@@ -101,7 +101,8 @@ function injureUser(c: Career, p: Player, rng: ReturnType<typeof rngFor>) {
   c.flags.injHistory = (c.flags.injHistory ?? 0) + 1;
   const notes = applyInjuryAftermath(p, inj, rng);
   addNews(c, 'injury', `Lesión: ${inj.name}`, `Baja estimada: ${inj.totalDays} días.${notes.length ? ' Secuelas: ' + notes.join(', ') + '.' : ''}`, 'bad');
-  queueEvent(c, inj.severity === 'leve' ? 'injury-minor' : inj.severity === 'moderada' ? 'injury-moderate' : 'injury-severe');
+  // Minor knocks are just news; only significant injuries ask for a decision.
+  if (inj.severity !== 'leve') queueEvent(c, inj.severity === 'moderada' ? 'injury-moderate' : 'injury-severe');
 }
 
 /** Satellite game for the user (college, Europe, G League). */

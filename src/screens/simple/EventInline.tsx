@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import type { Career } from '../../engine/types';
-import { chooseOption, dismissEvent } from '../../engine/api';
+import { chooseOption, dismissEvent, runUntilDecision } from '../../engine/api';
 import { CATEGORY_LABEL } from '../../content/events';
 import { store } from '../../store/store';
 import { CATEGORY_ICON } from '../../ui/simple';
@@ -8,11 +8,13 @@ import { CATEGORY_ICON } from '../../ui/simple';
 /** Narrative decision rendered as Copero-style cards inside the career screen. */
 export function EventModalInline({ c }: { c: Career }) {
   const ev = c.pendingEvent!;
+  // After a decision the season resumes on its own until the next one.
+  const next = () => store.actAsync('Simulando…', (x) => { dismissEvent(x); runUntilDecision(x); });
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.target as HTMLElement)?.tagName === 'INPUT') return;
       if (ev.resolved) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); store.act(dismissEvent); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); next(); }
         return;
       }
       const n = Number(e.key);
@@ -49,7 +51,7 @@ export function EventModalInline({ c }: { c: Career }) {
               })}
             </div>
           )}
-          <button className="btn pill light" style={{ marginTop: 14 }} onClick={() => store.act(dismissEvent)} autoFocus>Continuar</button>
+          <button className="btn pill light" style={{ marginTop: 14 }} onClick={next} autoFocus>Continuar</button>
         </div>
       )}
     </div>

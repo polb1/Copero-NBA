@@ -7,7 +7,6 @@ import { inSeason } from '../../engine/flow';
 import { teamName } from '../../engine/league';
 import { averages, f1, sumStats } from '../../engine/stats';
 import { marketValue, fmtMoney, makeSalaries } from '../../engine/contracts';
-import { goalOptions } from '../../engine/goals';
 import { AWARD_LABEL } from '../../engine/awards';
 import { SATELLITES } from '../../engine/satellite';
 import { seasonLabel } from '../../engine/schedule';
@@ -142,6 +141,8 @@ function Decision({ c }: { c: Career }) {
   const t = teamOf(c);
   if (c.pendingEvent) return <EventModalInline c={c} />;
   const sim = (label: string, fn: (x: Career) => void) => store.actAsync(label, fn);
+  /** Apply an action, then keep simulating until the next real decision. */
+  const go = (label: string, fn?: (x: Career) => void) => store.actAsync(label, (x) => { fn?.(x); api.runUntilDecision(x); });
 
   switch (c.phase) {
     case 'predraft': {
@@ -151,7 +152,7 @@ function Decision({ c }: { c: Career }) {
         const comp = SATELLITES[s.comp as 'NCAA' | 'EUR'];
         return (
           <Block title={`Temporada en ${s.teamName}`} desc={`${comp.name} · ${s.w}-${s.l}. Los ojeadores NBA miran cada partido; la liga NBA se juega en paralelo y decidirá el orden del draft.`}>
-            <Choice top="Jugar" title="La temporada completa" icon="🏀" onClick={() => sim('Jugando la temporada…', (x) => api.advance(x, 'season'))}>Se detiene si surge una decisión.</Choice>
+            <Choice top="Jugar" title="La temporada completa" icon="🏀" onClick={() => go('Jugando la temporada…')}>Se detiene si surge una decisión.</Choice>
           </Block>
         );
       }
@@ -160,7 +161,7 @@ function Decision({ c }: { c: Career }) {
         return (
           <Block title="¿Te declaras para el draft?" desc={c.lastSummary ? c.lastSummary.lines.slice(2, 5).map((l) => `${l.value} ${l.label.toLowerCase()}`).join(' · ') : undefined}>
             <Choice top="Dar el salto" title="Declararme" icon="🎓" onClick={() => store.act((x) => api.predraftDecision(x, true))}>Combine, entrevistas y draft.</Choice>
-            {canReturn && <Choice top="Esperar" title="Otra temporada" icon="📚" tone="stay" onClick={() => sim('Avanzando un año…', (x) => api.predraftDecision(x, false))}>Mejorar tu cotización.</Choice>}
+            {canReturn && <Choice top="Esperar" title="Otra temporada" icon="📚" tone="stay" onClick={() => go('Jugando otra temporada…', (x) => api.predraftDecision(x, false))}>Mejorar tu cotización.</Choice>}
           </Block>
         );
       }
@@ -182,18 +183,15 @@ function Decision({ c }: { c: Career }) {
           </Block>
         );
       }
-      if (p.step === 'mock' && p.mock) {
+      if ((p.step === 'mock' || p.step === 'lottery') && p.mock) {
+        // Lottery and draft run together: one click from the mock draft to your pick.
+        const draftNight = (x: Career) => {
+          if (x.predraft!.step === 'mock') api.revealLottery(x);
+          api.runUserDraft(x);
+        };
         return (
           <Block title={`Mock draft: picks ${p.mock.pickLow}–${p.mock.pickHigh}`} desc={p.mock.text}>
-            <Choice top="Siguiente" title="Sorteo de la lotería" icon="🎱" onClick={() => store.act(api.revealLottery)}>Formato 3-2-1, 16 equipos.</Choice>
-          </Block>
-        );
-      }
-      if (p.step === 'lottery' && p.lottery) {
-        const top = [...p.lottery].sort((a, b) => a.to - b.to).slice(0, 4);
-        return (
-          <Block title="Resultado de la lotería" desc={top.map((m) => `${m.to}. ${c.league.teams[m.teamId].city}`).join(' · ')}>
-            <Choice top="La gran noche" title="Noche del draft" icon="🎤" onClick={() => sim('Celebrando el draft…', api.runUserDraft)}>Dos rondas, 60 picks.</Choice>
+            <Choice top="La gran noche" title="Noche del draft" icon="🎤" onClick={() => sim('Lotería y draft…', draftNight)}>Lotería 3-2-1 y dos rondas.</Choice>
           </Block>
         );
       }
@@ -203,26 +201,18 @@ function Decision({ c }: { c: Career }) {
       const pk = c.predraft?.userPick;
       return (
         <Block title={pk ? `Pick ${pk.pick} · ${teamName(c.league, pk.teamId)}` : 'Busca tu oportunidad'} desc={pk ? (pk.round === 1 ? 'Primera ronda: contrato de escala de novato.' : 'Segunda ronda: estándar o two-way.') : 'Nadie te eligió en el draft. Elige tu camino.'}>
-          {c.offers.map((o) => <OfferChoice key={o.id} c={c} o={o} onPick={() => store.act((x) => api.acceptOffer(x, o.id))} />)}
+          {c.offers.map((o) => <OfferChoice key={o.id} c={c} o={o} onPick={() => go('Primera temporada…', (x) => api.acceptOffer(x, o.id))} />)}
         </Block>
       );
     }
-    case 'preseason': {
-      const goals = goalOptions(c, u).slice(0, 3);
-      return (
-        <Block title="Objetivo de la temporada" desc="Se evalúa con tus estadísticas reales. Cumplirlo mejora reputación, moral y confianza.">
-          {goals.map((g) => <Choice key={g.id} top="Objetivo" title={g.label} icon="🎯" onClick={() => store.act((x) => { api.setGoals(x, [g.id]); api.startRegularSeason(x); })}>{g.desc}</Choice>)}
-          <Choice top="Sin presión" title="Sin objetivo" icon="😌" tone="stay" onClick={() => store.act((x) => { api.setGoals(x, []); api.startRegularSeason(x); })}>Solo jugar.</Choice>
-        </Block>
-      );
-    }
+    case 'preseason':
     case 'regular':
     case 'postseason': {
       const where = t && c.assignment === 'NBA' ? teamName(c.league, t.id) : c.satellite?.teamName ?? (t ? t.gLeagueName : 'Europa');
       const record = t ? `${t.w}-${t.l}` : c.satellite ? `${c.satellite.w}-${c.satellite.l}` : '';
       return (
         <Block title={`Temporada ${seasonLabel(c.league.season)}`} desc={`${where}${record ? ` · ${record}` : ''}${c.phase === 'postseason' ? ' · Postemporada' : ''}${u.injury ? ` · 🩹 ${u.injury.name} (${u.injury.daysLeft} días)` : ''}`}>
-          <Choice top="Simular" title={c.phase === 'postseason' ? 'Los playoffs' : 'La temporada'} icon="🏀" onClick={() => sim('Simulando…', (x) => api.advance(x, 'season'))}>Se detiene en cada decisión.</Choice>
+          <Choice top="Simular" title={c.phase === 'postseason' ? 'Los playoffs' : 'La temporada'} icon="🏀" onClick={() => go('Simulando…')}>Se detiene si surge una decisión.</Choice>
           <Choice top="Ir partido a partido" title="Vista detallada" icon="📊" tone="stay" onClick={() => nav('/career')}>Calendario, rotación y estadísticas.</Choice>
         </Block>
       );
@@ -231,18 +221,18 @@ function Decision({ c }: { c: Career }) {
       const s = c.lastSummary!;
       return (
         <Block title={`Fin de temporada ${seasonLabel(s.season)}`} desc={<>{s.teamResult}<br />{s.lines.slice(2, 5).map((l) => `${l.value} ${l.label.toLowerCase()}`).join(' · ')} · OVR {s.ovrDelta >= 0 ? '+' : ''}{s.ovrDelta}{s.awards.length ? <><br /><span className="gold">🏆 {s.awards.join(' · ')}</span></> : null}</>}>
-          <Choice top="Continuar" title="Temporada baja" icon="☀️" onClick={() => sim('Procesando el verano…', api.beginOffseason)}>Evolución, contratos y mercado.</Choice>
+          <Choice top="Continuar" title="Siguiente temporada" icon="▶️" onClick={() => go('Verano y nueva temporada…', api.beginOffseason)}>Solo se detiene si hay algo que decidir.</Choice>
         </Block>
       );
     }
     case 'offseason': {
       const needs = api.needsContract(c);
       const canRetire = u.age >= 30 || (needs && c.offers.length === 0);
-      const accept = (id: string) => store.act((x) => { api.acceptOffer(x, id); if (!api.needsContract(x) && x.phase === 'offseason') api.startPreseason(x); });
+      const accept = (id: string) => go('Nueva temporada…', (x) => { api.acceptOffer(x, id); x.offers = []; });
       return (
         <Block title={needs ? 'Mercado de fichajes' : c.offers.length ? 'Propuestas sobre la mesa' : `Verano · ${u.age} años`} desc={needs ? (c.offers.length ? 'Tu contrato terminó. Elige tu próximo destino.' : 'Nadie te ha hecho una oferta.') : `OVR ${u.ovr} · bajo contrato con ${teamName(c.league, u.teamId)}.`}>
           {c.offers.map((o) => <OfferChoice key={o.id} c={c} o={o} onPick={() => accept(o.id)} />)}
-          {!needs && <Choice top="Quedarse en" title={t ? teamName(c.league, t.id) : 'tu equipo'} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : '🏠'} tone="stay" onClick={() => store.act(api.startPreseason)}>Empezar la pretemporada.</Choice>}
+          {!needs && <Choice top="Quedarse en" title={t ? teamName(c.league, t.id) : 'tu equipo'} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : '🏠'} tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Seguir con tu contrato.</Choice>}
           {canRetire && <Choice top="Colgar las botas" title="Retirarse" icon="🏁" tone="danger" onClick={() => { if (confirm('¿Anunciar la retirada?')) store.act((x) => api.retire(x, 'Retirada voluntaria.')); }}>Fin de la carrera.</Choice>}
         </Block>
       );

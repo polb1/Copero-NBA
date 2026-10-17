@@ -214,9 +214,9 @@ export function beginOffseason(c: Career) {
   c.phase = 'offseason';
   c.offers = [];
   buildOffseasonOffers(c);
-  // Offseason event
+  // Summer event: only in the full pace, and not every year.
   const ctx = eventContext(c);
-  const ev = pickEvent(ctx, rngFor(c.seed, 'off-event', L.season));
+  const ev = c.mode === 'full' && rngFor(c.seed, 'off-event-roll', L.season).chance(0.4) ? pickEvent(ctx, rngFor(c.seed, 'off-event', L.season)) : null;
   if (ev) {
     c.pendingEvent = instantiate(ev, ctx, rngFor(c.seed, 'off-event-i', L.season));
     markEventSeen(c, ev.id, ctx.absDay);
@@ -370,12 +370,6 @@ export function startPreseason(c: Career) {
       addNews(c, 'contract', 'Cortado en el training camp', `No hay plaza en el primer equipo. ${fullName(u)} jugará en ${t.gLeagueName}.`, 'bad');
     }
   }
-  const ctx = eventContext(c);
-  const ev = pickEvent(ctx, rngFor(c.seed, 'camp-event', L.season));
-  if (ev && !c.pendingEvent) {
-    c.pendingEvent = instantiate(ev, ctx, rngFor(c.seed, 'camp-event-i', L.season));
-    markEventSeen(c, ev.id, ctx.absDay);
-  }
 }
 
 export function startRegularSeason(c: Career) {
@@ -441,7 +435,7 @@ export function doCombine(c: Career, choice: 'full' | 'measure' | 'skip') {
   const range = mockRange(p.draftClass!, 'user', rng);
   const order = runLotteryPreview(c);
   const teams = order.slice(Math.max(0, range.pickLow - 2), Math.min(order.length, range.pickHigh + 2));
-  p.interviewTeams = rng.shuffle([...new Set(teams)]).slice(0, 3);
+  p.interviewTeams = rng.shuffle([...new Set(teams)]).slice(0, c.mode === 'full' ? 3 : 1);
   p.interviewQuestions = p.interviewTeams.map((teamId, i) => INTERVIEW_QUESTIONS[(i + Math.floor(rng.next() * INTERVIEW_QUESTIONS.length)) % INTERVIEW_QUESTIONS.length]).map((q, i) => ({ teamId: p.interviewTeams[i], question: q.q, answers: q.a }));
   p.step = 'interviews';
 }

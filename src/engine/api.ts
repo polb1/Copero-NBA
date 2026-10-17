@@ -1,7 +1,7 @@
 // Public game API used by the UI. Every function mutates the given career (the store passes a clone).
 import type { Career, TrainingFocus } from './types';
 import { createCareer, userOf, addNews, type NewCareerInput } from './career';
-import { advance, type AdvanceUnit, achievementsCheck } from './flow';
+import { advance, type AdvanceUnit, achievementsCheck, inSeason } from './flow';
 import { buildSigningOffers, acceptOffer, beginOffseason, startPreseason, startRegularSeason, predraftDecision, doCombine, answerInterview, revealLottery, runUserDraft, retire, needsContract } from './offseason';
 import { resolveEvent } from './events';
 import { executeTrade, signUser, contractFromOffer } from './market';
@@ -37,6 +37,33 @@ export function chooseOption(c: Career, index: number) {
   }
   resolveEvent(c, userOf(c), index, rngFor(c.seed, 'resolve', ev.defId, c.league.season, c.league.day));
   achievementsCheck(c);
+}
+
+/**
+ * Simple-mode driver: keeps the career moving (preseason, season, playoffs) until the user
+ * really has to decide something: an event, the end-of-season report, a contract, a draft step
+ * or retirement. Results are identical to advancing step by step.
+ */
+export function runUntilDecision(c: Career) {
+  for (let i = 0; i < 30; i++) {
+    if (c.pendingEvent) return;
+    if (c.phase === 'offseason') {
+      if ((needsContract(c) && !c.satellite) || c.offers.length) return;
+      startPreseason(c);
+      continue;
+    }
+    if (c.phase === 'preseason') {
+      startRegularSeason(c);
+      continue;
+    }
+    if (inSeason(c)) {
+      const before = `${c.phase}|${c.league.season}|${c.league.day}`;
+      advance(c, 'season');
+      if (`${c.phase}|${c.league.season}|${c.league.day}` === before) return;
+      continue;
+    }
+    return;
+  }
 }
 
 export function dismissEvent(c: Career) {

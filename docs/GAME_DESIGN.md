@@ -19,9 +19,15 @@ acontecimiento**. El resultado es idéntico sea cual sea el tamaño del paso (RN
 ## 3. Ritmos
 | Ritmo | Eventos | Avance por defecto | Semilla |
 |---|---|---|---|
-| Carrera completa | ~10-14 por temporada + hitos | Partido / semana | Aleatoria |
-| Carrera rápida | ~4 por temporada | Hasta el siguiente evento | Aleatoria |
-| Desafío diario | Como rápida, máx. 12 temporadas | Hasta el siguiente evento | Fecha (UTC) |
+| Intenso (completa) | Hasta 2 por temporada (+ evento de verano el 40% de los años) | Hasta la siguiente decisión | Aleatoria |
+| Normal (rápida) | 1 por temporada | Hasta la siguiente decisión | Aleatoria |
+| Desafío diario | Como Normal, máx. 12 temporadas | Hasta la siguiente decisión | Fecha (UTC) |
+
+Objetivo de ritmo: corto e intenso. En la vista simple cada temporada se resuelve con 1-2 decisiones y
+un clic en el informe de fin de temporada; el juego solo se detiene por un acontecimiento, una lesión
+moderada o grave, una petición de traspaso, un contrato o el informe anual. Las lesiones leves son solo
+noticias. Medido en `pacing.test.ts`: ~2,2 paradas por temporada en Normal y ~3,5 en Intenso, contando el
+informe anual.
 
 El desafío diario fija nacionalidad, posición, físico, atributos y vía de entrada; el usuario solo
 elige nombre y dorsal (no afectan al RNG). Puntuación = Legacy Score. Mismas decisiones ⇒ mismo resultado.
