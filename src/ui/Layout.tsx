@@ -127,6 +127,7 @@ export function Layout({ children }: { children: ReactNode }) {
           <div className="brand-mark"><Icon name="ball" size={20} /></div>
           <div className="brand-name">NBA <span>Legacy</span></div>
         </NavLink>
+        <NavLink to="/play" className="nav-link"><Icon name="play" /> Vista simple</NavLink>
         {c.phase === 'predraft' && (
           <NavLink to="/draft" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}><Icon name="target" /> Proceso del draft <span className="dot" /></NavLink>
         )}

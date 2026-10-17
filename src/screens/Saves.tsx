@@ -17,7 +17,7 @@ export function Saves() {
       return;
     }
     store.setCareer(c, false);
-    nav(c.phase === 'predraft' ? '/draft' : c.phase === 'signing' ? '/signing' : c.phase === 'retired' ? '/retirement' : '/career');
+    nav('/play');
   };
   const onImport = async (f: File) => {
     try {

@@ -23,6 +23,8 @@ import { Achievements } from './screens/Achievements';
 import { Daily } from './screens/Daily';
 import { Saves } from './screens/Saves';
 import { Settings } from './screens/Settings';
+import { Start } from './screens/simple/Start';
+import { Play } from './screens/simple/Play';
 
 function NeedCareer({ children }: { children: ReactNode }) {
   const c = useCareer();
@@ -57,6 +59,8 @@ export function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/new" element={<NewCareer />} />
+        <Route path="/start" element={<Start />} />
+        <Route path="/play" element={<Play />} />
         <Route path="/daily" element={<Layout><Daily /></Layout>} />
         <Route path="/saves" element={<Layout><Saves /></Layout>} />
         <Route path="/settings" element={<Layout><Settings /></Layout>} />

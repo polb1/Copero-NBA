@@ -29,7 +29,7 @@ export function Home() {
   const slots = listSlots();
   const resume = () => {
     if (!c) return;
-    nav(c.phase === 'predraft' ? '/draft' : c.phase === 'signing' ? '/signing' : c.phase === 'retired' ? '/retirement' : '/career');
+    nav('/play');
   };
   return (
     <div className="hero">
@@ -47,7 +47,7 @@ export function Home() {
               <Icon name="play" /> Continuar: {fullName(userOf(c))}
             </button>
           )}
-          <Link to="/new" className={`btn lg ${c ? '' : 'primary'}`}><Icon name="star" /> Nueva carrera</Link>
+          <Link to="/start" className={`btn lg ${c ? '' : 'primary'}`}><Icon name="star" /> Nueva carrera</Link>
           <Link to="/daily" className="btn lg"><Icon name="sun" /> Desafío diario</Link>
         </div>
         {c && <p className="small dim">{MODE_LABEL[c.mode]} · {PHASE_LABEL[c.phase]} · OVR {userOf(c).ovr}</p>}
@@ -65,7 +65,7 @@ export function Home() {
         {!c && slots.length > 0 && (
           <div className="card flat" style={{ padding: 14 }}>
             <div className="tiny dim" style={{ marginBottom: 6 }}>Última partida</div>
-            <button className="btn ghost" style={{ justifyContent: 'flex-start', padding: 0 }} onClick={() => { const s = loadCareer(slots[0].id); if (s) { store.setCareer(s, false); nav('/career'); } }}>
+            <button className="btn ghost" style={{ justifyContent: 'flex-start', padding: 0 }} onClick={() => { const s = loadCareer(slots[0].id); if (s) { store.setCareer(s, false); nav('/play'); } }}>
               {slots[0].name} — {slots[0].detail}
             </button>
           </div>

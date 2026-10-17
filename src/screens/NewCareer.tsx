@@ -55,7 +55,7 @@ export function NewCareer() {
     const input: NewCareerInput = { ...f, jersey: f.jersey.trim() || f.last.trim().toUpperCase(), birthplace: f.birthplace || COUNTRIES.find((c) => c.code === f.nat)!.name };
     const c = newCareer(input, seed);
     store.setCareer(c);
-    nav(c.phase === 'predraft' ? '/draft' : '/signing');
+    nav('/play');
   };
   const countries = COUNTRIES.filter((c) => c.name.toLowerCase().includes(natQuery.toLowerCase()));
 

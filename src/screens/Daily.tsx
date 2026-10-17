@@ -28,7 +28,7 @@ export function Daily() {
   const start = () => {
     const c = newCareer(inp, preset.seed);
     store.setCareer(c);
-    nav(c.phase === 'predraft' ? '/draft' : '/signing');
+    nav('/play');
   };
   return (
     <div className={current ? '' : 'content'} style={current ? undefined : { maxWidth: 1100 }}>
