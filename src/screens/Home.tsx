@@ -33,6 +33,7 @@ export function Home() {
   };
   return (
     <div className="hero">
+      <div className="hero-photo" style={{ backgroundImage: 'url(stock/arena-2.jpg)' }} aria-hidden="true" />
       <Court />
       <div className="hero-copy anim-in">
         <div className="row" style={{ gap: 10 }}>

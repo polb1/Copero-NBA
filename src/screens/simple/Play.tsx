@@ -15,7 +15,9 @@ import { countryByCode } from '../../content/names';
 import { store, useCareer, useStore } from '../../store/store';
 import { EventModalInline } from './EventInline';
 import { TeamBadge, ovrTone } from '../../ui/simple';
+import { Confetti, OvrTile, SimProgress } from '../../ui/life';
 import { drawCard } from '../Retirement';
+import { Scene, type SceneKind } from '../../ui/Scene';
 import { Icon } from '../../ui/icons';
 
 const AWARD_ICON: Record<string, string> = { champion: '💍', mvp: '👑', fmvp: '🥇', dpoy: '🛡️', roy: '🌱', smoy: '🔋', mip: '📈', allStar: '⭐', allNba1: '🏅', allNba2: '🏅', allNba3: '🏅', allDef1: '🧱', allDef2: '🧱', threeContest: '🎯' };
@@ -23,6 +25,7 @@ const AWARD_ICON: Record<string, string> = { champion: '💍', mvp: '👑', fmvp
 export function Play() {
   const c = useCareer();
   const busy = useStore((s) => s.busy);
+  const sim = useStore((s) => s.sim);
   const toasts = useStore((s) => s.toasts);
   if (!c) return <div className="simple-wrap"><div className="simple-panel"><p className="muted">No hay carrera activa. <Link to="/start" className="accent">Crear una</Link></p></div></div>;
   return (
@@ -31,7 +34,7 @@ export function Play() {
         <div className="play-left">
           <TopCard c={c} />
           <div className="divider" style={{ margin: '18px 0' }} />
-          <Decision c={c} />
+          {sim ? <SimProgress c={c} label={sim} /> : <Decision c={c} />}
         </div>
         <div className="play-right">
           <Timeline c={c} />
@@ -45,15 +48,28 @@ export function Play() {
       </div>
       <p className="tiny dim" style={{ textAlign: 'center', maxWidth: 820, margin: '14px auto 0' }}>Los nombres de franquicias se usan solo como referencia dentro de la simulación. Proyecto sin afiliación con la NBA; jugadores, entrenadores y agentes son ficticios.</p>
       {busy && <div className="busy" role="status" aria-live="polite"><div className="stack" style={{ alignItems: 'center', gap: 18 }}><div className="ball" /><span className="muted">{busy}</span></div></div>}
+      <Confetti fire={sim ? null : celebration(c)} />
       <div className="toasts" aria-live="polite">{toasts.map((t) => <div key={t.id} className="toast">{t.text}</div>)}</div>
     </div>
   );
 }
 
+/** Moments worth confetti: titles and awards, a won minigame, a lottery pick, a great career. */
+function celebration(c: Career): string | null {
+  const ev = c.pendingEvent;
+  if (ev?.resolved && ev.minigame && (ev.resolved.made ?? 0) >= ev.minigame.great) return `mg-${ev.defId}-${c.league.season}-${c.league.day}`;
+  if (c.phase === 'season-end' && c.lastSummary?.awards.length) return `se-${c.league.season}`;
+  const pk = c.predraft?.userPick;
+  if (c.phase === 'signing' && pk && pk.round === 1 && pk.pick <= 14) return `pk-${c.league.season}`;
+  if (c.phase === 'retired' && (c.retirement?.legacyScore ?? 0) >= 150) return 'retired';
+  return null;
+}
+
 function TopCard({ c }: { c: Career }) {
   const u = userOf(c);
   const t = teamOf(c);
-  const tot = sumStats(c.seasons.filter((s) => s.comp === 'NBA').map((s) => s.stats).concat(inSeason(c) || c.phase === 'preseason' ? [u.season] : []));
+  // Only finished seasons: results stay hidden until the season is over.
+  const tot = sumStats(c.seasons.filter((s) => s.comp === 'NBA').map((s) => s.stats));
   const a = averages(tot);
   const awards: Record<string, number> = {};
   for (const s of c.seasons) for (const k of s.awards) awards[k] = (awards[k] ?? 0) + 1;
@@ -61,10 +77,7 @@ function TopCard({ c }: { c: Career }) {
   return (
     <>
       <div className="top-card">
-        <div className="ovr-tile" style={{ background: ovrTone(u.ovr) }}>
-          <small>OVR</small>
-          <b>{u.ovr}</b>
-        </div>
+        <OvrTile ovr={u.ovr} />
         <div className="id-box" style={{ ['--team' as string]: t?.color ?? '#334155' }}>
           <div className="row" style={{ gap: 6 }}>
             <span className="chip">{u.nat}</span>
@@ -102,9 +115,10 @@ function TopCard({ c }: { c: Career }) {
 
 // ---------------- Decisions ----------------
 
-function Choice({ title, top, icon, children, onClick, tone }: { title: string; top?: string; icon?: ReactNode; children?: ReactNode; onClick: () => void; tone?: 'stay' | 'danger' }) {
+function Choice({ title, top, icon, scene, children, onClick, tone }: { title: string; top?: string; icon?: ReactNode; scene?: SceneKind; children?: ReactNode; onClick: () => void; tone?: 'stay' | 'danger' }) {
   return (
-    <button className={`choice ${tone ?? ''}`} onClick={onClick}>
+    <button className={`choice ${tone ?? ''} ${scene ? 'with-img' : ''}`} onClick={onClick}>
+      {scene && <Scene kind={scene} variant={title} height={96} still className="choice-img" />}
       {top && <span className="tiny dim">{top}</span>}
       <b className="choice-title">{title}</b>
       {icon && <span className="choice-icon">{icon}</span>}
@@ -113,11 +127,11 @@ function Choice({ title, top, icon, children, onClick, tone }: { title: string; 
   );
 }
 
-function Block({ title, desc, children }: { title: string; desc?: ReactNode; children: ReactNode }) {
+function Block({ title, desc, scene, children }: { title: string; desc?: ReactNode; scene: SceneKind; children: ReactNode }) {
   return (
-    <div className="decision">
-      <h2>{title}</h2>
-      {desc && <p className="small muted" style={{ marginTop: 4 }}>{desc}</p>}
+    <div className="decision anim-in" key={title}>
+      <Scene kind={scene} variant={title} height={170}><h2>{title}</h2></Scene>
+      {desc && <p className="small muted desc">{desc}</p>}
       <div className="choices">{children}</div>
     </div>
   );
@@ -141,8 +155,8 @@ function Decision({ c }: { c: Career }) {
   const t = teamOf(c);
   if (c.pendingEvent) return <EventModalInline c={c} />;
   const sim = (label: string, fn: (x: Career) => void) => store.actAsync(label, fn);
-  /** Apply an action, then keep simulating until the next real decision. */
-  const go = (label: string, fn?: (x: Career) => void) => store.actAsync(label, (x) => { fn?.(x); api.runUntilDecision(x); });
+  /** Apply an action, then keep simulating (visibly, in slices) until the next real decision. */
+  const go = (label: string, fn?: (x: Career) => void) => store.actLive(label, api.runChunk, fn);
 
   switch (c.phase) {
     case 'predraft': {
@@ -151,26 +165,26 @@ function Decision({ c }: { c: Career }) {
         const s = c.satellite!;
         const comp = SATELLITES[s.comp as 'NCAA' | 'EUR'];
         return (
-          <Block title={`Temporada en ${s.teamName}`} desc={`${comp.name} · ${s.w}-${s.l}. Los ojeadores NBA miran cada partido; la liga NBA se juega en paralelo y decidirá el orden del draft.`}>
-            <Choice top="Jugar" title="La temporada completa" icon="🏀" onClick={() => go('Jugando la temporada…')}>Se detiene si surge una decisión.</Choice>
+          <Block scene={s.comp === 'NCAA' ? 'college' : 'europe'} title={`Temporada en ${s.teamName}`} desc={`${comp.name}. Los ojeadores NBA miran cada partido; la liga NBA se juega en paralelo y decidirá el orden del draft.`}>
+            <Choice top="Jugar" title="La temporada completa" scene="arena" onClick={() => go('Jugando la temporada…')}>Se detiene si surge una decisión.</Choice>
           </Block>
         );
       }
       if (p.step === 'decision') {
         const canReturn = u.age <= 21 && p.seasonsPlayed < 3;
         return (
-          <Block title="¿Te declaras para el draft?" desc={c.lastSummary ? c.lastSummary.lines.slice(2, 5).map((l) => `${l.value} ${l.label.toLowerCase()}`).join(' · ') : undefined}>
-            <Choice top="Dar el salto" title="Declararme" icon="🎓" onClick={() => store.act((x) => api.predraftDecision(x, true))}>Combine, entrevistas y draft.</Choice>
-            {canReturn && <Choice top="Esperar" title="Otra temporada" icon="📚" tone="stay" onClick={() => go('Jugando otra temporada…', (x) => api.predraftDecision(x, false))}>Mejorar tu cotización.</Choice>}
+          <Block scene={'draft'} title="¿Te declaras para el draft?" desc={c.lastSummary ? c.lastSummary.lines.slice(2, 5).map((l) => `${l.value} ${l.label.toLowerCase()}`).join(' · ') : undefined}>
+            <Choice top="Dar el salto" title="Declararme" scene="draft" onClick={() => store.act((x) => api.predraftDecision(x, true))}>Combine, entrevistas y draft.</Choice>
+            {canReturn && <Choice top="Esperar" title="Otra temporada" scene="college" tone="stay" onClick={() => go('Jugando otra temporada…', (x) => api.predraftDecision(x, false))}>Mejorar tu cotización.</Choice>}
           </Block>
         );
       }
       if (p.step === 'combine') {
         return (
-          <Block title="Draft Combine" desc="Las franquicias miden velocidad, salto, agilidad y tiro.">
-            <Choice top="Riesgo alto" title="Participar en todo" icon="⚡" onClick={() => store.act((x) => api.doCombine(x, 'full'))}>Puede subirte… o bajarte.</Choice>
-            <Choice top="Prudente" title="Solo medidas" icon="📏" onClick={() => store.act((x) => api.doCombine(x, 'measure'))}>Leve penalización.</Choice>
-            <Choice top="Confianza" title="No acudir" icon="🙅" onClick={() => store.act((x) => api.doCombine(x, 'skip'))}>Los equipos lo notarán.</Choice>
+          <Block scene={'training'} title="Draft Combine" desc="Las franquicias miden velocidad, salto, agilidad y tiro.">
+            <Choice top="Riesgo alto" title="Participar en todo" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'full'))}>Puede subirte… o bajarte.</Choice>
+            <Choice top="Prudente" title="Solo medidas" scene="training" onClick={() => store.act((x) => api.doCombine(x, 'measure'))}>Leve penalización.</Choice>
+            <Choice top="Confianza" title="No acudir" scene="rest" onClick={() => store.act((x) => api.doCombine(x, 'skip'))}>Los equipos lo notarán.</Choice>
           </Block>
         );
       }
@@ -178,7 +192,7 @@ function Decision({ c }: { c: Career }) {
         const i = p.interviews.length;
         const q = p.interviewQuestions[i];
         return (
-          <Block title={`Entrevista con ${teamName(c.league, q.teamId)}`} desc={`«${q.question}»`}>
+          <Block scene={'press'} title={`Entrevista con ${teamName(c.league, q.teamId)}`} desc={`«${q.question}»`}>
             {q.answers.map((a, k) => <Choice key={k} title={a} onClick={() => store.act((x) => api.answerInterview(x, i, k))} />)}
           </Block>
         );
@@ -190,8 +204,8 @@ function Decision({ c }: { c: Career }) {
           api.runUserDraft(x);
         };
         return (
-          <Block title={`Mock draft: picks ${p.mock.pickLow}–${p.mock.pickHigh}`} desc={p.mock.text}>
-            <Choice top="La gran noche" title="Noche del draft" icon="🎤" onClick={() => sim('Lotería y draft…', draftNight)}>Lotería 3-2-1 y dos rondas.</Choice>
+          <Block scene={'draft'} title={`Mock draft: picks ${p.mock.pickLow}–${p.mock.pickHigh}`} desc={p.mock.text}>
+            <Choice top="La gran noche" title="Noche del draft" scene="draft" onClick={() => sim('Lotería y draft…', draftNight)}>Lotería 3-2-1 y dos rondas.</Choice>
           </Block>
         );
       }
@@ -200,7 +214,7 @@ function Decision({ c }: { c: Career }) {
     case 'signing': {
       const pk = c.predraft?.userPick;
       return (
-        <Block title={pk ? `Pick ${pk.pick} · ${teamName(c.league, pk.teamId)}` : 'Busca tu oportunidad'} desc={pk ? (pk.round === 1 ? 'Primera ronda: contrato de escala de novato.' : 'Segunda ronda: estándar o two-way.') : 'Nadie te eligió en el draft. Elige tu camino.'}>
+        <Block scene={'contract'} title={pk ? `Pick ${pk.pick} · ${teamName(c.league, pk.teamId)}` : 'Busca tu oportunidad'} desc={pk ? (pk.round === 1 ? 'Primera ronda: contrato de escala de novato.' : 'Segunda ronda: estándar o two-way.') : 'Nadie te eligió en el draft. Elige tu camino.'}>
           {c.offers.map((o) => <OfferChoice key={o.id} c={c} o={o} onPick={() => go('Primera temporada…', (x) => api.acceptOffer(x, o.id))} />)}
         </Block>
       );
@@ -209,19 +223,18 @@ function Decision({ c }: { c: Career }) {
     case 'regular':
     case 'postseason': {
       const where = t && c.assignment === 'NBA' ? teamName(c.league, t.id) : c.satellite?.teamName ?? (t ? t.gLeagueName : 'Europa');
-      const record = t ? `${t.w}-${t.l}` : c.satellite ? `${c.satellite.w}-${c.satellite.l}` : '';
       return (
-        <Block title={`Temporada ${seasonLabel(c.league.season)}`} desc={`${where}${record ? ` · ${record}` : ''}${c.phase === 'postseason' ? ' · Postemporada' : ''}${u.injury ? ` · 🩹 ${u.injury.name} (${u.injury.daysLeft} días)` : ''}`}>
-          <Choice top="Simular" title={c.phase === 'postseason' ? 'Los playoffs' : 'La temporada'} icon="🏀" onClick={() => go('Simulando…')}>Se detiene si surge una decisión.</Choice>
-          <Choice top="Ir partido a partido" title="Vista detallada" icon="📊" tone="stay" onClick={() => nav('/career')}>Calendario, rotación y estadísticas.</Choice>
+        <Block scene={c.phase === 'postseason' ? 'trophy' : 'arena'} title={`Temporada ${seasonLabel(c.league.season)}`} desc={`${where} · ${c.phase === 'postseason' ? 'Postemporada en curso' : c.phase === 'preseason' ? 'Pretemporada' : 'Temporada en curso'}${u.injury ? ` · 🩹 ${u.injury.name} (${u.injury.daysLeft} días)` : ''}`}>
+          <Choice top="Simular" title={c.phase === 'postseason' ? 'Los playoffs' : 'La temporada'} scene="arena" onClick={() => go('Simulando…')}>Se detiene si surge una decisión.</Choice>
+          <Choice top="Ir partido a partido" title="Vista detallada" scene="coach" tone="stay" onClick={() => nav('/career')}>Calendario, rotación y estadísticas.</Choice>
         </Block>
       );
     }
     case 'season-end': {
       const s = c.lastSummary!;
       return (
-        <Block title={`Fin de temporada ${seasonLabel(s.season)}`} desc={<>{s.teamResult}<br />{s.lines.slice(2, 5).map((l) => `${l.value} ${l.label.toLowerCase()}`).join(' · ')} · OVR {s.ovrDelta >= 0 ? '+' : ''}{s.ovrDelta}{s.awards.length ? <><br /><span className="gold">🏆 {s.awards.join(' · ')}</span></> : null}</>}>
-          <Choice top="Continuar" title="Siguiente temporada" icon="▶️" onClick={() => go('Verano y nueva temporada…', api.beginOffseason)}>Solo se detiene si hay algo que decidir.</Choice>
+        <Block scene={s.awards.length ? 'trophy' : 'arena'} title={`Fin de temporada ${seasonLabel(s.season)}`} desc={<>{s.teamResult}<br />{s.lines.slice(2, 5).map((l) => `${l.value} ${l.label.toLowerCase()}`).join(' · ')} · OVR {s.ovrDelta >= 0 ? '+' : ''}{s.ovrDelta}{s.awards.length ? <><br /><span className="gold">🏆 {s.awards.join(' · ')}</span></> : null}</>}>
+          <Choice top="Continuar" title="Siguiente temporada" scene="summer" onClick={() => go('Verano y nueva temporada…', api.beginOffseason)}>Solo se detiene si hay algo que decidir.</Choice>
         </Block>
       );
     }
@@ -230,10 +243,10 @@ function Decision({ c }: { c: Career }) {
       const canRetire = u.age >= 30 || (needs && c.offers.length === 0);
       const accept = (id: string) => go('Nueva temporada…', (x) => { api.acceptOffer(x, id); x.offers = []; });
       return (
-        <Block title={needs ? 'Mercado de fichajes' : c.offers.length ? 'Propuestas sobre la mesa' : `Verano · ${u.age} años`} desc={needs ? (c.offers.length ? 'Tu contrato terminó. Elige tu próximo destino.' : 'Nadie te ha hecho una oferta.') : `OVR ${u.ovr} · bajo contrato con ${teamName(c.league, u.teamId)}.`}>
+        <Block scene={needs ? 'contract' : 'summer'} title={needs ? 'Mercado de fichajes' : c.offers.length ? 'Propuestas sobre la mesa' : `Verano · ${u.age} años`} desc={needs ? (c.offers.length ? 'Tu contrato terminó. Elige tu próximo destino.' : 'Nadie te ha hecho una oferta.') : `OVR ${u.ovr} · bajo contrato con ${teamName(c.league, u.teamId)}.`}>
           {c.offers.map((o) => <OfferChoice key={o.id} c={c} o={o} onPick={() => accept(o.id)} />)}
           {!needs && <Choice top="Quedarse en" title={t ? teamName(c.league, t.id) : 'tu equipo'} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : '🏠'} tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Seguir con tu contrato.</Choice>}
-          {canRetire && <Choice top="Colgar las botas" title="Retirarse" icon="🏁" tone="danger" onClick={() => { if (confirm('¿Anunciar la retirada?')) store.act((x) => api.retire(x, 'Retirada voluntaria.')); }}>Fin de la carrera.</Choice>}
+          {canRetire && <Choice top="Colgar las botas" title="Retirarse" scene="trophy" tone="danger" onClick={() => { if (confirm('¿Anunciar la retirada?')) store.act((x) => api.retire(x, 'Retirada voluntaria.')); }}>Fin de la carrera.</Choice>}
         </Block>
       );
     }
@@ -264,12 +277,12 @@ function Retired({ c }: { c: Career }) {
   };
   return (
     <div className="decision">
-      <h2>{r.tier}</h2>
-      <p className="small muted" style={{ marginTop: 4 }}>Retirado a los {r.age} · Legacy Score <b className="accent">{r.legacyScore}</b> · Hall of Fame {Math.round(r.hofProbability * 100)}% · {fmtMoney(r.earnings)} ganados</p>
+      <Scene kind="trophy" height={170}><h2>{r.tier}</h2></Scene>
+      <p className="small muted desc">Retirado a los {r.age} · Legacy Score <b className="accent">{r.legacyScore}</b> · Hall of Fame {Math.round(r.hofProbability * 100)}% · {fmtMoney(r.earnings)} ganados</p>
       <div className="choices">
-        <Choice top="Tarjeta final" title="Descargar PNG" icon="🖼️" onClick={download} />
-        <Choice top="Presumir" title="Compartir" icon="📣" onClick={share} />
-        <Choice top="Otra vez" title="Nueva carrera" icon="⭐" tone="stay" onClick={() => nav('/start')} />
+        <Choice top="Tarjeta final" title="Descargar PNG" scene="trophy" onClick={download} />
+        <Choice top="Presumir" title="Compartir" scene="phone" onClick={share} />
+        <Choice top="Otra vez" title="Nueva carrera" scene="arena" tone="stay" onClick={() => nav('/start')} />
       </div>
     </div>
   );
@@ -298,8 +311,6 @@ function Timeline({ c }: { c: Career }) {
     if (t) return teamName(c.league, t.id);
     return c.satellite?.teamName ?? 'Decisión de carrera…';
   };
-  const live = c.phase === 'predraft' ? c.satStats : c.assignment === 'GLG' && c.satStats.gp ? c.satStats : u.season;
-  const la = averages(live);
   const rows: ReactNode[] = [];
   for (let age = startAge; age <= endAge; age++) {
     const r = byAge.get(age);
@@ -308,7 +319,7 @@ function Timeline({ c }: { c: Career }) {
       const tm = r.teamId ? c.league.teams[r.teamId] : null;
       const won = r.awards.includes('champion');
       rows.push(
-        <div key={age} className="tl-row" title={`${seasonLabel(r.season)} · ${r.result}`}>
+        <div key={age} className="tl-row in" style={{ animationDelay: `${Math.min(12, age - startAge) * 45}ms` }} title={`${seasonLabel(r.season)} · ${r.result}`}>
           <span className="age-badge" style={{ background: tm?.color ?? '#334155' }}>{age}</span>
           <span className="tl-club">{tm ? <TeamBadge id={tm.id} color={tm.color} size={16} /> : <span className="tiny">{r.comp === 'NCAA' ? '🎓' : r.comp === 'EUR' ? '🌍' : '🏀'}</span>}<span>{r.teamName}</span>{r.comp !== 'NBA' && <span className="tiny dim">{r.comp === 'GLG' ? 'G League' : r.comp}</span>}{won && <span title="Campeón">💍</span>}{r.awards.filter((k) => k !== 'champion').slice(0, 2).map((k) => <span key={k} title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'}</span>)}</span>
           <span className="ovr-pill" style={{ background: ovrTone(r.ovrEnd) }}>{r.ovrEnd}</span>
@@ -327,10 +338,7 @@ function Timeline({ c }: { c: Career }) {
             <span className="dim">{pendingLabel()}</span>
           </span>
           <span className="ovr-pill" style={{ background: ovrTone(u.ovr) }}>{u.ovr}</span>
-          <span className="tl-num">{live.gp || ''}</span>
-          <span className="tl-num">{live.gp ? f1(la.ppg) : ''}</span>
-          <span className="tl-num">{live.gp ? f1(la.rpg) : ''}</span>
-          <span className="tl-num">{live.gp ? f1(la.apg) : ''}</span>
+          <span className="tl-live" style={{ gridColumn: 'span 4' }}>{inSeason(c) ? 'Temporada en curso' : ''}</span>
         </div>,
       );
     } else {

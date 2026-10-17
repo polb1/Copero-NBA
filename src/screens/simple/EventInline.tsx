@@ -1,16 +1,18 @@
 import { useEffect } from 'react';
 import type { Career } from '../../engine/types';
-import { chooseOption, dismissEvent, playMinigame, runUntilDecision } from '../../engine/api';
+import { chooseOption, dismissEvent, playMinigame, runChunk } from '../../engine/api';
 import { CATEGORY_LABEL } from '../../content/events';
 import { store } from '../../store/store';
 import { CATEGORY_ICON } from '../../ui/simple';
 import { ShotMeter } from '../../ui/ShotMeter';
+import { CATEGORY_SCENE, Scene } from '../../ui/Scene';
+import { sceneForOption } from '../../ui/life';
 
 /** Narrative decision rendered as Copero-style cards inside the career screen. */
 export function EventModalInline({ c }: { c: Career }) {
   const ev = c.pendingEvent!;
   // After a decision the season resumes on its own until the next one.
-  const next = () => store.actAsync('Simulando…', (x) => { dismissEvent(x); runUntilDecision(x); });
+  const next = () => store.actLive('Simulando…', runChunk, dismissEvent);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.target as HTMLElement)?.tagName === 'INPUT') return;
@@ -28,15 +30,18 @@ export function EventModalInline({ c }: { c: Career }) {
   const icon = CATEGORY_ICON[ev.category] ?? '🏀';
   return (
     <div className="decision">
-      <span className="chip accent" style={{ marginBottom: 6 }}>{icon} {CATEGORY_LABEL[ev.category] ?? ev.category}</span>
-      <h2>{ev.title}</h2>
-      <p className="small muted" style={{ marginTop: 4 }}>{ev.text}</p>
+      <Scene kind={CATEGORY_SCENE[ev.category] ?? 'arena'} variant={ev.defId} height={170}>
+        <span className="chip accent">{icon} {CATEGORY_LABEL[ev.category] ?? ev.category}</span>
+        <h2>{ev.title}</h2>
+      </Scene>
+      <p className="small muted desc">{ev.text}</p>
       {!ev.resolved && ev.minigame ? (
         <ShotMeter key={ev.defId + ev.title} spec={ev.minigame} onDone={(made) => store.act((x) => playMinigame(x, made))} onSimulate={() => store.act((x) => chooseOption(x, 0))} />
       ) : !ev.resolved ? (
         <div className="choices">
           {ev.options.map((o, i) => (
-            <button key={i} className="choice" onClick={() => store.act((x) => chooseOption(x, i))}>
+            <button key={i} className="choice with-img" onClick={() => store.act((x) => chooseOption(x, i))}>
+              <Scene kind={sceneForOption(o.label + ' ' + o.desc, CATEGORY_SCENE[ev.category] ?? 'arena')} variant={`${ev.defId}-${i}`} height={96} still className="choice-img" />
               <span className="tiny dim">Opción {i + 1}</span>
               <b className="choice-title">{o.label}</b>
               <span className="choice-body">{o.desc}</span>

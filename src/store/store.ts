@@ -168,12 +168,14 @@ export function resetAllData() {
 interface State {
   career: Career | null;
   busy: string | null;
+  /** Live simulation in progress (non-blocking): label shown in the career screen. */
+  sim: string | null;
   toasts: { id: number; text: string }[];
   settings: Settings;
   saveError: boolean;
 }
 
-let state: State = { career: null, busy: null, toasts: [], settings: getSettings(), saveError: false };
+let state: State = { career: null, busy: null, sim: null, toasts: [], settings: getSettings(), saveError: false };
 const listeners = new Set<() => void>();
 const emit = () => listeners.forEach((l) => l());
 const set = (patch: Partial<State>) => {
@@ -215,6 +217,29 @@ export const store = {
         }
       }, 30);
     });
+  },
+  /**
+   * Applies `fn` (optional) and then keeps calling `step` (one slice of simulation) until it returns
+   * true, publishing the intermediate state so the screen can animate. Saves once at the end.
+   */
+  async actLive(label: string, step: (c: Career) => boolean, fn?: (c: Career) => void) {
+    if (!state.career || state.sim) return;
+    let c = structuredClone(state.career);
+    fn?.(c);
+    set({ sim: label, career: c });
+    const frame = () => new Promise((r) => setTimeout(r, 45));
+    try {
+      for (let i = 0; i < 400; i++) {
+        await frame();
+        c = structuredClone(c);
+        const done = step(c);
+        set({ career: c });
+        if (done) break;
+      }
+    } finally {
+      store.setCareer(c);
+      set({ sim: null });
+    }
   },
   toast(text: string) {
     const id = Date.now() + Math.random();

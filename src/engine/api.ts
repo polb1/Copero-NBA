@@ -74,6 +74,32 @@ export function playMinigame(c: Career, made: number) {
   achievementsCheck(c);
 }
 
+/**
+ * Same as runUntilDecision but in small slices (about two weeks of calendar per call), so the UI can
+ * show the season advancing. Returns true once a decision point is reached. Results are identical.
+ */
+export function runChunk(c: Career): boolean {
+  if (c.pendingEvent) return true;
+  if (c.phase === 'offseason') {
+    if ((needsContract(c) && !c.satellite) || c.offers.length) return true;
+    startPreseason(c);
+    return false;
+  }
+  if (c.phase === 'preseason') {
+    startRegularSeason(c);
+    return false;
+  }
+  if (inSeason(c)) {
+    const before = `${c.phase}|${c.league.season}|${c.league.day}`;
+    advance(c, 'week');
+    if (c.pendingEvent || !inSeason(c)) return true;
+    if (`${c.phase}|${c.league.season}|${c.league.day}` === before) return true;
+    advance(c, 'week');
+    return !!c.pendingEvent || !inSeason(c);
+  }
+  return true;
+}
+
 export function dismissEvent(c: Career) {
   if (c.pendingEvent?.resolved) c.pendingEvent = null;
 }

@@ -4,6 +4,7 @@ import { chooseOption, dismissEvent, playMinigame } from '../engine/api';
 import { CATEGORY_LABEL } from '../content/events';
 import { Icon } from './icons';
 import { ShotMeter } from './ShotMeter';
+import { CATEGORY_SCENE, Scene } from './Scene';
 
 export function EventModal() {
   const c = useCareer();
@@ -35,7 +36,8 @@ export function EventModal() {
           <span className="chip accent">{CATEGORY_LABEL[ev.category] ?? ev.category}</span>
           <span className="tiny dim">Decisión</span>
         </div>
-        <h2 id="ev-title" style={{ fontSize: '2rem', marginBottom: 10 }}>{ev.title}</h2>
+        <Scene kind={CATEGORY_SCENE[ev.category] ?? 'arena'} height={170}><h2 id="ev-title" style={{ fontSize: '2rem' }}>{ev.title}</h2></Scene>
+        <div style={{ height: 12 }} />
         <p className="muted" style={{ fontSize: '1rem', marginBottom: 20 }}>{ev.text}</p>
         {!ev.resolved && ev.minigame ? (
           <ShotMeter key={ev.defId + ev.title} spec={ev.minigame} onDone={(made) => store.act((x) => playMinigame(x, made))} onSimulate={() => store.act((x) => chooseOption(x, 0))} />
