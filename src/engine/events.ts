@@ -1,0 +1,238 @@
+import type { ActiveEvent, Career, EffectBag, Player, Team } from './types';
+import { EVENTS, type EventDef, type EventWhen, type RoleKey, type EventOutcome } from '../content/events';
+import { countryByCode } from '../content/names';
+import { attrLabel } from './attributes';
+import { yearsLeft, fmtMoney } from './contracts';
+import { refreshOvr, fullName } from './players';
+import { rollInjury } from './injuries';
+import { clamp, type Rng } from './rng';
+
+export interface EventContext {
+  career: Career;
+  user: Player;
+  team: Team | null;
+  role: RoleKey;
+  absDay: number;
+}
+
+export const absDay = (season: number, day: number) => season * 1000 + day;
+
+function teamWinPct(t: Team | null) {
+  return t && t.w + t.l >= 8 ? t.w / (t.w + t.l) : 0.5;
+}
+
+export function matches(w: EventWhen, ctx: EventContext, viaChain = false): boolean {
+  const { career: c, user: u, team, role } = ctx;
+  if (w.chainOnly && !viaChain) return false;
+  if (w.phases && !w.phases.includes(c.phase)) return false;
+  if (w.minAge !== undefined && u.age < w.minAge) return false;
+  if (w.maxAge !== undefined && u.age > w.maxAge) return false;
+  if (w.minOvr !== undefined && u.ovr < w.minOvr) return false;
+  if (w.maxOvr !== undefined && u.ovr > w.maxOvr) return false;
+  if (w.roles && !w.roles.includes(role)) return false;
+  if (w.minTrust !== undefined && c.trust < w.minTrust) return false;
+  if (w.maxTrust !== undefined && c.trust > w.maxTrust) return false;
+  if (w.minMorale !== undefined && c.morale < w.minMorale) return false;
+  if (w.maxMorale !== undefined && c.morale > w.maxMorale) return false;
+  if (w.minChem !== undefined && c.chemistry < w.minChem) return false;
+  if (w.maxChem !== undefined && c.chemistry > w.maxChem) return false;
+  if (w.minFame !== undefined && c.fame < w.minFame) return false;
+  if (w.maxFame !== undefined && c.fame > w.maxFame) return false;
+  if (w.minPressure !== undefined && c.pressure < w.minPressure) return false;
+  if (w.minRep !== undefined && c.reputation < w.minRep) return false;
+  if (w.minFatigue !== undefined && u.fatigue < w.minFatigue) return false;
+  if (w.minForm !== undefined && u.form < w.minForm) return false;
+  if (w.maxForm !== undefined && u.form > w.maxForm) return false;
+  if (w.injured !== undefined && !!u.injury !== w.injured) return false;
+  if (w.severity && (!u.injury || !w.severity.includes(u.injury.severity))) return false;
+  if (w.flags && !w.flags.every((f) => c.flags[f])) return false;
+  if (w.notFlags && w.notFlags.some((f) => c.flags[f])) return false;
+  const comp = !u.teamId ? (c.satellite?.comp ?? 'NBA') : c.assignment === 'GLG' ? 'GLG' : 'NBA';
+  if (w.comp && !w.comp.includes(comp)) return false;
+  if (w.nba && (comp !== 'NBA' || !u.teamId)) return false;
+  if (w.contract) {
+    const k = u.contract;
+    if (!k) return false;
+    if (w.contract === 'expiring' && yearsLeft(k, c.league.season) !== 1) return false;
+    if (w.contract === 'rookie' && k.kind !== 'rookie') return false;
+    if (w.contract === 'two-way' && k.kind !== 'two-way') return false;
+    if (w.contract === 'long' && yearsLeft(k, c.league.season) < 3) return false;
+  }
+  if (w.teamStatus && (!team || !w.teamStatus.includes(team.status))) return false;
+  if (w.teamWinning && teamWinPct(team) < 0.55) return false;
+  if (w.teamLosing && teamWinPct(team) > 0.45) return false;
+  if (w.minYearsPro !== undefined && u.yearsPro < w.minYearsPro) return false;
+  if (w.maxYearsPro !== undefined && u.yearsPro > w.maxYearsPro) return false;
+  if (w.beforeDeadline && (c.phase !== 'regular' || c.league.day > c.league.deadlineDay)) return false;
+  return true;
+}
+
+export function eligibleEvents(ctx: EventContext): EventDef[] {
+  const c = ctx.career;
+  return EVENTS.filter((e) => {
+    if (e.weight <= 0) return false;
+    const last = c.eventHistory[e.id];
+    if (last !== undefined) {
+      if (e.once) return false;
+      const seen = c.flags['seen:' + e.id] ?? 1;
+      if (ctx.absDay - last < (e.cooldown ?? 300) * (1 + 0.5 * (seen - 1))) return false;
+    }
+    return matches(e.when, ctx);
+  });
+}
+
+export function pickEvent(ctx: EventContext, rng: Rng): EventDef | null {
+  const list = eligibleEvents(ctx);
+  if (!list.length) return null;
+  const maxP = Math.max(...list.map((e) => e.priority ?? 0));
+  const top = list.filter((e) => (e.priority ?? 0) === maxP);
+  // Prefer events never seen in this career to keep variety high.
+  return rng.weighted(top, (e) => (e.weight * (ctx.career.eventHistory[e.id] === undefined ? 1.6 : 1)) / (1 + (ctx.career.flags['seen:' + e.id] ?? 0)));
+}
+
+export function markEventSeen(c: Career, id: string, day: number) {
+  c.eventHistory[id] = day;
+  c.flags['seen:' + id] = (c.flags['seen:' + id] ?? 0) + 1;
+}
+
+function fill(text: string, vars: Record<string, string>) {
+  return text.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? k);
+}
+
+export function eventVars(ctx: EventContext, rng: Rng): Record<string, string> {
+  const { career: c, user: u, team } = ctx;
+  const league = c.league;
+  const mates = team ? team.roster.map((id) => league.players[id]).filter((p) => p && !p.isUser) : [];
+  const vet = [...mates].sort((a, b) => b.age - a.age)[0];
+  const others = Object.values(league.players).filter((p) => p.teamId && p.teamId !== u.teamId && p.pos === u.pos && p.ovr >= u.ovr - 6);
+  const rival = others.length ? rng.pick(others) : null;
+  return {
+    team: team ? `${team.city} ${team.name}` : c.satellite?.teamName ?? 'tu equipo',
+    city: team?.city ?? 'tu ciudad',
+    coach: team?.coach.name ?? 'Tu entrenador',
+    teammate: mates.length ? fullName(rng.pick(mates)) : 'Un compañero',
+    vet: vet ? fullName(vet) : 'un veterano',
+    rival: rival ? fullName(rival) : 'Un rival',
+    agent: c.agent.name,
+    country: countryByCode(u.nat).name,
+    injury: u.injury?.name ?? 'una lesión',
+  };
+}
+
+export function instantiate(def: EventDef, ctx: EventContext, rng: Rng): ActiveEvent {
+  const vars = eventVars(ctx, rng);
+  return {
+    defId: def.id,
+    category: def.category,
+    title: fill(def.title, vars),
+    text: fill(def.text, vars),
+    options: def.options.map((o) => ({ label: fill(o.label, vars), desc: fill(o.desc, vars) })),
+    vars,
+  };
+}
+
+function statFor(c: Career, u: Player, s: NonNullable<EventOutcome['boost']>['stat']) {
+  if (s === 'ovr') return u.ovr - 70;
+  const v = { trust: c.trust, fame: c.fame, workEthic: c.workEthic, chemistry: c.chemistry, reputation: c.reputation, morale: c.morale }[s];
+  return v - 50;
+}
+
+const SIGN = (n: number) => (n > 0 ? `+${n}` : `${n}`);
+
+/** Applies an effect bag to career + player. Returns human-readable summary lines. */
+export function applyEffects(c: Career, u: Player, e: EffectBag, rng: Rng): string[] {
+  const out: string[] = [];
+  const bump = (key: 'trust' | 'morale' | 'chemistry' | 'reputation' | 'fame' | 'pressure' | 'loyalty' | 'workEthic', label: string) => {
+    const v = e[key];
+    if (!v) return;
+    c[key] = clamp(c[key] + v, 0, 100);
+    if (key !== 'workEthic') out.push(`${label} ${SIGN(v)}`);
+  };
+  bump('trust', 'Confianza del entrenador');
+  bump('morale', 'Moral');
+  bump('chemistry', 'Química');
+  bump('reputation', 'Reputación');
+  bump('fame', 'Popularidad');
+  bump('pressure', 'Presión mediática');
+  bump('loyalty', 'Lealtad');
+  bump('workEthic', '');
+  if (e.fatigue) {
+    u.fatigue = clamp(u.fatigue + e.fatigue, 0, 100);
+    out.push(`Fatiga ${SIGN(e.fatigue)}`);
+  }
+  if (e.form) {
+    u.form = clamp(u.form + e.form, -10, 10);
+    out.push(`Forma ${SIGN(e.form)}`);
+  }
+  if (e.money) {
+    c.earnings += e.money;
+    out.push(`Dinero ${e.money > 0 ? '+' : '−'}${fmtMoney(Math.abs(e.money))}`);
+  }
+  if (e.endorsement) {
+    c.endorsement = Math.max(0, c.endorsement + e.endorsement);
+    out.push(`Patrocinios ${e.endorsement > 0 ? '+' : '−'}${fmtMoney(Math.abs(e.endorsement))}/año`);
+  }
+  if (e.pot) {
+    u.pot = clamp(u.pot + e.pot, u.ovr, 99);
+    out.push(`Potencial ${SIGN(e.pot)}`);
+  }
+  if (e.attrs) {
+    for (const [k, v] of Object.entries(e.attrs)) {
+      if (!v) continue;
+      const key = k as keyof typeof u.attrs;
+      u.attrs[key] = clamp(u.attrs[key] + v, 20, 99);
+      out.push(`${attrLabel(key)} ${SIGN(v)}`);
+    }
+    refreshOvr(u);
+  }
+  if (e.flag) c.flags[e.flag] = 1;
+  if (e.unflag) delete c.flags[e.unflag];
+  if (e.chain) c.eventQueue.push({ id: e.chain.id, season: c.league.season, day: c.league.day + e.chain.inDays });
+  if (e.injuryRisk) c.flags.injuryRisk = clamp((c.flags.injuryRisk ?? 0) + e.injuryRisk, 0, 3);
+  if (e.tradeRequest) {
+    c.tradeRequested = true;
+    out.push('Petición de traspaso registrada');
+  }
+  if (e.injure && !u.injury) {
+    u.injury = rollInjury(rng, e.injure);
+    out.push(`Lesión: ${u.injury.name}`);
+  }
+  if (e.heal && u.injury) {
+    const delta = Math.round((u.injury.daysLeft * e.heal) / 100);
+    u.injury.daysLeft = Math.max(1, u.injury.daysLeft - delta);
+    out.push(e.heal > 0 ? `Recuperación −${delta} días` : `Recuperación +${-delta} días`);
+  }
+  if (e.playThrough && u.injury) {
+    u.injury.playingThrough = true;
+    out.push('Jugarás con molestias');
+  }
+  if (e.gleague && u.contract && c.assignment !== 'GLG') {
+    c.assignment = 'GLG';
+    out.push('Asignado a la G League');
+  }
+  if (e.recall && c.assignment === 'GLG') {
+    c.assignment = 'NBA';
+    out.push('Recuperado por el equipo NBA');
+  }
+  return out;
+}
+
+export function resolveEvent(c: Career, u: Player, optionIndex: number, rng: Rng): { text: string; summary: string[] } {
+  const ev = c.pendingEvent!;
+  const def = EVENTS.find((e) => e.id === ev.defId)!;
+  const opt = def.options[optionIndex];
+  let effects: EffectBag = opt.effects ?? {};
+  let text = opt.text ?? '';
+  if (opt.outcomes) {
+    const o = rng.weighted(opt.outcomes, (x) => Math.max(0.05, x.weight + (x.boost ? statFor(c, u, x.boost.stat) * x.boost.per : 0)));
+    effects = o.effects;
+    text = o.text;
+  }
+  const summary = applyEffects(c, u, effects, rng);
+  const filled = fill(text, ev.vars);
+  ev.resolved = { option: optionIndex, result: filled, effectsSummary: summary };
+  c.decisions.push({ season: c.league.season, title: ev.title, choice: ev.options[optionIndex].label });
+  return { text: filled, summary };
+}
+
+export const eventById = (id: string) => EVENTS.find((e) => e.id === id);

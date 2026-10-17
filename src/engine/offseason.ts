@@ -1,0 +1,596 @@
+// League offseason, user contract situation, pre-draft process, signing and retirement.
+import type { Career, League, Offer, Prospect, RetirementSummary, TeamStatus } from './types';
+import { addNews, onNbaRoster, teamOf, userOf } from './career';
+import { generateDraftClass, materializeProspect, mockRange, positionNeeds, prospectValue, rookieContract, runLottery, simulateDraft } from './draft';
+import { contractEnd, makeSalaries, marketValue, offerCapacity, salaryIn, yearsLeft, fmtMoney } from './contracts';
+import { contractFromOffer, fallbackOffers, generateFAOffers, signUser, projectedRole } from './market';
+import { offseasonDevelopment } from './progression';
+import { generatePlayer, emptyStats, fullName } from './players';
+import { makeCoach, newPlayerId, setupSeasonSchedule, signNpc, teamName, teamStrength } from './league';
+import { pickEvent, instantiate, markEventSeen } from './events';
+import { eventContext } from './career';
+import { achievementsCheck } from './flow';
+import { legacyScore, hofProbability, hofVerdict, legacyTier, careerTotals, playoffTotals, awardCounts } from './legacy';
+import { DAILY_MAX_SEASONS, MAX_AGE, RULES, minSalary, rookieScale, scaled } from './config';
+import { clamp, rngFor } from './rng';
+import { seasonLabel } from './schedule';
+import { SATELLITES } from './satellite';
+
+// ---------------- League offseason ----------------
+
+export function runNpcDraft(L: League, seed: number, exclude?: string) {
+  const { order } = runLottery(L, seed);
+  const cls = generateDraftClass(seed, L.season + 1);
+  const picks = simulateDraft(L, seed, order, cls);
+  for (const pk of picks) {
+    const pr = cls.find((p) => p.id === pk.prospectId)!;
+    addDrafted(L, seed, pr, pk.teamId, pk.pick);
+  }
+  void exclude;
+  return { order, picks, cls };
+}
+
+export function addDrafted(L: League, seed: number, pr: Prospect, teamId: string, pick: number) {
+  const p = materializeProspect(seed, L.season + 1, pr, L);
+  p.teamId = teamId;
+  p.age = pr.age;
+  p.draft = { season: L.season + 1, round: pick <= RULES.roundSize ? 1 : 2, pick: pick <= RULES.roundSize ? pick : pick - RULES.roundSize, teamId };
+  rookieContract(p, teamId, pick, L.season + 1);
+  p.age -= 1; // will be aged in the offseason step
+  p.yearsPro = -1; // becomes 0 (rookie) after the offseason step
+  L.players[p.id] = p;
+  L.teams[teamId].roster.push(p.id);
+}
+
+function retireNpcs(L: League, seed: number) {
+  const rng = rngFor(seed, 'retire', L.season);
+  for (const p of Object.values(L.players)) {
+    if (p.isUser || p.retired) continue;
+    const old = p.age >= 39 || (p.age >= 35 && p.ovr < 72 && rng.chance(0.55)) || (p.age >= 33 && p.ovr < 62 && rng.chance(0.5));
+    const washed = !p.teamId && p.age >= 29 && p.ovr < 58;
+    if (old || washed) {
+      if (p.teamId) L.teams[p.teamId].roster = L.teams[p.teamId].roster.filter((id) => id !== p.id);
+      L.freeAgents = L.freeAgents.filter((id) => id !== p.id);
+      delete L.players[p.id];
+    }
+  }
+}
+
+function expireNpcContracts(L: League, seed: number) {
+  const rng = rngFor(seed, 'expire', L.season);
+  const next = L.season + 1;
+  for (const t of Object.values(L.teams)) {
+    for (const pid of [...t.roster]) {
+      const p = L.players[pid];
+      if (!p || p.isUser || !p.contract) continue;
+      const c = p.contract;
+      if (c.option?.type === 'team' && c.option.season === next && p.ovr < 60) {
+        c.salaries = c.salaries.slice(0, next - c.startSeason);
+      }
+      if (contractEnd(c) < next) {
+        if (p.ovr >= 64 && rng.chance(0.55)) {
+          const years = p.age >= 32 ? rng.int(1, 2) : rng.int(2, 4);
+          const first = Math.max(minSalary(p.yearsPro, next), Math.round(marketValue(p, next) * rng.range(0.85, 1.1)));
+          p.contract = { teamId: t.id, salaries: makeSalaries(first, years), startSeason: next, kind: 'standard' };
+        } else {
+          t.roster = t.roster.filter((id) => id !== pid);
+          p.teamId = null;
+          p.contract = null;
+          L.freeAgents.push(pid);
+        }
+      }
+    }
+  }
+}
+
+function npcFreeAgency(L: League, seed: number) {
+  const rng = rngFor(seed, 'npc-fa', L.season);
+  const next = L.season + 1;
+  const pool = () => L.freeAgents.map((id) => L.players[id]).filter((p) => p && !p.isUser).sort((a, b) => b.ovr - a.ovr);
+  for (let round = 0; round < 3; round++) {
+    for (const p of pool()) {
+      const target = round === 0 ? 13 : 14;
+      const candidates = Object.values(L.teams).filter((t) => t.roster.length < target);
+      if (!candidates.length) break;
+      const t = rng.weighted(candidates, (x) => 1 + Math.max(0, positionNeeds(L, x.id)[p.pos] + 2) + (offerCapacity(L, x.id, next).amount > marketValue(p, next) ? 2 : 0));
+      const cap = offerCapacity(L, t.id, next).amount;
+      const first = Math.max(minSalary(p.yearsPro, next), Math.min(cap, Math.round(marketValue(p, next) * rng.range(0.8, 1.05))));
+      p.contract = { teamId: t.id, salaries: makeSalaries(first, p.age >= 32 ? 1 : rng.int(1, 4)), startSeason: next, kind: 'standard' };
+      p.teamId = t.id;
+      t.roster.push(p.id);
+      L.freeAgents = L.freeAgents.filter((id) => id !== p.id);
+    }
+  }
+  // Fill any remaining holes with fresh veterans.
+  for (const t of Object.values(L.teams)) {
+    while (t.roster.length < 14) {
+      const p = generatePlayer(rng, { id: newPlayerId(L), level: Math.round(rng.range(55, 66)), age: rng.int(23, 32), season: next });
+      L.players[p.id] = p;
+      signNpc(L, p, t.id, rng, next);
+      p.contract!.startSeason = next;
+      t.roster.push(p.id);
+    }
+    while (t.roster.length > RULES.rosterMax + (t.roster.some((id) => L.players[id]?.contract?.kind === 'two-way') ? 1 : 0)) {
+      const cut = t.roster.map((id) => L.players[id]).filter((p) => p && !p.isUser).sort((a, b) => a.ovr - b.ovr)[0];
+      t.roster = t.roster.filter((id) => id !== cut.id);
+      cut.teamId = null;
+      cut.contract = null;
+      L.freeAgents.push(cut.id);
+    }
+  }
+  // Keep a reasonable pool of free agents: the rest sign abroad and leave the simulation.
+  const sortedFa = L.freeAgents.map((id) => L.players[id]).filter((p) => p && !p.isUser).sort((a, b) => b.ovr - a.ovr);
+  for (const p of sortedFa.slice(60)) delete L.players[p.id];
+  L.freeAgents = sortedFa.slice(0, 60).map((p) => p.id);
+  while (L.freeAgents.length < 20) {
+    const p = generatePlayer(rng, { id: newPlayerId(L), level: Math.round(rng.range(53, 64)), age: rng.int(22, 31), season: next });
+    L.players[p.id] = p;
+    L.freeAgents.push(p.id);
+  }
+}
+
+function reevaluateTeams(L: League, seed: number) {
+  const rng = rngFor(seed, 'teams-eval', L.season);
+  const ranked = Object.values(L.teams).sort((a, b) => teamStrength(L, b.id) - teamStrength(L, a.id));
+  ranked.forEach((t, i) => {
+    const status: TeamStatus = i < 5 ? 'contender' : i < 13 ? 'playoff' : i < 22 ? 'middle' : 'rebuild';
+    t.status = status;
+    const last = t.history[t.history.length - 1];
+    if (last && last.w < 28 && t.coach.hiredSeason < L.season && rng.chance(0.4)) {
+      t.coach = makeCoach(rng, L.season + 1);
+      t.coach.hiredSeason = L.season + 1;
+    }
+    t.reputation = Math.round(clamp(t.reputation * 0.8 + (last ? last.w / 82 : 0.5) * 30 + (t.market === 'large' ? 8 : 0), 20, 99));
+  });
+}
+
+export function leagueOffseason(L: League, seed: number, opts: { draft: boolean }) {
+  if (opts.draft) runNpcDraft(L, seed);
+  expireNpcContracts(L, seed);
+  // Aging and development for everyone except the user (handled with context).
+  const rng = rngFor(seed, 'npc-dev', L.season);
+  for (const p of Object.values(L.players)) {
+    if (p.retired) continue;
+    p.age++;
+    if (p.teamId) p.yearsPro++;
+    p.prevGmsc = p.season.gp >= 20 ? p.season.gmsc / p.season.gp : p.prevGmsc;
+    p.season = emptyStats();
+    p.playoffs = emptyStats();
+    p.fatigue = 0;
+    p.form = 0;
+    if (p.injury) {
+      p.injury.daysLeft -= 120;
+      p.injury.playingThrough = false;
+      if (p.injury.daysLeft <= 0) p.injury = null;
+    }
+    if (!p.isUser) offseasonDevelopment(p, rng);
+  }
+  retireNpcs(L, seed);
+  npcFreeAgency(L, seed);
+  reevaluateTeams(L, seed);
+  for (const t of Object.values(L.teams)) {
+    t.w = t.l = t.homeW = t.homeL = t.awayW = t.awayL = t.pf = t.pa = t.streak = 0;
+    t.last10 = [];
+  }
+  L.season++;
+  L.allStars = [];
+  setupSeasonSchedule(L, seed);
+}
+
+// ---------------- User offseason ----------------
+
+export function beginOffseason(c: Career) {
+  const L = c.league;
+  const u = userOf(c);
+  const prevSeason = L.season;
+  const t = teamOf(c);
+  const trainingBonus = Math.min(0.3, (c.flags.trainingGains ?? 0) / 60);
+  const recent = c.seasons.filter((s) => s.season === prevSeason);
+  const mins = recent.reduce((s, r) => s + r.stats.min, 0);
+  const gp = recent.reduce((s, r) => s + r.stats.gp, 0);
+  leagueOffseason(L, c.seed, { draft: true });
+  // user development
+  const delta = offseasonDevelopment(u, rngFor(c.seed, 'user-dev', prevSeason), {
+    workEthic: c.workEthic,
+    minutesShare: gp ? mins / gp / 36 : 0.2,
+    coachRating: t?.coach.rating ?? 60,
+    trainingBonus,
+  });
+  delete c.flags.trainingGains;
+  c.ovrHistory.push({ season: L.season, age: u.age, ovr: u.ovr, pot: u.pot });
+  if (u.teamId && (!c.bestTeamPeak || u.ovr > c.bestTeamPeak.ovr)) c.bestTeamPeak = { teamId: u.teamId, ovr: u.ovr };
+  addNews(c, 'training', 'Evolución en verano', `${fullName(u)} cumple ${u.age} años. OVR ${delta >= 0 ? '+' : ''}${delta} → ${u.ovr} (potencial ${u.pot}).`, delta >= 0 ? 'good' : 'bad');
+  c.gameLog = [];
+  c.satStats = emptyStats();
+  c.satellite = null;
+  c.goals = [];
+  c.devPoints = {};
+  c.tradeRequested = false;
+  c.pressure = clamp(c.pressure * 0.7, 0, 100);
+  delete c.flags.newTeam;
+  delete c.flags.wantsStay;
+  delete c.flags.testMarket;
+  delete c.flags.reinjuryRisk;
+  c.phase = 'offseason';
+  c.offers = [];
+  buildOffseasonOffers(c);
+  // Offseason event
+  const ctx = eventContext(c);
+  const ev = pickEvent(ctx, rngFor(c.seed, 'off-event', L.season));
+  if (ev) {
+    c.pendingEvent = instantiate(ev, ctx, rngFor(c.seed, 'off-event-i', L.season));
+    markEventSeen(c, ev.id, ctx.absDay);
+  }
+  achievementsCheck(c);
+}
+
+export function needsContract(c: Career) {
+  const u = userOf(c);
+  if (!u.contract) return true;
+  return contractEnd(u.contract) < c.league.season;
+}
+
+export function buildOffseasonOffers(c: Career) {
+  const L = c.league;
+  const u = userOf(c);
+  const season = L.season;
+  const k = u.contract;
+  const ownTeam = u.teamId;
+  if (k && contractEnd(k) >= season) {
+    // Option year?
+    if (k.option && k.option.season === season) {
+      if (k.option.type === 'team') {
+        const keep = u.ovr >= 60 && marketValue(u, season) >= salaryIn(k, season) * 0.7;
+        if (!keep) {
+          k.salaries = k.salaries.slice(0, season - k.startSeason);
+          addNews(c, 'contract', 'Opción de equipo rechazada', `${teamName(L, ownTeam)} declina tu opción. Eres agente libre.`, 'bad');
+        } else {
+          addNews(c, 'contract', 'Opción de equipo ejercida', `${teamName(L, ownTeam)} ejerce la opción: seguirás una temporada más por ${fmtMoney(salaryIn(k, season))}.`, 'good');
+          delete k.option;
+        }
+      } else {
+        c.offers.push({ id: 'opt-player', teamId: ownTeam!, kind: k.kind, years: 1, salary: salaryIn(k, season), raise: 0, role: projectedRole(L, ownTeam!, u), note: 'Ejercer tu opción de jugador: te quedas una temporada más con el salario pactado.' });
+        c.offers.push(...generateFAOffers(c, { ownTeam }).filter((o) => o.teamId !== ownTeam));
+        return;
+      }
+    }
+  }
+  if (u.contract && contractEnd(u.contract) >= season) {
+    // Under contract: possible extension in the final year.
+    if (yearsLeft(u.contract, season) === 1 && u.contract.kind !== 'two-way' && u.ovr >= 66) {
+      const ext = generateFAOffers(c, { ownTeam }).find((o) => o.teamId === ownTeam);
+      if (ext) {
+        ext.id = 'ext-' + ext.id;
+        ext.note = u.contract.kind === 'rookie' ? 'Extensión de contrato de novato: empieza la próxima temporada.' : 'Extensión de contrato: empieza la próxima temporada.';
+        c.offers.push(ext);
+      }
+    }
+    return;
+  }
+  // Free agent
+  const rfa = !!k?.rookieScale;
+  const own = onNbaRoster(c) ? ownTeam : null;
+  const nba = generateFAOffers(c, { ownTeam: own, rfa });
+  c.offers.push(...nba);
+  if (nba.length < 2) c.offers.push(...fallbackOffers(c));
+  if (k) addNews(c, 'contract', 'Agente libre', `Tu contrato con ${teamName(L, k.teamId)} ha terminado. ${c.offers.length} propuesta(s) sobre la mesa.`, 'neutral');
+}
+
+export function acceptOffer(c: Career, offerId: string) {
+  const L = c.league;
+  const o = c.offers.find((x) => x.id === offerId);
+  if (!o) return;
+  const u = userOf(c);
+  if (offerId === 'opt-player') {
+    if (u.contract) delete u.contract.option;
+    addNews(c, 'contract', 'Opción de jugador ejercida', `Seguirás en ${teamName(L, o.teamId)} una temporada más.`, 'neutral');
+    c.offers = [];
+    return;
+  }
+  if (offerId.startsWith('ext-')) {
+    const cur = u.contract!;
+    const ext = makeSalaries(o.salary, o.years, o.raise);
+    cur.salaries = [...cur.salaries, ...ext];
+    cur.kind = o.kind === 'max' ? 'max' : 'standard';
+    delete cur.option;
+    if (o.kind === 'max') c.flags.maxContract = 1;
+    c.loyalty = clamp(c.loyalty + 8, 0, 100);
+    addNews(c, 'contract', 'Extensión firmada', `${fullName(u)} extiende con ${teamName(L, o.teamId)}: ${o.years} años más desde ${seasonLabel(L.season + 1)} (${fmtMoney(o.salary)} el primer año).`, 'good');
+    c.offers = [];
+    return;
+  }
+  if (o.kind === 'overseas') {
+    if (u.teamId && L.teams[u.teamId]) L.teams[u.teamId].roster = L.teams[u.teamId].roster.filter((id) => id !== u.id);
+    u.teamId = null;
+    u.contract = null;
+    c.satellite = { comp: 'EUR', teamName: 'Atlético Mediterráneo', level: SATELLITES.EUR.level + 3, gamesPlanned: SATELLITES.EUR.games, w: 0, l: 0 };
+    c.flags.overseasSalary = o.salary;
+    addNews(c, 'contract', 'Rumbo a Europa', `${fullName(u)} jugará una temporada en la Liga Europea por ${fmtMoney(o.salary)}.`, 'neutral');
+  } else {
+    // RFA: the original team may match an outside offer.
+    const k = u.contract;
+    if (k?.rookieScale && contractEnd(k) < L.season && o.teamId !== k.teamId && onNbaRoster(c)) {
+      const rng = rngFor(c.seed, 'rfa-match', L.season);
+      if (o.salary <= marketValue(u, L.season) * 1.05 && rng.chance(0.55)) {
+        signUser(c, k.teamId, contractFromOffer({ ...o, teamId: k.teamId }, L.season));
+        addNews(c, 'contract', 'Oferta igualada', `${teamName(L, k.teamId)} iguala la oferta de ${teamName(L, o.teamId)}. Te quedas.`, 'neutral');
+        c.offers = [];
+        afterSigning(c);
+        return;
+      }
+    }
+    const prevTeam = u.teamId;
+    signUser(c, o.teamId, contractFromOffer(o, L.season));
+    if (prevTeam !== o.teamId) {
+      c.trust = 45;
+      c.chemistry = 42;
+      c.loyalty = 45;
+      c.flags.newTeam = 1;
+    }
+    addNews(c, 'contract', `${fullName(u)} firma con ${teamName(L, o.teamId)}`, `${o.years} año(s), ${fmtMoney(o.salary)} el primer año. Rol esperado: ${o.role}.`, 'good');
+  }
+  c.offers = [];
+  afterSigning(c);
+}
+
+function afterSigning(c: Career) {
+  if (c.phase === 'signing') startPreseason(c);
+}
+
+export function canRetire(c: Career) {
+  return userOf(c).age >= 30 || c.offers.length === 0;
+}
+
+export function startPreseason(c: Career) {
+  const L = c.league;
+  const u = userOf(c);
+  if (c.mode === 'daily' && c.seasons.filter((s) => s.comp === 'NBA').length >= DAILY_MAX_SEASONS) {
+    retire(c, 'Fin del desafío diario: 12 temporadas completadas.');
+    return;
+  }
+  if (u.age >= MAX_AGE) {
+    retire(c, 'Edad máxima alcanzada.');
+    return;
+  }
+  c.phase = 'preseason';
+  c.seasonOvrStart = u.ovr;
+  c.gameLog = [];
+  c.satStats = emptyStats();
+  c.twoWayNbaGames = 0;
+  c.flags.goalStrengthBase = u.attrs.strength;
+  if (u.contract?.kind === 'exhibit10') {
+    const rng = rngFor(c.seed, 'camp', L.season);
+    const t = L.teams[u.teamId!];
+    const worst = t.roster.map((id) => L.players[id]).filter((p) => p && !p.isUser).sort((a, b) => a.ovr - b.ovr)[0];
+    if (u.ovr + rng.normal(0, 3) > (worst?.ovr ?? 0)) {
+      signUser(c, t.id, { teamId: t.id, salaries: [minSalary(u.yearsPro, L.season)], startSeason: L.season, kind: 'minimum' });
+      addNews(c, 'contract', '¡Plaza ganada en el training camp!', `${fullName(u)} supera el corte y firma un contrato NBA con ${teamName(L, t.id)}.`, 'good');
+    } else {
+      signUser(c, t.id, { teamId: t.id, salaries: [scaled(40_500, L.season)], startSeason: L.season, kind: 'gleague' });
+      addNews(c, 'contract', 'Cortado en el training camp', `No hay plaza en el primer equipo. ${fullName(u)} jugará en ${t.gLeagueName}.`, 'bad');
+    }
+  }
+  const ctx = eventContext(c);
+  const ev = pickEvent(ctx, rngFor(c.seed, 'camp-event', L.season));
+  if (ev && !c.pendingEvent) {
+    c.pendingEvent = instantiate(ev, ctx, rngFor(c.seed, 'camp-event-i', L.season));
+    markEventSeen(c, ev.id, ctx.absDay);
+  }
+}
+
+export function startRegularSeason(c: Career) {
+  c.phase = 'regular';
+  addNews(c, 'league', `Arranca la temporada ${seasonLabel(c.league.season)}`, '82 partidos por delante. Cada noche cuenta.', 'neutral');
+}
+
+// ---------------- Pre-draft ----------------
+
+export function predraftDecision(c: Career, declare: boolean) {
+  const p = c.predraft!;
+  const u = userOf(c);
+  if (!declare) {
+    // Return to college / club for another season.
+    leagueOffseason(c.league, c.seed, { draft: true });
+    offseasonDevelopment(u, rngFor(c.seed, 'pre-dev', c.league.season), { workEthic: c.workEthic, minutesShare: 0.85, coachRating: 65, trainingBonus: 0.1 });
+    c.ovrHistory.push({ season: c.league.season, age: u.age, ovr: u.ovr, pot: u.pot });
+    const comp = p.route === 'college' ? 'NCAA' : 'EUR';
+    c.satellite = { comp, teamName: p.clubName, level: SATELLITES[comp].level + 1, gamesPlanned: SATELLITES[comp].games, w: 0, l: 0 };
+    c.satStats = emptyStats();
+    c.gameLog = [];
+    c.seasonOvrStart = u.ovr;
+    p.step = 'season';
+    addNews(c, 'draft', 'Un año más de formación', `${fullName(u)} decide seguir en ${p.clubName} para mejorar su cotización.`, 'neutral');
+    return;
+  }
+  p.step = 'combine';
+  // Build the draft class with the user inside.
+  const cls = generateDraftClass(c.seed, c.league.season + 1);
+  const stats = c.satStats;
+  const gp = Math.max(1, stats.gp);
+  const prod = clamp((stats.gmsc / gp - 10) * 0.5, -4, 6);
+  p.stockBonus = prod;
+  const me: Prospect = { id: 'user', name: fullName(u), nat: u.nat, pos: u.pos, age: u.age, ovr: u.ovr, pot: u.pot, arch: u.arch, isUser: true, value: prospectValue(u.ovr, u.pot, u.age) + prod };
+  p.draftClass = [...cls.slice(0, 71), me].sort((a, b) => b.value - a.value);
+  addNews(c, 'draft', `${fullName(u)} se declara elegible para el draft`, `Tras promediar ${(stats.pts / gp).toFixed(1)} puntos, el ${u.pos} da el salto. Próximo paso: el Draft Combine.`, 'good');
+}
+
+export function doCombine(c: Career, choice: 'full' | 'measure' | 'skip') {
+  const p = c.predraft!;
+  const u = userOf(c);
+  const rng = rngFor(c.seed, 'combine', c.league.season);
+  const a = u.attrs;
+  const sprint = +(3.6 - (a.speed + a.accel - 100) * 0.006 + rng.normal(0, 0.05)).toFixed(2);
+  const vertical = +(26 + (a.vert - 40) * 0.28 + rng.normal(0, 1.2)).toFixed(1);
+  const lane = +(12.4 - (a.accel + a.speed - 100) * 0.012 + rng.normal(0, 0.15)).toFixed(2);
+  const shooting = Math.round(clamp(8 + (a.three + a.mid - 100) * 0.18 + rng.normal(0, 2.5), 2, 25));
+  const score = (3.4 - sprint) * 20 + (vertical - 30) * 0.5 + (11.6 - lane) * 3 + (shooting - 12) * 0.35;
+  const grade = score > 6 ? 'A' : score > 2 ? 'B' : score > -2 ? 'C' : 'D';
+  if (choice === 'full') {
+    p.combine = { sprint, vertical, lane, shooting, grade };
+    p.stockBonus += clamp(score * 0.35, -2.5, 3);
+  } else if (choice === 'measure') {
+    p.combine = { sprint: 0, vertical: 0, lane: 0, shooting: 0, grade: 'Solo medidas' };
+    p.stockBonus -= 0.3;
+  } else {
+    p.combine = { sprint: 0, vertical: 0, lane: 0, shooting: 0, grade: 'No participó' };
+    p.stockBonus -= 0.8;
+  }
+  const me = p.draftClass!.find((x) => x.isUser)!;
+  me.value = prospectValue(u.ovr, u.pot, u.age) + p.stockBonus;
+  // Pick interview teams around the projected range.
+  const range = mockRange(p.draftClass!, 'user', rng);
+  const order = runLotteryPreview(c);
+  const teams = order.slice(Math.max(0, range.pickLow - 2), Math.min(order.length, range.pickHigh + 2));
+  p.interviewTeams = rng.shuffle([...new Set(teams)]).slice(0, 3);
+  p.interviewQuestions = p.interviewTeams.map((teamId, i) => INTERVIEW_QUESTIONS[(i + Math.floor(rng.next() * INTERVIEW_QUESTIONS.length)) % INTERVIEW_QUESTIONS.length]).map((q, i) => ({ teamId: p.interviewTeams[i], question: q.q, answers: q.a }));
+  p.step = 'interviews';
+}
+
+/** Order of the draft before the lottery (worst records first), used for projections. */
+function runLotteryPreview(c: Career): string[] {
+  const teams = Object.values(c.league.teams).sort((a, b) => a.w / Math.max(1, a.w + a.l) - b.w / Math.max(1, b.w + b.l));
+  return [...teams, ...teams].map((t) => t.id);
+}
+
+const INTERVIEW_QUESTIONS = [
+  { q: '¿Qué harías si te tocara salir desde el banquillo en tu primer año?', a: ['Aceptarlo y ganarme los minutos entrenando.', 'Pedir explicaciones al entrenador.', 'Me vería como titular desde el primer día.'] },
+  { q: '¿Cuál es tu mayor debilidad en la pista?', a: ['Mi defensa en el uno contra uno, y ya trabajo en ella.', 'No tengo debilidades importantes.', 'Prefiero no centrarme en lo negativo.'] },
+  { q: '¿Por qué deberíamos elegirte por delante de otros prospectos?', a: ['Porque mejoraré cada año y encajo en vuestro sistema.', 'Porque soy el mejor de esta clase.', 'Porque vendo camisetas.'] },
+  { q: 'Cuéntanos un momento difícil y cómo lo superaste.', a: ['Una lesión en el instituto; aprendí a ser paciente.', 'Nunca he tenido momentos difíciles.', 'Prefiero no hablar de eso.'] },
+  { q: '¿Cómo te ves dentro de cinco años?', a: ['Como una pieza clave de un equipo ganador.', 'Como MVP de la liga.', 'Ganando mucho dinero.'] },
+];
+
+export function answerInterview(c: Career, index: number, answer: number) {
+  const p = c.predraft!;
+  const q = p.interviewQuestions![index];
+  const rng = rngFor(c.seed, 'interview', index, answer);
+  const base = answer === 0 ? 1.6 : answer === 1 ? (c.reputation > 40 ? 0.8 : -0.6) : -1.5;
+  const val = base + rng.normal(0, 0.6);
+  const result = val > 0.8 ? 'good' : val > -0.4 ? 'neutral' : 'bad';
+  p.interviews.push({ teamId: q.teamId, result, answer });
+  p.userBoosts[q.teamId] = result === 'good' ? 3 : result === 'bad' ? -3 : 0;
+  if (p.interviews.length >= p.interviewQuestions!.length) {
+    const range = mockRange(p.draftClass!, 'user', rngFor(c.seed, 'mock', c.league.season));
+    p.mock = { pickLow: range.pickLow, pickHigh: range.pickHigh, text: mockText(range.pickLow, range.pickHigh) };
+    p.step = 'mock';
+  }
+}
+
+function mockText(lo: number, hi: number) {
+  if (hi <= 5) return 'Los analistas te sitúan entre los primeros cinco picks: candidato a número uno.';
+  if (hi <= 14) return 'Proyección de lotería. Varias franquicias en reconstrucción te tienen en su lista.';
+  if (lo <= 30) return 'Proyección de primera ronda media o baja, con riesgo de caer a la segunda.';
+  if (lo <= 60) return 'Proyección de segunda ronda. Tus entrevistas y el combine pueden marcar la diferencia.';
+  return 'Riesgo serio de no ser elegido. Prepara un plan alternativo.';
+}
+
+export function revealLottery(c: Career) {
+  const p = c.predraft!;
+  const { order, moves } = runLottery(c.league, c.seed);
+  p.order = order;
+  p.lottery = moves;
+  p.step = 'lottery';
+}
+
+export function runUserDraft(c: Career) {
+  const p = c.predraft!;
+  const L = c.league;
+  const u = userOf(c);
+  const cls = p.draftClass!;
+  // Team-specific interview boosts are applied through each team's board.
+  const picks: { pick: number; teamId: string; prospectId: string }[] = [];
+  const available = [...cls];
+  for (let i = 0; i < RULES.roundSize * RULES.rounds && available.length; i++) {
+    const teamId = p.order![i];
+    const single = simulateDraft(L, c.seed + i, [teamId], available, p.userBoosts[teamId] ?? 0)[0];
+    picks.push({ pick: i + 1, teamId, prospectId: single.prospectId });
+    available.splice(available.findIndex((x) => x.id === single.prospectId), 1);
+  }
+  p.picks = picks;
+  const mine = picks.find((x) => x.prospectId === 'user');
+  p.userPick = mine ? { pick: mine.pick, round: mine.pick <= RULES.roundSize ? 1 : 2, teamId: mine.teamId } : null;
+  for (const pk of picks) {
+    if (pk.prospectId === 'user') continue;
+    addDrafted(L, c.seed, cls.find((x) => x.id === pk.prospectId)!, pk.teamId, pk.pick);
+  }
+  p.step = 'draft';
+  // Advance the league to the new season (draft already done above).
+  leagueOffseason(L, c.seed, { draft: false });
+  offseasonDevelopment(u, rngFor(c.seed, 'draft-dev', L.season), { workEthic: c.workEthic, minutesShare: 0.8, coachRating: 65, trainingBonus: 0.05 });
+  c.ovrHistory.push({ season: L.season, age: u.age, ovr: u.ovr, pot: u.pot });
+  c.satellite = null;
+  c.satStats = emptyStats();
+  c.gameLog = [];
+  if (mine) {
+    u.draft = { season: L.season, round: p.userPick!.round, pick: p.userPick!.round === 1 ? mine.pick : mine.pick - RULES.roundSize, teamId: mine.teamId };
+    c.reputation = clamp(c.reputation + (mine.pick <= 5 ? 20 : mine.pick <= 14 ? 12 : mine.pick <= 30 ? 6 : 2), 0, 100);
+    c.fame = clamp(c.fame + (mine.pick <= 5 ? 20 : mine.pick <= 14 ? 10 : 4), 0, 100);
+    addNews(c, 'draft', `${fullName(u)}, elegido con el pick ${mine.pick}`, `${teamName(L, mine.teamId)} apuesta por el ${u.pos} de ${p.clubName}${mine.pick <= RULES.roundSize ? ' en primera ronda' : ' en segunda ronda'}.`, 'good');
+  } else {
+    c.flags.undrafted = 1;
+    addNews(c, 'draft', 'Sin llamada en el draft', `Ninguna franquicia eligió a ${fullName(u)}. Toca buscar otra vía.`, 'bad');
+  }
+  c.phase = 'signing';
+  buildSigningOffers(c);
+}
+
+export function buildSigningOffers(c: Career) {
+  const L = c.league;
+  const u = userOf(c);
+  const p = c.predraft!;
+  c.offers = [];
+  if (p.route === 'drafted' && !p.userPick) {
+    // Quick start: choose a draft slot by tier and a fitting team.
+    const rng = rngFor(c.seed, 'quick-draft');
+    const tier = c.flags.tierLottery ? 'lottery' : c.flags.tierSecond ? 'second' : 'first';
+    const pick = tier === 'lottery' ? rng.int(1, 14) : tier === 'first' ? rng.int(15, 30) : rng.int(31, 58);
+    const teams = Object.values(L.teams).filter((t) => (tier === 'lottery' ? t.status === 'rebuild' || t.status === 'middle' : true));
+    const team = rng.pick(teams);
+    p.userPick = { pick, round: pick <= 30 ? 1 : 2, teamId: team.id };
+    u.draft = { season: L.season, round: pick <= 30 ? 1 : 2, pick: pick <= 30 ? pick : pick - 30, teamId: team.id };
+    addNews(c, 'draft', `Elegido con el pick ${pick}`, `${teamName(L, team.id)} selecciona a ${fullName(u)}.`, 'good');
+  }
+  const pk = p.userPick;
+  if (pk && pk.round === 1) {
+    const sal = Math.round(rookieScale(pk.pick, L.season) * 1.2);
+    c.offers.push({ id: 'rookie-scale', teamId: pk.teamId, kind: 'rookie', years: 4, salary: sal, raise: 0.045, option: 'team', role: projectedRole(L, pk.teamId, u), note: 'Escala de novato de primera ronda al 120% (aproximada): 2 años garantizados + 2 opciones de equipo.' });
+  } else if (pk && pk.round === 2) {
+    c.offers.push({ id: 'second-std', teamId: pk.teamId, kind: 'minimum', years: 2, salary: minSalary(0, L.season), raise: 0.04, role: projectedRole(L, pk.teamId, u), note: 'Contrato estándar de segunda ronda (mínimo, 2 años).' });
+    c.offers.push({ id: 'second-tw', teamId: pk.teamId, kind: 'two-way', years: 2, salary: scaled(RULES.twoWaySalary, L.season), raise: 0, role: 'G League + hasta 50 partidos NBA', note: 'Two-way: más minutos en la G League, menos dinero.' });
+  } else {
+    c.offers.push(...fallbackOffers(c));
+  }
+}
+
+// ---------------- Retirement ----------------
+
+export function retire(c: Career, reason: string) {
+  const u = userOf(c);
+  c.phase = 'retired';
+  const score = legacyScore(c);
+  const prob = hofProbability(score);
+  const counts = awardCounts(c);
+  const peak = Math.max(...c.ovrHistory.map((o) => o.ovr));
+  const r: RetirementSummary = {
+    age: u.age,
+    season: c.league.season,
+    reason,
+    legacyScore: score,
+    hofProbability: prob,
+    hofVerdict: hofVerdict(prob),
+    peakOvr: peak,
+    bestTeam: c.bestTeamPeak ? teamName(c.league, c.bestTeamPeak.teamId) : (c.seasons[0]?.teamName ?? '—'),
+    totals: careerTotals(c),
+    playoffTotals: playoffTotals(c),
+    titles: counts.champion ?? 0,
+    awards: counts,
+    earnings: c.earnings,
+    tier: legacyTier(score),
+  };
+  c.retirement = r;
+  if (u.teamId && c.league.teams[u.teamId]) c.league.teams[u.teamId].roster = c.league.teams[u.teamId].roster.filter((id) => id !== u.id);
+  addNews(c, 'milestone', `${fullName(u)} anuncia su retirada`, `${reason} Legacy Score: ${score}. ${r.tier}.`, 'neutral');
+  achievementsCheck(c);
+}
+
+export const offersSorted = (offers: Offer[]) => [...offers].sort((a, b) => b.salary - a.salary);
