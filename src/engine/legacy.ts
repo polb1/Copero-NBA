@@ -17,7 +17,7 @@ export function awardCounts(c: Career): Record<string, number> {
 
 const AWARD_POINTS: Record<string, number> = {
   mvp: 40, fmvp: 30, champion: 25, allNba1: 15, allNba2: 10, allNba3: 6, allStar: 6, dpoy: 20, roy: 8, smoy: 6, mip: 5,
-  allDef1: 5, allDef2: 3, ptsLeader: 6, rebLeader: 4, astLeader: 4, stlLeader: 3, blkLeader: 3,
+  allDef1: 5, allDef2: 3, threeContest: 3, ptsLeader: 6, rebLeader: 4, astLeader: 4, stlLeader: 3, blkLeader: 3,
 };
 
 export function legacyScore(c: Career): number {

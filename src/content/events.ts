@@ -1,7 +1,7 @@
 // Narrative event library. Pure data: texts, appearance conditions and declarative effects.
 // The interpreter lives in src/engine/events.ts. Placeholders: {team} {city} {coach} {teammate}
 // {rival} {agent} {country} {opp} {vet}.
-import type { Competition, EffectBag, Phase, TeamStatus } from '../engine/types';
+import type { AttrKey, Competition, EffectBag, MinigameKind, Phase, TeamStatus } from '../engine/types';
 
 export type RoleKey = 'star' | 'starter' | 'rotation' | 'bench' | 'out';
 
@@ -47,8 +47,23 @@ export interface EventOption {
   outcomes?: EventOutcome[];
 }
 
+export interface MinigameDef {
+  kind: MinigameKind;
+  attempts: number;
+  /** Attributes that widen the green zone. */
+  attrs: AttrKey[];
+  /** 0 (relaxed) to 1 (maximum pressure): narrows the zone and speeds up the marker. */
+  pressure: number;
+  /** Made shots needed for each tier. */
+  great: number;
+  ok: number;
+  outcomes: Record<'great' | 'ok' | 'fail', { effects: EffectBag; text: string }>;
+}
+
 export interface EventDef {
   id: string;
+  /** Interactive shooting challenge instead of (or before) plain options. */
+  minigame?: MinigameDef;
   category: string;
   title: string;
   text: string;
@@ -65,7 +80,7 @@ export const CATEGORY_LABEL: Record<string, string> = {
   contract: 'Contrato', trade: 'Traspaso', injury: 'Lesión', rest: 'Descanso', media: 'Medios', rivalry: 'Rivalidad',
   personal: 'Vida personal', national: 'Selección', sponsor: 'Patrocinio', social: 'Redes sociales',
   locker: 'Vestuario', coachChange: 'Cambio de entrenador', goals: 'Objetivos', money: 'Dinero', career: 'Final de carrera',
-  draft: 'Draft',
+  draft: 'Draft', clutch: 'Momento decisivo', contest: 'All-Star',
 };
 
 const SEASON: Phase[] = ['regular'];
@@ -591,6 +606,47 @@ export const EVENTS: EventDef[] = [
       { label: 'Incorporarlo', desc: 'Prevenir lesiones.', effects: { injuryRisk: -0.6, attrs: { stamina: 1 }, workEthic: 2 }, text: 'Tu cuerpo lo nota: menos molestias.' },
       { label: 'Seguir como siempre', desc: 'Lo tuyo es el gimnasio.', effects: {}, text: 'Sin cambios.' },
     ] },
+  // ---------------- Minigames ----------------
+  { id: 'mg-clutch', category: 'clutch', title: 'El último tiro', weight: 9, cooldown: 160,
+    text: 'Empate a falta de 4 segundos contra {opp}. {coach} dibuja la jugada para ti. El pabellón entero contiene la respiración.',
+    when: { phases: ['regular', 'postseason'], nba: true, roles: ['star', 'starter', 'rotation'] },
+    minigame: { kind: 'clutch', attempts: 1, attrs: ['mid', 'three', 'consistency'], pressure: 0.8, great: 1, ok: 1,
+      outcomes: {
+        great: { effects: { fame: 6, reputation: 4, trust: 6, form: 3, morale: 5, flag: 'clutch' }, text: '¡Canasta sobre la bocina! Tus compañeros te sepultan en el centro de la pista.' },
+        ok: { effects: { fame: 6, reputation: 4, trust: 6, form: 3 }, text: '¡Dentro! Victoria agónica.' },
+        fail: { effects: { form: -2, pressure: 5, morale: -3 }, text: 'El balón escupe el aro. Prórroga… y derrota. Mañana habrá otra oportunidad.' },
+      } },
+    options: [] },
+  { id: 'mg-freethrows', category: 'clutch', title: 'Dos tiros libres para ganar', weight: 8, cooldown: 160,
+    text: 'Te hacen falta con un punto abajo y el reloj a cero. Dos tiros libres. Solo tú en la línea.',
+    when: { phases: ['regular', 'postseason'], nba: true, roles: ['star', 'starter', 'rotation'] },
+    minigame: { kind: 'freethrows', attempts: 2, attrs: ['ft', 'consistency'], pressure: 0.65, great: 2, ok: 1,
+      outcomes: {
+        great: { effects: { fame: 4, trust: 5, form: 2, reputation: 2 }, text: 'Dos de dos. Hielo en las venas: ganáis el partido.' },
+        ok: { effects: { trust: 1 }, text: 'Metes uno y fallas otro. Prórroga… que ganáis por la mínima.' },
+        fail: { effects: { form: -3, pressure: 6, trust: -3 }, text: 'Cero de dos. Las redes sociales no perdonan.' },
+      } },
+    options: [] },
+  { id: 'mg-threes', category: 'contest', title: 'Concurso de triples del All-Star', weight: 10, cooldown: 300,
+    text: 'La liga te invita al concurso de triples del fin de semana del All-Star. Diez balones, los mejores tiradores del mundo y millones de espectadores.',
+    when: { phases: ['regular'], nba: true, minOvr: 70, minRep: 25, beforeDeadline: true },
+    minigame: { kind: 'threes', attempts: 10, attrs: ['three', 'consistency'], pressure: 0.45, great: 7, ok: 4,
+      outcomes: {
+        great: { effects: { fame: 10, reputation: 5, morale: 6, endorsement: 200000, trophy: 'threeContest' }, text: '¡Campeón del concurso de triples! Levantas el trofeo entre confeti.' },
+        ok: { effects: { fame: 4, morale: 2 }, text: 'Buena actuación, pero no alcanza para la final.' },
+        fail: { effects: { fame: 1, morale: -2, pressure: 3 }, text: 'Noche fría desde el perímetro. Las redes se llenan de memes.' },
+      } },
+    options: [] },
+  { id: 'mg-drill', category: 'training', title: 'Reto de tiro en el entrenamiento', weight: 7, cooldown: 220,
+    text: '{coach} propone un reto al final de la sesión: cinco tiros desde la esquina. Quien gane elige la música del vestuario un mes.',
+    when: { phases: ['regular', 'preseason'], nba: true },
+    minigame: { kind: 'drill', attempts: 5, attrs: ['three', 'mid'], pressure: 0.2, great: 4, ok: 2,
+      outcomes: {
+        great: { effects: { attrs: { three: 1 }, trust: 4, chemistry: 3 }, text: 'Ganas el reto con autoridad. El cuerpo técnico toma nota.' },
+        ok: { effects: { chemistry: 2 }, text: 'Quedas a mitad de tabla. Risas y buen ambiente.' },
+        fail: { effects: { chemistry: 1, workEthic: 3 }, text: 'Último. Te quedas una hora más tirando: no volverá a pasar.' },
+      } },
+    options: [] },
   // ---------------- Pre-draft ----------------
   { id: 'predraft-agent', category: 'draft', title: 'Elegir agente', weight: 0, priority: 20,
     text: 'Con el draft en el horizonte, tres agencias quieren representarte.',

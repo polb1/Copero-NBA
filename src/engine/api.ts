@@ -3,7 +3,7 @@ import type { Career, TrainingFocus } from './types';
 import { createCareer, userOf, addNews, type NewCareerInput } from './career';
 import { advance, type AdvanceUnit, achievementsCheck, inSeason } from './flow';
 import { buildSigningOffers, acceptOffer, beginOffseason, startPreseason, startRegularSeason, predraftDecision, doCombine, answerInterview, revealLottery, runUserDraft, retire, needsContract } from './offseason';
-import { resolveEvent } from './events';
+import { resolveEvent, resolveMinigame } from './events';
 import { executeTrade, signUser, contractFromOffer } from './market';
 import { makeGoal } from './goals';
 import { rngFor } from './rng';
@@ -64,6 +64,14 @@ export function runUntilDecision(c: Career) {
     }
     return;
   }
+}
+
+/** Result of an interactive minigame played in the UI. */
+export function playMinigame(c: Career, made: number) {
+  const ev = c.pendingEvent;
+  if (!ev?.minigame || ev.resolved) return;
+  resolveMinigame(c, userOf(c), Math.max(0, Math.min(ev.minigame.attempts, Math.round(made))), rngFor(c.seed, 'minigame', ev.defId, c.league.season, c.league.day));
+  achievementsCheck(c);
 }
 
 export function dismissEvent(c: Career) {

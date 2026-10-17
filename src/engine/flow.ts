@@ -350,6 +350,7 @@ export function endSeason(c: Career) {
   const t = teamOf(c);
   const onRoster = onNbaRoster(c);
   const champion = !!t && onRoster && ps.champion === t.id;
+  if (c.flags[`trophy:threeContest:${L.season}`]) myAwards.push('threeContest');
   if (champion) {
     myAwards.push('champion');
     u.rings = (u.rings ?? 0) + 1;

@@ -111,7 +111,7 @@ export function snapshotNames(league: League, a: AwardResult) {
 export const AWARD_LABEL: Record<string, string> = {
   mvp: 'MVP', dpoy: 'Defensor del Año', roy: 'Rookie del Año', smoy: 'Sexto Hombre del Año', mip: 'Jugador Más Mejorado', fmvp: 'MVP de las Finales',
   allNba1: 'All-NBA 1.er equipo', allNba2: 'All-NBA 2.º equipo', allNba3: 'All-NBA 3.er equipo', allDef1: 'All-Defensive 1.er equipo', allDef2: 'All-Defensive 2.º equipo',
-  allStar: 'All-Star', champion: 'Campeón NBA', ptsLeader: 'Máximo anotador', rebLeader: 'Líder en rebotes', astLeader: 'Líder en asistencias', stlLeader: 'Líder en robos', blkLeader: 'Líder en tapones',
+  allStar: 'All-Star', champion: 'Campeón NBA', threeContest: 'Campeón del concurso de triples', ptsLeader: 'Máximo anotador', rebLeader: 'Líder en rebotes', astLeader: 'Líder en asistencias', stlLeader: 'Líder en robos', blkLeader: 'Líder en tapones',
 };
 
 /** Awards won by a given player in an AwardResult, as label keys. */

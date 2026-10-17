@@ -76,6 +76,21 @@ prioridades y encadenamientos. Cada opción tiene efectos inmediatos y, a veces,
 probabilidad oculta; el texto de resultado explica lo ocurrido. Las consecuencias modifican el
 estado real (minutos vía confianza, atributos, dinero, química, lesiones, peticiones de traspaso…).
 
+### Minijuegos de tiro
+Algunos acontecimientos se resuelven jugando: un medidor con un marcador que barre de lado a lado y
+una zona verde donde hay que lanzar (clic, toque, Espacio o Enter).
+| Minijuego | Tiros | Atributos | Presión | Mejor resultado |
+|---|---|---|---|---|
+| El último tiro | 1 | media distancia, triple, consistencia | Alta | Canasta ganadora: fama, confianza, forma |
+| Dos tiros libres para ganar | 2 | tiros libres, consistencia | Media-alta | 2/2: victoria |
+| Concurso de triples (All-Star) | 10 | triple, consistencia | Media | 7+: trofeo (cuenta como premio de temporada y suma al legado) |
+| Reto de tiro en el entrenamiento | 5 | triple, media distancia | Baja | 4+: +1 triple, confianza |
+
+El ancho de la zona depende de los atributos, la forma, la moral y la presión mediática; la presión
+también acelera el marcador. Siempre se puede pulsar «Simular»: el motor resuelve los tiros con una
+probabilidad derivada de la misma zona. Los minijuegos cuentan dentro del cupo de 1-2 decisiones por
+temporada.
+
 ## 9. Economía
 - Ingresos de carrera (salario + patrocinio) separados de la nómina de la franquicia.
 - Valor de mercado por OVR, edad, producción y reputación. Máximos por experiencia.

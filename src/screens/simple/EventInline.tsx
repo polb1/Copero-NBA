@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import type { Career } from '../../engine/types';
-import { chooseOption, dismissEvent, runUntilDecision } from '../../engine/api';
+import { chooseOption, dismissEvent, playMinigame, runUntilDecision } from '../../engine/api';
 import { CATEGORY_LABEL } from '../../content/events';
 import { store } from '../../store/store';
 import { CATEGORY_ICON } from '../../ui/simple';
+import { ShotMeter } from '../../ui/ShotMeter';
 
 /** Narrative decision rendered as Copero-style cards inside the career screen. */
 export function EventModalInline({ c }: { c: Career }) {
@@ -17,6 +18,7 @@ export function EventModalInline({ c }: { c: Career }) {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); next(); }
         return;
       }
+      if (ev.minigame) return; // the shot meter handles its own keys
       const n = Number(e.key);
       if (n >= 1 && n <= ev.options.length) store.act((x) => chooseOption(x, n - 1));
     };
@@ -29,7 +31,9 @@ export function EventModalInline({ c }: { c: Career }) {
       <span className="chip accent" style={{ marginBottom: 6 }}>{icon} {CATEGORY_LABEL[ev.category] ?? ev.category}</span>
       <h2>{ev.title}</h2>
       <p className="small muted" style={{ marginTop: 4 }}>{ev.text}</p>
-      {!ev.resolved ? (
+      {!ev.resolved && ev.minigame ? (
+        <ShotMeter key={ev.defId + ev.title} spec={ev.minigame} onDone={(made) => store.act((x) => playMinigame(x, made))} onSimulate={() => store.act((x) => chooseOption(x, 0))} />
+      ) : !ev.resolved ? (
         <div className="choices">
           {ev.options.map((o, i) => (
             <button key={i} className="choice" onClick={() => store.act((x) => chooseOption(x, i))}>
@@ -46,7 +50,7 @@ export function EventModalInline({ c }: { c: Career }) {
             <div className="effects" style={{ marginTop: 10 }}>
               {ev.resolved.effectsSummary.map((e) => {
                 const neutral = /Presión|Fatiga/.test(e);
-                const tone = neutral ? '' : /\+/.test(e) ? 'good' : /−|-\d/.test(e) ? 'bad' : '';
+                const tone = neutral ? '' : /\+|Trofeo/.test(e) ? 'good' : /−|-\d/.test(e) ? 'bad' : '';
                 return <span key={e} className={`chip ${tone}`}>{e}</span>;
               })}
             </div>

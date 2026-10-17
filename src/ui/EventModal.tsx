@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { store, useCareer } from '../store/store';
-import { chooseOption, dismissEvent } from '../engine/api';
+import { chooseOption, dismissEvent, playMinigame } from '../engine/api';
 import { CATEGORY_LABEL } from '../content/events';
 import { Icon } from './icons';
+import { ShotMeter } from './ShotMeter';
 
 export function EventModal() {
   const c = useCareer();
@@ -18,6 +19,7 @@ export function EventModal() {
         }
         return;
       }
+      if (ev.minigame) return;
       const n = Number(e.key);
       if (n >= 1 && n <= ev.options.length) store.act((x) => chooseOption(x, n - 1));
     };
@@ -35,7 +37,9 @@ export function EventModal() {
         </div>
         <h2 id="ev-title" style={{ fontSize: '2rem', marginBottom: 10 }}>{ev.title}</h2>
         <p className="muted" style={{ fontSize: '1rem', marginBottom: 20 }}>{ev.text}</p>
-        {!ev.resolved ? (
+        {!ev.resolved && ev.minigame ? (
+          <ShotMeter key={ev.defId + ev.title} spec={ev.minigame} onDone={(made) => store.act((x) => playMinigame(x, made))} onSimulate={() => store.act((x) => chooseOption(x, 0))} />
+        ) : !ev.resolved ? (
           <div className="stack">
             {ev.options.map((o, i) => (
               <button key={i} className="opt" onClick={() => store.act((x) => chooseOption(x, i))} autoFocus={i === 0}>
@@ -48,7 +52,7 @@ export function EventModal() {
         ) : (
           <div className="stack anim-in">
             <div className="card flat" style={{ borderColor: 'var(--line-2)' }}>
-              <div className="tiny dim" style={{ marginBottom: 6 }}>Elegiste: {ev.options[ev.resolved.option].label}</div>
+              <div className="tiny dim" style={{ marginBottom: 6 }}>{ev.minigame ? (ev.resolved.option === 0 ? 'Lanzamiento simulado' : 'Lanzamiento jugado') : `Elegiste: ${ev.options[ev.resolved.option].label}`}</div>
               <p style={{ fontSize: '1rem' }}>{ev.resolved.result}</p>
               {ev.resolved.effectsSummary.length > 0 && (
                 <div className="effects" style={{ marginTop: 12 }}>

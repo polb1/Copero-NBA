@@ -260,6 +260,7 @@ export interface EffectBag {
   gleague?: boolean; // assign to G League
   recall?: boolean;
   news?: string;
+  trophy?: 'threeContest';
 }
 
 export interface ActiveEvent {
@@ -269,7 +270,25 @@ export interface ActiveEvent {
   category: string;
   options: { label: string; desc: string }[];
   vars: Record<string, string>;
-  resolved?: { option: number; result: string; effectsSummary: string[] };
+  resolved?: { option: number; result: string; effectsSummary: string[]; made?: number };
+  minigame?: MinigameSpec;
+}
+
+export type MinigameKind = 'clutch' | 'freethrows' | 'threes' | 'drill';
+
+/** Interactive shot-meter challenge. Zone and speed come from the player's attributes and the pressure. */
+export interface MinigameSpec {
+  kind: MinigameKind;
+  attempts: number;
+  /** Green zone width as % of the meter. */
+  zone: number;
+  /** Full sweeps per second of the marker. */
+  speed: number;
+  /** Probability per shot when simulated instead of played. */
+  autoProb: number;
+  /** Shots needed for the best and middle outcomes. */
+  great: number;
+  ok: number;
 }
 
 export interface Goal {

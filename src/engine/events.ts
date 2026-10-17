@@ -1,5 +1,5 @@
-import type { ActiveEvent, Career, EffectBag, Player, Team } from './types';
-import { EVENTS, type EventDef, type EventWhen, type RoleKey, type EventOutcome } from '../content/events';
+import type { ActiveEvent, Career, EffectBag, MinigameSpec, Player, Team } from './types';
+import { EVENTS, type EventDef, type EventWhen, type RoleKey, type EventOutcome, type MinigameDef } from '../content/events';
 import { countryByCode } from '../content/names';
 import { attrLabel } from './attributes';
 import { yearsLeft, fmtMoney } from './contracts';
@@ -116,12 +116,34 @@ export function eventVars(ctx: EventContext, rng: Rng): Record<string, string> {
     agent: c.agent.name,
     country: countryByCode(u.nat).name,
     injury: u.injury?.name ?? 'una lesión',
+    opp: (() => {
+      const ids = Object.keys(league.teams).filter((id) => id !== u.teamId);
+      const t = league.teams[rng.pick(ids)];
+      return `${t.city} ${t.name}`;
+    })(),
+  };
+}
+
+/** Shot-meter parameters: better shooters get a wider green zone; pressure narrows it and speeds it up. */
+export function minigameSpec(def: MinigameDef, u: Player, c: Career): MinigameSpec {
+  const skill = def.attrs.reduce((s, k) => s + u.attrs[k], 0) / def.attrs.length;
+  const nerves = def.pressure * (1 - (c.morale - 50) / 200) * (1 + c.pressure / 200);
+  const zone = clamp(7 + (skill - 50) * 0.32 - nerves * 6 + u.form * 0.25, 5, 26);
+  const speed = clamp(0.55 + def.pressure * 0.5, 0.5, 1.1);
+  return {
+    kind: def.kind,
+    attempts: def.attempts,
+    zone: Math.round(zone * 10) / 10,
+    speed: Math.round(speed * 100) / 100,
+    autoProb: clamp(0.2 + zone * 0.026, 0.2, 0.88),
+    great: def.great,
+    ok: def.ok,
   };
 }
 
 export function instantiate(def: EventDef, ctx: EventContext, rng: Rng): ActiveEvent {
   const vars = eventVars(ctx, rng);
-  return {
+  const ev: ActiveEvent = {
     defId: def.id,
     category: def.category,
     title: fill(def.title, vars),
@@ -129,6 +151,26 @@ export function instantiate(def: EventDef, ctx: EventContext, rng: Rng): ActiveE
     options: def.options.map((o) => ({ label: fill(o.label, vars), desc: fill(o.desc, vars) })),
     vars,
   };
+  if (def.minigame) {
+    ev.minigame = minigameSpec(def.minigame, ctx.user, ctx.career);
+    // Single fallback option: let the engine shoot for you (accessibility, autopilot, impatience).
+    ev.options = [{ label: 'Simular el lanzamiento', desc: 'Decide tu nivel de tiro, sin jugar.' }];
+  }
+  return ev;
+}
+
+/** Applies a played (or simulated) minigame result. */
+export function resolveMinigame(c: Career, u: Player, made: number, rng: Rng, simulated = false) {
+  const ev = c.pendingEvent!;
+  const def = EVENTS.find((e) => e.id === ev.defId)!;
+  const mg = def.minigame!;
+  const tier = made >= mg.great ? 'great' : made >= mg.ok ? 'ok' : 'fail';
+  const o = mg.outcomes[tier];
+  const summary = applyEffects(c, u, o.effects, rng);
+  const score = `${made}/${mg.attempts}`;
+  ev.resolved = { option: simulated ? 0 : -1, made, result: `${score} — ${fill(o.text, ev.vars)}`, effectsSummary: summary };
+  c.decisions.push({ season: c.league.season, title: ev.title, choice: `${simulated ? 'Simulado' : 'Jugado'}: ${score}` });
+  return { text: ev.resolved.result, summary };
 }
 
 function statFor(c: Career, u: Player, s: NonNullable<EventOutcome['boost']>['stat']) {
@@ -186,6 +228,10 @@ export function applyEffects(c: Career, u: Player, e: EffectBag, rng: Rng): stri
     refreshOvr(u);
   }
   if (e.flag) c.flags[e.flag] = 1;
+  if (e.trophy) {
+    c.flags[`trophy:${e.trophy}:${c.league.season}`] = 1;
+    out.push('Trofeo: concurso de triples');
+  }
   if (e.unflag) delete c.flags[e.unflag];
   if (e.chain) c.eventQueue.push({ id: e.chain.id, season: c.league.season, day: c.league.day + e.chain.inDays });
   if (e.injuryRisk) c.flags.injuryRisk = clamp((c.flags.injuryRisk ?? 0) + e.injuryRisk, 0, 3);
@@ -220,6 +266,10 @@ export function applyEffects(c: Career, u: Player, e: EffectBag, rng: Rng): stri
 export function resolveEvent(c: Career, u: Player, optionIndex: number, rng: Rng): { text: string; summary: string[] } {
   const ev = c.pendingEvent!;
   const def = EVENTS.find((e) => e.id === ev.defId)!;
+  if (def.minigame && ev.minigame) {
+    const made = rng.binomial(ev.minigame.attempts, ev.minigame.autoProb);
+    return resolveMinigame(c, u, made, rng, true);
+  }
   const opt = def.options[optionIndex];
   let effects: EffectBag = opt.effects ?? {};
   let text = opt.text ?? '';
