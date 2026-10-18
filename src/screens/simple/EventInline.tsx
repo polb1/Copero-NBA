@@ -12,7 +12,8 @@ import { sceneForOption } from '../../ui/life';
 export function EventModalInline({ c }: { c: Career }) {
   const ev = c.pendingEvent!;
   // After a decision the season resumes on its own until the next one.
-  const next = () => store.actLive('Simulando…', runChunk, dismissEvent);
+  const weeks = window.matchMedia('(max-width: 760px)').matches ? 1 : 2;
+  const next = () => store.actLive('Simulando…', (x) => runChunk(x, weeks), dismissEvent);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.target as HTMLElement)?.tagName === 'INPUT') return;
