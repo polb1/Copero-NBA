@@ -256,8 +256,30 @@ const set = (patch: Partial<State>) => {
   emit();
 };
 
+let pendingSave: Career | null = null;
+let saveTimer: ReturnType<typeof setTimeout> | null = null;
+function flushSave() {
+  if (saveTimer) clearTimeout(saveTimer);
+  saveTimer = null;
+  if (!pendingSave) return;
+  const ok = saveCareer(pendingSave);
+  pendingSave = null;
+  if (ok === state.saveError) set({ saveError: !ok });
+}
+function scheduleSave(c: Career) {
+  pendingSave = c;
+  if (!saveTimer) saveTimer = setTimeout(flushSave, 60);
+}
+// Never lose the last action when the tab is closed or the app goes to the background.
+if (typeof window !== 'undefined') {
+  window.addEventListener('pagehide', flushSave);
+  document.addEventListener('visibilitychange', () => document.visibilityState === 'hidden' && flushSave());
+}
+
 export const store = {
   get: () => state,
+  /** Writes any pending save now (before reading the saved history). */
+  flush: flushSave,
   subscribe(l: () => void) {
     listeners.add(l);
     return () => {
@@ -265,10 +287,10 @@ export const store = {
     };
   },
   setCareer(c: Career | null, persist = true) {
-    if (c && persist) {
-      const ok = saveCareer(c);
-      set({ career: c, saveError: !ok });
-    } else set({ career: c });
+    set({ career: c });
+    // Save right after the screen updates: serialising the ~600 KB career costs a phone tens of ms per tap.
+    if (c && persist) scheduleSave(c);
+    else pendingSave = null;
   },
   /** Applies an engine action to a clone of the career, then saves. */
   act(fn: (c: Career) => void) {

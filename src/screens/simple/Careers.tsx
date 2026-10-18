@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { careerHistory, clearHistory, useCareer, type CareerRecord } from '../../store/store';
+import { careerHistory, clearHistory, store, useCareer, type CareerRecord } from '../../store/store';
 import { seasonLabel } from '../../engine/schedule';
 import { f1 } from '../../engine/stats';
 import { Flag } from '../../ui/Flag';
@@ -18,7 +18,8 @@ export function Careers() {
   const nav = useNavigate();
   const c = useCareer();
   const [sort, setSort] = useState<Sort>('legacyScore');
-  const [list, setList] = useState(careerHistory);
+  const [list, setList] = useState(() => { store.flush(); return careerHistory(); });
+  const doneCount = list.filter((r) => r.challengeDone).length;
   const rows = [...list].sort((a, b) => b[sort] - a[sort] || b.legacyScore - a.legacyScore);
   const best = (k: keyof CareerRecord) => Math.max(...list.map((r) => r[k] as number));
   const top = (r: CareerRecord, k: keyof CareerRecord) => list.length > 1 && (r[k] as number) > 0 && r[k] === best(k);
@@ -28,7 +29,7 @@ export function Careers() {
         <div className="simple-head">
           <div>
             <h2>Mis carreras</h2>
-            {list.length > 0 && <p className="tiny dim" style={{ margin: '4px 0 0' }}>{list.length} {list.length === 1 ? 'carrera' : 'carreras'} · {list.filter((r) => r.challengeDone).length} retos cumplidos · mejor legado {Math.max(...list.map((r) => r.legacyScore))}</p>}
+            {list.length > 0 && <p className="tiny dim" style={{ margin: '4px 0 0' }}>{list.length} {list.length === 1 ? 'carrera' : 'carreras'} · {doneCount} {doneCount === 1 ? 'reto cumplido' : 'retos cumplidos'} · mejor legado {Math.max(...list.map((r) => r.legacyScore))}</p>}
           </div>
           {list.length > 1 && (
             <div className="seg" role="radiogroup" aria-label="Ordenar">
