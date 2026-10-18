@@ -329,3 +329,6 @@
 /* Touch: no double-tap zoom delay or blue flash on buttons; a bigger target for the shot meter. */
 button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 @media (max-width: 560px) { .meter { height: 56px; } }
+
+.challenge { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line-2); }
+.challenge.done b, .challenge.done span:first-child { color: var(--gold); }

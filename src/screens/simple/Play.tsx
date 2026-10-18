@@ -1,5 +1,6 @@
 import { Children, useEffect, type ReactNode } from 'react';
 import { LEGACY_TIERS, legacyScore } from '../../engine/legacy';
+import { challengeOf } from '../../engine/challenges';
 import { Link, useNavigate } from 'react-router-dom';
 import type { Career, Offer, SeasonRecord } from '../../engine/types';
 import * as api from '../../engine/api';
@@ -142,9 +143,23 @@ function LegacyMeter({ c }: { c: Career }) {
     <div className="legacy" title="Legacy Score: producción, premios, anillos y longevidad">
       <div className="row between tiny"><span><b>Legado</b> · {cur[1]}</span><span className="dim">{next ? `${score} / ${next[0]} → ${next[1]}` : `${score} · nivel máximo`}</span></div>
       <div className="legacy-bar"><span style={{ width: `${Math.max(3, Math.min(100, pct))}%` }} /></div>
+      <ChallengeLine c={c} />
       {best > 0 && c.phase !== 'retired' && (
         <div className={`legacy-best tiny ${score > best ? 'gold' : 'dim'}`}>{score > best ? `🔥 Superando tu récord (${best})` : `Tu récord: ${best} · te faltan ${best - score}`}</div>
       )}
+    </div>
+  );
+}
+
+/** The career's random goal and how close it is. */
+function ChallengeLine({ c }: { c: Career }) {
+  const ch = challengeOf(c);
+  const [v, target] = ch.progress(c);
+  const done = v >= target;
+  return (
+    <div className={`challenge tiny ${done ? 'done' : ''}`}>
+      <span>{done ? '✅' : c.phase === 'retired' ? '❌' : '🎯'} <b>Reto:</b> {ch.label}</span>
+      <span className="dim">{done ? '¡Cumplido!' : c.phase === 'retired' ? 'No cumplido' : target > 1 ? `${Math.min(v, target).toLocaleString('es-ES')} / ${target.toLocaleString('es-ES')}` : 'Pendiente'}</span>
     </div>
   );
 }

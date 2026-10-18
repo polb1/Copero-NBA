@@ -9,11 +9,13 @@ import { makeGoal } from './goals';
 import { rngFor } from './rng';
 import { teamName } from './league';
 import { clamp } from './rng';
+import { rollChallenge } from './challenges';
 
 export function newCareer(input: NewCareerInput, seed: number): Career {
   const c = createCareer(input, seed);
   if (input.draftedTier === 'lottery') c.flags.tierLottery = 1;
   if (input.draftedTier === 'second') c.flags.tierSecond = 1;
+  c.flags.challenge = rollChallenge(seed);
   if (c.phase === 'signing') buildSigningOffers(c);
   return c;
 }

@@ -26,7 +26,10 @@ export function Careers() {
     <div className="simple-wrap">
       <div className="simple-panel anim-in careers">
         <div className="simple-head">
-          <h2>Mis carreras</h2>
+          <div>
+            <h2>Mis carreras</h2>
+            {list.length > 0 && <p className="tiny dim" style={{ margin: '4px 0 0' }}>{list.length} {list.length === 1 ? 'carrera' : 'carreras'} · {list.filter((r) => r.challengeDone).length} retos cumplidos · mejor legado {Math.max(...list.map((r) => r.legacyScore))}</p>}
+          </div>
           {list.length > 1 && (
             <div className="seg" role="radiogroup" aria-label="Ordenar">
               {SORTS.map((s) => <button key={s.id} aria-pressed={sort === s.id} onClick={() => setSort(s.id)}>{s.label}</button>)}
@@ -44,6 +47,7 @@ export function Careers() {
                   <b><Flag code={r.nat} size={18} /> {r.name}</b>
                   <small>{r.pos} · {seasonLabel(r.from)} a {seasonLabel(r.to)} · {r.seasons} temp. · retirado a los {r.age}</small>
                   <small className="dim">{r.teams.join(' · ')}</small>
+                  {r.challenge && <small className={r.challengeDone ? 'gold' : 'dim'}>{r.challengeDone ? '✅' : '❌'} Reto: {r.challenge}</small>}
                 </div>
                 <div className="career-stats">
                   <span className={top(r, 'ppg') ? 'gold' : ''}><b>{f1(r.ppg)}</b><small>PTS</small></span>

@@ -5,6 +5,7 @@ import { fullName } from '../engine/players';
 import { teamName } from '../engine/league';
 import { seasonLabel } from '../engine/schedule';
 import { averages } from '../engine/stats';
+import { challengeDone, challengeOf } from '../engine/challenges';
 
 // ---------- Persistence ----------
 const KEY_INDEX = 'nbalegacy:slots';
@@ -151,6 +152,9 @@ export interface CareerRecord {
   tier: string;
   hof: number;
   endedAt: number;
+  /** Older records have no challenge. */
+  challenge?: string;
+  challengeDone?: boolean;
 }
 
 export function careerHistory(): CareerRecord[] {
@@ -184,6 +188,8 @@ function recordHistory(c: Career) {
     legacyScore: r.legacyScore,
     tier: r.tier,
     hof: r.hofProbability,
+    challenge: challengeOf(c).label,
+    challengeDone: challengeDone(c),
     endedAt: careerHistory().find((h) => h.id === c.id)?.endedAt ?? Date.now(),
   };
   write(KEY_HISTORY, [...careerHistory().filter((h) => h.id !== c.id), rec]);
