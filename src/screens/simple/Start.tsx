@@ -3,12 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import type { Archetype, Hand, Mode, Pos } from '../../engine/types';
 import { ARCHETYPES, TRAINING_AREAS } from '../../engine/attributes';
 import { HEIGHT_RANGE } from '../../engine/players';
-import { COUNTRIES, EURO_CLUBS, HIGH_SCHOOLS, UNIVERSITY_SUGGESTIONS } from '../../content/names';
+import { COUNTRIES, HIGH_SCHOOLS } from '../../content/names';
+import { EURO_CLUBS, NCAA_PROGRAMS, type Club } from '../../data/clubs';
 import type { NewCareerInput, Route } from '../../engine/career';
 import { newCareer } from '../../engine/api';
 import { newSeed } from '../../engine/rng';
 import { store } from '../../store/store';
 import { CourtPicker, Jersey } from '../../ui/simple';
+import { Flag } from '../../ui/Flag';
 
 const ROUTES: { id: Route; label: string; hint: string }[] = [
   { id: 'college', label: 'Universidad', hint: 'Temporada NCAA y draft' },
@@ -29,6 +31,13 @@ export function Start() {
   const [pos, setPos] = useState<Pos>('SF');
   const [arch, setArch] = useState<Archetype>('twoWay');
   const [route, setRoute] = useState<Route>('college');
+  const [college, setCollege] = useState('Baylor');
+  const [euroClub, setEuroClub] = useState('Joventut Badalona');
+  const clubList: Club[] = route === 'international' ? EURO_CLUBS : NCAA_PROGRAMS;
+  const clubName = route === 'international' ? euroClub : college;
+  const setClub = route === 'international' ? setEuroClub : setCollege;
+  const club = clubList.find((c) => c.name === clubName);
+  const leagues = [...new Set(clubList.map((c) => c.league))];
 
   const archs = ARCHETYPES.filter((a) => a.positions.includes(pos));
   const pickPos = (p: Pos) => {
@@ -57,7 +66,7 @@ export function Start() {
       hand,
       pos,
       arch,
-      origin: route === 'international' ? EURO_CLUBS[0] : route === 'alternative' ? HIGH_SCHOOLS[0] : UNIVERSITY_SUGGESTIONS[0],
+      origin: route === 'international' ? euroClub : route === 'alternative' ? HIGH_SCHOOLS[0] : college,
       bio: '',
       route,
       draftedTier: 'first',
@@ -104,7 +113,7 @@ export function Start() {
             <div className="country-grid">
               {countries.map((c) => (
                 <button key={c.code} className={`country ${nat === c.code ? 'on' : ''}`} aria-pressed={nat === c.code} onClick={() => setNat(c.code)}>
-                  <span className="cc">{c.code}</span>
+                  <Flag code={c.code} size={28} />
                   <span>{c.name}</span>
                   {nat === c.code && <span className="check">✓</span>}
                 </button>
@@ -125,6 +134,22 @@ export function Start() {
                 {ROUTES.map((r) => <button key={r.id} className={`chip ${route === r.id ? 'accent' : ''}`} aria-pressed={route === r.id} title={r.hint} onClick={() => setRoute(r.id)}>{r.label}</button>)}
               </div>
             </div>
+            {(route === 'college' || route === 'international') && (
+              <div className="mini">
+                <span>{route === 'college' ? 'Universidad' : 'Club'}</span>
+                <div className="row" style={{ gap: 6 }}>
+                  <select className="input" value={clubName} onChange={(e) => setClub(e.target.value)} aria-label={route === 'college' ? 'Universidad' : 'Club'}>
+                    {leagues.map((lg) => (
+                      <optgroup key={lg} label={lg}>
+                        {clubList.filter((c) => c.league === lg).map((c) => <option key={c.name} value={c.name}>{'★'.repeat(4 - c.tier)} {c.name}</option>)}
+                      </optgroup>
+                    ))}
+                  </select>
+                  <button type="button" className="btn sm" title="Elegir al azar" aria-label="Club al azar" onClick={() => setClub(clubList[Math.floor(Math.random() * clubList.length)].name)}>🎲</button>
+                </div>
+                <span className="club-hint">{club ? (club.tier === 1 ? 'Gigante: más victorias y escaparate, pero menos minutos para ti.' : club.tier === 2 ? 'Equilibrado: buen nivel y minutos razonables.' : 'Modesto: tendrás el balón y muchos minutos, con menos victorias.') : ''}</span>
+              </div>
+            )}
           </section>
         </div>
         <div className="simple-foot">

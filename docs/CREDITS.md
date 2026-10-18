@@ -39,3 +39,11 @@ Las ilustraciones vectoriales de `src/ui/Scene.tsx` son originales del proyecto 
 | college-1.jpg | https://unsplash.com/photos/brown-concrete-building-U0dBV_QeiYk | Campus |
 | europe-1.jpg | https://unsplash.com/photos/aerial-view-of-a-bustling-historic-city-square-3su-6vzP6lo | Plaza europea |
 | rest-1.jpg | https://unsplash.com/photos/table-lamp-turned-on-near-bed-DE9MM2voqKc | Habitación de noche |
+
+## Banderas
+
+Banderas en `public/flags/` (PNG de 80 px) descargadas de [flagcdn.com](https://flagcdn.com) el 18/10/2026. Las banderas nacionales son de dominio público; flagcdn las ofrece gratis para cualquier uso.
+
+## Logotipos NBA
+
+No se incluyen en el proyecto: se cargan en tiempo de ejecución desde la CDN pública de la NBA (`src/data/logos.ts`). Son marcas registradas de la NBA y sus franquicias.

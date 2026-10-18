@@ -228,6 +228,8 @@ export function applyEffects(c: Career, u: Player, e: EffectBag, rng: Rng): stri
     refreshOvr(u);
   }
   if (e.flag) c.flags[e.flag] = 1;
+  if (e.flag === 'nationalTeam') c.flags.nationalCaps = (c.flags.nationalCaps ?? 0) + 1;
+  if (e.flag === 'medal') c.flags.medals = (c.flags.medals ?? 0) + 1;
   if (e.trophy) {
     c.flags[`trophy:${e.trophy}:${c.league.season}`] = 1;
     out.push('Trofeo: concurso de triples');

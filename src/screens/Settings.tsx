@@ -1,16 +1,12 @@
-import { Link } from 'react-router-dom';
-import { resetAllData, store, useCareer, useStore } from '../store/store';
+import { resetAllData, store, useStore } from '../store/store';
 import { Card, PageHead } from '../ui/common';
-import { Icon } from '../ui/icons';
 import { RULES } from '../engine/config';
 
 export function Settings() {
   const s = useStore((x) => x.settings);
-  const current = useCareer();
   const set = (patch: Partial<typeof s>) => store.setSettings({ ...s, ...patch });
   return (
-    <div className={current ? '' : 'content'} style={current ? undefined : { maxWidth: 1000 }}>
-      {!current && <Link to="/" className="btn ghost sm" style={{ marginBottom: 16 }}><Icon name="back" /> Inicio</Link>}
+    <div>
       <PageHead eyebrow="Ajustes, accesibilidad y preferencias" title="Ajustes" />
       <div className="grid g2">
         <Card title="Accesibilidad" icon="gear">

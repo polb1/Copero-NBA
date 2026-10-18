@@ -30,7 +30,7 @@ export function Saves() {
     }
   };
   return (
-    <div className={current ? '' : 'content'}>
+    <div>
       <PageHead eyebrow="Carga y recuperación" title="Partidas guardadas" desc="El juego guarda automáticamente tras cada acción en este navegador. Exporta tus partidas para tener una copia de seguridad o moverlas a otro dispositivo.">
         <button className="btn" onClick={() => fileRef.current?.click()}><Icon name="upload" /> Importar</button>
         {current && <button className="btn" onClick={() => exportCareer(current)}><Icon name="download" /> Exportar actual</button>}

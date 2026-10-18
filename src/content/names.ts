@@ -1,3 +1,4 @@
+import { EURO_CLUBS as EURO_CLUB_LIST, NCAA_PROGRAMS } from '../data/clubs';
 // Fictional name pools. Any match with a real person is coincidental.
 
 export interface Country {
@@ -78,7 +79,36 @@ export const COUNTRIES: Country[] = [
   { code: 'CHN', name: 'China', flag: '🇨🇳', weight: 1, region: 'AS',
     first: ['Wei', 'Hao', 'Jun', 'Lei'],
     last: ['Zhang', 'Li', 'Wang', 'Zhou'] },
+  { code: 'POR', name: 'Portugal', flag: '🇵🇹', weight: 1, region: 'EU', first: ['João', 'Tiago', 'Rúben', 'Diogo', 'Miguel'], last: ['Silva', 'Costa', 'Ferreira', 'Pereira', 'Rodrigues'] },
+  { code: 'BEL', name: 'Bélgica', flag: '🇧🇪', weight: 1, region: 'EU', first: ['Thomas', 'Ruben', 'Jonas', 'Arne', 'Kevin'], last: ['Peeters', 'Janssens', 'Maes', 'Wouters', 'Claes'] },
+  { code: 'POL', name: 'Polonia', flag: '🇵🇱', weight: 1, region: 'EU', first: ['Jakub', 'Kacper', 'Mateusz', 'Michał', 'Piotr'], last: ['Nowak', 'Kowalski', 'Wiśniewski', 'Lewandowski', 'Zieliński'] },
+  { code: 'ISR', name: 'Israel', flag: '🇮🇱', weight: 1, region: 'AS', first: ['Yam', 'Omri', 'Tamir', 'Ido', 'Noam'], last: ['Cohen', 'Levi', 'Mizrahi', 'Peretz', 'Biton'] },
+  { code: 'NZL', name: 'Nueva Zelanda', flag: '🇳🇿', weight: 1, region: 'OC', first: ['Tai', 'Corey', 'Finn', 'Isaac', 'Reuben'], last: ['Webster', 'Ngata', 'Taylor', 'Parata', 'Wilson'] },
+  { code: 'PUR', name: 'Puerto Rico', flag: '🇵🇷', weight: 1, region: 'LATAM', first: ['José', 'Carlos', 'Gian', 'Ismael', 'Jaysean'], last: ['Rivera', 'Colón', 'Ortiz', 'Vázquez', 'Santiago'] },
+  { code: 'VEN', name: 'Venezuela', flag: '🇻🇪', weight: 1, region: 'LATAM', first: ['Gregory', 'Néstor', 'Heissler', 'Windi', 'Michael'], last: ['Vargas', 'Colmenares', 'Guillent', 'Graterol', 'Carrera'] },
+  { code: 'COL', name: 'Colombia', flag: '🇨🇴', weight: 1, region: 'LATAM', first: ['Andrés', 'Juan David', 'Camilo', 'Sebastián', 'Luis'], last: ['Gómez', 'Martínez', 'Cuesta', 'Mosquera', 'Palacios'] },
+  { code: 'URU', name: 'Uruguay', flag: '🇺🇾', weight: 1, region: 'LATAM', first: ['Santiago', 'Martín', 'Joaquín', 'Bruno', 'Felipe'], last: ['Fernández', 'Pereira', 'Osimani', 'Vázquez', 'Bavosi'] },
+  { code: 'CUB', name: 'Cuba', flag: '🇨🇺', weight: 1, region: 'LATAM', first: ['Yoel', 'Alexei', 'Javier', 'Yordan', 'Osmel'], last: ['Rodríguez', 'Pérez', 'Hernández', 'Despaigne', 'Cárdenas'] },
+  { code: 'MNE', name: 'Montenegro', flag: '🇲🇪', weight: 1, region: 'EU', first: ['Nikola', 'Marko', 'Bojan', 'Vladimir', 'Igor'], last: ['Vučević', 'Popović', 'Dubljević', 'Ivanović', 'Radović'] },
+  { code: 'LAT', name: 'Letonia', flag: '🇱🇻', weight: 1, region: 'EU', first: ['Kristaps', 'Dāvis', 'Rolands', 'Artūrs', 'Mārtiņš'], last: ['Bērziņš', 'Kalniņš', 'Ozoliņš', 'Liepiņš', 'Šmits'] },
+  { code: 'CZE', name: 'Chequia', flag: '🇨🇿', weight: 1, region: 'EU', first: ['Tomáš', 'Jan', 'Ondřej', 'Vít', 'Martin'], last: ['Novák', 'Svoboda', 'Dvořák', 'Černý', 'Procházka'] },
+  { code: 'FIN', name: 'Finlandia', flag: '🇫🇮', weight: 1, region: 'EU', first: ['Lauri', 'Mikael', 'Elias', 'Sasu', 'Olivier'], last: ['Korhonen', 'Virtanen', 'Nieminen', 'Mäkinen', 'Salin'] },
+  { code: 'GBR', name: 'Reino Unido', flag: '🇬🇧', weight: 1, region: 'EU', first: ['Oliver', 'Harry', 'Jamal', 'Kieran', 'Ben'], last: ['Smith', 'Clarke', 'Okafor', 'Hughes', 'Walker'] },
+  { code: 'PHI', name: 'Filipinas', flag: '🇵🇭', weight: 1, region: 'AS', first: ['Jordan', 'Kai', 'Dwight', 'Kiefer', 'Thirdy'], last: ['Santos', 'Reyes', 'Ravena', 'Cruz', 'Bautista'] },
+  { code: 'KOR', name: 'Corea del Sur', flag: '🇰🇷', weight: 1, region: 'AS', first: ['Ji-hoon', 'Min-jun', 'Hyun-woo', 'Seung-ho', 'Dong-hyun'], last: ['Kim', 'Lee', 'Park', 'Choi', 'Jung'] },
+  { code: 'MLI', name: 'Malí', flag: '🇲🇱', weight: 1, region: 'AF', first: ['Moussa', 'Seydou', 'Boubacar', 'Amadou', 'Oumar'], last: ['Traoré', 'Keïta', 'Coulibaly', 'Diarra', 'Sissoko'] },
+  { code: 'SSD', name: 'Sudán del Sur', flag: '🇸🇸', weight: 1, region: 'AF', first: ['Wenyen', 'Majok', 'Nuni', 'Kuany', 'Marial'], last: ['Gabriel', 'Deng', 'Omot', 'Kuany', 'Shayok'] },
+  { code: 'BAH', name: 'Bahamas', flag: '🇧🇸', weight: 1, region: 'NA', first: ['Deandre', 'Eric', 'Kai', 'Travis', 'Chavano'], last: ['Ayton', 'Gordon', 'Munnings', 'Hield', 'Rolle'] },
+  { code: 'GEO', name: 'Georgia', flag: '🇬🇪', weight: 1, region: 'EU', first: ['Giorgi', 'Tornike', 'Levan', 'Sandro', 'Goga'], last: ['Shengelia', 'Mamukelashvili', 'Bitadze', 'Baldwin', 'Kakhiani'] },
 ];
+
+/** ISO 3166-1 alpha-2 codes for the bundled flag images (public/flags). */
+export const ISO2: Record<string, string> = {
+  USA: 'us', CAN: 'ca', ESP: 'es', FRA: 'fr', SRB: 'rs', GRE: 'gr', GER: 'de', SLO: 'si', LTU: 'lt', ITA: 'it', TUR: 'tr', CRO: 'hr',
+  AUS: 'au', ARG: 'ar', BRA: 'br', MEX: 'mx', DOM: 'do', NGA: 'ng', CMR: 'cm', SEN: 'sn', JPN: 'jp', CHN: 'cn',
+  POR: 'pt', BEL: 'be', POL: 'pl', ISR: 'il', NZL: 'nz', PUR: 'pr', VEN: 've', COL: 'co', URU: 'uy', CUB: 'cu', MNE: 'me', LAT: 'lv',
+  CZE: 'cz', FIN: 'fi', GBR: 'gb', PHI: 'ph', KOR: 'kr', MLI: 'ml', SSD: 'ss', BAH: 'bs', GEO: 'ge',
+};
 
 export const countryByCode = (code: string) => COUNTRIES.find((c) => c.code === code) ?? COUNTRIES[0];
 
@@ -87,9 +117,9 @@ export const COACH_LAST = ['Halvorsen', 'Brennan', 'Okoro', 'Castellano', 'Pryor
 
 export const AGENT_NAMES = ['Rivera Sports Group', 'Northstar Management', 'Elevate Athletes', 'Crown & Court Agency', 'Baseline Partners', 'Apex Hoops Representation'];
 
-export const UNIVERSITY_SUGGESTIONS = ['Duke', 'Kentucky', 'Kansas', 'North Carolina', 'Gonzaga', 'UCLA', 'Villanova', 'Michigan State', 'Arizona', 'Baylor', 'Houston', 'Auburn', 'Connecticut', 'Texas', 'Purdue', 'Florida'];
+export const UNIVERSITY_SUGGESTIONS = NCAA_PROGRAMS.map((c) => c.name);
 
-// Fictional European clubs for the international route.
-export const EURO_CLUBS = ['Atlético Mediterráneo', 'Helios Basket', 'Olimpia Adriatica', 'Real Club Cantábrico', 'Panthers Belgrade', 'Baskonia del Norte', 'Dynamo Kaunas', 'Galata Istanbul', 'Paris Lumière BC', 'Bavaria Ballers', 'Ionian Athens', 'Ljubljana Dragons'];
+// Real clubs for the international route (see src/data/clubs.ts).
+export const EURO_CLUBS = EURO_CLUB_LIST.map((c) => c.name);
 
 export const HIGH_SCHOOLS = ['Academia Elite de Baloncesto', 'Instituto Deportivo Central', 'Prep School Riverside', 'Centro de Alto Rendimiento', 'Escuela Municipal'];

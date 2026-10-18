@@ -8,6 +8,7 @@ import { applyInjuryAftermath, injuryRisk, rollInjury } from './injuries';
 import { trainWeek } from './progression';
 import { pickEvent, instantiate, absDay, markEventSeen } from './events';
 import { playSatelliteGame, SATELLITES } from './satellite';
+import { opponentsFor } from '../data/clubs';
 import { addBox, averages, f1, fpct, doubleCount } from './stats';
 import { gameScore } from './gamesim';
 import { goalDef, updateGoalProgress } from './goals';
@@ -120,11 +121,11 @@ function maybeSatelliteGame(c: Career, playedNbaTeamToday: boolean) {
   if (!comp) return;
   if (!c.satellite || c.satellite.comp !== comp) {
     const t = teamOf(c);
-    c.satellite = { comp, teamName: t ? t.gLeagueName : 'Filial', level: SATELLITES[comp].level, gamesPlanned: SATELLITES[comp].games, w: 0, l: 0 };
+    c.satellite = { comp, teamName: t ? t.gLeagueName : 'Filial', level: SATELLITES[comp].level, league: 'NBA G League', gamesPlanned: SATELLITES[comp].games, w: 0, l: 0 };
   }
   const s = c.satellite;
   if (s.w + s.l >= s.gamesPlanned) return;
-  const res = playSatelliteGame(c.seed, comp, c.league.season, s.w + s.l, u, s.level, 1 + (c.trust - 50) / 200);
+  const res = playSatelliteGame(c.seed, comp, c.league.season, s.w + s.l, u, s.level, (1 + (c.trust - 50) / 200) * (s.minutes ?? 1), opponentsFor(comp, s.teamName, u.teamId));
   if (res.teamScore > res.oppScore) s.w++;
   else s.l++;
   addBox(c.satStats, res.line);

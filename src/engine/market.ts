@@ -2,6 +2,7 @@ import type { Career, Contract, League, Offer, Player } from './types';
 import { capFor, maxSalary, minSalary, RULES, scaled } from './config';
 import { makeSalaries, marketValue, offerCapacity, productionBonus, rosterCount, salaryIn, yearsLeft, fmtMoney } from './contracts';
 import { positionNeeds } from './draft';
+import { EURO_CLUBS } from '../data/clubs';
 import { teamName, teamStrength } from './league';
 import { addNews, userOf } from './career';
 import { fullName } from './players';
@@ -92,7 +93,16 @@ export function fallbackOffers(c: Career): Offer[] {
     out.push({ id: `gl-${season}-${id}`, teamId: id, kind: 'gleague', years: 1, salary: 40_500, raise: 0, role: 'Filial G League', note: 'Contrato de G League sin plaza NBA. Rinde y llegará la llamada.' });
     out.push({ id: `ex-${season}-${teams[3] ?? id}`, teamId: teams[3] ?? id, kind: 'exhibit10', years: 1, salary: minSalary(0, season), raise: 0, role: 'Training camp', note: 'Exhibit 10: compites por una plaza en el training camp. Si no la ganas, pasas al filial.' });
   }
-  out.push({ id: `os-${season}`, teamId: 'EUR', kind: 'overseas', years: 1, salary: Math.round(scaled(600_000 + Math.max(0, u.ovr - 55) * 120_000, season)), raise: 0, role: 'Estrella en Europa', note: 'Temporada en la Liga Europea (ficticia). Vuelve a intentarlo el próximo verano.' });
+  // Two overseas clubs bid: their level depends on how good the player is.
+  const tier = u.ovr >= 70 ? 1 : u.ovr >= 63 ? 2 : 3;
+  const pool = EURO_CLUBS.filter((cl) => cl.tier === tier || cl.tier === Math.min(3, tier + 1));
+  const clubs = rng.shuffle([...pool]).slice(0, 2);
+  clubs.forEach((club, i) => out.push({
+    id: `os-${season}-${i}`, teamId: 'EUR', kind: 'overseas', years: 1, club: club.name,
+    salary: Math.round(scaled((600_000 + Math.max(0, u.ovr - 55) * 120_000) * (club.tier === 1 ? 1.25 : club.tier === 2 ? 1 : 0.8), season)),
+    raise: 0, role: club.tier === 1 ? 'Rotación en un grande' : club.tier === 2 ? 'Titular' : 'Estrella del equipo',
+    note: `${club.name} (${club.league}). Una temporada fuera y vuelves a la agencia libre el próximo verano.`,
+  }));
   return out;
 }
 

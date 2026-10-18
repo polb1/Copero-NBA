@@ -8,6 +8,7 @@ import { clamp, hashString, rngFor } from './rng';
 import { RULES } from './config';
 import { AGENT_NAMES, countryByCode } from '../content/names';
 import { SATELLITES } from './satellite';
+import { clubLevel, clubMinutes, findClub } from '../data/clubs';
 import type { RoleKey } from '../content/events';
 import { EVENTS } from '../content/events';
 import { instantiate, absDay, markEventSeen } from './events';
@@ -157,7 +158,8 @@ export function createCareer(input: NewCareerInput, seed: number): Career {
   if (input.route === 'college' || input.route === 'international') {
     const comp: Competition = input.route === 'college' ? 'NCAA' : 'EUR';
     c.predraft = { route: input.route, step: 'season', userBoosts: {}, clubName: input.origin, satelliteDone: false, seasonsPlayed: 0, interviews: [], interviewTeams: [], stockBonus: 0, workouts: [] };
-    c.satellite = { comp, teamName: input.origin, level: SATELLITES[comp].level + 1, gamesPlanned: SATELLITES[comp].games, w: 0, l: 0 };
+    const club = findClub(input.origin);
+    c.satellite = { comp, teamName: input.origin, level: clubLevel(club, comp), minutes: clubMinutes(club), league: club?.league, gamesPlanned: SATELLITES[comp].games, w: 0, l: 0 };
     addNews(c, 'draft', `${fullName(u)} inicia su camino hacia la NBA`, `El ${input.pos} de ${country} jugará la temporada ${season}-${(season + 1) % 100} en ${input.origin} (${SATELLITES[comp].name}). Los ojeadores ya tienen su nombre apuntado.`, 'neutral');
     queueEvent(c, 'predraft-agent');
   } else if (input.route === 'alternative') {

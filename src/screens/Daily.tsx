@@ -1,20 +1,20 @@
 import { useMemo, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { dailyPreset, todayKey } from '../engine/daily';
 import { newCareer } from '../engine/api';
 import { buildUserPlayer } from '../engine/career';
 import { ARCHETYPES, POS_LABEL, TRAINING_AREAS } from '../engine/attributes';
 import { DAILY_MAX_SEASONS } from '../engine/config';
-import { dailyRecords, listSlots, loadCareer, store, useCareer } from '../store/store';
-import { Card, PageHead, cm, flag, natName } from '../ui/common';
+import { dailyRecords, listSlots, loadCareer, store } from '../store/store';
+import { Card, PageHead, cm, natName } from '../ui/common';
 import { Avatar, OvrRing } from '../ui/PlayerCard';
 import { Icon } from '../ui/icons';
+import { Flag } from '../ui/Flag';
 
 const ROUTE: Record<string, string> = { college: 'Prospecto universitario', international: 'Jugador internacional', alternative: 'Vía alternativa (sin draft)', drafted: 'Novato elegido' };
 
 export function Daily() {
   const nav = useNavigate();
-  const current = useCareer();
   const key = todayKey();
   const preset = useMemo(() => dailyPreset(key), [key]);
   const [first, setFirst] = useState('');
@@ -31,14 +31,13 @@ export function Daily() {
     nav('/play');
   };
   return (
-    <div className={current ? '' : 'content'} style={current ? undefined : { maxWidth: 1100 }}>
-      {!current && <Link to="/" className="btn ghost sm" style={{ marginBottom: 16 }}><Icon name="back" /> Inicio</Link>}
+    <div>
       <PageHead eyebrow={`Desafío diario · ${key}`} title="Mismo punto de partida para todos" desc={`Hoy todos los jugadores comparten jugador, vía de entrada y semilla. Las mismas decisiones producen exactamente el mismo resultado. Máximo ${DAILY_MAX_SEASONS} temporadas NBA; tu puntuación es el Legacy Score final.`} />
       <div className="grid two-col">
         <div className="stack">
           <Card title="Condiciones de hoy" icon="sun" className="hl">
             <div className="grid g2 small">
-              <div><span className="dim">Nacionalidad:</span> {flag(preset.input.nat)} {natName(preset.input.nat)}</div>
+              <div><span className="dim">Nacionalidad:</span> <Flag code={preset.input.nat} size={20} /> {natName(preset.input.nat)}</div>
               <div><span className="dim">Posición:</span> {preset.input.pos} · {POS_LABEL[preset.input.pos]}</div>
               <div><span className="dim">Arquetipo:</span> {ARCHETYPES.find((a) => a.id === preset.input.arch)!.label}</div>
               <div><span className="dim">Vía:</span> {ROUTE[preset.input.route]}</div>

@@ -1,4 +1,6 @@
-import type { ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
+import { legacyScore } from '../../engine/legacy';
+import { ACHIEVEMENTS } from '../../engine/achievements';
 import { Link, useNavigate } from 'react-router-dom';
 import type { Career, Offer, SeasonRecord } from '../../engine/types';
 import * as api from '../../engine/api';
@@ -16,9 +18,22 @@ import { store, useCareer, useStore } from '../../store/store';
 import { EventModalInline } from './EventInline';
 import { TeamBadge, ovrTone } from '../../ui/simple';
 import { Confetti, OvrTile, SimProgress } from '../../ui/life';
-import { drawCard } from '../Retirement';
+import { drawCard } from '../../ui/card';
 import { Scene, type SceneKind } from '../../ui/Scene';
 import { Icon } from '../../ui/icons';
+import { Flag } from '../../ui/Flag';
+import { findClub } from '../../data/clubs';
+
+const num = (n: number) => Math.round(n).toLocaleString('es-ES');
+
+/** "541 puntos · 140 rebotes · 82 asistencias en 82 partidos" for a finished season. */
+function seasonTotals(c: Career, season: number): string {
+  const recs = c.seasons.filter((r) => r.season === season && r.stats.gp > 0);
+  const r = recs.find((x) => x.comp === 'NBA') ?? recs[0];
+  if (!r) return '';
+  const st = r.stats;
+  return `${num(st.pts)} puntos · ${num(st.oreb + st.dreb)} rebotes · ${num(st.ast)} asistencias en ${st.gp} partidos`;
+}
 
 const AWARD_ICON: Record<string, string> = { champion: '💍', mvp: '👑', fmvp: '🥇', dpoy: '🛡️', roy: '🌱', smoy: '🔋', mip: '📈', allStar: '⭐', allNba1: '🏅', allNba2: '🏅', allNba3: '🏅', allDef1: '🧱', allDef2: '🧱', threeContest: '🎯' };
 
@@ -27,6 +42,18 @@ export function Play() {
   const busy = useStore((s) => s.busy);
   const sim = useStore((s) => s.sim);
   const toasts = useStore((s) => s.toasts);
+  // Pop up achievements as they unlock (not on first load of a saved game).
+  const seenAch = useRef<Set<string> | null>(null);
+  useEffect(() => {
+    if (!c) return;
+    if (!seenAch.current || seenAch.current.size > c.achievements.length) { seenAch.current = new Set(c.achievements); return; }
+    for (const id of c.achievements) {
+      if (seenAch.current.has(id)) continue;
+      seenAch.current.add(id);
+      const a = ACHIEVEMENTS.find((x) => x.id === id);
+      if (a) store.toast(`${a.icon} Logro desbloqueado: ${a.title}`);
+    }
+  }, [c?.achievements.length, c?.id]);
   if (!c) return <div className="simple-wrap"><div className="simple-panel"><p className="muted">No hay carrera activa. <Link to="/start" className="accent">Crear una</Link></p></div></div>;
   return (
     <div className="simple-wrap">
@@ -41,7 +68,7 @@ export function Play() {
         </div>
       </div>
       <div className="play-tools">
-        <Link to="/career" className="btn sm ghost" title="Vista detallada"><Icon name="dash" /> Vista detallada</Link>
+        <Link to="/daily" className="btn sm ghost" title="Desafío diario"><Icon name="sun" /> Diario</Link>
         <Link to="/achievements" className="btn sm ghost" title="Logros" aria-label="Logros"><Icon name="medal" /></Link>
         <Link to="/saves" className="btn sm ghost" title="Partidas" aria-label="Partidas"><Icon name="save" /></Link>
         <Link to="/" className="btn sm ghost" title="Inicio" aria-label="Inicio"><Icon name="home" /></Link>
@@ -80,7 +107,7 @@ function TopCard({ c }: { c: Career }) {
         <OvrTile ovr={u.ovr} />
         <div className="id-box" style={{ ['--team' as string]: t?.color ?? '#334155' }}>
           <div className="row" style={{ gap: 6 }}>
-            <span className="chip">{u.nat}</span>
+            <span className="chip"><Flag code={u.nat} size={18} /> {u.nat}</span>
             <span className="chip accent">#{c.profile.number} {u.pos}</span>
             <span className="tiny dim">POT {u.pot}</span>
           </div>
@@ -95,10 +122,10 @@ function TopCard({ c }: { c: Career }) {
         </div>
       </div>
       <div className="tot-row">
-        <div><small>PJ NBA</small><b>{tot.gp}</b></div>
-        <div><small>PTS</small><b>{f1(a.ppg)}</b></div>
-        <div><small>REB</small><b>{f1(a.rpg)}</b></div>
-        <div><small>AST</small><b>{f1(a.apg)}</b></div>
+        <div title={`${f1(a.ppg)} / ${f1(a.rpg)} / ${f1(a.apg)} por partido`}><small>PARTIDOS</small><b>{num(tot.gp)}</b></div>
+        <div><small>PUNTOS</small><b>{num(tot.pts)}</b></div>
+        <div><small>REBOTES</small><b>{num(tot.oreb + tot.dreb)}</b></div>
+        <div><small>ASISTENCIAS</small><b>{num(tot.ast)}</b></div>
       </div>
       <div className="vitrina">
         {Object.keys(awards).length === 0 ? (
@@ -109,8 +136,32 @@ function TopCard({ c }: { c: Career }) {
           </div>
         )}
       </div>
+      <LegacyMeter c={c} />
     </>
   );
+}
+
+const TIERS: [number, string][] = [[0, 'Debutante'], [30, 'Jugador de rol'], [80, 'Jugador sólido'], [150, 'Estrella'], [230, 'Hall of Fame'], [420, 'Leyenda']];
+
+/** Long-term goal: progress of the legacy score towards the next tier. */
+function LegacyMeter({ c }: { c: Career }) {
+  const score = legacyScore(c);
+  const idx = TIERS.reduce((acc, t, i) => (score >= t[0] ? i : acc), 0);
+  const cur = TIERS[idx];
+  const next = TIERS[idx + 1];
+  const pct = next ? ((score - cur[0]) / (next[0] - cur[0])) * 100 : 100;
+  return (
+    <div className="legacy" title="Legacy Score: producción, premios, anillos y longevidad">
+      <div className="row between tiny"><span><b>Legado</b> · {cur[1]}</span><span className="dim">{next ? `${score} / ${next[0]} → ${next[1]}` : `${score} · nivel máximo`}</span></div>
+      <div className="legacy-bar"><span style={{ width: `${Math.max(3, Math.min(100, pct))}%` }} /></div>
+    </div>
+  );
+}
+
+/** New personal bests set in a given season, as short lines. */
+function seasonRecords(c: Career, season: number): string[] {
+  const label: Record<string, string> = { pts: 'puntos', reb: 'rebotes', ast: 'asistencias', stl: 'robos', blk: 'tapones', tpm: 'triples' };
+  return Object.entries(c.highs).filter(([, h]) => h && h.season === season).map(([k, h]) => `${h!.value} ${label[k] ?? k}`);
 }
 
 // ---------------- Decisions ----------------
@@ -140,9 +191,10 @@ function Block({ title, desc, scene, children }: { title: string; desc?: ReactNo
 function OfferChoice({ c, o, onPick, top = 'Firmar con' }: { c: Career; o: Offer; onPick: () => void; top?: string }) {
   const t = c.league.teams[o.teamId];
   const total = makeSalaries(o.salary, o.years, o.raise).reduce((s, v) => s + v, 0);
-  const name = t ? `${t.city} ${t.name}` : 'Liga Europea';
+  const club = o.club ? findClub(o.club) : undefined;
+  const name = t ? `${t.city} ${t.name}` : club ? club.name : 'Extranjero';
   return (
-    <Choice top={o.id === 'opt-player' ? 'Ejercer opción' : o.id.startsWith('ext-') ? 'Extender con' : top} title={name} onClick={onPick} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : <span style={{ fontSize: '2.6rem' }}>🌍</span>}>
+    <Choice top={o.id === 'opt-player' ? 'Ejercer opción' : o.id.startsWith('ext-') ? 'Extender con' : top} title={name} onClick={onPick} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : club ? <span className="club-crest"><Flag code={club.country} size={46} /><small>{club.league}</small></span> : <span style={{ fontSize: '2.6rem' }}>🌍</span>}>
       <span className="choice-meta">{fmtMoney(o.salary)}{o.years > 1 ? ` · ${o.years} años (${fmtMoney(total)})` : ` · ${o.kind === 'two-way' ? 'two-way' : o.kind === 'gleague' ? 'G League' : '1 año'}`}</span>
       <span className="choice-meta dim">{o.role}{t ? ` · ${t.w + t.l ? `${t.w}-${t.l}` : t.status === 'contender' ? 'aspirante' : t.status === 'rebuild' ? 'reconstrucción' : 'zona media'}` : ''}</span>
     </Choice>
@@ -150,7 +202,6 @@ function OfferChoice({ c, o, onPick, top = 'Firmar con' }: { c: Career; o: Offer
 }
 
 function Decision({ c }: { c: Career }) {
-  const nav = useNavigate();
   const u = userOf(c);
   const t = teamOf(c);
   if (c.pendingEvent) return <EventModalInline c={c} />;
@@ -165,7 +216,7 @@ function Decision({ c }: { c: Career }) {
         const s = c.satellite!;
         const comp = SATELLITES[s.comp as 'NCAA' | 'EUR'];
         return (
-          <Block scene={s.comp === 'NCAA' ? 'college' : 'europe'} title={`Temporada en ${s.teamName}`} desc={`${comp.name}. Los ojeadores NBA miran cada partido; la liga NBA se juega en paralelo y decidirá el orden del draft.`}>
+          <Block scene={s.comp === 'NCAA' ? 'college' : 'europe'} title={`Temporada en ${s.teamName}`} desc={`${s.league ?? comp.name}. Los ojeadores NBA miran cada partido; la liga NBA se juega en paralelo y decidirá el orden del draft.`}>
             <Choice top="Jugar" title="La temporada completa" scene="arena" onClick={() => go('Jugando la temporada…')}>Se detiene si surge una decisión.</Choice>
           </Block>
         );
@@ -173,7 +224,7 @@ function Decision({ c }: { c: Career }) {
       if (p.step === 'decision') {
         const canReturn = u.age <= 21 && p.seasonsPlayed < 3;
         return (
-          <Block scene={'draft'} title="¿Te declaras para el draft?" desc={c.lastSummary ? c.lastSummary.lines.slice(2, 5).map((l) => `${l.value} ${l.label.toLowerCase()}`).join(' · ') : undefined}>
+          <Block scene={'draft'} title="¿Te declaras para el draft?" desc={c.lastSummary ? seasonTotals(c, c.lastSummary.season) : undefined}>
             <Choice top="Dar el salto" title="Declararme" scene="draft" onClick={() => store.act((x) => api.predraftDecision(x, true))}>Combine, entrevistas y draft.</Choice>
             {canReturn && <Choice top="Esperar" title="Otra temporada" scene="college" tone="stay" onClick={() => go('Jugando otra temporada…', (x) => api.predraftDecision(x, false))}>Mejorar tu cotización.</Choice>}
           </Block>
@@ -226,14 +277,13 @@ function Decision({ c }: { c: Career }) {
       return (
         <Block scene={c.phase === 'postseason' ? 'trophy' : 'arena'} title={`Temporada ${seasonLabel(c.league.season)}`} desc={`${where} · ${c.phase === 'postseason' ? 'Postemporada en curso' : c.phase === 'preseason' ? 'Pretemporada' : 'Temporada en curso'}${u.injury ? ` · 🩹 ${u.injury.name} (${u.injury.daysLeft} días)` : ''}`}>
           <Choice top="Simular" title={c.phase === 'postseason' ? 'Los playoffs' : 'La temporada'} scene="arena" onClick={() => go('Simulando…')}>Se detiene si surge una decisión.</Choice>
-          <Choice top="Ir partido a partido" title="Vista detallada" scene="coach" tone="stay" onClick={() => nav('/career')}>Calendario, rotación y estadísticas.</Choice>
         </Block>
       );
     }
     case 'season-end': {
       const s = c.lastSummary!;
       return (
-        <Block scene={s.awards.length ? 'trophy' : 'arena'} title={`Fin de temporada ${seasonLabel(s.season)}`} desc={<>{s.teamResult}<br />{s.lines.slice(2, 5).map((l) => `${l.value} ${l.label.toLowerCase()}`).join(' · ')} · OVR {s.ovrDelta >= 0 ? '+' : ''}{s.ovrDelta}{s.awards.length ? <><br /><span className="gold">🏆 {s.awards.join(' · ')}</span></> : null}</>}>
+        <Block scene={s.awards.length ? 'trophy' : 'arena'} title={`Fin de temporada ${seasonLabel(s.season)}`} desc={<>{s.teamResult}<br />{seasonTotals(c, s.season)} · OVR {s.ovrDelta >= 0 ? '+' : ''}{s.ovrDelta}{s.awards.length ? <><br /><span className="gold">🏆 {s.awards.join(' · ')}</span></> : null}{s.highlights[0] && !s.highlights[0].startsWith('Campeón') ? <><br /><span>⭐ Mejor partido: {s.highlights[0]}</span></> : null}{seasonRecords(c, s.season).length ? <><br /><span className="accent">🔥 Récord personal: {seasonRecords(c, s.season).join(' · ')}</span></> : null}</>}>
           <Choice top="Continuar" title="Siguiente temporada" scene="summer" onClick={() => go('Verano y nueva temporada…', api.beginOffseason)}>Solo se detiene si hay algo que decidir.</Choice>
         </Block>
       );
@@ -324,9 +374,9 @@ function Timeline({ c }: { c: Career }) {
           <span className="tl-club">{tm ? <TeamBadge id={tm.id} color={tm.color} size={16} /> : <span className="tiny">{r.comp === 'NCAA' ? '🎓' : r.comp === 'EUR' ? '🌍' : '🏀'}</span>}<span>{r.teamName}</span>{r.comp !== 'NBA' && <span className="tiny dim">{r.comp === 'GLG' ? 'G League' : r.comp}</span>}{won && <span title="Campeón">💍</span>}{r.awards.filter((k) => k !== 'champion').slice(0, 2).map((k) => <span key={k} title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'}</span>)}</span>
           <span className={`ovr-pill ${r.ovrEnd >= 80 ? 'gold' : ''}`} style={{ background: ovrTone(r.ovrEnd) }}>{r.ovrEnd}</span>
           <span className="tl-num">{r.stats.gp}</span>
-          <span className="tl-num">{f1(a.ppg)}</span>
-          <span className="tl-num">{f1(a.rpg)}</span>
-          <span className="tl-num">{f1(a.apg)}</span>
+          <span className="tl-num" title={`${f1(a.ppg)} por partido`}>{num(r.stats.pts)}</span>
+          <span className="tl-num" title={`${f1(a.rpg)} por partido`}>{num(r.stats.oreb + r.stats.dreb)}</span>
+          <span className="tl-num" title={`${f1(a.apg)} por partido`}>{num(r.stats.ast)}</span>
         </div>,
       );
     } else if (age === pendingAge) {
@@ -354,15 +404,19 @@ function Timeline({ c }: { c: Career }) {
       </div>
       <div className="tl-body">{rows}</div>
       <div className="tl-row foot">
-        <span className="age-badge" style={{ background: '#1f2937' }}>🌍</span>
-        <span className="tl-club"><span>{country.name}</span>{c.flags.nationalTeam ? <span className="tiny dim">Internacional{c.flags.medal ? ' · 🥇 medalla' : ''}</span> : <span className="tiny dim">Sin convocatorias</span>}</span>
+        <span className="age-badge" style={{ background: '#1f2937' }}>Σ</span>
+        <span className="tl-club"><span>Total carrera NBA</span></span>
         <span />
-        <span className="tl-num">{nba.gp}</span>
-        <span className="tl-num" title="Puntos totales NBA">{nba.pts}</span>
-        <span className="tl-num">{nba.oreb + nba.dreb}</span>
-        <span className="tl-num">{nba.ast}</span>
+        <span className="tl-num">{num(nba.gp)}</span>
+        <span className="tl-num">{num(nba.pts)}</span>
+        <span className="tl-num">{num(nba.oreb + nba.dreb)}</span>
+        <span className="tl-num">{num(nba.ast)}</span>
       </div>
-      <p className="tiny dim" style={{ marginTop: 6 }}>Promedios por temporada (PTS/REB/AST por partido). La última fila suma tus totales NBA. Temporadas {RULES.label} en adelante.</p>
+      <div className="nat-row">
+        <Flag code={u.nat} size={22} />
+        <span><b>Selección de {country.name}</b> · {c.flags.nationalCaps ? `${c.flags.nationalCaps} convocatoria${c.flags.nationalCaps > 1 ? 's' : ''}` : c.flags.nationalTeam ? 'Internacional' : 'Aún sin convocatorias'}{c.flags.medals ? ` · 🥇 ${c.flags.medals} medalla${c.flags.medals > 1 ? 's' : ''}` : ''}</span>
+      </div>
+      <p className="tiny dim" style={{ marginTop: 6 }}>Totales de cada temporada (pasa el ratón para ver la media por partido). Temporadas {RULES.label} en adelante.</p>
     </div>
   );
 }

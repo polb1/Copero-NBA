@@ -40,7 +40,9 @@ Abre http://localhost:5173. Otros comandos:
 - **Progresión** por entrenamiento semanal, edad, minutos y potencial oculto (los ojeadores pueden equivocarse).
 - **Premios** calculados con las estadísticas de todos los jugadores: MVP, DPOY, ROY, 6MOY, MIP, All-NBA, All-Defensive, All-Star, líderes y MVP de las Finales.
 - **Tres ritmos**: carrera completa, carrera rápida y desafío diario (semilla compartida por fecha UTC).
-- **Vista detallada** con 22 pantallas conectadas al mismo estado, responsive, con teclado (`N`, `W`, `E`, `1-4`) y movimiento reducido.
+- **Una sola pantalla de juego**: sin menús de gestión. Logros, partidas, ajustes y desafío diario quedan en páginas secundarias.
+- **Clubes reales**: 53 clubes internacionales (ACB, BSL, Grecia, Italia, ABA, LKL, Francia, Alemania, Israel, NBL), 40 universidades NCAA y las 30 franquicias filiales de la G League. El nivel del club cambia la fuerza del equipo y tus minutos.
+- **43 nacionalidades** con bandera.
 - **Persistencia** local con autosave, varias partidas, exportación/importación JSON, logros globales y tarjeta final descargable en PNG.
 
 ## Documentación

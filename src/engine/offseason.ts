@@ -15,6 +15,7 @@ import { DAILY_MAX_SEASONS, MAX_AGE, RULES, minSalary, rookieScale, scaled } fro
 import { clamp, rngFor } from './rng';
 import { seasonLabel } from './schedule';
 import { SATELLITES } from './satellite';
+import { EURO_CLUBS, clubLevel, clubMinutes, findClub } from '../data/clubs';
 
 // ---------------- League offseason ----------------
 
@@ -303,9 +304,10 @@ export function acceptOffer(c: Career, offerId: string) {
     if (u.teamId && L.teams[u.teamId]) L.teams[u.teamId].roster = L.teams[u.teamId].roster.filter((id) => id !== u.id);
     u.teamId = null;
     u.contract = null;
-    c.satellite = { comp: 'EUR', teamName: 'Atlético Mediterráneo', level: SATELLITES.EUR.level + 3, gamesPlanned: SATELLITES.EUR.games, w: 0, l: 0 };
+    const club = findClub(o.club ?? '') ?? EURO_CLUBS[0];
+    c.satellite = { comp: 'EUR', teamName: club.name, level: clubLevel(club, 'EUR'), minutes: clubMinutes(club), league: club.league, gamesPlanned: SATELLITES.EUR.games, w: 0, l: 0 };
     c.flags.overseasSalary = o.salary;
-    addNews(c, 'contract', 'Rumbo a Europa', `${fullName(u)} jugará una temporada en la Liga Europea por ${fmtMoney(o.salary)}.`, 'neutral');
+    addNews(c, 'contract', 'Rumbo al extranjero', `${fullName(u)} jugará una temporada en ${club.name} (${club.league}) por ${fmtMoney(o.salary)}.`, 'neutral');
   } else {
     // RFA: the original team may match an outside offer.
     const k = u.contract;
@@ -388,7 +390,8 @@ export function predraftDecision(c: Career, declare: boolean) {
     offseasonDevelopment(u, rngFor(c.seed, 'pre-dev', c.league.season), { workEthic: c.workEthic, minutesShare: 0.85, coachRating: 65, trainingBonus: 0.1 });
     c.ovrHistory.push({ season: c.league.season, age: u.age, ovr: u.ovr, pot: u.pot });
     const comp = p.route === 'college' ? 'NCAA' : 'EUR';
-    c.satellite = { comp, teamName: p.clubName, level: SATELLITES[comp].level + 1, gamesPlanned: SATELLITES[comp].games, w: 0, l: 0 };
+    const club = findClub(p.clubName);
+    c.satellite = { comp, teamName: p.clubName, level: clubLevel(club, comp), minutes: clubMinutes(club), league: club?.league, gamesPlanned: SATELLITES[comp].games, w: 0, l: 0 };
     c.satStats = emptyStats();
     c.gameLog = [];
     c.seasonOvrStart = u.ovr;

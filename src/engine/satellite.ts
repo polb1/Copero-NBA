@@ -18,7 +18,7 @@ export interface SatelliteDef {
 export const SATELLITES: Record<Exclude<Competition, 'NBA'>, SatelliteDef> = {
   NCAA: { id: 'NCAA', name: 'NCAA División I', games: 32, level: 57, minutes: 40, pace: 69,
     opponents: ['Bayview State', 'Northern Plains', 'Coastal Tech', 'Midland University', 'Ridgewood College', 'Granite State', 'Lakeshore A&M', 'Desert Valley', 'Pinecrest', 'Redstone University'] },
-  EUR: { id: 'EUR', name: 'Liga Europea (ficticia)', games: 34, level: 62, minutes: 40, pace: 72,
+  EUR: { id: 'EUR', name: 'Baloncesto internacional', games: 34, level: 62, minutes: 40, pace: 72,
     opponents: ['Helios Basket', 'Olimpia Adriatica', 'Panthers Belgrade', 'Dynamo Kaunas', 'Galata Istanbul', 'Paris Lumière BC', 'Bavaria Ballers', 'Ionian Athens', 'Ljubljana Dragons', 'Real Club Cantábrico'] },
   GLG: { id: 'GLG', name: 'NBA G League', games: 50, level: 61, minutes: 48, pace: 101,
     opponents: ['Capital City Rush', 'Lakeside Storm', 'Mountain Peaks', 'Gulf Coast Pelicans', 'Prairie Wolves', 'Bay Area Surge', 'Delta Kings', 'Iron Range', 'Sunbelt Suns', 'Harbor Hawks'] },
@@ -50,11 +50,13 @@ export interface SatelliteGameResult {
 }
 
 /** User's satellite game: user + synthetic teammates vs synthetic opponent around the competition level. */
-export function playSatelliteGame(seed: number, comp: Exclude<Competition, 'NBA'>, season: number, gameNo: number, user: Player, teamLevel: number, minutesBoost = 1): SatelliteGameResult {
+export function playSatelliteGame(seed: number, comp: Exclude<Competition, 'NBA'>, season: number, gameNo: number, user: Player, teamLevel: number, minutesBoost = 1, opponents?: string[]): SatelliteGameResult {
   const def = SATELLITES[comp];
   const key = `${comp}-${season}-${gameNo}`;
   const rng = rngFor(seed, 'sat', key);
-  const oppName = def.opponents[gameNo % def.opponents.length];
+  const pool = opponents?.length ? opponents : def.opponents;
+  // Conference/league rivals appear twice as often as the rest.
+  const oppName = pool[(gameNo * 7 + Math.floor(gameNo / pool.length)) % pool.length];
   const oppLevel = def.level + rng.normal(0, 3.5);
   const mates = Array.from({ length: 9 }, (_, i) => synthPlayer(seed, `${comp}-${season}-team`, i, teamLevel));
   const me: SimPlayer = { id: user.id, attrs: user.attrs, ovr: user.ovr, arch: user.arch, pos: user.pos, form: user.form, fatigue: user.fatigue, hurt: !!user.injury?.playingThrough, minutes: 0, starter: false };

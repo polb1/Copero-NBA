@@ -1,5 +1,6 @@
 import type { Coach, League, Player, Pos, Team, TeamStatus } from './types';
 import { TEAM_SEEDS } from '../data/teams';
+import { G_LEAGUE } from '../data/clubs';
 import { COACH_FIRST, COACH_LAST } from '../content/names';
 import { generatePlayer } from './players';
 import { makeSalaries, marketValue } from './contracts';
@@ -84,7 +85,7 @@ export function createLeague(seed: number, season: number): League {
       roster: [],
       w: 0, l: 0, homeW: 0, homeL: 0, awayW: 0, awayL: 0, pf: 0, pa: 0, streak: 0, last10: [],
       history: [],
-      gLeagueName: `Filial G League de ${s.city}`,
+      gLeagueName: G_LEAGUE[s.id] ?? `Filial G League de ${s.city}`,
     };
     league.teams[s.id] = team;
     const posOrder: Pos[] = [];

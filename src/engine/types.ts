@@ -309,6 +309,8 @@ export interface Offer {
   option?: 'player' | 'team';
   role: string;
   note: string;
+  /** Overseas offers: the club making it. */
+  club?: string;
   expiresDay?: number;
 }
 
@@ -355,6 +357,9 @@ export interface Satellite {
   gamesPlanned: number;
   w: number;
   l: number;
+  /** Minutes multiplier from the club's depth (big clubs play their veterans). */
+  minutes?: number;
+  league?: string;
 }
 
 export interface Career {

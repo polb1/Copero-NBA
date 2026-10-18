@@ -184,3 +184,25 @@
 @keyframes went-gold { 0% { transform: scale(1); } 30% { transform: scale(1.22) rotate(-3deg); box-shadow: 0 0 40px rgba(245, 196, 81, 0.9); } 100% { transform: scale(1); } }
 .ovr-delta.gold-up { background: #f5c451; color: #3b2705; z-index: 2; }
 .ovr-pill.gold { color: #3b2705; text-shadow: none; box-shadow: 0 0 0 1px rgba(255, 220, 120, 0.55); }
+
+/* ---------- Shell for secondary pages ---------- */
+.shell { min-height: 100vh; }
+.shell-top { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 20px; background: rgba(11, 12, 14, 0.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.shell-top .brand { padding: 0; }
+.shell-nav { display: flex; gap: 4px; flex-wrap: wrap; }
+.shell-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 10px; color: var(--text-2); font-weight: 600; font-size: 0.86rem; }
+.shell-link:hover { background: var(--panel-2); color: var(--text); }
+.shell-link.active { background: var(--accent-soft); color: var(--text); }
+.shell-link.play { background: var(--accent); color: var(--accent-ink); }
+.shell-main { max-width: 1120px; margin: 0 auto; padding: 24px 16px 60px; }
+@media (max-width: 720px) { .shell-link span { display: none; } .shell-top .brand-name { display: none; } }
+.flag { display: inline-block; vertical-align: middle; object-fit: cover; border-radius: 3px; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 1px 3px rgba(0, 0, 0, 0.4); flex: none; }
+.nat-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; padding: 8px 10px; border-radius: 8px; background: #17191d; font-size: 0.82rem; color: var(--text-2); }
+.nat-row b { color: var(--text); }
+.mini > span.club-hint { text-transform: none; letter-spacing: 0; font-weight: 500; font-size: 0.74rem; color: var(--text-3); text-align: left; }
+.mini select.input { text-align: left; font-weight: 600; }
+.club-crest { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.club-crest small { font-size: 0.66rem; color: var(--text-3); font-weight: 600; }
+.legacy { margin-top: 12px; padding: 10px 12px; background: #17191d; border: 1px solid var(--line); border-radius: 10px; }
+.legacy-bar { height: 8px; margin-top: 6px; background: var(--bg-2); border-radius: 999px; overflow: hidden; }
+.legacy-bar span { display: block; height: 100%; background: linear-gradient(90deg, #f97316, #f5c451); border-radius: 999px; transition: width 1s var(--ease); }
