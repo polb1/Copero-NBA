@@ -1,6 +1,5 @@
-import { Children, useEffect, useRef, type ReactNode } from 'react';
-import { legacyScore } from '../../engine/legacy';
-import { ACHIEVEMENTS } from '../../engine/achievements';
+import { Children, useEffect, type ReactNode } from 'react';
+import { LEGACY_TIERS, legacyScore } from '../../engine/legacy';
 import { Link, useNavigate } from 'react-router-dom';
 import type { Career, Offer, SeasonRecord } from '../../engine/types';
 import * as api from '../../engine/api';
@@ -14,7 +13,7 @@ import { SATELLITES } from '../../engine/satellite';
 import { seasonLabel } from '../../engine/schedule';
 import { RULES } from '../../engine/config';
 import { countryByCode } from '../../content/names';
-import { store, useCareer, useStore } from '../../store/store';
+import { careerHistory, store, useCareer, useStore } from '../../store/store';
 import { EventModalInline } from './EventInline';
 import { TeamBadge, ovrTone } from '../../ui/simple';
 import { OvrTile, SimProgress } from '../../ui/life';
@@ -43,18 +42,18 @@ export function Play() {
   const busy = useStore((s) => s.busy);
   const sim = useStore((s) => s.sim);
   const toasts = useStore((s) => s.toasts);
-  // Pop up achievements as they unlock (not on first load of a saved game).
-  const seenAch = useRef<Set<string> | null>(null);
+  // Phones: the timeline grows above the decision, so bring each new decision (or the live sim) into view.
+  const decisionKey = c ? `${c.id}|${c.phase}|${c.league.season}|${c.predraft?.step}|${c.pendingEvent?.defId}|${!!c.pendingEvent?.resolved}|${c.offers.length}|${!!sim}` : '';
   useEffect(() => {
-    if (!c) return;
-    if (!seenAch.current || seenAch.current.size > c.achievements.length) { seenAch.current = new Set(c.achievements); return; }
-    for (const id of c.achievements) {
-      if (seenAch.current.has(id)) continue;
-      seenAch.current.add(id);
-      const a = ACHIEVEMENTS.find((x) => x.id === id);
-      if (a) store.toast(`${a.icon} Logro desbloqueado: ${a.title}`);
-    }
-  }, [c?.achievements.length, c?.id]);
+    if (!decisionKey || !window.matchMedia('(max-width: 560px)').matches) return;
+    const id = requestAnimationFrame(() => {
+      const el = document.querySelector('.play-left > .decision');
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      if (r.top > window.innerHeight - 160 || r.bottom < 0) window.scrollTo({ top: window.scrollY + r.top - 12, behavior: 'smooth' });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [decisionKey]);
   if (!c) return <div className="simple-wrap"><div className="simple-panel"><p className="muted">No hay carrera activa. <Link to="/start" className="accent">Crear una</Link></p></div></div>;
   return (
     <div className="simple-wrap">
@@ -87,7 +86,7 @@ function TopCard({ c }: { c: Career }) {
   const a = averages(tot);
   const awards: Record<string, number> = {};
   for (const s of c.seasons) for (const k of s.awards) awards[k] = (awards[k] ?? 0) + 1;
-  const clubLabel = t ? teamName(c.league, t.id) : c.satellite?.teamName ?? (c.phase === 'signing' ? 'Agente libre' : c.predraft?.clubName ?? 'Agente libre');
+  const clubLabel = t ? teamName(c.league, t.id) : c.satellite?.teamName ?? (c.phase === 'signing' ? 'Agente libre' : c.predraft?.clubName || 'Libre');
   return (
     <>
       <div className="top-card">
@@ -128,7 +127,7 @@ function TopCard({ c }: { c: Career }) {
   );
 }
 
-const TIERS: [number, string][] = [[0, 'Debutante'], [30, 'Jugador de rol'], [80, 'Jugador sólido'], [150, 'Estrella'], [230, 'Hall of Fame'], [420, 'Leyenda']];
+const TIERS: [number, string][] = [[0, 'Debutante'], [LEGACY_TIERS.role, 'Jugador de rol'], [LEGACY_TIERS.solid, 'Jugador sólido'], [LEGACY_TIERS.star, 'Estrella'], [LEGACY_TIERS.hof, 'Hall of Fame'], [LEGACY_TIERS.legend, 'Leyenda']];
 
 /** Long-term goal: progress of the legacy score towards the next tier. */
 function LegacyMeter({ c }: { c: Career }) {
@@ -137,10 +136,15 @@ function LegacyMeter({ c }: { c: Career }) {
   const cur = TIERS[idx];
   const next = TIERS[idx + 1];
   const pct = next ? ((score - cur[0]) / (next[0] - cur[0])) * 100 : 100;
+  // The best finished career is the target to beat.
+  const best = Math.max(0, ...careerHistory().filter((h) => h.id !== c.id).map((h) => h.legacyScore));
   return (
     <div className="legacy" title="Legacy Score: producción, premios, anillos y longevidad">
       <div className="row between tiny"><span><b>Legado</b> · {cur[1]}</span><span className="dim">{next ? `${score} / ${next[0]} → ${next[1]}` : `${score} · nivel máximo`}</span></div>
       <div className="legacy-bar"><span style={{ width: `${Math.max(3, Math.min(100, pct))}%` }} /></div>
+      {best > 0 && c.phase !== 'retired' && (
+        <div className={`legacy-best tiny ${score > best ? 'gold' : 'dim'}`}>{score > best ? `🔥 Superando tu récord (${best})` : `Tu récord: ${best} · te faltan ${best - score}`}</div>
+      )}
     </div>
   );
 }
@@ -153,7 +157,7 @@ function seasonRecords(c: Career, season: number): string[] {
 
 // ---------------- Decisions ----------------
 
-function Choice({ title, top, icon, scene, children, onClick, tone }: { title: string; top?: string; icon?: ReactNode; scene?: SceneKind; children?: ReactNode; onClick: () => void; tone?: 'stay' | 'danger' }) {
+function Choice({ title, top, icon, scene, children, onClick, tone }: { title: string; top?: string; icon?: ReactNode; scene?: SceneKind; children?: ReactNode; onClick: () => void; tone?: 'stay' | 'danger' | 'primary' }) {
   return (
     <button className={`choice ${tone ?? ''} ${scene ? 'with-img' : ''}`} onClick={onClick}>
       {scene && <Scene kind={scene} variant={title} height={96} still className="choice-img" />}
@@ -321,6 +325,9 @@ function Retired({ c }: { c: Career }) {
   const u = userOf(c);
   const r = c.retirement!;
   const a = averages(r.totals);
+  // Where this career lands among the finished ones (it is already in the history once retired).
+  const others = careerHistory().filter((h) => h.id !== c.id).map((h) => h.legacyScore);
+  const rank = { pos: others.filter((x) => x > r.legacyScore).length + 1, total: others.length + 1, best: Math.max(0, ...others), record: others.length > 0 && r.legacyScore > Math.max(...others) };
   const download = () => {
     const link = document.createElement('a');
     link.href = drawCard(c);
@@ -338,11 +345,16 @@ function Retired({ c }: { c: Career }) {
     <div className="decision">
       <Scene kind="trophy" height={170}><h2>{r.tier}</h2></Scene>
       <p className="small muted desc">Retirado a los {r.age} · Legacy Score <b className="accent">{r.legacyScore}</b> · Hall of Fame {Math.round(r.hofProbability * 100)}% · {fmtMoney(r.earnings)} ganados</p>
+      {rank.total > 1 && (
+        <p className={`career-rank-line ${rank.record ? 'record' : ''}`}>
+          {rank.record ? `🏆 ¡Nuevo récord personal! Tu mejor carrera de ${rank.total}` : `Puesto #${rank.pos} de tus ${rank.total} carreras · récord ${rank.best}`}
+        </p>
+      )}
       <div className="choices">
-        <Choice top="Tarjeta final" title="Descargar PNG" scene="trophy" onClick={download} />
-        <Choice top="Presumir" title="Compartir" scene="phone" onClick={share} />
+        <Choice top="Otra vez" title="Jugar otra carrera" scene="arena" tone="primary" onClick={() => nav('/start')} />
         <Choice top="Comparar" title="Mis carreras" scene="trophy" onClick={() => nav('/careers')} />
-        <Choice top="Otra vez" title="Nueva carrera" scene="arena" tone="stay" onClick={() => nav('/start')} />
+        <Choice top="Presumir" title="Compartir" scene="phone" onClick={share} />
+        <Choice top="Tarjeta final" title="Descargar PNG" scene="trophy" onClick={download} />
       </div>
     </div>
   );

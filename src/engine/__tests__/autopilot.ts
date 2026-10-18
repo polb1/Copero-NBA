@@ -19,7 +19,8 @@ export function autopilot(c: Career, opts: { pick?: (n: number, i: number) => nu
     switch (c.phase) {
       case 'predraft': {
         const p = c.predraft!;
-        if (p.step === 'season') api.advance(c, 'season');
+        if (p.step === 'club') api.chooseStartingClub(c, p.clubChoices![pick(p.clubChoices!.length, i++) % p.clubChoices!.length].name);
+        else if (p.step === 'season') api.advance(c, 'season');
         else if (p.step === 'decision') api.predraftDecision(c, true);
         else if (p.step === 'combine') api.doCombine(c, 'full');
         else if (p.step === 'interviews') api.answerInterview(c, p.interviews.length, 0);

@@ -8,6 +8,7 @@ import type { NewCareerInput } from '../../engine/career';
 import { newCareer } from '../../engine/api';
 import { newSeed } from '../../engine/rng';
 import { store, useCareer } from '../../store/store';
+import { userOf } from '../../engine/career';
 import { CourtPicker, Jersey } from '../../ui/simple';
 import { Flag } from '../../ui/Flag';
 
@@ -15,22 +16,25 @@ import { Flag } from '../../ui/Flag';
 export function Start() {
   const nav = useNavigate();
   const current = useCareer();
-  const [mode, setMode] = useState<Mode>('quick');
-  const [first, setFirst] = useState('');
-  const [last, setLast] = useState('');
-  const [number, setNumber] = useState(23);
-  const [hand, setHand] = useState<Hand>('R');
-  const [nat, setNat] = useState('ESP');
+  // Another run starts from the last player's identity: two taps and you are playing again.
+  const prev = current ? userOf(current) : null;
+  const [mode, setMode] = useState<Mode>(current?.mode === 'full' ? 'full' : 'quick');
+  const [first, setFirst] = useState(prev?.first ?? '');
+  const [last, setLast] = useState(prev?.last ?? '');
+  const [number, setNumber] = useState(current?.profile.number ?? 23);
+  const [hand, setHand] = useState<Hand>(prev?.hand ?? 'R');
+  const [nat, setNat] = useState(prev?.nat ?? 'ESP');
   const [q, setQ] = useState('');
-  const [pos, setPos] = useState<Pos>('SF');
-  const [arch, setArch] = useState<Archetype>('twoWay');
+  const [pos, setPos] = useState<Pos>(prev?.pos ?? 'SF');
+  const [arch, setArch] = useState<Archetype>(prev?.arch ?? 'twoWay');
 
   const archs = ARCHETYPES.filter((a) => a.positions.includes(pos));
   const pickPos = (p: Pos) => {
     setPos(p);
     if (!ARCHETYPES.find((a) => a.id === arch)!.positions.includes(p)) setArch(ARCHETYPES.find((a) => a.positions.includes(p))!.id);
   };
-  const countries = COUNTRIES.filter((c) => c.name.toLowerCase().includes(q.trim().toLowerCase())).sort((a, b) => a.name.localeCompare(b.name, 'es'));
+  // The chosen country stays on top so it is visible without scrolling the list.
+  const countries = COUNTRIES.filter((c) => c.name.toLowerCase().includes(q.trim().toLowerCase())).sort((a, b) => Number(b.code === nat) - Number(a.code === nat) || a.name.localeCompare(b.name, 'es'));
   const ready = last.trim().length > 0;
 
   const confirm = () => {

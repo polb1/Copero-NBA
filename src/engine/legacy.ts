@@ -28,22 +28,26 @@ export function legacyScore(c: Career): number {
   // Seasons abroad count too, at a lower weight than the NBA.
   const eu = sumStats(c.seasons.filter((s) => s.comp === 'EUR').map((s) => s.stats));
   const euSeasons = c.seasons.filter((s) => s.comp === 'EUR' && s.stats.gp > 0).length;
-  let score = eu.pts / 600 + (eu.oreb + eu.dreb) / 1000 + eu.ast / 800 + euSeasons * 1 + t.pts / 250 + (t.oreb + t.dreb) / 450 + t.ast / 320 + (t.stl + t.blk) / 250 + nbaSeasons * 2 + Math.max(0, peak - 74) * 3 + p.gp * 0.2;
+  // Volume alone (a long career as a role player) should not make a star: peak level and awards weigh most.
+  let score = eu.pts / 800 + (eu.oreb + eu.dreb) / 1400 + eu.ast / 1100 + euSeasons * 0.8 + t.pts / 420 + (t.oreb + t.dreb) / 750 + t.ast / 520 + (t.stl + t.blk) / 420 + nbaSeasons * 1.2 + Math.max(0, peak - 76) * 4 + p.gp * 0.15;
   const counts = awardCounts(c);
   for (const [k, n] of Object.entries(counts)) score += (AWARD_POINTS[k] ?? 0) * n;
   return Math.round(score);
 }
 
+/** Legacy score needed for each tier (the in-game meter and the retirement verdict share them). */
+export const LEGACY_TIERS = { role: 30, solid: 80, star: 160, hof: 260, legend: 560 } as const;
+
 export function hofProbability(score: number) {
-  return 1 / (1 + Math.exp(-(score - 200) / 32));
+  return 1 / (1 + Math.exp(-(score - (LEGACY_TIERS.hof - 30)) / 32));
 }
 
 export function legacyTier(score: number) {
-  if (score >= 420) return 'Leyenda del juego';
-  if (score >= 230) return 'Miembro del Hall of Fame';
-  if (score >= 150) return 'Estrella de la liga';
-  if (score >= 80) return 'Jugador sólido';
-  if (score >= 30) return 'Jugador de rol';
+  if (score >= LEGACY_TIERS.legend) return 'Leyenda del juego';
+  if (score >= LEGACY_TIERS.hof) return 'Miembro del Hall of Fame';
+  if (score >= LEGACY_TIERS.star) return 'Estrella de la liga';
+  if (score >= LEGACY_TIERS.solid) return 'Jugador sólido';
+  if (score >= LEGACY_TIERS.role) return 'Jugador de rol';
   return 'Paso fugaz por el profesionalismo';
 }
 

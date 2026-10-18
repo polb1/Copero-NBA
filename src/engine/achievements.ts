@@ -1,5 +1,5 @@
 import type { Career } from './types';
-import { awardCounts, careerTotals, legacyScore, playoffTotals } from './legacy';
+import { awardCounts, careerTotals, LEGACY_TIERS, legacyScore, playoffTotals } from './legacy';
 
 export interface AchievementDef {
   id: string;
@@ -42,7 +42,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   { id: 'journeyman', title: 'Trotamundos', desc: 'Juega en 5 franquicias distintas.', icon: '🧳', check: (c) => new Set(c.seasons.filter((s) => s.comp === 'NBA' && s.teamId).map((s) => s.teamId)).size >= 5 },
   { id: 'gleague', title: 'Forjado en la G League', desc: 'Juega en la G League y luego sé titular en la NBA.', icon: '🔨', check: (c) => c.seasons.some((s) => s.comp === 'GLG') && careerTotals(c).gs >= 41 },
   { id: 'longevity', title: 'Longevidad', desc: '15 temporadas en la NBA.', icon: '⏳', check: (c) => c.seasons.filter((s) => s.comp === 'NBA' && s.stats.gp > 0).length >= 15 },
-  { id: 'hof', title: 'Inmortal', desc: 'Retírate con un Legacy Score de Hall of Fame.', icon: '🏛️', check: (c) => c.phase === 'retired' && legacyScore(c) >= 230 },
+  { id: 'hof', title: 'Inmortal', desc: 'Retírate con un Legacy Score de Hall of Fame.', icon: '🏛️', check: (c) => c.phase === 'retired' && legacyScore(c) >= LEGACY_TIERS.hof },
   { id: 'max', title: 'Contrato máximo', desc: 'Firma un contrato máximo.', icon: '💰', check: (c) => c.flags.maxContract === 1 },
 ];
 

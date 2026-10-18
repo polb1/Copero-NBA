@@ -83,7 +83,8 @@ export function ShotMeter({ spec, onDone, onSimulate }: { spec: MinigameSpec; on
         <div className="ball-fly">🏀</div>
         {flash && <div className="shot-msg">{flash === 'in' ? '¡DENTRO!' : 'FUERA'}</div>}
       </div>
-      <button type="button" className="meter" onClick={shoot} disabled={locked || finished} aria-label={`Lanzar. Tiro ${Math.min(attempt + 1, spec.attempts)} de ${spec.attempts}`}>
+      {/* Fires on touch/press, not on release: a timing game must not lag behind the finger. Keyboard clicks (detail 0) still shoot. */}
+      <button type="button" className="meter" onPointerDown={(e) => { e.preventDefault(); shoot(); }} onClick={(e) => { if (e.detail === 0) shoot(); }} disabled={locked || finished} aria-label={`Lanzar. Tiro ${Math.min(attempt + 1, spec.attempts)} de ${spec.attempts}`}>
         <span className="zone" style={{ left: `${center - spec.zone / 2}%`, width: `${spec.zone}%` }} />
         <span className="sweet" style={{ left: `${center - 0.6}%` }} />
         <div className="marker" ref={markerRef} />

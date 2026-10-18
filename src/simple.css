@@ -108,7 +108,7 @@
 .shot-msg { position: absolute; right: 8px; top: 8px; font-weight: 900; font-size: 1.3rem; letter-spacing: 0.04em; animation: pop 0.35s var(--ease) both; }
 .hoop.in .shot-msg { color: var(--good); }
 .hoop.out .shot-msg { color: var(--bad); }
-.meter { position: relative; display: block; width: 100%; height: 44px; border-radius: 12px; border: 1px solid var(--line-2); background: linear-gradient(90deg, #3b1d1d, #2a2a2a 40%, #2a2a2a 60%, #3b1d1d); cursor: pointer; overflow: hidden; padding: 0; }
+.meter { touch-action: manipulation; -webkit-tap-highlight-color: transparent; position: relative; display: block; width: 100%; height: 44px; border-radius: 12px; border: 1px solid var(--line-2); background: linear-gradient(90deg, #3b1d1d, #2a2a2a 40%, #2a2a2a 60%, #3b1d1d); cursor: pointer; overflow: hidden; padding: 0; }
 .meter:disabled { cursor: default; }
 .meter .zone { position: absolute; top: 0; bottom: 0; background: rgba(52, 211, 153, 0.45); border-left: 2px solid var(--good); border-right: 2px solid var(--good); }
 .meter .sweet { position: absolute; top: 0; bottom: 0; width: 1.2%; background: rgba(255, 255, 255, 0.55); }
@@ -319,3 +319,13 @@
   .choice:hover .choice-img img, .choice:hover .choice-img svg { transform: none; }
   .sim-bar span { animation: none; }
 }
+
+/* Replay hooks: record to beat and where a finished career ranks. */
+.legacy-best { margin-top: 6px; }
+.career-rank-line { margin: 8px 0 0; padding: 8px 12px; border-radius: 10px; background: #17191d; border: 1px solid var(--line); font-size: 0.85rem; font-weight: 700; color: var(--text-2); }
+.career-rank-line.record { color: #3b2705; background: linear-gradient(90deg, #f5c451, #f97316); border-color: transparent; }
+.choice.primary { background: linear-gradient(180deg, #c2410c, #7c2d12); border-color: rgba(255, 160, 90, 0.5); }
+.shot-score { white-space: nowrap; }
+/* Touch: no double-tap zoom delay or blue flash on buttons; a bigger target for the shot meter. */
+button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+@media (max-width: 560px) { .meter { height: 56px; } }
