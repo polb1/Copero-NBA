@@ -108,6 +108,13 @@ const OPTION_SCENES: [RegExp, SceneKind][] = [
   [/rival|duelo|pista|partido|jugar|canastas|equipo|estren|sin miedo|atr[eé]v/, 'arena'],
 ];
 
+/** Small icon per scene, shown on phones where the option photos are hidden. */
+export const SCENE_EMOJI: Record<SceneKind, string> = {
+  arena: '🏀', training: '💪', locker: '🤝', coach: '📋', press: '🎤', medical: '🩺', contract: '✍️', money: '💰', sneakers: '👟',
+  phone: '📱', trophy: '🏆', draft: '🎓', travel: '✈️', national: '🏅', summer: '☀️', family: '🏠', clutch: '⏱️', contest: '🎯',
+  college: '🎓', europe: '🌍', rest: '😴', rivalry: '⚔️',
+};
+
 /** Picks an image for an option card from its wording, like Copero's illustrated choices. */
 export function sceneForOption(text: string, fallback: SceneKind): SceneKind {
   const t = text.toLowerCase();

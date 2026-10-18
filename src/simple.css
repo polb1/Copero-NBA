@@ -340,3 +340,5 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .streak { margin: 4px 0 0; color: #fb923c; font-weight: 700; }
 .tl-mode { margin-left: 6px; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--line-2); background: transparent; color: var(--text-2); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.04em; cursor: pointer; }
 .tl-mode[aria-pressed='true'] { color: var(--accent); border-color: var(--accent); }
+.choice-emoji { display: none; }
+@media (max-width: 960px) { .choice-emoji { display: block; font-size: 1.6rem; line-height: 1; margin-bottom: 2px; } }

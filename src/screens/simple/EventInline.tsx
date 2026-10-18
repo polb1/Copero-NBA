@@ -6,7 +6,7 @@ import { store } from '../../store/store';
 import { CATEGORY_ICON } from '../../ui/simple';
 import { ShotMeter } from '../../ui/ShotMeter';
 import { CATEGORY_SCENE, Scene } from '../../ui/Scene';
-import { sceneForOption } from '../../ui/life';
+import { SCENE_EMOJI, sceneForOption } from '../../ui/life';
 
 /** Narrative decision rendered as Copero-style cards inside the career screen. */
 export function EventModalInline({ c }: { c: Career }) {
@@ -40,14 +40,18 @@ export function EventModalInline({ c }: { c: Career }) {
         <ShotMeter key={ev.defId + ev.title} spec={ev.minigame} onDone={(made) => store.act((x) => playMinigame(x, made))} onSimulate={() => store.act((x) => chooseOption(x, 0))} />
       ) : !ev.resolved ? (
         <div className="choices">
-          {ev.options.map((o, i) => (
+          {ev.options.map((o, i) => {
+            const kind = sceneForOption(o.label + ' ' + o.desc, CATEGORY_SCENE[ev.category] ?? 'arena');
+            return (
             <button key={i} className="choice with-img" onClick={() => store.act((x) => chooseOption(x, i))}>
-              <Scene kind={sceneForOption(o.label + ' ' + o.desc, CATEGORY_SCENE[ev.category] ?? 'arena')} variant={`${ev.defId}-${i}`} height={96} still className="choice-img" />
+              <Scene kind={kind} variant={`${ev.defId}-${i}`} height={96} still className="choice-img" />
+              <span className="choice-emoji" aria-hidden="true">{SCENE_EMOJI[kind]}</span>
               <span className="tiny dim">Opción {i + 1}</span>
               <b className="choice-title">{o.label}</b>
               <span className="choice-body">{o.desc}</span>
             </button>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <div className="result anim-in">
