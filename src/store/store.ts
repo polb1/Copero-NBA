@@ -243,12 +243,14 @@ interface State {
   busy: string | null;
   /** Live simulation in progress (non-blocking): label shown in the career screen. */
   sim: string | null;
+  /** The player asked to skip the live animation until the next decision. */
+  simFast: boolean;
   toasts: { id: number; text: string }[];
   settings: Settings;
   saveError: boolean;
 }
 
-let state: State = { career: null, busy: null, sim: null, toasts: [], settings: getSettings(), saveError: false };
+let state: State = { career: null, busy: null, sim: null, simFast: false, toasts: [], settings: getSettings(), saveError: false };
 const listeners = new Set<() => void>();
 const emit = () => listeners.forEach((l) => l());
 const set = (patch: Partial<State>) => {
@@ -334,18 +336,23 @@ export const store = {
     const c = clone(state.career);
     fn?.(c);
     set({ sim: label, career: { ...c } });
-    const frame = () => new Promise((r) => setTimeout(r, 30));
+    const frame = () => new Promise((r) => setTimeout(r, state.simFast ? 0 : 30));
     try {
       for (let i = 0; i < 400; i++) {
         await frame();
-        const done = step(c);
+        // Skipping runs several slices per frame (still yielding so the screen never freezes).
+        let done = false;
+        for (let k = 0; k < (state.simFast ? 4 : 1) && !done; k++) done = step(c);
         set({ career: { ...c } });
         if (done) break;
       }
     } finally {
       store.setCareer(c);
-      set({ sim: null });
+      set({ sim: null, simFast: false });
     }
+  },
+  fastForward() {
+    if (state.sim) set({ simFast: true });
   },
   toast(text: string) {
     const id = Date.now() + Math.random();

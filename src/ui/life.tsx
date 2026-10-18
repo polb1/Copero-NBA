@@ -5,6 +5,7 @@ import { fmtDate, seasonLabel } from '../engine/schedule';
 import { teamOf, userOf } from '../engine/career';
 import { Scene, type SceneKind } from './Scene';
 import { GOLD_OVR, ovrTone } from './simple';
+import { store, useStore } from '../store/store';
 
 /** Animates a number towards its new value and reports the last change. */
 export function useCountUp(value: number, ms = 900) {
@@ -44,6 +45,12 @@ export function OvrTile({ ovr }: { ovr: number }) {
   );
 }
 
+/** Skips the animation up to the next decision (the simulation itself is the same). */
+function SkipButton() {
+  const fast = useStore((s) => s.simFast);
+  return <button type="button" className="btn sm ghost skip-btn" disabled={fast} onClick={() => store.fastForward()}>{fast ? '⏩…' : 'Saltar ⏩'}</button>;
+}
+
 /** What the screen shows while the season is being simulated: date and progress, never results. */
 export function SimProgress({ c, label }: { c: Career; label: string }) {
   const L = c.league;
@@ -77,6 +84,7 @@ export function SimProgress({ c, label }: { c: Career; label: string }) {
           <div className="sim-bar"><span style={{ width: `${Math.round(pct * 100)}%` }} /></div>
           <div className="tiny dim" style={{ marginTop: 6 }}>Los resultados se revelan al final de la temporada.</div>
         </div>
+        <SkipButton />
       </div>
     </div>
   );
