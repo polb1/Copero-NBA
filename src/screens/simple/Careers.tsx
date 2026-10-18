@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { careerHistory, clearHistory, store, useCareer, type CareerRecord } from '../../store/store';
+import { careerHistory, clearHistory, playStreak, store, useCareer, type CareerRecord } from '../../store/store';
 import { seasonLabel } from '../../engine/schedule';
 import { f1 } from '../../engine/stats';
 import { Flag } from '../../ui/Flag';
@@ -29,7 +29,7 @@ export function Careers() {
         <div className="simple-head">
           <div>
             <h2>Mis carreras</h2>
-            {list.length > 0 && <p className="tiny dim" style={{ margin: '4px 0 0' }}>{list.length} {list.length === 1 ? 'carrera' : 'carreras'} · {doneCount} {doneCount === 1 ? 'reto cumplido' : 'retos cumplidos'} · mejor legado {Math.max(...list.map((r) => r.legacyScore))}</p>}
+            {list.length > 0 && <p className="tiny dim" style={{ margin: '4px 0 0' }}>{list.length} {list.length === 1 ? 'carrera' : 'carreras'} · {doneCount} {doneCount === 1 ? 'reto cumplido' : 'retos cumplidos'} · mejor legado {Math.max(...list.map((r) => r.legacyScore))}{playStreak() >= 2 ? ` · 🔥 racha de ${playStreak()} días` : ''}</p>}
           </div>
           {list.length > 1 && (
             <div className="seg" role="radiogroup" aria-label="Ordenar">

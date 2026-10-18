@@ -337,3 +337,4 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .delta-up { color: var(--good); } .delta-down { color: var(--bad); }
 @media (max-width: 560px) { .start-panel .simple-foot { flex-wrap: wrap; } .start-panel .foot-hint { order: -1; width: 100%; text-align: center; } }
 .skip-btn { flex: none; align-self: center; white-space: nowrap; }
+.streak { margin: 4px 0 0; color: #fb923c; font-weight: 700; }

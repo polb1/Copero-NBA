@@ -8,7 +8,7 @@ import type { NewCareerInput } from '../../engine/career';
 import { newCareer } from '../../engine/api';
 import { newSeed } from '../../engine/rng';
 import { CHALLENGES, rollChallenge } from '../../engine/challenges';
-import { store, useCareer } from '../../store/store';
+import { playStreak, store, useCareer } from '../../store/store';
 import { userOf } from '../../engine/career';
 import { CourtPicker, Jersey } from '../../ui/simple';
 import { Flag } from '../../ui/Flag';
@@ -87,7 +87,10 @@ export function Start() {
     <div className="simple-wrap">
       <div className="simple-panel start-panel anim-in">
         <div className="simple-head">
-          <h2>Crea tu jugador</h2>
+          <div>
+            <h2>Crea tu jugador</h2>
+            {playStreak() >= 2 && <p className="tiny streak">🔥 {playStreak()} días seguidos jugando</p>}
+          </div>
           <div className="seg" role="radiogroup" aria-label="Ritmo">
             <button aria-pressed={mode === 'full'} onClick={() => setMode('full')}>Intenso</button>
             <button aria-pressed={mode === 'quick'} onClick={() => setMode('quick')}>Normal</button>

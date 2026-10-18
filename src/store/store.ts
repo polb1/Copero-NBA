@@ -14,6 +14,7 @@ const KEY_INDEX = 'nbalegacy:slots';
 const KEY_SAVE = (id: string) => `nbalegacy:save:${id}`;
 const KEY_ACH = 'nbalegacy:achievements';
 const KEY_HISTORY = 'nbalegacy:history';
+const KEY_STREAK = 'nbalegacy:streak';
 const KEY_SETTINGS = 'nbalegacy:settings';
 const KEY_LAST = 'nbalegacy:last';
 
@@ -77,6 +78,7 @@ export function saveCareer(c: Career): boolean {
   for (const s of listSlots()) if (s.id !== c.id) deleteSlot(s.id);
   const ok = write(KEY_SAVE(c.id), c);
   write(KEY_INDEX, [metaFor(c)]);
+  touchStreak();
   if (c.retirement) recordHistory(c);
   write(KEY_LAST, c.id);
   mergeAchievements(c.achievements);
@@ -195,6 +197,23 @@ function recordHistory(c: Career) {
     endedAt: careerHistory().find((h) => h.id === c.id)?.endedAt ?? Date.now(),
   };
   write(KEY_HISTORY, [...careerHistory().filter((h) => h.id !== c.id), rec]);
+}
+
+// ---------- Daily streak (days in a row with at least one game action) ----------
+const dayKey = (d: Date) => `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+function touchStreak() {
+  const today = dayKey(new Date());
+  const s = read<{ last: string; days: number }>(KEY_STREAK, { last: '', days: 0 });
+  if (s.last === today) return;
+  const yesterday = dayKey(new Date(Date.now() - 86400000));
+  write(KEY_STREAK, { last: today, days: s.last === yesterday ? s.days + 1 : 1 });
+}
+/** Current streak in days (0 if the last day played was before yesterday). */
+export function playStreak(): number {
+  const s = read<{ last: string; days: number }>(KEY_STREAK, { last: '', days: 0 });
+  const today = dayKey(new Date());
+  const yesterday = dayKey(new Date(Date.now() - 86400000));
+  return s.last === today || s.last === yesterday ? s.days : 0;
 }
 
 export function clearHistory() {
