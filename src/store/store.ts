@@ -4,12 +4,13 @@ import { SAVE_VERSION, userOf } from '../engine/career';
 import { fullName } from '../engine/players';
 import { teamName } from '../engine/league';
 import { seasonLabel } from '../engine/schedule';
+import { averages } from '../engine/stats';
 
 // ---------- Persistence ----------
 const KEY_INDEX = 'nbalegacy:slots';
 const KEY_SAVE = (id: string) => `nbalegacy:save:${id}`;
 const KEY_ACH = 'nbalegacy:achievements';
-const KEY_DAILY = 'nbalegacy:daily';
+const KEY_HISTORY = 'nbalegacy:history';
 const KEY_SETTINGS = 'nbalegacy:settings';
 const KEY_LAST = 'nbalegacy:last';
 
@@ -69,13 +70,13 @@ function metaFor(c: Career): SlotMeta {
 
 export function saveCareer(c: Career): boolean {
   c.updatedAt = Date.now();
+  // One career at a time: starting a new one replaces the previous save (finished ones live on in the history).
+  for (const s of listSlots()) if (s.id !== c.id) deleteSlot(s.id);
   const ok = write(KEY_SAVE(c.id), c);
-  const idx = listSlots().filter((s) => s.id !== c.id);
-  idx.push(metaFor(c));
-  write(KEY_INDEX, idx);
+  write(KEY_INDEX, [metaFor(c)]);
+  if (c.retirement) recordHistory(c);
   write(KEY_LAST, c.id);
   mergeAchievements(c.achievements);
-  if (c.mode === 'daily' && c.dailyKey && c.retirement) recordDaily(c.dailyKey, c.retirement.legacyScore, fullName(userOf(c)));
   return ok;
 }
 
@@ -103,19 +104,93 @@ export function lastSlotId(): string | null {
   return read<string | null>(KEY_LAST, null);
 }
 
+/** Downloads the career as JSON (used by the crash screen to rescue a save). */
 export function exportCareer(c: Career) {
   const blob = new Blob([JSON.stringify(c)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `nba-legacy-${fullName(userOf(c)).replace(/\s+/g, '-').toLowerCase()}-${seasonLabel(c.league.season)}.json`;
+  a.download = `nba-legacy-${fullName(userOf(c)).replace(/s+/g, '-').toLowerCase()}-${seasonLabel(c.league.season)}.json`;
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 2000);
 }
 
-export function importCareer(text: string): Career {
-  const c = JSON.parse(text) as Career;
-  if (!c || typeof c !== 'object' || !c.league || !c.userId || c.version !== SAVE_VERSION) throw new Error('Archivo de partida no válido o de otra versión.');
-  return c;
+/** Old builds kept many saves: move the finished ones into the history and keep only the last career. */
+export function consolidateSaves() {
+  const last = lastSlotId();
+  const known = new Set(careerHistory().map((h) => h.id));
+  for (const s of listSlots()) {
+    if (s.phase === 'retired' && !known.has(s.id)) {
+      const c = loadCareer(s.id);
+      if (c?.retirement) recordHistory(c);
+    }
+    if (s.id !== last) deleteSlot(s.id);
+  }
+}
+
+// ---------- Finished careers (kept small so they can pile up) ----------
+export interface CareerRecord {
+  id: string;
+  name: string;
+  nat: string;
+  pos: string;
+  from: number;
+  to: number;
+  age: number;
+  seasons: number;
+  teams: string[];
+  gp: number;
+  ppg: number;
+  rpg: number;
+  apg: number;
+  pts: number;
+  titles: number;
+  mvp: number;
+  allStar: number;
+  peakOvr: number;
+  legacyScore: number;
+  tier: string;
+  hof: number;
+  endedAt: number;
+}
+
+export function careerHistory(): CareerRecord[] {
+  return read<CareerRecord[]>(KEY_HISTORY, []);
+}
+
+function recordHistory(c: Career) {
+  const u = userOf(c);
+  const r = c.retirement!;
+  const a = averages(r.totals);
+  const pro = c.seasons.filter((s) => s.stats.gp > 0);
+  const rec: CareerRecord = {
+    id: c.id,
+    name: fullName(u),
+    nat: u.nat,
+    pos: u.pos,
+    from: c.seasons[0]?.season ?? r.season,
+    to: c.seasons[c.seasons.length - 1]?.season ?? r.season,
+    age: r.age,
+    seasons: new Set(pro.map((s) => s.season)).size,
+    teams: [...new Set(pro.map((s) => s.teamName))],
+    gp: r.totals.gp,
+    ppg: a.ppg,
+    rpg: a.rpg,
+    apg: a.apg,
+    pts: r.totals.pts,
+    titles: r.titles,
+    mvp: r.awards.mvp ?? 0,
+    allStar: r.awards.allStar ?? 0,
+    peakOvr: r.peakOvr,
+    legacyScore: r.legacyScore,
+    tier: r.tier,
+    hof: r.hofProbability,
+    endedAt: careerHistory().find((h) => h.id === c.id)?.endedAt ?? Date.now(),
+  };
+  write(KEY_HISTORY, [...careerHistory().filter((h) => h.id !== c.id), rec]);
+}
+
+export function clearHistory() {
+  write(KEY_HISTORY, []);
 }
 
 export function globalAchievements(): string[] {
@@ -128,17 +203,6 @@ function mergeAchievements(ids: string[]) {
   if (changed) write(KEY_ACH, [...cur]);
 }
 
-export interface DailyRecord { key: string; best: number; name: string; at: number }
-export function dailyRecords(): Record<string, DailyRecord> {
-  return read<Record<string, DailyRecord>>(KEY_DAILY, {});
-}
-function recordDaily(key: string, score: number, name: string) {
-  const all = dailyRecords();
-  if (!all[key] || all[key].best < score) {
-    all[key] = { key, best: score, name, at: Date.now() };
-    write(KEY_DAILY, all);
-  }
-}
 
 export function getSettings(): Settings {
   return { ...DEFAULT_SETTINGS, ...read<Partial<Settings>>(KEY_SETTINGS, {}) };

@@ -7,13 +7,14 @@ import { COUNTRIES } from '../../content/names';
 import type { NewCareerInput } from '../../engine/career';
 import { newCareer } from '../../engine/api';
 import { newSeed } from '../../engine/rng';
-import { store } from '../../store/store';
+import { store, useCareer } from '../../store/store';
 import { CourtPicker, Jersey } from '../../ui/simple';
 import { Flag } from '../../ui/Flag';
 
 
 export function Start() {
   const nav = useNavigate();
+  const current = useCareer();
   const [mode, setMode] = useState<Mode>('quick');
   const [first, setFirst] = useState('');
   const [last, setLast] = useState('');
@@ -73,7 +74,6 @@ export function Start() {
           <div className="seg" role="radiogroup" aria-label="Ritmo">
             <button aria-pressed={mode === 'full'} onClick={() => setMode('full')}>Intenso</button>
             <button aria-pressed={mode === 'quick'} onClick={() => setMode('quick')}>Normal</button>
-            <Link to="/daily" className="seg-link">Diario</Link>
           </div>
         </div>
         <div className="simple-cols">
@@ -118,8 +118,8 @@ export function Start() {
           </section>
         </div>
         <div className="simple-foot">
-          <button className="btn pill" onClick={() => nav('/')}>Volver</button>
-          <Link to="/new" className="small dim">Personalización avanzada</Link>
+          {current ? <button className="btn pill" onClick={() => nav('/play')}>Volver</button> : <Link to="/careers" className="btn pill">Mis carreras</Link>}
+          {current && current.phase !== 'retired' && <span className="small dim">Empezar de nuevo reemplaza la carrera actual.</span>}
           <button className="btn pill light" disabled={!ready} onClick={confirm}>Confirmar identidad</button>
         </div>
       </div>

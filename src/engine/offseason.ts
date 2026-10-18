@@ -212,6 +212,13 @@ export function beginOffseason(c: Career) {
   delete c.flags.wantsStay;
   delete c.flags.testMarket;
   delete c.flags.reinjuryRisk;
+  // Nobody plays out the string on a bench: veterans who stopped getting games hang it up.
+  const idle = gp < 5;
+  c.flags.idleSeasons = idle ? (c.flags.idleSeasons ?? 0) + 1 : 0;
+  if (idle && (u.age >= 33 || (u.age >= 30 && c.flags.idleSeasons >= 2) || c.flags.idleSeasons >= 3)) {
+    retire(c, gp === 0 ? 'Una temporada entera sin jugar: decides que es el momento de decir adiós.' : 'Sin minutos en la rotación: decides que es el momento de decir adiós.');
+    return;
+  }
   c.phase = 'offseason';
   c.offers = [];
   buildOffseasonOffers(c);

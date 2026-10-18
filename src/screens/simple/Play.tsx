@@ -69,10 +69,8 @@ export function Play() {
         </div>
       </div>
       <div className="play-tools">
-        <Link to="/daily" className="btn sm ghost" title="Desafío diario"><Icon name="sun" /> Diario</Link>
-        <Link to="/achievements" className="btn sm ghost" title="Logros" aria-label="Logros"><Icon name="medal" /></Link>
-        <Link to="/saves" className="btn sm ghost" title="Partidas" aria-label="Partidas"><Icon name="save" /></Link>
-        <Link to="/" className="btn sm ghost" title="Inicio" aria-label="Inicio"><Icon name="home" /></Link>
+        <Link to="/careers" className="btn sm ghost"><Icon name="trophy" /> Mis carreras</Link>
+        {c.phase !== 'retired' && <Link to="/start" className="btn sm ghost"><Icon name="history" /> Reiniciar</Link>}
       </div>
       <p className="tiny dim" style={{ textAlign: 'center', maxWidth: 820, margin: '14px auto 0' }}>Los nombres de franquicias se usan solo como referencia dentro de la simulación. Proyecto sin afiliación con la NBA; jugadores, entrenadores y agentes son ficticios.</p>
       {busy && <div className="busy" role="status" aria-live="polite"><div className="stack" style={{ alignItems: 'center', gap: 18 }}><div className="ball" /><span className="muted">{busy}</span></div></div>}
@@ -355,6 +353,7 @@ function Retired({ c }: { c: Career }) {
       <div className="choices">
         <Choice top="Tarjeta final" title="Descargar PNG" scene="trophy" onClick={download} />
         <Choice top="Presumir" title="Compartir" scene="phone" onClick={share} />
+        <Choice top="Comparar" title="Mis carreras" scene="trophy" onClick={() => nav('/careers')} />
         <Choice top="Otra vez" title="Nueva carrera" scene="arena" tone="stay" onClick={() => nav('/start')} />
       </div>
     </div>
