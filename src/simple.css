@@ -342,3 +342,4 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .tl-mode[aria-pressed='true'] { color: var(--accent); border-color: var(--accent); }
 .choice-emoji { display: none; }
 @media (max-width: 960px) { .choice-emoji { display: block; font-size: 1.6rem; line-height: 1; margin-bottom: 2px; } }
+@media (max-width: 560px) { .career-list { max-height: none; overflow: visible; } }
