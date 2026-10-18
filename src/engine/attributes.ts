@@ -98,7 +98,9 @@ export const ARCHETYPES: ArchetypeDef[] = [
     bias: { offIQ: 5, defIQ: 5, pass: 4, three: 3, close: 3, dreb: 3 }, growth: ['balanced'],
     sim: { threeRate: 0.36, usage: 1.05, creation: 1.15, boards: 1.1, ftRate: 1.1 } },
 ];
-export const archetypeDef = (a: Archetype) => ARCHETYPES.find((x) => x.id === a)!;
+// Map lookup: the game sim asks for archetypes several times per player per game.
+const ARCHETYPE_BY_ID = new Map(ARCHETYPES.map((x) => [x.id, x]));
+export const archetypeDef = (a: Archetype) => ARCHETYPE_BY_ID.get(a)!;
 
 export const POS_LABEL: Record<Pos, string> = {
   PG: 'Base', SG: 'Escolta', SF: 'Alero', PF: 'Ala-pívot', C: 'Pívot',

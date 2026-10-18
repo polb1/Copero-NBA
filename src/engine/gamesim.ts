@@ -60,7 +60,9 @@ export function buildRotation(league: League, teamId: string, o: RotationOptions
     if (p.age <= 22) e -= Math.max(0, 55 - t.coach.patience) * 0.04;
     return e;
   };
-  avail.sort((a, b) => eff(b) - eff(a));
+  // Each player's rating is computed once, not on every comparison of the sort.
+  const effOf = new Map(avail.map((p) => [p, eff(p)] as const));
+  avail.sort((a, b) => effOf.get(b)! - effOf.get(a)!);
   // Positional sanity for the starting five: at least one guard and one big.
   const isGuard = (p: Player) => p.pos === 'PG' || p.pos === 'SG';
   const isBig = (p: Player) => p.pos === 'PF' || p.pos === 'C';
@@ -105,26 +107,34 @@ function blank(p: SimPlayer): Acc {
   return { pid: p.id, min: 0, pts: 0, oreb: 0, dreb: 0, ast: 0, stl: 0, blk: 0, tov: 0, pf: 0, fgm: 0, fga: 0, tpm: 0, tpa: 0, ftm: 0, fta: 0, pm: 0, starter: p.starter };
 }
 
-function pickWeighted(rng: Rng, weights: number[]): number {
+const sumOf = (w: number[]) => {
   let total = 0;
-  for (const w of weights) total += w;
-  let r = rng.next() * total;
-  for (let i = 0; i < weights.length; i++) {
-    r -= weights[i];
-    if (r <= 0) return i;
-  }
-  return weights.length - 1;
-}
+  for (const x of w) total += x;
+  return total;
+};
 
+/**
+ * Hands out `n` events by weight. Same draws and same float sums as a weighted pick that re-sums every time, but the
+ * total is only recomputed when a cap zeroes a weight (this runs ~8 times per team per game).
+ */
 function distribute(rng: Rng, n: number, weights: number[], cap?: number[]): number[] {
   const out = weights.map(() => 0);
   if (!weights.some((w) => w > 0)) return out;
   const w = [...weights];
+  let total = sumOf(w);
   for (let k = 0; k < n; k++) {
-    const i = pickWeighted(rng, w);
+    let r = rng.next() * total;
+    let i = w.length - 1;
+    for (let j = 0; j < w.length; j++) {
+      r -= w[j];
+      if (r <= 0) { i = j; break; }
+    }
     out[i]++;
-    if (cap && out[i] >= cap[i]) w[i] = 0;
-    if (!w.some((x) => x > 0)) break;
+    if (cap && out[i] >= cap[i]) {
+      w[i] = 0;
+      if (!w.some((x) => x > 0)) break;
+      total = sumOf(w);
+    }
   }
   return out;
 }

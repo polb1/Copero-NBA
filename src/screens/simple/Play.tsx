@@ -1,4 +1,4 @@
-import { Children, useEffect, type ReactNode } from 'react';
+import { Children, memo, useEffect, type ReactNode } from 'react';
 import { LEGACY_TIERS, legacyScore } from '../../engine/legacy';
 import { challengeOf } from '../../engine/challenges';
 import { Link, useNavigate } from 'react-router-dom';
@@ -60,12 +60,12 @@ export function Play() {
     <div className="simple-wrap">
       <div className="play-grid anim-in">
         <div className="play-left">
-          <TopCard c={c} />
+          <MemoTopCard c={c} />
           <div className="divider" style={{ margin: '18px 0' }} />
           {sim ? <SimProgress c={c} label={sim} /> : <Decision c={c} />}
         </div>
         <div className="play-right">
-          <Timeline c={c} />
+          <MemoTimeline c={c} />
         </div>
       </div>
       <div className="play-tools">
@@ -78,6 +78,18 @@ export function Play() {
     </div>
   );
 }
+
+/**
+ * Everything the card and the timeline display. During a live simulation most slices change none of it,
+ * so those (large) parts skip re-rendering — that redraw was most of the per-frame cost on phones.
+ */
+function viewSig(c: Career): string {
+  const u = userOf(c);
+  return [c.id, c.phase, c.seasons.length, c.ovrHistory.length, u.ovr, u.pot, u.age, u.teamId, u.injury?.daysLeft ?? '', c.satellite?.teamName ?? '', c.predraft?.clubName ?? '', c.predraft?.step ?? '', c.league.season, c.league.day > 0, c.offers.length, c.retirement ? 1 : 0, c.flags.challenge ?? ''].join('|');
+}
+const sameView = (a: { c: Career }, b: { c: Career }) => viewSig(a.c) === viewSig(b.c);
+const MemoTopCard = memo(TopCard, sameView);
+const MemoTimeline = memo(Timeline, sameView);
 
 function TopCard({ c }: { c: Career }) {
   const u = userOf(c);

@@ -23,60 +23,67 @@ export function hashString(s: string): number {
   return h >>> 0;
 }
 
-export function mulberry32(seed: number): Rng {
-  let a = seed >>> 0;
-  const next = () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = a;
+/**
+ * Mulberry32 PRNG. A class (shared prototype methods) rather than an object of closures: the season sim
+ * creates thousands of short-lived streams, and allocating ten functions per stream showed up in profiles.
+ * The sequence is identical either way.
+ */
+class Mulberry32 implements Rng {
+  private a: number;
+  private spare: number | null = null;
+  constructor(seed: number) {
+    this.a = seed >>> 0;
+  }
+  next(): number {
+    this.a = (this.a + 0x6d2b79f5) >>> 0;
+    let t = this.a;
     t = Math.imul(t ^ (t >>> 15), t | 1);
     t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-  let spare: number | null = null;
-  const rng: Rng = {
-    next,
-    int: (min, max) => min + Math.floor(next() * (max - min + 1)),
-    range: (min, max) => min + next() * (max - min),
-    chance: (p) => next() < p,
-    normal: (mean = 0, sd = 1) => {
-      if (spare !== null) {
-        const v = spare;
-        spare = null;
-        return mean + sd * v;
-      }
-      let u = 0;
-      let v = 0;
-      while (u === 0) u = next();
-      v = next();
-      const mag = Math.sqrt(-2 * Math.log(u));
-      spare = mag * Math.sin(2 * Math.PI * v);
-      return mean + sd * mag * Math.cos(2 * Math.PI * v);
-    },
-    pick: (arr) => arr[Math.floor(next() * arr.length)],
-    weighted: (items, weight) => {
-      let total = 0;
-      for (const it of items) total += Math.max(0, weight(it));
-      let r = next() * total;
-      for (const it of items) {
-        r -= Math.max(0, weight(it));
-        if (r <= 0) return it;
-      }
-      return items[items.length - 1];
-    },
-    shuffle: (arr) => {
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(next() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    },
-    binomial: (n, p) => {
-      let k = 0;
-      for (let i = 0; i < n; i++) if (next() < p) k++;
-      return k;
-    },
-  };
-  return rng;
+  }
+  int(min: number, max: number) { return min + Math.floor(this.next() * (max - min + 1)); }
+  range(min: number, max: number) { return min + this.next() * (max - min); }
+  chance(p: number) { return this.next() < p; }
+  normal(mean = 0, sd = 1) {
+    if (this.spare !== null) {
+      const v = this.spare;
+      this.spare = null;
+      return mean + sd * v;
+    }
+    let u = 0;
+    while (u === 0) u = this.next();
+    const v = this.next();
+    const mag = Math.sqrt(-2 * Math.log(u));
+    this.spare = mag * Math.sin(2 * Math.PI * v);
+    return mean + sd * mag * Math.cos(2 * Math.PI * v);
+  }
+  pick<T>(arr: readonly T[]): T { return arr[Math.floor(this.next() * arr.length)]; }
+  weighted<T>(items: readonly T[], weight: (t: T) => number): T {
+    let total = 0;
+    for (const it of items) total += Math.max(0, weight(it));
+    let r = this.next() * total;
+    for (const it of items) {
+      r -= Math.max(0, weight(it));
+      if (r <= 0) return it;
+    }
+    return items[items.length - 1];
+  }
+  shuffle<T>(arr: T[]): T[] {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(this.next() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+  binomial(n: number, p: number) {
+    let k = 0;
+    for (let i = 0; i < n; i++) if (this.next() < p) k++;
+    return k;
+  }
+}
+
+export function mulberry32(seed: number): Rng {
+  return new Mulberry32(seed);
 }
 
 /** Derived stream: same seed + keys => same sequence, independent of other streams. */

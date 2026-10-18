@@ -295,9 +295,19 @@ export const store = {
   /** Applies an engine action to a clone of the career, then saves. */
   act(fn: (c: Career) => void) {
     if (!state.career) return;
-    const c = clone(state.career);
-    fn(c);
-    store.setCareer(c);
+    // Mutate in place and publish a shallow copy: a deep copy of the league cost phones ~60 ms per tap.
+    const c = state.career;
+    try {
+      fn(c);
+    } catch (e) {
+      // Never keep a half-applied action: drop the pending save (it shares the mutated objects) and fall
+      // back to the last saved state.
+      pendingSave = null;
+      const saved = loadCareer(c.id);
+      if (saved) set({ career: saved });
+      throw e;
+    }
+    store.setCareer({ ...c });
   },
   /** Same as act, but shows a loading overlay and yields to the browser first (long simulations). */
   actAsync(label: string, fn: (c: Career) => void): Promise<void> {
