@@ -229,6 +229,9 @@ export function resetAllData() {
 }
 
 // ---------- Global store ----------
+// structuredClone is missing on older phones (iOS < 15.4); careers are plain JSON, so this fallback is exact.
+const clone = <T,>(v: T): T => (typeof structuredClone === 'function' ? structuredClone(v) : JSON.parse(JSON.stringify(v)));
+
 interface State {
   career: Career | null;
   busy: string | null;
@@ -264,7 +267,7 @@ export const store = {
   /** Applies an engine action to a clone of the career, then saves. */
   act(fn: (c: Career) => void) {
     if (!state.career) return;
-    const c = structuredClone(state.career);
+    const c = clone(state.career);
     fn(c);
     store.setCareer(c);
   },
@@ -288,14 +291,14 @@ export const store = {
    */
   async actLive(label: string, step: (c: Career) => boolean, fn?: (c: Career) => void) {
     if (!state.career || state.sim) return;
-    let c = structuredClone(state.career);
+    let c = clone(state.career);
     fn?.(c);
     set({ sim: label, career: c });
     const frame = () => new Promise((r) => setTimeout(r, 45));
     try {
       for (let i = 0; i < 400; i++) {
         await frame();
-        c = structuredClone(c);
+        c = clone(c);
         const done = step(c);
         set({ career: c });
         if (done) break;
