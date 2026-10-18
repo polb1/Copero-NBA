@@ -7,6 +7,7 @@ import { COUNTRIES } from '../../content/names';
 import type { NewCareerInput } from '../../engine/career';
 import { newCareer } from '../../engine/api';
 import { newSeed } from '../../engine/rng';
+import { CHALLENGES, rollChallenge } from '../../engine/challenges';
 import { store, useCareer } from '../../store/store';
 import { userOf } from '../../engine/career';
 import { CourtPicker, Jersey } from '../../ui/simple';
@@ -29,6 +30,9 @@ export function Start() {
   const [q, setQ] = useState('');
   const [pos, setPos] = useState<Pos>(prev?.pos ?? 'SF');
   const [arch, setArch] = useState<Archetype>(prev?.arch ?? 'twoWay');
+  // The seed decides the career's challenge, so it is shown (and can be re-rolled) before starting.
+  const [seed, setSeed] = useState(newSeed);
+  const challenge = CHALLENGES[rollChallenge(seed)];
 
   const archs = ARCHETYPES.filter((a) => a.positions.includes(pos));
   const pickPos = (p: Pos) => {
@@ -69,7 +73,7 @@ export function Start() {
       focus,
       look: { skin: 2, hair: 1, accent: '#c2410c' },
     };
-    store.setCareer(newCareer(input, newSeed()));
+    store.setCareer(newCareer(input, seed));
     nav('/play');
   };
 
@@ -123,6 +127,10 @@ export function Start() {
               </div>
             </div>
           </section>
+        </div>
+        <div className="start-challenge">
+          <span>🎯 <b>Reto de esta carrera:</b> {challenge.label}</span>
+          <button type="button" className="btn sm ghost" onClick={() => setSeed(newSeed())} aria-label="Cambiar reto">🎲 Otro</button>
         </div>
         <div className="simple-foot">
           {current ? <button className="btn pill" onClick={() => nav('/play')}>Volver</button> : <Link to="/careers" className="btn pill">Mis carreras</Link>}

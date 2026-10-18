@@ -342,3 +342,6 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
   .start-panel .court-pick { width: min(240px, 100%); margin: 0 auto; }
   .start-panel .simple-foot { position: sticky; bottom: 0; z-index: 5; background: rgba(19, 20, 23, 0.97); border-radius: 0 0 16px 16px; padding: 12px 14px; }
 }
+
+.start-challenge { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 22px 14px; padding: 10px 14px; border-radius: 12px; background: #17191d; border: 1px dashed var(--line-2); font-size: 0.86rem; }
+@media (max-width: 560px) { .start-challenge { margin: 0 14px 12px; font-size: 0.8rem; } }
