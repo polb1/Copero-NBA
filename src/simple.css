@@ -338,3 +338,5 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 @media (max-width: 560px) { .start-panel .simple-foot { flex-wrap: wrap; } .start-panel .foot-hint { order: -1; width: 100%; text-align: center; } }
 .skip-btn { flex: none; align-self: center; white-space: nowrap; }
 .streak { margin: 4px 0 0; color: #fb923c; font-weight: 700; }
+.tl-mode { margin-left: 6px; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--line-2); background: transparent; color: var(--text-2); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.04em; cursor: pointer; }
+.tl-mode[aria-pressed='true'] { color: var(--accent); border-color: var(--accent); }

@@ -1,4 +1,4 @@
-import { Children, memo, useEffect, type ReactNode } from 'react';
+import { Children, memo, useEffect, useState, type ReactNode } from 'react';
 import { LEGACY_TIERS, legacyScore } from '../../engine/legacy';
 import { challengeDone, challengeOf } from '../../engine/challenges';
 import { Link, useNavigate } from 'react-router-dom';
@@ -398,6 +398,9 @@ function pickRecord(list: SeasonRecord[]): SeasonRecord {
 
 function Timeline({ c }: { c: Career }) {
   const u = userOf(c);
+  // Season totals or per-game averages (the header button switches; remembered on this device).
+  const [perGame, setPerGame] = useState(() => { try { return localStorage.getItem('nbalegacy:perGame') === '1'; } catch { return false; } });
+  const togglePerGame = () => setPerGame((v) => { try { localStorage.setItem('nbalegacy:perGame', v ? '0' : '1'); } catch { /* private mode */ } return !v; });
   const byAge = new Map<number, SeasonRecord>();
   const groups = new Map<number, SeasonRecord[]>();
   for (const s of c.seasons) groups.set(s.season, [...(groups.get(s.season) ?? []), s]);
@@ -429,9 +432,9 @@ function Timeline({ c }: { c: Career }) {
           <span className="tl-club">{tm && r.comp === 'NBA' ? <TeamBadge id={tm.id} color={tm.color} size={16} /> : r.comp === 'GLG' ? <span className="tiny">🏀</span> : <ClubLogo name={r.teamName} size={16} />}<span>{r.teamName}</span>{r.comp !== 'NBA' && <span className="tiny dim">{r.comp === 'GLG' ? 'G League' : r.comp === 'EUR' ? findClub(r.teamName)?.league ?? 'Internacional' : 'NCAA'}</span>}{won && <span title="Campeón">💍</span>}{r.awards.filter((k) => k !== 'champion').slice(0, 2).map((k) => <span key={k} title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'}</span>)}</span>
           <span className={`ovr-pill ${r.ovrEnd >= 80 ? 'gold' : ''}`} style={{ background: ovrTone(r.ovrEnd) }}>{r.ovrEnd}</span>
           <span className="tl-num">{r.stats.gp}</span>
-          <span className="tl-num" title={`${f1(a.ppg)} por partido`}>{num(r.stats.pts)}</span>
-          <span className="tl-num" title={`${f1(a.rpg)} por partido`}>{num(r.stats.oreb + r.stats.dreb)}</span>
-          <span className="tl-num" title={`${f1(a.apg)} por partido`}>{num(r.stats.ast)}</span>
+          <span className="tl-num">{perGame ? f1(a.ppg) : num(r.stats.pts)}</span>
+          <span className="tl-num">{perGame ? f1(a.rpg) : num(r.stats.oreb + r.stats.dreb)}</span>
+          <span className="tl-num">{perGame ? f1(a.apg) : num(r.stats.ast)}</span>
         </div>,
       );
     } else if (age === pendingAge) {
@@ -456,7 +459,7 @@ function Timeline({ c }: { c: Career }) {
   return (
     <div className="tl">
       <div className="tl-row head">
-        <span>EDAD</span><span>EQUIPO</span><span>OVR</span><span className="tl-num">PJ</span><span className="tl-num">PTS</span><span className="tl-num">REB</span><span className="tl-num">AST</span>
+        <span>EDAD</span><span>EQUIPO <button type="button" className="tl-mode" onClick={togglePerGame} aria-pressed={perGame}>{perGame ? 'Por partido' : 'Totales'} ⇄</button></span><span>OVR</span><span className="tl-num">PJ</span><span className="tl-num">PTS</span><span className="tl-num">REB</span><span className="tl-num">AST</span>
       </div>
       <div className="tl-body">{rows}</div>
       <div className="tl-row foot">
@@ -464,9 +467,9 @@ function Timeline({ c }: { c: Career }) {
         <span className="tl-club"><span>Total carrera NBA</span></span>
         <span />
         <span className="tl-num">{num(nba.gp)}</span>
-        <span className="tl-num">{num(nba.pts)}</span>
-        <span className="tl-num">{num(nba.oreb + nba.dreb)}</span>
-        <span className="tl-num">{num(nba.ast)}</span>
+        <span className="tl-num">{perGame ? f1(averages(nba).ppg) : num(nba.pts)}</span>
+        <span className="tl-num">{perGame ? f1(averages(nba).rpg) : num(nba.oreb + nba.dreb)}</span>
+        <span className="tl-num">{perGame ? f1(averages(nba).apg) : num(nba.ast)}</span>
       </div>
       {abroad.gp > 0 && (
         <div className="tl-row foot" style={{ marginTop: 2 }}>
@@ -474,9 +477,9 @@ function Timeline({ c }: { c: Career }) {
           <span className="tl-club"><span>Total fuera de la NBA</span></span>
           <span />
           <span className="tl-num">{num(abroad.gp)}</span>
-          <span className="tl-num">{num(abroad.pts)}</span>
-          <span className="tl-num">{num(abroad.oreb + abroad.dreb)}</span>
-          <span className="tl-num">{num(abroad.ast)}</span>
+          <span className="tl-num">{perGame ? f1(averages(abroad).ppg) : num(abroad.pts)}</span>
+          <span className="tl-num">{perGame ? f1(averages(abroad).rpg) : num(abroad.oreb + abroad.dreb)}</span>
+          <span className="tl-num">{perGame ? f1(averages(abroad).apg) : num(abroad.ast)}</span>
         </div>
       )}
       <div className="nat-row">
