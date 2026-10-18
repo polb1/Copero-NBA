@@ -16,6 +16,7 @@ import { clamp, rngFor } from './rng';
 import { seasonLabel } from './schedule';
 import { SATELLITES } from './satellite';
 import { EURO_CLUBS, clubLevel, clubMinutes, findClub } from '../data/clubs';
+import { countryByCode } from '../content/names';
 
 // ---------------- League offseason ----------------
 
@@ -219,6 +220,12 @@ export function beginOffseason(c: Career) {
     retire(c, gp === 0 ? 'Una temporada entera sin jugar: decides que es el momento de decir adiós.' : 'Sin minutos en la rotación: decides que es el momento de decir adiós.');
     return;
   }
+  // Veterans whose level has fallen far (in any league) call it a day instead of playing on into their forties.
+  if ((u.age >= 37 && u.ovr < 62) || (u.age >= 39 && u.ovr < 67)) {
+    retire(c, 'Tu cuerpo dice basta: el nivel ya no es el de antes y decides retirarte.');
+    return;
+  }
+  nationalSummer(c, prevSeason);
   c.phase = 'offseason';
   c.offers = [];
   buildOffseasonOffers(c);
@@ -230,6 +237,30 @@ export function beginOffseason(c: Career) {
     markEventSeen(c, ev.id, ctx.absDay);
   }
   achievementsCheck(c);
+}
+
+/**
+ * Every summer the best players of each country play for their national team (World Cup, EuroBasket,
+ * Olympics...). The bar depends on how deep the country is; medals depend on its strength.
+ */
+function nationalSummer(c: Career, season: number) {
+  const u = userOf(c);
+  if (u.injury && u.injury.daysLeft > 20) return;
+  const country = countryByCode(u.nat);
+  const deep = u.nat === 'USA' ? 2 : country.weight >= 3 ? 1 : 0;
+  const bar = [69, 75, 85][deep];
+  if (u.ovr < bar) return;
+  c.flags.nationalTeam = 1;
+  c.flags.nationalCaps = (c.flags.nationalCaps ?? 0) + 1;
+  c.fame = clamp(c.fame + 3, 0, 100);
+  const rng = rngFor(c.seed, 'national', season);
+  const medalChance = [0.08, 0.3, 0.7][deep] + Math.max(0, u.ovr - bar - 5) * 0.01;
+  if (rng.chance(medalChance)) {
+    c.flags.medals = (c.flags.medals ?? 0) + 1;
+    addNews(c, 'milestone', `Medalla con ${country.name}`, `Torneo internacional de verano: subes al podio con ${country.name}.`, 'good');
+  } else {
+    addNews(c, 'milestone', `Convocado por ${country.name}`, `Juegas el torneo internacional de verano con ${country.name}.`, 'neutral');
+  }
 }
 
 export function needsContract(c: Career) {

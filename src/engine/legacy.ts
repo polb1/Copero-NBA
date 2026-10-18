@@ -17,7 +17,7 @@ export function awardCounts(c: Career): Record<string, number> {
 
 const AWARD_POINTS: Record<string, number> = {
   mvp: 40, fmvp: 30, champion: 25, allNba1: 15, allNba2: 10, allNba3: 6, allStar: 6, dpoy: 20, roy: 8, smoy: 6, mip: 5,
-  allDef1: 5, allDef2: 3, threeContest: 3, euroChampion: 6, euroMvp: 5, ptsLeader: 6, rebLeader: 4, astLeader: 4, stlLeader: 3, blkLeader: 3,
+  allDef1: 5, allDef2: 3, threeContest: 3, euroChampion: 12, euroMvp: 12, ptsLeader: 6, rebLeader: 4, astLeader: 4, stlLeader: 3, blkLeader: 3,
 };
 
 export function legacyScore(c: Career): number {
@@ -29,7 +29,8 @@ export function legacyScore(c: Career): number {
   const eu = sumStats(c.seasons.filter((s) => s.comp === 'EUR').map((s) => s.stats));
   const euSeasons = c.seasons.filter((s) => s.comp === 'EUR' && s.stats.gp > 0).length;
   // Volume alone (a long career as a role player) should not make a star: peak level and awards weigh most.
-  let score = eu.pts / 800 + (eu.oreb + eu.dreb) / 1400 + eu.ast / 1100 + euSeasons * 0.8 + t.pts / 420 + (t.oreb + t.dreb) / 750 + t.ast / 520 + (t.stl + t.blk) / 420 + nbaSeasons * 1.2 + Math.max(0, peak - 76) * 4 + p.gp * 0.15;
+  // A long career abroad as a star (titles, MVPs) has to be able to reach the top tiers too.
+  let score = eu.pts / 500 + (eu.oreb + eu.dreb) / 1000 + eu.ast / 800 + euSeasons * 1.5 + (c.flags.nationalCaps ?? 0) * 1 + (c.flags.medals ?? 0) * 5 + t.pts / 420 + (t.oreb + t.dreb) / 750 + t.ast / 520 + (t.stl + t.blk) / 420 + nbaSeasons * 1.2 + Math.max(0, peak - 76) * 4 + p.gp * 0.15;
   const counts = awardCounts(c);
   for (const [k, n] of Object.entries(counts)) score += (AWARD_POINTS[k] ?? 0) * n;
   return Math.round(score);
