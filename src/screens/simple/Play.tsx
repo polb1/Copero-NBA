@@ -322,7 +322,7 @@ function Timeline({ c }: { c: Career }) {
         <div key={age} className="tl-row in" style={{ animationDelay: `${Math.min(12, age - startAge) * 45}ms` }} title={`${seasonLabel(r.season)} · ${r.result}`}>
           <span className="age-badge" style={{ background: tm?.color ?? '#334155' }}>{age}</span>
           <span className="tl-club">{tm ? <TeamBadge id={tm.id} color={tm.color} size={16} /> : <span className="tiny">{r.comp === 'NCAA' ? '🎓' : r.comp === 'EUR' ? '🌍' : '🏀'}</span>}<span>{r.teamName}</span>{r.comp !== 'NBA' && <span className="tiny dim">{r.comp === 'GLG' ? 'G League' : r.comp}</span>}{won && <span title="Campeón">💍</span>}{r.awards.filter((k) => k !== 'champion').slice(0, 2).map((k) => <span key={k} title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'}</span>)}</span>
-          <span className="ovr-pill" style={{ background: ovrTone(r.ovrEnd) }}>{r.ovrEnd}</span>
+          <span className={`ovr-pill ${r.ovrEnd >= 80 ? 'gold' : ''}`} style={{ background: ovrTone(r.ovrEnd) }}>{r.ovrEnd}</span>
           <span className="tl-num">{r.stats.gp}</span>
           <span className="tl-num">{f1(a.ppg)}</span>
           <span className="tl-num">{f1(a.rpg)}</span>
@@ -337,7 +337,7 @@ function Timeline({ c }: { c: Career }) {
             {t && (c.phase === 'preseason' || inSeason(c)) ? <TeamBadge id={t.id} color={t.color} size={16} /> : <span className="q">?</span>}
             <span className="dim">{pendingLabel()}</span>
           </span>
-          <span className="ovr-pill" style={{ background: ovrTone(u.ovr) }}>{u.ovr}</span>
+          <span className={`ovr-pill ${u.ovr >= 80 ? 'gold' : ''}`} style={{ background: ovrTone(u.ovr) }}>{u.ovr}</span>
           <span className="tl-live" style={{ gridColumn: 'span 4' }}>{inSeason(c) ? 'Temporada en curso' : ''}</span>
         </div>,
       );

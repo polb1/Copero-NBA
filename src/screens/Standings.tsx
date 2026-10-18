@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { TeamBadge } from '../ui/simple';
 import { useCareer } from '../store/store';
 import { teamOf } from '../engine/career';
 import { standings, gamesBehind } from '../engine/season';
@@ -64,7 +65,7 @@ function StandTable({ L, teams, myId, seeds }: { L: League; teams: Team[]; myId?
             const l10w = t.last10.filter((x) => x === 'W').length;
             return (
               <tr key={t.id} className={`${t.id === myId ? 'me' : ''} ${seeds && (i === 5 || i === 9) ? 'sep' : ''}`}>
-                <td className="l"><span className="row" style={{ gap: 8 }}><span className="dim num" style={{ width: 18 }}>{i + 1}</span><span className="team-dot" style={{ background: t.color }} />{teamName(L, t.id)}</span></td>
+                <td className="l"><span className="row" style={{ gap: 8 }}><span className="dim num" style={{ width: 18 }}>{i + 1}</span><TeamBadge id={t.id} color={t.color} size={20} />{teamName(L, t.id)}</span></td>
                 <td>{t.w}</td><td>{t.l}</td><td>{gp ? (t.w / gp).toFixed(3).replace(/^0/, '') : '—'}</td>
                 <td className="dim">{i === 0 ? '—' : gamesBehind(teams[0], t).toFixed(1)}</td>
                 <td className="hide-sm">{t.homeW}-{t.homeL}</td><td className="hide-sm">{t.awayW}-{t.awayL}</td>

@@ -1,5 +1,7 @@
 // Building blocks for the simple (single-screen) interface.
+import { useState } from 'react';
 import type { Pos } from '../engine/types';
+import { logoUrl } from '../data/logos';
 
 export function Jersey({ name, number, color = '#c2410c', trim = '#1e293b', size = 240 }: { name: string; number: number | string; color?: string; trim?: string; size?: number }) {
   const label = (name || 'APELLIDO').toUpperCase().slice(0, 12);
@@ -25,7 +27,17 @@ export function Jersey({ name, number, color = '#c2410c', trim = '#1e293b', size
   );
 }
 
+/** Team logo (official, from the league CDN) with an original crest as fallback. */
 export function TeamBadge({ id, color, size = 64 }: { id: string; color: string; size?: number }) {
+  const url = logoUrl(id);
+  const [failed, setFailed] = useState(false);
+  if (url && !failed) {
+    return <img className="team-logo" src={url} alt="" width={size} height={size} loading="lazy" decoding="async" onError={() => setFailed(true)} style={{ width: size, height: size }} />;
+  }
+  return <TeamCrest id={id} color={color} size={size} />;
+}
+
+export function TeamCrest({ id, color, size = 64 }: { id: string; color: string; size?: number }) {
   return (
     <svg viewBox="0 0 64 72" width={size} height={size * 1.12} aria-hidden="true">
       <path d="M32 2 L60 12 L58 40 Q54 60 32 70 Q10 60 6 40 L4 12 Z" fill={color} stroke="rgba(255,255,255,.75)" strokeWidth="2.5" />
@@ -76,10 +88,12 @@ export function CourtPicker({ value, onChange }: { value: Pos; onChange: (p: Pos
   );
 }
 
+/** Card colours by OVR: gold from 80, silver 70-79, orange 60-69, bronze below. */
+export const GOLD_OVR = 80;
 export function ovrTone(ovr: number) {
-  if (ovr >= 85) return 'linear-gradient(160deg, #fde68a, #d4a017)';
-  if (ovr >= 75) return 'linear-gradient(160deg, #cbd5e1, #64748b)';
-  if (ovr >= 62) return 'linear-gradient(160deg, #fb923c, #c2410c)';
+  if (ovr >= GOLD_OVR) return 'linear-gradient(160deg, #fff3b0 0%, #f5c451 35%, #c9971c 70%, #8a6410 100%)';
+  if (ovr >= 70) return 'linear-gradient(160deg, #e2e8f0, #94a3b8 55%, #475569)';
+  if (ovr >= 60) return 'linear-gradient(160deg, #fb923c, #c2410c)';
   return 'linear-gradient(160deg, #d97706, #92400e)';
 }
 

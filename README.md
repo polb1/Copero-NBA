@@ -62,6 +62,8 @@ frecuencia de eventos). Los eventos son datos en `src/content/events.ts`.
 - **22 ilustraciones vectoriales originales** (`src/ui/Scene.tsx`) como respaldo: si una foto falta o no carga, se muestra la ilustración.
 - Para cambiar o añadir fotos: copia el archivo a `public/stock/` y añádelo a `STOCK_PHOTOS` en `src/ui/Scene.tsx` (admite varias fotos por escena; se alternan).
 
+- **Logotipos de los equipos**: se cargan en tiempo de ejecución desde la CDN pública de la NBA (`src/data/logos.ts`), no se incluyen en el paquete. Son marcas de la NBA y sus franquicias. Para vender el juego sin licencia de la NBA, pon `OFFICIAL_LOGOS = false`: se usan escudos genéricos propios. Si un logo no carga (sin conexión), también se muestra el escudo propio.
+
 Tipografías: Barlow Condensed e Inter (Google Fonts, licencia SIL Open Font License).
 
 ## Entrega y despliegue
@@ -70,6 +72,6 @@ Tipografías: Barlow Condensed e Inter (Google Fonts, licencia SIL Open Font Lic
 (Netlify, Vercel, GitHub Pages, un bucket S3…). Usa rutas con `#`, así que no necesita
 configuración de servidor. Las partidas se guardan en el navegador del jugador; no hay backend.
 
-Aviso legal incluido en la propia aplicación: proyecto sin afiliación con la NBA; las franquicias se
-nombran solo como referencia y no se usan logotipos. Para una versión comercial con marcas reales haría
+Aviso legal incluido en la propia aplicación: proyecto sin afiliación con la NBA; las franquicias y sus
+logotipos se muestran solo como referencia. Para una versión comercial con marcas reales haría
 falta una licencia de la NBA; la alternativa es renombrar los equipos en `src/data/teams.ts`.

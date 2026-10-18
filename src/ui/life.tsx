@@ -4,7 +4,7 @@ import type { Career } from '../engine/types';
 import { fmtDate, seasonLabel } from '../engine/schedule';
 import { teamOf, userOf } from '../engine/career';
 import { Scene, type SceneKind } from './Scene';
-import { ovrTone } from './simple';
+import { GOLD_OVR, ovrTone } from './simple';
 
 /** Animates a number towards its new value and reports the last change. */
 export function useCountUp(value: number, ms = 900) {
@@ -33,11 +33,13 @@ export function useCountUp(value: number, ms = 900) {
 
 export function OvrTile({ ovr }: { ovr: number }) {
   const { shown, delta } = useCountUp(ovr);
+  const gold = shown >= GOLD_OVR;
+  const wentGold = !!delta && ovr >= GOLD_OVR && ovr - delta.v < GOLD_OVR;
   return (
-    <div className={`ovr-tile ${delta ? 'bump' : ''}`} style={{ background: ovrTone(shown) }} key={delta?.key ?? 'ovr'}>
+    <div className={`ovr-tile ${gold ? 'gold' : ''} ${delta ? 'bump' : ''} ${wentGold ? 'went-gold' : ''}`} style={{ background: ovrTone(shown) }} key={delta?.key ?? 'ovr'} title={gold ? 'Nivel oro (80+)' : undefined}>
       <small>OVR</small>
       <b>{shown}</b>
-      {delta && <span className={`ovr-delta ${delta.v > 0 ? 'up' : 'down'}`}>{delta.v > 0 ? `+${delta.v}` : delta.v}</span>}
+      {wentGold ? <span className="ovr-delta gold-up">¡ORO!</span> : delta && <span className={`ovr-delta ${delta.v > 0 ? 'up' : 'down'}`}>{delta.v > 0 ? `+${delta.v}` : delta.v}</span>}
     </div>
   );
 }

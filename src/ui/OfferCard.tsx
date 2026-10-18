@@ -1,4 +1,5 @@
 import type { Career, Offer } from '../engine/types';
+import { TeamBadge } from './simple';
 import { teamName, STATUS_LABEL, STYLE_LABEL, teamStrength } from '../engine/league';
 import { offerSummary } from '../engine/market';
 import { capTier, CAP_TIER_LABEL, makeSalaries, fmtMoney } from '../engine/contracts';
@@ -15,7 +16,7 @@ export function OfferCard({ c, o, onAccept, cta = 'Firmar' }: { c: Career; o: Of
     <div className="card" style={{ ['--team' as string]: t?.color ?? 'var(--accent)', borderTop: `3px solid ${t?.color ?? 'var(--accent)'}` }}>
       <div className="row between" style={{ marginBottom: 10 }}>
         <div className="row" style={{ gap: 10, minWidth: 0 }}>
-          {t ? <span className="team-dot" style={{ background: t.color, width: 14, height: 14 }} /> : <span>🌍</span>}
+          {t ? <TeamBadge id={t.id} color={t.color} size={34} /> : <span>🌍</span>}
           <div style={{ minWidth: 0 }}>
             <h3 style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{t ? teamName(c.league, o.teamId) : 'Liga Europea'}</h3>
             {t && <div className="tiny dim">{t.w + t.l > 0 ? `${t.w}-${t.l} · ` : ''}{STATUS_LABEL[t.status]} · {t.coach.name}</div>}

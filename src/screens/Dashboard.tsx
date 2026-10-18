@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { TeamBadge } from '../ui/simple';
 import { store, useCareer } from '../store/store';
 import * as api from '../engine/api';
 import { currentComp, onNbaRoster, teamOf, userOf, userRole } from '../engine/career';
@@ -172,7 +173,7 @@ function UpcomingGames({ c }: { c: Career }) {
             const t = c.league.teams[opp];
             return (
               <div key={g.id} className="li">
-                <span className="team-dot" style={{ background: t.color }} />
+                <TeamBadge id={t.id} color={t.color} size={20} />
                 <div style={{ flex: 1 }} className="small">{g.home === u.teamId ? 'vs' : '@'} {teamName(c.league, opp)}</div>
                 <span className="tiny dim">{t.w}-{t.l}</span>
                 <span className="tiny muted">{fmtDate(c.league.season, g.day)}</span>
@@ -210,7 +211,7 @@ function TeamSnapshot({ c }: { c: Career }) {
         <tbody>
           {window.map((x) => {
             const r = conf.indexOf(x) + 1;
-            return <tr key={x.id} className={x.id === t.id ? 'me' : ''}><td className="l">{r}. <span className="team-dot" style={{ background: x.color }} /> {x.city}</td><td>{x.w}-{x.l}</td><td className="dim">{r === 1 ? '—' : gamesBehind(conf[0], x).toFixed(1)}</td></tr>;
+            return <tr key={x.id} className={x.id === t.id ? 'me' : ''}><td className="l">{r}. <TeamBadge id={x.id} color={x.color} size={20} /> {x.city}</td><td>{x.w}-{x.l}</td><td className="dim">{r === 1 ? '—' : gamesBehind(conf[0], x).toFixed(1)}</td></tr>;
           })}
         </tbody>
       </table>

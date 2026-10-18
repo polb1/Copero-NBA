@@ -1,4 +1,5 @@
 import { store, useCareer } from '../store/store';
+import { TeamBadge } from '../ui/simple';
 import * as api from '../engine/api';
 import { onNbaRoster, teamOf, userOf } from '../engine/career';
 import { teamName, STATUS_LABEL, teamStrength } from '../engine/league';
@@ -48,7 +49,7 @@ export function Trades() {
                   const lv = level(x.s);
                   return (
                     <tr key={x.id}>
-                      <td className="l"><span className="row"><span className="team-dot" style={{ background: tm.color }} />{teamName(L, x.id)}</span></td>
+                      <td className="l"><span className="row"><TeamBadge id={tm.id} color={tm.color} size={20} />{teamName(L, x.id)}</span></td>
                       <td className="l small">{STATUS_LABEL[tm.status]}</td>
                       <td>{teamStrength(L, x.id).toFixed(1)}</td>
                       <td className="l small">{projectedRole(L, x.id, u)}</td>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { TeamBadge } from '../ui/simple';
 import { useNavigate } from 'react-router-dom';
 import { store, useCareer } from '../store/store';
 import * as api from '../engine/api';
@@ -100,7 +101,7 @@ export function Draft() {
                       return (
                         <tr key={m.teamId}>
                           <td><b>{m.to}</b></td>
-                          <td className="l"><span className="row"><span className="team-dot" style={{ background: t.color }} />{teamName(c.league, m.teamId)}</span></td>
+                          <td className="l"><span className="row"><TeamBadge id={t.id} color={t.color} size={20} />{teamName(c.league, m.teamId)}</span></td>
                           <td>{t.w}-{t.l}</td><td>{m.from}</td>
                           <td className={d > 0 ? 'good' : d < 0 ? 'bad' : 'dim'}>{d > 0 ? `▲ ${d}` : d < 0 ? `▼ ${-d}` : '='}</td>
                         </tr>
@@ -229,7 +230,7 @@ function DraftNight() {
           return (
             <div key={pk.pick} className={`li reveal-pick`} style={pr.isUser ? { background: 'var(--accent-soft)', borderRadius: 10, padding: 12 } : undefined}>
               <span className="badge-num">{pk.pick}</span>
-              <span className="team-dot" style={{ background: t.color }} />
+              <TeamBadge id={t.id} color={t.color} size={20} />
               <div style={{ flex: 1 }}>
                 <b>{pr.isUser ? `¡${pr.name}!` : pr.name}</b>
                 <div className="tiny dim">{teamName(c.league, pk.teamId)} · {pr.pos} · {flag(pr.nat)} · {pk.pick <= RULES.roundSize ? '1.ª ronda' : '2.ª ronda'}</div>

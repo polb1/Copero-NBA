@@ -61,7 +61,7 @@ export function OvrRing({ ovr, pot, size = 84 }: { ovr: number; pot?: number; si
       <svg viewBox="0 0 84 84" width={size} height={size}>
         <circle cx="42" cy="42" r={r} stroke="#262b34" strokeWidth="7" fill="none" />
         {pot && <circle cx="42" cy="42" r={r} stroke="rgba(255,145,71,.28)" strokeWidth="7" fill="none" strokeDasharray={`${c * pctP} ${c}`} strokeLinecap="round" />}
-        <circle cx="42" cy="42" r={r} stroke="var(--accent)" strokeWidth="7" fill="none" strokeDasharray={`${c * pctO} ${c}`} strokeLinecap="round" style={{ transition: 'stroke-dasharray .8s var(--ease)' }} />
+        <circle cx="42" cy="42" r={r} stroke={ovr >= 80 ? '#f5c451' : 'var(--accent)'} strokeWidth="7" fill="none" strokeDasharray={`${c * pctO} ${c}`} strokeLinecap="round" style={{ transition: 'stroke-dasharray .8s var(--ease)' }} />
       </svg>
       <div className="v"><div><b>{ovr}</b><small>OVR</small></div></div>
     </div>

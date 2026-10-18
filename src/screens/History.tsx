@@ -1,4 +1,5 @@
 import { useCareer } from '../store/store';
+import { TeamBadge } from '../ui/simple';
 import { averages, f1, fpct } from '../engine/stats';
 import { seasonLabel } from '../engine/schedule';
 import { fmtMoney } from '../engine/contracts';
@@ -28,7 +29,7 @@ export function History() {
                     <div className="rail" />
                     <div className="body">
                       <div className="row wrap" style={{ gap: 8 }}>
-                        {t && <span className="team-dot" style={{ background: t.color }} />}
+                        {t && <TeamBadge id={t.id} color={t.color} size={20} />}
                         <b>{x.teamName}</b>
                         <span className="chip">{COMP[x.comp]}</span>
                         <span className="chip">{seasonLabel(x.season)}</span>
@@ -50,7 +51,7 @@ export function History() {
                   {teams.map((id) => {
                     const ss = s.filter((x) => x.teamId === id && x.comp === 'NBA');
                     const t = c.league.teams[id];
-                    return <div key={id} className="li"><span className="team-dot" style={{ background: t.color }} /><div style={{ flex: 1 }}><b className="small">{t.city} {t.name}</b><div className="tiny dim">{seasonLabel(ss[0].season)} – {seasonLabel(ss[ss.length - 1].season)}</div></div><span className="chip">{ss.length} temp.</span></div>;
+                    return <div key={id} className="li"><TeamBadge id={t.id} color={t.color} size={20} /><div style={{ flex: 1 }}><b className="small">{t.city} {t.name}</b><div className="tiny dim">{seasonLabel(ss[0].season)} – {seasonLabel(ss[ss.length - 1].season)}</div></div><span className="chip">{ss.length} temp.</span></div>;
                   })}
                 </div>
               )}
