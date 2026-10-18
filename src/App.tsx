@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState, type ComponentType } from 'react';
+import { lazy, Suspense, useEffect, type ComponentType } from 'react';
 import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { ErrorBoundary } from './ui/ErrorBoundary';
 import { applySettings, consolidateSaves, lastSlotId, loadCareer, store, useCareer } from './store/store';
@@ -30,19 +30,22 @@ function Loading() {
   return <div className="busy" role="status" aria-live="polite" style={{ background: 'transparent' }}><div className="ball" /></div>;
 }
 
+/** Loads the saved career before the first render, so the splash goes straight to the game (no blank frame). */
+let booted = false;
+function boot() {
+  if (booted) return;
+  booted = true;
+  applySettings(store.get().settings);
+  consolidateSaves();
+  const id = lastSlotId();
+  if (id) {
+    const c = loadCareer(id);
+    if (c) store.setCareer(c, false);
+  }
+}
+
 export function App() {
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    applySettings(store.get().settings);
-    consolidateSaves();
-    const id = lastSlotId();
-    if (id) {
-      const c = loadCareer(id);
-      if (c) store.setCareer(c, false);
-    }
-    setReady(true);
-  }, []);
-  if (!ready) return null;
+  boot();
   return (
     <ErrorBoundary>
       <HashRouter>
