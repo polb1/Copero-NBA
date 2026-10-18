@@ -8,7 +8,7 @@ import type { NewCareerInput } from '../../engine/career';
 import { newCareer } from '../../engine/api';
 import { newSeed } from '../../engine/rng';
 import { CHALLENGES, rollChallenge } from '../../engine/challenges';
-import { playStreak, store, useCareer } from '../../store/store';
+import { careerHistory, playStreak, store, useCareer } from '../../store/store';
 import { userOf } from '../../engine/career';
 import { CourtPicker, Jersey } from '../../ui/simple';
 import { Flag } from '../../ui/Flag';
@@ -90,6 +90,7 @@ export function Start() {
           <div>
             <h2>Crea tu jugador</h2>
             {playStreak() >= 2 && <p className="tiny streak">🔥 {playStreak()} días seguidos jugando</p>}
+            {!current && careerHistory().length === 0 && <p className="tiny dim" style={{ margin: '4px 0 0', maxWidth: 420 }}>Elige país y posición y vive tu carrera desde los 18 años: draft, contratos, anillos y un legado que comparar en cada nueva partida.</p>}
           </div>
           <div className="seg" role="radiogroup" aria-label="Ritmo">
             <button aria-pressed={mode === 'full'} onClick={() => setMode('full')}>Intenso</button>
