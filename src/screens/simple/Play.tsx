@@ -46,7 +46,7 @@ export function Play() {
   // Phones: the timeline grows above the decision, so bring each new decision (or the live sim) into view.
   const decisionKey = c ? `${c.id}|${c.phase}|${c.league.season}|${c.predraft?.step}|${c.pendingEvent?.defId}|${!!c.pendingEvent?.resolved}|${c.offers.length}|${!!sim}` : '';
   useEffect(() => {
-    if (!decisionKey || !window.matchMedia('(max-width: 560px)').matches) return;
+    if (!decisionKey || !window.matchMedia('(max-width: 960px)').matches) return;
     const id = requestAnimationFrame(() => {
       const el = document.querySelector('.play-left > .decision');
       if (!el) return;
@@ -429,7 +429,7 @@ function Timeline({ c }: { c: Career }) {
             <span className="dim">{pendingLabel()}</span>
           </span>
           <span className={`ovr-pill ${u.ovr >= 80 ? 'gold' : ''}`} style={{ background: ovrTone(u.ovr) }}>{u.ovr}</span>
-          <span className="tl-live" style={{ gridColumn: 'span 4' }}>{inSeason(c) ? 'Temporada en curso' : ''}</span>
+          <span className="tl-live" style={{ gridColumn: 'span 4' }}>{inSeason(c) && c.league.day > 0 ? 'Temporada en curso' : ''}</span>
         </div>,
       );
     } else {

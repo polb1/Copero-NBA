@@ -224,8 +224,8 @@
 @media (max-width: 960px) {
   .choices.compact { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
 }
-/* Phones: one column like a feed — card, career timeline, then the decision in its own box. */
-@media (max-width: 560px) {
+/* Phones and portrait tablets: one column like a feed — card, career timeline, then the decision in its own box. */
+@media (max-width: 960px) {
   .simple-wrap { padding: 8px 8px 24px; }
   .play-grid { display: flex; flex-direction: column; gap: 10px; padding: 0; background: none; border: 0; }
   .play-left, .play-right { display: contents; }
@@ -242,7 +242,6 @@
   .vitrina, .legacy { margin-top: 0; }
   .tl-row { min-height: 25px; padding: 2px 6px; }
   .tl-row.far, .tl-hint, .play-left > .tot-row { display: none; }
-  .tl-club > .tiny.dim { display: none; }
   .tl-row.foot { margin-top: 6px; }
   .decision { background: #16181c; border: 1px solid var(--line); border-radius: 16px; padding: 14px 12px; }
   .decision > .scene { height: auto !important; border: 0; background: none; overflow: visible; border-radius: 0; }
@@ -345,3 +344,6 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 
 .start-challenge { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 22px 14px; padding: 10px 14px; border-radius: 12px; background: #17191d; border: 1px dashed var(--line-2); font-size: 0.86rem; }
 @media (max-width: 560px) { .start-challenge { margin: 0 14px 12px; font-size: 0.8rem; } }
+
+@media (max-width: 560px) { .tl-club > .tiny.dim { display: none; } }
+@media (min-width: 561px) and (max-width: 960px) { .play-grid { max-width: 640px; margin: 0 auto; } }
