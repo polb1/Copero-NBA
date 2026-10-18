@@ -347,3 +347,4 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 
 @media (max-width: 560px) { .tl-club > .tiny.dim { display: none; } }
 @media (min-width: 561px) and (max-width: 960px) { .play-grid { max-width: 640px; margin: 0 auto; } }
+.delta-up { color: var(--good); } .delta-down { color: var(--bad); }

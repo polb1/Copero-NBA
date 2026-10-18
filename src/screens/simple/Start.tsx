@@ -32,6 +32,7 @@ export function Start() {
   const [arch, setArch] = useState<Archetype>(prev?.arch ?? 'twoWay');
   // The seed decides the career's challenge, so it is shown (and can be re-rolled) before starting.
   const [seed, setSeed] = useState(newSeed);
+  const [creating, setCreating] = useState(false);
   const challenge = CHALLENGES[rollChallenge(seed)];
 
   const archs = ARCHETYPES.filter((a) => a.positions.includes(pos));
@@ -73,8 +74,12 @@ export function Start() {
       focus,
       look: { skin: 2, hair: 1, accent: '#c2410c' },
     };
-    store.setCareer(newCareer(input, seed));
-    nav('/play');
+    // Generating the league takes a moment on phones: show it on the button first, then build.
+    setCreating(true);
+    setTimeout(() => {
+      store.setCareer(newCareer(input, seed));
+      nav('/play');
+    }, 30);
   };
 
   return (
@@ -135,7 +140,7 @@ export function Start() {
         <div className="simple-foot">
           {current ? <button className="btn pill" onClick={() => nav('/play')}>Volver</button> : <Link to="/careers" className="btn pill">Mis carreras</Link>}
           {current && current.phase !== 'retired' && <span className="small dim">Empezar de nuevo reemplaza la carrera actual.</span>}
-          <button className="btn pill light" onClick={confirm}>{last.trim() ? 'Confirmar identidad' : 'Empezar'}</button>
+          <button className="btn pill light" disabled={creating} onClick={confirm}>{creating ? 'Creando tu liga…' : last.trim() ? 'Confirmar identidad' : 'Empezar'}</button>
         </div>
       </div>
     </div>

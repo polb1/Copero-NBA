@@ -322,7 +322,7 @@ function Decision({ c }: { c: Career }) {
     case 'season-end': {
       const s = c.lastSummary!;
       return (
-        <Block scene={s.awards.length ? 'trophy' : 'arena'} title={`Fin de temporada ${seasonLabel(s.season)}`} desc={<>{s.teamResult}<br />{seasonTotals(c, s.season)} · OVR {s.ovrDelta >= 0 ? '+' : ''}{s.ovrDelta}{s.awards.length ? <><br /><span className="gold">🏆 {s.awards.join(' · ')}</span></> : null}{s.highlights[0] && !s.highlights[0].startsWith('Campeón') ? <><br /><span>⭐ Mejor partido: {s.highlights[0]}</span></> : null}{seasonRecords(c, s.season).length ? <><br /><span className="accent">🔥 Récord personal: {seasonRecords(c, s.season).join(' · ')}</span></> : null}</>}>
+        <Block scene={s.awards.length ? 'trophy' : 'arena'} title={`Fin de temporada ${seasonLabel(s.season)}`} desc={<>{s.teamResult}<br />{seasonTotals(c, s.season)} · <b className={s.ovrDelta > 0 ? 'delta-up' : s.ovrDelta < 0 ? 'delta-down' : ''}>OVR {s.ovrDelta >= 0 ? '+' : ''}{s.ovrDelta}</b>{s.awards.length ? <><br /><span className="gold">🏆 {s.awards.join(' · ')}</span></> : null}{s.highlights[0] && !s.highlights[0].startsWith('Campeón') ? <><br /><span>⭐ Mejor partido: {s.highlights[0]}</span></> : null}{seasonRecords(c, s.season).length ? <><br /><span className="accent">🔥 Récord personal: {seasonRecords(c, s.season).join(' · ')}</span></> : null}</>}>
           <Choice top="Continuar" title="Siguiente temporada" scene="summer" onClick={() => go('Verano y nueva temporada…', api.beginOffseason)}>Solo se detiene si hay algo que decidir.</Choice>
         </Block>
       );
@@ -408,7 +408,8 @@ function Timeline({ c }: { c: Career }) {
   const pendingLabel = () => {
     if (c.phase === 'predraft') return c.predraft?.clubName || 'Eligiendo club…';
     if (c.phase === 'signing') return 'Eligiendo equipo…';
-    if (c.phase === 'season-end' || (c.phase === 'offseason' && api.needsContract(c))) return 'Eligiendo club…';
+    if (c.phase === 'offseason' && api.needsContract(c)) return 'Eligiendo club…';
+    if (c.phase === 'season-end') return 'Próxima temporada';
     if (t) return teamName(c.league, t.id);
     return c.satellite?.teamName ?? 'Decisión de carrera…';
   };
