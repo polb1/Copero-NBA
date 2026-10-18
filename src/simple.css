@@ -263,7 +263,7 @@
   .play-tools { flex-wrap: wrap; justify-content: center; }
 }
 @media (max-width: 340px) {
-  .choices, .choices.compact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .choices, .choices.compact { grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); }
 }
 /* Short desktop screens (e.g. 1280x800 laptops): keep the whole decision above the fold. */
 @media (max-height: 920px) and (min-width: 961px) {

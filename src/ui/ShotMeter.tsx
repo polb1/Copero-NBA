@@ -47,6 +47,8 @@ export function ShotMeter({ spec, onDone, onSimulate }: { spec: MinigameSpec; on
     const hit = Math.abs(pos.current - center) <= spec.zone / 2;
     setLocked(true);
     setFlash(hit ? 'in' : 'out');
+    // A short buzz on phones that support it (Android); a no-op elsewhere.
+    try { navigator.vibrate?.(hit ? [18, 40, 18] : 35); } catch { /* not supported */ }
     setShots((s) => [...s, hit]);
     const nextMade = made + (hit ? 1 : 0);
     setMade(nextMade);
