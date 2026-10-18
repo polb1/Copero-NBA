@@ -17,7 +17,7 @@ import { countryByCode } from '../../content/names';
 import { careerHistory, store, useCareer, useStore } from '../../store/store';
 import { EventModalInline } from './EventInline';
 import { TeamBadge, ovrTone } from '../../ui/simple';
-import { OvrTile, SimProgress } from '../../ui/life';
+import { OvrTile, SCENE_EMOJI, SimProgress } from '../../ui/life';
 import { drawCard } from '../../ui/card';
 import { Scene, type SceneKind } from '../../ui/Scene';
 import { Icon } from '../../ui/icons';
@@ -188,6 +188,7 @@ function Choice({ title, top, icon, scene, children, onClick, tone }: { title: s
   return (
     <button className={`choice ${tone ?? ''} ${scene ? 'with-img' : ''}`} onClick={onClick}>
       {scene && <Scene kind={scene} variant={title} height={96} still className="choice-img" />}
+      {scene && !icon && <span className="choice-emoji" aria-hidden="true">{SCENE_EMOJI[scene]}</span>}
       {top && <span className="tiny dim">{top}</span>}
       <b className="choice-title">{title}</b>
       {icon && <span className="choice-icon">{icon}</span>}

@@ -112,7 +112,7 @@ const OPTION_SCENES: [RegExp, SceneKind][] = [
 export const SCENE_EMOJI: Record<SceneKind, string> = {
   arena: '🏀', training: '💪', locker: '🤝', coach: '📋', press: '🎤', medical: '🩺', contract: '✍️', money: '💰', sneakers: '👟',
   phone: '📱', trophy: '🏆', draft: '🎓', travel: '✈️', national: '🏅', summer: '☀️', family: '🏠', clutch: '⏱️', contest: '🎯',
-  college: '🎓', europe: '🌍', rest: '😴', rivalry: '⚔️',
+  college: '📚', europe: '🌍', rest: '😴', rivalry: '⚔️',
 };
 
 /** Picks an image for an option card from its wording, like Copero's illustrated choices. */
