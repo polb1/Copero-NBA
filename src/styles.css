@@ -62,7 +62,6 @@ body {
   margin: 0;
   background: var(--bg);
   background-image: radial-gradient(1200px 500px at 85% -10%, rgba(255, 107, 26, 0.09), transparent 60%), radial-gradient(900px 400px at -10% 110%, rgba(96, 165, 250, 0.05), transparent 60%);
-  background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-body);
   font-size: 0.94rem;

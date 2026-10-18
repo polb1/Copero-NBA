@@ -1,5 +1,5 @@
 // Small pieces that give the simple screen movement and feedback.
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Career } from '../engine/types';
 import { fmtDate, seasonLabel } from '../engine/schedule';
 import { teamOf, userOf } from '../engine/career';
@@ -40,29 +40,6 @@ export function OvrTile({ ovr }: { ovr: number }) {
       <small>OVR</small>
       <b>{shown}</b>
       {wentGold ? <span className="ovr-delta gold-up">¡ORO!</span> : delta && <span className={`ovr-delta ${delta.v > 0 ? 'up' : 'down'}`}>{delta.v > 0 ? `+${delta.v}` : delta.v}</span>}
-    </div>
-  );
-}
-
-const CONFETTI_COLORS = ['#f97316', '#facc15', '#34d399', '#60a5fa', '#f472b6', '#ffffff'];
-
-/** Burst of confetti. Re-runs whenever `fire` changes to a new truthy value. */
-export function Confetti({ fire }: { fire: string | number | null | undefined }) {
-  const pieces = useMemo(() => Array.from({ length: 70 }, (_, i) => ({
-    left: (i * 37) % 100,
-    delay: (i % 10) * 0.05,
-    dur: 1.6 + ((i * 13) % 10) / 10,
-    color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
-    drift: ((i * 29) % 80) - 40,
-    rot: (i * 47) % 360,
-    w: 6 + (i % 3) * 3,
-  })), []);
-  if (!fire) return null;
-  return (
-    <div className="confetti" key={String(fire)} aria-hidden="true">
-      {pieces.map((p, i) => (
-        <span key={i} style={{ left: `${p.left}%`, background: p.color, width: p.w, height: p.w * 1.6, animationDelay: `${p.delay}s`, animationDuration: `${p.dur}s`, ['--drift' as string]: `${p.drift}px`, ['--rot' as string]: `${p.rot}deg` }} />
-      ))}
     </div>
   );
 }

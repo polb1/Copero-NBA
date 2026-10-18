@@ -17,7 +17,7 @@ import { countryByCode } from '../../content/names';
 import { store, useCareer, useStore } from '../../store/store';
 import { EventModalInline } from './EventInline';
 import { TeamBadge, ovrTone } from '../../ui/simple';
-import { Confetti, OvrTile, SimProgress } from '../../ui/life';
+import { OvrTile, SimProgress } from '../../ui/life';
 import { drawCard } from '../../ui/card';
 import { Scene, type SceneKind } from '../../ui/Scene';
 import { Icon } from '../../ui/icons';
@@ -74,21 +74,9 @@ export function Play() {
       </div>
       <p className="tiny dim" style={{ textAlign: 'center', maxWidth: 820, margin: '14px auto 0' }}>Los nombres de franquicias se usan solo como referencia dentro de la simulación. Proyecto sin afiliación con la NBA; jugadores, entrenadores y agentes son ficticios.</p>
       {busy && <div className="busy" role="status" aria-live="polite"><div className="stack" style={{ alignItems: 'center', gap: 18 }}><div className="ball" /><span className="muted">{busy}</span></div></div>}
-      <Confetti fire={sim ? null : celebration(c)} />
       <div className="toasts" aria-live="polite">{toasts.map((t) => <div key={t.id} className="toast">{t.text}</div>)}</div>
     </div>
   );
-}
-
-/** Moments worth confetti: titles and awards, a won minigame, a lottery pick, a great career. */
-function celebration(c: Career): string | null {
-  const ev = c.pendingEvent;
-  if (ev?.resolved && ev.minigame && (ev.resolved.made ?? 0) >= ev.minigame.great) return `mg-${ev.defId}-${c.league.season}-${c.league.day}`;
-  if (c.phase === 'season-end' && c.lastSummary?.awards.length) return `se-${c.league.season}`;
-  const pk = c.predraft?.userPick;
-  if (c.phase === 'signing' && pk && pk.round === 1 && pk.pick <= 14) return `pk-${c.league.season}`;
-  if (c.phase === 'retired' && (c.retirement?.legacyScore ?? 0) >= 150) return 'retired';
-  return null;
 }
 
 function TopCard({ c }: { c: Career }) {

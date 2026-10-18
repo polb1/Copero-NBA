@@ -291,16 +291,17 @@ export const store = {
    */
   async actLive(label: string, step: (c: Career) => boolean, fn?: (c: Career) => void) {
     if (!state.career || state.sim) return;
-    let c = clone(state.career);
+    // One deep copy up front; each slice then mutates it and publishes a shallow copy so React re-renders.
+    // (Deep-copying the ~600 KB league every slice made phones stutter.)
+    const c = clone(state.career);
     fn?.(c);
-    set({ sim: label, career: c });
-    const frame = () => new Promise((r) => setTimeout(r, 45));
+    set({ sim: label, career: { ...c } });
+    const frame = () => new Promise((r) => setTimeout(r, 30));
     try {
       for (let i = 0; i < 400; i++) {
         await frame();
-        c = clone(c);
         const done = step(c);
-        set({ career: c });
+        set({ career: { ...c } });
         if (done) break;
       }
     } finally {
