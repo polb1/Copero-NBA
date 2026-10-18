@@ -206,3 +206,19 @@
 .legacy { margin-top: 12px; padding: 10px 12px; background: #17191d; border: 1px solid var(--line); border-radius: 10px; }
 .legacy-bar { height: 8px; margin-top: 6px; background: var(--bg-2); border-radius: 999px; overflow: hidden; }
 .legacy-bar span { display: block; height: 100%; background: linear-gradient(90deg, #f97316, #f5c451); border-radius: 999px; transition: width 1s var(--ease); }
+
+/* ---------- Compact decisions (many options) ---------- */
+.decision.is-compact .scene h2 { font-size: 1.1rem; }
+.decision.is-compact .scene-content { bottom: 8px; }
+.decision.is-compact .desc { margin-top: 6px; }
+.choices.compact { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 10px; }
+.choices.compact .choice { min-height: 0; padding: 8px 6px; gap: 2px; border-radius: 10px; }
+.choices.compact .choice > .tiny { display: none; }
+.choices.compact .choice-title { font-size: 0.8rem; line-height: 1.15; }
+.choices.compact .choice-icon { margin: 2px 0; font-size: 1.6rem; }
+.choices.compact .choice-icon .team-logo, .choices.compact .choice-icon > svg { width: 34px !important; height: 34px !important; }
+.choices.compact .club-crest .flag { width: 30px !important; height: 20px !important; }
+.choices.compact .choice-body { font-size: 0.68rem; }
+.choices.compact .choice-meta { font-size: 0.68rem; }
+.choices.compact .choice.with-img .choice-img { height: 48px !important; }
+@media (max-width: 420px) { .choices.compact { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

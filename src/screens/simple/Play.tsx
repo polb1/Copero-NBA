@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { Children, useEffect, useRef, type ReactNode } from 'react';
 import { legacyScore } from '../../engine/legacy';
 import { ACHIEVEMENTS } from '../../engine/achievements';
 import { Link, useNavigate } from 'react-router-dom';
@@ -179,11 +179,13 @@ function Choice({ title, top, icon, scene, children, onClick, tone }: { title: s
 }
 
 function Block({ title, desc, scene, children }: { title: string; desc?: ReactNode; scene: SceneKind; children: ReactNode }) {
+  // Many options (e.g. a busy transfer market): slim banner and compact cards so all fit on screen.
+  const compact = Children.toArray(children).filter(Boolean).length > 3;
   return (
-    <div className="decision anim-in" key={title}>
-      <Scene kind={scene} variant={title} height={170}><h2>{title}</h2></Scene>
+    <div className={`decision anim-in ${compact ? 'is-compact' : ''}`} key={title}>
+      <Scene kind={scene} variant={title} height={compact ? 64 : 170}><h2>{title}</h2></Scene>
       {desc && <p className="small muted desc">{desc}</p>}
-      <div className="choices">{children}</div>
+      <div className={`choices ${compact ? 'compact' : ''}`}>{children}</div>
     </div>
   );
 }
