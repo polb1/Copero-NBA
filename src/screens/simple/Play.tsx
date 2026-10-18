@@ -1,5 +1,6 @@
 import { Children, memo, useEffect, useState, type ReactNode } from 'react';
 import { LEGACY_TIERS, legacyScore } from '../../engine/legacy';
+import { ACHIEVEMENTS } from '../../engine/achievements';
 import { challengeDone, challengeOf } from '../../engine/challenges';
 import { Link, useNavigate } from 'react-router-dom';
 import type { Career, Offer, SeasonRecord } from '../../engine/types';
@@ -60,12 +61,12 @@ export function Play() {
     <div className="simple-wrap">
       <div className="play-grid anim-in">
         <div className="play-left">
-          <MemoTopCard c={c} />
+          <MemoTopCard c={c} sig={viewSig(c)} />
           <div className="divider" style={{ margin: '18px 0' }} />
           {sim ? <SimProgress c={c} label={sim} /> : <Decision c={c} />}
         </div>
         <div className="play-right">
-          <MemoTimeline c={c} />
+          <MemoTimeline c={c} sig={viewSig(c)} />
         </div>
       </div>
       <div className="play-tools">
@@ -85,11 +86,13 @@ export function Play() {
  */
 function viewSig(c: Career): string {
   const u = userOf(c);
-  return [c.id, c.phase, c.seasons.length, c.ovrHistory.length, u.ovr, u.pot, u.age, u.teamId, u.injury?.daysLeft ?? '', c.satellite?.teamName ?? '', c.predraft?.clubName ?? '', c.predraft?.step ?? '', c.league.season, c.league.day > 0, c.offers.length, c.retirement ? 1 : 0, c.flags.challenge ?? ''].join('|');
+  return [c.id, c.phase, c.seasons.length, c.ovrHistory.length, u.ovr, u.pot, u.age, u.teamId, u.injury?.daysLeft ?? '', c.satellite?.teamName ?? '', c.predraft?.clubName ?? '', c.predraft?.step ?? '', c.league.season, c.league.day > 0, c.offers.length, c.retirement ? 1 : 0, c.flags.challenge ?? '', c.flags.nationalCaps ?? 0, c.flags.medals ?? 0, u.contract?.startSeason ?? '', u.contract?.salaries.length ?? ''].join('|');
 }
-const sameView = (a: { c: Career }, b: { c: Career }) => viewSig(a.c) === viewSig(b.c);
-const MemoTopCard = memo(TopCard, sameView);
-const MemoTimeline = memo(Timeline, sameView);
+// The signature is computed when rendering and passed as a prop: actions mutate the career in place, so
+// recomputing it from the previous props object would already see the new state and skip needed renders.
+const sameView = (a: { sig: string }, b: { sig: string }) => a.sig === b.sig;
+const MemoTopCard = memo(({ c }: { c: Career; sig: string }) => <TopCard c={c} />, sameView);
+const MemoTimeline = memo(({ c }: { c: Career; sig: string }) => <Timeline c={c} />, sameView);
 
 function TopCard({ c }: { c: Career }) {
   const u = userOf(c);
@@ -357,6 +360,7 @@ function Retired({ c }: { c: Career }) {
   const a = averages(r.totals);
   // Where this career lands among the finished ones (it is already in the history once retired).
   const others = careerHistory().filter((h) => h.id !== c.id).map((h) => h.legacyScore);
+  const earned = ACHIEVEMENTS.filter((x) => c.achievements.includes(x.id));
   const rank = { pos: others.filter((x) => x > r.legacyScore).length + 1, total: others.length + 1, best: Math.max(0, ...others), record: others.length > 0 && r.legacyScore > Math.max(...others) };
   const download = () => {
     const link = document.createElement('a');
@@ -380,6 +384,12 @@ function Retired({ c }: { c: Career }) {
         <p className={`career-rank-line ${rank.record ? 'record' : ''}`}>
           {rank.record ? `🏆 ¡Nuevo récord personal! Tu mejor carrera de ${rank.total}` : `Puesto #${rank.pos} de tus ${rank.total} carreras · récord ${rank.best}`}
         </p>
+      )}
+      {earned.length > 0 && (
+        <div className="earned" title={earned.map((x) => x.title).join(' · ')}>
+          <span className="tiny dim">Logros de esta carrera ({earned.length})</span>
+          <div>{earned.map((x) => <span key={x.id} title={`${x.title}: ${x.desc}`}>{x.icon}</span>)}</div>
+        </div>
       )}
       <div className="choices">
         <Choice top="Otra vez" title="Jugar otra carrera" scene="arena" tone="primary" onClick={() => nav('/start')} />
