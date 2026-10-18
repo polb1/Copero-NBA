@@ -280,6 +280,16 @@ const set = (patch: Partial<State>) => {
 // ---------- Live simulation worker ----------
 let worker: Worker | null | undefined;
 let activeWorker: Worker | null = null;
+let finishActive: ((c: Career | null) => void) | null = null;
+/** Stops a running simulation (the player switched careers): the worker is discarded and recreated later. */
+function cancelSim() {
+  if (activeWorker) {
+    activeWorker.terminate();
+    worker = undefined;
+  }
+  finishActive?.(null);
+  set({ sim: null, simFast: false });
+}
 function getWorker(): Worker | null {
   if (worker !== undefined) return worker;
   try {
@@ -299,11 +309,14 @@ function simulateInWorker(base: Career, weeks: number): Promise<Career | null> {
       w.onmessage = null;
       w.onerror = null;
       activeWorker = null;
+      finishActive = null;
       resolve(c);
     };
+    finishActive = finish;
     w.onmessage = (e: MessageEvent<FromWorker>) => {
       const m = e.data;
       if (m.type === 'progress') {
+        if (state.career?.id !== base.id) return;
         // Only what the progress view needs changes; the rest of the screen keeps the pre-simulation state.
         set({ career: { ...base, phase: m.p.phase, league: { ...base.league, season: m.p.season, day: m.p.day }, predraft: base.predraft && m.p.step ? { ...base.predraft, step: m.p.step as NonNullable<Career['predraft']>['step'] } : base.predraft } });
       } else if (m.type === 'done') finish(m.career);
@@ -348,6 +361,7 @@ export const store = {
     };
   },
   setCareer(c: Career | null, persist = true) {
+    if (state.sim && c?.id !== state.career?.id) cancelSim();
     set({ career: c });
     // Save right after the screen updates: serialising the ~600 KB career costs a phone tens of ms per tap.
     if (c && persist) scheduleSave(c);
@@ -401,19 +415,22 @@ export const store = {
     } catch {
       result = null;
     }
+    if (state.career?.id !== c.id) return; // cancelled: another career is active now
     if (!result) {
       const frame = () => new Promise((r) => setTimeout(r, state.simFast ? 0 : 30));
       for (let i = 0; i < 400; i++) {
         await frame();
         // Skipping runs several slices per frame (still yielding so the screen never freezes).
         let done = false;
+        if (state.career?.id !== c.id) break;
         for (let k = 0; k < (state.simFast ? 4 : 1) && !done; k++) done = runChunk(c, weeks);
         set({ career: { ...c } });
         if (done) break;
       }
       result = c;
     }
-    store.setCareer(result);
+    // If the player started another career meanwhile ("Reiniciar" during the simulation), drop this result.
+    if (state.career?.id === c.id) store.setCareer(result);
     set({ sim: null, simFast: false });
   },
   fastForward() {
