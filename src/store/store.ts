@@ -6,6 +6,8 @@ import { teamName } from '../engine/league';
 import { seasonLabel } from '../engine/schedule';
 import { averages } from '../engine/stats';
 import { challengeDone, challengeOf } from '../engine/challenges';
+import { runChunk } from '../engine/api';
+import type { FromWorker, ToWorker } from '../engine/simWorker';
 
 // ---------- Persistence ----------
 const KEY_INDEX = 'nbalegacy:slots';
@@ -235,8 +237,6 @@ export function resetAllData() {
 }
 
 // ---------- Global store ----------
-// structuredClone is missing on older phones (iOS < 15.4); careers are plain JSON, so this fallback is exact.
-const clone = <T,>(v: T): T => (typeof structuredClone === 'function' ? structuredClone(v) : JSON.parse(JSON.stringify(v)));
 
 interface State {
   career: Career | null;
@@ -257,6 +257,46 @@ const set = (patch: Partial<State>) => {
   state = { ...state, ...patch };
   emit();
 };
+
+// ---------- Live simulation worker ----------
+let worker: Worker | null | undefined;
+let activeWorker: Worker | null = null;
+function getWorker(): Worker | null {
+  if (worker !== undefined) return worker;
+  try {
+    worker = new Worker(new URL('../engine/simWorker.ts', import.meta.url), { type: 'module' });
+  } catch {
+    worker = null;
+  }
+  return worker;
+}
+/** Runs the season to the next decision in the worker, streaming the date to the screen. Null if unavailable. */
+function simulateInWorker(base: Career, weeks: number): Promise<Career | null> {
+  const w = getWorker();
+  if (!w) return Promise.resolve(null);
+  return new Promise((resolve) => {
+    activeWorker = w;
+    const finish = (c: Career | null) => {
+      w.onmessage = null;
+      w.onerror = null;
+      activeWorker = null;
+      resolve(c);
+    };
+    w.onmessage = (e: MessageEvent<FromWorker>) => {
+      const m = e.data;
+      if (m.type === 'progress') {
+        // Only what the progress view needs changes; the rest of the screen keeps the pre-simulation state.
+        set({ career: { ...base, phase: m.p.phase, league: { ...base.league, season: m.p.season, day: m.p.day }, predraft: base.predraft && m.p.step ? { ...base.predraft, step: m.p.step as NonNullable<Career['predraft']>['step'] } : base.predraft } });
+      } else if (m.type === 'done') finish(m.career);
+      else finish(null);
+    };
+    w.onerror = () => {
+      worker = null; // broken worker (old browser, blocked file): use the in-page loop from now on
+      finish(null);
+    };
+    w.postMessage({ type: 'start', career: base, weeks, fast: state.simFast } satisfies ToWorker);
+  });
+}
 
 let pendingSave: Career | null = null;
 let saveTimer: ReturnType<typeof setTimeout> | null = null;
@@ -329,30 +369,38 @@ export const store = {
    * Applies `fn` (optional) and then keeps calling `step` (one slice of simulation) until it returns
    * true, publishing the intermediate state so the screen can animate. Saves once at the end.
    */
-  async actLive(label: string, step: (c: Career) => boolean, fn?: (c: Career) => void) {
+  async actLive(label: string, weeks: number, fn?: (c: Career) => void) {
     if (!state.career || state.sim) return;
-    // One deep copy up front; each slice then mutates it and publishes a shallow copy so React re-renders.
-    // (Deep-copying the ~600 KB league every slice made phones stutter.)
-    const c = clone(state.career);
+    // fn mutates the career in place (as act does); the simulation itself then runs in a Web Worker so the
+    // screen never stalls, with a paced in-page loop as fallback.
+    const c = state.career;
     fn?.(c);
     set({ sim: label, career: { ...c } });
-    const frame = () => new Promise((r) => setTimeout(r, state.simFast ? 0 : 30));
+    let result: Career | null = null;
     try {
+      result = await simulateInWorker(c, weeks);
+    } catch {
+      result = null;
+    }
+    if (!result) {
+      const frame = () => new Promise((r) => setTimeout(r, state.simFast ? 0 : 30));
       for (let i = 0; i < 400; i++) {
         await frame();
         // Skipping runs several slices per frame (still yielding so the screen never freezes).
         let done = false;
-        for (let k = 0; k < (state.simFast ? 4 : 1) && !done; k++) done = step(c);
+        for (let k = 0; k < (state.simFast ? 4 : 1) && !done; k++) done = runChunk(c, weeks);
         set({ career: { ...c } });
         if (done) break;
       }
-    } finally {
-      store.setCareer(c);
-      set({ sim: null, simFast: false });
+      result = c;
     }
+    store.setCareer(result);
+    set({ sim: null, simFast: false });
   },
   fastForward() {
-    if (state.sim) set({ simFast: true });
+    if (!state.sim) return;
+    set({ simFast: true });
+    activeWorker?.postMessage({ type: 'fast' } satisfies ToWorker);
   },
   toast(text: string) {
     const id = Date.now() + Math.random();

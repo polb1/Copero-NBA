@@ -229,7 +229,7 @@ function Decision({ c }: { c: Career }) {
   /** Apply an action, then keep simulating (visibly, in slices) until the next real decision. */
   // Phones simulate one week per frame (shorter pauses, smoother screen); same results either way.
   const weeks = window.matchMedia('(max-width: 760px)').matches ? 1 : 2;
-  const go = (label: string, fn?: (x: Career) => void) => store.actLive(label, (x) => api.runChunk(x, weeks), fn);
+  const go = (label: string, fn?: (x: Career) => void) => store.actLive(label, weeks, fn);
 
   switch (c.phase) {
     case 'predraft': {

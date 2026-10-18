@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import type { Career } from '../../engine/types';
-import { chooseOption, dismissEvent, playMinigame, runChunk } from '../../engine/api';
+import { chooseOption, dismissEvent, playMinigame } from '../../engine/api';
 import { CATEGORY_LABEL } from '../../content/events';
 import { store } from '../../store/store';
 import { CATEGORY_ICON } from '../../ui/simple';
@@ -13,7 +13,7 @@ export function EventModalInline({ c }: { c: Career }) {
   const ev = c.pendingEvent!;
   // After a decision the season resumes on its own until the next one.
   const weeks = window.matchMedia('(max-width: 760px)').matches ? 1 : 2;
-  const next = () => store.actLive('Simulando…', (x) => runChunk(x, weeks), dismissEvent);
+  const next = () => store.actLive('Simulando…', weeks, dismissEvent);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.target as HTMLElement)?.tagName === 'INPUT') return;
