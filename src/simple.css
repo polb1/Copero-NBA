@@ -343,3 +343,15 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .choice-emoji { display: none; }
 @media (max-width: 960px) { .choice-emoji { display: block; font-size: 1.6rem; line-height: 1; margin-bottom: 2px; } }
 @media (max-width: 560px) { .career-list { max-height: none; overflow: visible; } }
+
+/* Achievement collection in "Mis carreras". */
+.ach-box { padding: 4px 22px 18px; }
+.ach-box h3 { font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-size: 1rem; font-weight: 800; margin-bottom: 10px; }
+.ach-box h3 .dim { font-weight: 600; font-size: 0.85rem; margin-left: 6px; }
+.ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 6px; }
+.ach-item { display: flex; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 10px; background: #15171b; border: 1px solid var(--line); opacity: 0.55; }
+.ach-item.on { opacity: 1; border-color: rgba(245, 196, 81, 0.45); background: linear-gradient(90deg, rgba(245, 196, 81, 0.1), #15171b 60%); }
+.ach-ic { font-size: 1.4rem; width: 30px; text-align: center; flex: none; }
+.ach-item b { display: block; font-size: 0.82rem; }
+.ach-item small { display: block; font-size: 0.68rem; color: var(--text-3); line-height: 1.3; }
+@media (max-width: 560px) { .ach-box { padding: 4px 12px 14px; } .ach-grid { grid-template-columns: 1fr 1fr; } .ach-item small { display: none; } }

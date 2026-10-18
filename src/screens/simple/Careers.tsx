@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { careerHistory, clearHistory, playStreak, store, useCareer, type CareerRecord } from '../../store/store';
+import { careerHistory, clearHistory, globalAchievements, playStreak, store, useCareer, type CareerRecord } from '../../store/store';
 import { seasonLabel } from '../../engine/schedule';
 import { f1 } from '../../engine/stats';
 import { Flag } from '../../ui/Flag';
+import { ACHIEVEMENTS } from '../../engine/achievements';
 
 type Sort = 'legacyScore' | 'ppg' | 'titles' | 'endedAt';
 const SORTS: { id: Sort; label: string }[] = [
@@ -67,6 +68,7 @@ export function Careers() {
             ))}
           </div>
         )}
+        <Achievements />
         <div className="simple-foot">
           <button className="btn pill" onClick={() => nav(c ? '/play' : '/start')}>{c && c.phase !== 'retired' ? 'Volver al juego' : 'Volver'}</button>
           {list.length > 0 && <button className="btn pill ghost small" onClick={() => { if (confirm('¿Borrar todas las carreras guardadas?')) { clearHistory(); setList([]); } }}>Borrar historial</button>}
@@ -74,5 +76,25 @@ export function Careers() {
         </div>
       </div>
     </div>
+  );
+}
+
+/** Achievements unlocked across all careers: a collection to complete run after run. */
+function Achievements() {
+  const got = new Set(globalAchievements());
+  const list = ACHIEVEMENTS.filter((a) => !a.id.startsWith('daily'));
+  const n = list.filter((a) => got.has(a.id)).length;
+  return (
+    <section className="ach-box">
+      <h3>Logros <span className="dim">{n} / {list.length}</span></h3>
+      <div className="ach-grid">
+        {list.map((a) => (
+          <div key={a.id} className={`ach-item ${got.has(a.id) ? 'on' : ''}`} title={a.desc}>
+            <span className="ach-ic" aria-hidden="true">{got.has(a.id) ? a.icon : '🔒'}</span>
+            <span><b>{a.title}</b><small>{a.desc}</small></span>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
