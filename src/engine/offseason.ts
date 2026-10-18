@@ -254,7 +254,7 @@ function nationalSummer(c: Career, season: number) {
   c.flags.nationalCaps = (c.flags.nationalCaps ?? 0) + 1;
   c.fame = clamp(c.fame + 3, 0, 100);
   const rng = rngFor(c.seed, 'national', season);
-  const medalChance = [0.08, 0.3, 0.7][deep] + Math.max(0, u.ovr - bar - 5) * 0.01;
+  const medalChance = [0.06, 0.22, 0.65][deep] + Math.max(0, u.ovr - bar - 5) * 0.006;
   if (rng.chance(medalChance)) {
     c.flags.medals = (c.flags.medals ?? 0) + 1;
     addNews(c, 'milestone', `Medalla con ${country.name}`, `Torneo internacional de verano: subes al podio con ${country.name}.`, 'good');
