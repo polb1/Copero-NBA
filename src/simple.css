@@ -168,8 +168,6 @@
 @keyframes dribble { from { transform: translateY(-10px); } to { transform: translateY(8px) scaleY(0.9); } }
 
 
-.hero-photo { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0.4; animation: kenburns 24s ease-in-out infinite alternate; }
-.hero-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #0b0c0e 25%, rgba(11, 12, 14, 0.4) 70%, #0b0c0e); }
 
 /* ---------- Team logos & gold OVR ---------- */
 .team-logo { object-fit: contain; flex: none; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45)); }
@@ -182,17 +180,6 @@
 .ovr-delta.gold-up { background: #f5c451; color: #3b2705; z-index: 2; }
 .ovr-pill.gold { color: #3b2705; text-shadow: none; box-shadow: 0 0 0 1px rgba(255, 220, 120, 0.55); }
 
-/* ---------- Shell for secondary pages ---------- */
-.shell { min-height: 100vh; }
-.shell-top { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 20px; background: rgba(11, 12, 14, 0.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-.shell-top .brand { padding: 0; }
-.shell-nav { display: flex; gap: 4px; flex-wrap: wrap; }
-.shell-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 10px; color: var(--text-2); font-weight: 600; font-size: 0.86rem; }
-.shell-link:hover { background: var(--panel-2); color: var(--text); }
-.shell-link.active { background: var(--accent-soft); color: var(--text); }
-.shell-link.play { background: var(--accent); color: var(--accent-ink); }
-.shell-main { max-width: 1120px; margin: 0 auto; padding: 24px 16px 60px; }
-@media (max-width: 720px) { .shell-link span { display: none; } .shell-top .brand-name { display: none; } }
 .flag { display: inline-block; vertical-align: middle; object-fit: cover; border-radius: 3px; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 1px 3px rgba(0, 0, 0, 0.4); flex: none; }
 .nat-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; padding: 8px 10px; border-radius: 8px; background: #17191d; font-size: 0.82rem; color: var(--text-2); }
 .nat-row b { color: var(--text); }
@@ -308,7 +295,7 @@
 
 /* Phones and touch screens: drop the effects that make mobile GPUs redraw every frame. */
 @media (max-width: 760px), (hover: none) {
-  .scene.live img, .scene.live svg, .hero-photo { animation: none; }
+  .scene.live img, .scene.live svg { animation: none; }
   @keyframes photo-in { from { opacity: 0; } }
   .team-logo { filter: none; }
   .tl-row.current { animation: none; outline-color: rgba(255, 107, 26, 0.55); }
