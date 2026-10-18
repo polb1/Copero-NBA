@@ -315,7 +315,10 @@ function Decision({ c }: { c: Career }) {
       return (
         <Block scene={needs ? 'contract' : 'summer'} title={needs ? 'Mercado de fichajes' : c.offers.length ? 'Propuestas sobre la mesa' : `Verano · ${u.age} años`} desc={needs ? (c.offers.length ? (c.flags.euroCareer ? 'Estos clubes te quieren la próxima temporada.' : 'Tu contrato terminó. Elige tu próximo destino.') : 'Nadie te ha hecho una oferta.') : `OVR ${u.ovr} · bajo contrato con ${teamName(c.league, u.teamId)}.`}>
           {c.offers.map((o) => <OfferChoice key={o.id} c={c} o={o} onPick={() => accept(o.id)} />)}
-          {!needs && <Choice top="Quedarse en" title={t ? teamName(c.league, t.id) : 'tu equipo'} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : '🏠'} tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Seguir con tu contrato.</Choice>}
+          {!needs && !c.offers.some((o) => o.id === 'opt-player') && (c.offers.some((o) => o.id.startsWith('ext-'))
+            // The extension already shows this team: the alternative is just keeping the current deal, not a second offer from it.
+            ? <Choice top="Sin firmar nada" title="Rechazar la extensión" icon="📝" tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Cumples el contrato que ya tienes.</Choice>
+            : <Choice top="Quedarse en" title={t ? teamName(c.league, t.id) : 'tu equipo'} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : '🏠'} tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Seguir con tu contrato.</Choice>)}
           {canRetire && <Choice top="Colgar las botas" title="Retirarse" scene="trophy" tone="danger" onClick={() => { if (confirm('¿Anunciar la retirada?')) store.act((x) => api.retire(x, 'Retirada voluntaria.')); }}>Fin de la carrera.</Choice>}
         </Block>
       );
