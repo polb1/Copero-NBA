@@ -126,7 +126,7 @@ function TopCard({ c }: { c: Career }) {
         <div><small>REBOTES</small><b>{num(tot.oreb + tot.dreb)}</b></div>
         <div><small>ASISTENCIAS</small><b>{num(tot.ast)}</b></div>
       </div>
-      <div className="vitrina">
+      <div className={`vitrina ${Object.keys(awards).length ? '' : 'empty'}`}>
         {Object.keys(awards).length === 0 ? (
           <><span style={{ fontSize: '1.3rem', opacity: 0.5 }}>🏆</span><span className="tiny dim">VITRINA VACÍA</span></>
         ) : (
@@ -384,6 +384,8 @@ function Timeline({ c }: { c: Career }) {
     return c.satellite?.teamName ?? 'Decisión de carrera…';
   };
   const rows: ReactNode[] = [];
+  // Phones hide the far-off empty years so the decision stays within reach.
+  const lastAge = Math.max(pendingAge ?? 0, ...byAge.keys());
   for (let age = startAge; age <= endAge; age++) {
     const r = byAge.get(age);
     if (r) {
@@ -414,7 +416,7 @@ function Timeline({ c }: { c: Career }) {
         </div>,
       );
     } else {
-      rows.push(<div key={age} className="tl-row empty"><span className="age-empty">{age}</span></div>);
+      rows.push(<div key={age} className={`tl-row empty ${age > lastAge + 4 ? 'far' : ''}`}><span className="age-empty">{age}</span></div>);
     }
   }
   const nba = sumStats(c.seasons.filter((s) => s.comp === 'NBA').map((s) => s.stats));
@@ -450,7 +452,7 @@ function Timeline({ c }: { c: Career }) {
         <Flag code={u.nat} size={22} />
         <span><b>Selección de {country.name}</b> · {c.flags.nationalCaps ? `${c.flags.nationalCaps} convocatoria${c.flags.nationalCaps > 1 ? 's' : ''}` : c.flags.nationalTeam ? 'Internacional' : 'Aún sin convocatorias'}{c.flags.medals ? ` · 🥇 ${c.flags.medals} medalla${c.flags.medals > 1 ? 's' : ''}` : ''}</span>
       </div>
-      <p className="tiny dim" style={{ marginTop: 6 }}>Totales de cada temporada (pasa el ratón para ver la media por partido). Temporadas {RULES.label} en adelante.</p>
+      <p className="tiny dim tl-hint" style={{ marginTop: 6 }}>Totales de cada temporada (pasa el ratón para ver la media por partido). Temporadas {RULES.label} en adelante.</p>
     </div>
   );
 }
