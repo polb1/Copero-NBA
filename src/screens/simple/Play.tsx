@@ -183,7 +183,7 @@ function Block({ title, desc, scene, children }: { title: string; desc?: ReactNo
   const compact = Children.toArray(children).filter(Boolean).length > 3;
   return (
     <div className={`decision anim-in ${compact ? 'is-compact' : ''}`} key={title}>
-      <Scene kind={scene} variant={title} height={compact ? 64 : 170}><h2>{title}</h2></Scene>
+      <Scene kind={scene} variant={title} height={compact ? 84 : 170}><h2>{title}</h2></Scene>
       {desc && <p className="small muted desc">{desc}</p>}
       <div className={`choices ${compact ? 'compact' : ''}`}>{children}</div>
     </div>
