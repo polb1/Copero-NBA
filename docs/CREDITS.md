@@ -42,7 +42,7 @@ Las ilustraciones vectoriales de `src/ui/Scene.tsx` son originales del proyecto 
 
 ## Banderas
 
-Banderas en `public/flags/` (PNG de 80 px) descargadas de [flagcdn.com](https://flagcdn.com) el 18/10/2026. Las banderas nacionales son de dominio público; flagcdn las ofrece gratis para cualquier uso.
+Banderas de los 200 países en `public/flags/` (PNG de 80 px, 292 KB en total) descargadas de [flagcdn.com](https://flagcdn.com) el 18/10/2026. Las banderas nacionales son de dominio público; flagcdn las ofrece gratis para cualquier uso.
 
 ## Logotipos NBA
 

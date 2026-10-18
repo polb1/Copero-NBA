@@ -3,7 +3,7 @@ import type { Career, League, Offer, Prospect, RetirementSummary, TeamStatus } f
 import { addNews, onNbaRoster, teamOf, userOf } from './career';
 import { generateDraftClass, materializeProspect, mockRange, positionNeeds, prospectValue, rookieContract, runLottery, simulateDraft } from './draft';
 import { contractEnd, makeSalaries, marketValue, offerCapacity, salaryIn, yearsLeft, fmtMoney } from './contracts';
-import { contractFromOffer, fallbackOffers, generateFAOffers, signUser, projectedRole } from './market';
+import { contractFromOffer, euroOffers, fallbackOffers, generateFAOffers, signUser, projectedRole } from './market';
 import { offseasonDevelopment } from './progression';
 import { generatePlayer, emptyStats, fullName } from './players';
 import { makeCoach, newPlayerId, setupSeasonSchedule, signNpc, teamName, teamStrength } from './league';
@@ -268,6 +268,24 @@ export function buildOffseasonOffers(c: Career) {
     }
     return;
   }
+  // European career: club offers every summer, plus NBA interest if good enough.
+  if (c.flags.euroCareer && !onNbaRoster(c)) {
+    const nba = u.ovr >= 72 ? generateFAOffers(c).slice(0, 2) : [];
+    const last = [...c.seasons].reverse().find((s) => s.comp === 'EUR');
+    const club = last ? findClub(last.teamName) : undefined;
+    if ((c.flags.euroUntil ?? 0) >= season && club) {
+      const stay: Offer = { id: `eu-stay-${season}`, teamId: 'EUR', kind: 'overseas', years: c.flags.euroUntil - season + 1, club: club.name, salary: c.flags.euroSalary ?? 0, raise: 0, role: 'Bajo contrato', note: `Sigues bajo contrato con ${club.name} hasta ${seasonLabel(c.flags.euroUntil)}.` };
+      if (!nba.length) {
+        // Nothing to decide: the season with the current club simply continues.
+        setOverseasClub(c, club.name, stay.salary);
+        return;
+      }
+      c.offers.push(stay, ...nba);
+      return;
+    }
+    c.offers.push(...euroOffers(c), ...nba);
+    return;
+  }
   // Free agent
   const rfa = !!k?.rookieScale;
   const own = onNbaRoster(c) ? ownTeam : null;
@@ -304,9 +322,11 @@ export function acceptOffer(c: Career, offerId: string) {
     if (u.teamId && L.teams[u.teamId]) L.teams[u.teamId].roster = L.teams[u.teamId].roster.filter((id) => id !== u.id);
     u.teamId = null;
     u.contract = null;
-    const club = findClub(o.club ?? '') ?? EURO_CLUBS[0];
-    c.satellite = { comp: 'EUR', teamName: club.name, level: clubLevel(club, 'EUR'), minutes: clubMinutes(club), league: club.league, gamesPlanned: SATELLITES.EUR.games, w: 0, l: 0 };
-    c.flags.overseasSalary = o.salary;
+    const club = setOverseasClub(c, o.club ?? EURO_CLUBS[0].name, o.salary);
+    if (!o.id.startsWith('eu-stay')) {
+      c.flags.euroUntil = L.season + o.years - 1;
+      c.flags.euroSalary = o.salary;
+    }
     addNews(c, 'contract', 'Rumbo al extranjero', `${fullName(u)} jugará una temporada en ${club.name} (${club.league}) por ${fmtMoney(o.salary)}.`, 'neutral');
   } else {
     // RFA: the original team may match an outside offer.
@@ -379,7 +399,47 @@ export function startRegularSeason(c: Career) {
   addNews(c, 'league', `Arranca la temporada ${seasonLabel(c.league.season)}`, '82 partidos por delante. Cada noche cuenta.', 'neutral');
 }
 
+function setOverseasClub(c: Career, name: string, salary: number) {
+  const club = findClub(name) ?? EURO_CLUBS[0];
+  c.satellite = { comp: 'EUR', teamName: club.name, level: clubLevel(club, 'EUR'), minutes: clubMinutes(club), league: club.league, gamesPlanned: SATELLITES.EUR.games, w: 0, l: 0 };
+  c.flags.overseasSalary = salary;
+  return club;
+}
+
 // ---------------- Pre-draft ----------------
+
+/** Simple flow: the player picks one of the three starting clubs offered after the agency decision. */
+export function chooseStartingClub(c: Career, name: string) {
+  const p = c.predraft;
+  const choice = p?.clubChoices?.find((x) => x.name === name);
+  if (!p || p.step !== 'club' || !choice) return;
+  const club = findClub(name);
+  const comp = choice.comp;
+  p.route = comp === 'NCAA' ? 'college' : 'international';
+  p.clubName = name;
+  p.step = 'season';
+  c.profile.origin = name;
+  c.satellite = { comp, teamName: name, level: clubLevel(club, comp), minutes: clubMinutes(club), league: club?.league, gamesPlanned: SATELLITES[comp].games, w: 0, l: 0 };
+  addNews(c, 'contract', `${fullName(userOf(c))} firma con ${name}`, `Primera temporada como profesional en ${club?.league ?? SATELLITES[comp].name}.`, 'good');
+}
+
+/** Skip the NBA draft and build a career abroad: club offers every summer, league titles to win. */
+export function chooseEuroCareer(c: Career) {
+  const p = c.predraft!;
+  const u = userOf(c);
+  leagueOffseason(c.league, c.seed, { draft: true });
+  offseasonDevelopment(u, rngFor(c.seed, 'euro-dev', c.league.season), { workEthic: c.workEthic, minutesShare: 0.85, coachRating: 65, trainingBonus: 0.1 });
+  c.ovrHistory.push({ season: c.league.season, age: u.age, ovr: u.ovr, pot: u.pot });
+  c.flags.euroCareer = 1;
+  p.step = 'done';
+  c.satellite = null;
+  c.satStats = emptyStats();
+  c.gameLog = [];
+  c.phase = 'offseason';
+  c.offers = [];
+  buildOffseasonOffers(c);
+  addNews(c, 'contract', 'Carrera en el extranjero', `${fullName(u)} renuncia al draft de la NBA para hacer carrera fuera. La puerta de la NBA seguirá abierta si su nivel lo merece.`, 'neutral');
+}
 
 export function predraftDecision(c: Career, declare: boolean) {
   const p = c.predraft!;

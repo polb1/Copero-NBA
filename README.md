@@ -41,8 +41,10 @@ Abre http://localhost:5173. Otros comandos:
 - **Premios** calculados con las estadísticas de todos los jugadores: MVP, DPOY, ROY, 6MOY, MIP, All-NBA, All-Defensive, All-Star, líderes y MVP de las Finales.
 - **Tres ritmos**: carrera completa, carrera rápida y desafío diario (semilla compartida por fecha UTC).
 - **Una sola pantalla de juego**: sin menús de gestión. Logros, partidas, ajustes y desafío diario quedan en páginas secundarias.
-- **Clubes reales**: 53 clubes internacionales (ACB, BSL, Grecia, Italia, ABA, LKL, Francia, Alemania, Israel, NBL), 40 universidades NCAA y las 30 franquicias filiales de la G League. El nivel del club cambia la fuerza del equipo y tus minutos.
-- **43 nacionalidades** con bandera.
+- **Clubes reales**: 137 clubes de Europa, Latinoamérica, Asia, África y Oceanía con fuerza por liga, 40 universidades NCAA y las 30 franquicias filiales de la G League. El nivel del club cambia la fuerza del equipo y tus minutos.
+- **Todos los países del mundo** (200) con bandera.
+- **Inicio por elección**: tras elegir agente, el juego ofrece 3 clubes de tu país (universidades NCAA si eres estadounidense), uno de cada nivel.
+- **Carrera europea**: en vez del draft puedes quedarte fuera de la NBA: ofertas de clubes cada verano (renovación incluida), contratos de varios años, títulos de liga y MVP. Si tu nivel llega a OVR 72, también llaman equipos NBA.
 - **Persistencia** local con autosave, varias partidas, exportación/importación JSON, logros globales y tarjeta final descargable en PNG.
 
 ## Documentación

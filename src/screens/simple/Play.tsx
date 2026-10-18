@@ -35,7 +35,7 @@ function seasonTotals(c: Career, season: number): string {
   return `${num(st.pts)} puntos · ${num(st.oreb + st.dreb)} rebotes · ${num(st.ast)} asistencias en ${st.gp} partidos`;
 }
 
-const AWARD_ICON: Record<string, string> = { champion: '💍', mvp: '👑', fmvp: '🥇', dpoy: '🛡️', roy: '🌱', smoy: '🔋', mip: '📈', allStar: '⭐', allNba1: '🏅', allNba2: '🏅', allNba3: '🏅', allDef1: '🧱', allDef2: '🧱', threeContest: '🎯' };
+const AWARD_ICON: Record<string, string> = { champion: '💍', mvp: '👑', fmvp: '🥇', dpoy: '🛡️', roy: '🌱', smoy: '🔋', mip: '📈', allStar: '⭐', allNba1: '🏅', allNba2: '🏅', allNba3: '🏅', allDef1: '🧱', allDef2: '🧱', threeContest: '🎯', euroChampion: '🏆', euroMvp: '🌟' };
 
 export function Play() {
   const c = useCareer();
@@ -96,7 +96,7 @@ function TopCard({ c }: { c: Career }) {
   const u = userOf(c);
   const t = teamOf(c);
   // Only finished seasons: results stay hidden until the season is over.
-  const tot = sumStats(c.seasons.filter((s) => s.comp === 'NBA').map((s) => s.stats));
+  const tot = sumStats(c.seasons.filter((s) => s.comp !== 'NCAA').map((s) => s.stats));
   const a = averages(tot);
   const awards: Record<string, number> = {};
   for (const s of c.seasons) for (const k of s.awards) awards[k] = (awards[k] ?? 0) + 1;
@@ -196,7 +196,7 @@ function OfferChoice({ c, o, onPick, top = 'Firmar con' }: { c: Career; o: Offer
   const club = o.club ? findClub(o.club) : undefined;
   const name = t ? `${t.city} ${t.name}` : club ? club.name : 'Extranjero';
   return (
-    <Choice top={o.id === 'opt-player' ? 'Ejercer opción' : o.id.startsWith('ext-') ? 'Extender con' : top} title={name} onClick={onPick} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : club ? <span className="club-crest"><Flag code={club.country} size={46} /><small>{club.league}</small></span> : <span style={{ fontSize: '2.6rem' }}>🌍</span>}>
+    <Choice top={o.id === 'opt-player' ? 'Ejercer opción' : o.id.startsWith('ext-') ? 'Extender con' : o.note.startsWith('Renovar') ? 'Renovar con' : o.id.startsWith('eu-stay') ? 'Seguir en' : top} title={name} onClick={onPick} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : club ? <span className="club-crest"><Flag code={club.country} size={46} /><small>{club.league}</small></span> : <span style={{ fontSize: '2.6rem' }}>🌍</span>}>
       <span className="choice-meta">{fmtMoney(o.salary)}{o.years > 1 ? ` · ${o.years} años (${fmtMoney(total)})` : ` · ${o.kind === 'two-way' ? 'two-way' : o.kind === 'gleague' ? 'G League' : '1 año'}`}</span>
       <span className="choice-meta dim">{o.role}{t ? ` · ${t.w + t.l ? `${t.w}-${t.l}` : t.status === 'contender' ? 'aspirante' : t.status === 'rebuild' ? 'reconstrucción' : 'zona media'}` : ''}</span>
     </Choice>
@@ -214,6 +214,22 @@ function Decision({ c }: { c: Career }) {
   switch (c.phase) {
     case 'predraft': {
       const p = c.predraft!;
+      if (p.step === 'club' && p.clubChoices) {
+        const country = countryByCode(u.nat).name;
+        const ncaa = p.clubChoices[0]?.comp === 'NCAA';
+        return (
+          <Block scene={ncaa ? 'college' : 'contract'} title="Elige tu primer club" desc={ncaa ? 'Tres universidades te ofrecen una beca. Elige dónde empieza tu carrera.' : `Tres clubes quieren ficharte${p.clubChoices.some((x) => findClub(x.name)?.country === u.nat) ? ` en ${country}` : ''}. Elige dónde empieza tu carrera.`}>
+            {p.clubChoices.map((x) => {
+              const club = findClub(x.name);
+              return (
+                <Choice key={x.name} top={club?.league ?? (ncaa ? 'NCAA' : '')} title={x.name} icon={club ? <span className="club-crest"><Flag code={club.country} size={46} /><small>{'★'.repeat(4 - club.tier)}</small></span> : '🏀'} onClick={() => store.act((y) => api.chooseStartingClub(y, x.name))}>
+                  {club?.tier === 1 ? 'Gigante: más victorias, menos minutos.' : club?.tier === 2 ? 'Equilibrado: nivel y minutos.' : 'Modesto: el balón será tuyo.'}
+                </Choice>
+              );
+            })}
+          </Block>
+        );
+      }
       if (p.step === 'season') {
         const s = c.satellite!;
         const comp = SATELLITES[s.comp as 'NCAA' | 'EUR'];
@@ -228,6 +244,7 @@ function Decision({ c }: { c: Career }) {
         return (
           <Block scene={'draft'} title="¿Te declaras para el draft?" desc={c.lastSummary ? seasonTotals(c, c.lastSummary.season) : undefined}>
             <Choice top="Dar el salto" title="Declararme" scene="draft" onClick={() => store.act((x) => api.predraftDecision(x, true))}>Combine, entrevistas y draft.</Choice>
+            <Choice top="Sin NBA" title={p.route === 'college' ? 'Jugar en el extranjero' : 'Carrera en Europa'} scene="europe" tone="stay" onClick={() => go('Mercado de clubes…', api.chooseEuroCareer)}>Clubes, títulos y la puerta de la NBA abierta.</Choice>
             {canReturn && <Choice top="Esperar" title="Otra temporada" scene="college" tone="stay" onClick={() => go('Jugando otra temporada…', (x) => api.predraftDecision(x, false))}>Mejorar tu cotización.</Choice>}
           </Block>
         );
@@ -295,7 +312,7 @@ function Decision({ c }: { c: Career }) {
       const canRetire = u.age >= 30 || (needs && c.offers.length === 0);
       const accept = (id: string) => go('Nueva temporada…', (x) => { api.acceptOffer(x, id); x.offers = []; });
       return (
-        <Block scene={needs ? 'contract' : 'summer'} title={needs ? 'Mercado de fichajes' : c.offers.length ? 'Propuestas sobre la mesa' : `Verano · ${u.age} años`} desc={needs ? (c.offers.length ? 'Tu contrato terminó. Elige tu próximo destino.' : 'Nadie te ha hecho una oferta.') : `OVR ${u.ovr} · bajo contrato con ${teamName(c.league, u.teamId)}.`}>
+        <Block scene={needs ? 'contract' : 'summer'} title={needs ? 'Mercado de fichajes' : c.offers.length ? 'Propuestas sobre la mesa' : `Verano · ${u.age} años`} desc={needs ? (c.offers.length ? (c.flags.euroCareer ? 'Estos clubes te quieren la próxima temporada.' : 'Tu contrato terminó. Elige tu próximo destino.') : 'Nadie te ha hecho una oferta.') : `OVR ${u.ovr} · bajo contrato con ${teamName(c.league, u.teamId)}.`}>
           {c.offers.map((o) => <OfferChoice key={o.id} c={c} o={o} onPick={() => accept(o.id)} />)}
           {!needs && <Choice top="Quedarse en" title={t ? teamName(c.league, t.id) : 'tu equipo'} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : '🏠'} tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Seguir con tu contrato.</Choice>}
           {canRetire && <Choice top="Colgar las botas" title="Retirarse" scene="trophy" tone="danger" onClick={() => { if (confirm('¿Anunciar la retirada?')) store.act((x) => api.retire(x, 'Retirada voluntaria.')); }}>Fin de la carrera.</Choice>}
@@ -357,7 +374,7 @@ function Timeline({ c }: { c: Career }) {
   const pendingAge = c.phase === 'retired' ? null : byAge.has(u.age) ? u.age + 1 : u.age;
   const t = teamOf(c);
   const pendingLabel = () => {
-    if (c.phase === 'predraft') return c.predraft?.clubName ?? 'Formación';
+    if (c.phase === 'predraft') return c.predraft?.clubName || 'Eligiendo club…';
     if (c.phase === 'signing') return 'Eligiendo equipo…';
     if (c.phase === 'season-end' || (c.phase === 'offseason' && api.needsContract(c))) return 'Eligiendo club…';
     if (t) return teamName(c.league, t.id);
@@ -373,7 +390,7 @@ function Timeline({ c }: { c: Career }) {
       rows.push(
         <div key={age} className="tl-row in" style={{ animationDelay: `${Math.min(12, age - startAge) * 45}ms` }} title={`${seasonLabel(r.season)} · ${r.result}`}>
           <span className="age-badge" style={{ background: tm?.color ?? '#334155' }}>{age}</span>
-          <span className="tl-club">{tm ? <TeamBadge id={tm.id} color={tm.color} size={16} /> : <span className="tiny">{r.comp === 'NCAA' ? '🎓' : r.comp === 'EUR' ? '🌍' : '🏀'}</span>}<span>{r.teamName}</span>{r.comp !== 'NBA' && <span className="tiny dim">{r.comp === 'GLG' ? 'G League' : r.comp}</span>}{won && <span title="Campeón">💍</span>}{r.awards.filter((k) => k !== 'champion').slice(0, 2).map((k) => <span key={k} title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'}</span>)}</span>
+          <span className="tl-club">{tm ? <TeamBadge id={tm.id} color={tm.color} size={16} /> : <span className="tiny">{r.comp === 'NCAA' ? '🎓' : r.comp === 'EUR' ? '🌍' : '🏀'}</span>}<span>{r.teamName}</span>{r.comp !== 'NBA' && <span className="tiny dim">{r.comp === 'GLG' ? 'G League' : r.comp === 'EUR' ? findClub(r.teamName)?.league ?? 'Internacional' : 'NCAA'}</span>}{won && <span title="Campeón">💍</span>}{r.awards.filter((k) => k !== 'champion').slice(0, 2).map((k) => <span key={k} title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'}</span>)}</span>
           <span className={`ovr-pill ${r.ovrEnd >= 80 ? 'gold' : ''}`} style={{ background: ovrTone(r.ovrEnd) }}>{r.ovrEnd}</span>
           <span className="tl-num">{r.stats.gp}</span>
           <span className="tl-num" title={`${f1(a.ppg)} por partido`}>{num(r.stats.pts)}</span>
@@ -398,6 +415,7 @@ function Timeline({ c }: { c: Career }) {
     }
   }
   const nba = sumStats(c.seasons.filter((s) => s.comp === 'NBA').map((s) => s.stats));
+  const abroad = sumStats(c.seasons.filter((s) => s.comp === 'EUR').map((s) => s.stats));
   const country = countryByCode(u.nat);
   return (
     <div className="tl">
@@ -414,6 +432,17 @@ function Timeline({ c }: { c: Career }) {
         <span className="tl-num">{num(nba.oreb + nba.dreb)}</span>
         <span className="tl-num">{num(nba.ast)}</span>
       </div>
+      {abroad.gp > 0 && (
+        <div className="tl-row foot" style={{ marginTop: 2 }}>
+          <span className="age-badge" style={{ background: '#1f2937' }}>🌍</span>
+          <span className="tl-club"><span>Total fuera de la NBA</span></span>
+          <span />
+          <span className="tl-num">{num(abroad.gp)}</span>
+          <span className="tl-num">{num(abroad.pts)}</span>
+          <span className="tl-num">{num(abroad.oreb + abroad.dreb)}</span>
+          <span className="tl-num">{num(abroad.ast)}</span>
+        </div>
+      )}
       <div className="nat-row">
         <Flag code={u.nat} size={22} />
         <span><b>Selección de {country.name}</b> · {c.flags.nationalCaps ? `${c.flags.nationalCaps} convocatoria${c.flags.nationalCaps > 1 ? 's' : ''}` : c.flags.nationalTeam ? 'Internacional' : 'Aún sin convocatorias'}{c.flags.medals ? ` · 🥇 ${c.flags.medals} medalla${c.flags.medals > 1 ? 's' : ''}` : ''}</span>

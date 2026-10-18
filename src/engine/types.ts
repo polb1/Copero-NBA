@@ -330,7 +330,9 @@ export interface Prospect {
 
 export interface PreDraft {
   route: 'college' | 'international' | 'alternative' | 'drafted';
-  step: 'season' | 'decision' | 'combine' | 'interviews' | 'mock' | 'lottery' | 'draft' | 'done';
+  step: 'club' | 'season' | 'decision' | 'combine' | 'interviews' | 'mock' | 'lottery' | 'draft' | 'done';
+  /** Starting clubs offered after the agency decision (simple flow). */
+  clubChoices?: { name: string; comp: 'NCAA' | 'EUR' }[];
   userBoosts: Record<string, number>;
   interviewQuestions?: { teamId: string; question: string; answers: string[] }[];
   seasonLog?: string;

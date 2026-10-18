@@ -9,6 +9,7 @@ import { RULES } from './config';
 import { AGENT_NAMES, countryByCode } from '../content/names';
 import { SATELLITES } from './satellite';
 import { clubLevel, clubMinutes, findClub } from '../data/clubs';
+import { startingClubs } from './clubpick';
 import type { RoleKey } from '../content/events';
 import { EVENTS } from '../content/events';
 import { instantiate, absDay, markEventSeen } from './events';
@@ -155,7 +156,13 @@ export function createCareer(input: NewCareerInput, seed: number): Career {
     allStarGames: 0,
   };
   const country = countryByCode(input.nat).name;
-  if (input.route === 'college' || input.route === 'international') {
+  if ((input.route === 'college' || input.route === 'international') && !input.origin.trim()) {
+    // Simple flow: agency first, then pick one of three clubs from the player's country.
+    const choices = startingClubs(input.nat, rngFor(seed, 'start-clubs'));
+    c.predraft = { route: input.route, step: 'club', clubChoices: choices.map((x) => ({ name: x.club.name, comp: x.comp })), userBoosts: {}, clubName: '', satelliteDone: false, seasonsPlayed: 0, interviews: [], interviewTeams: [], stockBonus: 0, workouts: [] };
+    addNews(c, 'draft', `${fullName(u)} empieza su carrera`, `El ${input.pos} de ${country} tiene ofertas de varios clubes. Primero, elegir quién le representa.`, 'neutral');
+    openEvent(c, 'predraft-agent');
+  } else if (input.route === 'college' || input.route === 'international') {
     const comp: Competition = input.route === 'college' ? 'NCAA' : 'EUR';
     c.predraft = { route: input.route, step: 'season', userBoosts: {}, clubName: input.origin, satelliteDone: false, seasonsPlayed: 0, interviews: [], interviewTeams: [], stockBonus: 0, workouts: [] };
     const club = findClub(input.origin);

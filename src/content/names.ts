@@ -1,4 +1,5 @@
 import { EURO_CLUBS as EURO_CLUB_LIST, NCAA_PROGRAMS } from '../data/clubs';
+import { ALL_ISO2, REGION_NAMES, flagEmoji, regionOfIso2, spanishCountryName, type Region } from '../data/countries';
 // Fictional name pools. Any match with a real person is coincidental.
 
 export interface Country {
@@ -9,7 +10,7 @@ export interface Country {
   last: string[];
   /** Relative weight in generated NBA rosters. */
   weight: number;
-  region: 'NA' | 'EU' | 'LATAM' | 'AF' | 'OC' | 'AS';
+  region: Region;
 }
 
 export const COUNTRIES: Country[] = [
@@ -109,6 +110,15 @@ export const ISO2: Record<string, string> = {
   POR: 'pt', BEL: 'be', POL: 'pl', ISR: 'il', NZL: 'nz', PUR: 'pr', VEN: 've', COL: 'co', URU: 'uy', CUB: 'cu', MNE: 'me', LAT: 'lv',
   CZE: 'cz', FIN: 'fi', GBR: 'gb', PHI: 'ph', KOR: 'kr', MLI: 'ml', SSD: 'ss', BAH: 'bs', GEO: 'ge',
 };
+
+// Every other country in the world (weight 0: they only appear when the player picks them).
+for (const iso of ALL_ISO2) {
+  const lower = iso.toLowerCase();
+  if (Object.values(ISO2).includes(lower)) continue;
+  const region = regionOfIso2(iso);
+  COUNTRIES.push({ code: iso, name: spanishCountryName(iso), flag: flagEmoji(iso), weight: 0, region, first: REGION_NAMES[region].first, last: REGION_NAMES[region].last });
+  ISO2[iso] = lower;
+}
 
 export const countryByCode = (code: string) => COUNTRIES.find((c) => c.code === code) ?? COUNTRIES[0];
 

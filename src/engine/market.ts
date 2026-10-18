@@ -2,7 +2,8 @@ import type { Career, Contract, League, Offer, Player } from './types';
 import { capFor, maxSalary, minSalary, RULES, scaled } from './config';
 import { makeSalaries, marketValue, offerCapacity, productionBonus, rosterCount, salaryIn, yearsLeft, fmtMoney } from './contracts';
 import { positionNeeds } from './draft';
-import { EURO_CLUBS } from '../data/clubs';
+import { EURO_CLUBS, LEAGUE_STRENGTH } from '../data/clubs';
+import { countryByCode } from '../content/names';
 import { teamName, teamStrength } from './league';
 import { addNews, userOf } from './career';
 import { fullName } from './players';
@@ -75,6 +76,37 @@ export function generateFAOffers(c: Career, opts: { ownTeam?: string | null; rfa
     });
   }
   return offers;
+}
+
+/** Summer offers from clubs outside the NBA (European career): renewal with the current club + two others. */
+export function euroOffers(c: Career): Offer[] {
+  const L = c.league;
+  const u = userOf(c);
+  const season = L.season;
+  const rng = rngFor(c.seed, 'euro-offers', season);
+  const last = [...c.seasons].reverse().find((s) => s.comp === 'EUR');
+  const current = last ? EURO_CLUBS.find((cl) => cl.name === last.teamName) : undefined;
+  const tiers = u.ovr >= 74 ? [1] : u.ovr >= 67 ? [1, 2] : u.ovr >= 60 ? [2, 3] : [3];
+  // Clubs from the player's country and region come first, then the strongest leagues.
+  const myRegion = countryByCode(u.nat).region;
+  const score = (cl: (typeof EURO_CLUBS)[number]) => (cl.country === u.nat ? 3 : 0) + (countryByCode(cl.country).region === myRegion ? 2 : 0) + ((LEAGUE_STRENGTH[cl.league] ?? -3) >= -1 ? 1.5 : 0) + rng.next() * 1.5;
+  const pool = EURO_CLUBS.filter((cl) => tiers.includes(cl.tier) && cl.name !== current?.name).map((cl) => ({ cl, s: score(cl) })).sort((a, b) => b.s - a.s).map((x) => x.cl);
+  // Prefer variety: different leagues.
+  const picks: typeof EURO_CLUBS = [];
+  for (const cl of pool) if (picks.length < 2 && !picks.some((p) => p.league === cl.league)) picks.push(cl);
+  for (const cl of pool) if (picks.length < 2 && !picks.includes(cl)) picks.push(cl);
+  const list = current && u.age < 37 ? [current, ...picks] : picks;
+  const base = 450_000 + Math.max(0, u.ovr - 55) * 160_000 + Math.max(0, u.ovr - 72) * 250_000;
+  return list.map((club, i) => {
+    const renew = club === current;
+    const years = u.age >= 32 ? 1 : rng.int(1, 3);
+    const salary = Math.round(scaled(base * (club.tier === 1 ? 1.3 : club.tier === 2 ? 1 : 0.75) * (renew ? 1.05 : 1), season));
+    return {
+      id: `eu-${season}-${i}`, teamId: 'EUR', kind: 'overseas' as const, years, club: club.name, salary, raise: 0.04,
+      role: club.tier === 1 ? (u.ovr >= 74 ? 'Estrella' : 'Rotación') : club.tier === 2 ? 'Titular' : 'Estrella del equipo',
+      note: renew ? `Renovar con ${club.name} (${club.league}).` : `${club.name} (${club.league}).`,
+    };
+  });
 }
 
 export function fallbackOffers(c: Career): Offer[] {

@@ -2,7 +2,7 @@
 import type { Career, TrainingFocus } from './types';
 import { createCareer, userOf, addNews, type NewCareerInput } from './career';
 import { advance, type AdvanceUnit, achievementsCheck, inSeason } from './flow';
-import { buildSigningOffers, acceptOffer, beginOffseason, startPreseason, startRegularSeason, predraftDecision, doCombine, answerInterview, revealLottery, runUserDraft, retire, needsContract } from './offseason';
+import { chooseStartingClub, chooseEuroCareer, buildSigningOffers, acceptOffer, beginOffseason, startPreseason, startRegularSeason, predraftDecision, doCombine, answerInterview, revealLottery, runUserDraft, retire, needsContract } from './offseason';
 import { resolveEvent, resolveMinigame } from './events';
 import { executeTrade, signUser, contractFromOffer } from './market';
 import { makeGoal } from './goals';
@@ -144,6 +144,6 @@ export function setAssignment(c: Career, to: 'NBA' | 'GLG') {
 }
 
 export {
-  advance, acceptOffer, beginOffseason, startPreseason, startRegularSeason, predraftDecision, doCombine, answerInterview, revealLottery, runUserDraft, retire, needsContract, signUser, contractFromOffer,
+  chooseStartingClub, chooseEuroCareer, advance, acceptOffer, beginOffseason, startPreseason, startRegularSeason, predraftDecision, doCombine, answerInterview, revealLottery, runUserDraft, retire, needsContract, signUser, contractFromOffer,
 };
 export type { AdvanceUnit, NewCareerInput };

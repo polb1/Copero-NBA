@@ -17,7 +17,7 @@ export function awardCounts(c: Career): Record<string, number> {
 
 const AWARD_POINTS: Record<string, number> = {
   mvp: 40, fmvp: 30, champion: 25, allNba1: 15, allNba2: 10, allNba3: 6, allStar: 6, dpoy: 20, roy: 8, smoy: 6, mip: 5,
-  allDef1: 5, allDef2: 3, threeContest: 3, ptsLeader: 6, rebLeader: 4, astLeader: 4, stlLeader: 3, blkLeader: 3,
+  allDef1: 5, allDef2: 3, threeContest: 3, euroChampion: 6, euroMvp: 5, ptsLeader: 6, rebLeader: 4, astLeader: 4, stlLeader: 3, blkLeader: 3,
 };
 
 export function legacyScore(c: Career): number {
@@ -25,7 +25,10 @@ export function legacyScore(c: Career): number {
   const p = playoffTotals(c);
   const nbaSeasons = c.seasons.filter((s) => s.comp === 'NBA' && s.stats.gp > 0).length;
   const peak = Math.max(0, ...c.ovrHistory.map((o) => o.ovr));
-  let score = t.pts / 250 + (t.oreb + t.dreb) / 450 + t.ast / 320 + (t.stl + t.blk) / 250 + nbaSeasons * 2 + Math.max(0, peak - 74) * 3 + p.gp * 0.2;
+  // Seasons abroad count too, at a lower weight than the NBA.
+  const eu = sumStats(c.seasons.filter((s) => s.comp === 'EUR').map((s) => s.stats));
+  const euSeasons = c.seasons.filter((s) => s.comp === 'EUR' && s.stats.gp > 0).length;
+  let score = eu.pts / 600 + (eu.oreb + eu.dreb) / 1000 + eu.ast / 800 + euSeasons * 1 + t.pts / 250 + (t.oreb + t.dreb) / 450 + t.ast / 320 + (t.stl + t.blk) / 250 + nbaSeasons * 2 + Math.max(0, peak - 74) * 3 + p.gp * 0.2;
   const counts = awardCounts(c);
   for (const [k, n] of Object.entries(counts)) score += (AWARD_POINTS[k] ?? 0) * n;
   return Math.round(score);

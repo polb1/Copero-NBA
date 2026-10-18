@@ -73,7 +73,106 @@ export const EURO_CLUBS: Club[] = [
   { name: 'Sydney Kings', league: 'NBL Australia', country: 'AUS', tier: 2 },
   { name: 'Melbourne United', league: 'NBL Australia', country: 'AUS', tier: 2 },
   { name: 'New Zealand Breakers', league: 'NBL Australia', country: 'NZL', tier: 3 },
+  // Resto de Europa
+  { name: 'Benfica', league: 'Liga Portuguesa', country: 'POR', tier: 2 },
+  { name: 'FC Porto', league: 'Liga Portuguesa', country: 'POR', tier: 2 },
+  { name: 'Sporting CP', league: 'Liga Portuguesa', country: 'POR', tier: 3 },
+  { name: 'Filou Oostende', league: 'BNXT League', country: 'BEL', tier: 2 },
+  { name: 'Antwerp Giants', league: 'BNXT League', country: 'BEL', tier: 3 },
+  { name: 'Heroes Den Bosch', league: 'BNXT League', country: 'NL', tier: 3 },
+  { name: 'Śląsk Wrocław', league: 'PLK', country: 'POL', tier: 2 },
+  { name: 'Anwil Włocławek', league: 'PLK', country: 'POL', tier: 3 },
+  { name: 'Legia Varsovia', league: 'PLK', country: 'POL', tier: 3 },
+  { name: 'ERA Nymburk', league: 'NBL Chequia', country: 'CZE', tier: 2 },
+  { name: 'Cibona', league: 'Liga ABA', country: 'CRO', tier: 3 },
+  { name: 'KK Split', league: 'Liga ABA', country: 'CRO', tier: 3 },
+  { name: 'KK Zadar', league: 'Liga ABA', country: 'CRO', tier: 3 },
+  { name: 'Igokea', league: 'Liga ABA', country: 'BA', tier: 3 },
+  { name: 'Krka Novo Mesto', league: 'Liga ABA', country: 'SLO', tier: 3 },
+  { name: 'VEF Rīga', league: 'Liga Letona-Estonia', country: 'LAT', tier: 3 },
+  { name: 'BC Kalev', league: 'Liga Letona-Estonia', country: 'EE', tier: 3 },
+  { name: 'Kauhajoki Karhu', league: 'Korisliiga', country: 'FIN', tier: 3 },
+  { name: 'Prometey', league: 'Superliga Ucrania', country: 'UA', tier: 3 },
+  { name: 'CSKA Moscú', league: 'VTB United League', country: 'RU', tier: 1 },
+  { name: 'UNICS Kazán', league: 'VTB United League', country: 'RU', tier: 2 },
+  { name: 'Zenit San Petersburgo', league: 'VTB United League', country: 'RU', tier: 2 },
+  { name: 'Falco Szombathely', league: 'NB I/A', country: 'HU', tier: 3 },
+  { name: 'U-BT Cluj-Napoca', league: 'Liga Națională', country: 'RO', tier: 3 },
+  { name: 'Levski Sofía', league: 'NBL Bulgaria', country: 'BG', tier: 3 },
+  { name: 'London Lions', league: 'Super League Basketball', country: 'GBR', tier: 3 },
+  { name: 'BC Vienna', league: 'BSL Austria', country: 'AT', tier: 3 },
+  { name: 'Fribourg Olympic', league: 'SB League', country: 'CH', tier: 3 },
+  { name: 'Bakken Bears', league: 'Basketligaen', country: 'DK', tier: 3 },
+  { name: 'Norrköping Dolphins', league: 'Basketligan', country: 'SE', tier: 3 },
+  { name: 'Rustavi', league: 'Superliga Georgia', country: 'GEO', tier: 3 },
+  // Latinoamérica
+  { name: 'Boca Juniors', league: 'Liga Nacional', country: 'ARG', tier: 2 },
+  { name: 'Quimsa', league: 'Liga Nacional', country: 'ARG', tier: 2 },
+  { name: 'Instituto de Córdoba', league: 'Liga Nacional', country: 'ARG', tier: 3 },
+  { name: 'Obras Sanitarias', league: 'Liga Nacional', country: 'ARG', tier: 3 },
+  { name: 'Flamengo', league: 'NBB', country: 'BRA', tier: 2 },
+  { name: 'Franca', league: 'NBB', country: 'BRA', tier: 2 },
+  { name: 'Minas', league: 'NBB', country: 'BRA', tier: 3 },
+  { name: 'São Paulo', league: 'NBB', country: 'BRA', tier: 3 },
+  { name: 'Diablos Rojos del México', league: 'LNBP', country: 'MEX', tier: 2 },
+  { name: 'Halcones de Xalapa', league: 'LNBP', country: 'MEX', tier: 3 },
+  { name: 'Astros de Jalisco', league: 'LNBP', country: 'MEX', tier: 3 },
+  { name: 'Cangrejeros de Santurce', league: 'BSN', country: 'PUR', tier: 2 },
+  { name: 'Vaqueros de Bayamón', league: 'BSN', country: 'PUR', tier: 2 },
+  { name: 'Capitanes de Arecibo', league: 'BSN', country: 'PUR', tier: 3 },
+  { name: 'Guaros de Lara', league: 'SPB', country: 'VEN', tier: 2 },
+  { name: 'Trotamundos de Carabobo', league: 'SPB', country: 'VEN', tier: 3 },
+  { name: 'Spartans Distrito Capital', league: 'SPB', country: 'VEN', tier: 3 },
+  { name: 'Nacional', league: 'Liga Uruguaya', country: 'URU', tier: 3 },
+  { name: 'Peñarol', league: 'Liga Uruguaya', country: 'URU', tier: 3 },
+  { name: 'Aguada', league: 'Liga Uruguaya', country: 'URU', tier: 3 },
+  { name: 'Titanes de Barranquilla', league: 'Liga Colombiana', country: 'COL', tier: 3 },
+  { name: 'Cimarrones del Chocó', league: 'Liga Colombiana', country: 'COL', tier: 3 },
+  { name: 'Leones de Santo Domingo', league: 'LNB Dominicana', country: 'DOM', tier: 3 },
+  { name: 'Metros de Santiago', league: 'LNB Dominicana', country: 'DOM', tier: 3 },
+  { name: 'Calgary Surge', league: 'CEBL', country: 'CAN', tier: 3 },
+  { name: 'Niagara River Lions', league: 'CEBL', country: 'CAN', tier: 3 },
+  { name: 'Vancouver Bandits', league: 'CEBL', country: 'CAN', tier: 3 },
+  // Asia
+  { name: 'Guangdong Southern Tigers', league: 'CBA', country: 'CHN', tier: 2 },
+  { name: 'Liaoning Flying Leopards', league: 'CBA', country: 'CHN', tier: 2 },
+  { name: 'Beijing Ducks', league: 'CBA', country: 'CHN', tier: 3 },
+  { name: 'Shanghai Sharks', league: 'CBA', country: 'CHN', tier: 3 },
+  { name: 'Alvark Tokyo', league: 'B.League', country: 'JPN', tier: 2 },
+  { name: 'Chiba Jets', league: 'B.League', country: 'JPN', tier: 2 },
+  { name: 'Utsunomiya Brex', league: 'B.League', country: 'JPN', tier: 3 },
+  { name: 'Ryukyu Golden Kings', league: 'B.League', country: 'JPN', tier: 3 },
+  { name: 'Seoul SK Knights', league: 'KBL', country: 'KOR', tier: 3 },
+  { name: 'Ulsan Hyundai Mobis Phoebus', league: 'KBL', country: 'KOR', tier: 3 },
+  { name: 'Wonju DB Promy', league: 'KBL', country: 'KOR', tier: 3 },
+  { name: 'San Miguel Beermen', league: 'PBA', country: 'PHI', tier: 3 },
+  { name: 'Barangay Ginebra', league: 'PBA', country: 'PHI', tier: 3 },
+  { name: 'TNT Tropang Giga', league: 'PBA', country: 'PHI', tier: 3 },
+  { name: 'Al Riyadi', league: 'Liga Libanesa', country: 'LB', tier: 3 },
+  { name: 'Sagesse', league: 'Liga Libanesa', country: 'LB', tier: 3 },
+  // África (Basketball Africa League)
+  { name: 'Petro de Luanda', league: 'Basketball Africa League', country: 'AO', tier: 2 },
+  { name: 'Primeiro de Agosto', league: 'Basketball Africa League', country: 'AO', tier: 3 },
+  { name: 'Al Ahly', league: 'Basketball Africa League', country: 'EG', tier: 2 },
+  { name: 'Zamalek', league: 'Basketball Africa League', country: 'EG', tier: 3 },
+  { name: 'US Monastir', league: 'Basketball Africa League', country: 'TN', tier: 2 },
+  { name: 'FUS Rabat', league: 'Basketball Africa League', country: 'MA', tier: 3 },
+  { name: 'AS Douanes', league: 'Basketball Africa League', country: 'SEN', tier: 3 },
+  { name: 'Rivers Hoopers', league: 'Basketball Africa League', country: 'NGA', tier: 3 },
+  { name: 'APR', league: 'Basketball Africa League', country: 'RW', tier: 3 },
+  { name: 'Stade Malien', league: 'Basketball Africa League', country: 'MLI', tier: 3 },
 ];
+
+/** How strong each league is relative to the top European leagues (rating points). */
+export const LEAGUE_STRENGTH: Record<string, number> = {
+  'Liga ACB': 0, 'Basketbol Süper Ligi': 0, 'Greek Basket League': -0.5, 'Lega Basket Serie A': -0.5, 'Liga ABA': -0.5,
+  LKL: -1, 'LNB Élite': -0.5, 'Basketball Bundesliga': -0.5, "Ligat ha'Al": -1, 'NBL Australia': -0.5, 'VTB United League': -0.5,
+  'Liga Portuguesa': -3, 'BNXT League': -3, PLK: -2.5, 'NBL Chequia': -3, 'Liga Letona-Estonia': -3.5, Korisliiga: -4,
+  'Superliga Ucrania': -4, 'NB I/A': -3.5, 'Liga Națională': -4, 'NBL Bulgaria': -4.5, 'Super League Basketball': -4,
+  'BSL Austria': -4.5, 'SB League': -4.5, Basketligaen: -4.5, Basketligan: -4.5, 'Superliga Georgia': -5,
+  'Liga Nacional': -2.5, NBB: -3, LNBP: -4, BSN: -3, SPB: -4, 'Liga Uruguaya': -4.5, 'Liga Colombiana': -5.5, 'LNB Dominicana': -5,
+  CEBL: -5, CBA: -2.5, 'B.League': -2.5, KBL: -4, PBA: -4.5, 'Liga Libanesa': -4.5, 'Basketball Africa League': -5,
+};
 
 export const NCAA_PROGRAMS: Club[] = [
   { name: 'Duke', league: 'ACC', country: 'USA', tier: 1 },
@@ -133,9 +232,10 @@ export const findClub = (name: string): Club | undefined =>
 
 /** Team strength of a club on the NBA rating scale. */
 export function clubLevel(club: Club | undefined, comp: 'NCAA' | 'EUR'): number {
-  const base = comp === 'NCAA' ? 54 : 59;
+  const base = comp === 'NCAA' ? 54 : 61;
   const tier = club?.tier ?? 2;
-  return base + (4 - tier) * 2.5;
+  const league = club && comp === 'EUR' ? LEAGUE_STRENGTH[club.league] ?? -3 : 0;
+  return base + (4 - tier) * 2.5 + league;
 }
 
 /** Minutes multiplier for a young player: stacked clubs play veterans, small clubs give the ball. */

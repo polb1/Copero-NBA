@@ -59,7 +59,11 @@ export function playSatelliteGame(seed: number, comp: Exclude<Competition, 'NBA'
   const oppName = pool[(gameNo * 7 + Math.floor(gameNo / pool.length)) % pool.length];
   const oppLevel = def.level + rng.normal(0, 3.5);
   const mates = Array.from({ length: 9 }, (_, i) => synthPlayer(seed, `${comp}-${season}-team`, i, teamLevel));
-  const me: SimPlayer = { id: user.id, attrs: user.attrs, ovr: user.ovr, arch: user.arch, pos: user.pos, form: user.form, fatigue: user.fatigue, hurt: !!user.injury?.playingThrough, minutes: 0, starter: false };
+  // Stars well above the league get double-teamed: their edge over the competition is softened.
+  const cap = def.level + 6;
+  const damped = { ...user.attrs };
+  for (const k of Object.keys(damped) as (keyof typeof damped)[]) if (damped[k] > cap) damped[k] = Math.round(cap + (damped[k] - cap) * 0.5);
+  const me: SimPlayer = { id: user.id, attrs: damped, ovr: user.ovr > cap ? Math.round(cap + (user.ovr - cap) * 0.5) : user.ovr, arch: user.arch, pos: user.pos, form: user.form, fatigue: user.fatigue, hurt: !!user.injury?.playingThrough, minutes: 0, starter: false };
   const team = [me, ...mates];
   const totalMin = def.minutes * 5;
   assignMinutes(team, totalMin);

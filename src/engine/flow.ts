@@ -8,7 +8,7 @@ import { applyInjuryAftermath, injuryRisk, rollInjury } from './injuries';
 import { trainWeek } from './progression';
 import { pickEvent, instantiate, absDay, markEventSeen } from './events';
 import { playSatelliteGame, SATELLITES } from './satellite';
-import { opponentsFor } from '../data/clubs';
+import { findClub, opponentsFor } from '../data/clubs';
 import { addBox, averages, f1, fpct, doubleCount } from './stats';
 import { gameScore } from './gamesim';
 import { goalDef, updateGoalProgress } from './goals';
@@ -367,6 +367,24 @@ export function endSeason(c: Career) {
     const s = c.satellite;
     const comp = s.comp;
     records.push(seasonRecord(c, comp, { ...c.satStats }, null, comp === 'GLG' ? u.teamId : null, s.teamName, `${s.w}-${s.l}`, comp === 'GLG' ? 'G League' : SATELLITES[comp as 'NCAA' | 'EUR'].name, records.length ? [] : myAwards, comp === 'GLG' ? 'G League' : 'Titular'));
+  }
+  // Honours abroad: league title (team record + luck) and league MVP (production on a winning team).
+  const euro = records.find((r) => r.comp === 'EUR');
+  if (euro && c.satellite) {
+    const s = c.satellite;
+    const winPct = s.w / Math.max(1, s.w + s.l);
+    const rngE = rngFor(c.seed, 'euro-honours', L.season);
+    const ea = averages(euro.stats);
+    const tier = findClub(s.teamName)?.tier ?? 3;
+    const clubFactor = tier === 1 ? 1 : tier === 2 ? 0.55 : 0.25;
+    if (rngE.chance(clamp((winPct - 0.55) * 2 * clubFactor, 0, 0.75))) euro.awards.push('euroChampion');
+    if (euro.stats.gp >= 20 && ea.ppg >= 18 && winPct >= 0.55 && rngE.chance(clamp((ea.ppg - 18) / 25 + (winPct - 0.55), 0, 0.45))) euro.awards.push('euroMvp');
+    for (const a of euro.awards) {
+      if (a !== 'euroChampion' && a !== 'euroMvp') continue;
+      c.reputation = clamp(c.reputation + (a === 'euroMvp' ? 5 : 4), 0, 100);
+      addNews(c, 'award', a === 'euroMvp' ? `MVP de ${s.league ?? 'la liga'}` : `¡Campeones de ${s.league ?? 'liga'}!`, a === 'euroMvp' ? `${fullName(u)} es elegido MVP de la temporada con ${s.teamName}.` : `${s.teamName} gana el título con ${fullName(u)}.`, 'good');
+      if (!myAwards.includes(a)) myAwards.push(a);
+    }
   }
   c.seasons.push(...records);
   // Reputation / fame from awards and team success
