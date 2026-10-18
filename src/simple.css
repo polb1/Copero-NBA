@@ -254,3 +254,5 @@
   .choices.compact { margin-top: 8px; }
   .choices.compact .choice { padding-top: 8px; padding-bottom: 8px; }
 }
+/* Club crests: soft light backing so dark crests stay readable on the dark UI. */
+.club-logo { background: rgba(255, 255, 255, 0.92); border-radius: 22%; box-sizing: border-box; object-fit: contain; filter: none; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4); }

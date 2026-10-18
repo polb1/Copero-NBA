@@ -23,6 +23,7 @@ import { Scene, type SceneKind } from '../../ui/Scene';
 import { Icon } from '../../ui/icons';
 import { Flag } from '../../ui/Flag';
 import { findClub } from '../../data/clubs';
+import { ClubLogo } from '../../ui/ClubLogo';
 
 const num = (n: number) => Math.round(n).toLocaleString('es-ES');
 
@@ -112,7 +113,7 @@ function TopCard({ c }: { c: Career }) {
             <span className="tiny dim">POT {u.pot}</span>
           </div>
           <div className="row" style={{ gap: 8, marginTop: 6, minWidth: 0 }}>
-            {t && <TeamBadge id={t.id} color={t.color} size={26} />}
+            {t ? <TeamBadge id={t.id} color={t.color} size={26} /> : c.satellite ? <ClubLogo name={c.satellite.teamName} size={26} /> : null}
             <strong className="club">{clubLabel}</strong>
           </div>
           <div className="id-side">
@@ -196,7 +197,7 @@ function OfferChoice({ c, o, onPick, top = 'Firmar con' }: { c: Career; o: Offer
   const club = o.club ? findClub(o.club) : undefined;
   const name = t ? `${t.city} ${t.name}` : club ? club.name : 'Extranjero';
   return (
-    <Choice top={o.id === 'opt-player' ? 'Ejercer opción' : o.id.startsWith('ext-') ? 'Extender con' : o.note.startsWith('Renovar') ? 'Renovar con' : o.id.startsWith('eu-stay') ? 'Seguir en' : top} title={name} onClick={onPick} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : club ? <span className="club-crest"><Flag code={club.country} size={46} /><small>{club.league}</small></span> : <span style={{ fontSize: '2.6rem' }}>🌍</span>}>
+    <Choice top={o.id === 'opt-player' ? 'Ejercer opción' : o.id.startsWith('ext-') ? 'Extender con' : o.note.startsWith('Renovar') ? 'Renovar con' : o.id.startsWith('eu-stay') ? 'Seguir en' : top} title={name} onClick={onPick} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : club ? <span className="club-crest"><ClubLogo name={club.name} size={50} /><small>{club.league}</small></span> : <span style={{ fontSize: '2.6rem' }}>🌍</span>}>
       <span className="choice-meta">{fmtMoney(o.salary)}{o.years > 1 ? ` · ${o.years} años (${fmtMoney(total)})` : ` · ${o.kind === 'two-way' ? 'two-way' : o.kind === 'gleague' ? 'G League' : '1 año'}`}</span>
       <span className="choice-meta dim">{o.role}{t ? ` · ${t.w + t.l ? `${t.w}-${t.l}` : t.status === 'contender' ? 'aspirante' : t.status === 'rebuild' ? 'reconstrucción' : 'zona media'}` : ''}</span>
     </Choice>
@@ -222,7 +223,7 @@ function Decision({ c }: { c: Career }) {
             {p.clubChoices.map((x) => {
               const club = findClub(x.name);
               return (
-                <Choice key={x.name} top={club?.league ?? (ncaa ? 'NCAA' : '')} title={x.name} icon={club ? <span className="club-crest"><Flag code={club.country} size={46} /><small>{'★'.repeat(4 - club.tier)}</small></span> : '🏀'} onClick={() => store.act((y) => api.chooseStartingClub(y, x.name))}>
+                <Choice key={x.name} top={club?.league ?? (ncaa ? 'NCAA' : '')} title={x.name} icon={<span className="club-crest"><ClubLogo name={x.name} size={52} /><small>{club ? '★'.repeat(4 - club.tier) : ''}</small></span>} onClick={() => store.act((y) => api.chooseStartingClub(y, x.name))}>
                   {club?.tier === 1 ? 'Gigante: más victorias, menos minutos.' : club?.tier === 2 ? 'Equilibrado: nivel y minutos.' : 'Modesto: el balón será tuyo.'}
                 </Choice>
               );
@@ -390,7 +391,7 @@ function Timeline({ c }: { c: Career }) {
       rows.push(
         <div key={age} className="tl-row in" style={{ animationDelay: `${Math.min(12, age - startAge) * 45}ms` }} title={`${seasonLabel(r.season)} · ${r.result}`}>
           <span className="age-badge" style={{ background: tm?.color ?? '#334155' }}>{age}</span>
-          <span className="tl-club">{tm ? <TeamBadge id={tm.id} color={tm.color} size={16} /> : <span className="tiny">{r.comp === 'NCAA' ? '🎓' : r.comp === 'EUR' ? '🌍' : '🏀'}</span>}<span>{r.teamName}</span>{r.comp !== 'NBA' && <span className="tiny dim">{r.comp === 'GLG' ? 'G League' : r.comp === 'EUR' ? findClub(r.teamName)?.league ?? 'Internacional' : 'NCAA'}</span>}{won && <span title="Campeón">💍</span>}{r.awards.filter((k) => k !== 'champion').slice(0, 2).map((k) => <span key={k} title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'}</span>)}</span>
+          <span className="tl-club">{tm && r.comp === 'NBA' ? <TeamBadge id={tm.id} color={tm.color} size={16} /> : r.comp === 'GLG' ? <span className="tiny">🏀</span> : <ClubLogo name={r.teamName} size={16} />}<span>{r.teamName}</span>{r.comp !== 'NBA' && <span className="tiny dim">{r.comp === 'GLG' ? 'G League' : r.comp === 'EUR' ? findClub(r.teamName)?.league ?? 'Internacional' : 'NCAA'}</span>}{won && <span title="Campeón">💍</span>}{r.awards.filter((k) => k !== 'champion').slice(0, 2).map((k) => <span key={k} title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'}</span>)}</span>
           <span className={`ovr-pill ${r.ovrEnd >= 80 ? 'gold' : ''}`} style={{ background: ovrTone(r.ovrEnd) }}>{r.ovrEnd}</span>
           <span className="tl-num">{r.stats.gp}</span>
           <span className="tl-num" title={`${f1(a.ppg)} por partido`}>{num(r.stats.pts)}</span>
@@ -403,7 +404,7 @@ function Timeline({ c }: { c: Career }) {
         <div key={age} className="tl-row current">
           <span className="age-badge" style={{ background: '#475569' }}>{age}</span>
           <span className="tl-club">
-            {t && (c.phase === 'preseason' || inSeason(c)) ? <TeamBadge id={t.id} color={t.color} size={16} /> : <span className="q">?</span>}
+            {t && (c.phase === 'preseason' || inSeason(c)) ? <TeamBadge id={t.id} color={t.color} size={16} /> : c.satellite ? <ClubLogo name={c.satellite.teamName} size={16} /> : <span className="q">?</span>}
             <span className="dim">{pendingLabel()}</span>
           </span>
           <span className={`ovr-pill ${u.ovr >= 80 ? 'gold' : ''}`} style={{ background: ovrTone(u.ovr) }}>{u.ovr}</span>
