@@ -1,6 +1,6 @@
 import { Children, memo, useEffect, type ReactNode } from 'react';
 import { LEGACY_TIERS, legacyScore } from '../../engine/legacy';
-import { challengeOf } from '../../engine/challenges';
+import { challengeDone, challengeOf } from '../../engine/challenges';
 import { Link, useNavigate } from 'react-router-dom';
 import type { Career, Offer, SeasonRecord } from '../../engine/types';
 import * as api from '../../engine/api';
@@ -364,7 +364,8 @@ function Retired({ c }: { c: Career }) {
     link.click();
   };
   const share = async () => {
-    const text = `🏀 NBA Legacy\n${u.first} ${u.last} (${u.pos}, ${countryByCode(u.nat).name})\n${r.totals.gp} PJ · ${f1(a.ppg)} PTS ${f1(a.rpg)} REB ${f1(a.apg)} AST · ${r.titles} anillo(s)\nLegacy Score ${r.legacyScore} · ${r.tier}`;
+    const text = `🏀 NBA Legacy\n${u.first} ${u.last} (${u.pos}, ${countryByCode(u.nat).name})\n${r.totals.gp} PJ · ${f1(a.ppg)} PTS ${f1(a.rpg)} REB ${f1(a.apg)} AST · ${r.titles} anillo(s)\nLegacy Score ${r.legacyScore} · ${r.tier}\n${challengeDone(c) ? '✅' : '❌'} Reto: ${challengeOf(c).label}\n¿Puedes superarlo? ${location.origin + location.pathname}`;
+    // The link turns every shared career into an invitation to play.
     try {
       if (navigator.share) await navigator.share({ text });
       else { await navigator.clipboard.writeText(text); store.toast('Resumen copiado.'); }
