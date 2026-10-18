@@ -13,6 +13,8 @@ import { CourtPicker, Jersey } from '../../ui/simple';
 import { Flag } from '../../ui/Flag';
 
 
+const pickName = (list: string[]) => list[Math.floor(Math.random() * list.length)];
+
 export function Start() {
   const nav = useNavigate();
   const current = useCareer();
@@ -35,7 +37,6 @@ export function Start() {
   };
   // The chosen country stays on top so it is visible without scrolling the list.
   const countries = COUNTRIES.filter((c) => c.name.toLowerCase().includes(q.trim().toLowerCase())).sort((a, b) => Number(b.code === nat) - Number(a.code === nat) || a.name.localeCompare(b.name, 'es'));
-  const ready = last.trim().length > 0;
 
   const confirm = () => {
     const [lo, hi] = HEIGHT_RANGE[pos];
@@ -43,10 +44,12 @@ export function Start() {
     const growth = ARCHETYPES.find((a) => a.id === arch)!.growth.filter((g) => g !== 'balanced') as (keyof typeof TRAINING_AREAS)[];
     const focus: NewCareerInput['focus'] = growth.length ? Object.fromEntries(growth.map((g) => [g, Math.floor(10 / growth.length)])) : { shooting: 2, defense: 2, playmaking: 2, athleticism: 2, rebounding: 2 };
     const country = COUNTRIES.find((c) => c.code === nat)!;
+    // Empty fields get a typical name from the chosen country, so you can start with one tap.
+    const surname = last.trim() || pickName(country.last);
     const input: NewCareerInput = {
-      first: first.trim() || country.first[0],
-      last: last.trim(),
-      jersey: last.trim().toUpperCase(),
+      first: first.trim() || pickName(country.first),
+      last: surname,
+      jersey: surname.toUpperCase(),
       number,
       nat,
       birthplace: country.name,
@@ -72,9 +75,9 @@ export function Start() {
 
   return (
     <div className="simple-wrap">
-      <div className="simple-panel anim-in">
+      <div className="simple-panel start-panel anim-in">
         <div className="simple-head">
-          <h2>Definí tu identidad</h2>
+          <h2>Crea tu jugador</h2>
           <div className="seg" role="radiogroup" aria-label="Ritmo">
             <button aria-pressed={mode === 'full'} onClick={() => setMode('full')}>Intenso</button>
             <button aria-pressed={mode === 'quick'} onClick={() => setMode('quick')}>Normal</button>
@@ -86,7 +89,7 @@ export function Start() {
             <div style={{ display: 'grid', placeItems: 'center' }}><Jersey name={last} number={number} /></div>
             <div className="mini-fields">
               <label className="mini"><span>Nombre</span><input className="input" value={first} maxLength={20} onChange={(e) => setFirst(e.target.value)} placeholder="Opcional" /></label>
-              <label className="mini"><span>Apellido</span><input className="input" value={last} maxLength={14} onChange={(e) => setLast(e.target.value)} placeholder="APELLIDO" autoFocus /></label>
+              <label className="mini"><span>Apellido</span><input className="input" value={last} maxLength={14} onChange={(e) => setLast(e.target.value)} placeholder="Aleatorio" /></label>
               <label className="mini" style={{ maxWidth: 90 }}><span>Número</span><input className="input" type="number" min={0} max={99} value={number} onChange={(e) => setNumber(Math.max(0, Math.min(99, Number(e.target.value) || 0)))} /></label>
             </div>
             <div className="mini"><span>Mano hábil</span>
@@ -124,7 +127,7 @@ export function Start() {
         <div className="simple-foot">
           {current ? <button className="btn pill" onClick={() => nav('/play')}>Volver</button> : <Link to="/careers" className="btn pill">Mis carreras</Link>}
           {current && current.phase !== 'retired' && <span className="small dim">Empezar de nuevo reemplaza la carrera actual.</span>}
-          <button className="btn pill light" disabled={!ready} onClick={confirm}>Confirmar identidad</button>
+          <button className="btn pill light" onClick={confirm}>{last.trim() ? 'Confirmar identidad' : 'Empezar'}</button>
         </div>
       </div>
     </div>

@@ -332,3 +332,13 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 
 .challenge { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line-2); }
 .challenge.done b, .challenge.done span:first-child { color: var(--gold); }
+/* Phones: a shorter creation screen with the confirm button always in reach. */
+@media (max-width: 560px) {
+  .start-panel { overflow: visible; }
+  .start-panel .simple-head { padding: 14px 16px; }
+  .start-panel .simple-cols { padding: 14px; gap: 18px; }
+  .start-panel .simple-col svg[role="img"] { width: 128px; height: 128px; }
+  .start-panel .country-grid { max-height: 210px; }
+  .start-panel .court-pick { width: min(240px, 100%); margin: 0 auto; }
+  .start-panel .simple-foot { position: sticky; bottom: 0; z-index: 5; background: rgba(19, 20, 23, 0.97); border-radius: 0 0 16px 16px; padding: 12px 14px; }
+}
