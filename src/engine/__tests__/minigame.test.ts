@@ -61,7 +61,8 @@ describe('shooting minigames', () => {
     api.runUntilDecision(c);
     while (c.pendingEvent || c.phase !== 'season-end') {
       if (c.pendingEvent) {
-        api.chooseOption(c, 0);
+        // First option the player can pay for (some cost money up front).
+        api.chooseOption(c, c.pendingEvent.options.findIndex((_, i) => api.canAfford(c, i)));
         api.dismissEvent(c);
       }
       api.runUntilDecision(c);

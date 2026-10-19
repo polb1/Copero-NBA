@@ -44,7 +44,7 @@ describe('starting clubs and European career', () => {
     api.chooseStartingClub(c, c.predraft!.clubChoices![0].name);
     let guard = 0;
     while (c.phase !== 'retired' && guard++ < 3000) {
-      if (c.pendingEvent) { api.chooseOption(c, 0); api.dismissEvent(c); continue; }
+      if (c.pendingEvent) { api.chooseOption(c, c.pendingEvent.options.findIndex((_, i) => api.canAfford(c, i))); api.dismissEvent(c); continue; }
       if (c.phase === 'predraft' && c.predraft?.step === 'decision') { api.chooseEuroCareer(c); continue; }
       if (c.phase === 'season-end') { api.beginOffseason(c); }
       if (c.phase === 'offseason') {

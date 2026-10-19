@@ -271,7 +271,8 @@ export interface ActiveEvent {
   text: string;
   category: string;
   /** cost: money the option needs up front (it cannot be chosen without it). */
-  options: { label: string; desc: string; cost?: number }[];
+  /** odds: chance (0-100) that a risky option turns out well, shown before choosing. */
+  options: { label: string; desc: string; cost?: number; odds?: number }[];
   vars: Record<string, string>;
   resolved?: { option: number; result: string; effectsSummary: string[]; made?: number };
   minigame?: MinigameSpec;

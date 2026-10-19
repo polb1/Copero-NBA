@@ -9,7 +9,7 @@ function playSimple(c: Career, seasons: number) {
   for (let guard = 0; guard < 2000 && done < seasons && c.phase !== 'retired'; guard++) {
     if (c.pendingEvent) {
       stops++;
-      api.chooseOption(c, 0);
+      api.chooseOption(c, c.pendingEvent.options.findIndex((_, i) => api.canAfford(c, i)));
       api.dismissEvent(c);
       api.runUntilDecision(c);
       continue;

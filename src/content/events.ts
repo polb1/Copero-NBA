@@ -270,6 +270,43 @@ export const EVENTS: EventDef[] = [
         { weight: 1, effects: { form: -2, fatigue: 8 }, text: 'Partido durísimo. Sin vencedor claro en el duelo individual.' } ] },
       { label: 'Jugar el sistema', desc: 'Que gane el equipo.', effects: { trust: 4, chemistry: 3 }, text: 'Tu entrenador agradece la madurez.' },
     ] },
+  // ---------------- Gambles: visible odds, real consequences ----------------
+  { id: 'gamble-injection', category: 'injury', title: 'Infiltrarte para el partido decisivo', weight: 9, cooldown: 300,
+    text: 'Arrastras {injury}. El médico puede infiltrarte para que juegues esta noche, pero si la lesión se agrava te pierdes lo que queda de temporada.',
+    when: { phases: ['postseason', 'regular'], injured: true, severity: ['leve', 'moderada'], nba: true },
+    options: [
+      { label: 'Jugar infiltrado', desc: 'Todo o nada: el equipo te necesita.', outcomes: [
+        { weight: 3, boost: { stat: 'workEthic', per: 0.02 }, effects: { playThrough: true, heal: 30, fame: 8, trust: 6, morale: 6, form: 3 }, text: 'Juegas como si nada. La afición corea tu nombre.' },
+        { weight: 2, effects: { injure: 'grave', morale: -10, fame: 2 }, text: 'En la segunda parte la rodilla cede. Temporada en blanco.' } ] },
+      { label: 'No arriesgar', desc: 'Primero la salud.', effects: { trust: -2, morale: -2, fame: -2 }, text: 'Lo ves desde el banquillo, con la cabeza fría.' },
+    ] },
+  { id: 'gamble-dunk', category: 'media', title: 'El mate imposible', weight: 6, cooldown: 500,
+    text: 'En el calentamiento te retan a intentar un mate que nadie ha hecho jamás. Las cámaras ya están grabando.',
+    when: { phases: ['regular'], minFame: 30, nba: true },
+    options: [
+      { label: 'Intentarlo', desc: 'Puede ser historia… o un esguince.', outcomes: [
+        { weight: 11, boost: { stat: 'ovr', per: 0.15 }, effects: { fame: 12, endorsement: 150_000, morale: 4 }, text: 'Lo clavas. El vídeo da la vuelta al mundo.' },
+        { weight: 9, effects: { injure: 'leve', fame: 2, pressure: 4 }, text: 'Caes mal. Risas en redes y unos días en la enfermería.' } ] },
+      { label: 'Mejor un mate normal', desc: 'Sin riesgos.', effects: { fame: 1 }, text: 'Correcto, sin más.' },
+    ] },
+  { id: 'gamble-party', category: 'locker', title: 'Fiesta la víspera', weight: 6, cooldown: 400,
+    text: 'Tus compañeros montan una fiesta la noche antes de un partido importante.',
+    when: { phases: ['regular'], minAge: 19 },
+    options: [
+      { label: 'Ir a la fiesta', desc: 'Unir al grupo… o llegar fatal al partido.', outcomes: [
+        { weight: 1, effects: { chemistry: 7, morale: 5 }, text: 'Noche épica y al día siguiente estás fino. El vestuario, más unido que nunca.' },
+        { weight: 1, effects: { form: -4, trust: -6, pressure: 8 }, text: 'Llegas sin dormir, juegas fatal y el entrenador se entera.' } ] },
+      { label: 'Quedarte en casa', desc: 'Descansar.', effects: { fatigue: -8, chemistry: -2 }, text: 'Duermes ocho horas. Algún compañero lo nota.' },
+    ] },
+  { id: 'gamble-invest', category: 'money', title: 'Inversión arriesgada', weight: 5, cooldown: 600,
+    text: 'Un conocido te ofrece entrar en una empresa emergente. Puede multiplicar tu dinero o hacerlo desaparecer.',
+    when: { phases: ['regular', 'offseason'], minAge: 21 },
+    options: [
+      { label: 'Invertir $500K', desc: 'Alto riesgo, alta recompensa.', outcomes: [
+        { weight: 2, effects: { money: 1_000_000, morale: 4 }, text: 'La empresa despega: recuperas tu dinero y un millón más.' },
+        { weight: 3, effects: { money: -500_000, morale: -5, pressure: 3 }, text: 'La empresa quiebra. Adiós a la inversión.' } ] },
+      { label: 'No, gracias', desc: 'El dinero, en el banco.', effects: {}, text: 'Prudencia financiera.' },
+    ] },
   // ---------------- Injury / rest ----------------
   { id: 'injury-minor', category: 'injury', title: 'Molestias físicas', weight: 0, priority: 10,
     text: 'El cuerpo médico confirma: {injury}. Te dan opciones.',

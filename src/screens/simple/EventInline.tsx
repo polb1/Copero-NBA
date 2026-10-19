@@ -52,6 +52,7 @@ export function EventModalInline({ c }: { c: Career }) {
               <span className="tiny dim">Opción {i + 1}</span>
               <b className="choice-title">{o.label}</b>
               <span className="choice-body">{o.desc}</span>
+              {o.odds !== undefined && <span className="odds" title="Probabilidad según tu estado actual"><span className="odds-bar"><span style={{ width: `${o.odds}%` }} /></span><span><b className="good">{o.odds} %</b> sale bien · <b className="bad">{100 - o.odds} %</b> sale mal</span></span>}
               {o.cost ? <span className={`cost ${afford(i) ? '' : 'short'}`}>{afford(i) ? `Cuesta ${fmtMoney(o.cost)}` : `Te faltan ${fmtMoney(o.cost - cashOf(c))}`}</span> : null}
             </button>
             );

@@ -147,6 +147,27 @@ function optionCost(o: EventDef['options'][number]): number {
   return Math.max(0, ...spends.map((m) => -m));
 }
 
+/** Rough value of an outcome for the player: positive is "it went well". */
+function outcomeValue(e: EffectBag): number {
+  let v = (e.trust ?? 0) + (e.morale ?? 0) + (e.chemistry ?? 0) + (e.reputation ?? 0) + (e.fame ?? 0) + (e.loyalty ?? 0) + (e.workEthic ?? 0);
+  v += -(e.pressure ?? 0) * 0.5 - (e.fatigue ?? 0) * 0.3 + (e.form ?? 0) * 2 + (e.money ?? 0) / 100_000 + (e.endorsement ?? 0) / 50_000 + (e.pot ?? 0) * 5;
+  v += Object.values(e.attrs ?? {}).reduce((s, x) => s + (x ?? 0) * 2, 0);
+  v += (e.heal ?? 0) / 5 - (e.injuryRisk ?? 0) * 15;
+  if (e.injure) v -= e.injure === 'grave' ? 60 : e.injure === 'moderada' ? 30 : 12;
+  if (e.trophy) v += 20;
+  return v;
+}
+
+/** Chance (%) that a risky option goes well, with the same weights the resolution uses. */
+function optionOdds(o: EventDef['options'][number], ctx: EventContext): number | undefined {
+  if (!o.outcomes || o.outcomes.length < 2) return undefined;
+  const w = o.outcomes.map((x) => Math.max(0.05, x.weight + (x.boost ? statFor(ctx.career, ctx.user, x.boost.stat) * x.boost.per : 0)));
+  const total = w.reduce((a, b) => a + b, 0);
+  const good = o.outcomes.reduce((s, x, i) => s + (outcomeValue(x.effects) > 0 ? w[i] : 0), 0);
+  const pct = Math.round((good / total) * 100);
+  return pct > 0 && pct < 100 ? pct : undefined;
+}
+
 export function instantiate(def: EventDef, ctx: EventContext, rng: Rng): ActiveEvent {
   const vars = eventVars(ctx, rng);
   const ev: ActiveEvent = {
@@ -155,7 +176,7 @@ export function instantiate(def: EventDef, ctx: EventContext, rng: Rng): ActiveE
     title: fill(def.title, vars),
     text: fill(def.text, vars),
     // An option that spends money needs it up front: its largest possible cost.
-    options: def.options.map((o) => ({ label: fill(o.label, vars), desc: fill(o.desc, vars), cost: optionCost(o) || undefined })),
+    options: def.options.map((o) => ({ label: fill(o.label, vars), desc: fill(o.desc, vars), cost: optionCost(o) || undefined, odds: optionOdds(o, ctx) })),
     vars,
   };
   if (def.minigame) {
@@ -188,7 +209,6 @@ function statFor(c: Career, u: Player, s: NonNullable<EventOutcome['boost']>['st
 
 const SIGN = (n: number) => (n > 0 ? `+${n}` : `${n}`);
 
-/** Applies an effect bag to career + player. Returns human-readable summary lines. */
 /** Agencies: commission on every salary vs. contacts that raise the contract offers. */
 const AGENCY = {
   top: { cut: 6, quality: 85, note: 'Mejores ofertas de contrato' },
@@ -196,6 +216,7 @@ const AGENCY = {
   self: { cut: 0, quality: 25, note: 'Ofertas de contrato más bajas' },
 } as const;
 
+/** Applies an effect bag to career + player. Returns human-readable summary lines. */
 export function applyEffects(c: Career, u: Player, e: EffectBag, rng: Rng): string[] {
   const out: string[] = [];
   const bump = (key: 'trust' | 'morale' | 'chemistry' | 'reputation' | 'fame' | 'pressure' | 'loyalty' | 'workEthic', label: string) => {
@@ -264,7 +285,8 @@ export function applyEffects(c: Career, u: Player, e: EffectBag, rng: Rng): stri
     c.tradeRequested = true;
     out.push('Petición de traspaso registrada');
   }
-  if (e.injure && !u.injury) {
+  const sev = { leve: 1, moderada: 2, grave: 3 } as const;
+  if (e.injure && (!u.injury || sev[e.injure] > sev[u.injury.severity])) {
     u.injury = rollInjury(rng, e.injure);
     out.push(`Lesión: ${u.injury.name}`);
   }

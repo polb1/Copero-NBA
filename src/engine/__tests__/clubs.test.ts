@@ -28,7 +28,7 @@ describe('real clubs', () => {
     expect(opp[0]).not.toBe('Partizan');
     expect(EURO_CLUBS.find((x) => x.name === opp[0])?.league).toBe('Liga ABA');
     for (let i = 0; i < 20 && !c.gameLog.some((g) => g.comp === 'EUR'); i++) {
-      if (c.pendingEvent) { api.chooseOption(c, 0); api.dismissEvent(c); }
+      if (c.pendingEvent) { api.chooseOption(c, c.pendingEvent.options.findIndex((_, i) => api.canAfford(c, i))); api.dismissEvent(c); }
       api.runUntilDecision(c);
     }
     const game = c.gameLog.find((g) => g.comp === 'EUR');

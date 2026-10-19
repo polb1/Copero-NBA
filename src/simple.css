@@ -409,3 +409,7 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .decision.has-card .choice-img { height: 56px !important; }
 .decision.has-card .scene h2 { font-size: 1.15rem; }
 .vitrina.empty { display: none; }
+/* Risky options: the odds before you choose. */
+.odds { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; width: 100%; font-size: 0.68rem; color: var(--text-2); }
+.odds-bar { height: 5px; border-radius: 999px; background: var(--bad); overflow: hidden; }
+.odds-bar span { display: block; height: 100%; background: var(--good); }
