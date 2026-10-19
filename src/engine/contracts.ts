@@ -1,4 +1,4 @@
-import type { Contract, League, Player, Team } from './types';
+import type { Career, Contract, League, Player, Team } from './types';
 import { capFor, maxSalary, minSalary, RULES, scaled } from './config';
 import { clamp } from './rng';
 
@@ -21,6 +21,12 @@ export function marketValue(p: Player, season: number, production = 0): number {
   const eff = p.ovr + ageAdj + production;
   const base = 1_600_000 * Math.exp((eff - 60) * 0.14);
   return Math.round(clamp(scaled(base, season), minSalary(p.yearsPro, season), maxSalary(p.yearsPro, season)));
+}
+
+/** Keeps the highest market value of the career (shown on the final card). */
+export function notePeakValue(c: Career, p: Player) {
+  const v = marketValue(p, c.league.season);
+  if (v > (c.flags.peakValue ?? 0)) c.flags.peakValue = v;
 }
 
 /** Production bonus from last season's game score average (keeps value tied to real stats). */

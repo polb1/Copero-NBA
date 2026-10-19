@@ -1278,4 +1278,7 @@ export const EN: Dict = {
   "¡Sale bien!": "It worked out!",
   "Sale mal": "It went wrong",
   "Tirando": "Rolling",
+  "OVR MÁXIMO": "PEAK OVR",
+  "Valor máximo": "Peak value",
+  "Sin premios individuales": "No individual awards",
 };

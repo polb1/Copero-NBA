@@ -1203,4 +1203,7 @@ export const CA: Dict = {
   "¡Sale bien!": "Surt bé!",
   "Sale mal": "Surt malament",
   "Tirando": "Tirant",
+  "OVR MÁXIMO": "OVR MÀXIM",
+  "Valor máximo": "Valor màxim",
+  "Sin premios individuales": "Sense premis individuals",
 };
