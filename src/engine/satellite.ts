@@ -50,7 +50,7 @@ export interface SatelliteGameResult {
 }
 
 /** User's satellite game: user + synthetic teammates vs synthetic opponent around the competition level. */
-export function playSatelliteGame(seed: number, comp: Exclude<Competition, 'NBA'>, season: number, gameNo: number, user: Player, teamLevel: number, minutesBoost = 1, opponents?: string[]): SatelliteGameResult {
+export function playSatelliteGame(seed: number, comp: Exclude<Competition, 'NBA'>, season: number, gameNo: number, user: Player, teamLevel: number, minutesBoost = 1, opponents?: string[], boost = 0): SatelliteGameResult {
   const def = SATELLITES[comp];
   const key = `${comp}-${season}-${gameNo}`;
   const rng = rngFor(seed, 'sat', key);
@@ -63,7 +63,7 @@ export function playSatelliteGame(seed: number, comp: Exclude<Competition, 'NBA'
   const cap = def.level + 6;
   const damped = { ...user.attrs };
   for (const k of Object.keys(damped) as (keyof typeof damped)[]) if (damped[k] > cap) damped[k] = Math.round(cap + (damped[k] - cap) * 0.5);
-  const me: SimPlayer = { id: user.id, attrs: damped, ovr: user.ovr > cap ? Math.round(cap + (user.ovr - cap) * 0.5) : user.ovr, arch: user.arch, pos: user.pos, form: user.form, fatigue: user.fatigue, hurt: !!user.injury?.playingThrough, minutes: 0, starter: false };
+  const me: SimPlayer = { id: user.id, attrs: damped, ovr: user.ovr > cap ? Math.round(cap + (user.ovr - cap) * 0.5) : user.ovr, arch: user.arch, pos: user.pos, form: user.form, fatigue: user.fatigue, hurt: !!user.injury?.playingThrough, boost, minutes: 0, starter: false };
   const team = [me, ...mates];
   const totalMin = def.minutes * 5;
   assignMinutes(team, totalMin);

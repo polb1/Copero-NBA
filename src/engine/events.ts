@@ -1,4 +1,5 @@
 import type { ActiveEvent, Career, EffectBag, MinigameSpec, Player, Team } from './types';
+import { cashOf } from './mindset';
 import { EVENTS, type EventDef, type EventWhen, type RoleKey, type EventOutcome, type MinigameDef } from '../content/events';
 import { countryByCode } from '../content/names';
 import { attrLabel } from './attributes';
@@ -141,6 +142,11 @@ export function minigameSpec(def: MinigameDef, u: Player, c: Career): MinigameSp
   };
 }
 
+function optionCost(o: EventDef['options'][number]): number {
+  const spends = [o.effects?.money ?? 0, ...(o.outcomes ?? []).map((x) => x.effects.money ?? 0)];
+  return Math.max(0, ...spends.map((m) => -m));
+}
+
 export function instantiate(def: EventDef, ctx: EventContext, rng: Rng): ActiveEvent {
   const vars = eventVars(ctx, rng);
   const ev: ActiveEvent = {
@@ -148,7 +154,8 @@ export function instantiate(def: EventDef, ctx: EventContext, rng: Rng): ActiveE
     category: def.category,
     title: fill(def.title, vars),
     text: fill(def.text, vars),
-    options: def.options.map((o) => ({ label: fill(o.label, vars), desc: fill(o.desc, vars) })),
+    // An option that spends money needs it up front: its largest possible cost.
+    options: def.options.map((o) => ({ label: fill(o.label, vars), desc: fill(o.desc, vars), cost: optionCost(o) || undefined })),
     vars,
   };
   if (def.minigame) {
@@ -182,13 +189,20 @@ function statFor(c: Career, u: Player, s: NonNullable<EventOutcome['boost']>['st
 const SIGN = (n: number) => (n > 0 ? `+${n}` : `${n}`);
 
 /** Applies an effect bag to career + player. Returns human-readable summary lines. */
+/** Agencies: commission on every salary vs. contacts that raise the contract offers. */
+const AGENCY = {
+  top: { cut: 6, quality: 85, note: 'Mejores ofertas de contrato' },
+  family: { cut: 4, quality: 55, note: 'Ofertas de contrato normales' },
+  self: { cut: 0, quality: 25, note: 'Ofertas de contrato más bajas' },
+} as const;
+
 export function applyEffects(c: Career, u: Player, e: EffectBag, rng: Rng): string[] {
   const out: string[] = [];
   const bump = (key: 'trust' | 'morale' | 'chemistry' | 'reputation' | 'fame' | 'pressure' | 'loyalty' | 'workEthic', label: string) => {
     const v = e[key];
     if (!v) return;
     c[key] = clamp(c[key] + v, 0, 100);
-    if (key !== 'workEthic') out.push(`${label} ${SIGN(v)}`);
+    out.push(`${label} ${SIGN(v)}`);
   };
   bump('trust', 'Confianza del entrenador');
   bump('morale', 'Moral');
@@ -197,7 +211,7 @@ export function applyEffects(c: Career, u: Player, e: EffectBag, rng: Rng): stri
   bump('fame', 'Popularidad');
   bump('pressure', 'Presión mediática');
   bump('loyalty', 'Lealtad');
-  bump('workEthic', '');
+  bump('workEthic', 'Ética de trabajo');
   if (e.fatigue) {
     u.fatigue = clamp(u.fatigue + e.fatigue, 0, 100);
     out.push(`Fatiga ${SIGN(e.fatigue)}`);
@@ -207,8 +221,17 @@ export function applyEffects(c: Career, u: Player, e: EffectBag, rng: Rng): stri
     out.push(`Forma ${SIGN(e.form)}`);
   }
   if (e.money) {
-    c.earnings += e.money;
+    // Income counts towards career earnings; costs come out of the wallet only.
+    c.cash = cashOf(c) + e.money;
+    if (e.money > 0) c.earnings += e.money;
     out.push(`Dinero ${e.money > 0 ? '+' : '−'}${fmtMoney(Math.abs(e.money))}`);
+  }
+  if (e.agent) {
+    const deal = AGENCY[e.agent];
+    c.agent = { ...c.agent, quality: deal.quality };
+    c.flags.agentCut = deal.cut;
+    if (e.agent === 'top') c.flags.agentUpgrade = 1;
+    out.push(`Comisión del agente ${deal.cut} %`, deal.note);
   }
   if (e.endorsement) {
     c.endorsement = Math.max(0, c.endorsement + e.endorsement);

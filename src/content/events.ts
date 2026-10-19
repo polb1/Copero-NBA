@@ -652,8 +652,8 @@ export const EVENTS: EventDef[] = [
     text: 'Con el draft en el horizonte, tres agencias quieren representarte.',
     when: { phases: ['predraft'], chainOnly: true },
     options: [
-      { label: 'Agencia top', desc: 'Contactos con todas las franquicias. Cobra más.', effects: { flag: 'agentUpgrade', money: -50000 }, text: 'Firmas con una agencia de primer nivel.' },
-      { label: 'Agencia familiar', desc: 'Atención personal y lealtad.', effects: { morale: 4, loyalty: 4 }, text: 'Te sientes arropado.' },
-      { label: 'Representarte tú mismo', desc: 'Sin comisiones, sin contactos.', effects: { money: 40000, reputation: -2 }, text: 'Valiente, pero arriesgado.' },
+      { label: 'Agencia top', desc: 'Contratos más altos. Se queda el 6 % de tu sueldo.', effects: { agent: 'top', reputation: 3 }, text: 'Firmas con una agencia de primer nivel.' },
+      { label: 'Agencia familiar', desc: 'Atención personal. Comisión del 4 %.', effects: { agent: 'family', morale: 4, loyalty: 4 }, text: 'Te sientes arropado.' },
+      { label: 'Representarte tú mismo', desc: 'Sin comisiones, pero ofertas más bajas.', effects: { agent: 'self', reputation: -2 }, text: 'Valiente, pero arriesgado.' },
     ] },
 ];

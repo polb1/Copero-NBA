@@ -10,6 +10,7 @@ import { rngFor } from './rng';
 import { teamName } from './league';
 import { clamp } from './rng';
 import { rollChallenge } from './challenges';
+import { cashOf } from './mindset';
 
 export function newCareer(input: NewCareerInput, seed: number): Career {
   const c = createCareer(input, seed);
@@ -20,9 +21,19 @@ export function newCareer(input: NewCareerInput, seed: number): Career {
   return c;
 }
 
+/** Whether the player has the money an event option needs (if no option is affordable, all are allowed). */
+export function canAfford(c: Career, index: number): boolean {
+  const ev = c.pendingEvent;
+  if (!ev) return false;
+  const cash = cashOf(c);
+  const ok = (i: number) => (ev.options[i]?.cost ?? 0) <= cash;
+  return ok(index) || !ev.options.some((_, i) => ok(i));
+}
+
 export function chooseOption(c: Career, index: number) {
   const ev = c.pendingEvent;
   if (!ev || ev.resolved) return;
+  if (!canAfford(c, index)) return;
   if (ev.defId === 'dyn:trade') {
     const offer = c.offers[index];
     if (offer) {

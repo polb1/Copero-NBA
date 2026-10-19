@@ -121,6 +121,7 @@ export function createCareer(input: NewCareerInput, seed: number): Career {
     loyalty: 50,
     workEthic: Math.round(rng.range(45, 75)),
     earnings: 0,
+    cash: 0,
     endorsement: 0,
     agent: { name: rng.pick(AGENT_NAMES), quality: Math.round(rng.range(40, 70)) },
     training: { focus: 'balanced', intensity: 'normal' },

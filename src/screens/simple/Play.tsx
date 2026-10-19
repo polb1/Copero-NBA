@@ -10,6 +10,7 @@ import { inSeason } from '../../engine/flow';
 import { teamName } from '../../engine/league';
 import { averages, f1, sumStats } from '../../engine/stats';
 import { marketValue, fmtMoney, makeSalaries } from '../../engine/contracts';
+import { agentCut, cashOf, fameSponsor, performancePct, startingSalary } from '../../engine/mindset';
 import { AWARD_LABEL } from '../../engine/awards';
 import { SATELLITES } from '../../engine/satellite';
 import { seasonLabel } from '../../engine/schedule';
@@ -86,7 +87,7 @@ export function Play() {
  */
 function viewSig(c: Career): string {
   const u = userOf(c);
-  return [c.id, c.phase, c.seasons.length, c.ovrHistory.length, u.ovr, u.pot, u.age, u.teamId, u.injury?.daysLeft ?? '', c.satellite?.teamName ?? '', c.predraft?.clubName ?? '', c.predraft?.step ?? '', c.league.season, c.league.day > 0, c.offers.length, c.retirement ? 1 : 0, c.flags.challenge ?? '', c.flags.nationalCaps ?? 0, c.flags.medals ?? 0, u.contract?.startSeason ?? '', u.contract?.salaries.length ?? ''].join('|');
+  return [c.id, c.phase, c.seasons.length, c.ovrHistory.length, u.ovr, u.pot, u.age, u.teamId, u.injury?.daysLeft ?? '', c.satellite?.teamName ?? '', c.predraft?.clubName ?? '', c.predraft?.step ?? '', c.league.season, c.league.day > 0, c.offers.length, c.retirement ? 1 : 0, c.flags.challenge ?? '', c.flags.nationalCaps ?? 0, c.flags.medals ?? 0, Math.round(c.morale), Math.round(c.chemistry), Math.round(c.trust), Math.round(c.pressure), Math.round(c.fame), Math.round(c.reputation), Math.round(c.loyalty), Math.round(c.workEthic), Math.round(u.form), Math.round(u.fatigue / 5), cashOf(c), c.endorsement, u.contract?.startSeason ?? '', u.contract?.salaries.length ?? ''].join('|');
 }
 // The signature is computed when rendering and passed as a prop: actions mutate the career in place, so
 // recomputing it from the previous props object would already see the new state and skip needed renders.
@@ -120,6 +121,7 @@ function TopCard({ c }: { c: Career }) {
           <div className="id-side">
             <div><small>EDAD</small><b>{u.age}</b></div>
             <div><small>VALOR</small><b>{fmtMoney(marketValue(u, c.league.season))}</b></div>
+            <div title="Tu dinero: cobras al final de cada temporada y pagas los gastos de tus decisiones"><small>DINERO</small><b className="cash">{fmtMoney(cashOf(c))}</b></div>
           </div>
         </div>
       </div>
@@ -139,6 +141,7 @@ function TopCard({ c }: { c: Career }) {
         )}
       </div>
       <LegacyMeter c={c} />
+      <StatePanel c={c} />
     </>
   );
 }
@@ -163,6 +166,62 @@ function LegacyMeter({ c }: { c: Career }) {
         <div className={`legacy-best tiny ${score > best ? 'gold' : 'dim'}`}>{score > best ? `🔥 Superando tu récord (${best})` : `Tu récord: ${best} · te faltan ${best - score}`}</div>
       )}
     </div>
+  );
+}
+
+const STATE_ROWS: { key: 'morale' | 'chemistry' | 'trust' | 'pressure' | 'fame' | 'reputation' | 'loyalty' | 'workEthic'; label: string; icon: string; what: string; invert?: boolean }[] = [
+  { key: 'morale', label: 'Moral', icon: '😊', what: 'Rendimiento en pista' },
+  { key: 'chemistry', label: 'Química', icon: '🤝', what: 'Rendimiento en pista' },
+  { key: 'pressure', label: 'Presión', icon: '😰', what: 'Por encima de 55 resta rendimiento', invert: true },
+  { key: 'trust', label: 'Confianza', icon: '📋', what: 'Minutos que te da el entrenador' },
+  { key: 'fame', label: 'Popularidad', icon: '⭐', what: 'Patrocinios y votos All-Star' },
+  { key: 'reputation', label: 'Reputación', icon: '🏅', what: 'Ofertas de contrato' },
+  { key: 'loyalty', label: 'Lealtad', icon: '🫱', what: 'Ganas de tu equipo de renovarte' },
+  { key: 'workEthic', label: 'Ética', icon: '💪', what: 'Cuánto mejoras cada verano' },
+];
+
+/** The numbers your choices move, and what each one does to your career. */
+function StatePanel({ c }: { c: Career }) {
+  const u = userOf(c);
+  const [open, setOpen] = useState(false);
+  const perf = performancePct(c, u);
+  const sponsor = c.endorsement + fameSponsor(c);
+  return (
+    <div className="state-panel">
+      <div className="row between tiny">
+        <b>Estado</b>
+        <span className={`perf ${perf > 0 ? 'delta-up' : perf < 0 ? 'delta-down' : 'dim'}`} title="Moral, química, presión, forma y fatiga sobre tu juego">En pista {perf > 0 ? '+' : ''}{perf} %</span>
+        <button type="button" className="tl-mode" onClick={() => setOpen((v) => !v)} aria-expanded={open}>{open ? 'Ocultar' : '¿Qué hace?'}</button>
+      </div>
+      <div className="state-grid">
+        {STATE_ROWS.map((r) => {
+          const v = Math.round(c[r.key]);
+          const good = r.invert ? v <= 45 : v >= 60;
+          const bad = r.invert ? v >= 65 : v <= 35;
+          return (
+            <div key={r.key} className="state-item" title={`${r.label}: ${r.what}`}>
+              <span className="state-label">{r.icon} {r.label}</span>
+              <span className="state-bar"><span key={v} className={good ? 'good' : bad ? 'bad' : ''} style={{ width: `${Math.max(3, v)}%` }} /></span>
+              <b>{v}</b>
+              {open && <small className="state-what">{r.what}</small>}
+            </div>
+          );
+        })}
+      </div>
+      {open && (
+        <p className="tiny dim state-notes">
+          Patrocinios: {fmtMoney(sponsor)}/año · Comisión del agente: {Math.round(agentCut(c) * 100)} % del sueldo · Forma {u.form > 0 ? '+' : ''}{Math.round(u.form)} · Fatiga {Math.round(u.fatigue)}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/** What the season paid: salary, sponsorship, the agent's cut and the wallet after it. */
+function MoneyLine({ m }: { m?: { salary: number; sponsor: number; agent: number; cash: number } }) {
+  if (!m) return null;
+  return (
+    <><br /><span className="money-line">💰 {m.salary ? `Sueldo +${fmtMoney(m.salary)}` : 'Sin sueldo'}{m.sponsor ? ` · Patrocinios +${fmtMoney(m.sponsor)}` : ''}{m.agent ? ` · Agente −${fmtMoney(m.agent)}` : ''} → <b>{fmtMoney(m.cash)}</b></span></>
   );
 }
 
@@ -248,6 +307,7 @@ function Decision({ c }: { c: Career }) {
               return (
                 <Choice key={x.name} top={club?.league ?? (ncaa ? 'NCAA' : '')} title={x.name} icon={<span className="club-crest"><ClubLogo name={x.name} size={52} /><small>{club ? '★'.repeat(4 - club.tier) : ''}</small></span>} onClick={() => store.act((y) => api.chooseStartingClub(y, x.name))}>
                   {club?.tier === 1 ? 'Gigante: más victorias, menos minutos.' : club?.tier === 2 ? 'Equilibrado: nivel y minutos.' : 'Modesto: el balón será tuyo.'}
+                  <span className="choice-meta">{x.comp === 'NCAA' ? 'Beca (sin sueldo)' : `${fmtMoney(startingSalary(x.comp, club?.tier))}/año`}</span>
                 </Choice>
               );
             })}
@@ -266,7 +326,7 @@ function Decision({ c }: { c: Career }) {
       if (p.step === 'decision') {
         const canReturn = u.age <= 21 && p.seasonsPlayed < 3;
         return (
-          <Block scene={'draft'} title="¿Te declaras para el draft?" desc={c.lastSummary ? seasonTotals(c, c.lastSummary.season) : undefined}>
+          <Block scene={'draft'} title="¿Te declaras para el draft?" desc={c.lastSummary ? <>{seasonTotals(c, c.lastSummary.season)}<MoneyLine m={c.lastSummary.money} /></> : undefined}>
             <Choice top="Dar el salto" title="Declararme" scene="draft" onClick={() => store.act((x) => api.predraftDecision(x, true))}>Combine, entrevistas y draft.</Choice>
             <Choice top="Sin NBA" title={p.route === 'college' ? 'Jugar en el extranjero' : 'Carrera en Europa'} scene="europe" tone="stay" onClick={() => go('Mercado de clubes…', api.chooseEuroCareer)}>Clubes, títulos y la puerta de la NBA abierta.</Choice>
             {canReturn && <Choice top="Esperar" title="Otra temporada" scene="college" tone="stay" onClick={() => go('Jugando otra temporada…', (x) => api.predraftDecision(x, false))}>Mejorar tu cotización.</Choice>}
@@ -326,7 +386,7 @@ function Decision({ c }: { c: Career }) {
     case 'season-end': {
       const s = c.lastSummary!;
       return (
-        <Block scene={s.awards.length ? 'trophy' : 'arena'} title={`Fin de temporada ${seasonLabel(s.season)}`} desc={<>{s.teamResult}<br />{seasonTotals(c, s.season)} · <b className={s.ovrDelta > 0 ? 'delta-up' : s.ovrDelta < 0 ? 'delta-down' : ''}>OVR {s.ovrDelta >= 0 ? '+' : ''}{s.ovrDelta}</b>{s.awards.length ? <><br /><span className="gold">🏆 {s.awards.join(' · ')}</span></> : null}{s.highlights[0] && !s.highlights[0].startsWith('Campeón') ? <><br /><span>⭐ Mejor partido: {s.highlights[0]}</span></> : null}{seasonRecords(c, s.season).length ? <><br /><span className="accent">🔥 Récord personal: {seasonRecords(c, s.season).join(' · ')}</span></> : null}</>}>
+        <Block scene={s.awards.length ? 'trophy' : 'arena'} title={`Fin de temporada ${seasonLabel(s.season)}`} desc={<>{s.teamResult}<br />{seasonTotals(c, s.season)} · <b className={s.ovrDelta > 0 ? 'delta-up' : s.ovrDelta < 0 ? 'delta-down' : ''}>OVR {s.ovrDelta >= 0 ? '+' : ''}{s.ovrDelta}</b>{s.awards.length ? <><br /><span className="gold">🏆 {s.awards.join(' · ')}</span></> : null}{s.highlights[0] && !s.highlights[0].startsWith('Campeón') ? <><br /><span>⭐ Mejor partido: {s.highlights[0]}</span></> : null}{seasonRecords(c, s.season).length ? <><br /><span className="accent">🔥 Récord personal: {seasonRecords(c, s.season).join(' · ')}</span></> : null}<MoneyLine m={s.money} /></>}>
           <Choice top="Continuar" title="Siguiente temporada" scene="summer" onClick={() => go('Verano y nueva temporada…', api.beginOffseason)}>Solo se detiene si hay algo que decidir.</Choice>
         </Block>
       );

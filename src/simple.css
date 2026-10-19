@@ -357,3 +357,27 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 @media (max-width: 560px) { .ach-box { padding: 4px 12px 14px; } .ach-grid { grid-template-columns: 1fr 1fr; } .ach-item small { display: none; } }
 .earned { margin-top: 10px; }
 .earned > div { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; font-size: 1.35rem; }
+
+/* Wallet and player state: what choices move and what it does. */
+.id-side b.cash { color: #86efac; }
+.state-panel { margin-top: 10px; padding: 10px 12px; background: #17191d; border: 1px solid var(--line); border-radius: 10px; }
+.state-panel .perf { font-weight: 800; }
+.state-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 14px; margin-top: 8px; }
+.state-item { display: grid; grid-template-columns: minmax(0, 1fr) 54px 22px; align-items: center; gap: 6px; font-size: 0.72rem; }
+.state-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-2); }
+.state-item b { text-align: right; font-variant-numeric: tabular-nums; }
+.state-bar { height: 6px; background: var(--bg-2); border-radius: 999px; overflow: hidden; }
+.state-bar span { display: block; height: 100%; background: #94a3b8; border-radius: 999px; animation: state-flash 0.9s var(--ease); transition: width 0.4s; }
+.state-bar span.good { background: var(--good); }
+.state-bar span.bad { background: var(--bad); }
+@keyframes state-flash { 0% { filter: brightness(2.2); } 100% { filter: none; } }
+.state-what { grid-column: 1 / -1; color: var(--text-3); font-size: 0.64rem; margin-top: -2px; }
+.state-notes { margin: 8px 0 0; }
+@media (max-width: 960px) { .play-left > .state-panel { order: 4; margin-top: 0; } }
+@media (max-width: 560px) { .id-side { flex-wrap: wrap; gap: 2px 12px; } }
+.cost { margin-top: 4px; font-size: 0.7rem; font-weight: 700; color: #fbbf24; }
+.cost.short { color: var(--bad); }
+.choice.locked { opacity: 0.5; cursor: not-allowed; }
+.choice.locked:hover { transform: none; border-color: var(--line); }
+.money-line { color: #86efac; }
+.money-line b { color: #bbf7d0; }

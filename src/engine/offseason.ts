@@ -17,6 +17,7 @@ import { seasonLabel } from './schedule';
 import { SATELLITES } from './satellite';
 import { EURO_CLUBS, clubLevel, clubMinutes, findClub } from '../data/clubs';
 import { countryByCode } from '../content/names';
+import { startingSalary } from './mindset';
 
 // ---------------- League offseason ----------------
 
@@ -456,6 +457,7 @@ export function chooseStartingClub(c: Career, name: string) {
   p.route = comp === 'NCAA' ? 'college' : 'international';
   p.clubName = name;
   p.step = 'season';
+  c.flags.youthSalary = startingSalary(comp, club?.tier);
   c.profile.origin = name;
   c.satellite = { comp, teamName: name, level: clubLevel(club, comp), minutes: clubMinutes(club), league: club?.league, gamesPlanned: SATELLITES[comp].games, w: 0, l: 0 };
   addNews(c, 'contract', `${fullName(userOf(c))} firma con ${name}`, `Primera temporada como profesional en ${club?.league ?? SATELLITES[comp].name}.`, 'good');

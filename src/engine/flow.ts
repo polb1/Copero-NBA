@@ -1,6 +1,7 @@
 // In-season flow: daily simulation with user hooks, weekly training and events, trade deadline,
 // All-Star, postseason and the end-of-season report.
 import type { BoxLine, Career, Player, SeasonRecord, SeasonSummary, UserGame } from './types';
+import { agentCut, cashOf, fameSponsor, mindsetBoost } from './mindset';
 import { addNews, currentComp, eventContext, onNbaRoster, openEvent, queueEvent, teamOf, userOf, userRole } from './career';
 import { playPostseasonDay, playRegularDay, regularSeasonOver, startPostseason, teamPlayoffResult, type DayHooks } from './season';
 import { computeAwards, finalsMvp, selectAllStars, snapshotNames, awardsFor, AWARD_LABEL } from './awards';
@@ -52,7 +53,7 @@ export function userHooks(c: Career): DayHooks {
     rotation: (teamId) => {
       if (teamId !== u.teamId) return {};
       const twoWayOk = u.contract?.kind !== 'two-way' || c.twoWayNbaGames < RULES.twoWayNbaGameLimit;
-      return { userId: u.id, userTrust: c.trust, userAvailable: c.assignment === 'NBA' && twoWayOk };
+      return { userId: u.id, userTrust: c.trust, userAvailable: c.assignment === 'NBA' && twoWayOk, userBoost: mindsetBoost(c) };
     },
     onGame: (ctx, res, home, away) => {
       if (!u.teamId || (ctx.home !== u.teamId && ctx.away !== u.teamId)) return;
@@ -125,7 +126,7 @@ function maybeSatelliteGame(c: Career, playedNbaTeamToday: boolean) {
   }
   const s = c.satellite;
   if (s.w + s.l >= s.gamesPlanned) return;
-  const res = playSatelliteGame(c.seed, comp, c.league.season, s.w + s.l, u, s.level, (1 + (c.trust - 50) / 200) * (s.minutes ?? 1), opponentsFor(comp, s.teamName, u.teamId));
+  const res = playSatelliteGame(c.seed, comp, c.league.season, s.w + s.l, u, s.level, (1 + (c.trust - 50) / 200) * (s.minutes ?? 1), opponentsFor(comp, s.teamName, u.teamId), mindsetBoost(c));
   if (res.teamScore > res.oppScore) s.w++;
   else s.l++;
   addBox(c.satStats, res.line);
@@ -410,14 +411,21 @@ export function endSeason(c: Career) {
   }
   // Money
   const salary = u.contract && (onRoster || u.contract.kind === 'gleague' || u.contract.kind === 'two-way') ? salaryIn(u.contract, L.season) : 0;
-  const overseas = c.flags.overseasSalary ?? 0;
-  c.earnings += salary + c.endorsement + overseas;
+  // Abroad: the club contract; before the draft: the first professional contract with the starting club.
+  const overseas = (c.flags.overseasSalary ?? 0) + (c.predraft?.step === 'season' ? c.flags.youthSalary ?? 0 : 0);
+  // Paid into the wallet at the end of the season: salary minus the agent's cut, plus sponsorship
+  // (deals signed in events and what popularity brings in).
+  const sponsor = c.endorsement + fameSponsor(c);
+  const agent = Math.round((salary + overseas) * agentCut(c));
+  c.earnings += salary + overseas + sponsor;
+  c.cash = cashOf(c) + salary + overseas + sponsor - agent;
   delete c.flags.overseasSalary;
   // Summary
   const a = averages(mainStats);
   const comp = currentComp(c);
   const summary: SeasonSummary = {
     season: L.season,
+    money: { salary: salary + overseas, sponsor, agent, cash: c.cash },
     lines: [
       { label: 'Competición', value: u.season.gp ? 'NBA' : c.satellite ? SATELLITES[c.satellite.comp as 'NCAA' | 'EUR' | 'GLG'].name : comp },
       { label: 'Partidos', value: `${mainStats.gp} (${mainStats.gs} de titular)` },

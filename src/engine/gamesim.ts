@@ -12,6 +12,8 @@ export interface SimPlayer {
   form: number;
   fatigue: number;
   hurt: boolean; // playing through an injury
+  /** Mental-state multiplier (morale, chemistry, pressure); only the user's player has one. */
+  boost?: number;
   minutes: number;
   starter: boolean;
 }
@@ -39,6 +41,8 @@ export interface RotationOptions {
   userAvailable?: boolean;
   /** Extra minutes multiplier for the user from events (e.g., earned or lost role). */
   userMinutesBoost?: number;
+  /** The user's mental-state performance boost (see mindset.ts). */
+  userBoost?: number;
 }
 
 /** Coach's rotation: orders available players by effective rating and assigns minutes. */
@@ -95,6 +99,7 @@ export function buildRotation(league: League, teamId: string, o: RotationOptions
     form: p.form,
     fatigue: p.fatigue,
     hurt: !!p.injury?.playingThrough,
+    boost: p.isUser ? o.userBoost : undefined,
     minutes: Math.min(46, raw[i] * scale),
     starter: i < 5,
   }));
@@ -152,7 +157,7 @@ interface Ctx {
 function prepare(team: SimTeam, minutesOverride?: number[]): Ctx[] {
   return team.players.map((p, i) => {
     const c = composites(p.attrs);
-    const mult = 1 + p.form * SIM.formEffect - p.fatigue * SIM.fatiguePenalty - (p.hurt ? 0.06 : 0);
+    const mult = 1 + p.form * SIM.formEffect - p.fatigue * SIM.fatiguePenalty - (p.hurt ? 0.06 : 0) + (p.boost ?? 0);
     const min = minutesOverride ? minutesOverride[i] : p.minutes;
     return { p, c, mult, share: min / 48 };
   });

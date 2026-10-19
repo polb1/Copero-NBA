@@ -12,7 +12,13 @@ export function autopilot(c: Career, opts: { pick?: (n: number, i: number) => nu
   while (c.phase !== 'retired' && guard++ < 5000) {
     if (c.pendingEvent) {
       if (c.pendingEvent.resolved) api.dismissEvent(c);
-      else api.chooseOption(c, pick(c.pendingEvent.options.length, i++) % c.pendingEvent.options.length);
+      else {
+        const n = c.pendingEvent.options.length;
+        const want = pick(n, i++) % n;
+        // An option the player cannot pay for is skipped for the first affordable one.
+        const idx = api.canAfford(c, want) ? want : [...Array(n).keys()].find((k) => api.canAfford(c, k)) ?? want;
+        api.chooseOption(c, idx);
+      }
       continue;
     }
     const u = userOf(c);

@@ -261,6 +261,8 @@ export interface EffectBag {
   recall?: boolean;
   news?: string;
   trophy?: 'threeContest';
+  /** Agency signed: commission and contacts for the rest of the career. */
+  agent?: 'top' | 'family' | 'self';
 }
 
 export interface ActiveEvent {
@@ -268,7 +270,8 @@ export interface ActiveEvent {
   title: string;
   text: string;
   category: string;
-  options: { label: string; desc: string }[];
+  /** cost: money the option needs up front (it cannot be chosen without it). */
+  options: { label: string; desc: string; cost?: number }[];
   vars: Record<string, string>;
   resolved?: { option: number; result: string; effectsSummary: string[]; made?: number };
   minigame?: MinigameSpec;
@@ -384,6 +387,8 @@ export interface Career {
   loyalty: number;
   workEthic: number;
   earnings: number;
+  /** Money in hand: starts at 0, salary is paid at the end of each season, costs come out of it. */
+  cash?: number;
   endorsement: number; // per season
   agent: { name: string; quality: number };
   training: { focus: TrainingFocus; intensity: 'light' | 'normal' | 'intense' };
@@ -426,6 +431,8 @@ export type TrainingFocus =
 export interface SeasonSummary {
   season: number;
   lines: { label: string; value: string; tone?: 'good' | 'bad' }[];
+  /** Money paid at the end of the season (absent on old saves). */
+  money?: { salary: number; sponsor: number; agent: number; cash: number };
   highlights: string[];
   awards: string[];
   goals: Goal[];

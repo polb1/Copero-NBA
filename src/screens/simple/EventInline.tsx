@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import type { Career } from '../../engine/types';
-import { chooseOption, dismissEvent, playMinigame } from '../../engine/api';
+import { canAfford, chooseOption, dismissEvent, playMinigame } from '../../engine/api';
+import { cashOf } from '../../engine/mindset';
+import { fmtMoney } from '../../engine/contracts';
 import { CATEGORY_LABEL } from '../../content/events';
 import { store } from '../../store/store';
 import { CATEGORY_ICON } from '../../ui/simple';
@@ -29,6 +31,7 @@ export function EventModalInline({ c }: { c: Career }) {
     return () => window.removeEventListener('keydown', onKey);
   }, [ev]);
   const icon = CATEGORY_ICON[ev.category] ?? '🏀';
+  const afford = (i: number) => canAfford(c, i);
   return (
     <div className="decision">
       <Scene kind={CATEGORY_SCENE[ev.category] ?? 'arena'} variant={ev.defId} height={170}>
@@ -43,12 +46,13 @@ export function EventModalInline({ c }: { c: Career }) {
           {ev.options.map((o, i) => {
             const kind = sceneForOption(o.label + ' ' + o.desc, CATEGORY_SCENE[ev.category] ?? 'arena');
             return (
-            <button key={i} className="choice with-img" onClick={() => store.act((x) => chooseOption(x, i))}>
+            <button key={i} className={`choice with-img ${afford(i) ? '' : 'locked'}`} disabled={!afford(i)} onClick={() => store.act((x) => chooseOption(x, i))}>
               <Scene kind={kind} variant={`${ev.defId}-${i}`} height={96} still className="choice-img" />
               <span className="choice-emoji" aria-hidden="true">{SCENE_EMOJI[kind]}</span>
               <span className="tiny dim">Opción {i + 1}</span>
               <b className="choice-title">{o.label}</b>
               <span className="choice-body">{o.desc}</span>
+              {o.cost ? <span className={`cost ${afford(i) ? '' : 'short'}`}>{afford(i) ? `Cuesta ${fmtMoney(o.cost)}` : `Te faltan ${fmtMoney(o.cost - cashOf(c))}`}</span> : null}
             </button>
             );
           })}
