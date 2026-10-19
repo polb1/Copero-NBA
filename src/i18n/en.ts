@@ -1275,4 +1275,7 @@ export const EN: Dict = {
   "Vitrina": "Trophies",
   "¡Hecho!": "Done!",
   "Aún no has ganado ningún trofeo.": "No trophies yet.",
+  "¡Sale bien!": "It worked out!",
+  "Sale mal": "It went wrong",
+  "Tirando": "Rolling",
 };

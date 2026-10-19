@@ -1200,4 +1200,7 @@ export const CA: Dict = {
   "Reto": "Repte",
   "¡Hecho!": "Fet!",
   "Aún no has ganado ningún trofeo.": "Encara no has guanyat cap trofeu.",
+  "¡Sale bien!": "Surt bé!",
+  "Sale mal": "Surt malament",
+  "Tirando": "Tirant",
 };

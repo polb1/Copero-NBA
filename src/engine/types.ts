@@ -274,7 +274,8 @@ export interface ActiveEvent {
   /** odds: chance (0-100) that a risky option turns out well, shown before choosing. */
   options: { label: string; desc: string; cost?: number; odds?: number }[];
   vars: Record<string, string>;
-  resolved?: { option: number; result: string; effectsSummary: string[]; made?: number };
+  /** odds/lucky: for a risky option, the chance shown and whether the roll went the player's way. */
+  resolved?: { option: number; result: string; effectsSummary: string[]; made?: number; odds?: number; lucky?: boolean };
   minigame?: MinigameSpec;
 }
 

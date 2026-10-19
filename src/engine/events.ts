@@ -320,14 +320,17 @@ export function resolveEvent(c: Career, u: Player, optionIndex: number, rng: Rng
   const opt = def.options[optionIndex];
   let effects: EffectBag = opt.effects ?? {};
   let text = opt.text ?? '';
+  let lucky: boolean | undefined;
   if (opt.outcomes) {
     const o = rng.weighted(opt.outcomes, (x) => Math.max(0.05, x.weight + (x.boost ? statFor(c, u, x.boost.stat) * x.boost.per : 0)));
     effects = o.effects;
     text = o.text;
+    lucky = outcomeValue(o.effects) > 0;
   }
   const summary = applyEffects(c, u, effects, rng);
   const filled = fill(text, ev.vars);
-  ev.resolved = { option: optionIndex, result: filled, effectsSummary: summary };
+  const odds = ev.options[optionIndex].odds;
+  ev.resolved = { option: optionIndex, result: filled, effectsSummary: summary, ...(odds !== undefined ? { odds, lucky } : {}) };
   c.decisions.push({ season: c.league.season, title: ev.title, choice: ev.options[optionIndex].label });
   return { text: filled, summary };
 }
