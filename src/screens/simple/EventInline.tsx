@@ -34,7 +34,7 @@ export function EventModalInline({ c }: { c: Career }) {
   const afford = (i: number) => canAfford(c, i);
   return (
     <div className="decision">
-      <Scene kind={CATEGORY_SCENE[ev.category] ?? 'arena'} variant={ev.defId} height={170}>
+      <Scene kind={CATEGORY_SCENE[ev.category] ?? 'arena'} variant={ev.defId} height={120}>
         <span className="chip accent">{icon} {CATEGORY_LABEL[ev.category] ?? ev.category}</span>
         <h2>{ev.title}</h2>
       </Scene>
@@ -47,9 +47,8 @@ export function EventModalInline({ c }: { c: Career }) {
             const kind = sceneForOption(o.label + ' ' + o.desc, CATEGORY_SCENE[ev.category] ?? 'arena');
             return (
             <button key={i} className={`choice with-img ${afford(i) ? '' : 'locked'}`} disabled={!afford(i)} onClick={() => store.act((x) => chooseOption(x, i))}>
-              <Scene kind={kind} variant={`${ev.defId}-${i}`} height={96} still className="choice-img" />
+              <Scene kind={kind} variant={`${ev.defId}-${i}`} height={64} still className="choice-img" />
               <span className="choice-emoji" aria-hidden="true">{SCENE_EMOJI[kind]}</span>
-              <span className="tiny dim">Opción {i + 1}</span>
               <b className="choice-title">{o.label}</b>
               <span className="choice-body">{o.desc}</span>
               {o.odds !== undefined && <span className="odds" title="Probabilidad según tu estado actual"><span className="odds-bar"><span style={{ width: `${o.odds}%` }} /></span><span><b className="good">{o.odds} %</b> sale bien · <b className="bad">{100 - o.odds} %</b> sale mal</span></span>}

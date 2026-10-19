@@ -46,7 +46,7 @@
 .tot-row b { font-size: 1.15rem; font-weight: 800; font-variant-numeric: tabular-nums; }
 .vitrina { display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 14px; }
 .decision h2 { font-family: var(--font-body); text-transform: none; letter-spacing: -0.01em; font-size: 1.35rem; font-weight: 800; }
-.choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 14px; }
+.choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(124px, 1fr)); gap: 10px; margin-top: 14px; }
 .choice { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 14px 12px; border-radius: 14px; border: 1px solid var(--line); background: linear-gradient(180deg, #2a1616, #1b1214); cursor: pointer; transition: transform 0.15s var(--ease), border-color 0.15s; min-height: 140px; }
 .choice:hover { transform: translateY(-2px); border-color: rgba(255, 255, 255, 0.35); }
 .choice.stay { background: linear-gradient(180deg, #172131, #121821); }
@@ -205,16 +205,14 @@
 @media (max-width: 960px) {
   .choices.compact { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
 }
-/* Phones and portrait tablets: one column like a feed — card, career timeline, then the decision in its own box. */
+/* Phones and portrait tablets: one column — player card, the decision right below it, then the career timeline. */
 @media (max-width: 960px) {
   .simple-wrap { padding: 8px 8px 24px; }
   .play-grid { display: flex; flex-direction: column; gap: 10px; padding: 0; background: none; border: 0; }
   .play-left, .play-right { display: contents; }
-  .play-left > * { order: 5; }
-  .play-right > * { order: 2; }
-  .play-left > .top-card { order: 1; }
-  .play-left > .tot-row, .play-left > .vitrina { order: 3; }
-  .play-left > .legacy { order: 4; }
+  .play-left > * { order: 3; }
+  .play-right > * { order: 6; }
+  .play-left > .top-card, .play-left > .id-stats, .play-left > .card-tabs { order: 1; }
   .play-left > .divider, .vitrina.empty { display: none; }
   .top-card { flex-wrap: nowrap; }
   .tot-row { margin-top: 0; background: #17191d; border-radius: 10px; padding: 6px 0; }
@@ -366,7 +364,6 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 @keyframes state-flash { 0% { filter: brightness(2.2); } 100% { filter: none; } }
 .state-what { grid-column: 1 / -1; color: var(--text-3); font-size: 0.64rem; margin-top: -2px; }
 .state-notes { margin: 8px 0 0; }
-@media (max-width: 960px) { .play-left > .state-panel { order: 4; margin-top: 0; } }
 .cost { margin-top: 4px; font-size: 0.7rem; font-weight: 700; color: #fbbf24; }
 .cost.short { color: var(--bad); }
 .choice.locked { opacity: 0.5; cursor: not-allowed; }
@@ -441,3 +438,41 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .lang-switch button { border: 0; background: none; color: var(--text-3); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; padding: 5px 9px; border-radius: 999px; cursor: pointer; }
 .lang-switch button[aria-pressed='true'] { background: var(--panel-3); color: var(--text); }
 .careers-lang { display: flex; justify-content: center; padding: 0 0 14px; }
+
+/* ---------- Creation: stacked name fields and plain-words positions ---------- */
+.name-fields { display: flex; flex-direction: column; gap: 8px; }
+.name-field { display: grid; grid-template-columns: 74px minmax(0, 1fr); align-items: center; gap: 10px; }
+.name-field > span { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); text-align: right; }
+.name-field .input { font-weight: 700; }
+.name-hint { margin: 0; font-size: 0.74rem; color: #fbbf24; text-align: center; }
+.pos-info { padding: 10px 12px; border-radius: 12px; background: #17191d; border: 1px solid var(--line); font-size: 0.82rem; }
+.pos-info > b { font-size: 0.95rem; }
+.pos-info > p { margin: 4px 0 6px; color: var(--text-2); line-height: 1.4; }
+.pos-help-btn { padding: 0; border: 0; background: none; color: var(--accent); font-size: 0.76rem; font-weight: 700; cursor: pointer; }
+.pos-help { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.pos-help li { display: flex; gap: 8px; align-items: flex-start; padding: 6px; border-radius: 8px; cursor: pointer; color: var(--text-2); font-size: 0.76rem; line-height: 1.35; }
+.pos-help li.on { background: rgba(255, 107, 26, 0.12); color: var(--text); }
+.pos-help li b { color: var(--text); }
+.pos-tag { flex: none; min-width: 30px; text-align: center; padding: 2px 4px; border-radius: 6px; background: #26292f; font-weight: 800; font-size: 0.7rem; color: var(--text); }
+.style-desc { margin: 2px 0 0; text-align: center; font-size: 0.78rem; color: var(--text-2); }
+.start-panel .simple-foot .btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+
+/* ---------- Play card: secondary info folded into tabs ---------- */
+.card-tabs { margin-top: 8px; }
+.card-tab-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.card-tab { display: flex; flex-direction: column; align-items: center; gap: 1px; min-width: 0; padding: 6px 4px; border-radius: 10px; border: 1px solid var(--line); background: #17191d; color: var(--text); cursor: pointer; font: inherit; }
+.card-tab small { font-size: 0.6rem; font-weight: 700; color: var(--text-3); white-space: nowrap; }
+.card-tab b { font-size: 0.8rem; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; font-variant-numeric: tabular-nums; }
+.card-tab.on { border-color: var(--accent); background: rgba(255, 107, 26, 0.1); }
+.card-panel { margin-top: 6px; padding: 10px 12px; border-radius: 10px; background: #17191d; border: 1px solid var(--line); }
+.card-panel .legacy, .card-panel .state-panel { margin: 0; padding: 0; background: none; border: 0; }
+.card-panel .tot-row { margin-top: 10px; }
+.card-panel .challenge { margin: 0; padding: 0; border: 0; }
+@media (max-width: 960px) {
+  .card-tabs { margin-top: 0; }
+  .card-panel .tot-row { display: grid; background: none; }
+}
+/* Phones: the season card keeps the per-game numbers; totals and the best-game line stay in the timeline. */
+@media (max-width: 960px) {
+  .sc-tiles small, .sc-best { display: none; }
+}

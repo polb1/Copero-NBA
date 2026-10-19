@@ -55,7 +55,7 @@ export function Play() {
       <div className="play-grid anim-in">
         <div className="play-left">
           <MemoTopCard c={c} sig={viewSig(c)} />
-          <div className="divider" style={{ margin: '18px 0' }} />
+          <div className="divider" style={{ margin: '12px 0' }} />
           {sim ? <SimProgress c={c} label={sim} /> : <Decision c={c} />}
           {!sim && <SeasonRecap c={c} />}
         </div>
@@ -120,24 +120,66 @@ function TopCard({ c }: { c: Career }) {
         <div><small>Valor</small><b>{fmtMoney(marketValue(u, c.league.season))}</b></div>
         <div title="Tu dinero: cobras al final de cada temporada y pagas los gastos de tus decisiones"><small>Dinero</small><b className="cash">{fmtMoney(cashOf(c))}</b></div>
       </div>
-      <div className="tot-row">
-        <div title={`${f1(a.ppg)} / ${f1(a.rpg)} / ${f1(a.apg)} por partido`}><small>PARTIDOS</small><b>{num(tot.gp)}</b></div>
-        <div><small>PUNTOS</small><b>{num(tot.pts)}</b></div>
-        <div><small>REBOTES</small><b>{num(tot.oreb + tot.dreb)}</b></div>
-        <div><small>ASISTENCIAS</small><b>{num(tot.ast)}</b></div>
-      </div>
-      <div className={`vitrina ${Object.keys(awards).length ? '' : 'empty'}`}>
-        {Object.keys(awards).length === 0 ? (
-          <><span style={{ fontSize: '1.3rem', opacity: 0.5 }}>🏆</span><span className="tiny dim">VITRINA VACÍA</span></>
-        ) : (
-          <div className="row wrap" style={{ justifyContent: 'center', gap: 6 }}>
-            {Object.entries(awards).sort((x, y) => y[1] - x[1]).map(([k, n]) => <span key={k} className="chip gold" title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'} {n > 1 ? `${n}× ` : ''}{AWARD_LABEL[k] ?? k}</span>)}
-          </div>
-        )}
-      </div>
-      <LegacyMeter c={c} />
-      <StatePanel c={c} />
+      <CardTabs c={c} awards={awards} totals={
+        <div className="tot-row">
+          <div title={`${f1(a.ppg)} / ${f1(a.rpg)} / ${f1(a.apg)} por partido`}><small>PARTIDOS</small><b>{num(tot.gp)}</b></div>
+          <div><small>PUNTOS</small><b>{num(tot.pts)}</b></div>
+          <div><small>REBOTES</small><b>{num(tot.oreb + tot.dreb)}</b></div>
+          <div><small>ASISTENCIAS</small><b>{num(tot.ast)}</b></div>
+        </div>
+      } />
     </>
+  );
+}
+
+type CardTab = 'legacy' | 'goal' | 'trophies' | 'state';
+
+/**
+ * Secondary info (legacy, challenge, trophies, state) folds into four small tabs: one line by default,
+ * one panel at a time when tapped, so the decision stays on screen without scrolling.
+ */
+function CardTabs({ c, awards, totals }: { c: Career; awards: Record<string, number>; totals: ReactNode }) {
+  const [tab, setTab] = useState<CardTab | null>(() => { try { return (localStorage.getItem('nbalegacy:cardTab') as CardTab) || null; } catch { return null; } });
+  const pick = (t: CardTab) => setTab((v) => {
+    const next = v === t ? null : t;
+    try { localStorage.setItem('nbalegacy:cardTab', next ?? ''); } catch { /* private mode */ }
+    return next;
+  });
+  const score = legacyScore(c);
+  const tier = TIERS.reduce((acc, t) => (score >= t[0] ? t : acc), TIERS[0])[1];
+  const ch = challengeOf(c);
+  const [v, target] = ch.progress(c);
+  const perf = performancePct(c, userOf(c));
+  const trophies = Object.values(awards).reduce((x, y) => x + y, 0);
+  const tabs: { id: CardTab; icon: string; label: string; value: ReactNode }[] = [
+    { id: 'legacy', icon: '📈', label: 'Legado', value: tier },
+    { id: 'goal', icon: v >= target ? '✅' : '🎯', label: 'Reto', value: v >= target ? '¡Hecho!' : target > 1 ? `${Math.min(v, target).toLocaleString('es-ES')} / ${target.toLocaleString('es-ES')}` : 'Pendiente' },
+    { id: 'trophies', icon: '🏆', label: 'Vitrina', value: String(trophies) },
+    { id: 'state', icon: '🧠', label: 'Estado', value: <span className={perf > 0 ? 'delta-up' : perf < 0 ? 'delta-down' : ''}>{perf > 0 ? '+' : ''}{perf} %</span> },
+  ];
+  return (
+    <div className="card-tabs">
+      <div className="card-tab-row" role="tablist">
+        {tabs.map((t) => (
+          <button key={t.id} type="button" role="tab" aria-selected={tab === t.id} className={`card-tab ${tab === t.id ? 'on' : ''}`} onClick={() => pick(t.id)}>
+            <small>{t.icon} {t.label}</small>
+            <b>{t.value}</b>
+          </button>
+        ))}
+      </div>
+      {tab === 'legacy' && <div className="card-panel anim-in"><LegacyMeter c={c} />{totals}</div>}
+      {tab === 'goal' && <div className="card-panel anim-in"><ChallengeLine c={c} /></div>}
+      {tab === 'trophies' && (
+        <div className="card-panel anim-in">
+          {trophies === 0 ? <p className="tiny dim" style={{ margin: 0, textAlign: 'center' }}>Aún no has ganado ningún trofeo.</p> : (
+            <div className="row wrap" style={{ justifyContent: 'center', gap: 6 }}>
+              {Object.entries(awards).sort((x, y) => y[1] - x[1]).map(([k, n]) => <span key={k} className="chip gold" title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'} {n > 1 ? `${n}× ` : ''}{AWARD_LABEL[k] ?? k}</span>)}
+            </div>
+          )}
+        </div>
+      )}
+      {tab === 'state' && <div className="card-panel anim-in"><StatePanel c={c} /></div>}
+    </div>
   );
 }
 
@@ -156,7 +198,6 @@ function LegacyMeter({ c }: { c: Career }) {
     <div className="legacy" title="Legacy Score: producción, premios, anillos y longevidad">
       <div className="row between tiny"><span><b>Legado</b> · {cur[1]}</span><span className="dim">{next ? `${score} / ${next[0]} → ${next[1]}` : `${score} · nivel máximo`}</span></div>
       <div className="legacy-bar"><span style={{ width: `${Math.max(3, Math.min(100, pct))}%` }} /></div>
-      <ChallengeLine c={c} />
       {best > 0 && c.phase !== 'retired' && (
         <div className={`legacy-best tiny ${score > best ? 'gold' : 'dim'}`}>{score > best ? `🔥 Superando tu récord (${best})` : `Tu récord: ${best} · te faltan ${best - score}`}</div>
       )}
@@ -178,8 +219,6 @@ const STATE_ROWS: { key: 'morale' | 'chemistry' | 'trust' | 'pressure' | 'fame' 
 /** The numbers your choices move, and what each one does to your career. */
 function StatePanel({ c }: { c: Career }) {
   const u = userOf(c);
-  const [open, setOpen] = useState(() => { try { return localStorage.getItem('nbalegacy:stateOpen') === '1'; } catch { return false; } });
-  const toggle = () => setOpen((v) => { try { localStorage.setItem('nbalegacy:stateOpen', v ? '0' : '1'); } catch { /* private mode */ } return !v; });
   const perf = performancePct(c, u);
   const sponsor = c.endorsement + fameSponsor(c);
   return (
@@ -187,14 +226,8 @@ function StatePanel({ c }: { c: Career }) {
       <div className="row between tiny">
         <b>Estado</b>
         <span className={`perf ${perf > 0 ? 'delta-up' : perf < 0 ? 'delta-down' : 'dim'}`} title="Moral, química, presión, forma y fatiga sobre tu juego">En pista {perf > 0 ? '+' : ''}{perf} %</span>
-        <button type="button" className="tl-mode" onClick={toggle} aria-expanded={open}>{open ? 'Ocultar' : 'Ver'}</button>
       </div>
-      {!open && (
-        <button type="button" className="state-line" onClick={toggle} aria-label="Ver el estado del jugador">
-          {STATE_ROWS.map((r) => <span key={r.key} title={r.label}>{r.icon}{Math.round(c[r.key])}</span>)}
-        </button>
-      )}
-      {open && <div className="state-grid">
+      <div className="state-grid">
         {STATE_ROWS.map((r) => {
           const v = Math.round(c[r.key]);
           const good = r.invert ? v <= 45 : v >= 60;
@@ -208,12 +241,10 @@ function StatePanel({ c }: { c: Career }) {
             </div>
           );
         })}
-      </div>}
-      {open && (
-        <p className="tiny dim state-notes">
-          Patrocinios: {fmtMoney(sponsor)}/año · Comisión del agente: {Math.round(agentCut(c) * 100)} % del sueldo · Forma {u.form > 0 ? '+' : ''}{Math.round(u.form)} · Fatiga {Math.round(u.fatigue)}
-        </p>
-      )}
+      </div>
+      <p className="tiny dim state-notes">
+        Patrocinios: {fmtMoney(sponsor)}/año · Comisión del agente: {Math.round(agentCut(c) * 100)} % del sueldo · Forma {u.form > 0 ? '+' : ''}{Math.round(u.form)} · Fatiga {Math.round(u.fatigue)}
+      </p>
     </div>
   );
 }
@@ -348,7 +379,7 @@ function seasonRecords(c: Career, season: number): string[] {
 function Choice({ title, top, icon, scene, children, onClick, tone }: { title: string; top?: string; icon?: ReactNode; scene?: SceneKind; children?: ReactNode; onClick: () => void; tone?: 'stay' | 'danger' | 'primary' }) {
   return (
     <button className={`choice ${tone ?? ''} ${scene ? 'with-img' : ''}`} onClick={onClick}>
-      {scene && <Scene kind={scene} variant={title} height={96} still className="choice-img" />}
+      {scene && <Scene kind={scene} variant={title} height={64} still className="choice-img" />}
       {scene && !icon && <span className="choice-emoji" aria-hidden="true">{SCENE_EMOJI[scene]}</span>}
       {top && <span className="tiny dim">{top}</span>}
       <b className="choice-title">{title}</b>
@@ -365,7 +396,7 @@ function Block({ title, desc, scene, children }: { title: string; desc?: ReactNo
   const card = !!desc && typeof desc !== 'string';
   return (
     <div className={`decision anim-in ${compact ? 'is-compact' : ''} ${card ? 'has-card' : ''}`} key={title}>
-      <Scene kind={scene} variant={title} height={compact || card ? 84 : 170}><h2>{title}</h2></Scene>
+      <Scene kind={scene} variant={title} height={compact || card ? 72 : 120}><h2>{title}</h2></Scene>
       {desc && (typeof desc === 'string' ? <p className="small muted desc">{desc}</p> : <div className="small muted desc">{desc}</div>)}
       <div className={`choices ${compact ? 'compact' : ''}`}>{children}</div>
     </div>

@@ -15,7 +15,15 @@ import { Flag } from '../../ui/Flag';
 import { LangSwitch } from '../../ui/LangSwitch';
 
 
-const pickName = (list: string[]) => list[Math.floor(Math.random() * list.length)];
+/** What each position does on court, in plain words for people new to basketball. */
+const POS_INFO: Record<Pos, { name: string; icon: string; role: string }> = {
+  PG: { name: 'Base', icon: '🧠', role: 'Sube el balón y organiza el ataque. Reparte asistencias. Suele ser el más bajo y rápido.' },
+  SG: { name: 'Escolta', icon: '🎯', role: 'El tirador del equipo: anota desde lejos y también ataca el aro.' },
+  SF: { name: 'Alero', icon: '⚡', role: 'El más versátil: anota, defiende y juega tanto dentro como fuera.' },
+  PF: { name: 'Ala-pívot', icon: '💪', role: 'Juega cerca del aro: rebotes, bloqueos y defensa interior.' },
+  C: { name: 'Pívot', icon: '🧱', role: 'El más alto: protege el aro, coge rebotes y anota bajo la canasta.' },
+};
+const POS_ORDER: Pos[] = ['PG', 'SG', 'SF', 'PF', 'C'];
 
 export function Start() {
   const nav = useNavigate();
@@ -34,6 +42,8 @@ export function Start() {
   // The seed decides the career's challenge, so it is shown (and can be re-rolled) before starting.
   const [seed, setSeed] = useState(newSeed);
   const [creating, setCreating] = useState(false);
+  const [posHelp, setPosHelp] = useState(false);
+  const named = !!(first.trim() || last.trim());
   const replacing = !!current && current.phase !== 'retired';
   const challenge = CHALLENGES[rollChallenge(seed)];
 
@@ -51,10 +61,11 @@ export function Start() {
     const growth = ARCHETYPES.find((a) => a.id === arch)!.growth.filter((g) => g !== 'balanced') as (keyof typeof TRAINING_AREAS)[];
     const focus: NewCareerInput['focus'] = growth.length ? Object.fromEntries(growth.map((g) => [g, Math.floor(10 / growth.length)])) : { shooting: 2, defense: 2, playmaking: 2, athleticism: 2, rebounding: 2 };
     const country = COUNTRIES.find((c) => c.code === nat)!;
-    // Empty fields get a typical name from the chosen country, so you can start with one tap.
-    const surname = last.trim() || pickName(country.last);
+    if (!named) return;
+    // One name is enough: on its own it becomes the surname shown on the jersey.
+    const surname = last.trim() || first.trim();
     const input: NewCareerInput = {
-      first: first.trim() || pickName(country.first),
+      first: last.trim() ? first.trim() : '',
       last: surname,
       jersey: surname.toUpperCase(),
       number,
@@ -104,16 +115,19 @@ export function Start() {
         <div className="simple-cols">
           <section className="simple-col">
             <h3>Identidad</h3>
-            <div style={{ display: 'grid', placeItems: 'center' }}><Jersey name={last} number={number} /></div>
-            <div className="mini-fields">
-              <label className="mini"><span>Nombre</span><input className="input" value={first} maxLength={20} onChange={(e) => setFirst(e.target.value)} placeholder="Opcional" /></label>
-              <label className="mini"><span>Apellido</span><input className="input" value={last} maxLength={14} onChange={(e) => setLast(e.target.value)} placeholder="Aleatorio" /></label>
-              <label className="mini" style={{ maxWidth: 90 }}><span>Número</span><input className="input" type="number" min={0} max={99} value={number} onChange={(e) => setNumber(Math.max(0, Math.min(99, Number(e.target.value) || 0)))} /></label>
+            <div style={{ display: 'grid', placeItems: 'center' }}><Jersey name={last.trim() || first.trim()} number={number} /></div>
+            <div className="name-fields">
+              <label className="name-field"><span>Nombre</span><input className="input" value={first} maxLength={20} onChange={(e) => setFirst(e.target.value)} placeholder="Ej.: Marc" autoComplete="off" /></label>
+              <label className="name-field"><span>Apellido</span><input className="input" value={last} maxLength={14} onChange={(e) => setLast(e.target.value)} placeholder="Ej.: Gasol" autoComplete="off" /></label>
+              {!named && <p className="name-hint">Escribe al menos un nombre o un apellido.</p>}
             </div>
-            <div className="mini"><span>Mano hábil</span>
-              <div className="toggle2">
-                <button aria-pressed={hand === 'L'} onClick={() => setHand('L')}>Izquierda</button>
-                <button aria-pressed={hand === 'R'} onClick={() => setHand('R')}>Derecha</button>
+            <div className="mini-fields">
+              <label className="mini" style={{ maxWidth: 90 }}><span>Número</span><input className="input" type="number" min={0} max={99} value={number} onChange={(e) => setNumber(Math.max(0, Math.min(99, Number(e.target.value) || 0)))} /></label>
+              <div className="mini"><span>Mano hábil</span>
+                <div className="toggle2">
+                  <button aria-pressed={hand === 'L'} onClick={() => setHand('L')}>Izquierda</button>
+                  <button aria-pressed={hand === 'R'} onClick={() => setHand('R')}>Derecha</button>
+                </div>
               </div>
             </div>
           </section>
@@ -135,10 +149,26 @@ export function Start() {
           <section className="simple-col">
             <h3>Posición</h3>
             <CourtPicker value={pos} onChange={pickPos} />
-            <div className="mini"><span>Estilo</span>
+            <div className="pos-info">
+              <b>{POS_INFO[pos].icon} {POS_INFO[pos].name} <span className="dim">({pos})</span></b>
+              <p>{POS_INFO[pos].role}</p>
+              <button type="button" className="pos-help-btn" aria-expanded={posHelp} onClick={() => setPosHelp((v) => !v)}>{posHelp ? 'Ocultar' : '¿Qué hace cada posición?'}</button>
+              {posHelp && (
+                <ul className="pos-help">
+                  {POS_ORDER.map((p) => (
+                    <li key={p} className={p === pos ? 'on' : ''} onClick={() => pickPos(p)}>
+                      <span className="pos-tag">{p}</span>
+                      <span><b>{POS_INFO[p].name}</b> {POS_INFO[p].role}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div className="mini"><span>Estilo de juego</span>
               <div className="chips">
-                {archs.map((a) => <button key={a.id} className={`chip ${arch === a.id ? 'accent' : ''}`} aria-pressed={arch === a.id} title={a.desc} onClick={() => setArch(a.id)}>{a.label}</button>)}
+                {archs.map((a) => <button key={a.id} className={`chip ${arch === a.id ? 'accent' : ''}`} aria-pressed={arch === a.id} onClick={() => setArch(a.id)}>{a.label}</button>)}
               </div>
+              <p className="style-desc">{ARCHETYPES.find((a) => a.id === arch)!.desc}</p>
             </div>
           </section>
         </div>
@@ -149,7 +179,7 @@ export function Start() {
         <div className="simple-foot">
           {current ? <button className="btn pill" onClick={() => nav('/play')}>Volver</button> : <Link to="/careers" className="btn pill">Mis carreras</Link>}
           {replacing && <span className="small dim foot-hint">Empezar de nuevo reemplaza la carrera actual.</span>}
-          <button className="btn pill light" disabled={creating} onClick={confirm}>{creating ? 'Creando tu liga…' : replacing ? 'Empezar de nuevo' : last.trim() ? 'Confirmar identidad' : 'Empezar'}</button>
+          <button className="btn pill light" disabled={creating || !named} title={named ? undefined : 'Escribe al menos un nombre o un apellido.'} onClick={confirm}>{creating ? 'Creando tu liga…' : replacing ? 'Empezar de nuevo' : 'Empezar carrera'}</button>
         </div>
       </div>
     </div>

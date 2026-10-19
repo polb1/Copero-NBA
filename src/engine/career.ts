@@ -68,8 +68,9 @@ export function buildUserPlayer(input: NewCareerInput, seed: number, season: num
   const hiddenPot = Math.round(clamp(pot + rng.normal(-2, 6), ovr + 1, 99));
   return {
     id: 'user',
-    first: input.first.trim() || 'Jugador',
-    last: input.last.trim() || 'Novato',
+    // A single name is allowed (first stays empty); only a blank identity falls back to a placeholder.
+    first: input.last.trim() ? input.first.trim() : input.first.trim() ? '' : 'Jugador',
+    last: input.last.trim() || input.first.trim() || 'Novato',
     nat: input.nat,
     pos: input.pos,
     arch: input.arch,

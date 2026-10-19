@@ -101,8 +101,9 @@ export function generatePlayer(rng: Rng, o: GenOptions): Player {
   };
 }
 
-export const fullName = (p: { first: string; last: string }) => `${p.first} ${p.last}`;
-export const shortName = (p: { first: string; last: string }) => `${p.first[0]}. ${p.last}`;
+// A player may go by a single name (first is empty then).
+export const fullName = (p: { first: string; last: string }) => (p.first ? `${p.first} ${p.last}` : p.last);
+export const shortName = (p: { first: string; last: string }) => (p.first ? `${p.first[0]}. ${p.last}` : p.last);
 
 export function refreshOvr(p: Player) {
   p.ovr = computeOvr(p.attrs, p.pos);
