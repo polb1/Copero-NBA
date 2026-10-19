@@ -179,10 +179,15 @@ function weeklyTick(c: Career) {
       addNews(c, 'contract', twoWay ? 'Llamada al primer equipo' : 'De vuelta al primer equipo', twoWay ? `${t.city} te sube a la NBA (${c.twoWayNbaGames}/${RULES.twoWayNbaGameLimit} partidos two-way usados).` : 'Termina tu etapa en el filial: vuelves a la rotación NBA.', 'good');
     }
   }
-  // Random narrative event
-  const cfg = EVENT_RATE[c.mode];
+  // Narrative events: each season draws how many it gets from the pace, and they are spread over the
+  // remaining weeks so the number is reached by the end of the regular season.
+  const cfg = EVENT_RATE[c.mode] ?? EVENT_RATE.quick;
   const countKey = `events${c.league.season}`;
-  if (!c.pendingEvent && (c.flags[countKey] ?? 0) < cfg.maxPerSeason && rng.chance(cfg.perWeek)) {
+  const targetKey = `eventTarget${c.league.season}`;
+  if (c.flags[targetKey] === undefined) c.flags[targetKey] = rngFor(c.seed, 'event-target', c.league.season).int(cfg.min, cfg.max);
+  const left = c.flags[targetKey] - (c.flags[countKey] ?? 0);
+  const weeksLeft = Math.max(1, Math.floor((c.league.lastDay - c.league.day) / 7) - 1);
+  if (!c.pendingEvent && left > 0 && rng.chance(Math.min(0.95, left / weeksLeft))) {
     const ctx = eventContext(c);
     const def = pickEvent(ctx, rng);
     if (def) {

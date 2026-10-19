@@ -121,10 +121,12 @@ export const MINUTES_TEMPLATE = [35, 34, 32, 31, 29, 25, 21, 16, 10, 5, 2, 0, 0,
 export const PLAYOFF_MINUTES_TEMPLATE = [39, 38, 36, 34, 31, 23, 18, 12, 6, 3, 0, 0, 0, 0, 0];
 
 // Short and intense: 1-2 narrative decisions per season (injuries and trade requests aside).
-export const EVENT_RATE = {
-  full: { perWeek: 0.12, maxPerSeason: 2 },
-  quick: { perWeek: 0.07, maxPerSeason: 1 },
-  daily: { perWeek: 0.07, maxPerSeason: 1 },
+/** Narrative decisions per season by pace (each season draws its number in this range). */
+export const EVENT_RATE: Record<'express' | 'quick' | 'full' | 'daily', { min: number; max: number }> = {
+  express: { min: 1, max: 1 },
+  quick: { min: 2, max: 3 },
+  full: { min: 4, max: 5 },
+  daily: { min: 1, max: 1 },
 };
 
 export const DAILY_MAX_SEASONS = 12;

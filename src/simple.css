@@ -508,3 +508,5 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
   .tl-row.foot { grid-template-columns: 28px minmax(0, 1fr) 0 40px 50px 48px 46px; gap: 4px; font-size: 0.74rem; }
   .tl-row.foot .tl-club span { overflow: hidden; text-overflow: ellipsis; }
 }
+.mode-hint { flex-basis: 100%; margin: 0; text-align: right; font-size: 0.76rem; font-weight: 600; color: var(--text-2); }
+@media (max-width: 560px) { .mode-hint { text-align: left; } }

@@ -1206,4 +1206,10 @@ export const CA: Dict = {
   "OVR MÁXIMO": "OVR MÀXIM",
   "Valor máximo": "Valor màxim",
   "Sin premios individuales": "Sense premis individuals",
+  "Larga": "Llarga",
+  "1 decisión por temporada": "1 decisió per temporada",
+  "2-3 decisiones por temporada": "2-3 decisions per temporada",
+  "4-5 decisiones por temporada": "4-5 decisions per temporada",
+  "Carrera larga": "Carrera llarga",
+  "Ritmo": "Ritme",
 };

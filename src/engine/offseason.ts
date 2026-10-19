@@ -231,12 +231,13 @@ export function beginOffseason(c: Career) {
   c.phase = 'offseason';
   c.offers = [];
   buildOffseasonOffers(c);
-  // Summer event: only in the full pace, and not every year.
+  // Summer event: only in the long pace, and not every year. It counts towards the coming season's decisions.
   const ctx = eventContext(c);
   const ev = c.mode === 'full' && rngFor(c.seed, 'off-event-roll', L.season).chance(0.4) ? pickEvent(ctx, rngFor(c.seed, 'off-event', L.season)) : null;
   if (ev) {
     c.pendingEvent = instantiate(ev, ctx, rngFor(c.seed, 'off-event-i', L.season));
     markEventSeen(c, ev.id, ctx.absDay);
+    c.flags[`events${L.season}`] = (c.flags[`events${L.season}`] ?? 0) + 1;
   }
   achievementsCheck(c);
 }

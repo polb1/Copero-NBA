@@ -30,7 +30,7 @@ export function Start() {
   const current = useCareer();
   // Another run starts from the last player's identity: two taps and you are playing again.
   const prev = current ? userOf(current) : null;
-  const [mode, setMode] = useState<Mode>(current?.mode === 'full' ? 'full' : 'quick');
+  const [mode, setMode] = useState<Mode>(current?.mode === 'full' || current?.mode === 'express' ? current.mode : 'quick');
   const [first, setFirst] = useState(prev?.first ?? '');
   const [last, setLast] = useState(prev?.last ?? '');
   const [number, setNumber] = useState(current?.profile.number ?? 23);
@@ -107,9 +107,11 @@ export function Start() {
           <div className="row" style={{ gap: 8, flexWrap: 'wrap' }}>
           <LangSwitch />
           <div className="seg" role="radiogroup" aria-label="Ritmo">
-            <button aria-pressed={mode === 'full'} onClick={() => setMode('full')}>Intenso</button>
-            <button aria-pressed={mode === 'quick'} onClick={() => setMode('quick')}>Normal</button>
+            <button aria-pressed={mode === 'express'} title="1 decisión por temporada" onClick={() => setMode('express')}>Exprés</button>
+            <button aria-pressed={mode === 'quick'} title="2-3 decisiones por temporada" onClick={() => setMode('quick')}>Normal</button>
+            <button aria-pressed={mode === 'full'} title="4-5 decisiones por temporada" onClick={() => setMode('full')}>Larga</button>
           </div>
+          <p className="mode-hint">{mode === 'express' ? '1 decisión por temporada' : mode === 'full' ? '4-5 decisiones por temporada' : '2-3 decisiones por temporada'}</p>
           </div>
         </div>
         <div className="simple-cols">

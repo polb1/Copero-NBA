@@ -36,14 +36,20 @@ function playSimple(c: Career, seasons: number) {
 }
 
 describe('simple-mode pacing', () => {
-  for (const mode of ['quick', 'full'] as Mode[]) {
-    test(`${mode}: few decisions per season`, () => {
+  // Narrative decisions per season: Exprés 1, Normal 2-3, Larga 4-5.
+  const range: Partial<Record<Mode, [number, number]>> = { express: [1, 1], quick: [2, 3], full: [4, 5] };
+  for (const mode of ['express', 'quick', 'full'] as Mode[]) {
+    test(`${mode}: decisions per season match the pace`, () => {
       const c = api.newCareer(baseInput({ route: 'drafted', mode }), 777);
-      const { stops, done } = playSimple(c, 6);
+      const { done } = playSimple(c, 6);
       expect(done).toBeGreaterThanOrEqual(5);
-      const perSeason = stops / done;
-      // Season report + random events (1 in Normal, up to 2 in Intenso) + occasional contracts/injuries.
-      expect(perSeason).toBeLessThan(mode === 'quick' ? 3.2 : 4.2);
+      const [lo, hi] = range[mode]!;
+      const seasons = [...new Set(c.seasons.filter((s) => s.comp === 'NBA').map((s) => s.season))];
+      for (const s of seasons) {
+        const n = c.flags[`events${s}`] ?? 0;
+        expect(n).toBeGreaterThanOrEqual(lo);
+        expect(n).toBeLessThanOrEqual(hi);
+      }
     }, 120000);
   }
 });

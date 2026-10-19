@@ -103,4 +103,4 @@ export const PHASE_LABEL: Record<Career['phase'], string> = {
   retired: 'Retirado',
 };
 
-export const MODE_LABEL: Record<Career['mode'], string> = { full: 'Carrera completa', quick: 'Carrera rápida', daily: 'Desafío diario' };
+export const MODE_LABEL: Record<Career['mode'], string> = { express: 'Carrera exprés', quick: 'Carrera normal', full: 'Carrera larga', daily: 'Desafío diario' };

@@ -14,7 +14,8 @@ export type Archetype =
   | 'stretchBig' | 'rimProtector' | 'postScorer' | 'allAround';
 
 export type Competition = 'NBA' | 'GLG' | 'NCAA' | 'EUR';
-export type Mode = 'full' | 'quick' | 'daily';
+/** Pace: express = 1 decision per season, quick ("Normal") = 2-3, full ("Larga") = 4-5. */
+export type Mode = 'express' | 'quick' | 'full' | 'daily';
 export type Hand = 'R' | 'L';
 
 export interface StatLine {

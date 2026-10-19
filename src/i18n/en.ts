@@ -1281,4 +1281,13 @@ export const EN: Dict = {
   "OVR MÁXIMO": "PEAK OVR",
   "Valor máximo": "Peak value",
   "Sin premios individuales": "No individual awards",
+  "Exprés": "Express",
+  "Larga": "Long",
+  "1 decisión por temporada": "1 decision per season",
+  "2-3 decisiones por temporada": "2-3 decisions per season",
+  "4-5 decisiones por temporada": "4-5 decisions per season",
+  "Carrera exprés": "Express career",
+  "Carrera normal": "Normal career",
+  "Carrera larga": "Long career",
+  "Ritmo": "Pace",
 };
