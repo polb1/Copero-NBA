@@ -40,11 +40,6 @@
 .ovr-tile small { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.1em; opacity: 0.85; }
 .ovr-tile b { font-size: 2.3rem; font-weight: 800; line-height: 1; }
 .id-box { position: relative; flex: 1; min-width: 0; background: linear-gradient(120deg, color-mix(in srgb, var(--team) 35%, #1b1f26), #1b1f26 70%); border: 1px solid var(--line-2); border-radius: 12px; padding: 10px 12px; overflow: hidden; }
-.id-box .club { font-size: 1.15rem; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 62%; }
-.id-side { position: absolute; right: 12px; top: 8px; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-.id-side div { display: flex; align-items: baseline; gap: 6px; }
-.id-side small { font-size: 0.6rem; font-weight: 700; color: var(--text-3); letter-spacing: 0.1em; }
-.id-side b { font-size: 1.05rem; font-weight: 800; }
 .tot-row { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 14px; text-align: center; }
 .tot-row div + div { border-left: 1px solid var(--line); }
 .tot-row small { display: block; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; color: var(--text-3); }
@@ -84,7 +79,6 @@
 @media (max-width: 420px) {
   .tl-row { grid-template-columns: 28px minmax(0, 1fr) 34px 30px 36px 34px 34px; gap: 5px; font-size: 0.78rem; }
   .country-grid { grid-template-columns: 1fr; }
-  .id-side { position: static; flex-direction: row; gap: 12px; margin-top: 6px; }
   .id-box .club { max-width: 100%; }
 }
 
@@ -359,7 +353,6 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .earned > div { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; font-size: 1.35rem; }
 
 /* Wallet and player state: what choices move and what it does. */
-.id-side b.cash { color: #86efac; }
 .state-panel { margin-top: 10px; padding: 10px 12px; background: #17191d; border: 1px solid var(--line); border-radius: 10px; }
 .state-panel .perf { font-weight: 800; }
 .state-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 14px; margin-top: 8px; }
@@ -374,7 +367,6 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .state-what { grid-column: 1 / -1; color: var(--text-3); font-size: 0.64rem; margin-top: -2px; }
 .state-notes { margin: 8px 0 0; }
 @media (max-width: 960px) { .play-left > .state-panel { order: 4; margin-top: 0; } }
-@media (max-width: 560px) { .id-side { flex-wrap: wrap; gap: 2px 12px; } }
 .cost { margin-top: 4px; font-size: 0.7rem; font-weight: 700; color: #fbbf24; }
 .cost.short { color: var(--bad); }
 .choice.locked { opacity: 0.5; cursor: not-allowed; }
@@ -413,3 +405,33 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .odds { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; width: 100%; font-size: 0.68rem; color: var(--text-2); }
 .odds-bar { height: 5px; border-radius: 999px; background: var(--bad); overflow: hidden; }
 .odds-bar span { display: block; height: 100%; background: var(--good); }
+
+/* End-of-season celebration. */
+.recap { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 16px; background: rgba(5, 6, 8, 0.86); animation: fade 0.25s ease both; }
+.recap-box { width: min(440px, 100%); max-height: calc(100vh - 32px); overflow-y: auto; text-align: center; padding: 22px 18px 18px; border-radius: 20px; background: linear-gradient(180deg, #1c1f26, #121418); border: 1px solid var(--line-2); box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6); animation: pop 0.45s var(--ease) both; }
+.recap-kicker { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+.recap-box h2 { font-family: var(--font-body); text-transform: none; font-size: 1.6rem; font-weight: 800; margin: 6px 0 4px; }
+.recap-line { margin: 0 0 14px; color: var(--text-2); font-size: 0.86rem; display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap; }
+.recap-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; }
+.recap-stats div { display: flex; flex-direction: column; padding: 10px 2px; border-radius: 12px; background: #23272f; }
+.recap-stats b { font-size: 1.5rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.recap-stats span { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em; color: var(--text-3); }
+.recap-stats .up b { color: var(--good); }
+.recap-stats .down b { color: var(--bad); }
+.recap-trophies { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.recap-trophy { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 14px; text-align: left; background: linear-gradient(90deg, rgba(245, 196, 81, 0.22), rgba(245, 196, 81, 0.04)); border: 1px solid rgba(245, 196, 81, 0.45); animation: trophy-in 0.6s var(--ease) both; }
+.recap-trophy span { font-size: 1.9rem; filter: drop-shadow(0 0 10px rgba(245, 196, 81, 0.6)); }
+.recap-trophy b { color: var(--gold); font-size: 0.98rem; }
+@keyframes trophy-in { 0% { opacity: 0; transform: scale(0.6) translateY(10px); } 70% { opacity: 1; transform: scale(1.06); } 100% { transform: scale(1); } }
+
+/* Player card: name and club breathe; age, value and money in their own row. */
+.id-box { display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+.player-name { font-size: 1.15rem; font-weight: 800; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.club-row { gap: 8px; min-width: 0; }
+.id-box .club, .club-row .club { font-size: 0.92rem; font-weight: 600; color: var(--text-2); max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.id-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
+.id-stats div { display: flex; flex-direction: column; align-items: center; padding: 7px 4px; border-radius: 10px; background: #17191d; border: 1px solid var(--line); min-width: 0; }
+.id-stats small { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); }
+.id-stats b { font-size: 1.02rem; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.id-stats b.cash { color: #86efac; }
+@media (max-width: 960px) { .play-left > .id-stats { order: 1; margin-top: 0; } }

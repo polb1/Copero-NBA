@@ -18,7 +18,7 @@ import { countryByCode } from '../../content/names';
 import { careerHistory, store, useCareer, useStore } from '../../store/store';
 import { EventModalInline } from './EventInline';
 import { TeamBadge, ovrTone } from '../../ui/simple';
-import { OvrTile, SCENE_EMOJI, SimProgress } from '../../ui/life';
+import { OvrTile, SCENE_EMOJI, SimProgress, useCountUp } from '../../ui/life';
 import { drawCard } from '../../ui/card';
 import { Scene, type SceneKind } from '../../ui/Scene';
 import { Icon } from '../../ui/icons';
@@ -55,6 +55,7 @@ export function Play() {
           <MemoTopCard c={c} sig={viewSig(c)} />
           <div className="divider" style={{ margin: '18px 0' }} />
           {sim ? <SimProgress c={c} label={sim} /> : <Decision c={c} />}
+          {!sim && <SeasonRecap c={c} />}
         </div>
         <div className="play-right">
           <MemoTimeline c={c} sig={viewSig(c)} />
@@ -103,16 +104,18 @@ function TopCard({ c }: { c: Career }) {
             <span className="chip accent">#{c.profile.number} {u.pos}</span>
             <span className="tiny dim">POT {u.pot}</span>
           </div>
-          <div className="row" style={{ gap: 8, marginTop: 6, minWidth: 0 }}>
-            {t ? <TeamBadge id={t.id} color={t.color} size={26} /> : c.satellite ? <ClubLogo name={c.satellite.teamName} size={26} /> : null}
-            <strong className="club">{clubLabel}</strong>
-          </div>
-          <div className="id-side">
-            <div><small>EDAD</small><b>{u.age}</b></div>
-            <div><small>VALOR</small><b>{fmtMoney(marketValue(u, c.league.season))}</b></div>
-            <div title="Tu dinero: cobras al final de cada temporada y pagas los gastos de tus decisiones"><small>DINERO</small><b className="cash">{fmtMoney(cashOf(c))}</b></div>
+          <strong className="player-name">{u.first} {u.last}</strong>
+          <div className="row club-row">
+            {t ? <TeamBadge id={t.id} color={t.color} size={22} /> : c.satellite ? <ClubLogo name={c.satellite.teamName} size={22} /> : null}
+            <span className="club">{clubLabel}</span>
           </div>
         </div>
+      </div>
+      {/* Age, value and money get a row of their own: on phones they used to squeeze the club name. */}
+      <div className="id-stats">
+        <div><small>Edad</small><b>{u.age}</b></div>
+        <div><small>Valor</small><b>{fmtMoney(marketValue(u, c.league.season))}</b></div>
+        <div title="Tu dinero: cobras al final de cada temporada y pagas los gastos de tus decisiones"><small>Dinero</small><b className="cash">{fmtMoney(cashOf(c))}</b></div>
       </div>
       <div className="tot-row">
         <div title={`${f1(a.ppg)} / ${f1(a.rpg)} / ${f1(a.apg)} por partido`}><small>PARTIDOS</small><b>{num(tot.gp)}</b></div>
@@ -217,6 +220,72 @@ function MoneyLine({ m }: { m?: { salary: number; sponsor: number; agent: number
   if (!m) return null;
   return (
     <><span className="money-line">💰 {m.salary ? `Sueldo +${fmtMoney(m.salary)}` : 'Sin sueldo'}{m.sponsor ? ` · Patrocinios +${fmtMoney(m.sponsor)}` : ''}{m.agent ? ` · Agente −${fmtMoney(m.agent)}` : ''} → <b>{fmtMoney(m.cash)}</b></span></>
+  );
+}
+
+/** A number that counts up from zero when it appears (one decimal). */
+function CountUp({ value }: { value: number }) {
+  const { shown } = useCountUp(Math.round(value * 10), 1100);
+  return <>{(shown / 10).toFixed(1)}</>;
+}
+
+/**
+ * End-of-season celebration: the numbers count up and every trophy of the season pops in, one by one.
+ * After a summer with a national-team medal, the medal gets its own moment. Each shows once.
+ */
+function SeasonRecap({ c }: { c: Career }) {
+  const s = c.lastSummary;
+  const medal = c.phase === 'offseason' && c.flags.medalSeason !== undefined && c.flags.medalSeen !== c.flags.medalSeason;
+  const season = c.phase === 'season-end' && s && c.flags.recapSeen !== s.season;
+  if (!medal && !season) return null;
+  const close = () => store.act((x) => {
+    if (season && s) x.flags.recapSeen = s.season;
+    if (medal) x.flags.medalSeen = x.flags.medalSeason;
+  });
+  if (medal) {
+    const country = countryByCode(userOf(c).nat);
+    return (
+      <div className="recap" role="dialog" aria-label="Medalla con la selección" onClick={close}>
+        <div className="recap-box" onClick={(e) => e.stopPropagation()}>
+          <span className="recap-kicker">Verano con la selección</span>
+          <div className="recap-trophies"><div className="recap-trophy" style={{ animationDelay: '0.2s' }}><span>🥇</span><b>Medalla con {country.name}</b></div></div>
+          <p className="recap-line"><Flag code={userOf(c).nat} size={20} /> {c.flags.nationalCaps} convocatorias · {c.flags.medals} {c.flags.medals === 1 ? 'medalla' : 'medallas'}</p>
+          <button type="button" className="btn pill light" onClick={close} autoFocus>Continuar</button>
+        </div>
+      </div>
+    );
+  }
+  const recs = c.seasons.filter((r) => r.season === s!.season && r.stats.gp > 0);
+  const r = recs.find((x) => x.comp === 'NBA') ?? recs[0];
+  const a = r ? averages(r.stats) : null;
+  const keys = [...new Set(recs.flatMap((x) => x.awards))];
+  return (
+    <div className="recap" role="dialog" aria-label={`Resumen de la temporada ${seasonLabel(s!.season)}`} onClick={close}>
+      <div className="recap-box" onClick={(e) => e.stopPropagation()}>
+        <span className="recap-kicker">Temporada {seasonLabel(s!.season)}</span>
+        <h2>{keys.length ? (keys.includes('champion') || keys.includes('euroChampion') ? '¡Campeones!' : '¡Temporada de premios!') : 'Temporada terminada'}</h2>
+        <p className="recap-line">{s!.teamResult}</p>
+        {a && (
+          <div className="recap-stats">
+            <div><b><CountUp value={a.ppg} /></b><span>PTS</span></div>
+            <div><b><CountUp value={a.rpg} /></b><span>REB</span></div>
+            <div><b><CountUp value={a.apg} /></b><span>AST</span></div>
+            <div className={s!.ovrDelta > 0 ? 'up' : s!.ovrDelta < 0 ? 'down' : ''}><b>{s!.ovrDelta > 0 ? '+' : ''}{s!.ovrDelta}</b><span>OVR</span></div>
+          </div>
+        )}
+        {keys.length > 0 && (
+          <div className="recap-trophies">
+            {keys.map((k, i) => (
+              <div key={k} className="recap-trophy" style={{ animationDelay: `${0.5 + i * 0.35}s` }}>
+                <span>{AWARD_ICON[k] ?? '🏆'}</span>
+                <b>{AWARD_LABEL[k] ?? k}</b>
+              </div>
+            ))}
+          </div>
+        )}
+        <button type="button" className="btn pill light" onClick={close} autoFocus>Ver la temporada</button>
+      </div>
+    </div>
   );
 }
 

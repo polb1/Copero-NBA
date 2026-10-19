@@ -258,6 +258,7 @@ function nationalSummer(c: Career, season: number) {
   const medalChance = [0.06, 0.22, 0.65][deep] + Math.max(0, u.ovr - bar - 5) * 0.006;
   if (rng.chance(medalChance)) {
     c.flags.medals = (c.flags.medals ?? 0) + 1;
+    c.flags.medalSeason = season; // the screen celebrates it once
     addNews(c, 'milestone', `Medalla con ${country.name}`, `Torneo internacional de verano: subes al podio con ${country.name}.`, 'good');
   } else {
     addNews(c, 'milestone', `Convocado por ${country.name}`, `Juegas el torneo internacional de verano con ${country.name}.`, 'neutral');
