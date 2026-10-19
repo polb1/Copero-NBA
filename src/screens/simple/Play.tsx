@@ -25,6 +25,8 @@ import { Icon } from '../../ui/icons';
 import { Flag } from '../../ui/Flag';
 import { findClub } from '../../data/clubs';
 import { ClubLogo } from '../../ui/ClubLogo';
+import { LangSwitch } from '../../ui/LangSwitch';
+import { t as tx } from '../../i18n/i18n';
 
 const num = (n: number) => Math.round(n).toLocaleString('es-ES');
 
@@ -63,6 +65,7 @@ export function Play() {
       </div>
       <div className="play-tools">
         <Link to="/careers" className="btn sm ghost"><Icon name="trophy" /> Mis carreras</Link>
+        <LangSwitch />
         {c.phase !== 'retired' && <Link to="/start" className="btn sm ghost"><Icon name="history" /> Reiniciar</Link>}
       </div>
       {busy && <div className="busy" role="status" aria-live="polite"><div className="stack" style={{ alignItems: 'center', gap: 18 }}><div className="ball" /><span className="muted">{busy}</span></div></div>}
@@ -500,7 +503,7 @@ function Decision({ c }: { c: Career }) {
             // The extension already shows this team: the alternative is just keeping the current deal, not a second offer from it.
             ? <Choice top="Sin firmar nada" title="Rechazar la extensión" icon="📝" tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Cumples el contrato que ya tienes.</Choice>
             : <Choice top="Quedarse en" title={t ? teamName(c.league, t.id) : 'tu equipo'} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : '🏠'} tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Seguir con tu contrato.</Choice>)}
-          {canRetire && <Choice top="Colgar las botas" title="Retirarse" scene="trophy" tone="danger" onClick={() => { if (confirm('¿Anunciar la retirada?')) store.act((x) => api.retire(x, 'Retirada voluntaria.')); }}>Fin de la carrera.</Choice>}
+          {canRetire && <Choice top="Colgar las botas" title="Retirarse" scene="trophy" tone="danger" onClick={() => { if (confirm(tx('¿Anunciar la retirada?'))) store.act((x) => api.retire(x, 'Retirada voluntaria.')); }}>Fin de la carrera.</Choice>}
         </Block>
       );
     }

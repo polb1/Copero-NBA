@@ -5,6 +5,8 @@ import { seasonLabel } from '../../engine/schedule';
 import { f1 } from '../../engine/stats';
 import { Flag } from '../../ui/Flag';
 import { ACHIEVEMENTS } from '../../engine/achievements';
+import { t } from '../../i18n/i18n';
+import { LangSwitch } from '../../ui/LangSwitch';
 
 type Sort = 'legacyScore' | 'ppg' | 'titles' | 'endedAt';
 const SORTS: { id: Sort; label: string }[] = [
@@ -69,9 +71,10 @@ export function Careers() {
           </div>
         )}
         <Achievements />
+        <div className="careers-lang"><LangSwitch /></div>
         <div className="simple-foot">
           <button className="btn pill" onClick={() => nav(c ? '/play' : '/start')}>{c && c.phase !== 'retired' ? 'Volver al juego' : 'Volver'}</button>
-          {list.length > 0 && <button className="btn pill ghost small" onClick={() => { if (confirm('¿Borrar todas las carreras guardadas?')) { clearHistory(); setList([]); } }}>Borrar historial</button>}
+          {list.length > 0 && <button className="btn pill ghost small" onClick={() => { if (confirm(t('¿Borrar todas las carreras guardadas?'))) { clearHistory(); setList([]); } }}>Borrar historial</button>}
           <button className="btn pill light" onClick={() => nav('/start')}>Nueva carrera</button>
         </div>
       </div>

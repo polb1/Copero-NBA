@@ -10,7 +10,7 @@ export function Flag({ code, size = 20 }: { code: string; size?: number }) {
   return (
     <img
       className="flag"
-      src={`flags/${iso}.png`}
+      src={`/flags/${iso}.png`}
       alt={name}
       title={name}
       width={size}

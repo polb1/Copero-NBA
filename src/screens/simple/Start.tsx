@@ -12,6 +12,7 @@ import { careerHistory, playStreak, store, useCareer } from '../../store/store';
 import { userOf } from '../../engine/career';
 import { CourtPicker, Jersey } from '../../ui/simple';
 import { Flag } from '../../ui/Flag';
+import { LangSwitch } from '../../ui/LangSwitch';
 
 
 const pickName = (list: string[]) => list[Math.floor(Math.random() * list.length)];
@@ -92,9 +93,12 @@ export function Start() {
             {playStreak() >= 2 && <p className="tiny streak">🔥 {playStreak()} días seguidos jugando</p>}
             {!current && careerHistory().length === 0 && <p className="tiny dim" style={{ margin: '4px 0 0', maxWidth: 420 }}>Elige país y posición y vive tu carrera desde los 18 años: draft, contratos, anillos y un legado que comparar en cada nueva partida.</p>}
           </div>
+          <div className="row" style={{ gap: 8, flexWrap: 'wrap' }}>
+          <LangSwitch />
           <div className="seg" role="radiogroup" aria-label="Ritmo">
             <button aria-pressed={mode === 'full'} onClick={() => setMode('full')}>Intenso</button>
             <button aria-pressed={mode === 'quick'} onClick={() => setMode('quick')}>Normal</button>
+          </div>
           </div>
         </div>
         <div className="simple-cols">
