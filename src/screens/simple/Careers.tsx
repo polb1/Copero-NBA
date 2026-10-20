@@ -5,7 +5,7 @@ import { seasonLabel } from '../../engine/schedule';
 import { f1 } from '../../engine/stats';
 import { Flag } from '../../ui/Flag';
 import { ACHIEVEMENTS } from '../../engine/achievements';
-import { t } from '../../i18n/i18n';
+import { ConfirmModal } from '../../ui/ConfirmModal';
 import { LangSwitch } from '../../ui/LangSwitch';
 
 type Sort = 'legacyScore' | 'ppg' | 'titles' | 'endedAt';
@@ -22,6 +22,7 @@ export function Careers() {
   const c = useCareer();
   const [sort, setSort] = useState<Sort>('legacyScore');
   const [list, setList] = useState(() => { store.flush(); return careerHistory(); });
+  const [askClear, setAskClear] = useState(false);
   const doneCount = list.filter((r) => r.challengeDone).length;
   const rows = [...list].sort((a, b) => b[sort] - a[sort] || b.legacyScore - a.legacyScore);
   const best = (k: keyof CareerRecord) => Math.max(...list.map((r) => r[k] as number));
@@ -74,10 +75,16 @@ export function Careers() {
         <div className="careers-lang"><LangSwitch /></div>
         <div className="simple-foot">
           <button className="btn pill" onClick={() => nav(c ? '/play' : '/start')}>{c && c.phase !== 'retired' ? 'Volver al juego' : 'Volver'}</button>
-          {list.length > 0 && <button className="btn pill ghost small" onClick={() => { if (confirm(t('¿Borrar todas las carreras guardadas?'))) { clearHistory(); setList([]); } }}>Borrar historial</button>}
+          {list.length > 0 && <button className="btn pill ghost small" onClick={() => setAskClear(true)}>Borrar historial</button>}
           <button className="btn pill light" onClick={() => nav('/start')}>Nueva carrera</button>
         </div>
       </div>
+      {askClear && (
+        <ConfirmModal icon="🗑️" kicker="Mis carreras" title="¿Borrar el historial?" confirmLabel="Sí, borrar" danger
+          onCancel={() => setAskClear(false)} onConfirm={() => { setAskClear(false); clearHistory(); setList([]); }}>
+          <p>{`Se borrarán tus ${list.length} carreras guardadas y no se podrán recuperar.`}</p>
+        </ConfirmModal>
+      )}
     </div>
   );
 }

@@ -13,6 +13,7 @@ import { userOf } from '../../engine/career';
 import { CourtPicker, Jersey } from '../../ui/simple';
 import { Flag } from '../../ui/Flag';
 import { LangSwitch } from '../../ui/LangSwitch';
+import { ConfirmModal } from '../../ui/ConfirmModal';
 
 
 /** What each position does on court, in plain words for people new to basketball. */
@@ -43,6 +44,7 @@ export function Start() {
   const [seed, setSeed] = useState(newSeed);
   const [creating, setCreating] = useState(false);
   const [posHelp, setPosHelp] = useState(false);
+  const [askReplace, setAskReplace] = useState(false);
   const named = !!(first.trim() || last.trim());
   const replacing = !!current && current.phase !== 'retired';
   const challenge = CHALLENGES[rollChallenge(seed)];
@@ -181,9 +183,16 @@ export function Start() {
         <div className="simple-foot">
           {current ? <button className="btn pill" onClick={() => nav('/play')}>Volver</button> : <Link to="/careers" className="btn pill">Mis carreras</Link>}
           {replacing && <span className="small dim foot-hint">Empezar de nuevo reemplaza la carrera actual.</span>}
-          <button className="btn pill light" disabled={creating || !named} title={named ? undefined : 'Escribe al menos un nombre o un apellido.'} onClick={confirm}>{creating ? 'Creando tu liga…' : replacing ? 'Empezar de nuevo' : 'Empezar carrera'}</button>
+          <button className="btn pill light" disabled={creating || !named} title={named ? undefined : 'Escribe al menos un nombre o un apellido.'} onClick={() => (replacing ? setAskReplace(true) : confirm())}>{creating ? 'Creando tu liga…' : replacing ? 'Empezar de nuevo' : 'Empezar carrera'}</button>
         </div>
       </div>
+      {askReplace && prev && current && (
+        <ConfirmModal icon="🔄" kicker="Nueva carrera" title="¿Empezar de nuevo?" confirmLabel="Sí, empezar" cancelLabel="Volver" danger
+          onCancel={() => setAskReplace(false)} onConfirm={() => { setAskReplace(false); confirm(); }}>
+          <p>{`Tu carrera actual con ${[prev.first, prev.last].filter(Boolean).join(' ')} (${prev.age} años) se perderá.`}</p>
+          <p>Solo las carreras terminadas se guardan en Mis carreras.</p>
+        </ConfirmModal>
+      )}
     </div>
   );
 }

@@ -26,7 +26,7 @@ import { Flag } from '../../ui/Flag';
 import { findClub } from '../../data/clubs';
 import { ClubLogo } from '../../ui/ClubLogo';
 import { LangSwitch } from '../../ui/LangSwitch';
-import { t as tx } from '../../i18n/i18n';
+import { ConfirmModal } from '../../ui/ConfirmModal';
 
 const num = (n: number) => Math.round(n).toLocaleString('es-ES');
 
@@ -419,6 +419,7 @@ function OfferChoice({ c, o, onPick, top = 'Firmar con' }: { c: Career; o: Offer
 function Decision({ c }: { c: Career }) {
   const u = userOf(c);
   const t = teamOf(c);
+  const [askRetire, setAskRetire] = useState(false);
   if (c.pendingEvent) return <EventModalInline c={c} />;
   const sim = (label: string, fn: (x: Career) => void) => store.actAsync(label, fn);
   /** Apply an action, then keep simulating (visibly, in slices) until the next real decision. */
@@ -534,7 +535,8 @@ function Decision({ c }: { c: Career }) {
             // The extension already shows this team: the alternative is just keeping the current deal, not a second offer from it.
             ? <Choice top="Sin firmar nada" title="Rechazar la extensión" icon="📝" tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Cumples el contrato que ya tienes.</Choice>
             : <Choice top="Quedarse en" title={t ? teamName(c.league, t.id) : 'tu equipo'} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : '🏠'} tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Seguir con tu contrato.</Choice>)}
-          {canRetire && <Choice top="Colgar las botas" title="Retirarse" scene="trophy" tone="danger" onClick={() => { if (confirm(tx('¿Anunciar la retirada?'))) store.act((x) => api.retire(x, 'Retirada voluntaria.')); }}>Fin de la carrera.</Choice>}
+          {canRetire && <Choice top="Colgar las botas" title="Retirarse" scene="trophy" tone="danger" onClick={() => setAskRetire(true)}>Fin de la carrera.</Choice>}
+          {askRetire && <RetireModal c={c} onCancel={() => setAskRetire(false)} />}
         </Block>
       );
     }
@@ -543,6 +545,29 @@ function Decision({ c }: { c: Career }) {
     default:
       return null;
   }
+}
+
+/** Retiring is final: the modal shows what the career leaves behind before confirming. */
+function RetireModal({ c, onCancel }: { c: Career; onCancel: () => void }) {
+  const u = userOf(c);
+  const nba = c.seasons.filter((s) => s.comp === 'NBA');
+  const seasons = new Set(nba.map((s) => s.season)).size;
+  const rings = c.seasons.filter((s) => s.awards.includes('champion')).length;
+  const score = legacyScore(c);
+  const tier = TIERS.reduce((acc, x) => (score >= x[0] ? x : acc), TIERS[0])[1];
+  return (
+    <ConfirmModal icon="👟" kicker="Colgar las botas" title="¿Anunciar tu retirada?" confirmLabel="Sí, me retiro" cancelLabel="Seguir jugando" danger
+      onCancel={onCancel} onConfirm={() => { onCancel(); store.act((x) => api.retire(x, 'Retirada voluntaria.')); }}>
+      <div className="confirm-stats">
+        <div><b>{u.age}</b><span>Años</span></div>
+        <div><b>{seasons}</b><span>Temporadas NBA</span></div>
+        <div><b>{rings}</b><span>Anillos</span></div>
+        <div><b>{score}</b><span>Legado</span></div>
+      </div>
+      <p>{`Te retiras como ${tier}.`}</p>
+      <p>La carrera termina aquí y se guarda en Mis carreras.</p>
+    </ConfirmModal>
+  );
 }
 
 function Retired({ c }: { c: Career }) {
