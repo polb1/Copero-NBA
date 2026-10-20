@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Career } from '../../engine/types';
-import { canAfford, chooseOption, dismissEvent, playMinigame } from '../../engine/api';
+import { canAfford, chooseOption, dismissEvent, playMinigame, selectMinigameTier } from '../../engine/api';
 import { cashOf } from '../../engine/mindset';
 import { fmtMoney } from '../../engine/contracts';
 import { CATEGORY_LABEL } from '../../content/events';
 import { store } from '../../store/store';
 import { CATEGORY_ICON } from '../../ui/simple';
-import { ShotMeter } from '../../ui/ShotMeter';
+import { Minigame } from '../../ui/Minigame';
 import { CATEGORY_SCENE, Scene } from '../../ui/Scene';
 import { SCENE_EMOJI, sceneForOption } from '../../ui/life';
 
@@ -76,6 +76,9 @@ export function EventModalInline({ c }: { c: Career }) {
   }, [ev]);
   const icon = CATEGORY_ICON[ev.category] ?? '🏀';
   const afford = (i: number) => canAfford(c, i);
+  const mg = ev.minigame;
+  const tiers = ev.minigameTiers;
+  const tierKey = ev.defId + ev.title + (ev.minigameTier ?? '');
   return (
     <div className="decision">
       <Scene kind={CATEGORY_SCENE[ev.category] ?? 'arena'} variant={ev.defId} height={120}>
@@ -83,8 +86,31 @@ export function EventModalInline({ c }: { c: Career }) {
         <h2>{ev.title}</h2>
       </Scene>
       <p className="small muted desc">{ev.text}</p>
-      {!ev.resolved && ev.minigame ? (
-        <ShotMeter key={ev.defId + ev.title} spec={ev.minigame} onDone={(made) => store.act((x) => playMinigame(x, made))} onSimulate={() => store.act((x) => chooseOption(x, 0))} />
+      {!ev.resolved && mg ? (
+        <>
+          {tiers && tiers.length > 1 && (
+            <div className="tiers" role="group" aria-label="Dificultad">
+              {tiers.map((t) => (
+                <button
+                  key={t.id}
+                  type="button"
+                  className={`tier ${ev.minigameTier === t.id ? 'on' : ''}`}
+                  onClick={() => store.act((x) => selectMinigameTier(x, t.id))}
+                >
+                  <b>{t.label}</b>
+                  <span className="tiny dim">{t.desc}</span>
+                </button>
+              ))}
+            </div>
+          )}
+          {(mg.reward || mg.risk) && (
+            <div className="risk-row">
+              {mg.reward && <span className="chip good">Recompensa ×{mg.reward.mul}</span>}
+              {mg.risk && <span className="chip bad">Riesgo de lesión {Math.round(mg.risk.injury * 100)}%</span>}
+            </div>
+          )}
+          <Minigame key={tierKey} spec={mg} onDone={(made) => store.act((x) => playMinigame(x, made))} onSimulate={() => store.act((x) => chooseOption(x, 0))} />
+        </>
       ) : !ev.resolved ? (
         <div className="choices">
           {ev.options.map((o, i) => {

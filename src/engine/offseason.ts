@@ -1,5 +1,8 @@
 // League offseason, user contract situation, pre-draft process, signing and retirement.
-import type { Career, League, Offer, Prospect, RetirementSummary, TeamStatus } from './types';
+import type { Career, League, MinigameTierId, Offer, Player, Prospect, RetirementSummary, TeamStatus } from './types';
+import type { MinigameDef } from '../content/events';
+import { COMBINE_TESTS, combineTestIds, type CombineTestDef } from '../content/combine';
+import { buildSpec } from './minigames';
 import { addNews, onNbaRoster, teamOf, userOf } from './career';
 import { generateDraftClass, materializeProspect, mockRange, positionNeeds, prospectValue, rookieContract, runLottery, simulateDraft } from './draft';
 import { contractEnd, makeSalaries, marketValue, offerCapacity, salaryIn, yearsLeft, fmtMoney } from './contracts';
@@ -12,7 +15,7 @@ import { eventContext } from './career';
 import { achievementsCheck } from './flow';
 import { legacyScore, hofProbability, hofVerdict, legacyTier, careerTotals, playoffTotals, awardCounts } from './legacy';
 import { DAILY_MAX_SEASONS, MAX_AGE, RULES, minSalary, rookieScale, scaled } from './config';
-import { clamp, rngFor } from './rng';
+import { clamp, rngFor, type Rng } from './rng';
 import { seasonLabel } from './schedule';
 import { SATELLITES } from './satellite';
 import { EURO_CLUBS, clubLevel, clubMinutes, findClub } from '../data/clubs';
@@ -513,7 +516,51 @@ export function predraftDecision(c: Career, declare: boolean) {
   addNews(c, 'draft', `${fullName(u)} se declara elegible para el draft`, `Tras promediar ${(stats.pts / gp).toFixed(1)} puntos, el ${u.pos} da el salto. Próximo paso: el Draft Combine.`, 'good');
 }
 
-export function doCombine(c: Career, choice: 'full' | 'measure' | 'skip') {
+/** Level of the combine tests implied by the prospect projection (OVR 55% + potential 45%). */
+export function combineTier(u: Player): MinigameTierId {
+  const projected = u.ovr * 0.55 + u.pot * 0.45;
+  return projected < 64 ? 'easy' : projected < 72 ? 'normal' : 'hard';
+}
+
+export type CombinePlan = 'full' | 'hard' | 'safe' | 'measure' | 'skip';
+
+/** Event-level shape of a combine test: the combine is scored, so the outcomes carry no effects. */
+function combineDef(t: CombineTestDef): MinigameDef {
+  const def: MinigameDef = {
+    kind: t.kind,
+    attempts: t.attempts,
+    attrs: t.attrs,
+    pressure: t.pressure,
+    great: t.great,
+    ok: t.ok,
+    mechanic: t.mechanic,
+    outcomes: {
+      great: { effects: {}, text: '' },
+      ok: { effects: {}, text: '' },
+      fail: { effects: {}, text: '' },
+    },
+  };
+  if (t.slots !== undefined) def.slots = t.slots;
+  if (t.windowMs !== undefined) def.windowMs = t.windowMs;
+  return def;
+}
+
+/** Legacy tail of the combine: the user's board value, the mock range and the interview teams. */
+function afterCombine(c: Career, rng: Rng) {
+  const p = c.predraft!;
+  const u = userOf(c);
+  const me = p.draftClass!.find((x) => x.isUser)!;
+  me.value = prospectValue(u.ovr, u.pot, u.age) + p.stockBonus;
+  // Pick interview teams around the projected range.
+  const range = mockRange(p.draftClass!, 'user', rng);
+  const order = runLotteryPreview(c);
+  const teams = order.slice(Math.max(0, range.pickLow - 2), Math.min(order.length, range.pickHigh + 2));
+  p.interviewTeams = rng.shuffle([...new Set(teams)]).slice(0, c.mode === 'full' ? 3 : 1);
+  p.interviewQuestions = p.interviewTeams.map((teamId, i) => INTERVIEW_QUESTIONS[(i + Math.floor(rng.next() * INTERVIEW_QUESTIONS.length)) % INTERVIEW_QUESTIONS.length]).map((q, i) => ({ teamId: p.interviewTeams[i], question: q.q, answers: q.a }));
+  p.step = 'interviews';
+}
+
+export function doCombine(c: Career, choice: CombinePlan) {
   const p = c.predraft!;
   const u = userOf(c);
   const rng = rngFor(c.seed, 'combine', c.league.season);
@@ -524,25 +571,75 @@ export function doCombine(c: Career, choice: 'full' | 'measure' | 'skip') {
   const shooting = Math.round(clamp(8 + (a.three + a.mid - 100) * 0.18 + rng.normal(0, 2.5), 2, 25));
   const score = (3.4 - sprint) * 20 + (vertical - 30) * 0.5 + (11.6 - lane) * 3 + (shooting - 12) * 0.35;
   const grade = score > 6 ? 'A' : score > 2 ? 'B' : score > -2 ? 'C' : 'D';
-  if (choice === 'full') {
-    p.combine = { sprint, vertical, lane, shooting, grade };
-    p.stockBonus += clamp(score * 0.35, -2.5, 3);
-  } else if (choice === 'measure') {
+  // The legacy score/grade stay computed for reference; the played plans grade the combine in finishCombine.
+  void score;
+  void grade;
+  if (choice === 'measure') {
     p.combine = { sprint: 0, vertical: 0, lane: 0, shooting: 0, grade: 'Solo medidas' };
     p.stockBonus -= 0.3;
-  } else {
+    afterCombine(c, rng);
+    return;
+  }
+  if (choice === 'skip') {
     p.combine = { sprint: 0, vertical: 0, lane: 0, shooting: 0, grade: 'No participó' };
     p.stockBonus -= 0.8;
+    afterCombine(c, rng);
+    return;
   }
+  // Played plans: the measurements are taken now and the stock waits for the tests.
+  p.combine = { sprint, vertical, lane, shooting, grade: 'Pendiente' };
+  p.combinePlan = choice;
+  const tier: MinigameTierId = choice === 'hard' ? 'hard' : choice === 'safe' ? 'easy' : combineTier(u);
+  const ids = choice === 'safe' ? ['shooting', 'athletic'] : combineTestIds(u.pos);
+  p.combineTests = ids.map((id) => {
+    const def = COMBINE_TESTS.find((t) => t.id === id)!;
+    return { id: def.id, label: def.label, desc: def.desc, weight: def.weight, spec: buildSpec(combineDef(def), u, c, tier) };
+  });
+  p.step = 'combineTests';
+}
+
+/** Legacy score of the measured combine (sprint/vertical/lane/shooting), used as flavour in the tests. */
+function measureScoreOf(m: { sprint: number; vertical: number; lane: number; shooting: number }): number {
+  return (3.4 - m.sprint) * 20 + (m.vertical - 30) * 0.5 + (11.6 - m.lane) * 3 + (m.shooting - 12) * 0.35;
+}
+
+/** Plays (or simulates, when `made` is omitted) the next combine test. The last one closes the combine. */
+export function playCombineTest(c: Career, made?: number) {
+  const p = c.predraft;
+  if (!p || p.step !== 'combineTests' || !p.combineTests) return;
+  const t = p.combineTests.find((x) => x.made === undefined);
+  if (!t) return;
+  const attempts = t.spec.attempts;
+  t.made = made === undefined
+    ? rngFor(c.seed, 'combine-test', c.league.season, t.id).binomial(attempts, t.spec.autoProb)
+    : clamp(Math.round(made), 0, attempts);
+  if (p.combineTests.every((x) => x.made !== undefined)) finishCombine(c);
+}
+
+/** Turns the played tests into stock, board value, grade and interview teams. */
+export function finishCombine(c: Career) {
+  const p = c.predraft;
+  if (!p?.combineTests?.length) return;
+  if (p.combineTests.some((t) => t.made === undefined)) return;
+  const u = userOf(c);
+  const tests = p.combineTests;
+  const W = tests.reduce((s, t) => s + t.weight, 0);
+  const thirdId = combineTestIds(u.pos)[2];
+  const third = COMBINE_TESTS.find((t) => t.id === thirdId);
+  const WALL = 1.5 + 1.2 + (third?.weight ?? 1.0);
+  const q = W > 0 ? tests.reduce((s, t) => s + ((t.made ?? 0) / t.spec.attempts) * t.weight, 0) / W : 0;
+  const coverage = WALL > 0 ? W / WALL : 0;
+  const tier = tests[0].spec.tier ?? 'normal';
+  const tierMul = tier === 'easy' ? 0.85 : tier === 'hard' ? 1.2 : 1;
+  const flavor = p.combine ? clamp(measureScoreOf(p.combine) * 0.1, -0.5, 0.8) : 0;
+  const bonus = (q * 1.45 - 0.55) * tierMul * coverage * 2.2 + flavor;
+  p.stockBonus += bonus;
+  const grade = bonus > 2 ? 'A' : bonus > 0.5 ? 'B' : bonus > -1 ? 'C' : 'D';
+  p.combineResult = { grade, bonus, detail: `${Math.round(q * 100)}% de acierto · cobertura ${Math.round(coverage * 100)}%` };
+  if (p.combine) p.combine.grade = grade;
   const me = p.draftClass!.find((x) => x.isUser)!;
   me.value = prospectValue(u.ovr, u.pot, u.age) + p.stockBonus;
-  // Pick interview teams around the projected range.
-  const range = mockRange(p.draftClass!, 'user', rng);
-  const order = runLotteryPreview(c);
-  const teams = order.slice(Math.max(0, range.pickLow - 2), Math.min(order.length, range.pickHigh + 2));
-  p.interviewTeams = rng.shuffle([...new Set(teams)]).slice(0, c.mode === 'full' ? 3 : 1);
-  p.interviewQuestions = p.interviewTeams.map((teamId, i) => INTERVIEW_QUESTIONS[(i + Math.floor(rng.next() * INTERVIEW_QUESTIONS.length)) % INTERVIEW_QUESTIONS.length]).map((q, i) => ({ teamId: p.interviewTeams[i], question: q.q, answers: q.a }));
-  p.step = 'interviews';
+  afterCombine(c, rngFor(c.seed, 'combine-after', c.league.season));
 }
 
 /** Order of the draft before the lottery (worst records first), used for projections. */

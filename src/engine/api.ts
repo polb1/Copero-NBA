@@ -1,8 +1,8 @@
 // Public game API used by the UI. Every function mutates the given career (the store passes a clone).
-import type { Career, TrainingFocus } from './types';
+import type { Career, MinigameTierId, TrainingFocus } from './types';
 import { createCareer, userOf, addNews, type NewCareerInput } from './career';
 import { advance, type AdvanceUnit, achievementsCheck, inSeason } from './flow';
-import { chooseStartingClub, chooseEuroCareer, buildSigningOffers, acceptOffer, beginOffseason, startPreseason, startRegularSeason, predraftDecision, doCombine, answerInterview, revealLottery, runUserDraft, retire, needsContract } from './offseason';
+import { chooseStartingClub, chooseEuroCareer, buildSigningOffers, acceptOffer, beginOffseason, startPreseason, startRegularSeason, predraftDecision, doCombine, playCombineTest, finishCombine, answerInterview, revealLottery, runUserDraft, retire, needsContract } from './offseason';
 import { resolveEvent, resolveMinigame } from './events';
 import { executeTrade, signUser, contractFromOffer } from './market';
 import { makeGoal } from './goals';
@@ -88,6 +88,19 @@ export function playMinigame(c: Career, made: number) {
 }
 
 /**
+ * Arms a difficulty level for the pending challenge. Never resolves the event: the player still
+ * has to play (or simulate) it, so autopilot and pacing counts are unaffected.
+ */
+export function selectMinigameTier(c: Career, tierId: MinigameTierId): void {
+  const ev = c.pendingEvent;
+  if (!ev?.minigameTiers || ev.resolved) return;
+  const t = ev.minigameTiers.find((x) => x.id === tierId);
+  if (!t) return;
+  ev.minigame = t.spec;
+  ev.minigameTier = t.id;
+}
+
+/**
  * Same as runUntilDecision but in small slices (about two weeks of calendar per call), so the UI can
  * show the season advancing. Returns true once a decision point is reached. Results are identical.
  */
@@ -158,6 +171,6 @@ export function setAssignment(c: Career, to: 'NBA' | 'GLG') {
 }
 
 export {
-  chooseStartingClub, chooseEuroCareer, advance, acceptOffer, beginOffseason, startPreseason, startRegularSeason, predraftDecision, doCombine, answerInterview, revealLottery, runUserDraft, retire, needsContract, signUser, contractFromOffer,
+  chooseStartingClub, chooseEuroCareer, advance, acceptOffer, beginOffseason, startPreseason, startRegularSeason, predraftDecision, doCombine, playCombineTest, finishCombine, answerInterview, revealLottery, runUserDraft, retire, needsContract, signUser, contractFromOffer,
 };
 export type { AdvanceUnit, NewCareerInput };

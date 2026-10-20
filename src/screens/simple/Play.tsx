@@ -27,6 +27,8 @@ import { findClub } from '../../data/clubs';
 import { ClubLogo } from '../../ui/ClubLogo';
 import { LangSwitch } from '../../ui/LangSwitch';
 import { ConfirmModal } from '../../ui/ConfirmModal';
+import { Minigame } from '../../ui/Minigame';
+import { MINIGAME_TIER_LABEL } from '../../content/minigames';
 
 const num = (n: number) => Math.round(n).toLocaleString('es-ES');
 
@@ -468,11 +470,33 @@ function Decision({ c }: { c: Career }) {
       }
       if (p.step === 'combine') {
         return (
-          <Block scene={'training'} title="Draft Combine" desc="Las franquicias miden velocidad, salto, agilidad y tiro.">
-            <Choice top="Riesgo alto" title="Participar en todo" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'full'))}>Puede subirte… o bajarte.</Choice>
+          <Block scene={'training'} title="Draft Combine" desc="Las franquicias miden velocidad, salto, agilidad y tiro… y ahora también te ponen a prueba.">
+            <Choice top="Riesgo alto" title="Demostrar todo" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'full'))}>Tres pruebas con dificultad según tu proyección.</Choice>
+            <Choice top="Sin red" title="A lo bestia" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'hard'))}>Tres pruebas al máximo: más recompensa y más riesgo.</Choice>
+            <Choice top="Prudente" title="Ir con calma" scene="training" onClick={() => store.act((x) => api.doCombine(x, 'safe'))}>Dos pruebas fáciles; menos margen de subida.</Choice>
             <Choice top="Prudente" title="Solo medidas" scene="training" onClick={() => store.act((x) => api.doCombine(x, 'measure'))}>Leve penalización.</Choice>
             <Choice top="Confianza" title="No acudir" scene="rest" onClick={() => store.act((x) => api.doCombine(x, 'skip'))}>Los equipos lo notarán.</Choice>
           </Block>
+        );
+      }
+      if (p.step === 'combineTests' && p.combineTests) {
+        const test = p.combineTests.find((x) => x.made === undefined);
+        if (!test) return null;
+        const done = p.combineTests.filter((x) => x.made !== undefined).length;
+        return (
+          <div className="decision anim-in">
+            <Scene kind="training" variant={test.id} height={120}>
+              <span className="chip">Draft Combine</span>
+              <h2>{test.label}</h2>
+            </Scene>
+            <p className="small muted desc">{test.desc}</p>
+            <div className="risk-row">
+              <span className="chip">Prueba {done + 1}/{p.combineTests.length}</span>
+              <span className="chip">Dificultad: {MINIGAME_TIER_LABEL[test.spec.tier ?? 'normal']}</span>
+            </div>
+            <Minigame key={test.id + (test.spec.tier ?? '')} spec={test.spec} onDone={(made) => store.act((x) => api.playCombineTest(x, made))} onSimulate={() => store.act((x) => api.playCombineTest(x))} />
+            <p className="small muted desc">El resultado mueve tu proyección en el draft.</p>
+          </div>
         );
       }
       if (p.step === 'interviews' && p.interviewQuestions) {
@@ -480,6 +504,13 @@ function Decision({ c }: { c: Career }) {
         const q = p.interviewQuestions[i];
         return (
           <Block scene={'press'} title={`Entrevista con ${teamName(c.league, q.teamId)}`} desc={`«${q.question}»`}>
+            {p.combineResult && (
+              <div className="risk-row">
+                <span className="chip accent">Combine {p.combineResult.grade}</span>
+                <span className="chip">{p.combineResult.detail}</span>
+                <span className="chip">Bonus {p.combineResult.bonus >= 0 ? '+' : ''}{p.combineResult.bonus.toFixed(1)}</span>
+              </div>
+            )}
             {q.answers.map((a, k) => <Choice key={k} title={a} onClick={() => store.act((x) => api.answerInterview(x, i, k))} />)}
           </Block>
         );

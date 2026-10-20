@@ -282,11 +282,23 @@ export interface ActiveEvent {
   /** odds/lucky: for a risky option, the chance shown and whether the roll went the player's way. */
   resolved?: { option: number; result: string; effectsSummary: string[]; made?: number; odds?: number; lucky?: boolean };
   minigame?: MinigameSpec;
+  /** Difficulty levels offered for this challenge. Absent (saves v1) = no selector. */
+  minigameTiers?: { id: MinigameTierId; label: string; desc: string; spec: MinigameSpec }[];
+  /** Armed difficulty level. Absent (saves v1) = 'normal'. */
+  minigameTier?: MinigameTierId;
 }
 
-export type MinigameKind = 'clutch' | 'freethrows' | 'threes' | 'drill';
+/** How the player interacts with the challenge. Absent (saves v1) = 'meter'. */
+export type MinigameMechanic = 'meter' | 'target' | 'power' | 'reaction' | 'choice';
 
-/** Interactive shot-meter challenge. Zone and speed come from the player's attributes and the pressure. */
+/** Difficulty level. Absent (saves v1) = 'normal'. */
+export type MinigameTierId = 'easy' | 'normal' | 'hard';
+
+export type MinigameKind =
+  | 'clutch' | 'freethrows' | 'threes' | 'drill'   // existing
+  | 'spotlight' | 'dunk' | 'boards' | 'steal' | 'pass' | 'close'; // phase 2
+
+/** Interactive challenge. Zone and speed come from the player's attributes and the pressure. */
 export interface MinigameSpec {
   kind: MinigameKind;
   attempts: number;
@@ -299,6 +311,19 @@ export interface MinigameSpec {
   /** Shots needed for the best and middle outcomes. */
   great: number;
   ok: number;
+  // --- phase 2, all optional ---
+  /** Widget that plays the challenge. Default 'meter'. */
+  mechanic?: MinigameMechanic;
+  /** Armed difficulty level. Default 'normal'. */
+  tier?: MinigameTierId;
+  /** 'choice'/'reaction': number of options or quadrants. */
+  slots?: number;
+  /** 'reaction': total reaction window in ms. */
+  windowMs?: number;
+  /** 0..1 chance of a light injury when failing. */
+  risk?: { injury: number };
+  /** Multiplier applied to the level's rewards. */
+  reward?: { mul: number };
 }
 
 export interface Goal {
@@ -340,7 +365,13 @@ export interface Prospect {
 
 export interface PreDraft {
   route: 'college' | 'international' | 'alternative' | 'drafted';
-  step: 'club' | 'season' | 'decision' | 'combine' | 'interviews' | 'mock' | 'lottery' | 'draft' | 'done';
+  step: 'club' | 'season' | 'decision' | 'combine' | 'combineTests' | 'interviews' | 'mock' | 'lottery' | 'draft' | 'done';
+  /** Plan chosen at the combine. Absent on saves v1. */
+  combinePlan?: 'full' | 'hard' | 'safe' | 'measure' | 'skip';
+  /** Tests of the phase-2 combine. Absent on saves v1. */
+  combineTests?: { id: string; label: string; desc: string; weight: number; spec: MinigameSpec; made?: number }[];
+  /** Result of the phase-2 combine. Absent on saves v1. */
+  combineResult?: { grade: string; bonus: number; detail: string };
   /** Starting clubs offered after the agency decision (simple flow). */
   clubChoices?: { name: string; comp: 'NCAA' | 'EUR' }[];
   userBoosts: Record<string, number>;

@@ -1,4 +1,6 @@
-import type { ActiveEvent, Career, EffectBag, MinigameSpec, Player, Team } from './types';
+import type { ActiveEvent, Career, EffectBag, MinigameTierId, MinigameSpec, Player, Team } from './types';
+import { autoTier, buildSpec, buildTiers, scaleEffects, tierDef } from './minigames';
+import { MINIGAME_TIER_LABEL } from '../content/minigames';
 import { shiftOvr } from './progression';
 import { cashOf } from './mindset';
 import { EVENTS, type EventDef, type EventWhen, type RoleKey, type EventOutcome, type MinigameDef } from '../content/events';
@@ -65,6 +67,7 @@ export function matches(w: EventWhen, ctx: EventContext, viaChain = false): bool
   if (w.teamLosing && teamWinPct(team) > 0.45) return false;
   if (w.minYearsPro !== undefined && u.yearsPro < w.minYearsPro) return false;
   if (w.maxYearsPro !== undefined && u.yearsPro > w.maxYearsPro) return false;
+  if (w.positions && !w.positions.includes(u.pos)) return false;
   if (w.beforeDeadline && (c.phase !== 'regular' || c.league.day > c.league.deadlineDay)) return false;
   return true;
 }
@@ -88,8 +91,11 @@ export function pickEvent(ctx: EventContext, rng: Rng): EventDef | null {
   if (!list.length) return null;
   const maxP = Math.max(...list.map((e) => e.priority ?? 0));
   const top = list.filter((e) => (e.priority ?? 0) === maxP);
-  // Prefer events never seen in this career to keep variety high.
-  return rng.weighted(top, (e) => (e.weight * (ctx.career.eventHistory[e.id] === undefined ? 1.6 : 1)) / (1 + (ctx.career.flags['seen:' + e.id] ?? 0)));
+  // Prefer events never seen in this career to keep variety high. Thematic position affinity weighs in.
+  return rng.weighted(top, (e) => {
+    const posMul = e.minigame?.positions ? (e.minigame.positions.includes(ctx.user.pos) ? 1.9 : 0.6) : 1;
+    return ((e.weight * (ctx.career.eventHistory[e.id] === undefined ? 1.6 : 1)) / (1 + (ctx.career.flags['seen:' + e.id] ?? 0))) * posMul;
+  });
 }
 
 export function markEventSeen(c: Career, id: string, day: number) {
@@ -126,21 +132,12 @@ export function eventVars(ctx: EventContext, rng: Rng): Record<string, string> {
   };
 }
 
-/** Shot-meter parameters: better shooters get a wider green zone; pressure narrows it and speeds it up. */
+/**
+ * Shot-meter parameters, kept as a compatibility wrapper: same numbers as `buildSpec(..., 'normal')`.
+ * Better shooters get a wider green zone; pressure narrows it and speeds it up.
+ */
 export function minigameSpec(def: MinigameDef, u: Player, c: Career): MinigameSpec {
-  const skill = def.attrs.reduce((s, k) => s + u.attrs[k], 0) / def.attrs.length;
-  const nerves = def.pressure * (1 - (c.morale - 50) / 200) * (1 + c.pressure / 200);
-  const zone = clamp(7 + (skill - 50) * 0.32 - nerves * 6 + u.form * 0.25, 5, 26);
-  const speed = clamp(0.55 + def.pressure * 0.5, 0.5, 1.1);
-  return {
-    kind: def.kind,
-    attempts: def.attempts,
-    zone: Math.round(zone * 10) / 10,
-    speed: Math.round(speed * 100) / 100,
-    autoProb: clamp(0.2 + zone * 0.026, 0.2, 0.88),
-    great: def.great,
-    ok: def.ok,
-  };
+  return buildSpec(def, u, c, 'normal');
 }
 
 function optionCost(o: EventDef['options'][number]): number {
@@ -181,24 +178,38 @@ export function instantiate(def: EventDef, ctx: EventContext, rng: Rng): ActiveE
     vars,
   };
   if (def.minigame) {
-    ev.minigame = minigameSpec(def.minigame, ctx.user, ctx.career);
+    const tiers = buildTiers(def.minigame, ctx.user, ctx.career);
+    // One level only ⇒ no selector (legacy behaviour for defs without `tiers`).
+    ev.minigameTiers = tiers.length > 1 ? tiers : undefined;
+    const armed: MinigameTierId = def.minigame.autoScale ? autoTier(ctx.user, ctx.career) : (def.minigame.defaultTier ?? 'normal');
+    const chosen = tiers.find((t) => t.id === armed) ?? tiers[0];
+    ev.minigameTier = chosen.id;
+    ev.minigame = chosen.spec;
     // Single fallback option: let the engine shoot for you (accessibility, autopilot, impatience).
     ev.options = [{ label: 'Simular el lanzamiento', desc: 'Decide tu nivel de tiro, sin jugar.' }];
   }
   return ev;
 }
 
-/** Applies a played (or simulated) minigame result. */
+/** Applies a played (or simulated) minigame result, scaled by the armed difficulty level. */
 export function resolveMinigame(c: Career, u: Player, made: number, rng: Rng, simulated = false) {
   const ev = c.pendingEvent!;
   const def = EVENTS.find((e) => e.id === ev.defId)!;
-  const mg = def.minigame!;
-  const tier = made >= mg.great ? 'great' : made >= mg.ok ? 'ok' : 'fail';
-  const o = mg.outcomes[tier];
-  const summary = applyEffects(c, u, o.effects, rng);
-  const score = `${made}/${mg.attempts}`;
-  ev.resolved = { option: simulated ? 0 : -1, made, result: `${score} — ${fill(o.text, ev.vars)}`, effectsSummary: summary };
-  c.decisions.push({ season: c.league.season, title: ev.title, choice: `${simulated ? 'Simulado' : 'Jugado'}: ${score}` });
+  const spec = ev.minigame!;
+  const tierId: MinigameTierId = ev.minigameTier ?? 'normal';
+  const t = tierDef(tierId);
+  const tier = made >= spec.great ? 'great' : made >= spec.ok ? 'ok' : 'fail';
+  const o = def.minigame!.outcomes[tier];
+  const mul = tier === 'fail' ? t.riskMul : t.rewardMul;
+  const summary = applyEffects(c, u, scaleEffects(o.effects, mul), rng);
+  if (tier === 'fail' && t.injury > 0 && rng.chance(t.injury)) {
+    // Draws from the same rng stream, so the outcome stays deterministic.
+    applyEffects(c, u, { injure: 'leve' }, rng);
+  }
+  const score = `${made}/${spec.attempts}`;
+  const label = tierId === 'normal' ? '' : ` · ${MINIGAME_TIER_LABEL[tierId]}`;
+  ev.resolved = { option: simulated ? 0 : -1, made, result: `${score}${label} — ${fill(o.text, ev.vars)}`, effectsSummary: summary };
+  c.decisions.push({ season: c.league.season, title: ev.title, choice: `${simulated ? 'Simulado' : 'Jugado'}: ${score}${label}` });
   return { text: ev.resolved.result, summary };
 }
 

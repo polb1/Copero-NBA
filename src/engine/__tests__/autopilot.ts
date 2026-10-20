@@ -29,6 +29,7 @@ export function autopilot(c: Career, opts: { pick?: (n: number, i: number) => nu
         else if (p.step === 'season') api.advance(c, 'season');
         else if (p.step === 'decision') api.predraftDecision(c, true);
         else if (p.step === 'combine') api.doCombine(c, 'full');
+        else if (p.step === 'combineTests') api.playCombineTest(c);
         else if (p.step === 'interviews') api.answerInterview(c, p.interviews.length, 0);
         else if (p.step === 'mock') api.revealLottery(c);
         else if (p.step === 'lottery') api.runUserDraft(c);

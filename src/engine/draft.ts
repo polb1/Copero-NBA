@@ -125,12 +125,12 @@ export function simulateDraft(league: League, seed: number, order: string[], pro
   for (let i = 0; i < total && available.length; i++) {
     const teamId = order[i];
     const needs = positionNeeds(league, teamId);
-    const teamRng: Rng = rngFor(seed, 'board', league.season, teamId);
+    const teamRng: Rng = rngFor(seed, 'board', league.season, teamId, i + 1);
     const rebuilding = league.teams[teamId].status === 'rebuild';
     const best = available
       .map((pr) => ({
         pr,
-        s: pr.value + needs[pr.pos] * 0.8 + (rebuilding ? (pr.pot - pr.ovr) * 0.1 : (pr.ovr - 60) * 0.1) + teamRng.normal(0, 2.2) + (pr.isUser ? userBoost : 0),
+        s: pr.value + needs[pr.pos] * 0.8 + (rebuilding ? (pr.pot - pr.ovr) * 0.1 : (pr.ovr - 60) * 0.1) + teamRng.normal(0, 1.4) + (pr.isUser ? userBoost : 0),
       }))
       .sort((a, b) => b.s - a.s)[0];
     picks.push({ pick: i + 1, teamId, prospectId: best.pr.id });

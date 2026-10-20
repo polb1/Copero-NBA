@@ -113,6 +113,78 @@
 .shot-dots span.miss { background: var(--bad); border-color: var(--bad); }
 .tl-live { text-align: right; font-size: 0.72rem; color: var(--text-3); font-style: italic; }
 
+/* ---------- Difficulty selector & risk chips ---------- */
+.tiers { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; min-width: 0; }
+.tier { flex: 1 1 120px; min-width: 0; min-height: 44px; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--panel); color: var(--text); text-align: left; cursor: pointer; transition: border-color 0.2s var(--ease), background 0.2s var(--ease); }
+.tier b { font-size: 0.86rem; }
+.tier .tiny { line-height: 1.25; }
+.tier:hover { border-color: var(--line-2); background: #22252b; }
+.tier:active { transform: scale(0.98); }
+.tier.on { border-color: var(--accent); background: #22252b; box-shadow: inset 0 0 0 1px var(--accent); }
+.risk-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+/* ---------- Target (aiming) minigame ---------- */
+.target-game { margin-top: 14px; background: var(--panel); border: 1px solid var(--line-2); border-radius: 14px; padding: 14px; }
+.target-arena { position: relative; display: block; width: 100%; height: 190px; margin: 8px 0 12px; padding: 0; border: 1px solid var(--line-2); border-radius: 12px; background: radial-gradient(circle at 50% 50%, #1e2530, #14161a 72%); overflow: hidden; cursor: crosshair; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.target-arena:disabled { cursor: default; }
+.target-ring { position: absolute; top: 50%; aspect-ratio: 1; min-width: 24px; transform: translate(-50%, -50%); border-radius: 50%; background: rgba(52, 211, 153, 0.28); border: 2px solid var(--good); box-shadow: 0 0 18px rgba(52, 211, 153, 0.35); }
+.target-ring::before { content: ""; position: absolute; left: 50%; top: 50%; width: 68%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.35); }
+.target-ring::after { content: ""; position: absolute; left: 50%; top: 50%; width: 34%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; border: 1px dashed rgba(255, 255, 255, 0.6); }
+.target-line { position: absolute; top: 0; bottom: 0; width: 3px; margin-left: -1.5px; background: #fff; box-shadow: 0 0 10px rgba(255, 255, 255, 0.85); }
+.target-msg { position: absolute; right: 10px; top: 8px; font-weight: 900; font-size: 1.3rem; letter-spacing: 0.04em; animation: pop 0.35s var(--ease) both; }
+.target-game.in .target-msg { color: var(--good); }
+.target-game.out .target-msg { color: var(--bad); }
+
+/* ---------- Power (charge) minigame ---------- */
+.power-game { margin-top: 14px; background: var(--panel); border: 1px solid var(--line-2); border-radius: 14px; padding: 14px; }
+.power-track { position: relative; display: block; width: 100%; height: 56px; margin: 10px 0 12px; padding: 0; border: 1px solid var(--line-2); border-radius: 12px; background: linear-gradient(180deg, #2a2a2a, #1d1f24); overflow: hidden; cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+.power-track:disabled { cursor: default; }
+.power-band { position: absolute; top: 0; bottom: 0; background: rgba(52, 211, 153, 0.42); border-left: 2px solid var(--good); border-right: 2px solid var(--good); }
+.power-fill { position: absolute; left: 0; top: 0; bottom: 0; pointer-events: none; background: linear-gradient(90deg, rgba(255, 107, 26, 0.5), rgba(250, 204, 21, 0.8)); }
+.power-msg { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); text-align: center; font-weight: 900; font-size: 1.2rem; letter-spacing: 0.04em; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7); animation: pop 0.35s var(--ease) both; }
+.power-game.in .power-msg { color: #052e16; }
+.power-game.out .power-msg { color: #fff; }
+
+/* ---------- Reaction (reflex) minigame ---------- */
+.react-game { margin-top: 14px; background: var(--panel); border: 1px solid var(--line-2); border-radius: 14px; padding: 14px; }
+.react-grid { display: grid; gap: 10px; margin: 10px 0 12px; }
+.react-grid.c3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.react-grid.c4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.react-cell { display: flex; align-items: center; justify-content: center; min-height: 84px; padding: 0; border: 1px solid var(--line-2); border-radius: 14px; background: #1d2026; color: var(--text-2); font-size: 1.4rem; font-weight: 800; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background 0.08s linear, border-color 0.08s linear, color 0.08s linear; }
+.react-cell:disabled { cursor: default; }
+.react-cell.lit { background: radial-gradient(circle at 50% 50%, #fde68a, #f59e0b); border-color: #fbbf24; color: #1c1207; box-shadow: 0 0 18px rgba(245, 158, 11, 0.55); }
+.react-cell.picked { outline: 3px solid var(--bad); outline-offset: -3px; }
+.react-game.in .react-cell.picked { outline-color: var(--good); }
+.react-msg { text-align: center; font-weight: 900; font-size: 1.15rem; letter-spacing: 0.04em; min-height: 1.5em; animation: pop 0.35s var(--ease) both; }
+.react-game.in .react-msg { color: var(--good); }
+.react-game.out .react-msg { color: var(--bad); }
+
+/* ---------- Choice (memory) minigame ---------- */
+.choice-game { margin-top: 14px; background: var(--panel); border: 1px solid var(--line-2); border-radius: 14px; padding: 14px; }
+.choice-lanes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 10px 0 12px; }
+.choice-lane { display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 110px; padding: 10px 6px; border: 1px solid var(--line-2); border-radius: 14px; background: #1d2026; color: var(--text-2); font-size: 1.5rem; font-weight: 800; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background 0.12s var(--ease), border-color 0.12s var(--ease), color 0.12s var(--ease); }
+.choice-lane:disabled { cursor: default; }
+.choice-lane.open { background: rgba(52, 211, 153, 0.22); border-color: var(--good); color: var(--text); box-shadow: inset 0 0 0 1px var(--good); }
+.choice-lane.picked { outline: 3px solid var(--bad); outline-offset: -3px; }
+.choice-game.in .choice-lane.picked { outline-color: var(--good); }
+.choice-msg { text-align: center; font-weight: 900; font-size: 1.1rem; letter-spacing: 0.04em; min-height: 1.5em; animation: pop 0.35s var(--ease) both; }
+.choice-game.in .choice-msg { color: var(--good); }
+.choice-game.out .choice-msg { color: var(--bad); }
+
+/* Phones: big touch areas, no horizontal scroll. */
+@media (max-width: 560px) {
+  .react-cell { min-height: 76px; }
+  .choice-lane { min-height: 96px; }
+  .react-msg, .choice-msg { font-size: 1rem; }
+  .react-game, .choice-game { padding: 12px; }
+}
+
+/* ---------- Shared minigame dots ---------- */
+.mg-dots { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 10px; }
+.mg-dots span { width: 12px; height: 12px; border-radius: 50%; background: var(--panel-3); border: 1px solid var(--line-2); }
+.mg-dots span.hit { background: var(--good); border-color: var(--good); }
+.mg-dots span.miss { background: var(--bad); border-color: var(--bad); }
+
 /* ---------- Scene artwork ---------- */
 .scene { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--line-2); background: #0b0c0e; }
 .scene svg, .scene img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -307,6 +379,14 @@
 /* Touch: no double-tap zoom delay or blue flash on buttons; a bigger target for the shot meter. */
 button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 @media (max-width: 560px) { .meter { height: 56px; } }
+/* Phones: full-width difficulty buttons and smaller arenas so nothing scrolls sideways. */
+@media (max-width: 560px) {
+  .tiers { flex-direction: column; }
+  .tier { flex: 1 1 auto; min-height: 48px; }
+  .target-arena { height: 150px; }
+  .target-msg { font-size: 1.1rem; }
+  .shot, .target-game, .power-game { padding: 12px; }
+}
 
 .challenge { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line-2); }
 .challenge.done b, .challenge.done span:first-child { color: var(--gold); }

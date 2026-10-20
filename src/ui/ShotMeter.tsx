@@ -1,12 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { MinigameSpec } from '../engine/types';
-
-const KIND_HINT: Record<MinigameSpec['kind'], string> = {
-  clutch: 'Un solo tiro. Suelta cuando el marcador esté en la zona verde.',
-  freethrows: 'Dos tiros libres. Cada fallo cuenta.',
-  threes: 'Diez balones. Necesitas 7 para ganar el concurso.',
-  drill: 'Cinco tiros desde la esquina.',
-};
+import { minigameHint } from '../content/minigames';
 
 /** Where the green zone sits for each attempt (varies so it is not muscle memory). */
 const zoneCenter = (i: number) => 32 + ((i * 37) % 36);
@@ -75,7 +69,7 @@ export function ShotMeter({ spec, onDone, onSimulate }: { spec: MinigameSpec; on
   return (
     <div className="shot">
       <div className="shot-top">
-        <span className="tiny dim">{KIND_HINT[spec.kind]}</span>
+        <span className="tiny dim">{minigameHint(spec.kind)}</span>
         <span className="shot-score"><b>{made}</b> / {spec.attempts}</span>
       </div>
       <div className={`hoop ${flash ?? ''}`} aria-hidden="true">

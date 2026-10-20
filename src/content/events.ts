@@ -1,7 +1,9 @@
 // Narrative event library. Pure data: texts, appearance conditions and declarative effects.
 // The interpreter lives in src/engine/events.ts. Placeholders: {team} {city} {coach} {teammate}
 // {rival} {agent} {country} {opp} {vet}.
-import type { AttrKey, Competition, EffectBag, MinigameKind, Phase, TeamStatus } from '../engine/types';
+import type {
+  AttrKey, Competition, EffectBag, MinigameKind, MinigameMechanic, MinigameTierId, Phase, Pos, TeamStatus,
+} from '../engine/types';
 
 export type RoleKey = 'star' | 'starter' | 'rotation' | 'bench' | 'out';
 
@@ -29,6 +31,8 @@ export interface EventWhen {
   beforeDeadline?: boolean;
   nba?: boolean;
   chainOnly?: boolean;
+  /** Only when the user plays one of these positions. */
+  positions?: Pos[];
 }
 
 export interface EventOutcome {
@@ -58,6 +62,21 @@ export interface MinigameDef {
   great: number;
   ok: number;
   outcomes: Record<'great' | 'ok' | 'fail', { effects: EffectBag; text: string }>;
+  // --- phase 2, all optional ---
+  /** Widget that plays the challenge. Default 'meter'. */
+  mechanic?: MinigameMechanic;
+  /** Thematic positions (affinity in the event picker). */
+  positions?: Pos[];
+  /** Levels offered. Default ['normal']. */
+  tiers?: MinigameTierId[];
+  /** Level armed first. Default 'normal'. */
+  defaultTier?: MinigameTierId;
+  /** The engine picks the level from the player's state (fatigue, morale, pressure). */
+  autoScale?: boolean;
+  /** 'choice'/'reaction': number of options or quadrants. */
+  slots?: number;
+  /** 'reaction': total reaction window in ms. */
+  windowMs?: number;
 }
 
 export interface EventDef {
@@ -693,6 +712,7 @@ export const EVENTS: EventDef[] = [
     text: 'Empate a falta de 4 segundos contra {opp}. {coach} dibuja la jugada para ti. El pabellón entero contiene la respiración.',
     when: { phases: ['regular', 'postseason'], nba: true, roles: ['star', 'starter', 'rotation'] },
     minigame: { kind: 'clutch', attempts: 1, attrs: ['mid', 'three', 'consistency'], pressure: 0.8, great: 1, ok: 1,
+      positions: ['PG', 'SG', 'SF', 'PF', 'C'],
       outcomes: {
         great: { effects: { fame: 6, reputation: 4, trust: 6, form: 3, morale: 5, flag: 'clutch' }, text: '¡Canasta sobre la bocina! Tus compañeros te sepultan en el centro de la pista.' },
         ok: { effects: { fame: 6, reputation: 4, trust: 6, form: 3 }, text: '¡Dentro! Victoria agónica.' },
@@ -703,6 +723,7 @@ export const EVENTS: EventDef[] = [
     text: 'Te hacen falta con un punto abajo y el reloj a cero. Dos tiros libres. Solo tú en la línea.',
     when: { phases: ['regular', 'postseason'], nba: true, roles: ['star', 'starter', 'rotation'] },
     minigame: { kind: 'freethrows', attempts: 2, attrs: ['ft', 'consistency'], pressure: 0.65, great: 2, ok: 1,
+      positions: ['PG', 'SG', 'SF', 'PF', 'C'],
       outcomes: {
         great: { effects: { fame: 4, trust: 5, form: 2, reputation: 2 }, text: 'Dos de dos. Hielo en las venas: ganáis el partido.' },
         ok: { effects: { trust: 1 }, text: 'Metes uno y fallas otro. Prórroga… que ganáis por la mínima.' },
@@ -713,6 +734,7 @@ export const EVENTS: EventDef[] = [
     text: 'La liga te invita al concurso de triples del fin de semana del All-Star. Diez balones, los mejores tiradores del mundo y millones de espectadores.',
     when: { phases: ['regular'], nba: true, minOvr: 70, minRep: 25, beforeDeadline: true },
     minigame: { kind: 'threes', attempts: 10, attrs: ['three', 'consistency'], pressure: 0.45, great: 7, ok: 4,
+      positions: ['PG', 'SG', 'SF', 'PF'],
       outcomes: {
         great: { effects: { fame: 10, reputation: 5, morale: 6, endorsement: 200000, trophy: 'threeContest' }, text: '¡Campeón del concurso de triples! Levantas el trofeo entre confeti.' },
         ok: { effects: { fame: 4, morale: 2 }, text: 'Buena actuación, pero no alcanza para la final.' },
@@ -723,10 +745,78 @@ export const EVENTS: EventDef[] = [
     text: '{coach} propone un reto al final de la sesión: cinco tiros desde la esquina. Quien gane elige la música del vestuario un mes.',
     when: { phases: ['regular', 'preseason'], nba: true },
     minigame: { kind: 'drill', attempts: 5, attrs: ['three', 'mid'], pressure: 0.2, great: 4, ok: 2,
+      positions: ['PG', 'SG', 'SF', 'PF', 'C'],
       outcomes: {
         great: { effects: { attrs: { three: 1 }, trust: 4, chemistry: 3 }, text: 'Ganas el reto con autoridad. El cuerpo técnico toma nota.' },
         ok: { effects: { chemistry: 2 }, text: 'Quedas a mitad de tabla. Risas y buen ambiente.' },
         fail: { effects: { chemistry: 1, workEthic: 3 }, text: 'Último. Te quedas una hora más tirando: no volverá a pasar.' },
+      } },
+    options: [] },
+  // ---------------- Phase 2 minigames (position themed) ----------------
+  { id: 'mg-spotlight', category: 'media', title: 'La diana de la prensa', weight: 7, cooldown: 200,
+    text: 'Un periodista te propone un reto para la portada: cinco dianas desde la zona de tiro y la cámara encendida. Si fallas, mañana se verá en todas partes.',
+    when: { phases: ['regular', 'postseason'], nba: true, minFame: 20 },
+    minigame: { kind: 'spotlight', mechanic: 'target', positions: ['PG', 'SG'], attempts: 5, attrs: ['three', 'consistency'],
+      pressure: 0.5, great: 4, ok: 2, tiers: ['easy', 'normal', 'hard'], defaultTier: 'normal',
+      outcomes: {
+        great: { effects: { fame: 8, reputation: 3, morale: 4, pressure: -4 }, text: 'Cinco dianas seguidas delante de la cámara. El vídeo se comparte solo.' },
+        ok: { effects: { fame: 3, chemistry: 2 }, text: 'Cumples el reto justo a tiempo. Los compañeros te lo reconocen.' },
+        fail: { effects: { fame: -2, pressure: 5, morale: -3 }, text: 'La cámara capta todos los fallos. El clip circula con burla.' },
+      } },
+    options: [] },
+  { id: 'mg-dunk', category: 'contest', title: 'El mate del concurso', weight: 7, cooldown: 250,
+    text: 'El concurso de mates del All-Star busca participantes. Te dan tres intentos y un pabellón entero esperando algo irrepetible.',
+    when: { phases: ['regular'], nba: true, minOvr: 62, beforeDeadline: true },
+    minigame: { kind: 'dunk', mechanic: 'power', positions: ['SG', 'SF', 'PF'], attempts: 3, attrs: ['dunk', 'vert', 'strength'],
+      pressure: 0.55, great: 3, ok: 2, tiers: ['easy', 'normal', 'hard'], defaultTier: 'normal',
+      outcomes: {
+        great: { effects: { fame: 6, form: 3, morale: 5, chemistry: 4, attrs: { vert: 1 } }, text: 'Los tres mates entran limpios. El pabellón se levanta y tus compañeros invaden la pista.' },
+        ok: { effects: { chemistry: 3, form: 1 }, text: 'Dos mates buenos y uno fallado. Aplausos y buen ambiente en el vestuario.' },
+        fail: { effects: { form: -3, pressure: 4, chemistry: -2, fatigue: 4 }, text: 'Ni uno. El concurso se convierte en un chiste y las piernas te pesan.' },
+      } },
+    options: [] },
+  { id: 'mg-boards', category: 'coach', title: 'Guerra en el rebote', weight: 7, cooldown: 220,
+    text: '{coach} insiste en el vídeo: os están matando en el rebote. Te reta a cerrar el aro en cinco posesiones seguidas sin ceder una segunda oportunidad.',
+    when: { phases: ['regular', 'postseason'], nba: true, roles: ['star', 'starter', 'rotation'], minOvr: 60 },
+    minigame: { kind: 'boards', mechanic: 'reaction', positions: ['PF', 'C'], attempts: 5, attrs: ['dreb', 'oreb', 'strength'],
+      pressure: 0.4, great: 4, ok: 2, autoScale: true, slots: 4, windowMs: 1500,
+      outcomes: {
+        great: { effects: { trust: 5, attrs: { dreb: 1 }, chemistry: 3, morale: 3 }, text: 'Ganas todos los rebotes del ejercicio. {coach} da la sesión por ganada.' },
+        ok: { effects: { trust: 2, chemistry: 1 }, text: 'Cumples a medias. El cuerpo técnico apunta el detalle.' },
+        fail: { effects: { trust: -4, fatigue: 5, chemistry: -2 }, text: 'Te ganan la posición una y otra vez. {coach} alarga el entrenamiento.' },
+      } },
+    options: [] },
+  { id: 'mg-steal', category: 'clutch', title: 'Lectura de robo', weight: 7, cooldown: 220,
+    text: 'El análisis previo señala la línea de pase que {opp} repite en los momentos calientes. Toca leerla antes de que la lance.',
+    when: { phases: ['regular', 'postseason'], nba: true, roles: ['star', 'starter', 'rotation'], minOvr: 60 },
+    minigame: { kind: 'steal', mechanic: 'reaction', positions: ['PG', 'SG', 'SF'], attempts: 4, attrs: ['steal', 'perD', 'defIQ'],
+      pressure: 0.6, great: 3, ok: 2, autoScale: true, slots: 3, windowMs: 1300,
+      outcomes: {
+        great: { effects: { attrs: { perD: 1 }, trust: 5, reputation: 3, form: 2 }, text: 'Robas tres balones en el momento justo. La grada rival se queda muda.' },
+        ok: { effects: { trust: 2, attrs: { defIQ: 1 } }, text: 'Aciertas la mitad. {coach} valora tu lectura del partido.' },
+        fail: { effects: { trust: -3, pressure: 4, morale: -2 }, text: 'Vas tarde a todas. Te castigan con canastas fáciles.' },
+      } },
+    options: [] },
+  { id: 'mg-pass', category: 'teammates', title: 'El pase imposible', weight: 6, cooldown: 200,
+    text: 'En el entrenamiento, {coach} coloca tres defensas y un solo compañero libre. Hay que encontrar el pase antes de que se cierre la línea.',
+    when: { phases: ['regular', 'postseason'], nba: true, roles: ['star', 'starter', 'rotation'] },
+    minigame: { kind: 'pass', mechanic: 'choice', positions: ['PG', 'SG'], attempts: 3, attrs: ['pass', 'vision'],
+      pressure: 0.5, great: 3, ok: 2, tiers: ['easy', 'normal', 'hard'], defaultTier: 'normal', slots: 3,
+      outcomes: {
+        great: { effects: { attrs: { pass: 1 }, trust: 5, chemistry: 5, fame: 2 }, text: 'Tres asistencias imposibles. El vestuario habla de tu visión de juego.' },
+        ok: { effects: { chemistry: 3, trust: 2 }, text: 'Dos pases buenos y uno forzado. El grupo lo agradece igual.' },
+        fail: { effects: { chemistry: -4, trust: -3, pressure: 3 }, text: 'Tres pérdidas seguidas. {coach} para el ejercicio y te señala.' },
+      } },
+    options: [] },
+  { id: 'mg-close', category: 'clutch', title: 'Finalización en el uno contra uno', weight: 7, cooldown: 220,
+    text: 'Última posesión del entrenamiento: {coach} te pone un defensor encima y pide que la metas como sea. Tres intentos, sin ayudas.',
+    when: { phases: ['regular', 'postseason'], nba: true, roles: ['star', 'starter', 'rotation'] },
+    minigame: { kind: 'close', mechanic: 'meter', positions: ['PG', 'SF', 'PF', 'C'], attempts: 3, attrs: ['layup', 'close', 'vert'],
+      pressure: 0.65, great: 3, ok: 2, autoScale: true,
+      outcomes: {
+        great: { effects: { attrs: { layup: 1 }, form: 3, fame: 3, trust: 2 }, text: 'Las tres finalizaciones entran con contacto. {coach} asiente sin decir nada.' },
+        ok: { effects: { form: 1 }, text: 'Dos de tres. Suficiente para cerrar la sesión con buen sabor.' },
+        fail: { effects: { form: -3, pressure: 4, fatigue: 4 }, text: 'Te barren dos veces y la tercera la fuerzas. El entrenador no está contento.' },
       } },
     options: [] },
   // ---------------- Pre-draft ----------------
