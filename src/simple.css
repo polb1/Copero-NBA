@@ -526,3 +526,7 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .confirm-actions .btn { width: 100%; justify-content: center; }
 .btn.danger-btn { background: #dc2626; border-color: #dc2626; color: #fff; }
 .btn.danger-btn:hover { background: #ef4444; }
+
+/* Exactly three options: two side by side, the third across the full width below. */
+.choices:has(> .choice:nth-child(3):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.choices > .choice:nth-child(3):last-child { grid-column: 1 / -1; }
