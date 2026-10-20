@@ -23,10 +23,27 @@ export function marketValue(p: Player, season: number, production = 0): number {
   return Math.round(clamp(scaled(base, season), minSalary(p.yearsPro, season), maxSalary(p.yearsPro, season)));
 }
 
-/** Keeps the highest market value of the career (shown on the final card). */
-export function notePeakValue(c: Career, p: Player) {
-  const v = marketValue(p, c.league.season);
-  if (v > (c.flags.peakValue ?? 0)) c.flags.peakValue = v;
+/**
+ * The player's market value as the game shows it: the contract value, scaled by experience (a teenager
+ * with no professional games is worth a fraction of it) and lifted by last season's production.
+ */
+export function careerValue(c: Career, p: Player): number {
+  const games = c.seasons.filter((s) => s.comp !== 'NCAA').reduce((n, s) => n + s.stats.gp, 0);
+  const experience = clamp(0.2 + (games / 300) * 0.8, 0.2, 1);
+  const last = [...c.seasons].reverse().find((s) => s.stats.gp > 0);
+  const prod = last ? productionBonus(last.stats.gmsc / last.stats.gp) : 0;
+  return Math.round(marketValue(p, c.league.season, prod) * experience);
+}
+
+/** Shown value: moves once per season and never jumps (at most +45 % or −25 % a year). */
+export const shownValue = (c: Career, p: Player) => c.flags.value ?? careerValue(c, p);
+
+/** End of season: the shown value moves towards the real one, and the career peak is kept for the final card. */
+export function updateValue(c: Career, p: Player) {
+  const target = careerValue(c, p);
+  const prev = c.flags.value;
+  c.flags.value = Math.round(prev ? clamp(target, prev * 0.75, prev * 1.45) : target);
+  if (c.flags.value > (c.flags.peakValue ?? 0)) c.flags.peakValue = c.flags.value;
 }
 
 /** Production bonus from last season's game score average (keeps value tied to real stats). */

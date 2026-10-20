@@ -52,7 +52,9 @@ const TIER_LEVEL = { lottery: 4, first: 0, second: -3 } as const;
 /** Builds the user player (also used by the creation screen preview). */
 export function buildUserPlayer(input: NewCareerInput, seed: number, season: number): Player {
   const rng = rngFor(seed, 'user-attrs');
-  const lvl = ROUTE_LEVEL[input.route] + (input.route === 'drafted' ? TIER_LEVEL[input.draftedTier ?? 'first'] : 0) + (input.talent === 'raw' ? -4 : input.talent === 'ready' ? 3 : 0) + (input.age - 19) * 0.6;
+  // Starting at a club as a teenager means no experience yet: a lower rating now, the same ceiling later.
+  const greenhorn = input.route === 'international' || input.route === 'college' ? Math.max(0, 21 - input.age) * 2 : 0;
+  const lvl = ROUTE_LEVEL[input.route] + (input.route === 'drafted' ? TIER_LEVEL[input.draftedTier ?? 'first'] : 0) + (input.talent === 'raw' ? -4 : input.talent === 'ready' ? 3 : 0) + (input.age - 19) * 0.6 - greenhorn;
   const attrs = buildAttrs(lvl - 4, input.pos, input.arch, () => rng.normal(0, 3.5));
   applyPhysique(attrs, input.pos, input.height, input.weight);
   for (const [area, pts] of Object.entries(input.focus)) {
@@ -63,7 +65,7 @@ export function buildUserPlayer(input: NewCareerInput, seed: number, season: num
   const ovr = computeOvr(attrs, input.pos);
   const youth = Math.max(0, 23 - input.age);
   const potBase = input.talent === 'raw' ? 22 : input.talent === 'ready' ? 10 : 16;
-  const pot = Math.round(clamp(ovr + potBase + youth * 1.2 + rng.normal(0, 2), ovr + 3, 97));
+  const pot = Math.round(clamp(ovr + potBase + youth * 1.2 + greenhorn + rng.normal(0, 2), ovr + 3, 97));
   // Scouts can be wrong: the real ceiling is hidden and revealed over time.
   const hiddenPot = Math.round(clamp(pot + rng.normal(-2, 6), ovr + 1, 99));
   return {
@@ -160,7 +162,7 @@ export function createCareer(input: NewCareerInput, seed: number): Career {
   const country = countryByCode(input.nat).name;
   if ((input.route === 'college' || input.route === 'international') && !input.origin.trim()) {
     // Simple flow: agency first, then pick one of three clubs from the player's country.
-    const choices = startingClubs(input.nat, rngFor(seed, 'start-clubs'));
+    const choices = startingClubs(input.nat, rngFor(seed, 'start-clubs'), u.ovr);
     c.predraft = { route: input.route, step: 'club', clubChoices: choices.map((x) => ({ name: x.club.name, comp: x.comp })), userBoosts: {}, clubName: '', satelliteDone: false, seasonsPlayed: 0, interviews: [], interviewTeams: [], stockBonus: 0, workouts: [] };
     addNews(c, 'draft', `${fullName(u)} empieza su carrera`, `El ${input.pos} de ${country} tiene ofertas de varios clubes. Primero, elegir quién le representa.`, 'neutral');
     openEvent(c, 'predraft-agent');

@@ -9,7 +9,7 @@ import { teamOf, userOf } from '../../engine/career';
 import { inSeason } from '../../engine/flow';
 import { teamName } from '../../engine/league';
 import { averages, f1, sumStats } from '../../engine/stats';
-import { marketValue, fmtMoney, makeSalaries } from '../../engine/contracts';
+import { shownValue, fmtMoney, makeSalaries } from '../../engine/contracts';
 import { agentCut, cashOf, fameSponsor, performancePct, startingSalary } from '../../engine/mindset';
 import { AWARD_LABEL } from '../../engine/awards';
 import { SATELLITES } from '../../engine/satellite';
@@ -117,7 +117,7 @@ function TopCard({ c }: { c: Career }) {
       {/* Age, value and money get a row of their own: on phones they used to squeeze the club name. */}
       <div className="id-stats">
         <div><small>Edad</small><b>{u.age}</b></div>
-        <div><small>Valor</small><b>{fmtMoney(marketValue(u, c.league.season))}</b></div>
+        <div title="Sube poco a poco con tu experiencia y tu rendimiento"><small>Valor</small><b>{fmtMoney(shownValue(c, u))}</b></div>
         <div title="Tu dinero: cobras al final de cada temporada y pagas los gastos de tus decisiones"><small>Dinero</small><b className="cash">{fmtMoney(cashOf(c))}</b></div>
       </div>
       <CardTabs c={c} awards={awards} totals={

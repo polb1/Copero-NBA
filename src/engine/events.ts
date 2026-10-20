@@ -1,4 +1,5 @@
 import type { ActiveEvent, Career, EffectBag, MinigameSpec, Player, Team } from './types';
+import { shiftOvr } from './progression';
 import { cashOf } from './mindset';
 import { EVENTS, type EventDef, type EventWhen, type RoleKey, type EventOutcome, type MinigameDef } from '../content/events';
 import { countryByCode } from '../content/names';
@@ -150,7 +151,7 @@ function optionCost(o: EventDef['options'][number]): number {
 /** Rough value of an outcome for the player: positive is "it went well". */
 function outcomeValue(e: EffectBag): number {
   let v = (e.trust ?? 0) + (e.morale ?? 0) + (e.chemistry ?? 0) + (e.reputation ?? 0) + (e.fame ?? 0) + (e.loyalty ?? 0) + (e.workEthic ?? 0);
-  v += -(e.pressure ?? 0) * 0.5 - (e.fatigue ?? 0) * 0.3 + (e.form ?? 0) * 2 + (e.money ?? 0) / 100_000 + (e.endorsement ?? 0) / 50_000 + (e.pot ?? 0) * 5;
+  v += -(e.pressure ?? 0) * 0.5 - (e.fatigue ?? 0) * 0.3 + (e.form ?? 0) * 2 + (e.money ?? 0) / 100_000 + (e.endorsement ?? 0) / 50_000 + (e.pot ?? 0) * 5 + (e.ovr ?? 0) * 8;
   v += Object.values(e.attrs ?? {}).reduce((s, x) => s + (x ?? 0) * 2, 0);
   v += (e.heal ?? 0) / 5 - (e.injuryRisk ?? 0) * 15;
   if (e.injure) v -= e.injure === 'grave' ? 60 : e.injure === 'moderada' ? 30 : 12;
@@ -257,6 +258,12 @@ export function applyEffects(c: Career, u: Player, e: EffectBag, rng: Rng): stri
   if (e.endorsement) {
     c.endorsement = Math.max(0, c.endorsement + e.endorsement);
     out.push(`Patrocinios ${e.endorsement > 0 ? '+' : '−'}${fmtMoney(Math.abs(e.endorsement))}/año`);
+  }
+  if (e.ovr) {
+    const before = u.ovr;
+    shiftOvr(u, e.ovr, rng);
+    const d = u.ovr - before;
+    if (d) out.push(`OVR ${SIGN(d)}`);
   }
   if (e.pot) {
     u.pot = clamp(u.pot + e.pot, u.ovr, 99);

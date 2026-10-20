@@ -2,7 +2,7 @@
 import type { Career, League, Offer, Prospect, RetirementSummary, TeamStatus } from './types';
 import { addNews, onNbaRoster, teamOf, userOf } from './career';
 import { generateDraftClass, materializeProspect, mockRange, positionNeeds, prospectValue, rookieContract, runLottery, simulateDraft } from './draft';
-import { contractEnd, makeSalaries, marketValue, notePeakValue, offerCapacity, salaryIn, yearsLeft, fmtMoney } from './contracts';
+import { contractEnd, makeSalaries, marketValue, offerCapacity, salaryIn, yearsLeft, fmtMoney } from './contracts';
 import { contractFromOffer, euroOffers, fallbackOffers, generateFAOffers, signUser, projectedRole } from './market';
 import { offseasonDevelopment } from './progression';
 import { generatePlayer, emptyStats, fullName } from './players';
@@ -201,7 +201,6 @@ export function beginOffseason(c: Career) {
   });
   delete c.flags.trainingGains;
   c.ovrHistory.push({ season: L.season, age: u.age, ovr: u.ovr, pot: u.pot });
-  notePeakValue(c, u);
   if (u.teamId && (!c.bestTeamPeak || u.ovr > c.bestTeamPeak.ovr)) c.bestTeamPeak = { teamId: u.teamId, ovr: u.ovr };
   addNews(c, 'training', 'Evolución en verano', `${fullName(u)} cumple ${u.age} años. OVR ${delta >= 0 ? '+' : ''}${delta} → ${u.ovr} (potencial ${u.pot}).`, delta >= 0 ? 'good' : 'bad');
   c.gameLog = [];

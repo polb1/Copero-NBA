@@ -250,6 +250,8 @@ export interface EffectBag {
   trust?: number; morale?: number; chemistry?: number; reputation?: number; fame?: number;
   pressure?: number; loyalty?: number; workEthic?: number; fatigue?: number; form?: number;
   money?: number; endorsement?: number; pot?: number;
+  /** Overall rating change (spread over the attributes). */
+  ovr?: number;
   attrs?: Partial<Attrs>;
   flag?: string; unflag?: string;
   chain?: { id: string; inDays: number };

@@ -14,6 +14,7 @@ import { CourtPicker, Jersey } from '../../ui/simple';
 import { Flag } from '../../ui/Flag';
 import { LangSwitch } from '../../ui/LangSwitch';
 import { ConfirmModal } from '../../ui/ConfirmModal';
+import { useKitColors } from '../../ui/flagColors';
 
 
 /** What each position does on court, in plain words for people new to basketball. */
@@ -45,6 +46,7 @@ export function Start() {
   const [creating, setCreating] = useState(false);
   const [posHelp, setPosHelp] = useState(false);
   const [askReplace, setAskReplace] = useState(false);
+  const kit = useKitColors(nat);
   const named = !!(first.trim() || last.trim());
   const replacing = !!current && current.phase !== 'retired';
   const challenge = CHALLENGES[rollChallenge(seed)];
@@ -119,7 +121,7 @@ export function Start() {
         <div className="simple-cols">
           <section className="simple-col">
             <h3>Identidad</h3>
-            <div style={{ display: 'grid', placeItems: 'center' }}><Jersey name={last.trim() || first.trim()} number={number} /></div>
+            <div style={{ display: 'grid', placeItems: 'center' }}><Jersey name={last.trim() || first.trim()} number={number} color={kit.color} trim={kit.trim} text={kit.text} /></div>
             <div className="name-fields">
               <label className="name-field"><span>Nombre</span><input className="input" value={first} maxLength={20} onChange={(e) => setFirst(e.target.value)} placeholder="Ej.: Marc" autoComplete="off" /></label>
               <label className="name-field"><span>Apellido</span><input className="input" value={last} maxLength={14} onChange={(e) => setLast(e.target.value)} placeholder="Ej.: Gasol" autoComplete="off" /></label>

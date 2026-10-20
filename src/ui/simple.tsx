@@ -3,7 +3,7 @@ import { useState } from 'react';
 import type { Pos } from '../engine/types';
 import { logoUrl } from '../data/logos';
 
-export function Jersey({ name, number, color = '#c2410c', trim = '#1e293b', size = 240 }: { name: string; number: number | string; color?: string; trim?: string; size?: number }) {
+export function Jersey({ name, number, color = '#c2410c', trim = '#1e293b', text = '#fde047', size = 240 }: { name: string; number: number | string; color?: string; trim?: string; text?: string; size?: number }) {
   const label = (name || 'APELLIDO').toUpperCase().slice(0, 12);
   const fs = label.length > 9 ? 17 : 21;
   return (
@@ -21,8 +21,8 @@ export function Jersey({ name, number, color = '#c2410c', trim = '#1e293b', size
       <path d="M78 22 Q120 58 162 22" fill="none" stroke={trim} strokeWidth="8" strokeLinecap="round" />
       <path d="M54 30 Q58 74 36 96" fill="none" stroke={trim} strokeWidth="8" strokeLinecap="round" />
       <path d="M186 30 Q182 74 204 96" fill="none" stroke={trim} strokeWidth="8" strokeLinecap="round" />
-      <text x="120" y="92" textAnchor="middle" fontFamily="Barlow Condensed, Arial Narrow, sans-serif" fontWeight="800" fontSize={fs} fill="#fde047" letterSpacing="1">{label}</text>
-      <text x="120" y="176" textAnchor="middle" fontFamily="Barlow Condensed, Arial Narrow, sans-serif" fontWeight="800" fontSize="88" fill="#fde047">{number}</text>
+      <text x="120" y="92" textAnchor="middle" fontFamily="Barlow Condensed, Arial Narrow, sans-serif" fontWeight="800" fontSize={fs} fill={text} letterSpacing="1">{label}</text>
+      <text x="120" y="176" textAnchor="middle" fontFamily="Barlow Condensed, Arial Narrow, sans-serif" fontWeight="800" fontSize="88" fill={text} stroke={trim} strokeWidth="1.5">{number}</text>
     </svg>
   );
 }

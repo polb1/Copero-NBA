@@ -289,6 +289,51 @@ export const EVENTS: EventDef[] = [
         { weight: 9, effects: { injure: 'leve', fame: 2, pressure: 4 }, text: 'Caes mal. Risas en redes y unos días en la enfermería.' } ] },
       { label: 'Mejor un mate normal', desc: 'Sin riesgos.', effects: { fame: 1 }, text: 'Correcto, sin más.' },
     ] },
+  { id: 'gamble-diet', category: 'training', title: 'Plan de alimentación extremo', weight: 6, cooldown: 500,
+    text: 'Un nutricionista de moda te propone un plan muy estricto: menos grasa, más músculo… si tu cuerpo lo aguanta.',
+    when: { phases: ['regular', 'offseason'], minAge: 19 },
+    options: [
+      { label: 'Seguir el plan', desc: 'Puede cambiarte el físico, para bien o para mal.', outcomes: [
+        { weight: 6, boost: { stat: 'workEthic', per: 0.03 }, effects: { ovr: 4, morale: 3 }, text: 'Pierdes grasa, ganas potencia y te sientes más rápido que nunca.' },
+        { weight: 4, effects: { ovr: -5, fatigue: 12, morale: -4 }, text: 'Tu cuerpo no lo asimila: pierdes fuerza y energía en pleno curso.' } ] },
+      { label: 'Tu dieta de siempre', desc: 'Lo que te ha traído hasta aquí.', effects: { form: 1 }, text: 'Sin sorpresas: sigues como estabas.' },
+    ] },
+  { id: 'gamble-coach', category: 'training', title: 'Entrenador de élite', weight: 5, cooldown: 600,
+    text: 'Un preparador que ha trabajado con estrellas se ofrece a entrenarte en privado. No es barato y su método es durísimo.',
+    when: { phases: ['regular', 'offseason'], minAge: 20 },
+    options: [
+      { label: 'Contratarle ($300K)', desc: 'Método exigente: o das el salto o te pasas de vueltas.', outcomes: [
+        { weight: 13, boost: { stat: 'workEthic', per: 0.05 }, effects: { money: -300_000, ovr: 3, workEthic: 3 }, text: 'Su método funciona: tu juego da un salto visible.' },
+        { weight: 7, effects: { money: -300_000, ovr: -2, injure: 'leve' }, text: 'Sobrecarga muscular: semanas perdidas y algo de nivel por el camino.' } ] },
+      { label: 'Seguir con el cuerpo técnico', desc: 'Sin gastar nada.', effects: { trust: 2 }, text: 'El club valora que confíes en su gente.' },
+    ] },
+  { id: 'gamble-altitude', category: 'training', title: 'Concentración en altura', weight: 5, cooldown: 600,
+    text: 'Te invitan a tres semanas de entrenamiento en altura. Los pulmones lo agradecen… si el cuerpo se adapta.',
+    when: { phases: ['offseason', 'regular'], minAge: 19 },
+    options: [
+      { label: 'Ir a la concentración', desc: 'Más resistencia y explosividad, o un bajón.', outcomes: [
+        { weight: 11, effects: { ovr: 3, fatigue: -5 }, text: 'Vuelves con un fondo físico espectacular.' },
+        { weight: 9, effects: { ovr: -3, fatigue: 15 }, text: 'No te adaptas: vuelves agotado y fuera de ritmo.' } ] },
+      { label: 'Descansar en casa', desc: 'Recuperar y desconectar.', effects: { fatigue: -10, morale: 2 }, text: 'Desconectas y recargas pilas.' },
+    ] },
+  { id: 'gamble-mechanics', category: 'training', title: 'Rehacer tu tiro', weight: 5, cooldown: 700,
+    text: 'Tu entrenador de tiro cree que tu mecánica tiene un techo. Propone rehacerla desde cero a mitad de temporada.',
+    when: { phases: ['regular'], minAge: 19 },
+    options: [
+      { label: 'Rehacer la mecánica', desc: 'Un tiro nuevo… o perder el que tenías.', outcomes: [
+        { weight: 1, effects: { ovr: 3, attrs: { three: 3, mid: 2 } }, text: 'El nuevo tiro sale limpio y rápido. Ahora eres una amenaza.' },
+        { weight: 1, effects: { ovr: -3, attrs: { three: -3 }, morale: -4 }, text: 'Pierdes el ritmo de tiro y nada entra durante semanas.' } ] },
+      { label: 'No tocar nada', desc: 'Lo que funciona, no se toca.', effects: { form: 1 }, text: 'Mantienes tu tiro de siempre.' },
+    ] },
+  { id: 'gamble-supplement', category: 'training', title: 'Suplemento milagro', weight: 4, cooldown: 700,
+    text: 'Un compañero jura que un suplemento natural nuevo le ha cambiado el físico. Te pasa un bote.',
+    when: { phases: ['regular'], minAge: 20 },
+    options: [
+      { label: 'Probarlo', desc: 'Puede darte un extra… o sentarte fatal.', outcomes: [
+        { weight: 1, effects: { ovr: 2, form: 3 }, text: 'Te sientes más fuerte y con más chispa en cada partido.' },
+        { weight: 1, effects: { ovr: -4, form: -4, pressure: 4 }, text: 'Te sienta fatal: molestias, malas noches y un bajón de juego.' } ] },
+      { label: 'Ni tocarlo', desc: 'Nada que no apruebe el club.', effects: { trust: 1 }, text: 'Lo dejas en la taquilla. El médico del club te da la razón.' },
+    ] },
   { id: 'gamble-party', category: 'locker', title: 'Fiesta la víspera', weight: 6, cooldown: 400,
     text: 'Tus compañeros montan una fiesta la noche antes de un partido importante.',
     when: { phases: ['regular'], minAge: 19 },

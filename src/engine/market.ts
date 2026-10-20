@@ -86,7 +86,10 @@ export function euroOffers(c: Career): Offer[] {
   const rng = rngFor(c.seed, 'euro-offers', season);
   const last = [...c.seasons].reverse().find((s) => s.comp === 'EUR');
   const current = last ? EURO_CLUBS.find((cl) => cl.name === last.teamName) : undefined;
-  const tiers = u.ovr >= 74 ? [1] : u.ovr >= 67 ? [1, 2] : u.ovr >= 60 ? [2, 3] : [3];
+  // A good season counts as much as the rating: production opens the door to bigger clubs.
+  const prod = last && last.stats.gp ? productionBonus(last.stats.gmsc / last.stats.gp) : 0;
+  const level = u.ovr + prod;
+  const tiers = level >= 74 ? [1] : level >= 67 ? [1, 2] : level >= 60 ? [2, 3] : [3];
   // Clubs from the player's country and region come first, then the strongest leagues.
   const myRegion = countryByCode(u.nat).region;
   const score = (cl: (typeof EURO_CLUBS)[number]) => (cl.country === u.nat ? 3 : 0) + (countryByCode(cl.country).region === myRegion ? 2 : 0) + ((LEAGUE_STRENGTH[cl.league] ?? -3) >= -1 ? 1.5 : 0) + rng.next() * 1.5;

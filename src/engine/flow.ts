@@ -15,7 +15,7 @@ import { gameScore } from './gamesim';
 import { goalDef, updateGoalProgress } from './goals';
 import { newlyUnlocked, ACHIEVEMENTS } from './achievements';
 import { teamName, makeCoach } from './league';
-import { salaryIn, fmtMoney, yearsLeft, notePeakValue } from './contracts';
+import { salaryIn, fmtMoney, yearsLeft, updateValue } from './contracts';
 import { generateTradeOffers, executeTrade } from './market';
 import { emptyStats, fullName } from './players';
 import { EVENT_RATE, RULES } from './config';
@@ -452,7 +452,7 @@ export function endSeason(c: Career) {
   summary.highlights = best.map((g) => `${g.line!.pts} PTS, ${g.line!.oreb + g.line!.dreb} REB, ${g.line!.ast} AST vs ${g.oppName} (${fmtDate(g.season, g.day)})`);
   if (ps.champion) summary.highlights.push(`Campeón de la liga: ${teamName(L, ps.champion)}.`);
   c.lastSummary = summary;
-  notePeakValue(c, u);
+  updateValue(c, u);
   addNews(c, 'league', `${teamName(L, ps.champion!)}, campeón ${seasonLabel(L.season)}`, `MVP: ${awards.mvp ? awards.names[awards.mvp] : '—'}. MVP de las Finales: ${awards.fmvp ? awards.names[awards.fmvp] : '—'}.`, 'neutral');
   if (c.phase === 'predraft' && c.predraft) {
     c.predraft.step = 'decision';

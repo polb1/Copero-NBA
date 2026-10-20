@@ -20,7 +20,7 @@ const PAGES = {
     genre: ['Sports simulation', 'Basketball'],
     ldDescription: 'Free basketball career simulator: create your player, play for your club, enter the NBA draft and build your legacy all the way to the Hall of Fame.',
     h1: 'Free NBA basketball career simulator',
-    intro: '<strong>NBA Legacy</strong> is a basketball career simulator you play for free in your browser, on your phone or on your computer. You create your player at 18 and live his whole career: your first club, the <strong>NBA draft</strong>, contracts, injuries, trades, rings and retirement. Every season you make one or two decisions and the rest is played out game by game.',
+    intro: '<strong>NBA Legacy</strong> is a basketball career simulator you play for free in your browser, on your phone or on your computer. You create your player at 18 and live his whole career: your first club, the <strong>NBA draft</strong>, contracts, injuries, trades, rings and retirement. Every season you make between 1 and 5 decisions, depending on the mode, and the rest is played out game by game.',
     howTitle: 'How to play',
     how: [
       '<strong>Create your player:</strong> name, jersey number, country (more than 190), position and play style.',
@@ -41,7 +41,7 @@ const PAGES = {
     faqTitle: 'Frequently asked questions',
     faq: [
       ['Is NBA Legacy free?', 'Yes. It is a free game you play in your phone or computer browser, with no downloads, no sign-up and no ads.'],
-      ['How does the basketball career simulator work?', 'You create your player at 18, pick a country, position and style, and live his career season by season: youth club, NBA draft, contracts, injuries, trades, rings and retirement. Each season you make one or two decisions and the rest is simulated game by game.'],
+      ['How does the basketball career simulator work?', 'You create your player at 18, pick a country, position and style, and live his career season by season: youth club, NBA draft, contracts, injuries, trades, rings and retirement. Each season you make between 1 and 5 decisions, depending on the mode, and the rest is simulated game by game.'],
       ['Do my decisions change the career?', 'Yes. Every choice moves your morale, chemistry, pressure, the coach\'s trust, popularity or your money, and that changes your minutes, your performance in every game, the contracts you get and what you earn.'],
       ['Can I play in Spain or Europe instead of the NBA?', 'Yes. You can start at a club from your country (Real Madrid, Barça, Baskonia, Valencia Basket and many more), go to the draft or build your whole career in Europe winning leagues.'],
       ['How long does a career take?', 'A full career takes about 5 to 10 minutes. When you retire you can compare it with your previous careers and start another one right away.'],
@@ -65,7 +65,7 @@ const PAGES = {
     genre: ['Simulador esportiu', 'Bàsquet'],
     ldDescription: 'Simulador de carrera de bàsquet gratis: crea el teu jugador, juga al teu club, entra al draft de l\'NBA i construeix el teu llegat fins al Hall of Fame.',
     h1: 'Simulador de carrera de bàsquet NBA gratis',
-    intro: '<strong>NBA Legacy</strong> és un simulador de carrera de bàsquet que es juga gratis al navegador, al mòbil o a l\'ordinador. Crees el teu jugador amb 18 anys i vius tota la seva carrera: el teu primer club, el <strong>draft de l\'NBA</strong>, els contractes, les lesions, els traspassos, els anells i la retirada. Cada temporada prens una o dues decisions i la resta es juga partit a partit.',
+    intro: '<strong>NBA Legacy</strong> és un simulador de carrera de bàsquet que es juga gratis al navegador, al mòbil o a l\'ordinador. Crees el teu jugador amb 18 anys i vius tota la seva carrera: el teu primer club, el <strong>draft de l\'NBA</strong>, els contractes, les lesions, els traspassos, els anells i la retirada. Cada temporada prens entre 1 i 5 decisions, segons el mode, i la resta es juga partit a partit.',
     howTitle: 'Com es juga',
     how: [
       '<strong>Crea el teu jugador:</strong> nom, dorsal, país (més de 190), posició i estil de joc.',
@@ -86,7 +86,7 @@ const PAGES = {
     faqTitle: 'Preguntes freqüents',
     faq: [
       ['NBA Legacy és gratis?', 'Sí. És un joc gratuït que es juga al navegador del mòbil o de l\'ordinador, sense descàrregues, sense registre i sense anuncis.'],
-      ['Com funciona el simulador de carrera de bàsquet?', 'Crees el teu jugador amb 18 anys, tries país, posició i estil, i vius la seva carrera temporada a temporada: club de formació, draft de l\'NBA, contractes, lesions, traspassos, anells i retirada. Cada temporada prens una o dues decisions i la resta se simula partit a partit.'],
+      ['Com funciona el simulador de carrera de bàsquet?', 'Crees el teu jugador amb 18 anys, tries país, posició i estil, i vius la seva carrera temporada a temporada: club de formació, draft de l\'NBA, contractes, lesions, traspassos, anells i retirada. Cada temporada prens entre 1 i 5 decisions, segons el mode, i la resta se simula partit a partit.'],
       ['Les decisions canvien la carrera?', 'Sí. Cada elecció mou la moral, la química, la pressió, la confiança de l\'entrenador, la popularitat o els teus diners, i això afecta els teus minuts, el teu rendiment a cada partit, els contractes que reps i el que cobres.'],
       ['Puc jugar a Espanya o a Europa en lloc de l\'NBA?', 'Sí. Pots començar en un club del teu país (Reial Madrid, Barça, Baskonia, València Basket i molts més), anar al draft o fer tota la carrera a Europa guanyant lligues.'],
       ['Quant dura una carrera?', 'Una carrera completa es juga en uns 5 a 10 minuts. Quan et retires la pots comparar amb les teves carreres anteriors i començar-ne una altra al moment.'],
@@ -120,22 +120,27 @@ for (const [lang, p] of Object.entries(PAGES)) {
     { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: p.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
   ];
   h = swap(h, /<script type="application\/ld\+json">[\s\S]*?<\/script>/, `<script type="application/ld+json">${JSON.stringify(ld)}</script>`, 'json-ld');
-  const about = `<section id="about" class="about">
+  const about = `<footer id="about" class="about">
       <h1>${p.h1}</h1>
-      <p>${p.intro}</p>
-      <h2>${p.howTitle}</h2>
-      <ol>
-${p.how.map((x) => `        <li>${x}</li>`).join('\n')}
-      </ol>
-      <h2>${p.featTitle}</h2>
-      <ul>
-${p.feat.map((x) => `        <li>${x}</li>`).join('\n')}
-      </ul>
-      <h2>${p.faqTitle}</h2>
-${p.faq.map(([q, a]) => `        <details><summary>${q}</summary><p>${a}</p></details>`).join('\n')}
-      <p class="about-note">${p.note}</p>
-    </section>`;
-  h = swap(h, /<section id="about" class="about">[\s\S]*?<\/section>/, about, 'about section');
+      <p class="about-intro">${p.intro}</p>
+      <div class="about-groups">
+        <details class="about-group"><summary><h2>${p.howTitle}</h2></summary>
+          <ol>
+${p.how.map((x) => `            <li>${x}</li>`).join('\n')}
+          </ol>
+        </details>
+        <details class="about-group"><summary><h2>${p.featTitle}</h2></summary>
+          <ul>
+${p.feat.map((x) => `            <li>${x}</li>`).join('\n')}
+          </ul>
+        </details>
+        <details class="about-group"><summary><h2>${p.faqTitle}</h2></summary>
+${p.faq.map(([q, a]) => `          <details><summary>${q}</summary><p>${a}</p></details>`).join('\n')}
+        </details>
+      </div>
+      <p class="about-note">© NBA Legacy · ${p.note}</p>
+    </footer>`;
+  h = swap(h, /<footer id="about" class="about">[\s\S]*?<\/footer>/, about, 'about footer');
   h = swap(h, />Cargando…</, `>${p.loading}<`, 'splash');
   h = swap(h, /Está tardando más de lo normal\.<br><button onclick="location\.reload\(\)"([^>]*)>Recargar<\/button>/, `${p.slow}<br><button onclick="location.reload()"$1>${p.reload}</button>`, 'slow message');
   h = swap(h, /Tu navegador no pudo iniciar el juego\.<br>Actualízalo o ábrelo en Safari o Chrome\./, p.broken, 'error message');

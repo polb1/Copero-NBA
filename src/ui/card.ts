@@ -5,7 +5,7 @@ import { averages, f1 } from '../engine/stats';
 import { AWARD_LABEL } from '../engine/awards';
 import { seasonLabel } from '../engine/schedule';
 import { POS_LABEL } from '../engine/attributes';
-import { fmtMoney, marketValue } from '../engine/contracts';
+import { fmtMoney, shownValue } from '../engine/contracts';
 import { countryByCode } from '../content/names';
 import { t } from '../i18n/i18n';
 
@@ -18,7 +18,7 @@ export function drawCard(c: Career): string {
   const r = c.retirement!;
   const a = averages(r.totals);
   // Saves from before the peak was tracked fall back to the value at retirement.
-  const peakValue = Math.max(c.flags.peakValue ?? 0, marketValue(u, r.season));
+  const peakValue = Math.max(c.flags.peakValue ?? 0, shownValue(c, u));
   const W = 1080, H = 1350;
   const cv = document.createElement('canvas');
   cv.width = W;
