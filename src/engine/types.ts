@@ -200,6 +200,8 @@ export interface League {
   nextPlayerId: number;
   allStarsSelected: boolean;
   allStars?: string[];
+  /** Where the rosters came from: the real NBA snapshot ('real') or generated players ('fictional'). */
+  rosterSource?: 'real' | 'fictional';
 }
 
 export interface UserGame {

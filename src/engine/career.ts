@@ -1,5 +1,5 @@
 import type { Archetype, Career, Competition, Hand, Mode, NewsItem, Player, Pos, PreDraft, Team } from './types';
-import { createLeague, teamName } from './league';
+import { createRealLeague, teamName } from './league';
 import { buildAttrs, computeOvr, TRAINING_AREAS, ATTR_KEYS } from './attributes';
 import { applyPhysique, emptyStats, fullName } from './players';
 import { buildRotation } from './gamesim';
@@ -100,7 +100,7 @@ export function buildUserPlayer(input: NewCareerInput, seed: number, season: num
 
 export function createCareer(input: NewCareerInput, seed: number): Career {
   const season = RULES.baseSeason;
-  const league = createLeague(seed, season);
+  const league = createRealLeague(seed, season);
   const u = buildUserPlayer(input, seed, season);
   league.players[u.id] = u;
   const rng = rngFor(seed, 'career-init');

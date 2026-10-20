@@ -15,7 +15,7 @@ src/
     config.ts      Reglas de liga (cap, aprons, lotería, play-in, premios) y parámetros del modelo
     types.ts       Tipos del estado
     attributes.ts  Atributos, OVR, arquetipos
-    players.ts     Generación de jugadores ficticios
+    players.ts     Generación de jugadores (clases de draft y ligas generadas)
     league.ts      Creación de la liga (30 equipos, plantillas, entrenadores, estilos)
     schedule.ts    Calendario de 82 partidos y fechas
     gamesim.ts     Motor estadístico de partido (box scores coherentes)
@@ -36,11 +36,14 @@ src/
     market.ts      Interés de equipos, ofertas de agencia libre, fallback (two-way, G League, Europa), traspasos
     api.ts         Fachada que usa la UI
   content/       Textos y definiciones de eventos (datos), nombres, países, universidades
-  data/          Franquicias NBA
+  data/          Franquicias NBA y snapshot real de plantillas 2026-27 (ESPN/Wikipedia)
   store/         Store global (useSyncExternalStore) + persistencia
   ui/            Componentes compartidos (tarjeta, gráficos, tablas)
   screens/       Una pantalla por ruta
 ```
+
+Desde 2026-27 las carreras nuevas usan el snapshot real de plantillas y datos (ESPN y Wikipedia,
+20-10-2026); las clases de draft, los entrenadores y los agentes siguen siendo generados.
 
 ## Principios
 1. **Motor puro**: toda acción de juego es una función `(career, input) → career`. La UI nunca

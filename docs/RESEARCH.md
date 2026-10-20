@@ -120,7 +120,10 @@ Se usan como objetivos de las pruebas estadísticas automatizadas.
 - NBA G League: https://gleague.nba.com/
 
 ## 4. Limitaciones
-- Sin acceso a la API de estadísticas de la NBA: todos los jugadores de las plantillas son **ficticios**.
-  Solo se usan nombres de franquicias reales a efectos de identificación, sin afiliación.
+- Sin acceso a la API de estadísticas de la NBA: desde 2026-27 las carreras nuevas usan un snapshot de
+  plantillas y datos reales de fuentes públicas (rosters y estadísticas de ESPN y Wikipedia, 20-10-2026).
+  Las clases de draft, los entrenadores, los agentes y el resto de la simulación son generados. Solo se
+  usan nombres de franquicias y jugadores reales a efectos de identificación, sin afiliación con la NBA,
+  ESPN ni Wikipedia.
 - No se usan logotipos ni fotografías con derechos.
 - Las reglas se simplifican donde se indica; todas son parámetros en `config.ts`.

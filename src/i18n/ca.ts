@@ -1169,7 +1169,7 @@ export const CA: Dict = {
   "PALMARÉS": "PALMARÈS",
   "Retirado a los {a} años · {b}": "Retirat als {a} anys · {b}",
   "LIGA": "LLIGA",
-  "Proyecto independiente sin afiliación con la NBA. Los nombres de franquicias se usan solo como referencia dentro de la simulación; jugadores, entrenadores y agentes son ficticios.": "Projecte independent sense afiliació amb l'NBA. Els noms de franquícies s'utilitzen només com a referència dins de la simulació; jugadors, entrenadors i agents són ficticis.",
+  "Proyecto independiente sin afiliación con la NBA, ESPN ni Wikipedia. Los nombres de franquicias y jugadores reales se usan solo como referencia dentro de la simulación. Plantillas y datos 2026-27 basados en fuentes públicas (rosters y estadísticas de ESPN y Wikipedia, snapshot del 20-10-2026); partidos, decisiones, draft, entrenadores, agentes y el resto de la simulación son ficticios o generados. No es un producto oficial ni está respaldado por la NBA.": "Projecte independent sense afiliació amb l'NBA, ESPN ni Wikipedia. Els noms de franquícies i jugadors reals s'utilitzen només com a referència dins de la simulació. Plantilles i dades 2026-27 basades en fonts públiques (ESPN i Wikipedia, snapshot del 20-10-2026); partits, decisions, draft, entrenadors, agents i la resta de la simulació són ficticis o generats. No és un producte oficial ni està avalat per l'NBA.",
   "{n1} a {n2}": "{n1} a {n2}",
   "APELLIDO": "COGNOM",
   "{n1} / {n2} → {r}": "{n1} / {n2} → {r}",

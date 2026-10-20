@@ -1240,7 +1240,7 @@ export const EN: Dict = {
   "PALMARÉS": "HONORS",
   "Retirado a los {a} años · {b}": "Retired at {a} · {b}",
   "LIGA": "LEAGUE",
-  "Proyecto independiente sin afiliación con la NBA. Los nombres de franquicias se usan solo como referencia dentro de la simulación; jugadores, entrenadores y agentes son ficticios.": "An independent project not affiliated with the NBA. Franchise names are used only as references within the simulation; players, coaches and agents are fictional.",
+  "Proyecto independiente sin afiliación con la NBA, ESPN ni Wikipedia. Los nombres de franquicias y jugadores reales se usan solo como referencia dentro de la simulación. Plantillas y datos 2026-27 basados en fuentes públicas (rosters y estadísticas de ESPN y Wikipedia, snapshot del 20-10-2026); partidos, decisiones, draft, entrenadores, agentes y el resto de la simulación son ficticios o generados. No es un producto oficial ni está respaldado por la NBA.": "An independent project not affiliated with the NBA, ESPN or Wikipedia. Real franchise and player names are used only as references within the simulation. 2026-27 rosters and data are based on public sources (ESPN and Wikipedia, snapshot of 2026-10-20); games, decisions, the draft, coaches, agents and the rest of the simulation are fictional or generated. Not an official product and not endorsed by the NBA.",
   "{n1} a {n2}": "{n1} to {n2}",
   "APELLIDO": "LAST NAME",
   "en total": "total",

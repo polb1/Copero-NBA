@@ -47,9 +47,9 @@ const PAGES = {
       ['How long does a career take?', 'A full career takes about 5 to 10 minutes. When you retire you can compare it with your previous careers and start another one right away.'],
       ['Can I play on my phone?', 'Yes. It is made for mobile: it works on iPhone and Android, can be installed on your home screen like an app and works offline.'],
       ['Is my game saved?', 'Yes. Your game is saved automatically in your browser and your finished careers stay in "My careers" with their stats, challenges and achievements.'],
-      ['Is this an official NBA game?', 'No. It is an independent project not affiliated with the NBA. Franchise names are used only as references and all players are fictional.'],
+      ['Is this an official NBA game?', 'No. It is an independent project not affiliated with the NBA, ESPN or Wikipedia, and it is not an official product nor endorsed by the NBA. Real franchise and player names are used only as references within the simulation. 2026-27 rosters and data come from public sources (ESPN rosters and stats, and Wikipedia; snapshot of 2026-10-20); games, decisions, the draft, coaches, agents and the rest of the simulation are fictional or generated.'],
     ],
-    note: 'An independent project not affiliated with the NBA. Franchise names are used only as references within the simulation; players, coaches and agents are fictional.',
+    note: 'An independent project not affiliated with the NBA, ESPN or Wikipedia. Real franchise and player names are used only as references within the simulation. 2026-27 rosters and data are based on public sources (ESPN and Wikipedia; snapshot of 2026-10-20); games, decisions, the draft, coaches, agents and the rest of the simulation are fictional or generated. Not an official product and not endorsed by the NBA.',
   },
   ca: {
     locale: 'ca_ES',
@@ -92,9 +92,9 @@ const PAGES = {
       ['Quant dura una carrera?', 'Una carrera completa es juga en uns 5 a 10 minuts. Quan et retires la pots comparar amb les teves carreres anteriors i començar-ne una altra al moment.'],
       ['Es pot jugar al mòbil?', 'Sí. Està pensat per al mòbil: funciona a iPhone i Android, es pot instal·lar a la pantalla d\'inici com una app i funciona sense connexió.'],
       ['Es desa la partida?', 'Sí. La partida es desa automàticament al navegador i les teves carreres acabades queden a "Les meves carreres" amb les seves estadístiques, reptes i assoliments.'],
-      ['És un joc oficial de l\'NBA?', 'No. És un projecte independent sense afiliació amb l\'NBA. Els noms de franquícies s\'utilitzen només com a referència i tots els jugadors són ficticis.'],
+      ['És un joc oficial de l\'NBA?', 'No. És un projecte independent sense afiliació amb l\'NBA, ESPN ni Wikipedia, i no és un producte oficial ni té el suport de l\'NBA. Els noms de franquícies i jugadors reals s\'utilitzen només com a referència dins de la simulació. Les plantilles i dades 2026-27 provenen de fonts públiques (rosters i estadístiques d\'ESPN i Wikipedia, snapshot del 20-10-2026); els partits, les decisions, el draft, els entrenadors, els agents i la resta de la simulació són ficticis o generats.'],
     ],
-    note: 'Projecte independent sense afiliació amb l\'NBA. Els noms de franquícies s\'utilitzen només com a referència dins de la simulació; jugadors, entrenadors i agents són ficticis.',
+    note: 'Projecte independent sense afiliació amb l\'NBA, ESPN ni Wikipedia. Els noms de franquícies i jugadors reals s\'utilitzen només com a referència dins de la simulació. Plantilles i dades 2026-27 basades en fonts públiques (ESPN i Wikipedia, snapshot del 20-10-2026); partits, decisions, draft, entrenadors, agents i la resta de la simulació són ficticis o generats. No és un producte oficial ni està avalat per l\'NBA.',
   },
 };
 

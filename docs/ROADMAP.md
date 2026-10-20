@@ -24,5 +24,7 @@
 ## Limitaciones conocidas
 - El ranking del desafío diario es local.
 - Reglas del convenio simplificadas (ver RESEARCH §2.4) y escala de novato aproximada.
-- Plantillas ficticias; los NPC no traspasan jugadores entre ellos, solo se mueven en agencia libre.
+- Desde 2026-27 las carreras nuevas usan el snapshot real de plantillas y datos (ESPN/Wikipedia,
+  20-10-2026); las clases de draft, los entrenadores y los agentes siguen siendo generados. Los NPC no
+  traspasan jugadores entre ellos, solo se mueven en agencia libre.
 - Las banderas de país usan emojis: en Windows se ven como códigos de dos letras.

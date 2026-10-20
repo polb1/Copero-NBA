@@ -1,12 +1,15 @@
 # NBA Legacy
 
-Simulador de carrera profesional de baloncesto. Creas un jugador ficticio, vives el camino al draft
+Simulador de carrera profesional de baloncesto. Creas tu jugador, vives el camino al draft
 (NCAA, Europa, vía alternativa o novato directo) y gestionas su carrera hasta la retirada: minutos,
 entrenamiento, contratos, lesiones, traspasos, premios, anillos y legado.
 
 Inspirado en el concepto de carrera narrativa de Copero, con una identidad y unas mecánicas propias.
-Proyecto sin afiliación con la NBA: las franquicias se usan solo como referencia y todos los
-jugadores, entrenadores y agentes son ficticios.
+Proyecto independiente sin afiliación con la NBA, ESPN ni Wikipedia: los nombres de franquicias y
+jugadores reales se usan solo como referencia dentro de la simulación. Las plantillas y datos 2026-27
+se basan en fuentes públicas (rosters y estadísticas de ESPN y Wikipedia, snapshot del 20-10-2026);
+los partidos, decisiones, draft, entrenadores, agentes y el resto de la simulación son ficticios o
+generados. No es un producto oficial ni está respaldado por la NBA.
 
 ## Puesta en marcha
 
@@ -76,6 +79,7 @@ Tipografías: Barlow Condensed e Inter (Google Fonts, licencia SIL Open Font Lic
 (Netlify, Vercel, GitHub Pages, un bucket S3…). Usa rutas con `#`, así que no necesita
 configuración de servidor. Las partidas se guardan en el navegador del jugador; no hay backend.
 
-Aviso legal incluido en la propia aplicación: proyecto sin afiliación con la NBA; las franquicias y sus
-logotipos se muestran solo como referencia. Para una versión comercial con marcas reales haría
-falta una licencia de la NBA; la alternativa es renombrar los equipos en `src/data/teams.ts`.
+Aviso legal incluido en la propia aplicación: proyecto independiente sin afiliación con la NBA, ESPN
+ni Wikipedia; las franquicias y sus logotipos se muestran solo como referencia. Para una versión
+comercial con marcas reales haría falta una licencia de la NBA; la alternativa es renombrar los
+equipos en `src/data/teams.ts`.

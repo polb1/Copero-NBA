@@ -7,6 +7,8 @@ import { makeSalaries, marketValue } from './contracts';
 import { clamp, rngFor, type Rng } from './rng';
 import { minSalary, rookieScale } from './config';
 import { buildSchedule } from './schedule';
+import { NBA_ROSTER } from '../data/nbaRoster';
+import { assignRealContracts, buildTeamPlayers, selectRoster, statusesByStrength } from './realroster';
 
 const TIER_CURVES: Record<TeamStatus, number[]> = {
   contender: [90, 84, 79, 76, 74, 72, 70, 68, 66, 64, 62, 60, 58, 56],
@@ -51,7 +53,7 @@ function agedFor(tierIndex: number, status: TeamStatus, rng: Rng) {
   return clamp(Math.round(rng.normal(27, 4)), 19, 37);
 }
 
-export function createLeague(seed: number, season: number): League {
+export function createFictionalLeague(seed: number, season: number): League {
   const rng = rngFor(seed, 'league-create');
   const statuses: TeamStatus[] = rng.shuffle([
     ...Array(5).fill('contender'), ...Array(8).fill('playoff'), ...Array(9).fill('middle'), ...Array(8).fill('rebuild'),
@@ -72,6 +74,7 @@ export function createLeague(seed: number, season: number): League {
     lastNo1: null,
     nextPlayerId: 1,
     allStarsSelected: false,
+    rosterSource: 'fictional',
   };
   TEAM_SEEDS.forEach((s, i) => {
     const status = statuses[i];
@@ -97,6 +100,74 @@ export function createLeague(seed: number, season: number): League {
       league.players[p.id] = p;
       team.roster.push(p.id);
     });
+  });
+  for (let i = 0; i < 30; i++) {
+    const p = generatePlayer(rng, { id: newPlayerId(league), level: Math.round(rng.range(54, 67)), age: rng.int(22, 33), season });
+    league.players[p.id] = p;
+    league.freeAgents.push(p.id);
+  }
+  setupSeasonSchedule(league, seed);
+  return league;
+}
+
+export function createLeague(seed: number, season: number): League {
+  return createFictionalLeague(seed, season);
+}
+
+export function createRealLeague(seed: number, season: number): League {
+  if (season !== NBA_ROSTER.season) return createFictionalLeague(seed, season);
+  const rng = rngFor(seed, 'real-league', season);
+  const league: League = {
+    season,
+    day: 0,
+    teams: {},
+    players: {},
+    schedule: [],
+    allStarDay: 0,
+    deadlineDay: 0,
+    lastDay: 0,
+    postseason: null,
+    awards: [],
+    champions: [],
+    freeAgents: [],
+    lastNo1: null,
+    nextPlayerId: 1,
+    allStarsSelected: false,
+    rosterSource: 'real',
+  };
+  TEAM_SEEDS.forEach((s) => {
+    const coach = makeCoach(rng, season);
+    const team: Team = {
+      ...s,
+      coach,
+      pace: STYLE_PACE[coach.style],
+      status: 'middle',
+      reputation: 50,
+      roster: [],
+      w: 0, l: 0, homeW: 0, homeL: 0, awayW: 0, awayL: 0, pf: 0, pa: 0, streak: 0, last10: [],
+      history: [],
+      gLeagueName: G_LEAGUE[s.id] ?? `Filial G League de ${s.city}`,
+    };
+    league.teams[s.id] = team;
+  });
+  const twoWayIds = new Set(Object.values(NBA_ROSTER.players).filter((p) => p.twoWay).map((p) => p.id));
+  TEAM_SEEDS.forEach((s) => {
+    const all = buildTeamPlayers(NBA_ROSTER, s.id, season);
+    all.forEach((p) => { league.players[p.id] = p; });
+    const { roster, extras } = selectRoster(all, twoWayIds);
+    assignRealContracts(roster, extras, NBA_ROSTER, season);
+    const team = league.teams[s.id];
+    team.roster = roster.map((p) => p.id);
+    extras.forEach((p) => league.freeAgents.push(p.id));
+  });
+  const strengths: Record<string, number> = {};
+  TEAM_SEEDS.forEach((s) => { strengths[s.id] = teamStrength(league, s.id); });
+  const statuses = statusesByStrength(strengths);
+  TEAM_SEEDS.forEach((s) => {
+    const t = league.teams[s.id];
+    const status = statuses[s.id];
+    t.status = status;
+    t.reputation = Math.round(clamp((s.market === 'large' ? 65 : s.market === 'mid' ? 55 : 45) + (status === 'contender' ? 20 : status === 'playoff' ? 10 : status === 'rebuild' ? -10 : 0) + rng.normal(0, 6), 20, 99));
   });
   for (let i = 0; i < 30; i++) {
     const p = generatePlayer(rng, { id: newPlayerId(league), level: Math.round(rng.range(54, 67)), age: rng.int(22, 33), season });

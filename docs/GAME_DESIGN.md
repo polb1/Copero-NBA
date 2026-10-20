@@ -5,6 +5,10 @@ Vivir la carrera completa de un jugador ficticio: desde prospecto hasta la retir
 decisiones que cambian minutos, dinero, relaciones, salud y legado. El usuario no juega los partidos;
 el motor los simula y el usuario gestiona la vida del jugador.
 
+Nota (2026-27): las carreras nuevas parten del snapshot real de plantillas y datos de la NBA (ESPN y
+Wikipedia, 20-10-2026); los partidos, decisiones, clases de draft, entrenadores y agentes siguen siendo
+ficticios o generados.
+
 ## 2. Bucle principal
 ```
 Crear jugador → Vía de entrada (NCAA / Internacional / Alternativa / Novato directo)

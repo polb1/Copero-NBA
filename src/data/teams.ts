@@ -1,5 +1,6 @@
 // The 30 NBA franchises, conferences and divisions (nba.com, consulted 2026-10-17).
-// Names are used for identification only. Rosters, coaches and players are fictional.
+// Names are used for identification only. Since 2026-27 new careers use the real roster snapshot
+// (ESPN/Wikipedia, 2026-10-20); draft classes, coaches and agents remain generated.
 
 export interface TeamSeed {
   id: string;
