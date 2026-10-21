@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import type { Pos } from '../engine/types';
 import { logoUrl } from '../data/logos';
+import type { IconName } from './icons';
 
 export function Jersey({ name, number, color = '#c2410c', trim = '#1e293b', text = '#fde047', size = 240 }: { name: string; number: number | string; color?: string; trim?: string; text?: string; size?: number }) {
   const label = (name || 'APELLIDO').toUpperCase().slice(0, 12);
@@ -97,8 +98,9 @@ export function ovrTone(ovr: number) {
   return 'linear-gradient(160deg, #d97706, #92400e)';
 }
 
-export const CATEGORY_ICON: Record<string, string> = {
-  training: '🏋️', minutes: '⏱️', coach: '📋', teammates: '🤝', agent: '💼', contract: '📝', trade: '🔁', injury: '🩹',
-  rest: '😴', media: '🎙️', rivalry: '⚔️', personal: '🏠', national: '🌍', sponsor: '👟', social: '📱', locker: '🚪',
-  coachChange: '🔄', goals: '🎯', money: '💰', career: '🏁', draft: '🎓',
+export const CATEGORY_GLYPH: Record<string, IconName> = {
+  training: 'dumbbell', minutes: 'stopwatch', coach: 'clipboard', teammates: 'handshake', agent: 'briefcase', contract: 'contract', trade: 'swap', injury: 'med',
+  rest: 'bed', media: 'mic', rivalry: 'swords', personal: 'home', national: 'globe', sponsor: 'shoe', social: 'phone', locker: 'locker',
+  coachChange: 'refresh', goals: 'target', money: 'coin', career: 'flag', draft: 'cap',
+  clutch: 'stopwatch', contest: 'target',
 };

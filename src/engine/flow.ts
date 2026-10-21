@@ -1,7 +1,7 @@
 // In-season flow: daily simulation with user hooks, weekly training and events, trade deadline,
 // All-Star, postseason and the end-of-season report.
 import type { BoxLine, Career, Player, SeasonRecord, SeasonSummary, UserGame } from './types';
-import { agentCut, cashOf, fameSponsor, mindsetBoost } from './mindset';
+import { agentCut, fameSponsor, mindsetBoost } from './mindset';
 import { addNews, currentComp, eventContext, onNbaRoster, openEvent, queueEvent, teamOf, userOf, userRole } from './career';
 import { playPostseasonDay, playRegularDay, regularSeasonOver, startPostseason, teamPlayoffResult, type DayHooks } from './season';
 import { computeAwards, finalsMvp, selectAllStars, snapshotNames, awardsFor, AWARD_LABEL } from './awards';
@@ -21,6 +21,7 @@ import { emptyStats, fullName } from './players';
 import { EVENT_RATE, RULES } from './config';
 import { clamp, rngFor } from './rng';
 import { fmtDate, seasonLabel } from './schedule';
+import { financeOn, settleSeason, openCrisisEvent } from './finance';
 
 export type AdvanceUnit = 'game' | 'week' | 'event' | 'season';
 
@@ -416,21 +417,16 @@ export function endSeason(c: Career) {
   }
   // Money
   const salary = u.contract && (onRoster || u.contract.kind === 'gleague' || u.contract.kind === 'two-way') ? salaryIn(u.contract, L.season) : 0;
-  // Abroad: the club contract; before the draft: the first professional contract with the starting club.
   const overseas = (c.flags.overseasSalary ?? 0) + (c.predraft?.step === 'season' ? c.flags.youthSalary ?? 0 : 0);
-  // Paid into the wallet at the end of the season: salary minus the agent's cut, plus sponsorship
-  // (deals signed in events and what popularity brings in).
   const sponsor = c.endorsement + fameSponsor(c);
   const agent = Math.round((salary + overseas) * agentCut(c));
-  c.earnings += salary + overseas + sponsor;
-  c.cash = cashOf(c) + salary + overseas + sponsor - agent;
-  delete c.flags.overseasSalary;
+  const settled = settleSeason(c, { salary, overseas, sponsor, agent, season: L.season });
   // Summary
   const a = averages(mainStats);
   const comp = currentComp(c);
   const summary: SeasonSummary = {
     season: L.season,
-    money: { salary: salary + overseas, sponsor, agent, cash: c.cash },
+    money: settled.money,
     lines: [
       { label: 'Competición', value: u.season.gp ? 'NBA' : c.satellite ? SATELLITES[c.satellite.comp as 'NCAA' | 'EUR' | 'GLG'].name : comp },
       { label: 'Partidos', value: `${mainStats.gp} (${mainStats.gs} de titular)` },
@@ -451,6 +447,11 @@ export function endSeason(c: Career) {
   const best = c.gameLog.filter((g) => g.season === L.season && g.line).sort((x, y) => gameScore(y.line!) - gameScore(x.line!)).slice(0, 3);
   summary.highlights = best.map((g) => `${g.line!.pts} PTS, ${g.line!.oreb + g.line!.dreb} REB, ${g.line!.ast} AST vs ${g.oppName} (${fmtDate(g.season, g.day)})`);
   if (ps.champion) summary.highlights.push(`Campeón de la liga: ${teamName(L, ps.champion)}.`);
+  if (financeOn(c)) summary.lines.push({
+    label: 'Finanzas',
+    value: `${fmtMoney(settled.money.cash)} en caja · ${fmtMoney(settled.money.debt ?? 0)} de deuda`,
+    tone: settled.money.cash < 0 ? 'bad' : 'good',
+  });
   c.lastSummary = summary;
   updateValue(c, u);
   addNews(c, 'league', `${teamName(L, ps.champion!)}, campeón ${seasonLabel(L.season)}`, `MVP: ${awards.mvp ? awards.names[awards.mvp] : '—'}. MVP de las Finales: ${awards.fmvp ? awards.names[awards.fmvp] : '—'}.`, 'neutral');
@@ -460,6 +461,7 @@ export function endSeason(c: Career) {
   } else {
     c.phase = 'season-end';
   }
+  if (settled.gap > 0 && c.phase !== 'predraft') openCrisisEvent(c, settled.gap);
   achievementsCheck(c);
   void absDay;
   void emptyStats;

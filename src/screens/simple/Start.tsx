@@ -15,15 +15,16 @@ import { Flag } from '../../ui/Flag';
 import { LangSwitch } from '../../ui/LangSwitch';
 import { ConfirmModal } from '../../ui/ConfirmModal';
 import { useKitColors } from '../../ui/flagColors';
+import { Icon, type IconName } from '../../ui/icons';
 
 
 /** What each position does on court, in plain words for people new to basketball. */
-const POS_INFO: Record<Pos, { name: string; icon: string; role: string }> = {
-  PG: { name: 'Base', icon: '🧠', role: 'Sube el balón y organiza el ataque. Reparte asistencias. Suele ser el más bajo y rápido.' },
-  SG: { name: 'Escolta', icon: '🎯', role: 'El tirador del equipo: anota desde lejos y también ataca el aro.' },
-  SF: { name: 'Alero', icon: '⚡', role: 'El más versátil: anota, defiende y juega tanto dentro como fuera.' },
-  PF: { name: 'Ala-pívot', icon: '💪', role: 'Juega cerca del aro: rebotes, bloqueos y defensa interior.' },
-  C: { name: 'Pívot', icon: '🧱', role: 'El más alto: protege el aro, coge rebotes y anota bajo la canasta.' },
+const POS_INFO: Record<Pos, { name: string; icon: IconName; role: string }> = {
+  PG: { name: 'Base', icon: 'brain', role: 'Sube el balón y organiza el ataque. Reparte asistencias. Suele ser el más bajo y rápido.' },
+  SG: { name: 'Escolta', icon: 'target', role: 'El tirador del equipo: anota desde lejos y también ataca el aro.' },
+  SF: { name: 'Alero', icon: 'bolt', role: 'El más versátil: anota, defiende y juega tanto dentro como fuera.' },
+  PF: { name: 'Ala-pívot', icon: 'dumbbell', role: 'Juega cerca del aro: rebotes, bloqueos y defensa interior.' },
+  C: { name: 'Pívot', icon: 'brick', role: 'El más alto: protege el aro, coge rebotes y anota bajo la canasta.' },
 };
 const POS_ORDER: Pos[] = ['PG', 'SG', 'SF', 'PF', 'C'];
 
@@ -105,7 +106,7 @@ export function Start() {
         <div className="simple-head">
           <div>
             <h2>Crea tu jugador</h2>
-            {playStreak() >= 2 && <p className="tiny streak">🔥 {playStreak()} días seguidos jugando</p>}
+            {playStreak() >= 2 && <p className="tiny streak"><Icon name="flame" size={13} /> {playStreak()} días seguidos jugando</p>}
             {!current && careerHistory().length === 0 && <p className="tiny dim" style={{ margin: '4px 0 0', maxWidth: 420 }}>Elige país y posición y vive tu carrera desde los 18 años: draft, contratos, anillos y un legado que comparar en cada nueva partida.</p>}
           </div>
           <div className="row" style={{ gap: 8, flexWrap: 'wrap' }}>
@@ -146,7 +147,7 @@ export function Start() {
                 <button key={c.code} className={`country ${nat === c.code ? 'on' : ''}`} aria-pressed={nat === c.code} onClick={() => setNat(c.code)}>
                   <Flag code={c.code} size={28} />
                   <span>{c.name}</span>
-                  {nat === c.code && <span className="check">✓</span>}
+                  {nat === c.code && <span className="check"><Icon name="check" size={13} /></span>}
                 </button>
               ))}
             </div>
@@ -156,7 +157,7 @@ export function Start() {
             <h3>Posición</h3>
             <CourtPicker value={pos} onChange={pickPos} />
             <div className="pos-info">
-              <b>{POS_INFO[pos].icon} {POS_INFO[pos].name} <span className="dim">({pos})</span></b>
+              <b><Icon name={POS_INFO[pos].icon} size={16} /> {POS_INFO[pos].name} <span className="dim">({pos})</span></b>
               <p>{POS_INFO[pos].role}</p>
               <button type="button" className="pos-help-btn" aria-expanded={posHelp} onClick={() => setPosHelp((v) => !v)}>{posHelp ? 'Ocultar' : '¿Qué hace cada posición?'}</button>
               {posHelp && (
@@ -179,8 +180,8 @@ export function Start() {
           </section>
         </div>
         <div className="start-challenge">
-          <span>🎯 <b>Reto de esta carrera:</b> {challenge.label}</span>
-          <button type="button" className="btn sm ghost" onClick={() => setSeed(newSeed())} aria-label="Cambiar reto">🎲 Otro</button>
+          <span><Icon name="target" size={13} /> <b>Reto de esta carrera:</b> {challenge.label}</span>
+          <button type="button" className="btn sm ghost" onClick={() => setSeed(newSeed())} aria-label="Cambiar reto"><Icon name="dice" size={13} /> Otro</button>
         </div>
         <div className="simple-foot">
           {current ? <button className="btn pill" onClick={() => nav('/play')}>Volver</button> : <Link to="/careers" className="btn pill">Mis carreras</Link>}
@@ -189,7 +190,7 @@ export function Start() {
         </div>
       </div>
       {askReplace && prev && current && (
-        <ConfirmModal icon="🔄" kicker="Nueva carrera" title="¿Empezar de nuevo?" confirmLabel="Sí, empezar" cancelLabel="Volver" danger
+        <ConfirmModal icon={<Icon name="refresh" size={44} />} kicker="Nueva carrera" title="¿Empezar de nuevo?" confirmLabel="Sí, empezar" cancelLabel="Volver" danger
           onCancel={() => setAskReplace(false)} onConfirm={() => { setAskReplace(false); confirm(); }}>
           <p>{`Tu carrera actual con ${[prev.first, prev.last].filter(Boolean).join(' ')} (${prev.age} años) se perderá.`}</p>
           <p>Solo las carreras terminadas se guardan en Mis carreras.</p>

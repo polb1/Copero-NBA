@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { MinigameSpec } from '../engine/types';
 import { minigameHint } from '../content/minigames';
+import { Icon } from './icons';
 
 /** Where the green zone sits for each attempt (varies so it is not muscle memory). */
 const zoneCenter = (i: number) => 32 + ((i * 37) % 36);
@@ -76,7 +77,7 @@ export function ShotMeter({ spec, onDone, onSimulate }: { spec: MinigameSpec; on
         <div className="board" />
         <div className="rim" />
         <div className="net" />
-        <div className="ball-fly">🏀</div>
+        <div className="ball-fly"><Icon name="ball" size={28} /></div>
         {flash && <div className="shot-msg">{flash === 'in' ? '¡DENTRO!' : 'FUERA'}</div>}
       </div>
       {/* Fires on touch/press, not on release: a timing game must not lag behind the finger. Keyboard clicks (detail 0) still shoot. */}

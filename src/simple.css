@@ -423,7 +423,14 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 6px; }
 .ach-item { display: flex; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 10px; background: #15171b; border: 1px solid var(--line); opacity: 0.55; }
 .ach-item.on { opacity: 1; border-color: rgba(245, 196, 81, 0.45); background: linear-gradient(90deg, rgba(245, 196, 81, 0.1), #15171b 60%); }
-.ach-ic { font-size: 1.4rem; width: 30px; text-align: center; flex: none; }
+.ach-ic { width: 30px; text-align: center; flex: none; display: grid; place-items: center; }
+.ach-ic svg { width: 20px; height: 20px; }
+.ach-glyph { display: inline-grid; place-items: center; }
+.ach-glyph.locked { opacity: .45; }
+.ball-fly svg { width: 28px; height: 28px; display: block; }
+.pos-info svg { width: 16px; height: 16px; vertical-align: -3px; }
+.start-challenge svg, .country .check svg { width: 13px; height: 13px; vertical-align: -2px; }
+.career-who svg { width: 12px; height: 12px; vertical-align: -2px; }
 .ach-item b { display: block; font-size: 0.82rem; }
 .ach-item small { display: block; font-size: 0.68rem; color: var(--text-3); line-height: 1.3; }
 @media (max-width: 560px) { .ach-box { padding: 4px 12px 14px; } .ach-grid { grid-template-columns: 1fr 1fr; } .ach-item small { display: none; } }
@@ -511,6 +518,13 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .id-stats small { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); }
 .id-stats b { font-size: 1.02rem; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 .id-stats b.cash { color: #86efac; }
+.finance-line { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 10px; margin-top: 7px; padding: 7px 9px; border-radius: 10px; background: #17191d; border: 1px solid var(--line); font-size: 0.7rem; color: var(--text-3); font-variant-numeric: tabular-nums; }
+.finance-line b { color: var(--text-2); }
+.finance-line.in-debt { border-color: rgba(248, 113, 113, 0.45); }
+.finance-line.in-debt b { color: #fca5a5; }
+.finance-assets { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.finance-assets .chip { font-size: 0.62rem; padding: 2px 6px; }
+@media (max-width: 960px) { .play-left > .finance-line { order: 1; } }
 @media (max-width: 960px) { .play-left > .id-stats { order: 1; margin-top: 0; } }
 
 /* Language switch: ES · EN · CA. */
@@ -610,3 +624,23 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 /* Exactly three options: two side by side, the third across the full width below. */
 .choices:has(> .choice:nth-child(3):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .choices > .choice:nth-child(3):last-child { grid-column: 1 / -1; }
+
+/* ---------- SVG art inside the existing containers (step 4.2a) ---------- */
+.choice-emoji svg { width: 22px; height: 22px; }
+.dribble svg { width: 28px; height: 28px; }
+.recap-trophy span svg { width: 34px; height: 34px; filter: drop-shadow(0 0 10px rgba(245, 196, 81, 0.55)); }
+.state-label svg { width: 12px; height: 12px; vertical-align: -2px; }
+.card-tab small svg { width: 12px; height: 12px; vertical-align: -2px; }
+.money-line svg { width: 13px; height: 13px; vertical-align: -2px; }
+.finance-assets .chip svg { width: 12px; height: 12px; vertical-align: -2px; }
+.earned svg { width: 20px; height: 20px; }
+.tl-club > span svg { width: 14px; height: 14px; vertical-align: -2px; }
+.confirm-icon svg { width: 44px; height: 44px; }
+
+/* ---------- Trophy case (glass vitrina) ---------- */
+.trophy-case { position: relative; margin: 10px auto 2px; padding: 14px 12px 10px; border-radius: 14px; border: 1px solid rgba(245,196,81,.4); background: linear-gradient(180deg, rgba(245,196,81,.12), rgba(20,22,26,.75) 42%, #111317); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 10px 24px rgba(0,0,0,.35); overflow: hidden; }
+.trophy-case::before { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, rgba(255,255,255,.14), transparent 28%, transparent 65%, rgba(255,255,255,.06)); pointer-events: none; }
+.trophy-case-shelf { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: center; gap: 8px 10px; position: relative; z-index: 1; padding: 4px 6px 8px; border-bottom: 2px solid rgba(245,196,81,.45); }
+.trophy-case-shelf svg { filter: drop-shadow(0 4px 6px rgba(0,0,0,.45)); }
+.trophy-more { position: relative; z-index: 1; display: inline-block; align-self: center; font-size: .72rem; font-weight: 800; color: var(--gold); }
+@media (max-width: 560px) { .trophy-case-shelf { gap: 6px; } .trophy-case-shelf svg { width: 40px; height: 40px; } }

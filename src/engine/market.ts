@@ -46,8 +46,10 @@ export function generateFAOffers(c: Career, opts: { ownTeam?: string | null; rfa
   const rng = rngFor(c.seed, 'fa-offers', season, c.offers.length, u.ovr);
   const prevGmsc = c.seasons.filter((s) => s.comp === 'NBA').slice(-1)[0];
   const prod = prevGmsc && prevGmsc.stats.gp ? productionBonus(prevGmsc.stats.gmsc / prevGmsc.stats.gp) : 0;
-  const mv = marketValue(u, season, prod) * (c.flags.agentUpgrade ? 1.08 : 1) * (0.9 + c.agent.quality / 500);
-  const threshold = u.ovr >= 78 ? -6 : u.ovr >= 70 ? -1 : u.ovr >= 64 ? 3 : 7;
+  const marketDrop = c.flags.cut ? 0.82 : c.flags.demoted ? 0.92 : 1;
+  const mv = marketValue(u, season, prod) * (c.flags.agentUpgrade ? 1.08 : 1) * (0.9 + c.agent.quality / 500) * marketDrop;
+  const penalty = (c.flags.cut ? 5 : 0) + (c.flags.demoted ? 2 : 0);
+  const threshold = (u.ovr >= 78 ? -6 : u.ovr >= 70 ? -1 : u.ovr >= 64 ? 3 : 7) + penalty;
   const teams = Object.keys(league.teams)
     .map((id) => ({ id, s: teamInterest(league, id, u, c, rng) + (id === opts.ownTeam ? 3 + (c.flags.wantsStay ? 4 : 0) + (c.loyalty - 50) * 0.06 : 0) }))
     .filter((x) => x.s > threshold && (rosterCount(league.teams[x.id], league) < RULES.rosterMax || x.id === opts.ownTeam))

@@ -7,6 +7,7 @@ import { addNews, onNbaRoster, teamOf, userOf } from './career';
 import { generateDraftClass, materializeProspect, mockRange, positionNeeds, prospectValue, rookieContract, runLottery, simulateDraft } from './draft';
 import { contractEnd, makeSalaries, marketValue, offerCapacity, salaryIn, yearsLeft, fmtMoney } from './contracts';
 import { contractFromOffer, euroOffers, fallbackOffers, generateFAOffers, signUser, projectedRole } from './market';
+import { evaluateStanding } from './standing';
 import { offseasonDevelopment } from './progression';
 import { generatePlayer, emptyStats, fullName } from './players';
 import { makeCoach, newPlayerId, setupSeasonSchedule, signNpc, teamName, teamStrength } from './league';
@@ -229,6 +230,7 @@ export function beginOffseason(c: Career) {
     retire(c, 'Tu cuerpo dice basta: el nivel ya no es el de antes y decides retirarte.');
     return;
   }
+  evaluateStanding(c, prevSeason);
   nationalSummer(c, prevSeason);
   c.phase = 'offseason';
   c.offers = [];
@@ -336,6 +338,9 @@ export function buildOffseasonOffers(c: Career) {
   const nba = generateFAOffers(c, { ownTeam: own, rfa });
   c.offers.push(...nba);
   if (nba.length < 2) c.offers.push(...fallbackOffers(c));
+  if ((c.flags.cut || c.flags.demoted) && !c.offers.some((o) => o.kind === 'overseas')) {
+    c.offers.push(...fallbackOffers(c).filter((o) => o.kind === 'overseas').slice(0, 1));
+  }
   if (k) addNews(c, 'contract', 'Agente libre', `Tu contrato con ${teamName(L, k.teamId)} ha terminado. ${c.offers.length} propuesta(s) sobre la mesa.`, 'neutral');
 }
 
@@ -343,6 +348,10 @@ export function acceptOffer(c: Career, offerId: string) {
   const L = c.league;
   const o = c.offers.find((x) => x.id === offerId);
   if (!o) return;
+  // A fresh signing clears the poor-standing marks: a new air, even from a smaller market.
+  delete c.flags.cut;
+  delete c.flags.demoted;
+  delete c.flags.underStrikes;
   const u = userOf(c);
   if (offerId === 'opt-player') {
     if (u.contract) delete u.contract.option;

@@ -13,6 +13,7 @@ import { startingClubs } from './clubpick';
 import type { RoleKey } from '../content/events';
 import { EVENTS } from '../content/events';
 import { instantiate, absDay, markEventSeen } from './events';
+import { newFinance } from './finance';
 
 export const SAVE_VERSION = 1;
 
@@ -125,6 +126,7 @@ export function createCareer(input: NewCareerInput, seed: number): Career {
     workEthic: Math.round(rng.range(45, 75)),
     earnings: 0,
     cash: 0,
+    finance: input.mode === 'full' ? newFinance() : undefined,
     endorsement: 0,
     agent: { name: rng.pick(AGENT_NAMES), quality: Math.round(rng.range(40, 70)) },
     training: { focus: 'balanced', intensity: 'normal' },

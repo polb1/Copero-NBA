@@ -268,6 +268,7 @@ export interface EffectBag {
   trophy?: 'threeContest';
   /** Agency signed: commission and contacts for the rest of the career. */
   agent?: 'top' | 'family' | 'self';
+  buyAsset?: string; sellAsset?: string; borrow?: number;
 }
 
 export interface ActiveEvent {
@@ -277,7 +278,7 @@ export interface ActiveEvent {
   category: string;
   /** cost: money the option needs up front (it cannot be chosen without it). */
   /** odds: chance (0-100) that a risky option turns out well, shown before choosing. */
-  options: { label: string; desc: string; cost?: number; odds?: number }[];
+  options: { label: string; desc: string; cost?: number; odds?: number; action?: 'sell' | 'loan' | 'bankrupt'; assetId?: string; amount?: number }[];
   vars: Record<string, string>;
   /** odds/lucky: for a risky option, the chance shown and whether the roll went the player's way. */
   resolved?: { option: number; result: string; effectsSummary: string[]; made?: number; odds?: number; lucky?: boolean };
@@ -393,6 +394,16 @@ export interface PreDraft {
   workouts: string[];
 }
 
+export interface OwnedAsset { id: string; bought: number; value: number; }
+export interface FinanceState {
+  assets: OwnedAsset[];
+  debt: number;
+  credit: number;
+  bankruptcies: number;
+  ruined: boolean;
+  ruinCooldown: number;
+}
+
 export interface Satellite {
   comp: Competition;
   teamName: string;
@@ -427,6 +438,7 @@ export interface Career {
   earnings: number;
   /** Money in hand: starts at 0, salary is paid at the end of each season, costs come out of it. */
   cash?: number;
+  finance?: FinanceState; // only full mode saves from phase 3
   endorsement: number; // per season
   agent: { name: string; quality: number };
   training: { focus: TrainingFocus; intensity: 'light' | 'normal' | 'intense' };
@@ -470,7 +482,11 @@ export interface SeasonSummary {
   season: number;
   lines: { label: string; value: string; tone?: 'good' | 'bad' }[];
   /** Money paid at the end of the season (absent on old saves). */
-  money?: { salary: number; sponsor: number; agent: number; cash: number };
+  money?: {
+    salary: number; sponsor: number; agent: number; cash: number;
+    lifestyle?: number; upkeep?: number; assetIncome?: number; interest?: number; payment?: number;
+    debt?: number; assets?: number; netWorth?: number; sold?: string[];
+  };
   highlights: string[];
   awards: string[];
   goals: Goal[];

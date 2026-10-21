@@ -5,10 +5,12 @@ import { cashOf } from '../../engine/mindset';
 import { fmtMoney } from '../../engine/contracts';
 import { CATEGORY_LABEL } from '../../content/events';
 import { store } from '../../store/store';
-import { CATEGORY_ICON } from '../../ui/simple';
+import { CATEGORY_GLYPH } from '../../ui/simple';
+import { Icon } from '../../ui/icons';
 import { Minigame } from '../../ui/Minigame';
 import { CATEGORY_SCENE, Scene } from '../../ui/Scene';
-import { SCENE_EMOJI, sceneForOption } from '../../ui/life';
+import { SCENE_GLYPH } from '../../ui/art';
+import { sceneForOption } from '../../ui/life';
 
 const ROLL_MS = 2000;
 
@@ -49,7 +51,7 @@ function OddsRoll({ odds, lucky, seed }: { odds: number; lucky: boolean; seed: s
         <span className="roll-bad">{100 - odds} %</span>
         <span ref={marker} className="roll-marker" style={{ left: `${done ? land : lucky ? 96 : 4}%` }} />
       </div>
-      <div className="roll-verdict">{done ? (lucky ? '✅ ¡Sale bien!' : '💥 Sale mal') : '🎲 Tirando…'}</div>
+      <div className="roll-verdict">{done ? (lucky ? <><Icon name="check" size={13} /> ¡Sale bien!</> : <><Icon name="flame" size={13} /> Sale mal</>) : <><Icon name="dice" size={13} /> Tirando…</>}</div>
     </div>
   );
 }
@@ -74,7 +76,7 @@ export function EventModalInline({ c }: { c: Career }) {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [ev]);
-  const icon = CATEGORY_ICON[ev.category] ?? '🏀';
+  const icon = <Icon name={CATEGORY_GLYPH[ev.category] ?? 'ball'} size={13} />;
   const afford = (i: number) => canAfford(c, i);
   const mg = ev.minigame;
   const tiers = ev.minigameTiers;
@@ -118,7 +120,7 @@ export function EventModalInline({ c }: { c: Career }) {
             return (
             <button key={i} className={`choice with-img ${afford(i) ? '' : 'locked'}`} disabled={!afford(i)} onClick={() => store.act((x) => chooseOption(x, i))}>
               <Scene kind={kind} variant={`${ev.defId}-${i}`} height={64} still className="choice-img" />
-              <span className="choice-emoji" aria-hidden="true">{SCENE_EMOJI[kind]}</span>
+              <span className="choice-emoji" aria-hidden="true"><Icon name={SCENE_GLYPH[kind]} size={22} /></span>
               <b className="choice-title">{o.label}</b>
               <span className="choice-body">{o.desc}</span>
               {o.odds !== undefined && <span className="odds" title="Probabilidad según tu estado actual"><span className="odds-bar"><span style={{ width: `${o.odds}%` }} /></span><span><b className="good">{o.odds} %</b> sale bien · <b className="bad">{100 - o.odds} %</b> sale mal</span></span>}

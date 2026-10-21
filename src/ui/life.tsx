@@ -4,6 +4,7 @@ import type { Career } from '../engine/types';
 import { fmtDate, seasonLabel } from '../engine/schedule';
 import { teamOf, userOf } from '../engine/career';
 import { Scene, type SceneKind } from './Scene';
+import { Icon } from './icons';
 import { GOLD_OVR, ovrTone } from './simple';
 import { store, useStore } from '../store/store';
 
@@ -48,7 +49,7 @@ export function OvrTile({ ovr }: { ovr: number }) {
 /** Skips the animation up to the next decision (the simulation itself is the same). */
 function SkipButton() {
   const fast = useStore((s) => s.simFast);
-  return <button type="button" className="btn sm ghost skip-btn" disabled={fast} onClick={() => store.fastForward()}>{fast ? '⏩…' : 'Saltar ⏩'}</button>;
+  return <button type="button" className="btn sm ghost skip-btn" disabled={fast} onClick={() => store.fastForward()}>{fast ? 'Saltando…' : <><span>Saltar</span> <Icon name="forward" size={13} /></>}</button>;
 }
 
 /** What the screen shows while the season is being simulated: date and progress, never results. */
@@ -78,7 +79,7 @@ export function SimProgress({ c, label }: { c: Career; label: string }) {
         <h2>{phase}</h2>
       </Scene>
       <div className="sim-row">
-        <div className="dribble" aria-hidden="true">🏀</div>
+        <div className="dribble" aria-hidden="true"><Icon name="ball" size={28} /></div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div className="row between small"><span className="muted">{L.day > 0 ? fmtDate(L.season, L.day) : 'Training camp'}</span><span className="dim">{t ? t.city : u.teamId ?? c.satellite?.teamName ?? ''}</span></div>
           <div className="sim-bar"><span style={{ width: `${Math.round(pct * 100)}%` }} /></div>
@@ -107,13 +108,6 @@ const OPTION_SCENES: [RegExp, SceneKind][] = [
   [/entren|trabaj|gimnas|fuerza|ejerc|reto|tiro|campus|mec[aá]nica|v[ií]deo/, 'training'],
   [/rival|duelo|pista|partido|jugar|canastas|equipo|estren|sin miedo|atr[eé]v/, 'arena'],
 ];
-
-/** Small icon per scene, shown on phones where the option photos are hidden. */
-export const SCENE_EMOJI: Record<SceneKind, string> = {
-  arena: '🏀', training: '💪', locker: '🤝', coach: '📋', press: '🎤', medical: '🩺', contract: '✍️', money: '💰', sneakers: '👟',
-  phone: '📱', trophy: '🏆', draft: '🎓', travel: '✈️', national: '🏅', summer: '☀️', family: '🏠', clutch: '⏱️', contest: '🎯',
-  college: '📚', europe: '🌍', rest: '😴', rivalry: '⚔️',
-};
 
 /** Picks an image for an option card from its wording, like Copero's illustrated choices. */
 export function sceneForOption(text: string, fallback: SceneKind): SceneKind {

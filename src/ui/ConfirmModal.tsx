@@ -2,7 +2,7 @@ import { useEffect, type ReactNode } from 'react';
 
 /** In-game confirmation (replaces the browser's confirm()): backdrop, icon, title, text and two buttons. */
 export function ConfirmModal({ icon, kicker, title, children, confirmLabel, cancelLabel = 'Cancelar', danger, onConfirm, onCancel }: {
-  icon: string;
+  icon: ReactNode;
   kicker?: string;
   title: string;
   children?: ReactNode;

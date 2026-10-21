@@ -33,16 +33,17 @@ Abre http://localhost:5173. Otros comandos:
 
 ## Qué incluye
 
-- **Liga completa simulada**: 30 franquicias, calendario real de 82 partidos, Play-In, playoffs al mejor de 7, All-Star, fecha límite de traspasos, cambios de entrenador.
+- **Liga completa simulada**: 30 franquicias con plantillas reales 2026-27, calendario real de 82 partidos, Play-In, playoffs al mejor de 7, All-Star, fecha límite de traspasos, cambios de entrenador.
 - **Motor estadístico determinista**: box scores coherentes (los puntos salen de los tiros), fatiga, forma, lesiones, ventaja de campo, calidad rival. Misma semilla + mismas decisiones = mismo resultado.
-- **Draft**: temporada pre-draft, combine, entrevistas, mock draft, big board, lotería 3-2-1 (aprobada en mayo de 2026) y noche del draft con dos rondas.
+- **Draft**: temporada pre-draft, combine con pruebas de tiro, atléticas, manejo, fuerza y defensa, entrevistas, mock draft, big board, lotería 3-2-1 (aprobada en mayo de 2026) y noche del draft con dos rondas. El plan del combine (completo, duro, seguro, medir o saltar) afecta al stock y al pick.
 - **Contratos** con cifras 2026-27: tope, impuesto, aprons, MLE, mínimos, two-way, escala de novato aproximada, opciones, extensiones y agencia libre restringida (modelo simplificado y declarado como tal).
 - **Vista simple** (pantalla principal): identidad en una sola pantalla y una pantalla de carrera con tarjeta, decisiones en tarjetas y línea de tiempo por edades. 1-2 decisiones por temporada; los resultados de la temporada solo se muestran al terminarla.
-- **66 acontecimientos**, 4 de ellos **minijuegos de tiro** jugables (último tiro, tiros libres, concurso de triples, reto de entrenamiento).
-- **Fotos de stock e ilustraciones** en cada evento, fase y opción; simulación en directo con barra de progreso, contador de OVR animado, confeti en los grandes momentos y línea de tiempo animada.
+- **87 acontecimientos**, con **10 minijuegos** jugables por posición (tiro, mates, rebotes, robos, pases y cierre de partido) y dificultad según OVR: más riesgo, más puntos.
+- **Ilustraciones vectoriales originales** en cada evento, fase y opción; simulación en directo con barra de progreso, contador de OVR animado, confeti en los grandes momentos y línea de tiempo animada.
 - **Progresión** por entrenamiento semanal, edad, minutos y potencial oculto (los ojeadores pueden equivocarse).
 - **Premios** calculados con las estadísticas de todos los jugadores: MVP, DPOY, ROY, 6MOY, MIP, All-NBA, All-Defensive, All-Star, líderes y MVP de las Finales.
 - **Tres ritmos**: carrera completa, carrera rápida y desafío diario (semilla compartida por fecha UTC).
+- **Modo Larga con economía**: activos, mantenimiento, deuda al 8%, crisis, bancarrota y descenso/corte por bajo rendimiento; los ritmos rápidos conservan la carrera clásica sin finanzas.
 - **Una sola pantalla de juego**: sin menús de gestión. Logros, partidas, ajustes y desafío diario quedan en páginas secundarias.
 - **Clubes reales**: 137 clubes de Europa, Latinoamérica, Asia, África y Oceanía con fuerza por liga, 40 universidades NCAA y las 30 franquicias filiales de la G League. El nivel del club cambia la fuerza del equipo y tus minutos.
 - **Todos los países del mundo** (200) con bandera.
@@ -65,9 +66,7 @@ frecuencia de eventos). Los eventos son datos en `src/content/events.ts`.
 
 ## Imágenes y licencias
 
-- **30 fotografías de Unsplash** en `public/stock/` (2,4 MB), usadas como cabecera de cada evento y fase y en las tarjetas de opción. Licencia de Unsplash: uso comercial permitido sin atribución. Lista completa con enlaces en [docs/CREDITS.md](docs/CREDITS.md). Se eligieron sin logotipos de ligas o marcas ni personas identificables.
-- **22 ilustraciones vectoriales originales** (`src/ui/Scene.tsx`) como respaldo: si una foto falta o no carga, se muestra la ilustración.
-- Para cambiar o añadir fotos: copia el archivo a `public/stock/` y añádelo a `STOCK_PHOTOS` en `src/ui/Scene.tsx` (admite varias fotos por escena; se alternan).
+- **22 ilustraciones vectoriales originales** en `src/ui/Scene.tsx` y `src/ui/art/`, usadas como cabecera de cada evento y fase y en las tarjetas de opción; sin fotos de terceros. Sin filtros SVG ni emoji, ids deterministas por instancia.
 
 - **Logotipos de los equipos**: se cargan en tiempo de ejecución desde la CDN pública de la NBA (`src/data/logos.ts`), no se incluyen en el paquete. Son marcas de la NBA y sus franquicias. Para vender el juego sin licencia de la NBA, pon `OFFICIAL_LOGOS = false`: se usan escudos genéricos propios. Si un logo no carga (sin conexión), también se muestra el escudo propio.
 

@@ -7,6 +7,8 @@ import { Flag } from '../../ui/Flag';
 import { ACHIEVEMENTS } from '../../engine/achievements';
 import { ConfirmModal } from '../../ui/ConfirmModal';
 import { LangSwitch } from '../../ui/LangSwitch';
+import { AchievementArt } from '../../ui/art';
+import { Icon } from '../../ui/icons';
 
 type Sort = 'legacyScore' | 'ppg' | 'titles' | 'endedAt';
 const SORTS: { id: Sort; label: string }[] = [
@@ -33,7 +35,7 @@ export function Careers() {
         <div className="simple-head">
           <div>
             <h2>Mis carreras</h2>
-            {list.length > 0 && <p className="tiny dim" style={{ margin: '4px 0 0' }}>{list.length} {list.length === 1 ? 'carrera' : 'carreras'} · {doneCount} {doneCount === 1 ? 'reto cumplido' : 'retos cumplidos'} · mejor legado {Math.max(...list.map((r) => r.legacyScore))}{playStreak() >= 2 ? ` · 🔥 racha de ${playStreak()} días` : ''}</p>}
+            {list.length > 0 && <p className="tiny dim" style={{ margin: '4px 0 0' }}>{list.length} {list.length === 1 ? 'carrera' : 'carreras'} · {doneCount} {doneCount === 1 ? 'reto cumplido' : 'retos cumplidos'} · mejor legado {Math.max(...list.map((r) => r.legacyScore))}{playStreak() >= 2 ? ` · racha de ${playStreak()} días` : ''}</p>}
           </div>
           {list.length > 1 && (
             <div className="seg" role="radiogroup" aria-label="Ordenar">
@@ -52,7 +54,7 @@ export function Careers() {
                   <b><Flag code={r.nat} size={18} /> {r.name}</b>
                   <small>{r.pos} · {seasonLabel(r.from)} a {seasonLabel(r.to)} · {r.seasons} temp. · retirado a los {r.age}</small>
                   <small className="dim">{r.teams.join(' · ')}</small>
-                  {r.challenge && <small className={r.challengeDone ? 'gold' : 'dim'}>{r.challengeDone ? '✅' : '❌'} Reto: {r.challenge}</small>}
+                  {r.challenge && <small className={r.challengeDone ? 'gold' : 'dim'}><Icon name={r.challengeDone ? 'check' : 'close'} size={12} /> Reto: {r.challenge}</small>}
                 </div>
                 <div className="career-stats">
                   <span className={top(r, 'ppg') ? 'gold' : ''}><b>{f1(r.ppg)}</b><small>PTS</small></span>
@@ -80,7 +82,7 @@ export function Careers() {
         </div>
       </div>
       {askClear && (
-        <ConfirmModal icon="🗑️" kicker="Mis carreras" title="¿Borrar el historial?" confirmLabel="Sí, borrar" danger
+        <ConfirmModal icon={<Icon name="trash" size={44} />} kicker="Mis carreras" title="¿Borrar el historial?" confirmLabel="Sí, borrar" danger
           onCancel={() => setAskClear(false)} onConfirm={() => { setAskClear(false); clearHistory(); setList([]); }}>
           <p>{`Se borrarán tus ${list.length} carreras guardadas y no se podrán recuperar.`}</p>
         </ConfirmModal>
@@ -100,7 +102,7 @@ function Achievements() {
       <div className="ach-grid">
         {list.map((a) => (
           <div key={a.id} className={`ach-item ${got.has(a.id) ? 'on' : ''}`} title={a.desc}>
-            <span className="ach-ic" aria-hidden="true">{got.has(a.id) ? a.icon : '🔒'}</span>
+            <span className="ach-ic" aria-hidden="true"><AchievementArt id={a.id} size={20} locked={!got.has(a.id)} /></span>
             <span><b>{a.title}</b><small>{a.desc}</small></span>
           </div>
         ))}

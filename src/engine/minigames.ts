@@ -116,6 +116,7 @@ const SCALED_KEYS = [
 const PASSTHROUGH_KEYS = [
   'flag', 'unflag', 'chain', 'injure', 'heal', 'playThrough',
   'gleague', 'recall', 'tradeRequest', 'agent', 'trophy', 'news',
+  'buyAsset', 'sellAsset', 'borrow',
 ] as const;
 
 /** New EffectBag with every numeric effect multiplied by `mul`. The original bag is never mutated. */

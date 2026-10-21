@@ -9,6 +9,7 @@ import { attrLabel } from './attributes';
 import { yearsLeft, fmtMoney } from './contracts';
 import { refreshOvr, fullName } from './players';
 import { rollInjury } from './injuries';
+import { assetCost, buyAsset, sellAsset, borrow, financeOn } from './finance';
 import { clamp, type Rng } from './rng';
 
 export interface EventContext {
@@ -29,6 +30,9 @@ export function matches(w: EventWhen, ctx: EventContext, viaChain = false): bool
   const { career: c, user: u, team, role } = ctx;
   if (w.chainOnly && !viaChain) return false;
   if (w.phases && !w.phases.includes(c.phase)) return false;
+  if (w.modes && !w.modes.includes(c.mode)) return false;
+  if (w.financeOnly && !financeOn(c)) return false;
+  if (w.minCash !== undefined && cashOf(c) < w.minCash) return false;
   if (w.minAge !== undefined && u.age < w.minAge) return false;
   if (w.maxAge !== undefined && u.age > w.maxAge) return false;
   if (w.minOvr !== undefined && u.ovr < w.minOvr) return false;
@@ -140,9 +144,11 @@ export function minigameSpec(def: MinigameDef, u: Player, c: Career): MinigameSp
   return buildSpec(def, u, c, 'normal');
 }
 
-function optionCost(o: EventDef['options'][number]): number {
+function optionCost(o: EventDef['options'][number], c: Career): number {
+  const assetIds = [o.effects?.buyAsset, ...(o.outcomes ?? []).map((x) => x.effects.buyAsset)].filter(Boolean) as string[];
+  const asset = assetIds.reduce((max, id) => Math.max(max, assetCost(id, c.league.season)), 0);
   const spends = [o.effects?.money ?? 0, ...(o.outcomes ?? []).map((x) => x.effects.money ?? 0)];
-  return Math.max(0, ...spends.map((m) => -m));
+  return Math.max(0, ...spends.map((m) => -m), asset);
 }
 
 /** Rough value of an outcome for the player: positive is "it went well". */
@@ -174,7 +180,7 @@ export function instantiate(def: EventDef, ctx: EventContext, rng: Rng): ActiveE
     title: fill(def.title, vars),
     text: fill(def.text, vars),
     // An option that spends money needs it up front: its largest possible cost.
-    options: def.options.map((o) => ({ label: fill(o.label, vars), desc: fill(o.desc, vars), cost: optionCost(o) || undefined, odds: optionOdds(o, ctx) })),
+    options: def.options.map((o) => ({ label: fill(o.label, vars), desc: fill(o.desc, vars), cost: optionCost(o, ctx.career) || undefined, odds: optionOdds(o, ctx) })),
     vars,
   };
   if (def.minigame) {
@@ -259,6 +265,9 @@ export function applyEffects(c: Career, u: Player, e: EffectBag, rng: Rng): stri
     if (e.money > 0) c.earnings += e.money;
     out.push(`Dinero ${e.money > 0 ? '+' : '−'}${fmtMoney(Math.abs(e.money))}`);
   }
+  if (e.buyAsset) out.push(...buyAsset(c, e.buyAsset, c.league.season));
+  if (e.sellAsset) out.push(...sellAsset(c, e.sellAsset, c.league.season));
+  if (e.borrow) out.push(...borrow(c, e.borrow, c.league.season));
   if (e.agent) {
     const deal = AGENCY[e.agent];
     c.agent = { ...c.agent, quality: deal.quality };

@@ -15,13 +15,16 @@ import { AWARD_LABEL } from '../../engine/awards';
 import { SATELLITES } from '../../engine/satellite';
 import { seasonLabel } from '../../engine/schedule';
 import { countryByCode } from '../../content/names';
+import { annualUpkeep, financeOf, financeOn, lifestyleCost, netWorth } from '../../engine/finance';
+import { assetById } from '../../content/assets';
 import { careerHistory, store, useCareer, useStore } from '../../store/store';
 import { EventModalInline } from './EventInline';
 import { TeamBadge, ovrTone } from '../../ui/simple';
-import { OvrTile, SCENE_EMOJI, SimProgress, useCountUp } from '../../ui/life';
+import { OvrTile, SimProgress, useCountUp } from '../../ui/life';
 import { drawCard } from '../../ui/card';
 import { Scene, type SceneKind } from '../../ui/Scene';
-import { Icon } from '../../ui/icons';
+import { ASSET_GLYPH, AwardArt, AchievementArt, SCENE_GLYPH, TrophyCase } from '../../ui/art';
+import { Icon, type IconName } from '../../ui/icons';
 import { Flag } from '../../ui/Flag';
 import { findClub } from '../../data/clubs';
 import { ClubLogo } from '../../ui/ClubLogo';
@@ -31,8 +34,6 @@ import { Minigame } from '../../ui/Minigame';
 import { MINIGAME_TIER_LABEL } from '../../content/minigames';
 
 const num = (n: number) => Math.round(n).toLocaleString('es-ES');
-
-const AWARD_ICON: Record<string, string> = { champion: '💍', mvp: '👑', fmvp: '🥇', dpoy: '🛡️', roy: '🌱', smoy: '🔋', mip: '📈', allStar: '⭐', allNba1: '🏅', allNba2: '🏅', allNba3: '🏅', allDef1: '🧱', allDef2: '🧱', threeContest: '🎯', euroChampion: '🏆', euroMvp: '🌟' };
 
 export function Play() {
   const c = useCareer();
@@ -82,13 +83,36 @@ export function Play() {
  */
 function viewSig(c: Career): string {
   const u = userOf(c);
-  return [c.id, c.phase, c.seasons.length, c.ovrHistory.length, u.ovr, u.pot, u.age, u.teamId, u.injury?.daysLeft ?? '', c.satellite?.teamName ?? '', c.predraft?.clubName ?? '', c.predraft?.step ?? '', c.league.season, c.league.day > 0, c.offers.length, c.retirement ? 1 : 0, c.flags.challenge ?? '', c.flags.nationalCaps ?? 0, c.flags.medals ?? 0, Math.round(c.morale), Math.round(c.chemistry), Math.round(c.trust), Math.round(c.pressure), Math.round(c.fame), Math.round(c.reputation), Math.round(c.loyalty), Math.round(c.workEthic), Math.round(u.form), Math.round(u.fatigue / 5), cashOf(c), c.endorsement, u.contract?.startSeason ?? '', u.contract?.salaries.length ?? ''].join('|');
+  return [c.id, c.phase, c.seasons.length, c.ovrHistory.length, u.ovr, u.pot, u.age, u.teamId, u.injury?.daysLeft ?? '', c.satellite?.teamName ?? '', c.predraft?.clubName ?? '', c.predraft?.step ?? '', c.league.season, c.league.day > 0, c.offers.length, c.retirement ? 1 : 0, c.flags.challenge ?? '', c.flags.nationalCaps ?? 0, c.flags.medals ?? 0, Math.round(c.morale), Math.round(c.chemistry), Math.round(c.trust), Math.round(c.pressure), Math.round(c.fame), Math.round(c.reputation), Math.round(c.loyalty), Math.round(c.workEthic), Math.round(u.form), Math.round(u.fatigue / 5), cashOf(c), c.endorsement, u.contract?.startSeason ?? '', u.contract?.salaries.length ?? '', c.finance?.debt ?? 0, c.finance?.assets.length ?? 0, c.finance?.credit ?? 0, c.finance?.ruined ? 1 : 0, c.flags.cut ?? 0, c.flags.demoted ?? 0].join('|');
 }
 // The signature is computed when rendering and passed as a prop: actions mutate the career in place, so
 // recomputing it from the previous props object would already see the new state and skip needed renders.
 const sameView = (a: { sig: string }, b: { sig: string }) => a.sig === b.sig;
 const MemoTopCard = memo(({ c }: { c: Career; sig: string }) => <TopCard c={c} />, sameView);
 const MemoTimeline = memo(({ c }: { c: Career; sig: string }) => <Timeline c={c} />, sameView);
+
+function FinanceLine({ c }: { c: Career }) {
+  if (!financeOn(c)) return null;
+  const u = userOf(c);
+  const f = financeOf(c);
+  const professional = !(c.predraft?.step === 'season') && (!!u.contract || (c.flags.overseasSalary ?? 0) > 0);
+  const expenses = annualUpkeep(c, c.league.season) + lifestyleCost(c, c.league.season, professional);
+  const assets = f.assets.map((a) => assetById(a.id)).filter((a): a is NonNullable<typeof a> => !!a);
+  return (
+    <div className={`finance-line ${f.debt > 0 ? 'in-debt' : ''}`} title={`Patrimonio neto: ${fmtMoney(netWorth(c))}`}>
+      <span>Gastos fijos <b>{fmtMoney(expenses)}/año</b></span>
+      <span>Deuda <b>{fmtMoney(f.debt)}</b></span>
+      <span>Crédito <b>{Math.round(f.credit)}</b></span>
+      {assets.length > 0 && (
+        <span className="finance-assets">
+          {assets.map((a) => <span key={a.id} className="chip"><Icon name={ASSET_GLYPH[a.id] ?? 'building'} size={12} /> {a.short}</span>)}
+        </span>
+      )}
+      {f.ruined && <span className="chip bad">En ruina</span>}
+      {c.flags.cut ? <span className="chip bad">Cortado</span> : c.flags.demoted ? <span className="chip bad">En el mercado</span> : null}
+    </div>
+  );
+}
 
 function TopCard({ c }: { c: Career }) {
   const u = userOf(c);
@@ -122,6 +146,7 @@ function TopCard({ c }: { c: Career }) {
         <div title="Sube poco a poco con tu experiencia y tu rendimiento"><small>Valor</small><b>{fmtMoney(shownValue(c, u))}</b></div>
         <div title="Tu dinero: cobras al final de cada temporada y pagas los gastos de tus decisiones"><small>Dinero</small><b className="cash">{fmtMoney(cashOf(c))}</b></div>
       </div>
+      <FinanceLine c={c} />
       <CardTabs c={c} awards={awards} totals={
         <div className="tot-row">
           <div title={`${f1(a.ppg)} / ${f1(a.rpg)} / ${f1(a.apg)} por partido`}><small>PARTIDOS</small><b>{num(tot.gp)}</b></div>
@@ -153,11 +178,11 @@ function CardTabs({ c, awards, totals }: { c: Career; awards: Record<string, num
   const [v, target] = ch.progress(c);
   const perf = performancePct(c, userOf(c));
   const trophies = Object.values(awards).reduce((x, y) => x + y, 0);
-  const tabs: { id: CardTab; icon: string; label: string; value: ReactNode }[] = [
-    { id: 'legacy', icon: '📈', label: 'Legado', value: tier },
-    { id: 'goal', icon: v >= target ? '✅' : '🎯', label: 'Reto', value: v >= target ? '¡Hecho!' : target > 1 ? `${Math.min(v, target).toLocaleString('es-ES')} / ${target.toLocaleString('es-ES')}` : 'Pendiente' },
-    { id: 'trophies', icon: '🏆', label: 'Vitrina', value: String(trophies) },
-    { id: 'state', icon: '🧠', label: 'Estado', value: <span className={perf > 0 ? 'delta-up' : perf < 0 ? 'delta-down' : ''}>{perf > 0 ? '+' : ''}{perf} %</span> },
+  const tabs: { id: CardTab; icon: ReactNode; label: string; value: ReactNode }[] = [
+    { id: 'legacy', icon: <Icon name="chart" size={13} />, label: 'Legado', value: tier },
+    { id: 'goal', icon: <Icon name={v >= target ? 'check' : 'target'} size={13} />, label: 'Reto', value: v >= target ? '¡Hecho!' : target > 1 ? `${Math.min(v, target).toLocaleString('es-ES')} / ${target.toLocaleString('es-ES')}` : 'Pendiente' },
+    { id: 'trophies', icon: <Icon name="trophy" size={13} />, label: 'Vitrina', value: String(trophies) },
+    { id: 'state', icon: <Icon name="brain" size={13} />, label: 'Estado', value: <span className={perf > 0 ? 'delta-up' : perf < 0 ? 'delta-down' : ''}>{perf > 0 ? '+' : ''}{perf} %</span> },
   ];
   return (
     <div className="card-tabs">
@@ -174,9 +199,7 @@ function CardTabs({ c, awards, totals }: { c: Career; awards: Record<string, num
       {tab === 'trophies' && (
         <div className="card-panel anim-in">
           {trophies === 0 ? <p className="tiny dim" style={{ margin: 0, textAlign: 'center' }}>Aún no has ganado ningún trofeo.</p> : (
-            <div className="row wrap" style={{ justifyContent: 'center', gap: 6 }}>
-              {Object.entries(awards).sort((x, y) => y[1] - x[1]).map(([k, n]) => <span key={k} className="chip gold" title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'} {n > 1 ? `${n}× ` : ''}{AWARD_LABEL[k] ?? k}</span>)}
-            </div>
+            <TrophyCase awards={Object.entries(awards).flatMap(([k, n]) => Array.from({ length: n }, () => k))} size={44} max={12} labels={AWARD_LABEL} />
           )}
         </div>
       )}
@@ -201,21 +224,21 @@ function LegacyMeter({ c }: { c: Career }) {
       <div className="row between tiny"><span><b>Legado</b> · {cur[1]}</span><span className="dim">{next ? `${score} / ${next[0]} → ${next[1]}` : `${score} · nivel máximo`}</span></div>
       <div className="legacy-bar"><span style={{ width: `${Math.max(3, Math.min(100, pct))}%` }} /></div>
       {best > 0 && c.phase !== 'retired' && (
-        <div className={`legacy-best tiny ${score > best ? 'gold' : 'dim'}`}>{score > best ? `🔥 Superando tu récord (${best})` : `Tu récord: ${best} · te faltan ${best - score}`}</div>
+        <div className={`legacy-best tiny ${score > best ? 'gold' : 'dim'}`}>{score > best ? `Superando tu récord (${best})` : `Tu récord: ${best} · te faltan ${best - score}`}</div>
       )}
     </div>
   );
 }
 
-const STATE_ROWS: { key: 'morale' | 'chemistry' | 'trust' | 'pressure' | 'fame' | 'reputation' | 'loyalty' | 'workEthic'; label: string; icon: string; what: string; invert?: boolean }[] = [
-  { key: 'morale', label: 'Moral', icon: '😊', what: 'Rendimiento en pista' },
-  { key: 'chemistry', label: 'Química', icon: '🤝', what: 'Rendimiento en pista' },
-  { key: 'pressure', label: 'Presión', icon: '😰', what: 'Por encima de 55 resta rendimiento', invert: true },
-  { key: 'trust', label: 'Confianza', icon: '📋', what: 'Minutos que te da el entrenador' },
-  { key: 'fame', label: 'Popularidad', icon: '⭐', what: 'Patrocinios y votos All-Star' },
-  { key: 'reputation', label: 'Reputación', icon: '🏅', what: 'Ofertas de contrato' },
-  { key: 'loyalty', label: 'Lealtad', icon: '🫱', what: 'Ganas de tu equipo de renovarte' },
-  { key: 'workEthic', label: 'Ética', icon: '💪', what: 'Cuánto mejoras cada verano' },
+const STATE_ROWS: { key: 'morale' | 'chemistry' | 'trust' | 'pressure' | 'fame' | 'reputation' | 'loyalty' | 'workEthic'; label: string; icon: IconName; what: string; invert?: boolean }[] = [
+  { key: 'morale', label: 'Moral', icon: 'smile', what: 'Rendimiento en pista' },
+  { key: 'chemistry', label: 'Química', icon: 'handshake', what: 'Rendimiento en pista' },
+  { key: 'pressure', label: 'Presión', icon: 'gauge', what: 'Por encima de 55 resta rendimiento', invert: true },
+  { key: 'trust', label: 'Confianza', icon: 'clipboard', what: 'Minutos que te da el entrenador' },
+  { key: 'fame', label: 'Popularidad', icon: 'star', what: 'Patrocinios y votos All-Star' },
+  { key: 'reputation', label: 'Reputación', icon: 'medal', what: 'Ofertas de contrato' },
+  { key: 'loyalty', label: 'Lealtad', icon: 'heart', what: 'Ganas de tu equipo de renovarte' },
+  { key: 'workEthic', label: 'Ética', icon: 'dumbbell', what: 'Cuánto mejoras cada verano' },
 ];
 
 /** The numbers your choices move, and what each one does to your career. */
@@ -236,7 +259,7 @@ function StatePanel({ c }: { c: Career }) {
           const bad = r.invert ? v >= 65 : v <= 35;
           return (
             <div key={r.key} className="state-item" title={`${r.label}: ${r.what}`}>
-              <span className="state-label">{r.icon} {r.label}</span>
+              <span className="state-label"><Icon name={r.icon} size={12} /> {r.label}</span>
               <span className="state-bar"><span key={v} className={good ? 'good' : bad ? 'bad' : ''} style={{ width: `${Math.max(3, v)}%` }} /></span>
               <b>{v}</b>
               <small className="state-what">{r.what}</small>
@@ -251,11 +274,15 @@ function StatePanel({ c }: { c: Career }) {
   );
 }
 
-/** What the season paid: salary, sponsorship, the agent's cut and the wallet after it. */
-function MoneyLine({ m }: { m?: { salary: number; sponsor: number; agent: number; cash: number } }) {
+/** What the season paid: salary, sponsorship, assets, the agent's cut, expenses and the wallet after it. */
+function MoneyLine({ m }: { m?: NonNullable<SeasonSummary['money']> }) {
   if (!m) return null;
+  const expenses = (m.lifestyle ?? 0) + (m.upkeep ?? 0) + (m.interest ?? 0) + (m.payment ?? 0);
   return (
-    <><span className="money-line">💰 {m.salary ? `Sueldo +${fmtMoney(m.salary)}` : 'Sin sueldo'}{m.sponsor ? ` · Patrocinios +${fmtMoney(m.sponsor)}` : ''}{m.agent ? ` · Agente −${fmtMoney(m.agent)}` : ''} → <b>{fmtMoney(m.cash)}</b></span></>
+    <>
+      <span className="money-line"><Icon name="coin" size={13} /> {m.salary ? `Sueldo +${fmtMoney(m.salary)}` : 'Sin sueldo'}{m.sponsor ? ` · Patrocinios +${fmtMoney(m.sponsor)}` : ''}{m.assetIncome ? ` · Activos +${fmtMoney(m.assetIncome)}` : ''}{m.agent ? ` · Agente −${fmtMoney(m.agent)}` : ''}{expenses ? ` · Gastos −${fmtMoney(expenses)}` : ''}{m.debt ? ` · Deuda ${fmtMoney(m.debt)}` : ''} → <b>{fmtMoney(m.cash)}</b></span>
+      {m.sold?.length ? <span className="money-line">Vendido: {m.sold.map((id) => assetById(id)?.label ?? id).join(', ')}</span> : null}
+    </>
   );
 }
 
@@ -284,7 +311,7 @@ function SeasonRecap({ c }: { c: Career }) {
       <div className="recap" role="dialog" aria-label="Medalla con la selección" onClick={close}>
         <div className="recap-box" onClick={(e) => e.stopPropagation()}>
           <span className="recap-kicker">Verano con la selección</span>
-          <div className="recap-trophies"><div className="recap-trophy" style={{ animationDelay: '0.2s' }}><span>🥇</span><b>Medalla con {country.name}</b></div></div>
+          <div className="recap-trophies"><div className="recap-trophy" style={{ animationDelay: '0.2s' }}><span><Icon name="medal" size={34} /></span><b>Medalla con {country.name}</b></div></div>
           <p className="recap-line"><Flag code={userOf(c).nat} size={20} /> {c.flags.nationalCaps} convocatorias · {c.flags.medals} {c.flags.medals === 1 ? 'medalla' : 'medallas'}</p>
           <button type="button" className="btn pill light" onClick={close} autoFocus>Continuar</button>
         </div>
@@ -313,7 +340,7 @@ function SeasonRecap({ c }: { c: Career }) {
           <div className="recap-trophies">
             {keys.map((k, i) => (
               <div key={k} className="recap-trophy" style={{ animationDelay: `${0.5 + i * 0.35}s` }}>
-                <span>{AWARD_ICON[k] ?? '🏆'}</span>
+                <span><AwardArt kind={k} size={34} /></span>
                 <b>{AWARD_LABEL[k] ?? k}</b>
               </div>
             ))}
@@ -347,9 +374,9 @@ function SeasonCard({ c, s }: { c: Career; s: SeasonSummary }) {
       </div>
       {(s.awards.length > 0 || best || records.length > 0) && (
         <div className="sc-notes">
-          {s.awards.map((x) => <span key={x} className="chip gold">🏆 {x}</span>)}
-          {records.length > 0 && <span className="chip accent sc-record">🔥 Récord: {records.slice(0, 3).join(' · ')}{records.length > 3 ? '…' : ''}</span>}
-          {best && <span className="sc-best">⭐ Mejor partido: {best}</span>}
+          {s.awards.map((x) => <span key={x} className="chip gold" title={AWARD_LABEL[x] ?? x}><AwardArt kind={x} size={15} /> {AWARD_LABEL[x] ?? x}</span>)}
+          {records.length > 0 && <span className="chip accent sc-record"><Icon name="flame" size={13} /> Récord: {records.slice(0, 3).join(' · ')}{records.length > 3 ? '…' : ''}</span>}
+          {best && <span className="sc-best"><Icon name="star" size={13} /> Mejor partido: {best}</span>}
         </div>
       )}
       <MoneyLine m={s.money} />
@@ -362,9 +389,10 @@ function ChallengeLine({ c }: { c: Career }) {
   const ch = challengeOf(c);
   const [v, target] = ch.progress(c);
   const done = v >= target;
+  const mark = done ? 'check' : c.phase === 'retired' ? 'close' : 'target';
   return (
     <div className={`challenge tiny ${done ? 'done' : ''}`}>
-      <span>{done ? '✅' : c.phase === 'retired' ? '❌' : '🎯'} <b>Reto:</b> {ch.label}</span>
+      <span><Icon name={mark} size={13} /> <b>Reto:</b> {ch.label}</span>
       <span className="dim">{done ? '¡Cumplido!' : c.phase === 'retired' ? 'No cumplido' : target > 1 ? `${Math.min(v, target).toLocaleString('es-ES')} / ${target.toLocaleString('es-ES')}` : 'Pendiente'}</span>
     </div>
   );
@@ -382,7 +410,7 @@ function Choice({ title, top, icon, scene, children, onClick, tone }: { title: s
   return (
     <button className={`choice ${tone ?? ''} ${scene ? 'with-img' : ''}`} onClick={onClick}>
       {scene && <Scene kind={scene} variant={title} height={64} still className="choice-img" />}
-      {scene && !icon && <span className="choice-emoji" aria-hidden="true">{SCENE_EMOJI[scene]}</span>}
+      {scene && !icon && <span className="choice-emoji" aria-hidden="true"><Icon name={SCENE_GLYPH[scene]} size={22} /></span>}
       {top && <span className="tiny dim">{top}</span>}
       <b className="choice-title">{title}</b>
       {icon && <span className="choice-icon">{icon}</span>}
@@ -411,7 +439,7 @@ function OfferChoice({ c, o, onPick, top = 'Firmar con' }: { c: Career; o: Offer
   const club = o.club ? findClub(o.club) : undefined;
   const name = t ? `${t.city} ${t.name}` : club ? club.name : 'Extranjero';
   return (
-    <Choice top={o.id === 'opt-player' ? 'Ejercer opción' : o.id.startsWith('ext-') ? 'Extender con' : o.note.startsWith('Renovar') ? 'Renovar con' : o.id.startsWith('eu-stay') ? 'Seguir en' : top} title={name} onClick={onPick} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : club ? <span className="club-crest"><ClubLogo name={club.name} size={50} /><small>{club.league}</small></span> : <span style={{ fontSize: '2.6rem' }}>🌍</span>}>
+    <Choice top={o.id === 'opt-player' ? 'Ejercer opción' : o.id.startsWith('ext-') ? 'Extender con' : o.note.startsWith('Renovar') ? 'Renovar con' : o.id.startsWith('eu-stay') ? 'Seguir en' : top} title={name} onClick={onPick} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : club ? <span className="club-crest"><ClubLogo name={club.name} size={50} /><small>{club.league}</small></span> : <span className="offer-globe"><Icon name="globe" size={40} /></span>}>
       <span className="choice-meta">{fmtMoney(o.salary)}{o.years > 1 ? ` · ${o.years} años (${fmtMoney(total)})` : ` · ${o.kind === 'two-way' ? 'two-way' : o.kind === 'gleague' ? 'G League' : '1 año'}`}</span>
       <span className="choice-meta dim">{o.role}{t ? ` · ${t.w + t.l ? `${t.w}-${t.l}` : t.status === 'contender' ? 'aspirante' : t.status === 'rebuild' ? 'reconstrucción' : 'zona media'}` : ''}</span>
     </Choice>
@@ -440,7 +468,7 @@ function Decision({ c }: { c: Career }) {
             {p.clubChoices.map((x) => {
               const club = findClub(x.name);
               return (
-                <Choice key={x.name} top={club?.league ?? (ncaa ? 'NCAA' : '')} title={x.name} icon={<span className="club-crest"><ClubLogo name={x.name} size={52} /><small>{club ? '★'.repeat(4 - club.tier) : ''}</small></span>} onClick={() => store.act((y) => api.chooseStartingClub(y, x.name))}>
+                <Choice key={x.name} top={club?.league ?? (ncaa ? 'NCAA' : '')} title={x.name} icon={<span className="club-crest"><ClubLogo name={x.name} size={52} /><small>{club ? Array.from({ length: 4 - club.tier }, (_, i) => <Icon key={i} name="star" size={10} />) : ''}</small></span>} onClick={() => store.act((y) => api.chooseStartingClub(y, x.name))}>
                   {club?.tier === 1 ? 'Gigante: más victorias, menos minutos.' : club?.tier === 2 ? 'Equilibrado: nivel y minutos.' : 'Modesto: el balón será tuyo.'}
                   <span className="choice-meta">{x.comp === 'NCAA' ? 'Beca (sin sueldo)' : `${fmtMoney(startingSalary(x.comp, club?.tier))}/año`}</span>
                 </Choice>
@@ -542,7 +570,7 @@ function Decision({ c }: { c: Career }) {
     case 'postseason': {
       const where = t && c.assignment === 'NBA' ? teamName(c.league, t.id) : c.satellite?.teamName ?? (t ? t.gLeagueName : 'Europa');
       return (
-        <Block scene={c.phase === 'postseason' ? 'trophy' : 'arena'} title={`Temporada ${seasonLabel(c.league.season)}`} desc={`${where} · ${c.phase === 'postseason' ? 'Postemporada en curso' : c.phase === 'preseason' ? 'Pretemporada' : 'Temporada en curso'}${u.injury ? ` · 🩹 ${u.injury.name} (${u.injury.daysLeft} días)` : ''}`}>
+        <Block scene={c.phase === 'postseason' ? 'trophy' : 'arena'} title={`Temporada ${seasonLabel(c.league.season)}`} desc={`${where} · ${c.phase === 'postseason' ? 'Postemporada en curso' : c.phase === 'preseason' ? 'Pretemporada' : 'Temporada en curso'}${u.injury ? ` · ${u.injury.name} (${u.injury.daysLeft} días)` : ''}`}>
           <Choice top="Simular" title={c.phase === 'postseason' ? 'Los playoffs' : 'La temporada'} scene="arena" onClick={() => go('Simulando…')}>Se detiene si surge una decisión.</Choice>
         </Block>
       );
@@ -564,8 +592,8 @@ function Decision({ c }: { c: Career }) {
           {c.offers.map((o) => <OfferChoice key={o.id} c={c} o={o} onPick={() => accept(o.id)} />)}
           {!needs && !c.offers.some((o) => o.id === 'opt-player') && (c.offers.some((o) => o.id.startsWith('ext-'))
             // The extension already shows this team: the alternative is just keeping the current deal, not a second offer from it.
-            ? <Choice top="Sin firmar nada" title="Rechazar la extensión" icon="📝" tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Cumples el contrato que ya tienes.</Choice>
-            : <Choice top="Quedarse en" title={t ? teamName(c.league, t.id) : 'tu equipo'} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : '🏠'} tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Seguir con tu contrato.</Choice>)}
+            ? <Choice top="Sin firmar nada" title="Rechazar la extensión" icon={<Icon name="contract" size={40} />} tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Cumples el contrato que ya tienes.</Choice>
+            : <Choice top="Quedarse en" title={t ? teamName(c.league, t.id) : 'tu equipo'} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : <Icon name="home" size={40} />} tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Seguir con tu contrato.</Choice>)}
           {canRetire && <Choice top="Colgar las botas" title="Retirarse" scene="trophy" tone="danger" onClick={() => setAskRetire(true)}>Fin de la carrera.</Choice>}
           {askRetire && <RetireModal c={c} onCancel={() => setAskRetire(false)} />}
         </Block>
@@ -587,7 +615,7 @@ function RetireModal({ c, onCancel }: { c: Career; onCancel: () => void }) {
   const score = legacyScore(c);
   const tier = TIERS.reduce((acc, x) => (score >= x[0] ? x : acc), TIERS[0])[1];
   return (
-    <ConfirmModal icon="👟" kicker="Colgar las botas" title="¿Anunciar tu retirada?" confirmLabel="Sí, me retiro" cancelLabel="Seguir jugando" danger
+    <ConfirmModal icon={<Icon name="shoe" size={44} />} kicker="Colgar las botas" title="¿Anunciar tu retirada?" confirmLabel="Sí, me retiro" cancelLabel="Seguir jugando" danger
       onCancel={onCancel} onConfirm={() => { onCancel(); store.act((x) => api.retire(x, 'Retirada voluntaria.')); }}>
       <div className="confirm-stats">
         <div><b>{u.age}</b><span>Años</span></div>
@@ -617,7 +645,7 @@ function Retired({ c }: { c: Career }) {
     link.click();
   };
   const share = async () => {
-    const text = `🏀 NBA Legacy\n${u.first} ${u.last} (${u.pos}, ${countryByCode(u.nat).name})\n${r.totals.gp} PJ · ${f1(a.ppg)} PTS ${f1(a.rpg)} REB ${f1(a.apg)} AST · ${r.titles} anillo(s)\nLegacy Score ${r.legacyScore} · ${r.tier}\n${challengeDone(c) ? '✅' : '❌'} Reto: ${challengeOf(c).label}\n¿Puedes superarlo? ${location.origin + location.pathname}`;
+    const text = `NBA Legacy\n${u.first} ${u.last} (${u.pos}, ${countryByCode(u.nat).name})\n${r.totals.gp} PJ · ${f1(a.ppg)} PTS ${f1(a.rpg)} REB ${f1(a.apg)} AST · ${r.titles} anillo(s)\nLegacy Score ${r.legacyScore} · ${r.tier}\n${challengeDone(c) ? 'Reto cumplido' : 'Reto no cumplido'}: ${challengeOf(c).label}\n¿Puedes superarlo? ${location.origin + location.pathname}`;
     // The link turns every shared career into an invitation to play.
     try {
       if (navigator.share) await navigator.share({ text });
@@ -630,13 +658,13 @@ function Retired({ c }: { c: Career }) {
       <p className="small muted desc">Retirado a los {r.age} · Legacy Score <b className="accent">{r.legacyScore}</b> · Hall of Fame {Math.round(r.hofProbability * 100)}% · {fmtMoney(r.earnings)} ganados</p>
       {rank.total > 1 && (
         <p className={`career-rank-line ${rank.record ? 'record' : ''}`}>
-          {rank.record ? `🏆 ¡Nuevo récord personal! Tu mejor carrera de ${rank.total}` : `Puesto #${rank.pos} de tus ${rank.total} carreras · récord ${rank.best}`}
+          {rank.record ? <><Icon name="trophy" size={14} /> ¡Nuevo récord personal! Tu mejor carrera de {rank.total}</> : `Puesto #${rank.pos} de tus ${rank.total} carreras · récord ${rank.best}`}
         </p>
       )}
       {earned.length > 0 && (
         <div className="earned" title={earned.map((x) => x.title).join(' · ')}>
           <span className="tiny dim">Logros de esta carrera ({earned.length})</span>
-          <div>{earned.map((x) => <span key={x.id} title={`${x.title}: ${x.desc}`}>{x.icon}</span>)}</div>
+          <div>{earned.map((x) => <span key={x.id} title={`${x.title}: ${x.desc}`}><AchievementArt id={x.id} size={18} /></span>)}</div>
         </div>
       )}
       <div className="choices">
@@ -688,7 +716,7 @@ function Timeline({ c }: { c: Career }) {
       rows.push(
         <div key={age} className="tl-row in" style={{ animationDelay: `${Math.min(12, age - startAge) * 45}ms` }} title={`${seasonLabel(r.season)} · ${r.result}`}>
           <span className="age-badge" style={{ background: tm?.color ?? '#334155' }}>{age}</span>
-          <span className="tl-club">{tm && r.comp === 'NBA' ? <TeamBadge id={tm.id} color={tm.color} size={16} /> : r.comp === 'GLG' ? <span className="tiny">🏀</span> : <ClubLogo name={r.teamName} size={16} />}<span>{r.teamName}</span>{r.comp !== 'NBA' && <span className="tiny dim">{r.comp === 'GLG' ? 'G League' : r.comp === 'EUR' ? findClub(r.teamName)?.league ?? 'Internacional' : 'NCAA'}</span>}{won && <span title="Campeón">💍</span>}{r.awards.filter((k) => k !== 'champion').slice(0, 2).map((k) => <span key={k} title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'}</span>)}</span>
+          <span className="tl-club">{tm && r.comp === 'NBA' ? <TeamBadge id={tm.id} color={tm.color} size={16} /> : r.comp === 'GLG' ? <span className="tiny"><Icon name="ball" size={13} /></span> : <ClubLogo name={r.teamName} size={16} />}<span>{r.teamName}</span>{r.comp !== 'NBA' && <span className="tiny dim">{r.comp === 'GLG' ? 'G League' : r.comp === 'EUR' ? findClub(r.teamName)?.league ?? 'Internacional' : 'NCAA'}</span>}{won && <span title="Campeón"><Icon name="ring" size={13} /></span>}{r.awards.filter((k) => k !== 'champion').slice(0, 2).map((k) => <span key={k} title={AWARD_LABEL[k]}><AwardArt kind={k} size={14} /></span>)}</span>
           <span className={`ovr-pill ${r.ovrEnd >= 80 ? 'gold' : ''}`} style={{ background: ovrTone(r.ovrEnd) }}>{r.ovrEnd}</span>
           <span className="tl-num">{r.stats.gp}</span>
           <span className="tl-num">{perGame ? f1(a.ppg) : num(r.stats.pts)}</span>
@@ -732,7 +760,7 @@ function Timeline({ c }: { c: Career }) {
       </div>
       {abroad.gp > 0 && (
         <div className="tl-row foot" style={{ marginTop: 2 }}>
-          <span className="age-badge" style={{ background: '#1f2937' }}>🌍</span>
+          <span className="age-badge" style={{ background: '#1f2937' }}><Icon name="globe" size={13} /></span>
           <span className="tl-club"><span>Total fuera de la NBA</span></span>
           <span />
           <span className="tl-num">{num(abroad.gp)}</span>
@@ -743,7 +771,7 @@ function Timeline({ c }: { c: Career }) {
       )}
       {(c.flags.nationalCaps ?? 0) > 0 && <div className="nat-row">
         <Flag code={u.nat} size={22} />
-        <span><b>Selección de {country.name}</b> · {c.flags.nationalCaps ? `${c.flags.nationalCaps} convocatoria${c.flags.nationalCaps > 1 ? 's' : ''}` : c.flags.nationalTeam ? 'Internacional' : 'Aún sin convocatorias'}{c.flags.medals ? ` · 🥇 ${c.flags.medals} medalla${c.flags.medals > 1 ? 's' : ''}` : ''}</span>
+        <span><b>Selección de {country.name}</b> · {c.flags.nationalCaps ? `${c.flags.nationalCaps} convocatoria${c.flags.nationalCaps > 1 ? 's' : ''}` : c.flags.nationalTeam ? 'Internacional' : 'Aún sin convocatorias'}{c.flags.medals ? <> · <Icon name="medal" size={13} /> {c.flags.medals} medalla{c.flags.medals > 1 ? 's' : ''}</> : ''}</span>
       </div>}
     </div>
   );

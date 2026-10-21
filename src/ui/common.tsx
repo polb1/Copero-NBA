@@ -81,7 +81,7 @@ export function StatLineRow({ s, label }: { s: StatLine; label: ReactNode }) {
 }
 export const STAT_HEAD = ['PJ', 'TIT', 'MIN', 'PTS', 'REB', 'AST', 'ROB', 'TAP', 'PÉR', 'TC%', 'T3%', 'TL%', 'TS%'];
 
-export function Empty({ icon = '🏀', title, children }: { icon?: string; title: string; children?: ReactNode }) {
+export function Empty({ icon = <Icon name="ball" size={34} />, title, children }: { icon?: ReactNode; title: string; children?: ReactNode }) {
   return (
     <div className="empty">
       <div className="big">{icon}</div>

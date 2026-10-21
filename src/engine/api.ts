@@ -11,6 +11,7 @@ import { teamName } from './league';
 import { clamp } from './rng';
 import { rollChallenge } from './challenges';
 import { cashOf } from './mindset';
+import { resolveCrisis } from './finance';
 
 export function newCareer(input: NewCareerInput, seed: number): Career {
   const c = createCareer(input, seed);
@@ -46,6 +47,11 @@ export function chooseOption(c: Career, index: number) {
     }
     c.offers = [];
     c.decisions.push({ season: c.league.season, title: ev.title, choice: ev.options[index].label });
+    return;
+  }
+  if (ev.defId === 'dyn:crisis') {
+    resolveCrisis(c, index);
+    achievementsCheck(c);
     return;
   }
   resolveEvent(c, userOf(c), index, rngFor(c.seed, 'resolve', ev.defId, c.league.season, c.league.day));

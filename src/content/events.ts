@@ -2,13 +2,19 @@
 // The interpreter lives in src/engine/events.ts. Placeholders: {team} {city} {coach} {teammate}
 // {rival} {agent} {country} {opp} {vet}.
 import type {
-  AttrKey, Competition, EffectBag, MinigameKind, MinigameMechanic, MinigameTierId, Phase, Pos, TeamStatus,
+  AttrKey, Competition, EffectBag, MinigameKind, MinigameMechanic, MinigameTierId, Mode, Phase, Pos, TeamStatus,
 } from '../engine/types';
 
 export type RoleKey = 'star' | 'starter' | 'rotation' | 'bench' | 'out';
 
 export interface EventWhen {
   phases?: Phase[];
+  /** Only runs on these career modes (e.g. money assets need the full economy). */
+  modes?: Mode[];
+  /** Full careers with an initialized economy state; old full saves stay in legacy. */
+  financeOnly?: boolean;
+  /** Minimum wallet needed for the event to make sense. */
+  minCash?: number;
   minAge?: number; maxAge?: number;
   minOvr?: number; maxOvr?: number;
   roles?: RoleKey[];
@@ -827,5 +833,54 @@ export const EVENTS: EventDef[] = [
       { label: 'Agencia top', desc: 'Contratos más altos. Se queda el 6 % de tu sueldo.', effects: { agent: 'top', reputation: 3 }, text: 'Firmas con una agencia de primer nivel.' },
       { label: 'Agencia familiar', desc: 'Atención personal. Comisión del 4 %.', effects: { agent: 'family', morale: 4, loyalty: 4 }, text: 'Te sientes arropado.' },
       { label: 'Representarte tú mismo', desc: 'Sin comisiones, pero ofertas más bajas.', effects: { agent: 'self', reputation: -2 }, text: 'Valiente, pero arriesgado.' },
+    ] },
+  // ---------------- Assets and loans (full mode only) ----------------
+  { id: 'asset-mansion', category: 'money', title: 'La casa de tus sueños', weight: 5, cooldown: 700,
+    text: 'Tu agente te enseña un catálogo de propiedades: desde una mansión con vistas hasta un ático en el centro.',
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 21, minCash: 900_000, notFlags: ['asset:mansion'] },
+    options: [
+      { label: 'Comprar la mansión ($4.5M)', desc: 'Cancha privada, gimnasio y vistas. Mantenimiento alto.', effects: { buyAsset: 'mansion', morale: 5, fame: 6 }, text: 'La firma de la hipoteca pesa, pero la casa es espectacular.' },
+      { label: 'Comprar un ático ($900K)', desc: 'Menos lujo, menos gastos.', effects: { buyAsset: 'apartment', morale: 3, fame: 2 }, text: 'Un ático elegante en el centro. El recibo es asumible.' },
+      { label: 'Seguir de alquiler', desc: 'Tu dinero, invertido.', effects: { morale: 1 }, text: 'Prefieres no atarte a una hipoteca.' },
+    ] },
+  { id: 'asset-supercar', category: 'money', title: 'El coche del vestuario', weight: 5, cooldown: 600,
+    text: 'Un concesionario de la ciudad te ofrece condiciones de jugador estrella para un superdeportivo.',
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 20, minCash: 650_000, notFlags: ['asset:supercar'] },
+    options: [
+      { label: 'Comprar el deportivo ($650K)', desc: 'Un superdeportivo para tu aparcamiento.', effects: { buyAsset: 'supercar', morale: 2, fame: 4 }, text: 'El aparcamiento del pabellón ya tiene dueño.' },
+      { label: 'Alquilarlo un mes ($60K)', desc: 'El gusto temporal, sin compromiso.', effects: { money: -60_000, fame: 2, morale: 1 }, text: 'Disfrutas del coche sin quedártelo.' },
+      { label: 'Pasar', desc: 'No necesitas más ruido.', effects: {}, text: 'No necesitas llamar la atención.' },
+    ] },
+  { id: 'asset-jet', category: 'money', title: 'Volar sin escalas', weight: 4, cooldown: 900,
+    text: 'Una operadora de aviación privada te propone hacerte socio de su flota de jets.',
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 24, minCash: 1_500_000, notFlags: ['asset:jet'] },
+    options: [
+      { label: 'Comprar el jet ($9M)', desc: 'Privacidad total y horarios propios.', effects: { buyAsset: 'jet', morale: 3, fame: 8 }, text: 'Tu nombre en el fuselaje. La factura del hangar también.' },
+      { label: 'Alquilar un jet por temporada ($250K)', desc: 'Comodidad sin comprar el avión.', effects: { money: -250_000, fame: 3, morale: 2 }, text: 'Viajas como una estrella sin comprar el avión.' },
+      { label: 'Seguir en primera clase', desc: 'Viajar bien, sin excesos.', effects: { money: -20_000, morale: 1 }, text: 'Menos glamour, más sensatez.' },
+    ] },
+  { id: 'asset-entourage', category: 'money', title: 'Tu gente', weight: 5, cooldown: 600,
+    text: 'Varios profesionales se ofrecen a formar tu equipo personal: preparador, fisio, cocinero y escolta.',
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 22, minCash: 350_000, notFlags: ['asset:entourage'] },
+    options: [
+      { label: 'Contratar equipo personal ($350K)', desc: 'Un séquito completo a tu alrededor.', effects: { buyAsset: 'entourage', morale: 4, fame: 3 }, text: 'Preparador, fisio, cocinero y escolta. Todo el mundo cobra.' },
+      { label: 'Solo un preparador ($80K)', desc: 'Profesionalidad sin excesos.', effects: { money: -80_000, workEthic: 2, form: 2 }, text: 'Un profesional de confianza, sin séquito.' },
+      { label: 'Seguir con lo básico', desc: 'Sin cambios en tu rutina.', effects: {}, text: 'Tu círculo se queda pequeño.' },
+    ] },
+  { id: 'asset-rentals', category: 'money', title: 'Dinero que trabaja', weight: 4, cooldown: 800,
+    text: 'Tu asesor financiero te propone entrar en el mercado inmobiliario con una cartera de alquileres.',
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 23, minCash: 900_000, notFlags: ['asset:rentals'] },
+    options: [
+      { label: 'Comprar una cartera de alquileres ($1.8M)', desc: 'Inmuebles que generan ingresos.', effects: { buyAsset: 'rentals', reputation: 2 }, text: 'Los inmuebles empiezan a pagar el mantenimiento.' },
+      { label: 'Entrar en un fondo inmobiliario ($300K)', desc: 'Inversión pasiva, sin gestionar pisos.', effects: { money: -300_000, workEthic: 1 }, text: 'Una inversión pasiva y aburrida. A veces es lo mejor.' },
+      { label: 'No invertir', desc: 'Prefieres la liquidez.', effects: {}, text: 'Prefieres tener el dinero disponible.' },
+    ] },
+  { id: 'bank-loan', category: 'money', title: 'El banco te busca', weight: 6, cooldown: 500,
+    text: 'Tu banco te ofrece un crédito con condiciones de estrella: el gerente de la sucursal te invita a café.',
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason', 'regular'], minAge: 22, maxAge: 36, minFame: 20 },
+    options: [
+      { label: 'Pedir $2M', desc: 'Deuda al 8% anual; el banco confía en tu contrato.', effects: { borrow: 2_000_000 }, text: 'El dinero entra en tu cuenta. La deuda también.' },
+      { label: 'Pedir $500K', desc: 'Un crédito pequeño para caprichos o imprevistos.', effects: { borrow: 500_000 }, text: 'Un préstamo pequeño para un capricho o un imprevisto.' },
+      { label: 'No endeudarte', desc: 'Cero deudas, cero preocupaciones.', effects: {}, text: 'Prefieres no deber nada.' },
     ] },
 ];
