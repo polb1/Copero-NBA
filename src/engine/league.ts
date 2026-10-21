@@ -169,11 +169,6 @@ export function createRealLeague(seed: number, season: number): League {
     t.status = status;
     t.reputation = Math.round(clamp((s.market === 'large' ? 65 : s.market === 'mid' ? 55 : 45) + (status === 'contender' ? 20 : status === 'playoff' ? 10 : status === 'rebuild' ? -10 : 0) + rng.normal(0, 6), 20, 99));
   });
-  for (let i = 0; i < 30; i++) {
-    const p = generatePlayer(rng, { id: newPlayerId(league), level: Math.round(rng.range(54, 67)), age: rng.int(22, 33), season });
-    league.players[p.id] = p;
-    league.freeAgents.push(p.id);
-  }
   setupSeasonSchedule(league, seed);
   return league;
 }

@@ -13,6 +13,26 @@ const natName = (code: string) => t(countryByCode(code).name);
 const COND = '"Barlow Condensed", Arial Narrow, sans-serif';
 const BODY = 'Inter, system-ui, sans-serif';
 
+/** Posiciones de todas las medallas de selección, ajustadas para que quepan en la tarjeta. */
+export function medalSlots(count: number, startX = 72, y = 829): { x: number; y: number; size: number }[] {
+  const n = Math.max(0, Math.floor(count));
+  if (!n) return [];
+  const size = Math.max(10, Math.min(32, Math.floor(360 / n) - 4));
+  return Array.from({ length: n }, (_, i) => ({ x: startX + i * (size + 4), y, size }));
+}
+
+function roundRect(g: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+  g.beginPath();
+  if (typeof g.roundRect === 'function') { g.roundRect(x, y, w, h, r); return; }
+  const rr = Math.min(r, w / 2, h / 2);
+  g.moveTo(x + rr, y);
+  g.arcTo(x + w, y, x + w, y + h, rr);
+  g.arcTo(x + w, y + h, x, y + h, rr);
+  g.arcTo(x, y + h, x, y, rr);
+  g.arcTo(x, y, x + w, y, rr);
+  g.closePath();
+}
+
 function drawMedal(g: CanvasRenderingContext2D, x: number, y: number, size: number, gold = true): void {
   g.save();
   g.translate(x, y);
@@ -123,8 +143,7 @@ export function drawCard(c: Career): string {
   gold.addColorStop(0.4, '#f5c451');
   gold.addColorStop(1, '#8a6410');
   g.fillStyle = r.peakOvr >= 80 ? gold : '#ff6b1a';
-  g.beginPath();
-  g.roundRect(hx, hy, hw, hh, 28);
+  roundRect(g, hx, hy, hw, hh, 28);
   g.fill();
   g.fillStyle = '#1a1205';
   g.textAlign = 'center';
@@ -138,8 +157,7 @@ export function drawCard(c: Career): string {
     g.fillStyle = 'rgba(255,255,255,0.05)';
     g.strokeStyle = 'rgba(255,255,255,0.1)';
     g.lineWidth = 2;
-    g.beginPath();
-    g.roundRect(x, y, 300, 150, 18);
+    roundRect(g, x, y, 300, 150, 18);
     g.fill();
     g.stroke();
     g.fillStyle = color;
@@ -158,8 +176,9 @@ export function drawCard(c: Career): string {
   const medals = c.flags.medals ?? 0;
   const caps = c.flags.nationalCaps ?? 0;
   if (medals > 0 || caps > 0) {
-    drawMedal(g, 72, 829, 32, medals > 0);
-    let x = 114;
+    const slots = medalSlots(medals);
+    slots.forEach((s) => drawMedal(g, s.x, s.y, s.size, true));
+    let x = slots.length ? slots[slots.length - 1].x + slots[slots.length - 1].size + 10 : 72;
     if (medals > 0) {
       g.fillStyle = '#f5c451';
       g.font = `800 36px ${COND}`;

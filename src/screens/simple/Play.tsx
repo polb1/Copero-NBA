@@ -463,7 +463,7 @@ function OfferChoice({ c, o, onPick, top = 'Firmar con' }: { c: Career; o: Offer
   const champ = championOf(c.league);
   const fromChamp = !!champ && !!c.league.teams[o.teamId] && champ.team === o.teamId;
   return (
-    <Choice top={o.id === 'opt-player' ? 'Ejercer opción' : o.id.startsWith('ext-') ? 'Extender con' : o.note.startsWith('Renovar') ? 'Renovar con' : o.id.startsWith('eu-stay') ? 'Seguir en' : top} title={name} onClick={onPick} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : club ? <span className="club-crest"><ClubLogo name={club.name} size={50} /><small>{club.league}</small></span> : <span className="offer-globe"><Icon name="globe" size={40} /></span>}>
+    <Choice top={o.id === 'opt-player' ? 'Ejercer opción' : o.id.startsWith('ext-') ? 'Extender con' : o.note.startsWith('Renovar') ? 'Renovar con' : o.id.startsWith('eu-stay') ? 'Seguir en' : top} title={name} onClick={onPick} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : club ? <span className="club-crest"><ClubLogo name={club.name} size={50} /><small>{club.league}</small></span> : <span style={{ fontSize: '2.6rem' }}>🌍</span>}>
       <span className="choice-meta">{fmtMoney(o.salary)}{o.years > 1 ? ` · ${o.years} años (${fmtMoney(total)})` : ` · ${o.kind === 'two-way' ? 'two-way' : o.kind === 'gleague' ? 'G League' : '1 año'}`}</span>
       <span className="choice-meta dim">{o.role}{t ? ` · ${t.w + t.l ? `${t.w}-${t.l}` : t.status === 'contender' ? 'aspirante' : t.status === 'rebuild' ? 'reconstrucción' : 'zona media'}` : ''}</span>
       {fromChamp && champ && (

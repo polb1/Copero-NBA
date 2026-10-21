@@ -5,7 +5,7 @@ import { cashOf } from '../../engine/mindset';
 import { fmtMoney } from '../../engine/contracts';
 import { CATEGORY_LABEL } from '../../content/events';
 import { store } from '../../store/store';
-import { CATEGORY_GLYPH } from '../../ui/simple';
+import { CATEGORY_ICON } from '../../ui/simple';
 import { Icon } from '../../ui/icons';
 import { Minigame } from '../../ui/Minigame';
 import { CATEGORY_SCENE, Scene } from '../../ui/Scene';
@@ -75,7 +75,7 @@ export function EventModalInline({ c }: { c: Career }) {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [ev]);
-  const icon = <Icon name={CATEGORY_GLYPH[ev.category] ?? 'ball'} size={13} />;
+  const icon = CATEGORY_ICON[ev.category] ?? '🏀';
   const afford = (i: number) => canAfford(c, i);
   const mg = ev.minigame;
   const tiers = ev.minigameTiers;
