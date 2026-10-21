@@ -117,12 +117,21 @@ describe('minigame events content', () => {
     expect(threes).not.toContain('C');
 
     const spotlight = mgDef('mg-spotlight').positions!;
-    expect(spotlight).toEqual(['PG', 'SG']);
+    expect(spotlight).toEqual(['SG']);
 
     // The legacy covers every position; the dunk leaves the guards' playmaking aside.
     expect(mgDef('mg-clutch').positions).toEqual(['PG', 'SG', 'SF', 'PF', 'C']);
     expect(mgDef('mg-freethrows').positions).toEqual(['PG', 'SG', 'SF', 'PF', 'C']);
     expect(mgDef('mg-drill').positions).toEqual(['PG', 'SG', 'SF', 'PF', 'C']);
     expect(mgDef('mg-threes').positions).toEqual(['PG', 'SG', 'SF', 'PF']);
+  });
+
+  test('each position has its own themed signature challenge', () => {
+    const signature: Record<string, string> = {
+      PG: 'mg-pass', SG: 'mg-spotlight', SF: 'mg-dunk', PF: 'mg-boards', C: 'mg-close',
+    };
+    for (const [pos, id] of Object.entries(signature)) {
+      expect(mgDef(id).positions).toEqual([pos]);
+    }
   });
 });

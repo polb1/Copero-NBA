@@ -21,7 +21,7 @@ export function stateMod(u: Player, c: Career): number {
 
 /** Level picked from the player's state when `def.autoScale` is set. */
 export function autoTier(u: Player, c: Career): MinigameTierId {
-  const stress = 0.45 * c.pressure + 0.35 * u.fatigue + 0.9 * Math.max(0, 55 - c.morale);
+  const stress = 0.45 * c.pressure + 0.35 * u.fatigue + 0.9 * Math.max(0, 55 - c.morale) - u.form * 1.5;
   return stress < 20 ? 'easy' : stress < 42 ? 'normal' : 'hard';
 }
 

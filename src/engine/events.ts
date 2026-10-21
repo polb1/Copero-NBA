@@ -86,6 +86,8 @@ export function eligibleEvents(ctx: EventContext): EventDef[] {
       const seen = c.flags['seen:' + e.id] ?? 1;
       if (ctx.absDay - last < (e.cooldown ?? 300) * (1 + 0.5 * (seen - 1))) return false;
     }
+    // A position-themed challenge is only offered to the positions it names.
+    if (e.minigame?.positions && !e.minigame.positions.includes(ctx.user.pos)) return false;
     return matches(e.when, ctx);
   });
 }
