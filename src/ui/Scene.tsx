@@ -1,6 +1,8 @@
-// Scene artwork for events and phases: 22 original vector illustrations (step 4.1b).
-// No stock photos, no SVG filters, no emoji; gradient ids are unique per instance.
-import { useId, type ReactNode } from 'react';
+// Scene artwork for events and phases: real Unsplash photos from /public/stock (see
+// docs/CREDITS.md), with the 22 original vector illustrations as fallback if a photo fails.
+// No emoji; gradient ids are unique per instance.
+import { useId, useState, type ReactNode } from 'react';
+import { hashString } from '../engine/rng';
 import type { SceneKind } from './art/types';
 import { TrophyRoomArt } from './art/trophy';
 
@@ -534,13 +536,51 @@ function Art({ kind, id }: { kind: SceneKind; id: string }) {
   }
 }
 
+/** Fotos reales por tipo de escena. Varias por tipo para que las decisiones no repitan imagen. */
+export const STOCK_PHOTOS: Record<SceneKind, string[]> = {
+  arena: ['/stock/arena-1.jpg', '/stock/arena-2.jpg', '/stock/arena-3.jpg', '/stock/clutch-1.jpg', '/stock/clutch-2.jpg', '/stock/contest-1.jpg', '/stock/rivalry-1.jpg', '/stock/summer-2.jpg'],
+  rivalry: ['/stock/rivalry-1.jpg', '/stock/arena-1.jpg', '/stock/arena-2.jpg', '/stock/arena-3.jpg', '/stock/clutch-1.jpg', '/stock/clutch-2.jpg', '/stock/contest-1.jpg'],
+  training: ['/stock/training-1.jpg', '/stock/training-2.jpg', '/stock/training-3.jpg', '/stock/sneakers-1.jpg', '/stock/arena-3.jpg', '/stock/locker-1.jpg'],
+  locker: ['/stock/locker-1.jpg', '/stock/training-1.jpg', '/stock/training-2.jpg', '/stock/sneakers-1.jpg'],
+  coach: ['/stock/coach-1.jpg', '/stock/training-3.jpg', '/stock/locker-1.jpg', '/stock/arena-3.jpg'],
+  press: ['/stock/press-1.jpg', '/stock/phone-1.jpg', '/stock/arena-2.jpg', '/stock/trophy-1.jpg'],
+  medical: ['/stock/medical-1.jpg', '/stock/rest-1.jpg', '/stock/training-1.jpg', '/stock/training-2.jpg'],
+  contract: ['/stock/contract-1.jpg', '/stock/money-1.jpg', '/stock/phone-1.jpg', '/stock/press-1.jpg'],
+  money: ['/stock/money-1.jpg', '/stock/contract-1.jpg', '/stock/trophy-1.jpg', '/stock/trophy-2.jpg', '/stock/travel-1.jpg'],
+  sneakers: ['/stock/sneakers-1.jpg', '/stock/training-1.jpg', '/stock/training-2.jpg', '/stock/contest-1.jpg', '/stock/arena-3.jpg'],
+  phone: ['/stock/phone-1.jpg', '/stock/press-1.jpg', '/stock/contract-1.jpg', '/stock/family-1.jpg'],
+  trophy: ['/stock/trophy-1.jpg', '/stock/trophy-2.jpg', '/stock/national-1.jpg', '/stock/arena-1.jpg', '/stock/draft-1.jpg', '/stock/draft-2.jpg'],
+  draft: ['/stock/draft-1.jpg', '/stock/draft-2.jpg', '/stock/arena-1.jpg', '/stock/arena-2.jpg', '/stock/arena-3.jpg', '/stock/trophy-1.jpg'],
+  travel: ['/stock/travel-1.jpg', '/stock/europe-1.jpg', '/stock/summer-1.jpg', '/stock/national-1.jpg'],
+  national: ['/stock/national-1.jpg', '/stock/trophy-2.jpg', '/stock/europe-1.jpg', '/stock/arena-1.jpg', '/stock/arena-2.jpg'],
+  summer: ['/stock/summer-1.jpg', '/stock/summer-2.jpg', '/stock/travel-1.jpg', '/stock/family-1.jpg', '/stock/europe-1.jpg'],
+  family: ['/stock/family-1.jpg', '/stock/summer-1.jpg', '/stock/rest-1.jpg', '/stock/phone-1.jpg'],
+  clutch: ['/stock/clutch-1.jpg', '/stock/clutch-2.jpg', '/stock/arena-2.jpg', '/stock/contest-1.jpg', '/stock/rivalry-1.jpg'],
+  contest: ['/stock/contest-1.jpg', '/stock/arena-1.jpg', '/stock/arena-2.jpg', '/stock/arena-3.jpg', '/stock/clutch-1.jpg', '/stock/clutch-2.jpg', '/stock/sneakers-1.jpg'],
+  college: ['/stock/college-1.jpg', '/stock/arena-3.jpg', '/stock/training-3.jpg', '/stock/locker-1.jpg'],
+  europe: ['/stock/europe-1.jpg', '/stock/travel-1.jpg', '/stock/summer-1.jpg', '/stock/national-1.jpg'],
+  rest: ['/stock/rest-1.jpg', '/stock/family-1.jpg', '/stock/medical-1.jpg', '/stock/summer-1.jpg'],
+};
+
+/** Elige una foto estable para una decisión concreta (misma variante ⇒ misma foto). */
+export function photoFor(kind: SceneKind, variant: string | number = 0): string {
+  const list = STOCK_PHOTOS[kind];
+  return list[Math.abs(hashString(String(variant))) % list.length];
+}
+
 export function Scene({ kind, variant, height = 150, children, className, still }: { kind: SceneKind; variant?: string | number; height?: number; children?: ReactNode; className?: string; still?: boolean }) {
   const raw = useId().replace(/[^a-zA-Z0-9]/g, '');
+  const photo = photoFor(kind, variant ?? kind);
+  const [failed, setFailed] = useState<string | null>(null);
   return (
     <div className={`scene ${still ? '' : 'live'} ${className ?? ''}`} style={{ height }}>
-      <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <Art kind={kind} id={`s${raw}`} />
-      </svg>
+      {photo && failed !== photo ? (
+        <img key={photo} src={photo} alt="" loading="lazy" decoding="async" onError={() => setFailed(photo)} />
+      ) : (
+        <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <Art kind={kind} id={`s${raw}`} />
+        </svg>
+      )}
       <div className="scene-shade" />
       {children && <div className="scene-content">{children}</div>}
     </div>

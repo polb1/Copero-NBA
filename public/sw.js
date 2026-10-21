@@ -44,7 +44,7 @@ self.addEventListener('fetch', (e) => {
   const url = new URL(req.url);
   if (req.mode === 'navigate') return e.respondWith(networkFirst(req));
   if (url.origin === self.location.origin) {
-    if (/\/(assets|crests|flags|icons)\//.test(url.pathname)) return e.respondWith(cacheFirst(req));
+    if (/\/(assets|crests|flags|icons|stock)\//.test(url.pathname)) return e.respondWith(cacheFirst(req));
     return;
   }
   if (url.hostname === 'fonts.gstatic.com' || url.hostname === 'fonts.googleapis.com') e.respondWith(cacheFirst(req));
