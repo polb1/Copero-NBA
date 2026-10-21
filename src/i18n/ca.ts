@@ -726,6 +726,8 @@ export const CA: Dict = {
   "{a} convocatorias": "{a} convocatòries",
   "{a} medalla": "{a} medalla",
   "{a} medallas": "{a} medalles",
+  "medalla": "medalla",
+  "medallas": "medalles",
   "Legado": "Llegat",
   "Debutante": "Debutant",
   "Jugador sólido": "Jugador sòlid",

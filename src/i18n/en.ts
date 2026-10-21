@@ -749,6 +749,8 @@ export const EN: Dict = {
   "{a} convocatorias": "{a} call-ups",
   "{a} medalla": "{a} medal",
   "{a} medallas": "{a} medals",
+  "medalla": "medal",
+  "medallas": "medals",
   "Internacional": "International",
   "Legado": "Legacy",
   "Debutante": "Rookie",

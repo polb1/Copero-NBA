@@ -183,6 +183,12 @@ export type Phase =
   | 'predraft' | 'draft' | 'signing' | 'preseason' | 'regular' | 'postseason'
   | 'season-end' | 'offseason' | 'retired';
 
+export interface LeagueChampion {
+  season: number;
+  team: string;
+  runnerUp: string;
+}
+
 export interface League {
   season: number; // starting year, e.g. 2026 for 2026-27
   day: number;
@@ -194,7 +200,7 @@ export interface League {
   lastDay: number;
   postseason: Postseason | null;
   awards: AwardResult[];
-  champions: { season: number; team: string; runnerUp: string }[];
+  champions: LeagueChampion[];
   freeAgents: string[];
   lastNo1: string | null;
   nextPlayerId: number;

@@ -7,7 +7,7 @@ import type { Career, Offer, SeasonRecord, SeasonSummary } from '../../engine/ty
 import * as api from '../../engine/api';
 import { teamOf, userOf } from '../../engine/career';
 import { inSeason } from '../../engine/flow';
-import { teamName } from '../../engine/league';
+import { championOf, teamName } from '../../engine/league';
 import { averages, f1, sumStats } from '../../engine/stats';
 import { shownValue, fmtMoney, makeSalaries } from '../../engine/contracts';
 import { agentCut, cashOf, fameSponsor, performancePct, startingSalary } from '../../engine/mindset';
@@ -296,6 +296,19 @@ function CountUp({ value }: { value: number }) {
  * End-of-season celebration: the numbers count up and every trophy of the season pops in, one by one.
  * After a summer with a national-team medal, the medal gets its own moment. Each shows once.
  */
+function ChampionLine({ c, season, size = 16, className = '' }: { c: Career; season: number; size?: number; className?: string }) {
+  const champ = championOf(c.league, season);
+  if (!champ || champ.season !== season) return null;
+  return (
+    <div className={`champ-line ${className}`.trim()}>
+      <AwardArt kind="champion" size={size} />
+      <b>Campeón NBA:</b>
+      <span className="champ-team">{teamName(c.league, champ.team)}</span>
+      <span className="champ-season">{` · ${seasonLabel(champ.season)}`}</span>
+    </div>
+  );
+}
+
 function SeasonRecap({ c }: { c: Career }) {
   const s = c.lastSummary;
   const medal = c.phase === 'offseason' && c.flags.medalSeason !== undefined && c.flags.medalSeen !== c.flags.medalSeason;
@@ -327,6 +340,7 @@ function SeasonRecap({ c }: { c: Career }) {
       <div className="recap-box" onClick={(e) => e.stopPropagation()}>
         <span className="recap-kicker">Temporada {seasonLabel(s!.season)}</span>
         <h2>{keys.length ? (keys.includes('champion') || keys.includes('euroChampion') ? '¡Campeones!' : '¡Temporada de premios!') : 'Temporada terminada'}</h2>
+        <ChampionLine c={c} season={s!.season} size={26} className="recap-champ" />
         <p className="recap-line">{s!.teamResult}</p>
         {a && (
           <div className="recap-stats">
@@ -358,7 +372,7 @@ function SeasonCard({ c, s }: { c: Career; s: SeasonSummary }) {
   const r = recs.find((x) => x.comp === 'NBA') ?? recs[0];
   const records = seasonRecords(c, s.season);
   const best = s.highlights[0] && !s.highlights[0].startsWith('Campeón') ? s.highlights[0] : null;
-  if (!r) return <><span>{s.teamResult}</span><MoneyLine m={s.money} /></>;
+  if (!r) return <><span>{s.teamResult}</span><ChampionLine c={c} season={s.season} size={16} className="sc-champ" /><MoneyLine m={s.money} /></>;
   const st = r.stats;
   const a = averages(st);
   const fg = st.fga ? Math.round((st.fgm / st.fga) * 1000) / 10 : 0;
@@ -366,6 +380,7 @@ function SeasonCard({ c, s }: { c: Career; s: SeasonSummary }) {
   return (
     <div className="season-card">
       <div className="sc-head">{s.teamResult}</div>
+      <ChampionLine c={c} season={s.season} size={16} className="sc-champ" />
       <div className="sc-tiles">
         <div><b>{f1(a.ppg)}</b><span>PTS</span><small>{num(st.pts)} en total</small></div>
         <div><b>{f1(a.rpg)}</b><span>REB</span><small>{num(st.oreb + st.dreb)} en total</small></div>
@@ -438,10 +453,18 @@ function OfferChoice({ c, o, onPick, top = 'Firmar con' }: { c: Career; o: Offer
   const total = makeSalaries(o.salary, o.years, o.raise).reduce((s, v) => s + v, 0);
   const club = o.club ? findClub(o.club) : undefined;
   const name = t ? `${t.city} ${t.name}` : club ? club.name : 'Extranjero';
+  const champ = championOf(c.league);
+  const fromChamp = !!champ && !!c.league.teams[o.teamId] && champ.team === o.teamId;
   return (
     <Choice top={o.id === 'opt-player' ? 'Ejercer opción' : o.id.startsWith('ext-') ? 'Extender con' : o.note.startsWith('Renovar') ? 'Renovar con' : o.id.startsWith('eu-stay') ? 'Seguir en' : top} title={name} onClick={onPick} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : club ? <span className="club-crest"><ClubLogo name={club.name} size={50} /><small>{club.league}</small></span> : <span className="offer-globe"><Icon name="globe" size={40} /></span>}>
       <span className="choice-meta">{fmtMoney(o.salary)}{o.years > 1 ? ` · ${o.years} años (${fmtMoney(total)})` : ` · ${o.kind === 'two-way' ? 'two-way' : o.kind === 'gleague' ? 'G League' : '1 año'}`}</span>
       <span className="choice-meta dim">{o.role}{t ? ` · ${t.w + t.l ? `${t.w}-${t.l}` : t.status === 'contender' ? 'aspirante' : t.status === 'rebuild' ? 'reconstrucción' : 'zona media'}` : ''}</span>
+      {fromChamp && champ && (
+        <span className="chip gold offer-champ" title={`Campeón NBA · ${seasonLabel(champ.season)}`}>
+          <AwardArt kind="champion" size={14} />
+          {`Campeón NBA · ${seasonLabel(champ.season)}`}
+        </span>
+      )}
     </Choice>
   );
 }

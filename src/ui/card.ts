@@ -13,6 +13,72 @@ const natName = (code: string) => t(countryByCode(code).name);
 const COND = '"Barlow Condensed", Arial Narrow, sans-serif';
 const BODY = 'Inter, system-ui, sans-serif';
 
+function drawMedal(g: CanvasRenderingContext2D, x: number, y: number, size: number, gold = true): void {
+  g.save();
+  g.translate(x, y);
+  g.scale(size / 100, size / 100);
+  // Ribbons.
+  g.fillStyle = gold ? '#ff6b1a' : '#5b6472';
+  g.beginPath();
+  g.moveTo(30, 0);
+  g.lineTo(45, 0);
+  g.lineTo(54, 38);
+  g.lineTo(41, 44);
+  g.closePath();
+  g.fill();
+  g.beginPath();
+  g.moveTo(70, 0);
+  g.lineTo(55, 0);
+  g.lineTo(46, 38);
+  g.lineTo(59, 44);
+  g.closePath();
+  g.fill();
+  // Disc.
+  const disc = g.createLinearGradient(28, 32, 72, 92);
+  if (gold) {
+    disc.addColorStop(0, '#fff3b0');
+    disc.addColorStop(0.45, '#f5c451');
+    disc.addColorStop(1, '#8a6410');
+  } else {
+    disc.addColorStop(0, '#e8ecf1');
+    disc.addColorStop(0.45, '#aeb7c4');
+    disc.addColorStop(1, '#525a66');
+  }
+  g.fillStyle = disc;
+  g.beginPath();
+  g.arc(50, 62, 30, 0, Math.PI * 2);
+  g.fill();
+  g.strokeStyle = 'rgba(0,0,0,0.35)';
+  g.lineWidth = 2;
+  g.stroke();
+  // Inner ring.
+  g.strokeStyle = 'rgba(255,255,255,0.5)';
+  g.lineWidth = 2.5;
+  g.beginPath();
+  g.arc(50, 62, 23.5, 0, Math.PI * 2);
+  g.stroke();
+  // Five-point star.
+  g.fillStyle = gold ? '#3a2a08' : '#2b3038';
+  g.beginPath();
+  for (let i = 0; i < 10; i++) {
+    const a = (Math.PI / 5) * i - Math.PI / 2;
+    const r = i % 2 === 0 ? 15 : 6.5;
+    const px = 50 + Math.cos(a) * r;
+    const py = 62 + Math.sin(a) * r;
+    if (i === 0) g.moveTo(px, py);
+    else g.lineTo(px, py);
+  }
+  g.closePath();
+  g.fill();
+  // Gloss.
+  g.strokeStyle = 'rgba(255,255,255,0.45)';
+  g.lineWidth = 3.5;
+  g.beginPath();
+  g.arc(50, 62, 20, Math.PI * 1.12, Math.PI * 1.42);
+  g.stroke();
+  g.restore();
+}
+
 export function drawCard(c: Career): string {
   const u = userOf(c);
   const r = c.retirement!;
@@ -89,6 +155,39 @@ export function drawCard(c: Career): string {
   box(72, 670, 'Partidos NBA', String(r.totals.gp));
   box(390, 670, 'Valor máximo', fmtMoney(peakValue), '#86efac');
   box(708, 670, 'Anillos', String(r.titles), '#f5c451');
+  const medals = c.flags.medals ?? 0;
+  const caps = c.flags.nationalCaps ?? 0;
+  if (medals > 0 || caps > 0) {
+    drawMedal(g, 72, 829, 32, medals > 0);
+    let x = 114;
+    if (medals > 0) {
+      g.fillStyle = '#f5c451';
+      g.font = `800 36px ${COND}`;
+      const n = String(medals);
+      g.fillText(n, x, 856);
+      x += g.measureText(n).width + 8;
+      g.fillStyle = '#f4f5f7';
+      g.font = `700 28px ${COND}`;
+      const word = t(medals === 1 ? 'medalla' : 'medallas');
+      g.fillText(word, x, 856);
+      x += g.measureText(word).width;
+    }
+    if (caps > 0) {
+      g.fillStyle = '#767d8a';
+      g.font = `500 24px ${BODY}`;
+      const sep = medals > 0 ? ' · ' : '';
+      g.fillText(sep, x, 856);
+      x += g.measureText(sep).width;
+      g.fillStyle = '#b0b6c1';
+      g.font = `600 24px ${BODY}`;
+      g.fillText(t(`${caps} ${caps === 1 ? 'convocatoria' : 'convocatorias'}`), x, 856);
+    }
+    g.fillStyle = '#767d8a';
+    g.font = `700 24px ${COND}`;
+    g.textAlign = 'right';
+    g.fillText(t('Selección').toUpperCase(), 1008, 856);
+    g.textAlign = 'left';
+  }
   g.fillStyle = '#f4f5f7';
   g.font = `700 40px ${COND}`;
   g.fillText(t('PALMARÉS'), 72, 900);

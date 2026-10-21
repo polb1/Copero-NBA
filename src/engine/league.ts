@@ -1,4 +1,4 @@
-import type { Coach, League, Player, Pos, Team, TeamStatus } from './types';
+import type { Coach, League, LeagueChampion, Player, Pos, Team, TeamStatus } from './types';
 import { TEAM_SEEDS } from '../data/teams';
 import { G_LEAGUE } from '../data/clubs';
 import { COACH_FIRST, COACH_LAST } from '../content/names';
@@ -209,6 +209,17 @@ export function teamName(league: League, id: string | null | undefined) {
   if (!id) return 'Agente libre';
   const t = league.teams[id];
   return t ? `${t.city} ${t.name}` : id;
+}
+
+/** Latest NBA champion, or the champion of a given season. Old saves may not have the array. */
+export function championOf(league: League, season?: number): LeagueChampion | null {
+  const list = league.champions ?? [];
+  let best: LeagueChampion | null = null;
+  for (const x of list) {
+    if (season !== undefined && x.season !== season) continue;
+    if (!best || x.season >= best.season) best = x;
+  }
+  return best;
 }
 
 export function teamStrength(league: League, teamId: string): number {
