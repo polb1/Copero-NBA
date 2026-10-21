@@ -585,13 +585,13 @@ export function doCombine(c: Career, choice: CombinePlan) {
   void grade;
   if (choice === 'measure') {
     p.combine = { sprint: 0, vertical: 0, lane: 0, shooting: 0, grade: 'Solo medidas' };
-    p.stockBonus -= 0.3;
+    p.stockBonus -= 1.5;
     afterCombine(c, rng);
     return;
   }
   if (choice === 'skip') {
     p.combine = { sprint: 0, vertical: 0, lane: 0, shooting: 0, grade: 'No participó' };
-    p.stockBonus -= 0.8;
+    p.stockBonus -= 3.5;
     afterCombine(c, rng);
     return;
   }
@@ -641,7 +641,8 @@ export function finishCombine(c: Career) {
   const tier = tests[0].spec.tier ?? 'normal';
   const tierMul = tier === 'easy' ? 0.85 : tier === 'hard' ? 1.2 : 1;
   const flavor = p.combine ? clamp(measureScoreOf(p.combine) * 0.1, -0.5, 0.8) : 0;
-  const bonus = (q * 1.45 - 0.55) * tierMul * coverage * 2.2 + flavor;
+  // A bad combine must hurt as much as a good one helps: 0% ≈ −3 points, 100% ≈ +3.5.
+  const bonus = (q - 0.5) * 6 * tierMul * coverage + flavor;
   p.stockBonus += bonus;
   const grade = bonus > 2 ? 'A' : bonus > 0.5 ? 'B' : bonus > -1 ? 'C' : 'D';
   p.combineResult = { grade, bonus, detail: `${Math.round(q * 100)}% de acierto · cobertura ${Math.round(coverage * 100)}%` };
@@ -667,6 +668,7 @@ const INTERVIEW_QUESTIONS = [
 
 export function answerInterview(c: Career, index: number, answer: number) {
   const p = c.predraft!;
+  const u = userOf(c);
   const q = p.interviewQuestions![index];
   const rng = rngFor(c.seed, 'interview', index, answer);
   const base = answer === 0 ? 1.6 : answer === 1 ? (c.reputation > 40 ? 0.8 : -0.6) : -1.5;
@@ -674,6 +676,10 @@ export function answerInterview(c: Career, index: number, answer: number) {
   const result = val > 0.8 ? 'good' : val > -0.4 ? 'neutral' : 'bad';
   p.interviews.push({ teamId: q.teamId, result, answer });
   p.userBoosts[q.teamId] = result === 'good' ? 3 : result === 'bad' ? -3 : 0;
+  // Interviews move the board value too: a bad answer can cost a draft spot.
+  p.stockBonus += result === 'good' ? 1 : result === 'bad' ? -1.8 : 0;
+  const me = p.draftClass?.find((x) => x.isUser);
+  if (me) me.value = prospectValue(u.ovr, u.pot, u.age) + p.stockBonus;
   if (p.interviews.length >= p.interviewQuestions!.length) {
     const range = mockRange(p.draftClass!, 'user', rngFor(c.seed, 'mock', c.league.season));
     p.mock = { pickLow: range.pickLow, pickHigh: range.pickHigh, text: mockText(range.pickLow, range.pickHigh) };
