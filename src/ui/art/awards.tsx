@@ -224,6 +224,8 @@ function glyph(kind: string, m: string, l: string, a: string) {
           <Spec d="M9.6 13A6.4 6.4 0 0 1 12.4 10.6" />
         </>
       );
+    case 'nationalMedal':
+      return <Medallion m={m} l={l} a={a} n={1} />;
     default:
       return <Cup m={m} l={l} a={a} />;
   }
@@ -238,6 +240,7 @@ function mainPal(kind: string): Pal {
 
 /** Accent (gem/leaf/bolt/star) palette per award kind. */
 function accentPal(kind: string): Pal {
+  if (kind === 'nationalMedal') return PALETTES.red;
   if (kind === 'champion') return PALETTES.gem;
   if (kind === 'roy') return PALETTES.green;
   if (kind === 'smoy') return PALETTES.energy;
@@ -269,12 +272,9 @@ export function AwardArt({ kind, size = 28, className, title }: { kind: string; 
   );
 }
 
-/** Glass trophy case: shelf with up to `max` awards, plus a `+N` chip when there are more. */
-export function TrophyCase({ awards, size = 56, max = 8, labels }: { awards: string[]; size?: number; max?: number; labels?: Record<string, string> }) {
+/** Glass trophy case: every award gets its own place on the shelf (no limit, no "+N"). */
+export function TrophyCase({ awards, size = 56, labels }: { awards: string[]; size?: number; labels?: Record<string, string> }) {
   const id = useSvgId('tc');
-  const cap = Math.max(0, Math.floor(max));
-  const shown = awards.slice(0, cap);
-  const extra = awards.length - shown.length;
   return (
     <div className="trophy-case" style={{ position: 'relative' }}>
       <svg
@@ -294,10 +294,9 @@ export function TrophyCase({ awards, size = 56, max = 8, labels }: { awards: str
         <path d="M8 46h84" stroke="#e8f2fb" strokeWidth="1.4" />
       </svg>
       <div className="trophy-case-shelf" style={{ position: 'relative', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 2, flexWrap: 'wrap', padding: '6px 8px 14px' }}>
-        {shown.map((k, i) => (
+        {awards.map((k, i) => (
           <AwardArt key={`${k}-${i}`} kind={k} size={size} title={labels?.[k]} />
         ))}
-        {extra > 0 && <span className="trophy-more">+{extra}</span>}
       </div>
     </div>
   );

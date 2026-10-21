@@ -102,14 +102,15 @@ describe('AwardArt', () => {
 });
 
 describe('TrophyCase', () => {
-  it('renders 10 awards as 8 + "+2" without throwing', () => {
+  it('puts every award on the shelf, with no "+N" chip', () => {
     const awards = [...AWARD_KINDS.slice(0, 9), 'champion']; // 10 entries
     const html = renderToStaticMarkup(<TrophyCase awards={awards} size={24} />);
     expect(html).toContain('trophy-case');
     expect(html).toContain('trophy-case-shelf');
-    expect(html).toContain('trophy-more');
-    expect(html).toContain('+2');
+    expect(html).not.toContain('trophy-more');
+    expect(html).not.toContain('+2');
     expect(html).not.toMatch(EMOJI);
+    expect(html.match(/<svg/g)).toHaveLength(11); // the glass + 10 trophies
     const ids = idsOf(html);
     expect(new Set(ids).size).toBe(ids.length);
   });
@@ -117,6 +118,19 @@ describe('TrophyCase', () => {
   it('passes labels through as accessible titles only', () => {
     const html = renderToStaticMarkup(<TrophyCase awards={['mvp']} size={24} labels={{ mvp: 'MVP de la temporada' }} />);
     expect(html).toContain('<title>MVP de la temporada</title>');
+  });
+
+  it('shows the national-team medals like any other trophy', () => {
+    const html = renderToStaticMarkup(<TrophyCase awards={['nationalMedal', 'nationalMedal']} size={24} labels={{ nationalMedal: 'Medalla con la selección' }} />);
+    expect(html).toContain('<title>Medalla con la selección</title>');
+    expect(html.match(/<svg/g)).toHaveLength(3); // the glass + 2 medals
+    expect(html).not.toMatch(EMOJI);
+  });
+
+  it('renders an empty case without throwing', () => {
+    const html = renderToStaticMarkup(<TrophyCase awards={[]} size={24} />);
+    expect(html).toContain('trophy-case');
+    expect(html).not.toContain('trophy-more');
   });
 });
 

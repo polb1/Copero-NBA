@@ -9,7 +9,6 @@ import { CATEGORY_GLYPH } from '../../ui/simple';
 import { Icon } from '../../ui/icons';
 import { Minigame } from '../../ui/Minigame';
 import { CATEGORY_SCENE, Scene } from '../../ui/Scene';
-import { SCENE_GLYPH } from '../../ui/art';
 import { sceneForOption } from '../../ui/life';
 
 const ROLL_MS = 2000;
@@ -120,7 +119,6 @@ export function EventModalInline({ c }: { c: Career }) {
             return (
             <button key={i} className={`choice with-img ${afford(i) ? '' : 'locked'}`} disabled={!afford(i)} onClick={() => store.act((x) => chooseOption(x, i))}>
               <Scene kind={kind} variant={`${ev.defId}-${i}`} height={64} still className="choice-img" />
-              <span className="choice-emoji" aria-hidden="true"><Icon name={SCENE_GLYPH[kind]} size={22} /></span>
               <b className="choice-title">{o.label}</b>
               <span className="choice-body">{o.desc}</span>
               {o.odds !== undefined && <span className="odds" title="Probabilidad según tu estado actual"><span className="odds-bar"><span style={{ width: `${o.odds}%` }} /></span><span><b className="good">{o.odds} %</b> sale bien · <b className="bad">{100 - o.odds} %</b> sale mal</span></span>}

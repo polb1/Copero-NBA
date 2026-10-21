@@ -938,6 +938,8 @@ export const EN: Dict = {
   "Compartir": "Share",
   "Tarjeta final": "Final card",
   "Descargar PNG": "Download PNG",
+  "Mantén pulsado para guardar la imagen.": "Hold to save the image.",
+  "No se pudo generar la imagen.": "The image could not be generated.",
   "Resumen copiado.": "Summary copied.",
   "Opción {a}": "Option {a}",
   "Cuesta {a}": "Costs {a}",

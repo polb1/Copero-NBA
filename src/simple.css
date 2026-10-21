@@ -303,13 +303,14 @@
   .decision > p.desc { margin-top: 4px; }
   .choices, .choices.compact { grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 8px; margin-top: 12px; }
   .choice, .choices.compact .choice { min-height: 0; padding: 10px 6px; gap: 3px; border-radius: 12px; }
-  .choice.with-img { padding: 10px 6px; justify-content: center; }
-  .choice.with-img > *:not(.choice-img) { padding: 0; }
-  .choice-img { display: none; }
+  .choice.with-img { padding: 0 0 10px; justify-content: flex-start; }
+  .choice.with-img > *:not(.choice-img) { padding: 0 10px; }
   .choices.compact .choice > .tiny { display: inline; }
   .choice-title, .choices.compact .choice-title { font-size: 0.88rem; line-height: 1.15; }
-  .choice-icon, .choices.compact .choice-icon { font-size: 1.8rem; margin: 4px 0; }
-  .choice-icon .team-logo, .choice-icon > svg { width: 44px !important; height: 44px !important; }
+  .choice-icon, .choices.compact .choice-icon { font-size: 1.2rem; margin: 2px 0; gap: 4px; }
+  .choice-icon .team-logo, .choice-icon > svg { width: 40px !important; height: 40px !important; }
+  .choice-icon .club-crest .flag { width: 32px !important; height: 22px !important; }
+  .choice-icon .club-crest small { font-size: 0.58rem; }
   .choice-body, .choice-meta, .choices.compact .choice-body, .choices.compact .choice-meta { font-size: 0.7rem; }
   .play-tools { flex-wrap: wrap; justify-content: center; }
 }
@@ -413,7 +414,6 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .tl-mode { margin-left: 6px; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--line-2); background: transparent; color: var(--text-2); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.04em; cursor: pointer; }
 .tl-mode[aria-pressed='true'] { color: var(--accent); border-color: var(--accent); }
 .choice-emoji { display: none; }
-@media (max-width: 960px) { .choice-emoji { display: block; font-size: 1.6rem; line-height: 1; margin-bottom: 2px; } }
 @media (max-width: 560px) { .career-list { max-height: none; overflow: visible; } }
 
 /* Achievement collection in "Mis carreras". */
@@ -654,3 +654,19 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .trophy-case-shelf svg { filter: drop-shadow(0 4px 6px rgba(0,0,0,.45)); }
 .trophy-more { position: relative; z-index: 1; display: inline-block; align-self: center; font-size: .72rem; font-weight: 800; color: var(--gold); }
 @media (max-width: 560px) { .trophy-case-shelf { gap: 6px; } .trophy-case-shelf svg { width: 40px; height: 40px; } }
+
+/* ---------- Phones: one picture per option, sized for the card ---------- */
+@media (max-width: 960px) {
+  /* The scene picture is the option: it is visible again and it has a real height. */
+  .choice-img { height: 88px !important; }
+  .decision.has-card .choice-img { height: 72px !important; }
+  .choices.compact .choice.with-img .choice-img { height: 72px !important; }
+  /* No glyphs in the cards: the picture (or the badge) is the only visual. */
+  .choice-emoji { display: none !important; }
+}
+/* Narrow phones: two columns, so the picture and the title fit without shrinking. */
+@media (max-width: 560px) {
+  .choices:has(.choice.with-img) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .choice-title { overflow-wrap: anywhere; }
+}
+

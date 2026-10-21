@@ -891,6 +891,8 @@ export const CA: Dict = {
   "Presumir": "Fardar",
   "Tarjeta final": "Targeta final",
   "Descargar PNG": "Descarregar PNG",
+  "Mantén pulsado para guardar la imagen.": "Mantén premut per desar la imatge.",
+  "No se pudo generar la imagen.": "No s'ha pogut generar la imatge.",
   "Resumen copiado.": "Resum copiat.",
   "Opción {a}": "Opció {a}",
   "Cuesta {a}": "Costa {a}",

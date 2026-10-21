@@ -21,9 +21,9 @@ import { careerHistory, store, useCareer, useStore } from '../../store/store';
 import { EventModalInline } from './EventInline';
 import { TeamBadge, ovrTone } from '../../ui/simple';
 import { OvrTile, SimProgress, useCountUp } from '../../ui/life';
-import { drawCard } from '../../ui/card';
+import { downloadPNG } from "../../ui/download";
 import { Scene, type SceneKind } from '../../ui/Scene';
-import { ASSET_GLYPH, AwardArt, AchievementArt, SCENE_GLYPH, TrophyCase } from '../../ui/art';
+import { ASSET_GLYPH, AwardArt, AchievementArt, TrophyCase } from "../../ui/art";
 import { Icon, type IconName } from '../../ui/icons';
 import { Flag } from '../../ui/Flag';
 import { findClub } from '../../data/clubs';
@@ -199,7 +199,14 @@ function CardTabs({ c, awards, totals }: { c: Career; awards: Record<string, num
       {tab === 'trophies' && (
         <div className="card-panel anim-in">
           {trophies === 0 ? <p className="tiny dim" style={{ margin: 0, textAlign: 'center' }}>Aún no has ganado ningún trofeo.</p> : (
-            <TrophyCase awards={Object.entries(awards).flatMap(([k, n]) => Array.from({ length: n }, () => k))} size={44} max={12} labels={AWARD_LABEL} />
+            <TrophyCase
+    awards={[
+      ...Object.entries(awards).flatMap(([k, n]) => Array.from({ length: n }, () => k)),
+      ...Array.from({ length: c.flags.medals ?? 0 }, () => 'nationalMedal'),
+    ]}
+    size={44}
+    labels={{ ...AWARD_LABEL, nationalMedal: 'Medalla con la selección' }}
+  />
           )}
         </div>
       )}
@@ -425,10 +432,10 @@ function Choice({ title, top, icon, scene, children, onClick, tone }: { title: s
   return (
     <button className={`choice ${tone ?? ''} ${scene ? 'with-img' : ''}`} onClick={onClick}>
       {scene && <Scene kind={scene} variant={title} height={64} still className="choice-img" />}
-      {scene && !icon && <span className="choice-emoji" aria-hidden="true"><Icon name={SCENE_GLYPH[scene]} size={22} /></span>}
       {top && <span className="tiny dim">{top}</span>}
       <b className="choice-title">{title}</b>
-      {icon && <span className="choice-icon">{icon}</span>}
+      {/* One visual per card: with a picture there is no room for a second one. */}
+      {!scene && icon && <span className="choice-icon">{icon}</span>}
       {children && <span className="choice-body">{children}</span>}
     </button>
   );
@@ -491,7 +498,7 @@ function Decision({ c }: { c: Career }) {
             {p.clubChoices.map((x) => {
               const club = findClub(x.name);
               return (
-                <Choice key={x.name} top={club?.league ?? (ncaa ? 'NCAA' : '')} title={x.name} icon={<span className="club-crest"><ClubLogo name={x.name} size={52} /><small>{club ? Array.from({ length: 4 - club.tier }, (_, i) => <Icon key={i} name="star" size={10} />) : ''}</small></span>} onClick={() => store.act((y) => api.chooseStartingClub(y, x.name))}>
+                <Choice key={x.name} top={club?.league ?? (ncaa ? 'NCAA' : '')} title={x.name} icon={<span className="club-crest"><ClubLogo name={x.name} size={52} /></span>} onClick={() => store.act((y) => api.chooseStartingClub(y, x.name))}>
                   {club?.tier === 1 ? 'Gigante: más victorias, menos minutos.' : club?.tier === 2 ? 'Equilibrado: nivel y minutos.' : 'Modesto: el balón será tuyo.'}
                   <span className="choice-meta">{x.comp === 'NCAA' ? 'Beca (sin sueldo)' : `${fmtMoney(startingSalary(x.comp, club?.tier))}/año`}</span>
                 </Choice>
@@ -615,8 +622,8 @@ function Decision({ c }: { c: Career }) {
           {c.offers.map((o) => <OfferChoice key={o.id} c={c} o={o} onPick={() => accept(o.id)} />)}
           {!needs && !c.offers.some((o) => o.id === 'opt-player') && (c.offers.some((o) => o.id.startsWith('ext-'))
             // The extension already shows this team: the alternative is just keeping the current deal, not a second offer from it.
-            ? <Choice top="Sin firmar nada" title="Rechazar la extensión" icon={<Icon name="contract" size={40} />} tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Cumples el contrato que ya tienes.</Choice>
-            : <Choice top="Quedarse en" title={t ? teamName(c.league, t.id) : 'tu equipo'} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : <Icon name="home" size={40} />} tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Seguir con tu contrato.</Choice>)}
+            ? <Choice top="Sin firmar nada" title="Rechazar la extensión" scene="contract" tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Cumples el contrato que ya tienes.</Choice>
+            : <Choice top="Quedarse en" title={t ? teamName(c.league, t.id) : 'tu equipo'} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : undefined} scene={t ? undefined : 'arena'} tone="stay" onClick={() => go('Nueva temporada…', (x) => { x.offers = []; })}>Seguir con tu contrato.</Choice>)}
           {canRetire && <Choice top="Colgar las botas" title="Retirarse" scene="trophy" tone="danger" onClick={() => setAskRetire(true)}>Fin de la carrera.</Choice>}
           {askRetire && <RetireModal c={c} onCancel={() => setAskRetire(false)} />}
         </Block>
@@ -661,11 +668,10 @@ function Retired({ c }: { c: Career }) {
   const others = careerHistory().filter((h) => h.id !== c.id).map((h) => h.legacyScore);
   const earned = ACHIEVEMENTS.filter((x) => c.achievements.includes(x.id));
   const rank = { pos: others.filter((x) => x > r.legacyScore).length + 1, total: others.length + 1, best: Math.max(0, ...others), record: others.length > 0 && r.legacyScore > Math.max(...others) };
-  const download = () => {
-    const link = document.createElement('a');
-    link.href = drawCard(c);
-    link.download = `nba-legacy-${u.last.toLowerCase()}.png`;
-    link.click();
+  const download = async () => {
+    const out = await downloadPNG(c, `nba-legacy-${u.last.toLowerCase()}.png`);
+    if (out.method === 'open') store.toast('Mantén pulsado para guardar la imagen.');
+    else if (!out.ok) store.toast('No se pudo generar la imagen.');
   };
   const share = async () => {
     const text = `NBA Legacy\n${u.first} ${u.last} (${u.pos}, ${countryByCode(u.nat).name})\n${r.totals.gp} PJ · ${f1(a.ppg)} PTS ${f1(a.rpg)} REB ${f1(a.apg)} AST · ${r.titles} anillo(s)\nLegacy Score ${r.legacyScore} · ${r.tier}\n${challengeDone(c) ? 'Reto cumplido' : 'Reto no cumplido'}: ${challengeOf(c).label}\n¿Puedes superarlo? ${location.origin + location.pathname}`;
