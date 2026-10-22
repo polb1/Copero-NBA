@@ -402,6 +402,12 @@ export interface PreDraft {
   picks?: { pick: number; teamId: string; prospectId: string }[];
   userPick?: { pick: number; round: number; teamId: string } | null;
   workouts: string[];
+  /** Motivo por el que el último intento no llegó al draft (ausente en saves v1). */
+  lastOutcome?: 'no-interest' | 'combine-failed' | 'skipped-combine';
+  /** Años de espera acumulados tras no entrar al draft. */
+  waits?: number;
+  /** La puerta NBA se ha cerrado: solo quedan ofertas exteriores. */
+  noNbaInterest?: boolean;
 }
 
 export interface OwnedAsset { id: string; bought: number; value: number; }

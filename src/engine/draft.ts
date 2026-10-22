@@ -1,5 +1,5 @@
 import type { League, Player, Pos, Prospect } from './types';
-import { RULES, minSalary, rookieScale } from './config';
+import { RULES, DRAFT_GATE, minSalary, rookieScale } from './config';
 import { generatePlayer, fullName } from './players';
 import { makeSalaries } from './contracts';
 import { newPlayerId } from './league';
@@ -32,6 +32,20 @@ export function generateDraftClass(seed: number, season: number): Prospect[] {
     out.push({ id: p.id, name: fullName(p), nat: p.nat, pos: p.pos, age: p.age, ovr: p.ovr, pot: p.pot, arch: p.arch, value });
   }
   return out.sort((a, b) => b.value - a.value);
+}
+
+export function draftCutoff(cls: Prospect[], picks = DRAFT_GATE.picks, margin = DRAFT_GATE.margin): number {
+  const sorted = cls.filter((p) => !p.isUser).sort((a, b) => b.value - a.value);
+  if (!sorted.length) return Number.POSITIVE_INFINITY;
+  return sorted[clamp(picks - 3, 0, sorted.length - 1)].value + margin;
+}
+
+export interface DraftVerdict { value: number; cutoff: number; interested: boolean; rank: number; }
+
+export function draftVerdict(cls: Prospect[], value: number, picks = DRAFT_GATE.picks, margin = DRAFT_GATE.margin): DraftVerdict {
+  const cutoff = draftCutoff(cls, picks, margin);
+  const sorted = cls.filter((p) => !p.isUser).sort((a, b) => b.value - a.value);
+  return { value, cutoff, interested: Number.isFinite(value) && value >= cutoff, rank: sorted.filter((p) => p.value > value).length + 1 };
 }
 
 /** Recreates the full player for a drafted NPC prospect (deterministic). */

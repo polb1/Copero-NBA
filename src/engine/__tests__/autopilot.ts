@@ -27,7 +27,13 @@ export function autopilot(c: Career, opts: { pick?: (n: number, i: number) => nu
         const p = c.predraft!;
         if (p.step === 'club') api.chooseStartingClub(c, p.clubChoices![pick(p.clubChoices!.length, i++) % p.clubChoices!.length].name);
         else if (p.step === 'season') api.advance(c, 'season');
-        else if (p.step === 'decision') api.predraftDecision(c, true);
+        else if (p.step === 'decision') {
+          const interest = api.nbaInterest(c);
+          if (p.noNbaInterest) api.chooseEuroCareer(c);
+          else if (interest.interested) api.predraftDecision(c, true);
+          else if ((p.waits ?? 0) < 3) api.predraftDecision(c, false);
+          else api.chooseEuroCareer(c);
+        }
         else if (p.step === 'combine') api.doCombine(c, 'full');
         else if (p.step === 'combineTests') api.playCombineTest(c);
         else if (p.step === 'interviews') api.answerInterview(c, p.interviews.length, 0);
@@ -52,7 +58,11 @@ export function autopilot(c: Career, opts: { pick?: (n: number, i: number) => nu
         break;
       case 'offseason':
         if (u.age >= (opts.maxAge ?? 36)) api.retire(c, 'Retirada voluntaria');
-        else if (api.needsContract(c)) {
+        else if (c.flags.euroCareer && c.satellite) {
+          const euro = c.offers.find((o) => o.kind === 'overseas');
+          if (euro) api.acceptOffer(c, euro.id);
+          else api.startPreseason(c);
+        } else if (api.needsContract(c)) {
           if (c.offers.length) api.acceptOffer(c, c.offers[0].id);
           else api.retire(c, 'Sin ofertas');
         } else {

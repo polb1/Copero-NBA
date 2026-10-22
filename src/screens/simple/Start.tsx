@@ -122,7 +122,7 @@ export function Start() {
         <div className="simple-cols">
           <section className="simple-col">
             <h3>Identidad</h3>
-            <div style={{ display: 'grid', placeItems: 'center' }}><Jersey name={last.trim() || first.trim()} number={number} color={kit.color} trim={kit.trim} text={kit.text} /></div>
+            <div className="jersey-wrap" style={{ display: 'grid', placeItems: 'center' }}><Jersey name={last.trim() || first.trim()} number={number} color={kit.color} trim={kit.trim} text={kit.text} /></div>
             <div className="name-fields">
               <label className="name-field"><span>Nombre</span><input className="input" value={first} maxLength={20} onChange={(e) => setFirst(e.target.value)} placeholder="Ej.: Marc" autoComplete="off" /></label>
               <label className="name-field"><span>Apellido</span><input className="input" value={last} maxLength={14} onChange={(e) => setLast(e.target.value)} placeholder="Ej.: Gasol" autoComplete="off" /></label>

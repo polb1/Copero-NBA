@@ -4,7 +4,7 @@ import type { MinigameDef } from '../content/events';
 import { COMBINE_TESTS, combineTestIds, type CombineTestDef } from '../content/combine';
 import { buildSpec } from './minigames';
 import { addNews, onNbaRoster, teamOf, userOf } from './career';
-import { generateDraftClass, materializeProspect, mockRange, positionNeeds, prospectValue, rookieContract, runLottery, simulateDraft } from './draft';
+import { generateDraftClass, draftVerdict, materializeProspect, mockRange, positionNeeds, prospectValue, rookieContract, runLottery, simulateDraft } from './draft';
 import { contractEnd, makeSalaries, marketValue, offerCapacity, salaryIn, yearsLeft, fmtMoney } from './contracts';
 import { contractFromOffer, euroOffers, fallbackOffers, generateFAOffers, signUser, projectedRole } from './market';
 import { evaluateStanding, financialFallout } from './standing';
@@ -15,7 +15,7 @@ import { pickEvent, instantiate, markEventSeen } from './events';
 import { eventContext } from './career';
 import { achievementsCheck } from './flow';
 import { legacyScore, hofProbability, hofVerdict, legacyTier, careerTotals, playoffTotals, awardCounts } from './legacy';
-import { DAILY_MAX_SEASONS, MAX_AGE, RULES, minSalary, rookieScale, scaled } from './config';
+import { DAILY_MAX_SEASONS, DRAFT_GATE, MAX_AGE, RULES, minSalary, rookieScale, scaled } from './config';
 import { clamp, rngFor, type Rng } from './rng';
 import { seasonLabel } from './schedule';
 import { SATELLITES } from './satellite';
@@ -25,8 +25,21 @@ import { startingSalary } from './mindset';
 
 /** Board value used by the draft: a low OVR is heavily discounted so mock and simulation agree. */
 export function userDraftValue(u: Player, stockBonus: number) {
-  const penalty = u.ovr < 58 ? 12 : u.ovr < 62 ? 6 : u.ovr < 66 ? 2 : 0;
-  return prospectValue(u.ovr, u.pot, u.age) + stockBonus - penalty;
+  const penalty = u.ovr < 58 ? DRAFT_GATE.penaltyLow : u.ovr < 62 ? DRAFT_GATE.penaltyMid : u.ovr < 66 ? DRAFT_GATE.penaltyHigh : 0;
+  return prospectValue(u.ovr, u.pot, u.age) + stockBonus - penalty - Math.max(0, u.age - 19) * DRAFT_GATE.agePenalty;
+}
+
+export interface NbaInterest { interested: boolean; value: number; cutoff: number; rank: number; waits: number; }
+
+/** Interés NBA actual: valor de tablero contra el corte del pick 57. */
+export function nbaInterest(c: Career): NbaInterest {
+  const p = c.predraft;
+  const u = userOf(c);
+  if (!p) return { interested: false, value: 0, cutoff: Number.POSITIVE_INFINITY, rank: 0, waits: 0 };
+  const cls = p.draftClass ?? generateDraftClass(c.seed, c.league.season + 1);
+  const value = userDraftValue(u, p.stockBonus);
+  const verdict = draftVerdict(cls, value);
+  return { interested: !p.noNbaInterest && verdict.interested, value, cutoff: verdict.cutoff, rank: verdict.rank, waits: p.waits ?? 0 };
 }
 
 // ---------------- League offseason ----------------
@@ -499,6 +512,8 @@ export function chooseEuroCareer(c: Career) {
   c.ovrHistory.push({ season: c.league.season, age: u.age, ovr: u.ovr, pot: u.pot });
   c.flags.euroCareer = 1;
   p.step = 'done';
+  p.lastOutcome = undefined;
+  p.noNbaInterest = true;
   c.satellite = null;
   c.satStats = emptyStats();
   c.gameLog = [];
@@ -508,34 +523,89 @@ export function chooseEuroCareer(c: Career) {
   addNews(c, 'contract', 'Carrera en el extranjero', `${fullName(u)} renuncia al draft de la NBA para hacer carrera fuera. La puerta de la NBA seguirá abierta si su nivel lo merece.`, 'neutral');
 }
 
-export function predraftDecision(c: Career, declare: boolean) {
-  const p = c.predraft!;
+export function returnToClub(c: Career, outcome?: 'no-interest' | 'combine-failed' | 'skipped-combine') {
+  const p = c.predraft;
+  if (!p) return;
   const u = userOf(c);
-  if (!declare) {
-    // Return to college / club for another season.
-    leagueOffseason(c.league, c.seed, { draft: true });
-    offseasonDevelopment(u, rngFor(c.seed, 'pre-dev', c.league.season), { workEthic: c.workEthic, minutesShare: 0.85, coachRating: 65, trainingBonus: 0.1 });
-    c.ovrHistory.push({ season: c.league.season, age: u.age, ovr: u.ovr, pot: u.pot });
-    const comp = p.route === 'college' ? 'NCAA' : 'EUR';
-    const club = findClub(p.clubName);
-    c.satellite = { comp, teamName: p.clubName, level: clubLevel(club, comp), minutes: clubMinutes(club), league: club?.league, gamesPlanned: SATELLITES[comp].games, w: 0, l: 0 };
-    c.satStats = emptyStats();
-    c.gameLog = [];
-    c.seasonOvrStart = u.ovr;
-    p.step = 'season';
-    addNews(c, 'draft', 'Un año más de formación', `${fullName(u)} decide seguir en ${p.clubName} para mejorar su cotización.`, 'neutral');
-    return;
+  leagueOffseason(c.league, c.seed, { draft: true });
+  offseasonDevelopment(u, rngFor(c.seed, 'pre-dev', c.league.season), { workEthic: c.workEthic, minutesShare: 0.85, coachRating: 65, trainingBonus: 0.1 });
+  c.ovrHistory.push({ season: c.league.season, age: u.age, ovr: u.ovr, pot: u.pot });
+  const comp = p.route === 'college' ? 'NCAA' : 'EUR';
+  const club = findClub(p.clubName);
+  c.satellite = { comp, teamName: p.clubName, level: clubLevel(club, comp), minutes: clubMinutes(club), league: club?.league, gamesPlanned: SATELLITES[comp].games, w: 0, l: 0 };
+  c.satStats = emptyStats();
+  c.gameLog = [];
+  c.seasonOvrStart = u.ovr;
+  p.step = 'season';
+  p.waits = (p.waits ?? 0) + 1;
+  p.lastOutcome = outcome;
+  if (p.waits >= DRAFT_GATE.maxWaits) p.noNbaInterest = true;
+  p.combineTests = undefined;
+  p.combinePlan = undefined;
+  p.interviewQuestions = undefined;
+  p.interviews = [];
+  p.interviewTeams = [];
+  p.mock = undefined;
+  p.order = undefined;
+  p.lottery = undefined;
+  p.picks = undefined;
+  p.userPick = null;
+  p.draftClass = undefined;
+  p.stockBonus = 0;
+  const title = outcome === 'combine-failed' ? 'El combine no convence'
+    : outcome === 'skipped-combine' ? 'No acudió al combine'
+    : outcome === 'no-interest' ? 'Sin interés NBA'
+    : 'Un año más de formación';
+  const text = outcome === 'combine-failed'
+    ? `El combine no deja buen sabor: ${fullName(u)} no entra al draft y seguirá en ${p.clubName}.`
+    : outcome === 'skipped-combine'
+      ? `${fullName(u)} no se presenta al combine. Las franquicias lo notan y seguirá en ${p.clubName}.`
+      : outcome === 'no-interest'
+        ? `${fullName(u)} no entra en los planes de las franquicias. Seguirá en ${p.clubName} y probará de nuevo.`
+        : `${fullName(u)} decide seguir en ${p.clubName} para mejorar su cotización.`;
+  addNews(c, 'draft', title, text, outcome === 'no-interest' || !outcome ? 'neutral' : 'bad');
+}
+
+export function waitAnotherYear(c: Career) {
+  returnToClub(c);
+}
+
+export function predraftDecision(c: Career, declare: boolean): boolean {
+  const p = c.predraft;
+  if (!p) return false;
+  if (p.noNbaInterest) {
+    chooseEuroCareer(c);
+    return false;
   }
+  if (!declare) {
+    returnToClub(c);
+    return false;
+  }
+  const interest = nbaInterest(c);
+  if (!interest.interested) {
+    returnToClub(c, 'no-interest');
+    return false;
+  }
+  p.lastOutcome = undefined;
+  p.combineResult = undefined;
+  p.combine = undefined;
+  p.combineTests = undefined;
+  p.combinePlan = undefined;
+  p.interviewQuestions = undefined;
+  p.interviews = [];
+  p.interviewTeams = [];
+  p.mock = undefined;
   p.step = 'combine';
-  // Build the draft class with the user inside.
   const cls = generateDraftClass(c.seed, c.league.season + 1);
   const stats = c.satStats;
   const gp = Math.max(1, stats.gp);
   const prod = clamp((stats.gmsc / gp - 10) * 0.5, -4, 6);
   p.stockBonus = prod;
+  const u = userOf(c);
   const me: Prospect = { id: 'user', name: fullName(u), nat: u.nat, pos: u.pos, age: u.age, ovr: u.ovr, pot: u.pot, arch: u.arch, isUser: true, value: userDraftValue(u, prod) };
   p.draftClass = [...cls.slice(0, 71), me].sort((a, b) => b.value - a.value);
   addNews(c, 'draft', `${fullName(u)} se declara elegible para el draft`, `Tras promediar ${(stats.pts / gp).toFixed(1)} puntos, el ${u.pos} da el salto. Próximo paso: el Draft Combine.`, 'good');
+  return true;
 }
 
 /** Level of the combine tests implied by the prospect projection (OVR 55% + potential 45%). */
@@ -568,11 +638,15 @@ function combineDef(t: CombineTestDef): MinigameDef {
 }
 
 /** Legacy tail of the combine: the user's board value, the mock range and the interview teams. */
-function afterCombine(c: Career, rng: Rng) {
+function afterCombine(c: Career, rng: Rng): boolean {
   const p = c.predraft!;
   const u = userOf(c);
   const me = p.draftClass!.find((x) => x.isUser)!;
   me.value = userDraftValue(u, p.stockBonus);
+  if (!nbaInterest(c).interested) {
+    returnToClub(c, 'no-interest');
+    return false;
+  }
   // Pick interview teams around the projected range.
   const range = mockRange(p.draftClass!, 'user', rng);
   const order = runLotteryPreview(c);
@@ -580,6 +654,7 @@ function afterCombine(c: Career, rng: Rng) {
   p.interviewTeams = rng.shuffle([...new Set(teams)]).slice(0, c.mode === 'full' ? 3 : 1);
   p.interviewQuestions = p.interviewTeams.map((teamId, i) => INTERVIEW_QUESTIONS[(i + Math.floor(rng.next() * INTERVIEW_QUESTIONS.length)) % INTERVIEW_QUESTIONS.length]).map((q, i) => ({ teamId: p.interviewTeams[i], question: q.q, answers: q.a }));
   p.step = 'interviews';
+  return true;
 }
 
 export function doCombine(c: Career, choice: CombinePlan) {
@@ -604,8 +679,7 @@ export function doCombine(c: Career, choice: CombinePlan) {
   }
   if (choice === 'skip') {
     p.combine = { sprint: 0, vertical: 0, lane: 0, shooting: 0, grade: 'No participó' };
-    p.stockBonus -= 3.5;
-    afterCombine(c, rng);
+    returnToClub(c, 'skipped-combine');
     return;
   }
   // Played plans: the measurements are taken now and the stock waits for the tests.
@@ -660,6 +734,12 @@ export function finishCombine(c: Career) {
   const grade = bonus > 2 ? 'A' : bonus > 0.5 ? 'B' : bonus > -1 ? 'C' : 'D';
   p.combineResult = { grade, bonus, detail: `${Math.round(q * 100)}% de acierto · cobertura ${Math.round(coverage * 100)}%` };
   if (p.combine) p.combine.grade = grade;
+  const failedTests = tests.filter((t) => ((t.made ?? 0) / Math.max(1, t.spec.attempts)) < DRAFT_GATE.minAccuracy).length;
+  const failed = failedTests >= DRAFT_GATE.maxFailures || failedTests / tests.length >= DRAFT_GATE.failRatio || q < DRAFT_GATE.minAccuracy;
+  if (failed) {
+    returnToClub(c, 'combine-failed');
+    return;
+  }
   const me = p.draftClass!.find((x) => x.isUser)!;
   me.value = userDraftValue(u, p.stockBonus);
   afterCombine(c, rngFor(c.seed, 'combine-after', c.league.season));

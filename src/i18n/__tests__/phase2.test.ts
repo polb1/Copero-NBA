@@ -53,6 +53,7 @@ describe('phase 2 dictionaries', () => {
       'Mantén pulsado. Intento {n1} de {n2}',
       '¡Suelta!',
       'Mantén pulsado y suelta dentro de la franja',
+      'Precisión de ratón: franja más estrecha y menos tiempo',
       // ReactionGame
       'Celda {n1}. Intento {n2} de {n3}',
       '¡AHORA!',
@@ -73,6 +74,16 @@ describe('phase 2 dictionaries', () => {
       'Prueba {n1}/{n2}',
       'Dificultad: {x}',
       'El resultado mueve tu proyección en el draft.',
+      'Sin interés NBA',
+      'Los equipos no te ven listo para el draft.',
+      'Los equipos NBA no muestran interés',
+      'Combine insuficiente: no entras al draft',
+      'No acudiste al combine',
+      'Año de espera {n1}/3',
+      'Volver al club y mejorar tu cotización.',
+      'Carrera fuera de la NBA',
+      'La puerta NBA se ha cerrado',
+      'Las franquicias miden velocidad, salto, agilidad y tiro… y ahora también te ponen a prueba. Si fallas demasiadas pruebas o no acudes, no entrarás al draft: volverás al club.',
     ];
     for (const [name, dict] of DICTS) {
       for (const key of sample) {
@@ -95,6 +106,7 @@ describe('phase 2 dictionaries', () => {
       'Dificultad: {x}',
       'Combine {x}',
       'Bonus {x}',
+      'Año de espera {n1}/3',
     ];
     for (const [name, dict] of DICTS) {
       for (const key of patterns) {

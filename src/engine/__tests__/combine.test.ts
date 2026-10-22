@@ -28,6 +28,9 @@ function toCombine(seed: number): Career {
   }
   expect(p.step).toBe('decision');
 
+  const u = userOf(c);
+  u.ovr = Math.max(u.ovr, 68);
+  u.pot = Math.max(u.pot, 80);
   api.predraftDecision(c, true);
   expect(p.step).toBe('combine');
   return c;

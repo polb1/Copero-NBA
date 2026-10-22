@@ -5,7 +5,7 @@ import { challengeDone, challengeOf } from '../../engine/challenges';
 import { Link, useNavigate } from 'react-router-dom';
 import type { Career, Offer, SeasonRecord, SeasonSummary } from '../../engine/types';
 import * as api from '../../engine/api';
-import { openEvent, teamOf, userOf } from '../../engine/career';
+import { teamOf, userOf } from '../../engine/career';
 import { inSeason } from '../../engine/flow';
 import { championOf, teamName } from '../../engine/league';
 import { averages, f1, sumStats } from '../../engine/stats';
@@ -114,9 +114,6 @@ function FinanceLine({ c }: { c: Career }) {
       )}
       {f.ruined && <span className="chip bad">En ruina</span>}
       {c.flags.cut ? <span className="chip bad">Cortado</span> : c.flags.demoted ? <span className="chip bad">En el mercado</span> : null}
-      {!c.pendingEvent && cashOf(c) >= 30_000 && (c.flags['seen:gamble-allin'] ?? 0) < 3 && (
-        <button type="button" className="chip gold" onClick={() => store.act((x) => openEvent(x, 'gamble-allin'))}>🎲 Jugártelo todo</button>
-      )}
     </div>
   );
 }
@@ -432,15 +429,15 @@ function seasonRecords(c: Career, season: number): string[] {
 
 // ---------------- Decisions ----------------
 
-function Choice({ title, top, icon, scene, children, onClick, tone }: { title: string; top?: string; icon?: ReactNode; scene?: SceneKind; children?: ReactNode; onClick: () => void; tone?: 'stay' | 'danger' | 'primary' }) {
+function Choice({ title, top, icon, scene, children, onClick, tone, locked, lockNote }: { title: string; top?: string; icon?: ReactNode; scene?: SceneKind; children?: ReactNode; onClick: () => void; tone?: 'stay' | 'danger' | 'primary'; locked?: boolean; lockNote?: string }) {
   return (
-    <button className={`choice ${tone ?? ''} ${scene ? 'with-img' : ''}`} onClick={onClick}>
+    <button className={`choice ${tone ?? ''} ${scene ? 'with-img' : ''} ${locked ? 'locked' : ''}`} onClick={onClick} disabled={locked} aria-disabled={locked}>
       {scene && <Scene kind={scene} variant={title} height={64} still className="choice-img" />}
       {top && <span className="tiny dim">{top}</span>}
       <b className="choice-title">{title}</b>
-      {/* One visual per card: with a picture there is no room for a second one. */}
       {!scene && icon && <span className="choice-icon">{icon}</span>}
       {children && <span className="choice-body">{children}</span>}
+      {locked && <span className="choice-lock">🔒 {lockNote ?? 'No disponible'}</span>}
     </button>
   );
 }
@@ -514,25 +511,73 @@ function Decision({ c }: { c: Career }) {
       if (p.step === 'season') {
         const s = c.satellite!;
         const comp = SATELLITES[s.comp as 'NCAA' | 'EUR'];
+        const waits = p.waits ?? 0;
+        const outcome = p.lastOutcome === 'no-interest'
+          ? 'Los equipos NBA no muestran interés'
+          : p.lastOutcome === 'combine-failed'
+            ? 'Combine insuficiente: no entras al draft'
+            : p.lastOutcome === 'skipped-combine'
+              ? 'No acudiste al combine'
+              : null;
         return (
-          <Block scene={s.comp === 'NCAA' ? 'college' : 'europe'} title={`Temporada en ${s.teamName}`} desc={`${s.league ?? comp.name}. Los ojeadores NBA miran cada partido; la liga NBA se juega en paralelo y decidirá el orden del draft.`}>
+          <Block
+            scene={s.comp === 'NCAA' ? 'college' : 'europe'}
+            title={`Temporada en ${s.teamName}`}
+            desc={`${s.league ?? comp.name}. Los ojeadores NBA miran cada partido; la liga NBA se juega en paralelo y decidirá el orden del draft.`}
+            meta={(outcome || waits > 0) ? (
+              <div className="risk-row">
+                {outcome && <span className="chip">{outcome}</span>}
+                {waits > 0 && <span className="chip">{`Año de espera ${waits}/3`}</span>}
+              </div>
+            ) : undefined}
+          >
             <Choice top="Jugar" title="La temporada completa" scene="arena" onClick={() => go('Jugando la temporada…')}>Se detiene si surge una decisión.</Choice>
           </Block>
         );
       }
       if (p.step === 'decision') {
-        const canReturn = u.age <= 21 && p.seasonsPlayed < 3;
+        const interest = api.nbaInterest(c);
+        const waits = p.waits ?? 0;
+        const canReturn = !p.noNbaInterest && waits < 3 && u.age <= 21 && p.seasonsPlayed < 3;
+        const outcome = p.lastOutcome === 'no-interest'
+          ? 'Los equipos NBA no muestran interés'
+          : p.lastOutcome === 'combine-failed'
+            ? 'Combine insuficiente: no entras al draft'
+            : p.lastOutcome === 'skipped-combine'
+              ? 'No acudiste al combine'
+              : null;
         return (
-          <Block scene={'draft'} title="¿Te declaras para el draft?" desc={c.lastSummary ? <SeasonCard c={c} s={c.lastSummary} /> : undefined}>
-            <Choice top="Dar el salto" title="Declararme" scene="draft" onClick={() => store.act((x) => api.predraftDecision(x, true))}>Combine, entrevistas y draft.</Choice>
-            <Choice top="Sin NBA" title={p.route === 'college' ? 'Jugar en el extranjero' : 'Carrera en Europa'} scene="europe" tone="stay" onClick={() => go('Mercado de clubes…', api.chooseEuroCareer)}>Clubes, títulos y la puerta de la NBA abierta.</Choice>
-            {canReturn && <Choice top="Esperar" title="Otra temporada" scene="college" tone="stay" onClick={() => go('Jugando otra temporada…', (x) => api.predraftDecision(x, false))}>Mejorar tu cotización.</Choice>}
+          <Block
+            scene={'draft'}
+            title="¿Te declaras para el draft?"
+            desc={c.lastSummary ? <SeasonCard c={c} s={c.lastSummary} /> : undefined}
+            meta={(outcome || waits > 0 || p.combineResult || p.noNbaInterest) ? (
+              <div className="risk-row">
+                {outcome && <span className="chip">{outcome}</span>}
+                {p.combineResult && <span className="chip">{`Combine ${p.combineResult.grade} · ${p.combineResult.detail}`}</span>}
+                {waits > 0 && <span className="chip">{`Año de espera ${waits}/3`}</span>}
+                {p.noNbaInterest && <span className="chip">La puerta NBA se ha cerrado</span>}
+              </div>
+            ) : undefined}
+          >
+            <Choice
+              top={interest.interested ? 'Dar el salto' : 'Sin interés NBA'}
+              title="Declararme"
+              scene="draft"
+              locked={!interest.interested}
+              lockNote={!interest.interested ? 'Los equipos no te ven listo para el draft.' : undefined}
+              onClick={() => store.act((x) => api.predraftDecision(x, true))}
+            >
+              Combine, entrevistas y draft.
+            </Choice>
+            <Choice top="Sin NBA" title={p.noNbaInterest ? 'Carrera fuera de la NBA' : p.route === 'college' ? 'Jugar en el extranjero' : 'Carrera en Europa'} scene="europe" tone="stay" onClick={() => go('Mercado de clubes…', api.chooseEuroCareer)}>Clubes, títulos y la puerta de la NBA abierta.</Choice>
+            {canReturn && <Choice top="Esperar" title="Otra temporada" scene="college" tone="stay" onClick={() => go('Jugando otra temporada…', (x) => api.predraftDecision(x, false))}>Volver al club y mejorar tu cotización.</Choice>}
           </Block>
         );
       }
       if (p.step === 'combine') {
         return (
-          <Block scene={'training'} title="Draft Combine" desc="Las franquicias miden velocidad, salto, agilidad y tiro… y ahora también te ponen a prueba.">
+          <Block scene={'training'} title="Draft Combine" desc="Las franquicias miden velocidad, salto, agilidad y tiro… y ahora también te ponen a prueba. Si fallas demasiadas pruebas o no acudes, no entrarás al draft: volverás al club.">
             <Choice top="Riesgo alto" title="Demostrar todo" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'full'))}>Tres pruebas con dificultad según tu proyección.</Choice>
             <Choice top="Sin red" title="A lo bestia" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'hard'))}>Tres pruebas al máximo: más recompensa y más riesgo.</Choice>
             <Choice top="Prudente" title="Ir con calma" scene="training" onClick={() => store.act((x) => api.doCombine(x, 'safe'))}>Dos pruebas fáciles; menos margen de subida.</Choice>
