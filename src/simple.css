@@ -150,7 +150,8 @@
 .drag-arena { position: relative; display: block; width: 100%; height: 200px; margin: 8px 0 10px; border: 1px solid var(--line-2); border-radius: 12px; background: radial-gradient(circle at 70% 30%, #24303c, #121418 72%); overflow: hidden; cursor: crosshair; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
 .drag-rim { position: absolute; width: 46px; height: 12px; transform: translate(-50%, -50%); border: 3px solid #ff6b1a; border-radius: 50%; box-shadow: 0 0 14px rgba(255, 107, 26, 0.5); }
 .drag-ball { position: absolute; width: 28px; height: 28px; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffb37a, #c2410c 70%); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); pointer-events: none; }
-.drag-aim { position: absolute; height: 2px; transform-origin: left center; background: linear-gradient(90deg, rgba(255,255,255,.9), rgba(255,255,255,.1)); pointer-events: none; }
+.drag-arc { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.drag-arc path { fill: none; stroke: rgba(255, 255, 255, 0.85); stroke-width: 0.8; stroke-dasharray: 2.5 1.8; stroke-linecap: round; filter: drop-shadow(0 0 3px rgba(255,255,255,.5)); }
 .drag-power { height: 8px; border-radius: 999px; background: #1d2026; border: 1px solid var(--line-2); overflow: hidden; }
 .drag-power span { display: block; height: 100%; background: linear-gradient(90deg, #22c55e, #eab308, #ef4444); }
 .drag-msg { position: absolute; right: 10px; top: 8px; font-weight: 900; font-size: 1.3rem; letter-spacing: 0.04em; animation: pop 0.35s var(--ease) both; }

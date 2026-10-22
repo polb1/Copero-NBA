@@ -19,7 +19,7 @@ export function resolveDragShot(
   const dy = RIM_Y - BALL_Y;
   const optimal = (Math.atan2(dy, dx) * 180) / Math.PI;
   const dist = Math.hypot(dx, dy) / 100;
-  const idealPower = clamp(dist * 1.15, 0.3, 0.85);
+  const idealPower = clamp(dist, 0.3, 0.9);
   const angleTol = clamp(spec.zone * 0.7 - 6, 5, 30);
   const powerTol = clamp(spec.zone / 180, 0.08, 0.3);
   return Math.abs(angleDeg - optimal) <= angleTol && Math.abs(power - idealPower) <= powerTol;
@@ -72,7 +72,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     const dx = x - BALL_X;
     const dy = y - BALL_Y;
     const a = (Math.atan2(dy, dx) * 180) / Math.PI;
-    const p = clamp(Math.hypot(dx, dy) / 70, 0, 1);
+    const p = clamp(Math.hypot(dx, dy) / 100, 0, 1);
     angleRef.current = a;
     powerRef.current = p;
     setAngle(a);
@@ -130,7 +130,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     const dx = p.x - BALL_X;
     const dy = p.y - BALL_Y;
     const a = (Math.atan2(dy, dx) * 180) / Math.PI;
-    const pw = clamp(Math.hypot(dx, dy) / 70, 0, 1);
+    const pw = clamp(Math.hypot(dx, dy) / 100, 0, 1);
     resolve(a, pw);
   };
 
@@ -154,7 +154,9 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
   }, [resolve]);
 
   const rX = rimX(attempt);
-  const aimLen = Math.max(16, power * 70);
+  const rad = (angle * Math.PI) / 180;
+  const endX = BALL_X + Math.cos(rad) * power * 100;
+  const endY = BALL_Y + Math.sin(rad) * power * 100;
 
   return (
     <div className={`drag-game ${flash ?? ''}`}>
@@ -174,10 +176,11 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
         aria-label={t(`Arrastra y suelta. Tiro ${Math.min(attempt + 1, spec.attempts)} de ${spec.attempts}`)}
       >
         <span className="drag-rim" style={{ left: `${rX}%`, top: `${RIM_Y}%` }} />
-        <span
-          className="drag-aim"
-          style={{ left: `${BALL_X}%`, top: `${BALL_Y}%`, width: `${aimLen}%`, transform: `rotate(${angle}deg)` }}
-        />
+        <svg className="drag-arc" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <path
+            d={`M ${BALL_X} ${BALL_Y} Q ${(BALL_X + endX) / 2} ${Math.min(BALL_Y, endY) - 18 - 15 * power} ${endX} ${endY}`}
+          />
+        </svg>
         <span className="drag-ball" style={{ left: `${BALL_X}%`, top: `${BALL_Y}%` }} />
         {flash && <span className="drag-msg">{flash === 'in' ? t('¡DENTRO!') : t('FUERA')}</span>}
       </div>

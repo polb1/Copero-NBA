@@ -377,7 +377,7 @@ export const EVENTS: EventDef[] = [
         { weight: 3, effects: { money: -500_000, morale: -5, pressure: 3 }, text: 'La empresa quiebra. Adiós a la inversión.' } ] },
       { label: 'No, gracias', desc: 'El dinero, en el banco.', effects: {}, text: 'Prudencia financiera.' },
     ] },
-  { id: 'gamble-allin', category: 'money', title: 'Doble o nada', weight: 9, cooldown: 300,
+  { id: 'gamble-allin', category: 'money', title: 'Doble o nada', weight: 9, cooldown: 300, priority: 1,
     text: 'Un inversor te propone una operación exprés: pones todo tu efectivo sobre la mesa y, en una semana, o lo doblas o lo pierdes. Sin garantías.',
     when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason', 'regular'], minAge: 21, minCash: 50_000 },
     options: [
@@ -779,7 +779,7 @@ export const EVENTS: EventDef[] = [
         fail: { effects: { fame: -2, pressure: 5, morale: -3 }, text: 'La cámara capta todos los fallos. El clip circula con burla.' },
       } },
     options: [] },
-  { id: 'mg-dunk', category: 'contest', title: 'El mate del concurso', weight: 7, cooldown: 250,
+  { id: 'mg-dunk', category: 'contest', title: 'El mate del concurso', weight: 9, cooldown: 180,
     text: 'El concurso de mates del All-Star busca participantes. Te dan tres intentos y un pabellón entero esperando algo irrepetible.',
     when: { phases: ['regular'], nba: true, minOvr: 62, beforeDeadline: true },
     minigame: { kind: 'dunk', mechanic: 'power', positions: ['SF'], attempts: 3, attrs: ['dunk', 'vert', 'strength'],

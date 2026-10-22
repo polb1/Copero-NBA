@@ -33,7 +33,7 @@ function OddsRoll({ odds, lucky, seed }: { odds: number; lucky: boolean; seed: s
     const step = (now: number) => {
       const t = Math.min(1, (now - t0) / ROLL_MS);
       // Starts on the other side and swings across both zones, each pass shorter, until it settles.
-      const from = lucky ? 96 : 4;
+      const from = 50;
       const x = Math.max(1, Math.min(99, land + (from - land) * (1 - t) ** 1.6 * Math.cos(t * Math.PI * 5)));
       if (marker.current) marker.current.style.left = `${x}%`;
       if (t < 1) raf = requestAnimationFrame(step);
@@ -47,7 +47,7 @@ function OddsRoll({ odds, lucky, seed }: { odds: number; lucky: boolean; seed: s
       <div className="roll-bar">
         <span className="roll-good" style={{ width: `${odds}%` }}>{odds} %</span>
         <span className="roll-bad">{100 - odds} %</span>
-        <span ref={marker} className="roll-marker" style={{ left: `${done ? land : lucky ? 96 : 4}%` }} />
+        <span ref={marker} className="roll-marker" style={{ left: `${done ? land : 50}%` }} />
       </div>
       <div className="roll-verdict">{done ? (lucky ? '✅ ¡Sale bien!' : '💥 Sale mal') : '🎲 Tirando…'}</div>
     </div>

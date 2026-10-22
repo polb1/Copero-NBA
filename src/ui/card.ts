@@ -175,45 +175,45 @@ export function drawCard(c: Career): string {
   box(708, 670, 'Anillos', String(r.titles), '#f5c451');
   const medals = c.flags.medals ?? 0;
   const caps = c.flags.nationalCaps ?? 0;
+  g.fillStyle = '#f4f5f7';
+  g.font = `700 40px ${COND}`;
+  g.fillText(t('PALMARÉS'), 72, 880);
   if (medals > 0 || caps > 0) {
-    const startX = 300;
-    const slots = medalSlots(medals, startX);
+    g.fillStyle = '#767d8a';
+    g.font = `700 26px ${COND}`;
+    g.textAlign = 'right';
+    g.fillText(t('Selección').toUpperCase(), 1008, 880);
+    g.textAlign = 'left';
+    const slots = medalSlots(medals, 72, 900);
     slots.forEach((s) => drawMedal(g, s.x, s.y, s.size, true));
-    let x = slots.length ? slots[slots.length - 1].x + slots[slots.length - 1].size + 10 : startX;
+    let x = slots.length ? slots[slots.length - 1].x + slots[slots.length - 1].size + 10 : 72;
     if (medals > 0) {
       g.fillStyle = '#f5c451';
       g.font = `800 36px ${COND}`;
       const n = String(medals);
-      g.fillText(n, x, 856);
+      g.fillText(n, x, 930);
       x += g.measureText(n).width + 8;
       g.fillStyle = '#f4f5f7';
       g.font = `700 28px ${COND}`;
       const word = t(medals === 1 ? 'medalla' : 'medallas');
-      g.fillText(word, x, 856);
+      g.fillText(word, x, 930);
       x += g.measureText(word).width;
     }
     if (caps > 0) {
       g.fillStyle = '#767d8a';
       g.font = `500 24px ${BODY}`;
       const sep = medals > 0 ? ' · ' : '';
-      g.fillText(sep, x, 856);
+      g.fillText(sep, x, 930);
       x += g.measureText(sep).width;
       g.fillStyle = '#b0b6c1';
       g.font = `600 24px ${BODY}`;
-      g.fillText(t(`${caps} ${caps === 1 ? 'convocatoria' : 'convocatorias'}`), x, 856);
+      g.fillText(t(`${caps} ${caps === 1 ? 'convocatoria' : 'convocatorias'}`), x, 930);
     }
-    g.fillStyle = '#767d8a';
-    g.font = `700 30px ${COND}`;
-    g.textAlign = 'left';
-    g.fillText(t('Selección').toUpperCase(), 72, 856);
   }
-  g.fillStyle = '#f4f5f7';
-  g.font = `700 40px ${COND}`;
-  g.fillText(t('PALMARÉS'), 72, 900);
   g.font = `500 32px ${BODY}`;
   g.fillStyle = '#b0b6c1';
   const awards = Object.entries(r.awards).filter(([k]) => k !== 'champion').sort((x, y) => y[1] - x[1]).slice(0, 6);
-  (awards.length ? awards : [['—', 0] as [string, number]]).forEach(([k, n], i) => g.fillText(k === '—' ? t('Sin premios individuales') : `${n}× ${t(AWARD_LABEL[k] ?? k)}`, 72 + (i % 2) * 480, 960 + Math.floor(i / 2) * 50, 460));
+  (awards.length ? awards : [['—', 0] as [string, number]]).forEach(([k, n], i) => g.fillText(k === '—' ? t('Sin premios individuales') : `${n}× ${t(AWARD_LABEL[k] ?? k)}`, 72 + (i % 2) * 480, 980 + Math.floor(i / 2) * 50, 460));
   g.fillStyle = '#ff6b1a';
   g.font = `800 96px ${COND}`;
   g.fillText(String(r.legacyScore), 72, 1200);
