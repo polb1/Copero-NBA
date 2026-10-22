@@ -81,13 +81,18 @@ export function sellAsset(c: Career, id: string, season: number): string[] {
   if (idx < 0) return [];
   const def = assetById(id);
   const amount = assetResale(f.assets[idx]);
-  c.cash = cashOf(c) + amount;
+  const paid = Math.min(f.debt, amount);
+  f.debt -= paid;
+  c.cash = cashOf(c) + amount - paid;
   f.assets.splice(idx, 1);
   delete c.flags['asset:' + id];
   f.credit = clamp(f.credit - 4, 0, 100);
   c.morale = clamp(c.morale - 8, 0, 100);
   c.reputation = clamp(c.reputation - 2, 0, 100);
-  return [`Vendes ${def?.label ?? id} (+${fmtMoney(amount)})`, 'Moral −8', 'Reputación −2'];
+  const out = [`Vendes ${def?.label ?? id} (+${fmtMoney(amount)})`];
+  if (paid > 0) out.push(`Amortizas ${fmtMoney(paid)} de deuda (quedan ${fmtMoney(f.debt)})`);
+  out.push('Moral −8', 'Reputación −2');
+  return out;
 }
 
 export function borrow(c: Career, amount: number, season: number): string[] {

@@ -17,7 +17,7 @@ const BODY = 'Inter, system-ui, sans-serif';
 export function medalSlots(count: number, startX = 72, y = 829): { x: number; y: number; size: number }[] {
   const n = Math.max(0, Math.floor(count));
   if (!n) return [];
-  const size = Math.max(10, Math.min(32, Math.floor(360 / n) - 4));
+  const size = Math.max(6, Math.min(32, Math.floor(360 / n) - 4));
   return Array.from({ length: n }, (_, i) => ({ x: startX + i * (size + 4), y, size }));
 }
 

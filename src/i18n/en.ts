@@ -1529,4 +1529,13 @@ export const EN: Dict = {
   "No endeudarte": "Don't take on debt",
   "Cero deudas, cero preocupaciones.": "Zero debt, zero worries.",
   "Prefieres no deber nada.": "You'd rather owe nothing.",
+  "Campeón defensor.": "Defending champion.",
+  "La ruina te cuesta el puesto": "Bankruptcy costs you your place",
+  "{name} queda fuera del equipo tras la bancarrota. El mercado no será fácil.": "{name} is waived after the bankruptcy. The market will not be easy.",
+  "La ruina fuerza un descenso": "Bankruptcy forces a demotion",
+  "{name} sale a un equipo menor para reconstruirse tras la bancarrota.": "{name} moves to a smaller team to rebuild after the bankruptcy.",
+  "Hipoteca {a} (deuda {b})": "Mortgage {a} (debt {b})",
+  "Amortizas {a} de deuda (quedan {b})": "You repay {a} of debt ({b} left)",
+  "Entrada {a}": "Down payment {a}",
+  "Te faltan {a} para la entrada": "You need {a} more for the down payment",
 };

@@ -837,7 +837,7 @@ export const EVENTS: EventDef[] = [
   // ---------------- Assets and loans (full mode only) ----------------
   { id: 'asset-mansion', category: 'money', title: 'La casa de tus sueños', weight: 5, cooldown: 700,
     text: 'Tu agente te enseña un catálogo de propiedades: desde una mansión con vistas hasta un ático en el centro.',
-    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 21, minCash: 900_000, notFlags: ['asset:mansion'] },
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 21, notFlags: ['asset:mansion'] },
     options: [
       { label: 'Comprar la mansión ($4.5M)', desc: 'Cancha privada, gimnasio y vistas. Mantenimiento alto.', effects: { buyAsset: 'mansion', morale: 5, fame: 6 }, text: 'La firma de la hipoteca pesa, pero la casa es espectacular.' },
       { label: 'Comprar un ático ($900K)', desc: 'Menos lujo, menos gastos.', effects: { buyAsset: 'apartment', morale: 3, fame: 2 }, text: 'Un ático elegante en el centro. El recibo es asumible.' },
@@ -845,7 +845,7 @@ export const EVENTS: EventDef[] = [
     ] },
   { id: 'asset-supercar', category: 'money', title: 'El coche del vestuario', weight: 5, cooldown: 600,
     text: 'Un concesionario de la ciudad te ofrece condiciones de jugador estrella para un superdeportivo.',
-    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 20, minCash: 650_000, notFlags: ['asset:supercar'] },
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 20, notFlags: ['asset:supercar'] },
     options: [
       { label: 'Comprar el deportivo ($650K)', desc: 'Un superdeportivo para tu aparcamiento.', effects: { buyAsset: 'supercar', morale: 2, fame: 4 }, text: 'El aparcamiento del pabellón ya tiene dueño.' },
       { label: 'Alquilarlo un mes ($60K)', desc: 'El gusto temporal, sin compromiso.', effects: { money: -60_000, fame: 2, morale: 1 }, text: 'Disfrutas del coche sin quedártelo.' },
@@ -853,7 +853,7 @@ export const EVENTS: EventDef[] = [
     ] },
   { id: 'asset-jet', category: 'money', title: 'Volar sin escalas', weight: 4, cooldown: 900,
     text: 'Una operadora de aviación privada te propone hacerte socio de su flota de jets.',
-    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 24, minCash: 1_500_000, notFlags: ['asset:jet'] },
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 24, notFlags: ['asset:jet'] },
     options: [
       { label: 'Comprar el jet ($9M)', desc: 'Privacidad total y horarios propios.', effects: { buyAsset: 'jet', morale: 3, fame: 8 }, text: 'Tu nombre en el fuselaje. La factura del hangar también.' },
       { label: 'Alquilar un jet por temporada ($250K)', desc: 'Comodidad sin comprar el avión.', effects: { money: -250_000, fame: 3, morale: 2 }, text: 'Viajas como una estrella sin comprar el avión.' },
@@ -861,7 +861,7 @@ export const EVENTS: EventDef[] = [
     ] },
   { id: 'asset-entourage', category: 'money', title: 'Tu gente', weight: 5, cooldown: 600,
     text: 'Varios profesionales se ofrecen a formar tu equipo personal: preparador, fisio, cocinero y escolta.',
-    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 22, minCash: 350_000, notFlags: ['asset:entourage'] },
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 22, notFlags: ['asset:entourage'] },
     options: [
       { label: 'Contratar equipo personal ($350K)', desc: 'Un séquito completo a tu alrededor.', effects: { buyAsset: 'entourage', morale: 4, fame: 3 }, text: 'Preparador, fisio, cocinero y escolta. Todo el mundo cobra.' },
       { label: 'Solo un preparador ($80K)', desc: 'Profesionalidad sin excesos.', effects: { money: -80_000, workEthic: 2, form: 2 }, text: 'Un profesional de confianza, sin séquito.' },
@@ -869,7 +869,7 @@ export const EVENTS: EventDef[] = [
     ] },
   { id: 'asset-rentals', category: 'money', title: 'Dinero que trabaja', weight: 4, cooldown: 800,
     text: 'Tu asesor financiero te propone entrar en el mercado inmobiliario con una cartera de alquileres.',
-    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 23, minCash: 900_000, notFlags: ['asset:rentals'] },
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 23, notFlags: ['asset:rentals'] },
     options: [
       { label: 'Comprar una cartera de alquileres ($1.8M)', desc: 'Inmuebles que generan ingresos.', effects: { buyAsset: 'rentals', reputation: 2 }, text: 'Los inmuebles empiezan a pagar el mantenimiento.' },
       { label: 'Entrar en un fondo inmobiliario ($300K)', desc: 'Inversión pasiva, sin gestionar pisos.', effects: { money: -300_000, workEthic: 1 }, text: 'Una inversión pasiva y aburrida. A veces es lo mejor.' },

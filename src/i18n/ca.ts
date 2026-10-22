@@ -1451,4 +1451,13 @@ export const CA: Dict = {
   "No endeudarte": "No endeutar-te",
   "Cero deudas, cero preocupaciones.": "Zero deutes, zero preocupacions.",
   "Prefieres no deber nada.": "Prefereixes no deure res.",
+  "Campeón defensor.": "Campió defensor.",
+  "La ruina te cuesta el puesto": "La ruïna et costa el lloc",
+  "{name} queda fuera del equipo tras la bancarrota. El mercado no será fácil.": "{name} queda fora de l'equip després de la bancarrota. El mercat no serà fàcil.",
+  "La ruina fuerza un descenso": "La ruïna força un descens",
+  "{name} sale a un equipo menor para reconstruirse tras la bancarrota.": "{name} marxa a un equip menor per reconstruir-se després de la bancarrota.",
+  "Hipoteca {a} (deuda {b})": "Hipoteca {a} (deute {b})",
+  "Amortizas {a} de deuda (quedan {b})": "Amortitzes {a} de deute (queden {b})",
+  "Entrada {a}": "Entrada {a}",
+  "Te faltan {a} para la entrada": "Et falten {a} per a l'entrada",
 };

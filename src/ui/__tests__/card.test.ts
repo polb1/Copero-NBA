@@ -7,8 +7,8 @@ test('medalSlots devuelve una posición por medalla', () => {
   const three = medalSlots(3);
   expect(three).toHaveLength(3);
   expect(new Set(three.map((s) => s.x)).size).toBe(3);
-  const many = medalSlots(12);
-  expect(many).toHaveLength(12);
+  const many = medalSlots(30);
+  expect(many).toHaveLength(30);
   for (const s of many) {
     expect(s.x).toBeGreaterThanOrEqual(72);
     expect(s.x + s.size).toBeLessThanOrEqual(432);

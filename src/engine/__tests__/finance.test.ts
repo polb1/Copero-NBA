@@ -2,7 +2,7 @@ import { newCareer } from '../api';
 import type { NewCareerInput } from '../api';
 import { baseInput } from './autopilot';
 import type { Career } from '../types';
-import { assetIncome, assetCost, assetUpkeep, annualAssetIncome, annualUpkeep, borrow, buyAsset, creditLimit, financeOf, financeOn, lifestyleCost, netWorth, newFinance, openCrisisEvent, resolveCrisis, sellAsset, settleSeason } from '../finance';
+import { assetIncome, assetCost, assetUpkeep, annualAssetIncome, annualUpkeep, borrow, buyAsset, creditLimit, financeOf, financeOn, lifestyleCost, netWorth, newFinance, openCrisisEvent, resolveCrisis, sellAsset, settleSeason, assetResale } from '../finance';
 import { cashOf } from '../mindset';
 
 /** A full-mode career: the finance state comes with the career (reset here so the helper controls it). */
@@ -115,6 +115,17 @@ describe('assets', () => {
     expect(quick.finance.assets).toHaveLength(1);
     expect(quick.cash).toBe(100_000);
     expect(quick.flags['asset:mansion']).toBe(1);
+  });
+
+  test('selling a mortgaged asset pays down the debt first', () => {
+    const c = fullCareer(7020, 900_000);
+    buyAsset(c, 'mansion', 2026);
+    const debt = c.finance!.debt;
+    const before = cashOf(c);
+    const msgs = sellAsset(c, 'mansion', 2026);
+    expect(c.finance!.debt).toBeLessThan(debt);
+    expect(cashOf(c)).toBe(before + assetResale({ id: 'mansion', bought: 2026, value: assetCost('mansion', 2026) }) - Math.min(debt, assetResale({ id: 'mansion', bought: 2026, value: assetCost('mansion', 2026) })));
+    expect(msgs.some((m) => m.startsWith('Amortizas'))).toBe(true);
   });
 });
 

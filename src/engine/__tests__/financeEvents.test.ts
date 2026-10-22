@@ -22,14 +22,6 @@ const MAIN_ASSET: Record<(typeof ASSET_EVENTS)[number], string> = {
   'asset-rentals': 'rentals',
 };
 
-const EXPECTED_MIN_CASH: Record<(typeof ASSET_EVENTS)[number], number> = {
-  'asset-mansion': 900_000,
-  'asset-supercar': 650_000,
-  'asset-jet': 1_500_000,
-  'asset-entourage': 350_000,
-  'asset-rentals': 900_000,
-};
-
 function defOf(id: string) {
   const def = EVENTS.find((e) => e.id === id);
   if (!def) throw new Error(`missing event ${id}`);
@@ -65,8 +57,7 @@ describe('money asset and loan events', () => {
       const def = defOf(id);
       const main = MAIN_ASSET[id];
       expect(def.when.notFlags).toContain(`asset:${main}`);
-      expect(def.when.minCash).toBe(EXPECTED_MIN_CASH[id]);
-      expect(def.when.minCash!).toBeLessThanOrEqual(assetCost(main, 2026));
+      expect(def.when.minCash).toBeUndefined();
       expect(def.options.some((o) => o.effects?.buyAsset === main)).toBe(true);
     }
     // The loan also fires during the regular season and is repeatable (no asset flag).
@@ -106,7 +97,7 @@ describe('money asset and loan events', () => {
       expect(matches(defOf(id).when, eventContext(quick))).toBe(false);
     }
     expect(matches(defOf('asset-mansion').when, eventContext(full))).toBe(true);
-    expect(matches(defOf('asset-mansion').when, eventContext(broke))).toBe(false);
+    expect(matches(defOf('asset-mansion').when, eventContext(broke))).toBe(true);
   });
 
   test('instantiate prices every option and allows a 20% mortgage down payment', () => {

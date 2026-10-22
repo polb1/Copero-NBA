@@ -116,13 +116,14 @@ export function EventModalInline({ c }: { c: Career }) {
         <div className="choices">
           {ev.options.map((o, i) => {
             const kind = sceneForOption(o.label + ' ' + o.desc, CATEGORY_SCENE[ev.category] ?? 'arena');
+            const down = o.finance && o.cost ? Math.max(0, o.cost - Math.round(o.cost * 0.8)) : (o.cost ?? 0);
             return (
             <button key={i} className={`choice with-img ${afford(i) ? '' : 'locked'}`} disabled={!afford(i)} onClick={() => store.act((x) => chooseOption(x, i))}>
               <Scene kind={kind} variant={`${ev.defId}-${i}`} height={64} still className="choice-img" />
               <b className="choice-title">{o.label}</b>
               <span className="choice-body">{o.desc}</span>
               {o.odds !== undefined && <span className="odds" title="Probabilidad según tu estado actual"><span className="odds-bar"><span style={{ width: `${o.odds}%` }} /></span><span><b className="good">{o.odds} %</b> sale bien · <b className="bad">{100 - o.odds} %</b> sale mal</span></span>}
-              {o.cost ? <span className={`cost ${afford(i) ? '' : 'short'}`}>{afford(i) ? `Cuesta ${fmtMoney(o.cost)}` : `Te faltan ${fmtMoney(o.cost - cashOf(c))}`}</span> : null}
+              {o.cost ? <span className={`cost ${afford(i) ? '' : 'short'}`}>{o.finance ? (afford(i) ? `Entrada ${fmtMoney(down)}` : `Te faltan ${fmtMoney(Math.max(0, down - cashOf(c)))} para la entrada`) : afford(i) ? `Cuesta ${fmtMoney(o.cost)}` : `Te faltan ${fmtMoney(o.cost - cashOf(c))}`}</span> : null}
             </button>
             );
           })}
