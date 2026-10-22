@@ -6,7 +6,6 @@ import { fmtMoney } from '../../engine/contracts';
 import { CATEGORY_LABEL } from '../../content/events';
 import { store } from '../../store/store';
 import { CATEGORY_ICON } from '../../ui/simple';
-import { Icon } from '../../ui/icons';
 import { Minigame } from '../../ui/Minigame';
 import { CATEGORY_SCENE, Scene } from '../../ui/Scene';
 import { sceneForOption } from '../../ui/life';
@@ -50,7 +49,7 @@ function OddsRoll({ odds, lucky, seed }: { odds: number; lucky: boolean; seed: s
         <span className="roll-bad">{100 - odds} %</span>
         <span ref={marker} className="roll-marker" style={{ left: `${done ? land : lucky ? 96 : 4}%` }} />
       </div>
-      <div className="roll-verdict">{done ? (lucky ? <><Icon name="check" size={13} /> ¡Sale bien!</> : <><Icon name="flame" size={13} /> Sale mal</>) : <><Icon name="dice" size={13} /> Tirando…</>}</div>
+      <div className="roll-verdict">{done ? (lucky ? '✅ ¡Sale bien!' : '💥 Sale mal') : '🎲 Tirando…'}</div>
     </div>
   );
 }

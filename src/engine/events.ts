@@ -9,7 +9,7 @@ import { attrLabel } from './attributes';
 import { yearsLeft, fmtMoney } from './contracts';
 import { refreshOvr, fullName } from './players';
 import { rollInjury } from './injuries';
-import { assetCost, buyAsset, sellAsset, borrow, financeOn } from './finance';
+import { assetCost, buyAsset, sellAsset, borrow, financeOn, declareBankruptcy, syncFinanceSummary } from './finance';
 import { clamp, type Rng } from './rng';
 
 export interface EventContext {
@@ -161,6 +161,9 @@ function outcomeValue(e: EffectBag): number {
   v += (e.heal ?? 0) / 5 - (e.injuryRisk ?? 0) * 15;
   if (e.injure) v -= e.injure === 'grave' ? 60 : e.injure === 'moderada' ? 30 : 12;
   if (e.trophy) v += 20;
+  if (e.allIn === 'double') v += 40;
+  if (e.allIn === 'lose') v -= 60;
+  if (e.bankrupt) v -= 40;
   return v;
 }
 
@@ -269,6 +272,20 @@ export function applyEffects(c: Career, u: Player, e: EffectBag, rng: Rng): stri
     c.cash = cashOf(c) + e.money;
     if (e.money > 0) c.earnings += e.money;
     out.push(`Dinero ${e.money > 0 ? '+' : '−'}${fmtMoney(Math.abs(e.money))}`);
+  }
+  if (e.allIn) {
+    const stake = Math.max(0, Math.round(cashOf(c)));
+    if (e.allIn === 'double') {
+      c.cash = stake * 2;
+      out.push(`Apuestas todo: ${fmtMoney(stake)} → ${fmtMoney(stake * 2)}`);
+    } else {
+      c.cash = 0;
+      out.push(`Apuestas todo: pierdes ${fmtMoney(stake)}`);
+    }
+  }
+  if (e.bankrupt) {
+    out.push(...declareBankruptcy(c, c.league.season));
+    syncFinanceSummary(c);
   }
   if (e.buyAsset) out.push(...buyAsset(c, e.buyAsset, c.league.season));
   if (e.sellAsset) out.push(...sellAsset(c, e.sellAsset, c.league.season));

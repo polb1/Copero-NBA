@@ -181,7 +181,7 @@ export function Start() {
         </div>
         <div className="start-challenge">
           <span><Icon name="target" size={13} /> <b>Reto de esta carrera:</b> {challenge.label}</span>
-          <button type="button" className="btn sm ghost" onClick={() => setSeed(newSeed())} aria-label="Cambiar reto"><Icon name="dice" size={13} /> Otro</button>
+          <button type="button" className="btn sm ghost" onClick={() => setSeed(newSeed())} aria-label="Cambiar reto">🎲 Otro</button>
         </div>
         <div className="simple-foot">
           {current ? <button className="btn pill" onClick={() => nav('/play')}>Volver</button> : <Link to="/careers" className="btn pill">Mis carreras</Link>}

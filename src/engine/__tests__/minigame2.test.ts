@@ -181,6 +181,6 @@ describe('minigame tiers in the engine', () => {
       'normal',
     );
     expect(reaction.windowMs).toBe(1400);
-    expect(buildSpec(autoDef({ autoScale: undefined, mechanic: 'reaction', windowMs: 1400 }), u, c, 'hard').windowMs).toBe(1008);
+    expect(buildSpec(autoDef({ autoScale: undefined, mechanic: 'reaction', windowMs: 1400 }), u, c, 'hard').windowMs).toBe(896);
   });
 });

@@ -193,6 +193,9 @@
 .scene-content h2 { color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,.6); }
 .scene-content .chip { margin-bottom: 6px; background: rgba(0,0,0,.45); }
 .decision > p.desc { margin-top: 10px; }
+.decision-meta { margin-top: 10px; }
+.decision-meta .risk-row { margin-top: 0; }
+.decision-meta .chip { white-space: normal; max-width: 100%; overflow-wrap: break-word; }
 
 /* ---------- Life: motion and feedback ---------- */
 .scene.live img, .scene.live svg { animation: kenburns 16s ease-in-out infinite alternate; transform-origin: 60% 40%; }

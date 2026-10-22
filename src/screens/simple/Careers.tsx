@@ -7,7 +7,6 @@ import { Flag } from '../../ui/Flag';
 import { ACHIEVEMENTS } from '../../engine/achievements';
 import { ConfirmModal } from '../../ui/ConfirmModal';
 import { LangSwitch } from '../../ui/LangSwitch';
-import { AchievementArt } from '../../ui/art';
 import { Icon } from '../../ui/icons';
 
 type Sort = 'legacyScore' | 'ppg' | 'titles' | 'endedAt';
@@ -102,7 +101,7 @@ function Achievements() {
       <div className="ach-grid">
         {list.map((a) => (
           <div key={a.id} className={`ach-item ${got.has(a.id) ? 'on' : ''}`} title={a.desc}>
-            <span className="ach-ic" aria-hidden="true"><AchievementArt id={a.id} size={20} locked={!got.has(a.id)} /></span>
+            <span className="ach-ic" aria-hidden="true">{got.has(a.id) ? a.icon : '🔒'}</span>
             <span><b>{a.title}</b><small>{a.desc}</small></span>
           </div>
         ))}

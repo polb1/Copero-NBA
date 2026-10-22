@@ -74,4 +74,26 @@ describe('phase 3 dictionaries', () => {
       }
     }
   });
+
+  test('the all-in gamble strings are translated', () => {
+    const ev = EVENTS.find((e) => e.id === 'gamble-allin');
+    expect(ev).toBeTruthy();
+    if (!ev) return;
+    for (const [name, dict] of DICTS) {
+      expect(dict[ev.title], `${name}: missing all-in title`).toBeTruthy();
+      expect(dict[ev.text], `${name}: missing all-in text`).toBeTruthy();
+      expect(ev.options).toHaveLength(2);
+      for (const opt of ev.options) {
+        expect(dict[opt.label], `${name}: missing all-in label "${opt.label}"`).toBeTruthy();
+        expect(dict[opt.desc], `${name}: missing all-in desc "${opt.desc}"`).toBeTruthy();
+        if (opt.outcomes) {
+          for (const oc of opt.outcomes) {
+            expect(dict[oc.text], `${name}: missing all-in outcome "${oc.text}"`).toBeTruthy();
+          }
+        } else {
+          expect(dict[opt.text ?? ''], `${name}: missing all-in outcome "${opt.text}"`).toBeTruthy();
+        }
+      }
+    }
+  });
 });

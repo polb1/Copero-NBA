@@ -377,6 +377,15 @@ export const EVENTS: EventDef[] = [
         { weight: 3, effects: { money: -500_000, morale: -5, pressure: 3 }, text: 'La empresa quiebra. Adiós a la inversión.' } ] },
       { label: 'No, gracias', desc: 'El dinero, en el banco.', effects: {}, text: 'Prudencia financiera.' },
     ] },
+  { id: 'gamble-allin', category: 'money', title: 'Doble o nada', weight: 4, cooldown: 900,
+    text: 'Un inversor te propone una operación exprés: pones todo tu efectivo sobre la mesa y, en una semana, o lo doblas o lo pierdes. Sin garantías.',
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason', 'regular'], minAge: 21, minCash: 100_000 },
+    options: [
+      { label: 'Jugártelo todo', desc: 'Apuestas todo tu efectivo: doblarlo o quedarte en la ruina.', outcomes: [
+        { weight: 1, effects: { allIn: 'double', morale: 10, fame: 5 }, text: 'La operación sale redonda. Tu cuenta se dobla y suena el teléfono.' },
+        { weight: 1, effects: { allIn: 'lose', bankrupt: true, pressure: 20 }, text: 'El inversor desaparece. Pierdes todo tu efectivo y el banco ejecuta tus bienes.' } ] },
+      { label: 'No jugártela', desc: 'El dinero quieto no se pierde.', effects: { morale: 2 }, text: 'Prefieres dormir tranquilo. El inversor busca a otro.' },
+    ] },
   // ---------------- Injury / rest ----------------
   { id: 'injury-minor', category: 'injury', title: 'Molestias físicas', weight: 0, priority: 10,
     text: 'El cuerpo médico confirma: {injury}. Te dan opciones.',

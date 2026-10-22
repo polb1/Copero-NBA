@@ -258,6 +258,10 @@ export interface EffectBag {
   trust?: number; morale?: number; chemistry?: number; reputation?: number; fame?: number;
   pressure?: number; loyalty?: number; workEthic?: number; fatigue?: number; form?: number;
   money?: number; endorsement?: number; pot?: number;
+  /** All-in gamble: double the whole wallet or lose it. */
+  allIn?: 'double' | 'lose';
+  /** Force a formal bankruptcy (assets/debt wiped, sporting consequences later). */
+  bankrupt?: boolean;
   /** Overall rating change (spread over the attributes). */
   ovr?: number;
   attrs?: Partial<Attrs>;

@@ -22,7 +22,7 @@ export function stateMod(u: Player, c: Career): number {
 /** Level picked from the player's state when `def.autoScale` is set. */
 export function autoTier(u: Player, c: Career): MinigameTierId {
   const stress = 0.45 * c.pressure + 0.35 * u.fatigue + 0.9 * Math.max(0, 55 - c.morale) - u.form * 1.5;
-  return stress < 20 ? 'easy' : stress < 42 ? 'normal' : 'hard';
+  return stress < 18 ? 'easy' : stress < 35 ? 'normal' : 'hard';
 }
 
 /** Levels offered by an event: one auto-scaled, the declared list, or 'normal' only. */
@@ -116,7 +116,7 @@ const SCALED_KEYS = [
 const PASSTHROUGH_KEYS = [
   'flag', 'unflag', 'chain', 'injure', 'heal', 'playThrough',
   'gleague', 'recall', 'tradeRequest', 'agent', 'trophy', 'news',
-  'buyAsset', 'sellAsset', 'borrow',
+  'buyAsset', 'sellAsset', 'borrow', 'allIn', 'bankrupt',
 ] as const;
 
 /** New EffectBag with every numeric effect multiplied by `mul`. The original bag is never mutated. */
