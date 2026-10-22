@@ -4,7 +4,7 @@ import { makeSalaries, marketValue, offerCapacity, productionBonus, rosterCount,
 import { positionNeeds } from './draft';
 import { EURO_CLUBS, LEAGUE_STRENGTH } from '../data/clubs';
 import { countryByCode } from '../content/names';
-import { teamName, teamStrength } from './league';
+import { championOf, teamName, teamStrength } from './league';
 import { addNews, userOf } from './career';
 import { fullName } from './players';
 import { clamp, rngFor, type Rng } from './rng';
@@ -13,6 +13,8 @@ export function teamInterest(league: League, teamId: string, u: Player, c: Caree
   const t = league.teams[teamId];
   const need = positionNeeds(league, teamId)[u.pos];
   let s = need * 2 + rng.normal(0, 3);
+  const champ = championOf(league);
+  if (champ?.team === teamId) s += 2.5; // the reigning champion is a more attractive destination
   if (t.status === 'contender') s += (u.ovr - 72) * 0.5;
   if (t.status === 'rebuild') s += (u.pot - u.ovr) * 0.3 - Math.max(0, u.age - 27) * 1.2;
   s += (c.reputation - 40) * 0.08;
@@ -44,6 +46,7 @@ export function generateFAOffers(c: Career, opts: { ownTeam?: string | null; rfa
   const u = userOf(c);
   const season = league.season;
   const rng = rngFor(c.seed, 'fa-offers', season, c.offers.length, u.ovr);
+  const champ = championOf(league);
   const prevGmsc = c.seasons.filter((s) => s.comp === 'NBA').slice(-1)[0];
   const prod = prevGmsc && prevGmsc.stats.gp ? productionBonus(prevGmsc.stats.gmsc / prevGmsc.stats.gp) : 0;
   const marketDrop = c.flags.cut ? 0.82 : c.flags.demoted ? 0.92 : 1;
@@ -74,7 +77,7 @@ export function generateFAOffers(c: Career, opts: { ownTeam?: string | null; rfa
       raise: 0.05,
       option: years >= 3 && u.ovr >= 74 && rng.chance(0.5) ? 'player' : years >= 3 && rng.chance(0.25) ? 'team' : undefined,
       role: projectedRole(league, id, u),
-      note: own ? (opts.rfa ? 'Tu equipo actual (agente libre restringido: puede igualar ofertas).' : 'Tu equipo actual. Puede superar el tope para retenerte.') : `Vía: ${salary <= minSalary(u.yearsPro, season) * 1.01 ? 'mínimo' : cap.via}. ${league.teams[id].coach.name} (${league.teams[id].status === 'contender' ? 'aspirante' : league.teams[id].status === 'rebuild' ? 'proyecto joven' : 'equipo en construcción'}).`,
+      note: (own ? (opts.rfa ? 'Tu equipo actual (agente libre restringido: puede igualar ofertas).' : 'Tu equipo actual. Puede superar el tope para retenerte.') : `Vía: ${salary <= minSalary(u.yearsPro, season) * 1.01 ? 'mínimo' : cap.via}. ${league.teams[id].coach.name} (${league.teams[id].status === 'contender' ? 'aspirante' : league.teams[id].status === 'rebuild' ? 'proyecto joven' : 'equipo en construcción'}).`) + (champ?.team === id ? ' Campeón defensor.' : ''),
     });
   }
   return offers;

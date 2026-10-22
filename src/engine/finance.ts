@@ -61,12 +61,17 @@ export function buyAsset(c: Career, id: string, season: number): string[] {
   const def = assetById(id);
   if (!def) return [];
   const cost = assetCost(id, season);
-  if (cashOf(c) < cost) return ['No tienes efectivo suficiente.'];
-  c.cash = cashOf(c) - cost;
+  const cash = cashOf(c);
+  const loan = Math.max(0, cost - cash);
+  if (loan > Math.round(cost * 0.8)) return ['No tienes efectivo suficiente.'];
   const f = financeOf(c);
+  c.cash = Math.max(0, cash - cost);
+  if (loan > 0) f.debt += loan;
   f.assets.push({ id, bought: season, value: cost });
   c.flags['asset:' + id] = 1;
-  return [`Compras ${def.label} (−${fmtMoney(cost)})`, `Mantenimiento ${fmtMoney(assetUpkeep(id, season))}/año`];
+  const out = [`Compras ${def.label} (−${fmtMoney(Math.min(cash, cost))})`, `Mantenimiento ${fmtMoney(assetUpkeep(id, season))}/año`];
+  if (loan > 0) out.push(`Hipoteca ${fmtMoney(loan)} (deuda ${fmtMoney(f.debt)})`);
+  return out;
 }
 
 export function sellAsset(c: Career, id: string, season: number): string[] {
@@ -110,6 +115,8 @@ export function declareBankruptcy(c: Career, season: number): string[] {
   f.bankruptcies += 1;
   f.ruined = true;
   f.ruinCooldown = 2;
+  c.flags.ruined = 1;
+  c.flags.ruinedSeason = season;
   c.cash = 0;
   c.morale = clamp(c.morale - 25, 0, 100);
   c.reputation = clamp(c.reputation - 12, 0, 100);

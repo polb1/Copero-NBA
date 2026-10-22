@@ -9,6 +9,28 @@ import { executeTrade } from './market';
 import { teamName } from './league';
 import { rosterCount } from './contracts';
 
+/** A bankruptcy has a sporting cost: a low-rated player is waived, a good one is demoted. */
+export function financialFallout(c: Career, season: number): 'none' | 'demoted' | 'cut' {
+  if (c.mode !== 'full' || !c.finance?.ruined) return 'none';
+  const u = userOf(c);
+  if (!u.teamId) return 'none';
+  const f = c.finance;
+  f.ruined = false;
+  f.ruinCooldown = Math.max(2, f.ruinCooldown);
+  if ((f.bankruptcies ?? 0) >= 2 || u.ovr < 70) {
+    waiveUser(c, season);
+    c.flags.financialCut = 1;
+    addNews(c, 'contract', 'La ruina te cuesta el puesto', `${fullName(u)} queda fuera del equipo tras la bancarrota. El mercado no será fácil.`, 'bad');
+    return 'cut';
+  }
+  if (demoteUser(c, season)) {
+    c.flags.financialDemoted = 1;
+    addNews(c, 'contract', 'La ruina fuerza un descenso', `${fullName(u)} sale a un equipo menor para reconstruirse tras la bancarrota.`, 'bad');
+    return 'demoted';
+  }
+  return 'none';
+}
+
 export interface StandingResult {
   season: number;
   teamStatus: TeamStatus | null;

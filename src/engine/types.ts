@@ -284,7 +284,7 @@ export interface ActiveEvent {
   category: string;
   /** cost: money the option needs up front (it cannot be chosen without it). */
   /** odds: chance (0-100) that a risky option turns out well, shown before choosing. */
-  options: { label: string; desc: string; cost?: number; odds?: number; action?: 'sell' | 'loan' | 'bankrupt'; assetId?: string; amount?: number }[];
+  options: { label: string; desc: string; cost?: number; odds?: number; action?: 'sell' | 'loan' | 'bankrupt'; assetId?: string; amount?: number; finance?: boolean }[];
   vars: Record<string, string>;
   /** odds/lucky: for a risky option, the chance shown and whether the roll went the player's way. */
   resolved?: { option: number; result: string; effectsSummary: string[]; made?: number; odds?: number; lucky?: boolean };

@@ -182,7 +182,10 @@ export function instantiate(def: EventDef, ctx: EventContext, rng: Rng): ActiveE
     title: fill(def.title, vars),
     text: fill(def.text, vars),
     // An option that spends money needs it up front: its largest possible cost.
-    options: def.options.map((o) => ({ label: fill(o.label, vars), desc: fill(o.desc, vars), cost: optionCost(o, ctx.career) || undefined, odds: optionOdds(o, ctx) })),
+    options: def.options.map((o) => {
+      const financed = !!(o.effects?.buyAsset || (o.outcomes ?? []).some((x) => x.effects.buyAsset));
+      return { label: fill(o.label, vars), desc: fill(o.desc, vars), cost: optionCost(o, ctx.career) || undefined, finance: financed || undefined, odds: optionOdds(o, ctx) };
+    }),
     vars,
   };
   if (def.minigame) {

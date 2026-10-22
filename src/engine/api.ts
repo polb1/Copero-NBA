@@ -28,7 +28,14 @@ export function canAfford(c: Career, index: number): boolean {
   if (!ev) return false;
   const cash = cashOf(c);
   const ok = (i: number) => (ev.options[i]?.cost ?? 0) <= cash;
-  return ok(index) || !ev.options.some((_, i) => ok(i));
+  if (ok(index)) return true;
+  // Allow 20% in options that finance an asset
+  const opt = ev.options[index];
+  if (opt?.finance && opt.cost) {
+    const down = Math.max(0, opt.cost - Math.round(opt.cost * 0.8));
+    if (cash >= down) return true;
+  }
+  return !ev.options.some((_, i) => ok(i));
 }
 
 export function chooseOption(c: Career, index: number) {

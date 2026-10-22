@@ -4,7 +4,7 @@ import { userOf } from './career';
 import { emptyStats } from './players';
 import { buildOffseasonOffers, acceptOffer } from './offseason';
 import { generateFAOffers } from './market';
-import { evaluateStanding } from './standing';
+import { evaluateStanding, financialFallout } from './standing';
 import { rosterCount } from './contracts';
 import { RULES } from './config';
 import type { Career, SeasonRecord, Team } from './types';
@@ -127,5 +127,21 @@ describe('standing: a season below expectations', () => {
     c.flags.cut = 1;
     const offers = generateFAOffers(c);
     expect(Array.isArray(offers)).toBe(true);
+  });
+
+  test('a bankrupt low-rated player is cut and gets an offer outside the NBA', () => {
+    const c = signedFullCareer(7706);
+    const u = userOf(c);
+    u.ovr = 65;
+    c.finance!.ruined = true;
+    c.finance!.bankruptcies = 1;
+    const res = financialFallout(c, c.league.season);
+    expect(res).toBe('cut');
+    expect(u.teamId).toBeNull();
+    expect(c.flags.financialCut).toBe(1);
+    c.phase = 'offseason';
+    c.offers = [];
+    buildOffseasonOffers(c);
+    expect(c.offers.some((o) => o.kind === 'overseas')).toBe(true);
   });
 });

@@ -56,6 +56,15 @@ describe('assets', () => {
     expect(cashOf(c)).toBe(5_500_000);
   });
 
+  test('a mansion can be bought with a mortgage that drains the wallet', () => {
+    const c = fullCareer(7019, 900_000);
+    const msgs = buyAsset(c, 'mansion', 2026);
+    expect(c.finance!.assets).toHaveLength(1);
+    expect(cashOf(c)).toBe(0);
+    expect(c.finance!.debt).toBe(assetCost('mansion', 2026) - 900_000);
+    expect(msgs.some((m) => m.startsWith('Hipoteca'))).toBe(true);
+  });
+
   test('a career without cash cannot buy', () => {
     const c = fullCareer(7005, 1_000);
     expect(buyAsset(c, 'apartment', 2026)).toEqual(['No tienes efectivo suficiente.']);

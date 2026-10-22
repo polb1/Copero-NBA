@@ -109,16 +109,22 @@ describe('money asset and loan events', () => {
     expect(matches(defOf('asset-mansion').when, eventContext(broke))).toBe(false);
   });
 
-  test('instantiate prices every option: asset cost included, free options stay unpriced', () => {
+  test('instantiate prices every option and allows a 20% mortgage down payment', () => {
     const c = careerFor('full', 1_000_000, 6104);
     const ev = instantiate(defOf('asset-mansion'), eventContext(c), rngFor(c.seed, 'test-inst'));
     expect(ev.options[0].cost).toBe(assetCost('mansion', c.league.season));
     expect(ev.options[1].cost).toBe(assetCost('apartment', c.league.season));
     expect(ev.options[2].cost).toBeUndefined();
+    expect(ev.options[0].finance).toBe(true);
+    expect(ev.options[2].finance).toBeUndefined();
 
     c.pendingEvent = ev;
-    expect(api.canAfford(c, 0)).toBe(false); // mansion well above the 1M wallet
-    expect(api.canAfford(c, 1)).toBe(true); // apartment fits
+    expect(api.canAfford(c, 0)).toBe(true); // 1M covers the 20% down payment
+    expect(api.canAfford(c, 1)).toBe(true); // apartment fits outright
+
+    const poor = careerFor('full', 800_000, 6105);
+    poor.pendingEvent = instantiate(defOf('asset-mansion'), eventContext(poor), rngFor(poor.seed, 'test-inst'));
+    expect(api.canAfford(poor, 0)).toBe(false); // below the 900K down payment
   });
 
   test('applyEffects buys the asset, spends the cash and reports the purchase', () => {

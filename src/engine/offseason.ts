@@ -7,7 +7,7 @@ import { addNews, onNbaRoster, teamOf, userOf } from './career';
 import { generateDraftClass, materializeProspect, mockRange, positionNeeds, prospectValue, rookieContract, runLottery, simulateDraft } from './draft';
 import { contractEnd, makeSalaries, marketValue, offerCapacity, salaryIn, yearsLeft, fmtMoney } from './contracts';
 import { contractFromOffer, euroOffers, fallbackOffers, generateFAOffers, signUser, projectedRole } from './market';
-import { evaluateStanding } from './standing';
+import { evaluateStanding, financialFallout } from './standing';
 import { offseasonDevelopment } from './progression';
 import { generatePlayer, emptyStats, fullName } from './players';
 import { makeCoach, newPlayerId, setupSeasonSchedule, signNpc, teamName, teamStrength } from './league';
@@ -230,7 +230,8 @@ export function beginOffseason(c: Career) {
     retire(c, 'Tu cuerpo dice basta: el nivel ya no es el de antes y decides retirarte.');
     return;
   }
-  evaluateStanding(c, prevSeason);
+  const standing = evaluateStanding(c, prevSeason);
+  if (standing.action === 'none') financialFallout(c, prevSeason);
   nationalSummer(c, prevSeason);
   c.phase = 'offseason';
   c.offers = [];
