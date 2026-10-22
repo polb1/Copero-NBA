@@ -7,7 +7,7 @@ import { autoTier, buildSpec, buildTiers, scaleEffects, stateMod, tierDef } from
 import type { Career, EffectBag, MinigameMechanic, MinigameTierId } from '../types';
 import { baseInput } from './autopilot';
 
-const LEGACY = ['mg-clutch', 'mg-freethrows', 'mg-threes', 'mg-drill'];
+const LEGACY = ['mg-clutch', 'mg-freethrows'];
 
 function newCareer(): Career {
   return api.newCareer(baseInput({ route: 'drafted', mode: 'quick' }), 4321);
@@ -74,10 +74,22 @@ describe('minigame specs and levels', () => {
     }
   });
 
+  test('threes and drill use the drag mechanic; freethrows stays legacy', () => {
+    const c = newCareer();
+    const u = userOf(c);
+    for (const id of ['mg-threes', 'mg-drill']) {
+      const spec = buildSpec(mgDef(id), u, c, 'normal');
+      expect(spec.mechanic).toBe('drag');
+      expect(spec.slots).toBeUndefined();
+      expect(spec.windowMs).toBeUndefined();
+    }
+    expect(buildSpec(mgDef('mg-freethrows'), u, c, 'normal').mechanic).toBe('meter');
+  });
+
   test('the level widens/narrows the zone, speeds up the meter and changes the probability', () => {
     const c = newCareer();
     const u = userOf(c);
-    for (const id of ['mg-drill', 'mg-clutch']) {
+    for (const id of ['mg-freethrows', 'mg-clutch']) {
       const d = mgDef(id);
       const easy = buildSpec(d, u, c, 'easy');
       const normal = buildSpec(d, u, c, 'normal');
@@ -148,7 +160,7 @@ describe('minigame specs and levels', () => {
     expect(target.autoProb).toBeGreaterThanOrEqual(0.1);
     expect(target.autoProb).toBeLessThanOrEqual(0.95);
     expect(target.windowMs).toBeUndefined();
-    expect(target.slots).toBeUndefined();
+    expect(target.slots).toBe(1);
 
     const power = buildSpec(plainDef({ mechanic: 'power' }), u, c, 'normal');
     expect(power.mechanic).toBe('power');
@@ -175,7 +187,19 @@ describe('minigame specs and levels', () => {
     expect(choice.autoProb).toBeLessThanOrEqual(0.95);
     expect(buildSpec(plainDef({ mechanic: 'choice', slots: 4 }), u, c, 'hard').slots).toBe(4);
 
-    const mechanics: MinigameMechanic[] = ['meter', 'target', 'power', 'reaction', 'choice'];
+    const targetTwo = buildSpec(plainDef({ mechanic: 'target', slots: 2 }), u, c, 'normal');
+    expect(targetTwo.slots).toBe(2);
+
+    const drag = buildSpec(plainDef({ mechanic: 'drag' }), u, c, 'normal');
+    expect(drag.mechanic).toBe('drag');
+    expect(drag.zone).toBeGreaterThanOrEqual(10);
+    expect(drag.zone).toBeLessThanOrEqual(55);
+    expect(drag.autoProb).toBeGreaterThanOrEqual(0.1);
+    expect(drag.autoProb).toBeLessThanOrEqual(0.95);
+    expect(drag.windowMs).toBeUndefined();
+    expect(drag.slots).toBeUndefined();
+
+    const mechanics: MinigameMechanic[] = ['meter', 'target', 'power', 'reaction', 'choice', 'drag'];
     for (const mechanic of mechanics) {
       for (const tier of ['easy', 'normal', 'hard'] as MinigameTierId[]) {
         const spec = buildSpec(plainDef({ mechanic }), u, c, tier);

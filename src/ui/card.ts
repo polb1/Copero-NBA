@@ -176,9 +176,10 @@ export function drawCard(c: Career): string {
   const medals = c.flags.medals ?? 0;
   const caps = c.flags.nationalCaps ?? 0;
   if (medals > 0 || caps > 0) {
-    const slots = medalSlots(medals);
+    const startX = 300;
+    const slots = medalSlots(medals, startX);
     slots.forEach((s) => drawMedal(g, s.x, s.y, s.size, true));
-    let x = slots.length ? slots[slots.length - 1].x + slots[slots.length - 1].size + 10 : 72;
+    let x = slots.length ? slots[slots.length - 1].x + slots[slots.length - 1].size + 10 : startX;
     if (medals > 0) {
       g.fillStyle = '#f5c451';
       g.font = `800 36px ${COND}`;
@@ -202,10 +203,9 @@ export function drawCard(c: Career): string {
       g.fillText(t(`${caps} ${caps === 1 ? 'convocatoria' : 'convocatorias'}`), x, 856);
     }
     g.fillStyle = '#767d8a';
-    g.font = `700 24px ${COND}`;
-    g.textAlign = 'right';
-    g.fillText(t('Selección').toUpperCase(), 1008, 856);
+    g.font = `700 30px ${COND}`;
     g.textAlign = 'left';
+    g.fillText(t('Selección').toUpperCase(), 72, 856);
   }
   g.fillStyle = '#f4f5f7';
   g.font = `700 40px ${COND}`;

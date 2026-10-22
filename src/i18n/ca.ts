@@ -1474,4 +1474,9 @@ export const CA: Dict = {
   "✅ ¡Sale bien!": "✅ Surt bé!",
   "💥 Sale mal": "💥 Surt malament",
   "🎲 Tirando…": "🎲 Tirant…",
+  "Arrastra el balón y suelta para lanzar": "Arrossega la pilota i deixa anar per llançar",
+  "Arrastra y suelta. Tiro {n1} de {n2}": "Arrossega i deixa anar. Tir {n1} de {n2}",
+  "Flechas para apuntar · Espacio/Enter para lanzar": "Fletxes per apuntar · Espai/Enter per llançar",
+  "Toca la diana antes de que se cierre": "Toca la diana abans que es tanqui",
+  "Diana señuelo": "Diana esquer",
 };

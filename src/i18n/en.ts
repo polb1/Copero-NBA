@@ -1552,4 +1552,9 @@ export const EN: Dict = {
   "✅ ¡Sale bien!": "✅ It works out!",
   "💥 Sale mal": "💥 It goes wrong",
   "🎲 Tirando…": "🎲 Rolling…",
+  "Arrastra el balón y suelta para lanzar": "Drag the ball and release to shoot",
+  "Arrastra y suelta. Tiro {n1} de {n2}": "Drag and release. Shot {n1} of {n2}",
+  "Flechas para apuntar · Espacio/Enter para lanzar": "Arrow keys to aim · Space/Enter to shoot",
+  "Toca la diana antes de que se cierre": "Hit the target before it closes",
+  "Diana señuelo": "Decoy target",
 };

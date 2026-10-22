@@ -95,7 +95,7 @@ describe('minigame events content', () => {
       'mg-dunk': 'power',
       'mg-boards': 'reaction',
       'mg-steal': 'reaction',
-      'mg-pass': 'choice',
+      'mg-pass': 'reaction',
       'mg-close': 'meter',
     };
 
@@ -110,6 +110,11 @@ describe('minigame events content', () => {
       expect(mg.pressure).toBeGreaterThan(0);
       expect(mg.pressure).toBeLessThanOrEqual(1);
     }
+
+    expect(mgDef('mg-threes').mechanic).toBe('drag');
+    expect(mgDef('mg-drill').mechanic).toBe('drag');
+    expect(mgDef('mg-threes').slots).toBeUndefined();
+    expect(mgDef('mg-pass').windowMs).toBe(1500);
   });
 
   test('position themes exclude the centres from the guard-specific challenges', () => {

@@ -58,6 +58,7 @@ export function buildSpec(def: MinigameDef, u: Player, c: Career, tier: Minigame
     zone = clamp((24 + (skill - 50) * 0.3 - p * 8 - m * 45) * t.zoneMul, 8, 46);
     speed = clamp(0.3 + p * 0.5 + (skill - 50) * 0.004, 0.22, 1.0) * t.speedMul;
     autoProb = clamp((zone / 100) * 1.6 + m, 0.12, 0.88) * t.probMul;
+    slots = def.slots ?? 1;
   } else if (mechanic === 'power') {
     zone = clamp((14 + (skill - 50) * 0.24 - p * 5 - m * 25) * t.zoneMul, 5, 34);
     speed = clamp(0.55 + (100 - skill) * 0.004 + p * 0.25, 0.4, 1.3) * t.speedMul;
@@ -76,6 +77,10 @@ export function buildSpec(def: MinigameDef, u: Player, c: Career, tier: Minigame
     speed = 0;
     slots = def.slots ?? 3;
     autoProb = clamp((zone / 100) * 0.95 + m, 0.12, 0.92) * t.probMul;
+  } else if (mechanic === 'drag') {
+    zone = clamp((30 + (skill - 50) * 0.4 - p * 10 - m * 45) * t.zoneMul, 10, 55);
+    speed = 0;
+    autoProb = clamp((zone / 100) * 1.5 + m, 0.12, 0.9) * t.probMul;
   } else {
     // Legacy shot meter: identical to events.ts minigameSpec() before the level multipliers.
     const nerves = p * (1 - (c.morale - 50) / 200) * (1 + c.pressure / 200);

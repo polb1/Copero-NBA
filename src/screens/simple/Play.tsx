@@ -320,7 +320,7 @@ function ChampionLine({ c, season, size = 16, className = '' }: { c: Career; sea
 function SeasonRecap({ c }: { c: Career }) {
   const s = c.lastSummary;
   const medal = c.phase === 'offseason' && c.flags.medalSeason !== undefined && c.flags.medalSeen !== c.flags.medalSeason;
-  const season = c.phase === 'season-end' && s && c.flags.recapSeen !== s.season;
+  const season = !!s && (c.phase === 'season-end' || c.phase === 'offseason') && c.flags.recapSeen !== s.season;
   if (!medal && !season) return null;
   const close = () => store.act((x) => {
     if (season && s) x.flags.recapSeen = s.season;
@@ -470,8 +470,7 @@ function OfferChoice({ c, o, onPick, top = 'Firmar con' }: { c: Career; o: Offer
       <span className="choice-meta dim">{o.role}{t ? ` · ${t.w + t.l ? `${t.w}-${t.l}` : t.status === 'contender' ? 'aspirante' : t.status === 'rebuild' ? 'reconstrucción' : 'zona media'}` : ''}</span>
       {fromChamp && champ && (
         <span className="chip gold offer-champ" title={`Campeón NBA · ${seasonLabel(champ.season)}`}>
-          {'💍 '}
-          {`Campeón NBA · ${seasonLabel(champ.season)}`}
+          {`💍 Campeón · ${seasonLabel(champ.season)}`}
         </span>
       )}
     </Choice>
@@ -575,7 +574,7 @@ function Decision({ c }: { c: Career }) {
               </div>
             ) : undefined}
           >
-            {q.answers.map((a, k) => <Choice key={k} title={a} onClick={() => store.act((x) => api.answerInterview(x, i, k))} />)}
+            {q.answers.map((a, k) => <Choice key={k} title={a} scene="press" onClick={() => store.act((x) => api.answerInterview(x, i, k))} />)}
           </Block>
         );
       }

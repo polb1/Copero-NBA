@@ -377,9 +377,9 @@ export const EVENTS: EventDef[] = [
         { weight: 3, effects: { money: -500_000, morale: -5, pressure: 3 }, text: 'La empresa quiebra. Adiós a la inversión.' } ] },
       { label: 'No, gracias', desc: 'El dinero, en el banco.', effects: {}, text: 'Prudencia financiera.' },
     ] },
-  { id: 'gamble-allin', category: 'money', title: 'Doble o nada', weight: 4, cooldown: 900,
+  { id: 'gamble-allin', category: 'money', title: 'Doble o nada', weight: 9, cooldown: 300,
     text: 'Un inversor te propone una operación exprés: pones todo tu efectivo sobre la mesa y, en una semana, o lo doblas o lo pierdes. Sin garantías.',
-    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason', 'regular'], minAge: 21, minCash: 100_000 },
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason', 'regular'], minAge: 21, minCash: 50_000 },
     options: [
       { label: 'Jugártelo todo', desc: 'Apuestas todo tu efectivo: doblarlo o quedarte en la ruina.', outcomes: [
         { weight: 1, effects: { allIn: 'double', morale: 10, fame: 5 }, text: 'La operación sale redonda. Tu cuenta se dobla y suena el teléfono.' },
@@ -748,7 +748,7 @@ export const EVENTS: EventDef[] = [
   { id: 'mg-threes', category: 'contest', title: 'Concurso de triples del All-Star', weight: 10, cooldown: 300,
     text: 'La liga te invita al concurso de triples del fin de semana del All-Star. Diez balones, los mejores tiradores del mundo y millones de espectadores.',
     when: { phases: ['regular'], nba: true, minOvr: 70, minRep: 25, beforeDeadline: true },
-    minigame: { kind: 'threes', attempts: 10, attrs: ['three', 'consistency'], pressure: 0.45, great: 7, ok: 4,
+    minigame: { kind: 'threes', mechanic: 'drag', attempts: 10, attrs: ['three', 'consistency'], pressure: 0.45, great: 7, ok: 4,
       positions: ['PG', 'SG', 'SF', 'PF'],
       outcomes: {
         great: { effects: { fame: 10, reputation: 5, morale: 6, endorsement: 200000, trophy: 'threeContest' }, text: '¡Campeón del concurso de triples! Levantas el trofeo entre confeti.' },
@@ -759,7 +759,7 @@ export const EVENTS: EventDef[] = [
   { id: 'mg-drill', category: 'training', title: 'Reto de tiro en el entrenamiento', weight: 7, cooldown: 220,
     text: '{coach} propone un reto al final de la sesión: cinco tiros desde la esquina. Quien gane elige la música del vestuario un mes.',
     when: { phases: ['regular', 'preseason'], nba: true },
-    minigame: { kind: 'drill', attempts: 5, attrs: ['three', 'mid'], pressure: 0.2, great: 4, ok: 2,
+    minigame: { kind: 'drill', mechanic: 'drag', attempts: 5, attrs: ['three', 'mid'], pressure: 0.2, great: 4, ok: 2,
       positions: ['PG', 'SG', 'SF', 'PF', 'C'],
       outcomes: {
         great: { effects: { attrs: { three: 1 }, trust: 4, chemistry: 3 }, text: 'Ganas el reto con autoridad. El cuerpo técnico toma nota.' },
@@ -772,7 +772,7 @@ export const EVENTS: EventDef[] = [
     text: 'Un periodista te propone un reto para la portada: cinco dianas desde la zona de tiro y la cámara encendida. Si fallas, mañana se verá en todas partes.',
     when: { phases: ['regular', 'postseason'], nba: true, minFame: 20 },
     minigame: { kind: 'spotlight', mechanic: 'target', positions: ['SG'], attempts: 5, attrs: ['three', 'consistency'],
-      pressure: 0.5, great: 4, ok: 2, tiers: ['easy', 'normal', 'hard'], defaultTier: 'normal',
+      pressure: 0.5, great: 4, ok: 2, tiers: ['easy', 'normal', 'hard'], defaultTier: 'normal', slots: 2,
       outcomes: {
         great: { effects: { fame: 8, reputation: 3, morale: 4, pressure: -4 }, text: 'Cinco dianas seguidas delante de la cámara. El vídeo se comparte solo.' },
         ok: { effects: { fame: 3, chemistry: 2 }, text: 'Cumples el reto justo a tiempo. Los compañeros te lo reconocen.' },
@@ -815,8 +815,8 @@ export const EVENTS: EventDef[] = [
   { id: 'mg-pass', category: 'teammates', title: 'El pase imposible', weight: 6, cooldown: 200,
     text: 'En el entrenamiento, {coach} coloca tres defensas y un solo compañero libre. Hay que encontrar el pase antes de que se cierre la línea.',
     when: { phases: ['regular', 'postseason'], nba: true, roles: ['star', 'starter', 'rotation'] },
-    minigame: { kind: 'pass', mechanic: 'choice', positions: ['PG'], attempts: 3, attrs: ['pass', 'vision'],
-      pressure: 0.5, great: 3, ok: 2, tiers: ['easy', 'normal', 'hard'], defaultTier: 'normal', slots: 3,
+    minigame: { kind: 'pass', mechanic: 'reaction', positions: ['PG'], attempts: 3, attrs: ['pass', 'vision'],
+      pressure: 0.5, great: 3, ok: 2, tiers: ['easy', 'normal', 'hard'], defaultTier: 'normal', slots: 3, windowMs: 1500,
       outcomes: {
         great: { effects: { attrs: { pass: 1 }, trust: 5, chemistry: 5, fame: 2 }, text: 'Tres asistencias imposibles. El vestuario habla de tu visión de juego.' },
         ok: { effects: { chemistry: 3, trust: 2 }, text: 'Dos pases buenos y uno forzado. El grupo lo agradece igual.' },

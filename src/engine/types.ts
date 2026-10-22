@@ -300,7 +300,7 @@ export interface ActiveEvent {
 }
 
 /** How the player interacts with the challenge. Absent (saves v1) = 'meter'. */
-export type MinigameMechanic = 'meter' | 'target' | 'power' | 'reaction' | 'choice';
+export type MinigameMechanic = 'meter' | 'target' | 'power' | 'reaction' | 'choice' | 'drag';
 
 /** Difficulty level. Absent (saves v1) = 'normal'. */
 export type MinigameTierId = 'easy' | 'normal' | 'hard';
