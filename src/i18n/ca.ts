@@ -1451,7 +1451,6 @@ export const CA: Dict = {
   "No endeudarte": "No endeutar-te",
   "Cero deudas, cero preocupaciones.": "Zero deutes, zero preocupacions.",
   "Prefieres no deber nada.": "Prefereixes no deure res.",
-  "Campeón defensor.": "Campió defensor.",
   "La ruina te cuesta el puesto": "La ruïna et costa el lloc",
   "{name} queda fuera del equipo tras la bancarrota. El mercado no será fácil.": "{name} queda fora de l'equip després de la bancarrota. El mercat no serà fàcil.",
   "La ruina fuerza un descenso": "La ruïna força un descens",
