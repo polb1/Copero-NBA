@@ -10,6 +10,7 @@ import { yearsLeft, fmtMoney } from './contracts';
 import { refreshOvr, fullName } from './players';
 import { rollInjury } from './injuries';
 import { assetCost, buyAsset, sellAsset, borrow, financeOn, declareBankruptcy, syncFinanceSummary } from './finance';
+import { consumeRuin, waiveUser } from './standing';
 import { clamp, type Rng } from './rng';
 
 export interface EventContext {
@@ -80,6 +81,7 @@ export function eligibleEvents(ctx: EventContext): EventDef[] {
   const c = ctx.career;
   return EVENTS.filter((e) => {
     if (e.weight <= 0) return false;
+    if (e.maxSeen !== undefined && (c.flags['seen:' + e.id] ?? 0) >= e.maxSeen) return false;
     const last = c.eventHistory[e.id];
     if (last !== undefined) {
       if (e.once) return false;
@@ -283,9 +285,16 @@ export function applyEffects(c: Career, u: Player, e: EffectBag, rng: Rng): stri
       out.push(`Apuestas todo: pierdes ${fmtMoney(stake)}`);
     }
   }
-  if (e.bankrupt && financeOn(c)) {
-    out.push(...declareBankruptcy(c, c.league.season));
-    syncFinanceSummary(c);
+  if (e.bankrupt) {
+    if (financeOn(c)) {
+      out.push(...declareBankruptcy(c, c.league.season));
+      syncFinanceSummary(c);
+    }
+    if (u.teamId) {
+      waiveUser(c, c.league.season);
+      consumeRuin(c);
+      out.push('Cortado tras la ruina');
+    }
   }
   if (e.buyAsset) out.push(...buyAsset(c, e.buyAsset, c.league.season));
   if (e.sellAsset) out.push(...sellAsset(c, e.sellAsset, c.league.season));

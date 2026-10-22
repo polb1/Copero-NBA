@@ -23,6 +23,12 @@ import { EURO_CLUBS, clubLevel, clubMinutes, findClub } from '../data/clubs';
 import { countryByCode } from '../content/names';
 import { startingSalary } from './mindset';
 
+/** Board value used by the draft: a low OVR is heavily discounted so mock and simulation agree. */
+export function userDraftValue(u: Player, stockBonus: number) {
+  const penalty = u.ovr < 58 ? 12 : u.ovr < 62 ? 6 : u.ovr < 66 ? 2 : 0;
+  return prospectValue(u.ovr, u.pot, u.age) + stockBonus - penalty;
+}
+
 // ---------------- League offseason ----------------
 
 export function runNpcDraft(L: League, seed: number, exclude?: string) {
@@ -231,7 +237,7 @@ export function beginOffseason(c: Career) {
     return;
   }
   const standing = evaluateStanding(c, prevSeason);
-  if (standing.action === 'none') financialFallout(c, prevSeason);
+  financialFallout(c, prevSeason, standing.action === 'none');
   nationalSummer(c, prevSeason);
   c.phase = 'offseason';
   c.offers = [];
@@ -313,6 +319,9 @@ export function buildOffseasonOffers(c: Career) {
         c.offers.push(ext);
       }
     }
+    if ((u.ovr < 66 || (c.flags.underStrikes ?? 0) > 0) && !c.offers.some((o) => o.kind === 'overseas')) {
+      c.offers.push(...fallbackOffers(c).filter((o) => o.kind === 'overseas').slice(0, 1));
+    }
     return;
   }
   // European career: club offers every summer, plus NBA interest if good enough.
@@ -340,6 +349,9 @@ export function buildOffseasonOffers(c: Career) {
   c.offers.push(...nba);
   if (nba.length < 2) c.offers.push(...fallbackOffers(c));
   if ((c.flags.cut || c.flags.demoted) && !c.offers.some((o) => o.kind === 'overseas')) {
+    c.offers.push(...fallbackOffers(c).filter((o) => o.kind === 'overseas').slice(0, 1));
+  }
+  if ((u.ovr < 66 || (c.flags.underStrikes ?? 0) > 0) && !c.offers.some((o) => o.kind === 'overseas')) {
     c.offers.push(...fallbackOffers(c).filter((o) => o.kind === 'overseas').slice(0, 1));
   }
   if (k) addNews(c, 'contract', 'Agente libre', `Tu contrato con ${teamName(L, k.teamId)} ha terminado. ${c.offers.length} propuesta(s) sobre la mesa.`, 'neutral');
@@ -521,7 +533,7 @@ export function predraftDecision(c: Career, declare: boolean) {
   const gp = Math.max(1, stats.gp);
   const prod = clamp((stats.gmsc / gp - 10) * 0.5, -4, 6);
   p.stockBonus = prod;
-  const me: Prospect = { id: 'user', name: fullName(u), nat: u.nat, pos: u.pos, age: u.age, ovr: u.ovr, pot: u.pot, arch: u.arch, isUser: true, value: prospectValue(u.ovr, u.pot, u.age) + prod };
+  const me: Prospect = { id: 'user', name: fullName(u), nat: u.nat, pos: u.pos, age: u.age, ovr: u.ovr, pot: u.pot, arch: u.arch, isUser: true, value: userDraftValue(u, prod) };
   p.draftClass = [...cls.slice(0, 71), me].sort((a, b) => b.value - a.value);
   addNews(c, 'draft', `${fullName(u)} se declara elegible para el draft`, `Tras promediar ${(stats.pts / gp).toFixed(1)} puntos, el ${u.pos} da el salto. Próximo paso: el Draft Combine.`, 'good');
 }
@@ -560,7 +572,7 @@ function afterCombine(c: Career, rng: Rng) {
   const p = c.predraft!;
   const u = userOf(c);
   const me = p.draftClass!.find((x) => x.isUser)!;
-  me.value = prospectValue(u.ovr, u.pot, u.age) + p.stockBonus;
+  me.value = userDraftValue(u, p.stockBonus);
   // Pick interview teams around the projected range.
   const range = mockRange(p.draftClass!, 'user', rng);
   const order = runLotteryPreview(c);
@@ -649,7 +661,7 @@ export function finishCombine(c: Career) {
   p.combineResult = { grade, bonus, detail: `${Math.round(q * 100)}% de acierto · cobertura ${Math.round(coverage * 100)}%` };
   if (p.combine) p.combine.grade = grade;
   const me = p.draftClass!.find((x) => x.isUser)!;
-  me.value = prospectValue(u.ovr, u.pot, u.age) + p.stockBonus;
+  me.value = userDraftValue(u, p.stockBonus);
   afterCombine(c, rngFor(c.seed, 'combine-after', c.league.season));
 }
 
@@ -680,7 +692,7 @@ export function answerInterview(c: Career, index: number, answer: number) {
   // Interviews move the board value too: a bad answer can cost a draft spot.
   p.stockBonus += result === 'good' ? 1 : result === 'bad' ? -1.8 : 0;
   const me = p.draftClass?.find((x) => x.isUser);
-  if (me) me.value = prospectValue(u.ovr, u.pot, u.age) + p.stockBonus;
+  if (me) me.value = userDraftValue(u, p.stockBonus);
   if (p.interviews.length >= p.interviewQuestions!.length) {
     const range = mockRange(p.draftClass!, 'user', rngFor(c.seed, 'mock', c.league.season));
     p.mock = { pickLow: range.pickLow, pickHigh: range.pickHigh, text: mockText(range.pickLow, range.pickHigh) };
@@ -752,15 +764,22 @@ export function buildSigningOffers(c: Career) {
   const p = c.predraft!;
   c.offers = [];
   if (p.route === 'drafted' && !p.userPick) {
-    // Quick start: choose a draft slot by tier and a fitting team.
+    // Quick start: a low OVR can also fall out of the draft.
     const rng = rngFor(c.seed, 'quick-draft');
     const tier = c.flags.tierLottery ? 'lottery' : c.flags.tierSecond ? 'second' : 'first';
-    const pick = tier === 'lottery' ? rng.int(1, 14) : tier === 'first' ? rng.int(15, 30) : rng.int(31, 58);
-    const teams = Object.values(L.teams).filter((t) => (tier === 'lottery' ? t.status === 'rebuild' || t.status === 'middle' : true));
-    const team = rng.pick(teams);
-    p.userPick = { pick, round: pick <= 30 ? 1 : 2, teamId: team.id };
-    u.draft = { season: L.season, round: pick <= 30 ? 1 : 2, pick: pick <= 30 ? pick : pick - 30, teamId: team.id };
-    addNews(c, 'draft', `Elegido con el pick ${pick}`, `${teamName(L, team.id)} selecciona a ${fullName(u)}.`, 'good');
+    const baseChance = u.ovr < 58 ? 1 : u.ovr < 62 ? 0.6 : u.ovr < 66 ? 0.3 : u.ovr < 70 ? 0.1 : 0;
+    const cutChance = clamp(baseChance * (tier === 'lottery' ? 0.85 : tier === 'first' ? 0.95 : 1), 0, 1);
+    if (cutChance > 0 && rng.chance(cutChance)) {
+      c.flags.undrafted = 1;
+      addNews(c, 'draft', 'Sin llamada en el draft', `Ninguna franquicia eligió a ${fullName(u)}. Toca buscarse la vida fuera de la NBA.`, 'bad');
+    } else {
+      const pick = tier === 'lottery' ? rng.int(1, 14) : tier === 'first' ? rng.int(15, 30) : rng.int(31, 58);
+      const teams = Object.values(L.teams).filter((t) => (tier === 'lottery' ? t.status === 'rebuild' || t.status === 'middle' : true));
+      const team = rng.pick(teams);
+      p.userPick = { pick, round: pick <= 30 ? 1 : 2, teamId: team.id };
+      u.draft = { season: L.season, round: pick <= 30 ? 1 : 2, pick: pick <= 30 ? pick : pick - 30, teamId: team.id };
+      addNews(c, 'draft', `Elegido con el pick ${pick}`, `${teamName(L, team.id)} selecciona a ${fullName(u)}.`, 'good');
+    }
   }
   const pk = p.userPick;
   if (pk && pk.round === 1) {

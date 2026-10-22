@@ -114,7 +114,7 @@ function FinanceLine({ c }: { c: Career }) {
       )}
       {f.ruined && <span className="chip bad">En ruina</span>}
       {c.flags.cut ? <span className="chip bad">Cortado</span> : c.flags.demoted ? <span className="chip bad">En el mercado</span> : null}
-      {!c.pendingEvent && cashOf(c) >= 30_000 && (
+      {!c.pendingEvent && cashOf(c) >= 30_000 && (c.flags['seen:gamble-allin'] ?? 0) < 3 && (
         <button type="button" className="chip gold" onClick={() => store.act((x) => openEvent(x, 'gamble-allin'))}>🎲 Jugártelo todo</button>
       )}
     </div>

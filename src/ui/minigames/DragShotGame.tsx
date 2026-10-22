@@ -20,8 +20,8 @@ export function resolveDragShot(
   const optimal = (Math.atan2(dy, dx) * 180) / Math.PI;
   const dist = Math.hypot(dx, dy) / 100;
   const idealPower = clamp(dist, 0.3, 0.9);
-  const angleTol = clamp(spec.zone * 0.7 - 6, 5, 30);
-  const powerTol = clamp(spec.zone / 180, 0.08, 0.3);
+  const angleTol = clamp(spec.zone * 0.45 - 4, 3, 18);
+  const powerTol = clamp(spec.zone / 300, 0.05, 0.16);
   return Math.abs(angleDeg - optimal) <= angleTol && Math.abs(power - idealPower) <= powerTol;
 }
 

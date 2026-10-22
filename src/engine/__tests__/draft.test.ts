@@ -1,6 +1,7 @@
 import * as api from '../api';
 import { userOf } from '../career';
-import { generateDraftClass, prospectValue } from '../draft';
+import { generateDraftClass } from '../draft';
+import { userDraftValue } from '../offseason';
 import type { Career } from '../types';
 import { baseInput } from './autopilot';
 
@@ -13,7 +14,7 @@ function atLottery(seed: number, ovr: number, pot: number): Career {
   u.pot = pot;
   u.age = 21;
   const cls = generateDraftClass(seed, c.league.season + 1);
-  const me = { id: 'user', name: 'Test Player', nat: u.nat, pos: u.pos, age: u.age, ovr: u.ovr, pot: u.pot, arch: u.arch, isUser: true, value: prospectValue(u.ovr, u.pot, u.age) };
+  const me = { id: 'user', name: 'Test Player', nat: u.nat, pos: u.pos, age: u.age, ovr: u.ovr, pot: u.pot, arch: u.arch, isUser: true, value: userDraftValue(u, 0) };
   p.draftClass = [...cls.slice(0, 71), me].sort((a, b) => b.value - a.value);
   p.stockBonus = 0;
   p.order = [...Object.keys(c.league.teams), ...Object.keys(c.league.teams)];

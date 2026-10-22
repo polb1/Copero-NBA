@@ -95,6 +95,7 @@ export interface EventDef {
   weight: number;
   cooldown?: number; // days
   once?: boolean;
+  maxSeen?: number; // hard cap on how many times it can appear in a career
   priority?: number; // higher = preferred when several are eligible
   when: EventWhen;
   options: EventOption[];
@@ -377,7 +378,7 @@ export const EVENTS: EventDef[] = [
         { weight: 3, effects: { money: -500_000, morale: -5, pressure: 3 }, text: 'La empresa quiebra. Adiós a la inversión.' } ] },
       { label: 'No, gracias', desc: 'El dinero, en el banco.', effects: {}, text: 'Prudencia financiera.' },
     ] },
-  { id: 'gamble-allin', category: 'money', title: 'Doble o nada', weight: 9, cooldown: 300, priority: 1,
+  { id: 'gamble-allin', category: 'money', title: 'Doble o nada', weight: 30, cooldown: 500, maxSeen: 3,
     text: 'Un inversor te propone una operación exprés: pones todo tu efectivo sobre la mesa y, en una semana, o lo doblas o lo pierdes. Sin garantías.',
     when: { modes: ['full', 'quick'], phases: ['offseason', 'preseason', 'regular'], minAge: 18, minCash: 30_000 },
     options: [

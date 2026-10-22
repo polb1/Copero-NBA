@@ -165,7 +165,7 @@ describe('minigame specs and levels', () => {
     const power = buildSpec(plainDef({ mechanic: 'power' }), u, c, 'normal');
     expect(power.mechanic).toBe('power');
     expect(power.zone).toBeGreaterThanOrEqual(5);
-    expect(power.zone).toBeLessThanOrEqual(34);
+    expect(power.zone).toBeLessThanOrEqual(30);
     expect(power.speed).toBeGreaterThanOrEqual(0.4);
     expect(power.speed).toBeLessThanOrEqual(1.4);
 

@@ -60,8 +60,8 @@ export function buildSpec(def: MinigameDef, u: Player, c: Career, tier: Minigame
     autoProb = clamp((zone / 100) * 1.6 + m, 0.12, 0.88) * t.probMul;
     slots = def.slots ?? 1;
   } else if (mechanic === 'power') {
-    zone = clamp((12 + (skill - 50) * 0.24 - p * 5 - m * 25) * t.zoneMul, 5, 34);
-    speed = clamp(0.62 + (100 - skill) * 0.004 + p * 0.25, 0.4, 1.4) * t.speedMul;
+    zone = clamp((10 + (skill - 50) * 0.24 - p * 5 - m * 25) * t.zoneMul, 5, 30);
+    speed = clamp(0.72 + (100 - skill) * 0.004 + p * 0.25, 0.4, 1.4) * t.speedMul;
     autoProb = clamp((zone / 100) * 1.9 + m, 0.12, 0.9) * t.probMul;
   } else if (mechanic === 'reaction') {
     zone = clamp((26 + (skill - 50) * 0.36 - p * 6 - m * 40) * t.zoneMul, 8, 48);
