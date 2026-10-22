@@ -5,7 +5,7 @@ import { challengeDone, challengeOf } from '../../engine/challenges';
 import { Link, useNavigate } from 'react-router-dom';
 import type { Career, Offer, SeasonRecord, SeasonSummary } from '../../engine/types';
 import * as api from '../../engine/api';
-import { teamOf, userOf } from '../../engine/career';
+import { openEvent, teamOf, userOf } from '../../engine/career';
 import { inSeason } from '../../engine/flow';
 import { championOf, teamName } from '../../engine/league';
 import { averages, f1, sumStats } from '../../engine/stats';
@@ -114,6 +114,9 @@ function FinanceLine({ c }: { c: Career }) {
       )}
       {f.ruined && <span className="chip bad">En ruina</span>}
       {c.flags.cut ? <span className="chip bad">Cortado</span> : c.flags.demoted ? <span className="chip bad">En el mercado</span> : null}
+      {!c.pendingEvent && cashOf(c) >= 30_000 && (
+        <button type="button" className="chip gold" onClick={() => store.act((x) => openEvent(x, 'gamble-allin'))}>🎲 Jugártelo todo</button>
+      )}
     </div>
   );
 }

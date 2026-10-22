@@ -1557,4 +1557,9 @@ export const EN: Dict = {
   "Flechas para apuntar · Espacio/Enter para lanzar": "Arrow keys to aim · Space/Enter to shoot",
   "Toca la diana antes de que se cierre": "Hit the target before it closes",
   "Diana señuelo": "Decoy target",
+  "Prueba de potencia": "Power test",
+  "El preparador físico te reta a una prueba de potencia: carga, explota y suelta en el punto exacto. Todo el vestuario mira.": "The fitness coach challenges you to a power test: load, explode and release at the exact point. The whole locker room is watching.",
+  "Tres repeticiones perfectas. El preparador se queda con tu marca.": "Three perfect reps. The coach keeps your mark.",
+  "Dos buenas y una justa. El grupo lo celebra igual.": "Two good ones and one fair. The group celebrates anyway.",
+  "Te falta explosividad. El preparador te manda a descansar.": "You lack explosiveness. The coach sends you to rest.",
 };

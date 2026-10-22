@@ -67,7 +67,9 @@ describe('money asset and loan events', () => {
     // The six finance events plus the all-in gamble are the only full-mode-money events.
     const FINANCE_IDS = [...ALL_IDS, 'gamble-allin'];
     expect(EVENTS.filter((e) => e.when.modes).map((e) => e.id).sort()).toEqual([...FINANCE_IDS].sort());
-    expect(EVENTS.filter((e) => e.when.financeOnly).map((e) => e.id).sort()).toEqual([...FINANCE_IDS].sort());
+    expect(EVENTS.filter((e) => e.when.financeOnly).map((e) => e.id).sort()).toEqual([...ALL_IDS].sort());
+    expect(defOf('gamble-allin').when.modes).toContain('quick');
+    expect(defOf('gamble-allin').when.minCash).toBe(30_000);
   });
 
   test('matches: legacy full saves without finance skip the six, quick careers never qualify', () => {

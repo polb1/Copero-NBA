@@ -283,7 +283,7 @@ export function applyEffects(c: Career, u: Player, e: EffectBag, rng: Rng): stri
       out.push(`Apuestas todo: pierdes ${fmtMoney(stake)}`);
     }
   }
-  if (e.bankrupt) {
+  if (e.bankrupt && financeOn(c)) {
     out.push(...declareBankruptcy(c, c.league.season));
     syncFinanceSummary(c);
   }

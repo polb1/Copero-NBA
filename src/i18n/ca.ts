@@ -1479,4 +1479,9 @@ export const CA: Dict = {
   "Flechas para apuntar · Espacio/Enter para lanzar": "Fletxes per apuntar · Espai/Enter per llançar",
   "Toca la diana antes de que se cierre": "Toca la diana abans que es tanqui",
   "Diana señuelo": "Diana esquer",
+  "Prueba de potencia": "Prova de potència",
+  "El preparador físico te reta a una prueba de potencia: carga, explota y suelta en el punto exacto. Todo el vestuario mira.": "El preparador físic et repta a una prova de potència: carrega, explota i deixa anar al punt exacte. Tot el vestidor mira.",
+  "Tres repeticiones perfectas. El preparador se queda con tu marca.": "Tres repeticions perfectes. El preparador es queda amb la teva marca.",
+  "Dos buenas y una justa. El grupo lo celebra igual.": "Dues de bones i una de justa. El grup ho celebra igual.",
+  "Te falta explosividad. El preparador te manda a descansar.": "Et falta explosivitat. El preparador t'envia a descansar.",
 };

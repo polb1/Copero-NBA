@@ -3,9 +3,9 @@ import type { MinigameSpec } from '../../engine/types';
 import { clamp } from '../../engine/rng';
 import { t } from '../../i18n/i18n';
 
-const BALL_X = 18;
-const BALL_Y = 72;
 const RIM_Y = 36;
+const ballX = (attempt: number) => 12 + ((attempt * 29) % 18);
+const ballY = (attempt: number) => 62 + ((attempt * 17) % 20);
 const rimX = (attempt: number) => 72 + ((attempt * 37) % 22);
 
 /** Pure scoring: an angle/power pair is good if it is close to the line to the rim. */
@@ -15,8 +15,8 @@ export function resolveDragShot(
   power: number,
   spec: Pick<MinigameSpec, 'kind' | 'zone'>,
 ): boolean {
-  const dx = rimX(attempt) - BALL_X;
-  const dy = RIM_Y - BALL_Y;
+  const dx = rimX(attempt) - ballX(attempt);
+  const dy = RIM_Y - ballY(attempt);
   const optimal = (Math.atan2(dy, dx) * 180) / Math.PI;
   const dist = Math.hypot(dx, dy) / 100;
   const idealPower = clamp(dist, 0.3, 0.9);
@@ -39,6 +39,10 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
   const draggingRef = useRef(false);
   const [angle, setAngle] = useState(0);
   const [power, setPower] = useState(0);
+  const [rebound, setRebound] = useState(false);
+  const reboundRef = useRef(false);
+  const retryUsed = useRef(false);
+  const reboundTimer = useRef(0);
 
   const arena = useRef<HTMLDivElement>(null);
   const angleRef = useRef(0);
@@ -61,7 +65,10 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     timers.current = [];
   }, []);
 
-  useEffect(() => () => clearTimers(), [clearTimers]);
+  useEffect(() => () => {
+    clearTimers();
+    if (reboundTimer.current) window.clearTimeout(reboundTimer.current);
+  }, [clearTimers]);
 
   const point = (e: React.PointerEvent<HTMLDivElement>) => {
     const r = arena.current!.getBoundingClientRect();
@@ -69,8 +76,8 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
   };
 
   const aim = (x: number, y: number) => {
-    const dx = x - BALL_X;
-    const dy = y - BALL_Y;
+    const dx = x - ballX(attempt);
+    const dy = y - ballY(attempt);
     const a = (Math.atan2(dy, dx) * 180) / Math.PI;
     const p = clamp(Math.hypot(dx, dy) / 100, 0, 1);
     angleRef.current = a;
@@ -79,30 +86,62 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     setPower(p);
   };
 
+  const advance = useCallback(() => {
+    setFlash(null);
+    setLocked(false);
+    setPower(0);
+    setAngle(0);
+    retryUsed.current = false;
+    const next = attemptRef.current + 1;
+    if (next >= spec.attempts) {
+      done.current = true;
+      onDoneRef.current(madeRef.current);
+      return;
+    }
+    attemptRef.current = next;
+    setAttempt(next);
+  }, [spec.attempts]);
+
   const resolve = useCallback((a: number, p: number) => {
     if (locked || done.current) return;
     const hit = resolveDragShot(attemptRef.current, a, p, spec);
     setLocked(true);
     setFlash(hit ? 'in' : 'out');
     try { navigator.vibrate?.(hit ? [18, 40, 18] : 35); } catch { /* not supported */ }
-    madeRef.current += hit ? 1 : 0;
-    setMade(madeRef.current);
-    setShots((s) => [...s, hit]);
-    schedule(() => {
-      setFlash(null);
-      setLocked(false);
-      setPower(0);
-      setAngle(0);
-      const next = attemptRef.current + 1;
-      if (next >= spec.attempts) {
-        done.current = true;
-        onDoneRef.current(madeRef.current);
-        return;
-      }
-      attemptRef.current = next;
-      setAttempt(next);
-    }, spec.attempts > 5 ? 520 : 800);
-  }, [locked, spec, schedule]);
+    if (hit) {
+      madeRef.current += 1;
+      setMade(madeRef.current);
+      setShots((s) => [...s, true]);
+      schedule(advance, spec.attempts > 5 ? 520 : 800);
+      return;
+    }
+    if (retryUsed.current) {
+      setShots((s) => [...s, false]);
+      schedule(advance, spec.attempts > 5 ? 520 : 800);
+      return;
+    }
+    retryUsed.current = true;
+    reboundRef.current = true;
+    setRebound(true);
+    reboundTimer.current = window.setTimeout(() => {
+      if (!reboundRef.current) return;
+      reboundRef.current = false;
+      setRebound(false);
+      setShots((s) => [...s, false]);
+      advance();
+    }, 1100);
+  }, [locked, spec, schedule, advance]);
+
+  const putback = useCallback(() => {
+    if (!reboundRef.current) return;
+    reboundRef.current = false;
+    setRebound(false);
+    if (reboundTimer.current) window.clearTimeout(reboundTimer.current);
+    setFlash(null);
+    setLocked(false);
+    setPower(0);
+    setAngle(0);
+  }, []);
 
   const down = (e: React.PointerEvent<HTMLDivElement>) => {
     if (locked) return;
@@ -127,8 +166,8 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     setDragging(false);
     draggingRef.current = false;
     const p = point(e);
-    const dx = p.x - BALL_X;
-    const dy = p.y - BALL_Y;
+    const dx = p.x - ballX(attempt);
+    const dy = p.y - ballY(attempt);
     const a = (Math.atan2(dy, dx) * 180) / Math.PI;
     const pw = clamp(Math.hypot(dx, dy) / 100, 0, 1);
     resolve(a, pw);
@@ -153,10 +192,12 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     return () => window.removeEventListener('keydown', onKey);
   }, [resolve]);
 
+  const bx = ballX(attempt);
+  const by = ballY(attempt);
   const rX = rimX(attempt);
   const rad = (angle * Math.PI) / 180;
-  const endX = BALL_X + Math.cos(rad) * power * 100;
-  const endY = BALL_Y + Math.sin(rad) * power * 100;
+  const endX = bx + Math.cos(rad) * power * 100;
+  const endY = by + Math.sin(rad) * power * 100;
 
   return (
     <div className={`drag-game ${flash ?? ''}`}>
@@ -175,13 +216,25 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
         role="application"
         aria-label={t(`Arrastra y suelta. Tiro ${Math.min(attempt + 1, spec.attempts)} de ${spec.attempts}`)}
       >
+        <span className="drag-board" style={{ left: `${rX}%`, top: `${RIM_Y - 18}%` }} />
+        <span className="drag-net" style={{ left: `${rX}%`, top: `${RIM_Y + 2}%` }} />
         <span className="drag-rim" style={{ left: `${rX}%`, top: `${RIM_Y}%` }} />
         <svg className="drag-arc" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <path
-            d={`M ${BALL_X} ${BALL_Y} Q ${(BALL_X + endX) / 2} ${Math.min(BALL_Y, endY) - 18 - 15 * power} ${endX} ${endY}`}
+            d={`M ${bx} ${by} Q ${(bx + endX) / 2} ${Math.min(by, endY) - 18 - 15 * power} ${endX} ${endY}`}
           />
         </svg>
-        <span className="drag-ball" style={{ left: `${BALL_X}%`, top: `${BALL_Y}%` }} />
+        <span className="drag-ball" style={{ left: `${bx}%`, top: `${by}%` }} />
+        {rebound && (
+          <button
+            type="button"
+            className="drag-rebound"
+            onPointerDown={(e) => { e.stopPropagation(); e.preventDefault(); putback(); }}
+            onClick={(e) => { if (e.detail === 0) putback(); }}
+          >
+            ¡Rebote!
+          </button>
+        )}
         {flash && <span className="drag-msg">{flash === 'in' ? t('¡DENTRO!') : t('FUERA')}</span>}
       </div>
       <div className="drag-power"><span style={{ width: `${Math.round(power * 100)}%` }} /></div>
