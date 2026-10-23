@@ -2,9 +2,11 @@ import { newCareer } from './api';
 import { baseInput } from './__tests__/autopilot';
 import { userOf } from './career';
 import { emptyStats } from './players';
-import { buildOffseasonOffers, acceptOffer } from './offseason';
+import { buildOffseasonOffers, acceptOffer, beginOffseason } from './offseason';
 import { generateFAOffers } from './market';
-import { evaluateStanding } from './standing';
+import { evaluateStanding, financialFallout } from './standing';
+import { applyEffects } from './events';
+import { rngFor } from './rng';
 import { rosterCount } from './contracts';
 import { RULES } from './config';
 import type { Career, SeasonRecord, Team } from './types';
@@ -127,5 +129,93 @@ describe('standing: a season below expectations', () => {
     c.flags.cut = 1;
     const offers = generateFAOffers(c);
     expect(Array.isArray(offers)).toBe(true);
+  });
+
+  test('a bankrupt low-rated player is cut and gets an offer outside the NBA', () => {
+    const c = signedFullCareer(7706);
+    const u = userOf(c);
+    u.ovr = 65;
+    c.finance!.ruined = true;
+    c.finance!.bankruptcies = 1;
+    const res = financialFallout(c, c.league.season);
+    expect(res).toBe('cut');
+    expect(u.teamId).toBeNull();
+    expect(c.flags.financialCut).toBe(1);
+    c.phase = 'offseason';
+    c.offers = [];
+    buildOffseasonOffers(c);
+    expect(c.offers.some((o) => o.kind === 'overseas')).toBe(true);
+  });
+
+  test('an all-in loss waives the player and leaves non-NBA offers ready', () => {
+    const c = signedFullCareer(7707);
+    const u = userOf(c);
+    expect(u.teamId).toBeTruthy();
+    applyEffects(c, u, { allIn: 'lose', bankrupt: true }, rngFor(c.seed, 'allin-cut-test'));
+    expect(u.teamId).toBeNull();
+    expect(u.contract).toBeNull();
+    expect(c.flags.cut).toBe(1);
+    expect(c.offers.some((o) => o.kind === 'overseas')).toBe(true);
+  });
+
+  test('a bad player under an NBA contract still draws an overseas offer', () => {
+    const c = signedFullCareer(7708);
+    const u = userOf(c);
+    u.ovr = 62;
+    c.phase = 'offseason';
+    c.offers = [];
+    buildOffseasonOffers(c);
+    expect(c.offers.some((o) => o.kind === 'overseas')).toBe(true);
+  });
+
+  test('a player without a team is not evaluated again for the old season', () => {
+    const c = signedFullCareer(7709);
+    pushSeason(c, { gp: 40, min: 40 * 8, gmsc: 40 * 3 });
+    const u = userOf(c);
+    // High enough rating that this workload means three strikes and a cut without the guard.
+    u.ovr = 72;
+    u.teamId = null;
+    c.flags.underStrikes = 2;
+    const res = evaluateStanding(c, c.league.season);
+    expect(res.action).toBe('none');
+    expect(c.flags.underStrikes).toBe(2);
+  });
+
+  test('an all-in loss without a team keeps the offers already on the table', () => {
+    const c = signedFullCareer(7710);
+    const u = userOf(c);
+    if (u.teamId && c.league.teams[u.teamId]) {
+      c.league.teams[u.teamId].roster = c.league.teams[u.teamId].roster.filter((id) => id !== u.id);
+    }
+    u.teamId = null;
+    u.contract = null;
+    c.offers = [{ id: 'keep-offer', teamId: Object.keys(c.league.teams)[0], kind: 'standard', years: 1, salary: 1_000_000, raise: 0, role: 'Prueba', note: 'No debe borrarse.' }];
+    applyEffects(c, u, { allIn: 'lose', bankrupt: true }, rngFor(c.seed, 'allin-no-team-test'));
+    expect(c.offers.map((o) => o.id)).toEqual(['keep-offer']);
+  });
+
+  test('the ruin flag is consumed when the player was already cut', () => {
+    const c = signedFullCareer(7711);
+    const u = userOf(c);
+    u.ovr = 65;
+    applyEffects(c, u, { allIn: 'lose', bankrupt: true }, rngFor(c.seed, 'allin-ruin-test'));
+    expect(u.teamId).toBeNull();
+    expect(c.finance!.ruined).toBe(false);
+    const res = financialFallout(c, c.league.season);
+    expect(res).toBe('none');
+    expect(c.finance!.ruined).toBe(false);
+  });
+
+  test('the ruin flag is consumed even when the seasonal review already cuts', () => {
+    const c = signedFullCareer(7712);
+    const u = userOf(c);
+    u.ovr = 64;
+    c.league.teams[u.teamId!].status = 'middle';
+    c.flags.underStrikes = 2;
+    c.finance!.ruined = true;
+    pushSeason(c, { gp: 40, min: 40 * 8, gmsc: 40 * 3 });
+    c.phase = 'season-end';
+    beginOffseason(c);
+    expect(c.finance!.ruined).toBe(false);
   });
 });

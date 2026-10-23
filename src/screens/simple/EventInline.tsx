@@ -5,8 +5,7 @@ import { cashOf } from '../../engine/mindset';
 import { fmtMoney } from '../../engine/contracts';
 import { CATEGORY_LABEL } from '../../content/events';
 import { store } from '../../store/store';
-import { CATEGORY_GLYPH } from '../../ui/simple';
-import { Icon } from '../../ui/icons';
+import { CATEGORY_ICON } from '../../ui/simple';
 import { Minigame } from '../../ui/Minigame';
 import { CATEGORY_SCENE, Scene } from '../../ui/Scene';
 import { sceneForOption } from '../../ui/life';
@@ -27,6 +26,8 @@ function OddsRoll({ odds, lucky, seed }: { odds: number; lucky: boolean; seed: s
   for (const ch of seed) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
   const r = (h % 1000) / 1000;
   const land = lucky ? 4 + r * Math.max(1, odds - 8) : odds + 4 + r * Math.max(1, 100 - odds - 8);
+  // Start away from both ends, independent of the result, so the first frame says nothing.
+  const start = 38 + (h % 24);
   useEffect(() => {
     if (still) return;
     let raf = 0;
@@ -34,7 +35,7 @@ function OddsRoll({ odds, lucky, seed }: { odds: number; lucky: boolean; seed: s
     const step = (now: number) => {
       const t = Math.min(1, (now - t0) / ROLL_MS);
       // Starts on the other side and swings across both zones, each pass shorter, until it settles.
-      const from = lucky ? 96 : 4;
+      const from = start;
       const x = Math.max(1, Math.min(99, land + (from - land) * (1 - t) ** 1.6 * Math.cos(t * Math.PI * 5)));
       if (marker.current) marker.current.style.left = `${x}%`;
       if (t < 1) raf = requestAnimationFrame(step);
@@ -48,9 +49,9 @@ function OddsRoll({ odds, lucky, seed }: { odds: number; lucky: boolean; seed: s
       <div className="roll-bar">
         <span className="roll-good" style={{ width: `${odds}%` }}>{odds} %</span>
         <span className="roll-bad">{100 - odds} %</span>
-        <span ref={marker} className="roll-marker" style={{ left: `${done ? land : lucky ? 96 : 4}%` }} />
+        <span ref={marker} className="roll-marker" style={{ left: `${done ? land : start}%` }} />
       </div>
-      <div className="roll-verdict">{done ? (lucky ? <><Icon name="check" size={13} /> ¡Sale bien!</> : <><Icon name="flame" size={13} /> Sale mal</>) : <><Icon name="dice" size={13} /> Tirando…</>}</div>
+      <div className="roll-verdict">{done ? (lucky ? '✅ ¡Sale bien!' : '💥 Sale mal') : '🎲 Tirando…'}</div>
     </div>
   );
 }
@@ -75,7 +76,7 @@ export function EventModalInline({ c }: { c: Career }) {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [ev]);
-  const icon = <Icon name={CATEGORY_GLYPH[ev.category] ?? 'ball'} size={13} />;
+  const icon = CATEGORY_ICON[ev.category] ?? '🏀';
   const afford = (i: number) => canAfford(c, i);
   const mg = ev.minigame;
   const tiers = ev.minigameTiers;
@@ -116,13 +117,14 @@ export function EventModalInline({ c }: { c: Career }) {
         <div className="choices">
           {ev.options.map((o, i) => {
             const kind = sceneForOption(o.label + ' ' + o.desc, CATEGORY_SCENE[ev.category] ?? 'arena');
+            const down = o.finance && o.cost ? Math.max(0, o.cost - Math.round(o.cost * 0.8)) : (o.cost ?? 0);
             return (
             <button key={i} className={`choice with-img ${afford(i) ? '' : 'locked'}`} disabled={!afford(i)} onClick={() => store.act((x) => chooseOption(x, i))}>
               <Scene kind={kind} variant={`${ev.defId}-${i}`} height={64} still className="choice-img" />
               <b className="choice-title">{o.label}</b>
               <span className="choice-body">{o.desc}</span>
               {o.odds !== undefined && <span className="odds" title="Probabilidad según tu estado actual"><span className="odds-bar"><span style={{ width: `${o.odds}%` }} /></span><span><b className="good">{o.odds} %</b> sale bien · <b className="bad">{100 - o.odds} %</b> sale mal</span></span>}
-              {o.cost ? <span className={`cost ${afford(i) ? '' : 'short'}`}>{afford(i) ? `Cuesta ${fmtMoney(o.cost)}` : `Te faltan ${fmtMoney(o.cost - cashOf(c))}`}</span> : null}
+              {o.cost ? <span className={`cost ${afford(i) ? '' : 'short'}`}>{o.finance ? (afford(i) ? `Entrada ${fmtMoney(down)}` : `Te faltan ${fmtMoney(Math.max(0, down - cashOf(c)))} para la entrada`) : afford(i) ? `Cuesta ${fmtMoney(o.cost)}` : `Te faltan ${fmtMoney(o.cost - cashOf(c))}`}</span> : null}
             </button>
             );
           })}

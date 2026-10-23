@@ -30,7 +30,8 @@ describe('real league', () => {
   test('league is marked as real, big enough and has free agents', () => {
     expect(L.rosterSource).toBe('real');
     expect(Object.keys(L.players).length).toBeGreaterThan(500);
-    expect(L.freeAgents.length).toBeGreaterThanOrEqual(30);
+    expect(L.freeAgents.length).toBeGreaterThan(0);
+    for (const id of L.freeAgents) expect(id.startsWith('nba-')).toBe(true);
   });
 
   test('deterministic for the same seed', () => {
@@ -45,5 +46,10 @@ describe('real league', () => {
 
   test('createCareer starts from the real league', () => {
     expect(createCareer(baseInput(), 42).league.rosterSource).toBe('real');
+  });
+
+  test('every initial roster player comes from the real snapshot', () => {
+    for (const t of Object.values(L.teams)) for (const id of t.roster) expect(id.startsWith('nba-')).toBe(true);
+    for (const id of L.freeAgents) expect(id.startsWith('nba-')).toBe(true);
   });
 });

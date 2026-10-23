@@ -5,9 +5,39 @@ import { RULES } from './config';
 import { clamp } from './rng';
 import { addNews, userOf } from './career';
 import { fullName } from './players';
-import { executeTrade } from './market';
+import { executeTrade, fallbackOffers } from './market';
 import { teamName } from './league';
 import { rosterCount } from './contracts';
+
+/** Marks the ruin as already settled: no second sporting sanction for the same bankruptcy. */
+export function consumeRuin(c: Career) {
+  if (!c.finance?.ruined) return;
+  c.finance.ruined = false;
+  c.finance.ruinCooldown = Math.max(2, c.finance.ruinCooldown);
+  delete c.flags.ruined;
+  delete c.flags.ruinedSeason;
+}
+
+/** A bankruptcy has a sporting cost: a low-rated player is waived, a good one is demoted. */
+export function financialFallout(c: Career, season: number, apply = true): 'none' | 'demoted' | 'cut' {
+  if (c.mode !== 'full' || !c.finance?.ruined) return 'none';
+  const f = c.finance;
+  consumeRuin(c);
+  const u = userOf(c);
+  if (!u.teamId || !apply) return 'none';
+  if ((f.bankruptcies ?? 0) >= 2 || u.ovr < 70) {
+    waiveUser(c, season);
+    c.flags.financialCut = 1;
+    addNews(c, 'contract', 'La ruina te cuesta el puesto', `${fullName(u)} queda fuera del equipo tras la bancarrota. El mercado no será fácil.`, 'bad');
+    return 'cut';
+  }
+  if (demoteUser(c, season)) {
+    c.flags.financialDemoted = 1;
+    addNews(c, 'contract', 'La ruina fuerza un descenso', `${fullName(u)} sale a un equipo menor para reconstruirse tras la bancarrota.`, 'bad');
+    return 'demoted';
+  }
+  return 'none';
+}
 
 export interface StandingResult {
   season: number;
@@ -24,6 +54,9 @@ export interface StandingResult {
 export function evaluateStanding(c: Career, season: number): StandingResult {
   const u = userOf(c);
   if (c.mode !== 'full') {
+    return { season, teamStatus: null, mpg: 0, gmsc: 0, expectedMpg: 0, under: false, strikes: c.flags.underStrikes ?? 0, action: 'none' };
+  }
+  if (!u.teamId) {
     return { season, teamStatus: null, mpg: 0, gmsc: 0, expectedMpg: 0, under: false, strikes: c.flags.underStrikes ?? 0, action: 'none' };
   }
   const rec = c.seasons.find((s) => s.season === season && s.comp === 'NBA' && s.stats.gp > 0);
@@ -65,14 +98,14 @@ export function evaluateStanding(c: Career, season: number): StandingResult {
 }
 
 /** Released for poor production: no team, no contract, and a damaged reputation. */
-function waiveUser(c: Career, season: number) {
+export function waiveUser(c: Career, season: number) {
   const u = userOf(c);
   const from = u.teamId;
   if (from && c.league.teams[from]) c.league.teams[from].roster = c.league.teams[from].roster.filter((id) => id !== u.id);
   u.teamId = null;
   u.contract = null;
   c.assignment = 'NBA';
-  c.offers = [];
+  c.offers = fallbackOffers(c);
   c.flags.cut = 1;
   c.flags.demoted = 1;
   c.flags.cutSeason = season;

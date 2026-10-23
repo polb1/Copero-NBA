@@ -131,3 +131,18 @@ export const EVENT_RATE: Record<'express' | 'quick' | 'full' | 'daily', { min: n
 
 export const DAILY_MAX_SEASONS = 12;
 export const MAX_AGE = 42;
+
+/** Puerta de entrada al draft: valor de tablero mínimo y castigos del combine. */
+export const DRAFT_GATE = {
+  picks: 60,          // el corte se calcula sobre el pick (picks - 3)
+  cutoffPick: 57,
+  margin: 1.5,
+  failRatio: 0.5,     // proporción de pruebas falladas que retira del draft
+  maxFailures: 2,     // pruebas falladas que retiran del draft
+  minAccuracy: 0.4,   // acierto global mínimo del combine
+  maxWaits: 3,        // años de espera antes de cerrar la puerta NBA
+  penaltyLow: 16,     // OVR < 58
+  penaltyMid: 9,      // OVR < 62
+  penaltyHigh: 4,     // OVR < 66
+  agePenalty: 1.2,    // castigo adicional por año a partir de 19
+} as const;

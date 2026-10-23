@@ -39,7 +39,7 @@ Abre http://localhost:5173. Otros comandos:
 - **Contratos** con cifras 2026-27: tope, impuesto, aprons, MLE, mínimos, two-way, escala de novato aproximada, opciones, extensiones y agencia libre restringida (modelo simplificado y declarado como tal).
 - **Vista simple** (pantalla principal): identidad en una sola pantalla y una pantalla de carrera con tarjeta, decisiones en tarjetas y línea de tiempo por edades. 1-2 decisiones por temporada; los resultados de la temporada solo se muestran al terminarla.
 - **87 acontecimientos**, con **10 minijuegos** jugables por posición (tiro, mates, rebotes, robos, pases y cierre de partido) y dificultad según OVR: más riesgo, más puntos.
-- **Ilustraciones vectoriales originales** en cada evento, fase y opción; simulación en directo con barra de progreso, contador de OVR animado, confeti en los grandes momentos y línea de tiempo animada.
+- **Fotografías reales** de Unsplash en cada evento, fase y opción, con las ilustraciones vectoriales originales como respaldo si una foto no carga; simulación en directo con barra de progreso, contador de OVR animado, confeti en los grandes momentos y línea de tiempo animada.
 - **Progresión** por entrenamiento semanal, edad, minutos y potencial oculto (los ojeadores pueden equivocarse).
 - **Premios** calculados con las estadísticas de todos los jugadores: MVP, DPOY, ROY, 6MOY, MIP, All-NBA, All-Defensive, All-Star, líderes y MVP de las Finales.
 - **Tres ritmos**: carrera completa, carrera rápida y desafío diario (semilla compartida por fecha UTC).
@@ -66,7 +66,7 @@ frecuencia de eventos). Los eventos son datos en `src/content/events.ts`.
 
 ## Imágenes y licencias
 
-- **22 ilustraciones vectoriales originales** en `src/ui/Scene.tsx` y `src/ui/art/`, usadas como cabecera de cada evento y fase y en las tarjetas de opción; sin fotos de terceros. Sin filtros SVG ni emoji, ids deterministas por instancia.
+- **30 fotografías reales de Unsplash** en `public/stock/`, con créditos y licencia en `docs/CREDITS.md`, usadas en la cabecera de cada evento y fase y en las tarjetas de opción. Las **22 ilustraciones vectoriales originales** de `src/ui/Scene.tsx` y `src/ui/art/` quedan como respaldo si una foto falla. Los iconos de categoría vuelven a ser emoji; los trofeos y premios son arte vectorial propio.
 
 - **Logotipos de los equipos**: se cargan en tiempo de ejecución desde la CDN pública de la NBA (`src/data/logos.ts`), no se incluyen en el paquete. Son marcas de la NBA y sus franquicias. Para vender el juego sin licencia de la NBA, pon `OFFICIAL_LOGOS = false`: se usan escudos genéricos propios. Si un logo no carga (sin conexión), también se muestra el escudo propio.
 

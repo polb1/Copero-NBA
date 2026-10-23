@@ -49,8 +49,8 @@ function compile(dict: Dict) {
       const m = part.match(/^\{([a-zA-Z0-9_]+)\}$/);
       if (!m) return escapeRe(part);
       vars.push(m[1]);
-      // {n…} slots only take numbers ("{n1} a {n2}" for "2026-27 a 2048-49", never a whole sentence).
-      return m[1].startsWith('n') ? '([\\d.,\\-–/+%$KMk ]+?)' : '(.+?)';
+      // {n}, {n1}, {n2}… are numeric; {name}, {a}, {b}… accept any text.
+      return /^n\d*$/.test(m[1]) ? '([\\d.,\\-–/+%$KMk ]+?)' : '(.+?)';
     }).join('');
     patterns.push({ re: new RegExp(`^${src}$`), out: v, vars });
   }

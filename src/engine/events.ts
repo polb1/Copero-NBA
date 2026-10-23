@@ -9,7 +9,8 @@ import { attrLabel } from './attributes';
 import { yearsLeft, fmtMoney } from './contracts';
 import { refreshOvr, fullName } from './players';
 import { rollInjury } from './injuries';
-import { assetCost, buyAsset, sellAsset, borrow, financeOn } from './finance';
+import { assetCost, buyAsset, sellAsset, borrow, financeOn, declareBankruptcy, syncFinanceSummary } from './finance';
+import { consumeRuin, waiveUser } from './standing';
 import { clamp, type Rng } from './rng';
 
 export interface EventContext {
@@ -80,12 +81,15 @@ export function eligibleEvents(ctx: EventContext): EventDef[] {
   const c = ctx.career;
   return EVENTS.filter((e) => {
     if (e.weight <= 0) return false;
+    if (e.maxSeen !== undefined && (c.flags['seen:' + e.id] ?? 0) >= e.maxSeen) return false;
     const last = c.eventHistory[e.id];
     if (last !== undefined) {
       if (e.once) return false;
       const seen = c.flags['seen:' + e.id] ?? 1;
       if (ctx.absDay - last < (e.cooldown ?? 300) * (1 + 0.5 * (seen - 1))) return false;
     }
+    // A position-themed challenge is only offered to the positions it names.
+    if (e.minigame?.positions && !e.minigame.positions.includes(ctx.user.pos)) return false;
     return matches(e.when, ctx);
   });
 }
@@ -159,6 +163,9 @@ function outcomeValue(e: EffectBag): number {
   v += (e.heal ?? 0) / 5 - (e.injuryRisk ?? 0) * 15;
   if (e.injure) v -= e.injure === 'grave' ? 60 : e.injure === 'moderada' ? 30 : 12;
   if (e.trophy) v += 20;
+  if (e.allIn === 'double') v += 40;
+  if (e.allIn === 'lose') v -= 60;
+  if (e.bankrupt) v -= 40;
   return v;
 }
 
@@ -180,7 +187,10 @@ export function instantiate(def: EventDef, ctx: EventContext, rng: Rng): ActiveE
     title: fill(def.title, vars),
     text: fill(def.text, vars),
     // An option that spends money needs it up front: its largest possible cost.
-    options: def.options.map((o) => ({ label: fill(o.label, vars), desc: fill(o.desc, vars), cost: optionCost(o, ctx.career) || undefined, odds: optionOdds(o, ctx) })),
+    options: def.options.map((o) => {
+      const financed = !!(o.effects?.buyAsset || (o.outcomes ?? []).some((x) => x.effects.buyAsset));
+      return { label: fill(o.label, vars), desc: fill(o.desc, vars), cost: optionCost(o, ctx.career) || undefined, finance: financed || undefined, odds: optionOdds(o, ctx) };
+    }),
     vars,
   };
   if (def.minigame) {
@@ -264,6 +274,27 @@ export function applyEffects(c: Career, u: Player, e: EffectBag, rng: Rng): stri
     c.cash = cashOf(c) + e.money;
     if (e.money > 0) c.earnings += e.money;
     out.push(`Dinero ${e.money > 0 ? '+' : '−'}${fmtMoney(Math.abs(e.money))}`);
+  }
+  if (e.allIn) {
+    const stake = Math.max(0, Math.round(cashOf(c)));
+    if (e.allIn === 'double') {
+      c.cash = stake * 2;
+      out.push(`Apuestas todo: ${fmtMoney(stake)} → ${fmtMoney(stake * 2)}`);
+    } else {
+      c.cash = 0;
+      out.push(`Apuestas todo: pierdes ${fmtMoney(stake)}`);
+    }
+  }
+  if (e.bankrupt) {
+    if (financeOn(c)) {
+      out.push(...declareBankruptcy(c, c.league.season));
+      syncFinanceSummary(c);
+    }
+    if (u.teamId) {
+      waiveUser(c, c.league.season);
+      consumeRuin(c);
+      out.push('Cortado tras la ruina');
+    }
   }
   if (e.buyAsset) out.push(...buyAsset(c, e.buyAsset, c.league.season));
   if (e.sellAsset) out.push(...sellAsset(c, e.sellAsset, c.league.season));

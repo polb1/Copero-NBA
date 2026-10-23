@@ -9,8 +9,8 @@ const MENTAL: AttrKey[] = ['offIQ', 'defIQ', 'consistency'];
 export function ageGrowthFactor(age: number) {
   if (age <= 20) return 1.15;
   if (age <= 22) return 1.0;
-  if (age <= 25) return 0.72;
-  if (age <= 28) return 0.42;
+  if (age <= 25) return 0.85;
+  if (age <= 28) return 0.55;
   if (age <= 31) return 0.22;
   return 0.1;
 }
@@ -51,7 +51,7 @@ export function trainWeek(p: Player, bank: Partial<Record<TrainingFocus, number>
   const key = ctx.focus;
   bank[key] = (bank[key] ?? 0) + pts;
   const area = TRAINING_AREAS[key].attrs;
-  const threshold = key === 'balanced' ? 2 : 3.2;
+  const threshold = key === 'balanced' ? 1.6 : 2.5;
   while ((bank[key] ?? 0) >= threshold) {
     bank[key]! -= threshold;
     // Prefer weaker attributes in the area; nothing grows past the realistic ceiling.
@@ -104,11 +104,11 @@ export function offseasonDevelopment(p: Player, rng: Rng, ctx?: OffseasonDevCont
   const gap = Math.max(0, ceiling - p.ovr);
   let delta: number;
   const a = p.age; // age for the coming season
-  if (a <= 21) delta = gap * rng.range(0.06, 0.3);
-  else if (a <= 24) delta = gap * rng.range(0.05, 0.26);
-  else if (a <= 27) delta = gap * rng.range(0, 0.2) + rng.normal(0, 0.8);
-  else if (a <= 30) delta = rng.normal(-0.4, 1.1);
-  else if (a <= 33) delta = -rng.range(0.6, 3.2);
+  if (a <= 21) delta = gap * rng.range(0.18, 0.48);
+  else if (a <= 24) delta = gap * rng.range(0.15, 0.42);
+  else if (a <= 27) delta = gap * rng.range(0.10, 0.30) + rng.normal(0, 0.6);
+  else if (a <= 30) delta = rng.normal(-0.2, 1.0);
+  else if (a <= 33) delta = -rng.range(0.8, 3.2);
   else delta = -rng.range(2, 5.5);
   if (ctx) {
     const ethic = (ctx.workEthic - 50) / 50; // -1..1
@@ -120,7 +120,7 @@ export function offseasonDevelopment(p: Player, rng: Rng, ctx?: OffseasonDevCont
   if (p.hiddenPot !== undefined) {
     // The true ceiling drifts a little; the public estimate converges towards it.
     if (p.age <= 24) p.hiddenPot = Math.round(clamp(p.hiddenPot + rng.normal(0, 1.5), p.ovr, 99));
-    else p.hiddenPot = Math.max(p.ovr, Math.round(p.hiddenPot - rng.range(0.5, 3)));
+    else p.hiddenPot = Math.max(p.ovr, Math.round(p.hiddenPot - rng.range(0.5, 1.5)));
     p.pot = Math.max(p.ovr, Math.round(p.pot * 0.6 + p.hiddenPot * 0.4));
     return p.ovr - before;
   }

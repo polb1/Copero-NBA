@@ -235,6 +235,7 @@ export function eventContext(c: Career) {
 export function openEvent(c: Career, id: string): boolean {
   const def = EVENTS.find((e) => e.id === id);
   if (!def) return false;
+  if (def.maxSeen !== undefined && (c.flags['seen:' + def.id] ?? 0) >= def.maxSeen) return false;
   const ctx = eventContext(c);
   const rng = rngFor(c.seed, 'event-inst', id, c.league.season, c.league.day);
   c.pendingEvent = instantiate(def, ctx, rng);

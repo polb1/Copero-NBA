@@ -1,8 +1,8 @@
 import * as api from '../api';
 import { userOf } from '../career';
 import { combineTestIds, COMBINE_TESTS } from '../../content/combine';
-import { combineTier } from '../offseason';
-import { generateDraftClass, prospectValue, runLottery, simulateDraft } from '../draft';
+import { combineTier, userDraftValue } from '../offseason';
+import { generateDraftClass, runLottery, simulateDraft } from '../draft';
 import type { Career, Pos } from '../types';
 import { baseInput } from './autopilot';
 
@@ -28,6 +28,9 @@ function toCombine(seed: number): Career {
   }
   expect(p.step).toBe('decision');
 
+  const u = userOf(c);
+  u.ovr = Math.max(u.ovr, 68);
+  u.pot = Math.max(u.pot, 80);
   api.predraftDecision(c, true);
   expect(p.step).toBe('combine');
   return c;
@@ -113,7 +116,7 @@ describe('draft combine', () => {
     expect(p.combine!.grade).toBe(p.combineResult!.grade);
     expect(p.combineResult!.detail).toContain('%');
     expect(p.draftClass!.find((x) => x.isUser)!.value).toBeCloseTo(
-      prospectValue(userOf(c).ovr, userOf(c).pot, userOf(c).age) + p.stockBonus,
+      userDraftValue(userOf(c), p.stockBonus),
       6,
     );
     expect(p.combineResult!.grade).toMatch(/^[ABCD]$/);

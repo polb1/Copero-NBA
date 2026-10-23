@@ -98,6 +98,12 @@ export function ovrTone(ovr: number) {
   return 'linear-gradient(160deg, #d97706, #92400e)';
 }
 
+export const CATEGORY_ICON: Record<string, string> = {
+  training: '🏋️', minutes: '⏱️', coach: '📋', teammates: '🤝', agent: '💼', contract: '📝', trade: '🔁', injury: '🩹',
+  rest: '😴', media: '🎙️', rivalry: '⚔️', personal: '🏠', national: '🌍', sponsor: '👟', social: '📱', locker: '🚪',
+  coachChange: '🔄', goals: '🎯', money: '💰', career: '🏁', draft: '🎓',
+};
+
 export const CATEGORY_GLYPH: Record<string, IconName> = {
   training: 'dumbbell', minutes: 'stopwatch', coach: 'clipboard', teammates: 'handshake', agent: 'briefcase', contract: 'contract', trade: 'swap', injury: 'med',
   rest: 'bed', media: 'mic', rivalry: 'swords', personal: 'home', national: 'globe', sponsor: 'shoe', social: 'phone', locker: 'locker',

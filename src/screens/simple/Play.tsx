@@ -23,7 +23,6 @@ import { TeamBadge, ovrTone } from '../../ui/simple';
 import { OvrTile, SimProgress, useCountUp } from '../../ui/life';
 import { downloadPNG } from "../../ui/download";
 import { Scene, type SceneKind } from '../../ui/Scene';
-import { ASSET_GLYPH, AwardArt, AchievementArt, TrophyCase } from "../../ui/art";
 import { Icon, type IconName } from '../../ui/icons';
 import { Flag } from '../../ui/Flag';
 import { findClub } from '../../data/clubs';
@@ -34,6 +33,11 @@ import { Minigame } from '../../ui/Minigame';
 import { MINIGAME_TIER_LABEL } from '../../content/minigames';
 
 const num = (n: number) => Math.round(n).toLocaleString('es-ES');
+
+const AWARD_ICON: Record<string, string> = { champion: '💍', mvp: '👑', fmvp: '🥇', dpoy: '🛡️', roy: '🌱', smoy: '🔋', mip: '📈', allStar: '⭐', allNba1: '🏅', allNba2: '🏅', allNba3: '🏅', allDef1: '🧱', allDef2: '🧱', threeContest: '🎯', euroChampion: '🏆', euroMvp: '🌟', nationalMedal: '🥇' };
+const AWARD_ICON_BY_LABEL: Record<string, string> = Object.fromEntries(
+  Object.entries(AWARD_LABEL).map(([id, label]) => [label, AWARD_ICON[id] ?? '🏆']),
+);
 
 export function Play() {
   const c = useCareer();
@@ -105,7 +109,7 @@ function FinanceLine({ c }: { c: Career }) {
       <span>Crédito <b>{Math.round(f.credit)}</b></span>
       {assets.length > 0 && (
         <span className="finance-assets">
-          {assets.map((a) => <span key={a.id} className="chip"><Icon name={ASSET_GLYPH[a.id] ?? 'building'} size={12} /> {a.short}</span>)}
+          {assets.map((a) => <span key={a.id} className="chip"><span>{a.icon}</span> {a.short}</span>)}
         </span>
       )}
       {f.ruined && <span className="chip bad">En ruina</span>}
@@ -177,12 +181,13 @@ function CardTabs({ c, awards, totals }: { c: Career; awards: Record<string, num
   const ch = challengeOf(c);
   const [v, target] = ch.progress(c);
   const perf = performancePct(c, userOf(c));
-  const trophies = Object.values(awards).reduce((x, y) => x + y, 0);
-  const tabs: { id: CardTab; icon: ReactNode; label: string; value: ReactNode }[] = [
-    { id: 'legacy', icon: <Icon name="chart" size={13} />, label: 'Legado', value: tier },
-    { id: 'goal', icon: <Icon name={v >= target ? 'check' : 'target'} size={13} />, label: 'Reto', value: v >= target ? '¡Hecho!' : target > 1 ? `${Math.min(v, target).toLocaleString('es-ES')} / ${target.toLocaleString('es-ES')}` : 'Pendiente' },
-    { id: 'trophies', icon: <Icon name="trophy" size={13} />, label: 'Vitrina', value: String(trophies) },
-    { id: 'state', icon: <Icon name="brain" size={13} />, label: 'Estado', value: <span className={perf > 0 ? 'delta-up' : perf < 0 ? 'delta-down' : ''}>{perf > 0 ? '+' : ''}{perf} %</span> },
+  const medals = c.flags.medals ?? 0;
+  const trophies = Object.values(awards).reduce((x, y) => x + y, 0) + medals;
+  const tabs: { id: CardTab; icon: string; label: string; value: ReactNode }[] = [
+    { id: 'legacy', icon: '📈', label: 'Legado', value: tier },
+    { id: 'goal', icon: v >= target ? '✅' : '🎯', label: 'Reto', value: v >= target ? '¡Hecho!' : target > 1 ? `${Math.min(v, target).toLocaleString('es-ES')} / ${target.toLocaleString('es-ES')}` : 'Pendiente' },
+    { id: 'trophies', icon: '🏆', label: 'Vitrina', value: String(trophies) },
+    { id: 'state', icon: '🧠', label: 'Estado', value: <span className={perf > 0 ? 'delta-up' : perf < 0 ? 'delta-down' : ''}>{perf > 0 ? '+' : ''}{perf} %</span> },
   ];
   return (
     <div className="card-tabs">
@@ -199,14 +204,10 @@ function CardTabs({ c, awards, totals }: { c: Career; awards: Record<string, num
       {tab === 'trophies' && (
         <div className="card-panel anim-in">
           {trophies === 0 ? <p className="tiny dim" style={{ margin: 0, textAlign: 'center' }}>Aún no has ganado ningún trofeo.</p> : (
-            <TrophyCase
-    awards={[
-      ...Object.entries(awards).flatMap(([k, n]) => Array.from({ length: n }, () => k)),
-      ...Array.from({ length: c.flags.medals ?? 0 }, () => 'nationalMedal'),
-    ]}
-    size={44}
-    labels={{ ...AWARD_LABEL, nationalMedal: 'Medalla con la selección' }}
-  />
+            <div className="row wrap" style={{ justifyContent: 'center', gap: 6 }}>
+              {Object.entries(awards).sort((x, y) => y[1] - x[1]).map(([k, n]) => <span key={k} className="chip gold" title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'} {n > 1 ? `${n}× ` : ''}{AWARD_LABEL[k] ?? k}</span>)}
+              {Array.from({ length: medals }, (_, i) => <span key={`medal-${i}`} className="chip gold" title="Medalla con la selección">🥇 Medalla</span>)}
+            </div>
           )}
         </div>
       )}
@@ -308,7 +309,7 @@ function ChampionLine({ c, season, size = 16, className = '' }: { c: Career; sea
   if (!champ || champ.season !== season) return null;
   return (
     <div className={`champ-line ${className}`.trim()}>
-      <AwardArt kind="champion" size={size} />
+      <span aria-hidden="true" style={{ fontSize: size }}>💍</span>
       <b>Campeón NBA:</b>
       <span className="champ-team">{teamName(c.league, champ.team)}</span>
       <span className="champ-season">{` · ${seasonLabel(champ.season)}`}</span>
@@ -319,7 +320,7 @@ function ChampionLine({ c, season, size = 16, className = '' }: { c: Career; sea
 function SeasonRecap({ c }: { c: Career }) {
   const s = c.lastSummary;
   const medal = c.phase === 'offseason' && c.flags.medalSeason !== undefined && c.flags.medalSeen !== c.flags.medalSeason;
-  const season = c.phase === 'season-end' && s && c.flags.recapSeen !== s.season;
+  const season = !!s && (c.phase === 'season-end' || c.phase === 'offseason') && c.flags.recapSeen !== s.season;
   if (!medal && !season) return null;
   const close = () => store.act((x) => {
     if (season && s) x.flags.recapSeen = s.season;
@@ -331,7 +332,7 @@ function SeasonRecap({ c }: { c: Career }) {
       <div className="recap" role="dialog" aria-label="Medalla con la selección" onClick={close}>
         <div className="recap-box" onClick={(e) => e.stopPropagation()}>
           <span className="recap-kicker">Verano con la selección</span>
-          <div className="recap-trophies"><div className="recap-trophy" style={{ animationDelay: '0.2s' }}><span><Icon name="medal" size={34} /></span><b>Medalla con {country.name}</b></div></div>
+          <div className="recap-trophies"><div className="recap-trophy" style={{ animationDelay: '0.2s' }}><span>🥇</span><b>Medalla con {country.name}</b></div></div>
           <p className="recap-line"><Flag code={userOf(c).nat} size={20} /> {c.flags.nationalCaps} convocatorias · {c.flags.medals} {c.flags.medals === 1 ? 'medalla' : 'medallas'}</p>
           <button type="button" className="btn pill light" onClick={close} autoFocus>Continuar</button>
         </div>
@@ -361,7 +362,7 @@ function SeasonRecap({ c }: { c: Career }) {
           <div className="recap-trophies">
             {keys.map((k, i) => (
               <div key={k} className="recap-trophy" style={{ animationDelay: `${0.5 + i * 0.35}s` }}>
-                <span><AwardArt kind={k} size={34} /></span>
+                <span>{AWARD_ICON[k] ?? '🏆'}</span>
                 <b>{AWARD_LABEL[k] ?? k}</b>
               </div>
             ))}
@@ -396,7 +397,7 @@ function SeasonCard({ c, s }: { c: Career; s: SeasonSummary }) {
       </div>
       {(s.awards.length > 0 || best || records.length > 0) && (
         <div className="sc-notes">
-          {s.awards.map((x) => <span key={x} className="chip gold" title={AWARD_LABEL[x] ?? x}><AwardArt kind={x} size={15} /> {AWARD_LABEL[x] ?? x}</span>)}
+          {s.awards.map((x) => <span key={x} className="chip gold" title={x}>{AWARD_ICON_BY_LABEL[x] ?? '🏆'} {x}</span>)}
           {records.length > 0 && <span className="chip accent sc-record"><Icon name="flame" size={13} /> Récord: {records.slice(0, 3).join(' · ')}{records.length > 3 ? '…' : ''}</span>}
           {best && <span className="sc-best"><Icon name="star" size={13} /> Mejor partido: {best}</span>}
         </div>
@@ -428,20 +429,20 @@ function seasonRecords(c: Career, season: number): string[] {
 
 // ---------------- Decisions ----------------
 
-function Choice({ title, top, icon, scene, children, onClick, tone }: { title: string; top?: string; icon?: ReactNode; scene?: SceneKind; children?: ReactNode; onClick: () => void; tone?: 'stay' | 'danger' | 'primary' }) {
+function Choice({ title, top, icon, scene, children, onClick, tone, locked, lockNote }: { title: string; top?: string; icon?: ReactNode; scene?: SceneKind; children?: ReactNode; onClick: () => void; tone?: 'stay' | 'danger' | 'primary'; locked?: boolean; lockNote?: string }) {
   return (
-    <button className={`choice ${tone ?? ''} ${scene ? 'with-img' : ''}`} onClick={onClick}>
+    <button className={`choice ${tone ?? ''} ${scene ? 'with-img' : ''} ${locked ? 'locked' : ''}`} onClick={onClick} disabled={locked} aria-disabled={locked}>
       {scene && <Scene kind={scene} variant={title} height={64} still className="choice-img" />}
       {top && <span className="tiny dim">{top}</span>}
       <b className="choice-title">{title}</b>
-      {/* One visual per card: with a picture there is no room for a second one. */}
       {!scene && icon && <span className="choice-icon">{icon}</span>}
       {children && <span className="choice-body">{children}</span>}
+      {locked && <span className="choice-lock">🔒 {lockNote ?? 'No disponible'}</span>}
     </button>
   );
 }
 
-function Block({ title, desc, scene, children }: { title: string; desc?: ReactNode; scene: SceneKind; children: ReactNode }) {
+function Block({ title, desc, scene, meta, children }: { title: string; desc?: ReactNode; scene: SceneKind; meta?: ReactNode; children: ReactNode }) {
   // Many options (e.g. a busy transfer market): slim banner and compact cards so all fit on screen.
   const compact = Children.toArray(children).filter(Boolean).length > 3;
   // A season card carries the screen: the banner and option photos step back so the choices stay in view.
@@ -450,6 +451,7 @@ function Block({ title, desc, scene, children }: { title: string; desc?: ReactNo
     <div className={`decision anim-in ${compact ? 'is-compact' : ''} ${card ? 'has-card' : ''}`} key={title}>
       <Scene kind={scene} variant={title} height={compact || card ? 72 : 120}><h2>{title}</h2></Scene>
       {desc && (typeof desc === 'string' ? <p className="small muted desc">{desc}</p> : <div className="small muted desc">{desc}</div>)}
+      {meta && <div className="decision-meta">{meta}</div>}
       <div className={`choices ${compact ? 'compact' : ''}`}>{children}</div>
     </div>
   );
@@ -463,13 +465,12 @@ function OfferChoice({ c, o, onPick, top = 'Firmar con' }: { c: Career; o: Offer
   const champ = championOf(c.league);
   const fromChamp = !!champ && !!c.league.teams[o.teamId] && champ.team === o.teamId;
   return (
-    <Choice top={o.id === 'opt-player' ? 'Ejercer opción' : o.id.startsWith('ext-') ? 'Extender con' : o.note.startsWith('Renovar') ? 'Renovar con' : o.id.startsWith('eu-stay') ? 'Seguir en' : top} title={name} onClick={onPick} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : club ? <span className="club-crest"><ClubLogo name={club.name} size={50} /><small>{club.league}</small></span> : <span className="offer-globe"><Icon name="globe" size={40} /></span>}>
+    <Choice top={o.id === 'opt-player' ? 'Ejercer opción' : o.id.startsWith('ext-') ? 'Extender con' : o.note.startsWith('Renovar') ? 'Renovar con' : o.id.startsWith('eu-stay') ? 'Seguir en' : top} title={name} onClick={onPick} icon={t ? <TeamBadge id={t.id} color={t.color} size={58} /> : club ? <span className="club-crest"><ClubLogo name={club.name} size={50} /><small>{club.league}</small></span> : <span style={{ fontSize: '2.6rem' }}>🌍</span>}>
       <span className="choice-meta">{fmtMoney(o.salary)}{o.years > 1 ? ` · ${o.years} años (${fmtMoney(total)})` : ` · ${o.kind === 'two-way' ? 'two-way' : o.kind === 'gleague' ? 'G League' : '1 año'}`}</span>
       <span className="choice-meta dim">{o.role}{t ? ` · ${t.w + t.l ? `${t.w}-${t.l}` : t.status === 'contender' ? 'aspirante' : t.status === 'rebuild' ? 'reconstrucción' : 'zona media'}` : ''}</span>
       {fromChamp && champ && (
         <span className="chip gold offer-champ" title={`Campeón NBA · ${seasonLabel(champ.season)}`}>
-          <AwardArt kind="champion" size={14} />
-          {`Campeón NBA · ${seasonLabel(champ.season)}`}
+          {`💍 Campeón · ${seasonLabel(champ.season)}`}
         </span>
       )}
     </Choice>
@@ -510,25 +511,73 @@ function Decision({ c }: { c: Career }) {
       if (p.step === 'season') {
         const s = c.satellite!;
         const comp = SATELLITES[s.comp as 'NCAA' | 'EUR'];
+        const waits = p.waits ?? 0;
+        const outcome = p.lastOutcome === 'no-interest'
+          ? 'Los equipos NBA no muestran interés'
+          : p.lastOutcome === 'combine-failed'
+            ? 'Combine insuficiente: no entras al draft'
+            : p.lastOutcome === 'skipped-combine'
+              ? 'No acudiste al combine'
+              : null;
         return (
-          <Block scene={s.comp === 'NCAA' ? 'college' : 'europe'} title={`Temporada en ${s.teamName}`} desc={`${s.league ?? comp.name}. Los ojeadores NBA miran cada partido; la liga NBA se juega en paralelo y decidirá el orden del draft.`}>
+          <Block
+            scene={s.comp === 'NCAA' ? 'college' : 'europe'}
+            title={`Temporada en ${s.teamName}`}
+            desc={`${s.league ?? comp.name}. Los ojeadores NBA miran cada partido; la liga NBA se juega en paralelo y decidirá el orden del draft.`}
+            meta={(outcome || waits > 0) ? (
+              <div className="risk-row">
+                {outcome && <span className="chip">{outcome}</span>}
+                {waits > 0 && <span className="chip">{`Año de espera ${waits}/3`}</span>}
+              </div>
+            ) : undefined}
+          >
             <Choice top="Jugar" title="La temporada completa" scene="arena" onClick={() => go('Jugando la temporada…')}>Se detiene si surge una decisión.</Choice>
           </Block>
         );
       }
       if (p.step === 'decision') {
-        const canReturn = u.age <= 21 && p.seasonsPlayed < 3;
+        const interest = api.nbaInterest(c);
+        const waits = p.waits ?? 0;
+        const canReturn = !p.noNbaInterest && waits < 3 && u.age <= 21 && p.seasonsPlayed < 3;
+        const outcome = p.lastOutcome === 'no-interest'
+          ? 'Los equipos NBA no muestran interés'
+          : p.lastOutcome === 'combine-failed'
+            ? 'Combine insuficiente: no entras al draft'
+            : p.lastOutcome === 'skipped-combine'
+              ? 'No acudiste al combine'
+              : null;
         return (
-          <Block scene={'draft'} title="¿Te declaras para el draft?" desc={c.lastSummary ? <SeasonCard c={c} s={c.lastSummary} /> : undefined}>
-            <Choice top="Dar el salto" title="Declararme" scene="draft" onClick={() => store.act((x) => api.predraftDecision(x, true))}>Combine, entrevistas y draft.</Choice>
-            <Choice top="Sin NBA" title={p.route === 'college' ? 'Jugar en el extranjero' : 'Carrera en Europa'} scene="europe" tone="stay" onClick={() => go('Mercado de clubes…', api.chooseEuroCareer)}>Clubes, títulos y la puerta de la NBA abierta.</Choice>
-            {canReturn && <Choice top="Esperar" title="Otra temporada" scene="college" tone="stay" onClick={() => go('Jugando otra temporada…', (x) => api.predraftDecision(x, false))}>Mejorar tu cotización.</Choice>}
+          <Block
+            scene={'draft'}
+            title="¿Te declaras para el draft?"
+            desc={c.lastSummary ? <SeasonCard c={c} s={c.lastSummary} /> : undefined}
+            meta={(outcome || waits > 0 || p.combineResult || p.noNbaInterest) ? (
+              <div className="risk-row">
+                {outcome && <span className="chip">{outcome}</span>}
+                {p.combineResult && <span className="chip">{`Combine ${p.combineResult.grade} · ${p.combineResult.detail}`}</span>}
+                {waits > 0 && <span className="chip">{`Año de espera ${waits}/3`}</span>}
+                {p.noNbaInterest && <span className="chip">La puerta NBA se ha cerrado</span>}
+              </div>
+            ) : undefined}
+          >
+            <Choice
+              top={interest.interested ? 'Dar el salto' : 'Sin interés NBA'}
+              title="Declararme"
+              scene="draft"
+              locked={!interest.interested}
+              lockNote={!interest.interested ? 'Los equipos no te ven listo para el draft.' : undefined}
+              onClick={() => store.act((x) => api.predraftDecision(x, true))}
+            >
+              Combine, entrevistas y draft.
+            </Choice>
+            <Choice top="Sin NBA" title={p.noNbaInterest ? 'Carrera fuera de la NBA' : p.route === 'college' ? 'Jugar en el extranjero' : 'Carrera en Europa'} scene="europe" tone="stay" onClick={() => go('Mercado de clubes…', api.chooseEuroCareer)}>Clubes, títulos y la puerta de la NBA abierta.</Choice>
+            {canReturn && <Choice top="Esperar" title="Otra temporada" scene="college" tone="stay" onClick={() => go('Jugando otra temporada…', (x) => api.predraftDecision(x, false))}>Volver al club y mejorar tu cotización.</Choice>}
           </Block>
         );
       }
       if (p.step === 'combine') {
         return (
-          <Block scene={'training'} title="Draft Combine" desc="Las franquicias miden velocidad, salto, agilidad y tiro… y ahora también te ponen a prueba.">
+          <Block scene={'training'} title="Draft Combine" desc="Las franquicias miden velocidad, salto, agilidad y tiro… y ahora también te ponen a prueba. Si fallas demasiadas pruebas o no acudes, no entrarás al draft: volverás al club.">
             <Choice top="Riesgo alto" title="Demostrar todo" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'full'))}>Tres pruebas con dificultad según tu proyección.</Choice>
             <Choice top="Sin red" title="A lo bestia" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'hard'))}>Tres pruebas al máximo: más recompensa y más riesgo.</Choice>
             <Choice top="Prudente" title="Ir con calma" scene="training" onClick={() => store.act((x) => api.doCombine(x, 'safe'))}>Dos pruebas fáciles; menos margen de subida.</Choice>
@@ -561,15 +610,19 @@ function Decision({ c }: { c: Career }) {
         const i = p.interviews.length;
         const q = p.interviewQuestions[i];
         return (
-          <Block scene={'press'} title={`Entrevista con ${teamName(c.league, q.teamId)}`} desc={`«${q.question}»`}>
-            {p.combineResult && (
+          <Block
+            scene={'press'}
+            title={`Entrevista con ${teamName(c.league, q.teamId)}`}
+            desc={`«${q.question}»`}
+            meta={p.combineResult ? (
               <div className="risk-row">
                 <span className="chip accent">Combine {p.combineResult.grade}</span>
                 <span className="chip">{p.combineResult.detail}</span>
                 <span className="chip">Bonus {p.combineResult.bonus >= 0 ? '+' : ''}{p.combineResult.bonus.toFixed(1)}</span>
               </div>
-            )}
-            {q.answers.map((a, k) => <Choice key={k} title={a} onClick={() => store.act((x) => api.answerInterview(x, i, k))} />)}
+            ) : undefined}
+          >
+            {q.answers.map((a, k) => <Choice key={k} title={a} scene="press" onClick={() => store.act((x) => api.answerInterview(x, i, k))} />)}
           </Block>
         );
       }
@@ -693,7 +746,7 @@ function Retired({ c }: { c: Career }) {
       {earned.length > 0 && (
         <div className="earned" title={earned.map((x) => x.title).join(' · ')}>
           <span className="tiny dim">Logros de esta carrera ({earned.length})</span>
-          <div>{earned.map((x) => <span key={x.id} title={`${x.title}: ${x.desc}`}><AchievementArt id={x.id} size={18} /></span>)}</div>
+          <div>{earned.map((x) => <span key={x.id} title={`${x.title}: ${x.desc}`}><span>{x.icon}</span></span>)}</div>
         </div>
       )}
       <div className="choices">
@@ -745,7 +798,7 @@ function Timeline({ c }: { c: Career }) {
       rows.push(
         <div key={age} className="tl-row in" style={{ animationDelay: `${Math.min(12, age - startAge) * 45}ms` }} title={`${seasonLabel(r.season)} · ${r.result}`}>
           <span className="age-badge" style={{ background: tm?.color ?? '#334155' }}>{age}</span>
-          <span className="tl-club">{tm && r.comp === 'NBA' ? <TeamBadge id={tm.id} color={tm.color} size={16} /> : r.comp === 'GLG' ? <span className="tiny"><Icon name="ball" size={13} /></span> : <ClubLogo name={r.teamName} size={16} />}<span>{r.teamName}</span>{r.comp !== 'NBA' && <span className="tiny dim">{r.comp === 'GLG' ? 'G League' : r.comp === 'EUR' ? findClub(r.teamName)?.league ?? 'Internacional' : 'NCAA'}</span>}{won && <span title="Campeón"><Icon name="ring" size={13} /></span>}{r.awards.filter((k) => k !== 'champion').slice(0, 2).map((k) => <span key={k} title={AWARD_LABEL[k]}><AwardArt kind={k} size={14} /></span>)}</span>
+          <span className="tl-club">{tm && r.comp === 'NBA' ? <TeamBadge id={tm.id} color={tm.color} size={16} /> : r.comp === 'GLG' ? <span className="tiny"><Icon name="ball" size={13} /></span> : <ClubLogo name={r.teamName} size={16} />}<span>{r.teamName}</span>{r.comp !== 'NBA' && <span className="tiny dim">{r.comp === 'GLG' ? 'G League' : r.comp === 'EUR' ? findClub(r.teamName)?.league ?? 'Internacional' : 'NCAA'}</span>}{won && <span title="Campeón">💍</span>}{r.awards.filter((k) => k !== 'champion').slice(0, 2).map((k) => <span key={k} title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'}</span>)}</span>
           <span className={`ovr-pill ${r.ovrEnd >= 80 ? 'gold' : ''}`} style={{ background: ovrTone(r.ovrEnd) }}>{r.ovrEnd}</span>
           <span className="tl-num">{r.stats.gp}</span>
           <span className="tl-num">{perGame ? f1(a.ppg) : num(r.stats.pts)}</span>

@@ -145,6 +145,26 @@
 .power-game.in .power-msg { color: #052e16; }
 .power-game.out .power-msg { color: #fff; }
 
+/* ---------- Drag shot (slingshot) minigame ---------- */
+.drag-game { margin-top: 14px; background: var(--panel); border: 1px solid var(--line-2); border-radius: 14px; padding: 14px; }
+.drag-arena { position: relative; display: block; width: 100%; height: 200px; margin: 8px 0 10px; border: 1px solid var(--line-2); border-radius: 12px; background: radial-gradient(circle at 70% 30%, #24303c, #121418 72%); overflow: hidden; cursor: crosshair; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+.drag-rim { position: absolute; width: 46px; height: 12px; transform: translate(-50%, -50%); border: 3px solid #ff6b1a; border-radius: 50%; box-shadow: 0 0 14px rgba(255, 107, 26, 0.5); }
+.drag-board { position: absolute; width: 46px; height: 30px; transform: translate(-50%, -50%); border: 2px solid rgba(255,255,255,.55); background: rgba(255,255,255,.06); border-radius: 3px; }
+.drag-net { position: absolute; width: 28px; height: 18px; transform: translate(-50%, 0); border-left: 2px solid rgba(255,255,255,.6); border-right: 2px solid rgba(255,255,255,.6); border-bottom: 2px solid rgba(255,255,255,.6); clip-path: polygon(0 0, 100% 0, 78% 100%, 22% 100%); }
+.drag-ball { position: absolute; width: 28px; height: 28px; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffb37a, #c2410c 70%); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); pointer-events: none; }
+.drag-arc { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.drag-arc path { fill: none; stroke: rgba(255, 255, 255, 0.85); stroke-width: 0.8; stroke-dasharray: 2.5 1.8; stroke-linecap: round; filter: drop-shadow(0 0 3px rgba(255,255,255,.5)); }
+.drag-power { height: 8px; border-radius: 999px; background: #1d2026; border: 1px solid var(--line-2); overflow: hidden; }
+.drag-power span { display: block; height: 100%; background: linear-gradient(90deg, #22c55e, #eab308, #ef4444); }
+.drag-msg { position: absolute; right: 10px; top: 8px; font-weight: 900; font-size: 1.3rem; letter-spacing: 0.04em; animation: pop 0.35s var(--ease) both; }
+.drag-game.in .drag-msg { color: var(--good); }
+.drag-game.out .drag-msg { color: var(--bad); }
+
+.drag-rebound { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(245, 196, 81, 0.65); background: rgba(245, 196, 81, 0.18); color: var(--gold); font-weight: 800; font-size: 0.8rem; cursor: pointer; animation: pop 0.3s var(--ease) both; }
+.target-dot { position: absolute; transform: translate(-50%, -50%); border-radius: 50%; border: 2px solid rgba(255,255,255,.5); padding: 0; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.target-dot.active { background: radial-gradient(circle, rgba(52,211,153,.9), rgba(16,185,129,.35)); border-color: var(--good); box-shadow: 0 0 20px rgba(52,211,153,.6); cursor: pointer; }
+.target-dot.decoy { background: rgba(100,116,139,.28); border-color: rgba(148,163,184,.45); pointer-events: none; }
+
 /* ---------- Reaction (reflex) minigame ---------- */
 .react-game { margin-top: 14px; background: var(--panel); border: 1px solid var(--line-2); border-radius: 14px; padding: 14px; }
 .react-grid { display: grid; gap: 10px; margin: 10px 0 12px; }
@@ -161,8 +181,8 @@
 
 /* ---------- Choice (memory) minigame ---------- */
 .choice-game { margin-top: 14px; background: var(--panel); border: 1px solid var(--line-2); border-radius: 14px; padding: 14px; }
-.choice-lanes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 10px 0 12px; }
-.choice-lane { display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 110px; padding: 10px 6px; border: 1px solid var(--line-2); border-radius: 14px; background: #1d2026; color: var(--text-2); font-size: 1.5rem; font-weight: 800; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background 0.12s var(--ease), border-color 0.12s var(--ease), color 0.12s var(--ease); }
+.choice-lanes { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin: 10px 0 12px; }
+.choice-lane { display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 96px; padding: 6px 2px; border: 1px solid var(--line-2); border-radius: 14px; background: #1d2026; color: var(--text-2); font-size: 1.15rem; font-weight: 800; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background 0.12s var(--ease), border-color 0.12s var(--ease), color 0.12s var(--ease); }
 .choice-lane:disabled { cursor: default; }
 .choice-lane.open { background: rgba(52, 211, 153, 0.22); border-color: var(--good); color: var(--text); box-shadow: inset 0 0 0 1px var(--good); }
 .choice-lane.picked { outline: 3px solid var(--bad); outline-offset: -3px; }
@@ -174,7 +194,8 @@
 /* Phones: big touch areas, no horizontal scroll. */
 @media (max-width: 560px) {
   .react-cell { min-height: 76px; }
-  .choice-lane { min-height: 96px; }
+  .choice-lane { min-height: 78px; font-size: 1rem; }
+  .choice-lanes { gap: 5px; }
   .react-msg, .choice-msg { font-size: 1rem; }
   .react-game, .choice-game { padding: 12px; }
 }
@@ -193,6 +214,9 @@
 .scene-content h2 { color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,.6); }
 .scene-content .chip { margin-bottom: 6px; background: rgba(0,0,0,.45); }
 .decision > p.desc { margin-top: 10px; }
+.decision-meta { margin-top: 10px; }
+.decision-meta .risk-row { margin-top: 0; }
+.decision-meta .chip { white-space: normal; max-width: 100%; overflow-wrap: break-word; }
 
 /* ---------- Life: motion and feedback ---------- */
 .scene.live img, .scene.live svg { animation: kenburns 16s ease-in-out infinite alternate; transform-origin: 60% 40%; }
@@ -386,7 +410,8 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
   .tier { flex: 1 1 auto; min-height: 48px; }
   .target-arena { height: 150px; }
   .target-msg { font-size: 1.1rem; }
-  .shot, .target-game, .power-game { padding: 12px; }
+  .shot, .target-game, .power-game, .drag-game { padding: 12px; }
+  .drag-arena { height: 210px; }
 }
 
 .challenge { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line-2); }
@@ -490,7 +515,7 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .champ-line svg { flex: none; }
 .recap-champ { justify-content: center; margin: 0 0 12px; padding: 8px 12px; border-radius: 12px; background: rgba(245, 196, 81, 0.10); border: 1px solid rgba(245, 196, 81, 0.35); font-size: 0.88rem; }
 .sc-champ { font-size: 0.78rem; }
-.offer-champ { align-self: center; margin-top: 3px; font-size: 0.66rem; padding: 2px 8px; gap: 4px; }
+.offer-champ { align-self: center; margin-top: 3px; font-size: 0.62rem; padding: 2px 6px; gap: 4px; white-space: normal; max-width: 100%; text-align: center; line-height: 1.15; overflow-wrap: anywhere; }
 .offer-champ svg { flex: none; }
 .decision.has-card .choice-img { height: 56px !important; }
 .decision.has-card .scene h2 { font-size: 1.15rem; }
@@ -590,6 +615,7 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .roll-marker { position: absolute; top: -5px; bottom: -5px; width: 4px; margin-left: -2px; border-radius: 4px; background: #fff; box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
 .roll-verdict { margin-top: 10px; text-align: center; font-size: 1.25rem; font-weight: 900; letter-spacing: -0.01em; }
 .roll.rolling .roll-verdict { color: var(--text-2); animation: roll-pulse 0.5s ease-in-out infinite alternate; }
+.roll.rolling .roll-good, .roll.rolling .roll-bad { background: var(--panel-3); color: var(--text-2); opacity: 1; }
 .roll.won .roll-verdict { color: #4ade80; animation: roll-pop 0.45s cubic-bezier(0.2, 1.6, 0.4, 1) both; }
 .roll.lost .roll-verdict { color: #f87171; animation: roll-pop 0.45s cubic-bezier(0.2, 1.6, 0.4, 1) both, roll-shake 0.4s 0.1s ease-in-out; }
 .roll.won .roll-good { background: rgba(34, 197, 94, 0.55); color: #fff; transition: background 0.3s; }
@@ -669,4 +695,206 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
   .choices:has(.choice.with-img) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .choice-title { overflow-wrap: anywhere; }
 }
+
+/* ---------- P0: portada móvil equilibrada ---------- */
+@media (max-width: 560px) {
+  .simple-wrap {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 12px 10px calc(16px + env(safe-area-inset-bottom));
+  }
+  .simple-wrap:has(> .start-panel) {
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+  }
+  .start-panel .simple-head {
+    padding: 12px 14px 10px;
+    gap: 8px;
+  }
+  .start-panel .simple-head > div:first-child {
+    width: 100%;
+    text-align: center;
+  }
+  .start-panel .simple-head h2 {
+    font-size: 1.15rem;
+    line-height: 1.15;
+  }
+  .start-panel .simple-head .row {
+    width: 100%;
+    justify-content: center;
+    row-gap: 6px;
+  }
+  .start-panel .seg {
+    display: flex;
+    width: 100%;
+  }
+  .start-panel .seg button {
+    flex: 1;
+    padding: 8px 6px;
+    font-size: 0.8rem;
+  }
+  .start-panel .mode-hint {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+  }
+  .start-panel .simple-cols {
+    padding: 12px;
+    gap: 14px;
+  }
+  .start-panel .simple-col {
+    gap: 8px;
+  }
+  .start-panel .simple-col h3 {
+    font-size: 0.92rem;
+  }
+  .start-panel .jersey-wrap svg[role="img"] {
+    width: clamp(112px, 34vw, 150px);
+    height: auto;
+  }
+  .start-panel .name-field {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+  .start-panel .name-field > span {
+    text-align: center;
+  }
+  .start-panel .name-field .input {
+    text-align: center;
+    min-height: 2.75rem;
+    font-weight: 700;
+  }
+  .start-panel .mini > span {
+    text-align: center;
+  }
+  .start-panel .mini .input,
+  .start-panel .toggle2 button {
+    min-height: 2.75rem;
+  }
+  .start-panel .country-grid {
+    max-height: 11.5rem;
+  }
+  .start-panel .country {
+    padding: 8px;
+    gap: 8px;
+    font-size: 0.8rem;
+  }
+  .start-panel .country > span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .start-panel .country svg {
+    width: 22px;
+    height: 22px;
+  }
+  .start-panel .court-pick {
+    width: min(200px, 60%);
+    margin: 0 auto;
+  }
+  .start-panel .spot {
+    min-width: 2.5rem;
+    min-height: 2.25rem;
+    font-size: 0.78rem;
+  }
+  .start-panel .pos-info p,
+  .start-panel .style-desc {
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+  .start-panel .chips .chip {
+    padding: 5px 9px;
+    font-size: 0.74rem;
+  }
+  .start-panel .start-challenge {
+    font-size: 0.76rem;
+    text-align: center;
+    flex-wrap: wrap;
+  }
+  .start-panel .simple-foot {
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    gap: 8px;
+  }
+  .start-panel .simple-foot .btn.pill {
+    padding: 11px 18px;
+    font-size: 0.9rem;
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 430px) {
+  .start-panel .country-grid {
+    grid-template-columns: 1fr;
+    max-height: 10rem;
+  }
+  .start-panel .mini-fields {
+    flex-wrap: wrap;
+  }
+  .start-panel .jersey-wrap svg[role="img"] {
+    width: clamp(104px, 36vw, 140px);
+  }
+}
+
+@media (max-width: 360px) {
+  .start-panel .simple-head h2 {
+    font-size: 1.05rem;
+  }
+  .start-panel .simple-cols {
+    padding: 10px;
+  }
+}
+
+@media (max-height: 480px) and (pointer: coarse) {
+  .start-panel .jersey-wrap svg[role="img"] {
+    width: 96px;
+  }
+  .simple-wrap:has(> .start-panel) {
+    padding-top: 8px;
+  }
+}
+
+/* ---------- P1b: vuelo y trayectoria del tiro ---------- */
+@media (min-width: 561px) {
+  .drag-arena { height: clamp(190px, 36vh, 250px); }
+}
+.drag-ball { will-change: left, top; }
+.drag-trail { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
+.drag-trail path { fill:none; stroke:rgba(255,255,255,.34); stroke-width:.45; stroke-dasharray:1; stroke-dashoffset:0; stroke-linecap:round; }
+.drag-trail.drawing path { animation: drag-draw linear forwards; }
+@keyframes drag-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+.drag-pull { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
+.drag-pull line { stroke: rgba(245, 196, 81, .55); stroke-width: .7; stroke-dasharray: 1.5 1.2; stroke-linecap: round; }
+.drag-ghost { position:absolute; width:20px; height:20px; border:2px dashed rgba(245,196,81,.8); border-radius:50%; transform: translate(-50%, -50%); pointer-events:none; opacity:.8; }
+.drag-net.swish { animation: net-swish .45s var(--ease); }
+@keyframes net-swish {
+  0% { transform: translate(-50%, 0) scaleY(1); }
+  45% { transform: translate(-50%, 0) scaleY(1.35); }
+  100% { transform: translate(-50%, 0) scaleY(1); }
+}
+.drag-board.shake { animation: board-shake .35s var(--ease); }
+@keyframes board-shake {
+  0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+  35% { transform: translate(-50%, -50%) rotate(2.4deg); }
+  70% { transform: translate(-50%, -50%) rotate(-1.8deg); }
+}
+.drag-rim.clang { animation: rim-clang .35s var(--ease); }
+@keyframes rim-clang {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  40% { transform: translate(-50%, -50%) scale(1.18); }
+}
+.drag-ball.flying { filter: drop-shadow(0 0 6px rgba(255, 107, 26, .55)); }
+.drag-ball.rebounding { box-shadow: 0 0 0 4px rgba(245, 196, 81, .18); }
+.drag-arc.good path { stroke: var(--good); }
+.drag-arc.near path { stroke: var(--gold); }
+.drag-arc.bad path { stroke: var(--bad); }
+.drag-rebound { min-height: 2.75rem; }
+@media (prefers-reduced-motion: reduce) {
+  .drag-trail.drawing path, .drag-net.swish, .drag-board.shake, .drag-rim.clang { animation: none; }
+}
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+/* ---------- P4b: puerta del draft ---------- */
+.choice.locked { opacity: .55; cursor: not-allowed; }
+.choice.locked:active { transform: none; }
+.choice-lock { display: block; margin-top: 4px; font-size: .72rem; color: var(--gold); }
 

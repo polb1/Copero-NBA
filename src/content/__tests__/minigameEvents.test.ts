@@ -3,10 +3,12 @@ import { POSITIONS, type MinigameKind, type MinigameMechanic, type Pos } from '.
 
 const LEGACY = ['mg-clutch', 'mg-freethrows', 'mg-threes', 'mg-drill'];
 const PHASE2 = ['mg-spotlight', 'mg-dunk', 'mg-boards', 'mg-steal', 'mg-pass', 'mg-close'];
+const ROUND2 = ['mg-reflex', 'mg-precision', 'mg-memory'];
 
 const VALID_KINDS: MinigameKind[] = [
   'clutch', 'freethrows', 'threes', 'drill',
   'spotlight', 'dunk', 'boards', 'steal', 'pass', 'close',
+  'reflex', 'memory',
 ];
 
 const MINIGAME_EVENTS = EVENTS.filter((e) => e.minigame);
@@ -19,7 +21,7 @@ function mgDef(id: string): MinigameDef {
 
 describe('minigame events content', () => {
   test('every minigame event declares a valid kind and the three outcome tiers', () => {
-    expect(MINIGAME_EVENTS.length).toBeGreaterThanOrEqual(LEGACY.length + PHASE2.length);
+    expect(MINIGAME_EVENTS.length).toBeGreaterThanOrEqual(LEGACY.length + PHASE2.length + ROUND2.length);
     for (const ev of MINIGAME_EVENTS) {
       const mg = ev.minigame!;
       expect(VALID_KINDS).toContain(mg.kind);
@@ -95,7 +97,7 @@ describe('minigame events content', () => {
       'mg-dunk': 'power',
       'mg-boards': 'reaction',
       'mg-steal': 'reaction',
-      'mg-pass': 'choice',
+      'mg-pass': 'reaction',
       'mg-close': 'meter',
     };
 
@@ -110,6 +112,11 @@ describe('minigame events content', () => {
       expect(mg.pressure).toBeGreaterThan(0);
       expect(mg.pressure).toBeLessThanOrEqual(1);
     }
+
+    expect(mgDef('mg-threes').mechanic).toBe('drag');
+    expect(mgDef('mg-drill').mechanic).toBe('drag');
+    expect(mgDef('mg-threes').slots).toBeUndefined();
+    expect(mgDef('mg-pass').windowMs).toBe(1500);
   });
 
   test('position themes exclude the centres from the guard-specific challenges', () => {
@@ -117,12 +124,40 @@ describe('minigame events content', () => {
     expect(threes).not.toContain('C');
 
     const spotlight = mgDef('mg-spotlight').positions!;
-    expect(spotlight).toEqual(['PG', 'SG']);
+    expect(spotlight).toEqual(['SG']);
 
     // The legacy covers every position; the dunk leaves the guards' playmaking aside.
     expect(mgDef('mg-clutch').positions).toEqual(['PG', 'SG', 'SF', 'PF', 'C']);
     expect(mgDef('mg-freethrows').positions).toEqual(['PG', 'SG', 'SF', 'PF', 'C']);
     expect(mgDef('mg-drill').positions).toEqual(['PG', 'SG', 'SF', 'PF', 'C']);
     expect(mgDef('mg-threes').positions).toEqual(['PG', 'SG', 'SF', 'PF']);
+  });
+
+  test('each position has its own themed signature challenge', () => {
+    const signature: Record<string, string> = {
+      PG: 'mg-pass', SG: 'mg-spotlight', SF: 'mg-dunk', PF: 'mg-boards', C: 'mg-close',
+    };
+    for (const [pos, id] of Object.entries(signature)) {
+      expect(mgDef(id).positions).toEqual([pos]);
+    }
+  });
+
+  test('the round 2 challenges declare their mechanic and cover every position', () => {
+    const mechanics: Record<string, MinigameMechanic> = {
+      'mg-reflex': 'reaction',
+      'mg-precision': 'target',
+      'mg-memory': 'choice',
+    };
+
+    for (const id of ROUND2) {
+      const mg = mgDef(id);
+      expect(mg.positions).toEqual(['PG', 'SG', 'SF', 'PF', 'C']);
+      expect(mg.mechanic).toBe(mechanics[id]);
+      expect(mg.attempts).toBeGreaterThan(0);
+      expect(mg.great).toBeGreaterThan(mg.ok);
+      expect(mg.ok).toBeGreaterThanOrEqual(1);
+      expect(mg.pressure).toBeGreaterThan(0);
+      expect(mg.pressure).toBeLessThanOrEqual(1);
+    }
   });
 });

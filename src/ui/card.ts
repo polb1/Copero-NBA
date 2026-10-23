@@ -13,6 +13,71 @@ const natName = (code: string) => t(countryByCode(code).name);
 const COND = '"Barlow Condensed", Arial Narrow, sans-serif';
 const BODY = 'Inter, system-ui, sans-serif';
 
+/** Posiciones de todas las medallas de selección, ajustadas para que quepan en la tarjeta. */
+export function medalSlots(count: number, startX = 72, y = 829): { x: number; y: number; size: number }[] {
+  const n = Math.max(0, Math.floor(count));
+  if (!n) return [];
+  const size = Math.max(6, Math.min(32, Math.floor(360 / n) - 4));
+  return Array.from({ length: n }, (_, i) => ({ x: startX + i * (size + 4), y, size }));
+}
+
+/**
+ * Dibuja `text` dentro de `maxWidth`: reduce el tamaño de fuente (hasta `minFontSize`) y,
+ * si aún no cabe, recorta el texto con `…`. Conserva peso y familia de `g.font`.
+ */
+function fitText(
+  g: CanvasRenderingContext2D,
+  text: string,
+  x: number,
+  y: number,
+  maxWidth: number,
+  minFontSize = 20,
+): string {
+  const baseFont = g.font;
+  const baseSize = Math.max(minFontSize, Math.floor(Number(/(\d+(?:\.\d+)?)px/.exec(baseFont)?.[1] ?? minFontSize)));
+  const fontAt = (px: number) => baseFont.replace(/\d+(?:\.\d+)?px/, `${px}px`);
+  const draw = (value: string, px: number) => {
+    g.font = fontAt(px);
+    g.fillText(value, x, y);
+    g.font = baseFont;
+    return value;
+  };
+
+  for (let px = baseSize; px >= minFontSize; px--) {
+    g.font = fontAt(px);
+    if (g.measureText(text).width <= maxWidth) return draw(text, px);
+  }
+
+  g.font = fontAt(minFontSize);
+  for (let i = text.length - 1; i > 0; i--) {
+    const cut = text.slice(0, i).trimEnd() + '…';
+    if (g.measureText(cut).width <= maxWidth) return draw(cut, minFontSize);
+  }
+  return draw('…', minFontSize);
+}
+
+function roundRect(g: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+  g.beginPath();
+  if (typeof g.roundRect === 'function') { g.roundRect(x, y, w, h, r); return; }
+  const rr = Math.min(r, w / 2, h / 2);
+  g.moveTo(x + rr, y);
+  g.arcTo(x + w, y, x + w, y + h, rr);
+  g.arcTo(x + w, y + h, x, y + h, rr);
+  g.arcTo(x, y + h, x, y, rr);
+  g.arcTo(x, y, x + w, y, rr);
+  g.closePath();
+}
+
+/** Panel translúcido usado por las dos cajas de la zona inferior. */
+function drawPanel(g: CanvasRenderingContext2D, x: number, y: number, w: number, h: number): void {
+  g.fillStyle = 'rgba(255,255,255,0.05)';
+  g.strokeStyle = 'rgba(255,255,255,0.1)';
+  g.lineWidth = 2;
+  roundRect(g, x, y, w, h, 18);
+  g.fill();
+  g.stroke();
+}
+
 function drawMedal(g: CanvasRenderingContext2D, x: number, y: number, size: number, gold = true): void {
   g.save();
   g.translate(x, y);
@@ -123,8 +188,7 @@ export function drawCard(c: Career): string {
   gold.addColorStop(0.4, '#f5c451');
   gold.addColorStop(1, '#8a6410');
   g.fillStyle = r.peakOvr >= 80 ? gold : '#ff6b1a';
-  g.beginPath();
-  g.roundRect(hx, hy, hw, hh, 28);
+  roundRect(g, hx, hy, hw, hh, 28);
   g.fill();
   g.fillStyle = '#1a1205';
   g.textAlign = 'center';
@@ -138,8 +202,7 @@ export function drawCard(c: Career): string {
     g.fillStyle = 'rgba(255,255,255,0.05)';
     g.strokeStyle = 'rgba(255,255,255,0.1)';
     g.lineWidth = 2;
-    g.beginPath();
-    g.roundRect(x, y, 300, 150, 18);
+    roundRect(g, x, y, 300, 150, 18);
     g.fill();
     g.stroke();
     g.fillStyle = color;
@@ -155,55 +218,59 @@ export function drawCard(c: Career): string {
   box(72, 670, 'Partidos NBA', String(r.totals.gp));
   box(390, 670, 'Valor máximo', fmtMoney(peakValue), '#86efac');
   box(708, 670, 'Anillos', String(r.titles), '#f5c451');
+
+  // Lower zone: honors, national team and legacy.
   const medals = c.flags.medals ?? 0;
   const caps = c.flags.nationalCaps ?? 0;
-  if (medals > 0 || caps > 0) {
-    drawMedal(g, 72, 829, 32, medals > 0);
-    let x = 114;
-    if (medals > 0) {
-      g.fillStyle = '#f5c451';
-      g.font = `800 36px ${COND}`;
-      const n = String(medals);
-      g.fillText(n, x, 856);
-      x += g.measureText(n).width + 8;
-      g.fillStyle = '#f4f5f7';
-      g.font = `700 28px ${COND}`;
-      const word = t(medals === 1 ? 'medalla' : 'medallas');
-      g.fillText(word, x, 856);
-      x += g.measureText(word).width;
-    }
-    if (caps > 0) {
-      g.fillStyle = '#767d8a';
-      g.font = `500 24px ${BODY}`;
-      const sep = medals > 0 ? ' · ' : '';
-      g.fillText(sep, x, 856);
-      x += g.measureText(sep).width;
-      g.fillStyle = '#b0b6c1';
-      g.font = `600 24px ${BODY}`;
-      g.fillText(t(`${caps} ${caps === 1 ? 'convocatoria' : 'convocatorias'}`), x, 856);
-    }
-    g.fillStyle = '#767d8a';
-    g.font = `700 24px ${COND}`;
-    g.textAlign = 'right';
-    g.fillText(t('Selección').toUpperCase(), 1008, 856);
-    g.textAlign = 'left';
-  }
+
+  // Section labels.
   g.fillStyle = '#f4f5f7';
   g.font = `700 40px ${COND}`;
-  g.fillText(t('PALMARÉS'), 72, 900);
-  g.font = `500 32px ${BODY}`;
-  g.fillStyle = '#b0b6c1';
+  g.fillText(t('PALMARÉS'), 72, 884);
+  g.fillText(t('Selección').toUpperCase(), 560, 884);
+
+  // Two equal panels, ending at y = 1180.
+  drawPanel(g, 72, 904, 448, 276);
+  drawPanel(g, 560, 904, 448, 276);
+
+  // Individual awards: a single column, at most six rows.
   const awards = Object.entries(r.awards).filter(([k]) => k !== 'champion').sort((x, y) => y[1] - x[1]).slice(0, 6);
-  (awards.length ? awards : [['—', 0] as [string, number]]).forEach(([k, n], i) => g.fillText(k === '—' ? t('Sin premios individuales') : `${n}× ${t(AWARD_LABEL[k] ?? k)}`, 72 + (i % 2) * 480, 960 + Math.floor(i / 2) * 50, 460));
-  g.fillStyle = '#ff6b1a';
-  g.font = `800 96px ${COND}`;
-  g.fillText(String(r.legacyScore), 72, 1200);
   g.fillStyle = '#f4f5f7';
-  g.font = `700 40px ${COND}`;
-  g.fillText('LEGACY SCORE', 72 + g.measureText(String(r.legacyScore)).width + 120, 1160);
+  g.font = `600 30px ${BODY}`;
+  if (awards.length) {
+    awards.forEach(([k, n], i) => fitText(g, `${n}× ${t(AWARD_LABEL[k] ?? k)}`, 96, 956 + i * 38, 400));
+  } else {
+    g.fillText(t('Sin premios individuales'), 96, 956);
+  }
+
+  // National team: medals on top, totals underneath.
+  medalSlots(medals, 584, 936).forEach((s) => drawMedal(g, s.x, s.y, s.size, true));
+  g.font = `800 32px ${COND}`;
+  g.fillStyle = '#f5c451';
+  if (medals > 0) {
+    fitText(g, t(`${medals} medalla${medals > 1 ? 's' : ''}`), 584, 1002, 400);
+  } else {
+    g.fillText('—', 584, 1002);
+  }
+  if (caps > 0) {
+    g.fillStyle = '#b0b6c1';
+    g.font = `600 26px ${BODY}`;
+    fitText(g, t(`${caps} convocatoria${caps > 1 ? 's' : ''}`), 584, 1048, 400);
+  }
+
+  // Legacy score, tier and Hall of Fame odds.
+  g.fillStyle = '#ff6b1a';
+  g.font = `700 30px ${COND}`;
+  g.fillText(t('LEGACY SCORE'), 72, 1192);
+
+  g.fillStyle = '#ff6b1a';
+  g.font = `800 120px ${COND}`;
+  fitText(g, String(r.legacyScore), 72, 1300, 540);
+
   g.fillStyle = '#b0b6c1';
-  g.font = `500 30px ${BODY}`;
-  g.fillText(t(r.tier), 72, 1260);
-  g.fillText(`Hall of Fame: ${Math.round(r.hofProbability * 100)}%`, 640, 1260);
+  g.font = `600 30px ${BODY}`;
+  fitText(g, t(r.tier), 640, 1246, 368);
+  fitText(g, `Hall of Fame: ${Math.round(r.hofProbability * 100)}%`, 640, 1300, 368);
+
   return cv.toDataURL('image/png');
 }

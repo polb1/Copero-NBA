@@ -258,6 +258,10 @@ export interface EffectBag {
   trust?: number; morale?: number; chemistry?: number; reputation?: number; fame?: number;
   pressure?: number; loyalty?: number; workEthic?: number; fatigue?: number; form?: number;
   money?: number; endorsement?: number; pot?: number;
+  /** All-in gamble: double the whole wallet or lose it. */
+  allIn?: 'double' | 'lose';
+  /** Force a formal bankruptcy (assets/debt wiped, sporting consequences later). */
+  bankrupt?: boolean;
   /** Overall rating change (spread over the attributes). */
   ovr?: number;
   attrs?: Partial<Attrs>;
@@ -284,7 +288,7 @@ export interface ActiveEvent {
   category: string;
   /** cost: money the option needs up front (it cannot be chosen without it). */
   /** odds: chance (0-100) that a risky option turns out well, shown before choosing. */
-  options: { label: string; desc: string; cost?: number; odds?: number; action?: 'sell' | 'loan' | 'bankrupt'; assetId?: string; amount?: number }[];
+  options: { label: string; desc: string; cost?: number; odds?: number; action?: 'sell' | 'loan' | 'bankrupt'; assetId?: string; amount?: number; finance?: boolean }[];
   vars: Record<string, string>;
   /** odds/lucky: for a risky option, the chance shown and whether the roll went the player's way. */
   resolved?: { option: number; result: string; effectsSummary: string[]; made?: number; odds?: number; lucky?: boolean };
@@ -296,14 +300,15 @@ export interface ActiveEvent {
 }
 
 /** How the player interacts with the challenge. Absent (saves v1) = 'meter'. */
-export type MinigameMechanic = 'meter' | 'target' | 'power' | 'reaction' | 'choice';
+export type MinigameMechanic = 'meter' | 'target' | 'power' | 'reaction' | 'choice' | 'drag';
 
 /** Difficulty level. Absent (saves v1) = 'normal'. */
 export type MinigameTierId = 'easy' | 'normal' | 'hard';
 
 export type MinigameKind =
   | 'clutch' | 'freethrows' | 'threes' | 'drill'   // existing
-  | 'spotlight' | 'dunk' | 'boards' | 'steal' | 'pass' | 'close'; // phase 2
+  | 'spotlight' | 'dunk' | 'boards' | 'steal' | 'pass' | 'close' // phase 2
+  | 'reflex' | 'memory';
 
 /** Interactive challenge. Zone and speed come from the player's attributes and the pressure. */
 export interface MinigameSpec {
@@ -398,6 +403,12 @@ export interface PreDraft {
   picks?: { pick: number; teamId: string; prospectId: string }[];
   userPick?: { pick: number; round: number; teamId: string } | null;
   workouts: string[];
+  /** Motivo por el que el último intento no llegó al draft (ausente en saves v1). */
+  lastOutcome?: 'no-interest' | 'combine-failed' | 'skipped-combine';
+  /** Años de espera acumulados tras no entrar al draft. */
+  waits?: number;
+  /** La puerta NBA se ha cerrado: solo quedan ofertas exteriores. */
+  noNbaInterest?: boolean;
 }
 
 export interface OwnedAsset { id: string; bought: number; value: number; }

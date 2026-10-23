@@ -21,8 +21,8 @@ export function stateMod(u: Player, c: Career): number {
 
 /** Level picked from the player's state when `def.autoScale` is set. */
 export function autoTier(u: Player, c: Career): MinigameTierId {
-  const stress = 0.45 * c.pressure + 0.35 * u.fatigue + 0.9 * Math.max(0, 55 - c.morale);
-  return stress < 20 ? 'easy' : stress < 42 ? 'normal' : 'hard';
+  const stress = 0.45 * c.pressure + 0.35 * u.fatigue + 0.9 * Math.max(0, 55 - c.morale) - u.form * 1.5;
+  return stress < 18 ? 'easy' : stress < 35 ? 'normal' : 'hard';
 }
 
 /** Levels offered by an event: one auto-scaled, the declared list, or 'normal' only. */
@@ -58,9 +58,10 @@ export function buildSpec(def: MinigameDef, u: Player, c: Career, tier: Minigame
     zone = clamp((24 + (skill - 50) * 0.3 - p * 8 - m * 45) * t.zoneMul, 8, 46);
     speed = clamp(0.3 + p * 0.5 + (skill - 50) * 0.004, 0.22, 1.0) * t.speedMul;
     autoProb = clamp((zone / 100) * 1.6 + m, 0.12, 0.88) * t.probMul;
+    slots = def.slots ?? 1;
   } else if (mechanic === 'power') {
-    zone = clamp((14 + (skill - 50) * 0.24 - p * 5 - m * 25) * t.zoneMul, 5, 34);
-    speed = clamp(0.55 + (100 - skill) * 0.004 + p * 0.25, 0.4, 1.3) * t.speedMul;
+    zone = clamp((10 + (skill - 50) * 0.24 - p * 5 - m * 25) * t.zoneMul, 5, 30);
+    speed = clamp(0.72 + (100 - skill) * 0.004 + p * 0.25, 0.4, 1.4) * t.speedMul;
     autoProb = clamp((zone / 100) * 1.9 + m, 0.12, 0.9) * t.probMul;
   } else if (mechanic === 'reaction') {
     zone = clamp((26 + (skill - 50) * 0.36 - p * 6 - m * 40) * t.zoneMul, 8, 48);
@@ -76,6 +77,10 @@ export function buildSpec(def: MinigameDef, u: Player, c: Career, tier: Minigame
     speed = 0;
     slots = def.slots ?? 3;
     autoProb = clamp((zone / 100) * 0.95 + m, 0.12, 0.92) * t.probMul;
+  } else if (mechanic === 'drag') {
+    zone = clamp((30 + (skill - 50) * 0.4 - p * 10 - m * 45) * t.zoneMul, 10, 55);
+    speed = 0;
+    autoProb = clamp((zone / 100) * 1.5 + m, 0.12, 0.9) * t.probMul;
   } else {
     // Legacy shot meter: identical to events.ts minigameSpec() before the level multipliers.
     const nerves = p * (1 - (c.morale - 50) / 200) * (1 + c.pressure / 200);
@@ -116,7 +121,7 @@ const SCALED_KEYS = [
 const PASSTHROUGH_KEYS = [
   'flag', 'unflag', 'chain', 'injure', 'heal', 'playThrough',
   'gleague', 'recall', 'tradeRequest', 'agent', 'trophy', 'news',
-  'buyAsset', 'sellAsset', 'borrow',
+  'buyAsset', 'sellAsset', 'borrow', 'allIn', 'bankrupt',
 ] as const;
 
 /** New EffectBag with every numeric effect multiplied by `mul`. The original bag is never mutated. */

@@ -95,6 +95,7 @@ export interface EventDef {
   weight: number;
   cooldown?: number; // days
   once?: boolean;
+  maxSeen?: number; // hard cap on how many times it can appear in a career
   priority?: number; // higher = preferred when several are eligible
   when: EventWhen;
   options: EventOption[];
@@ -376,6 +377,15 @@ export const EVENTS: EventDef[] = [
         { weight: 2, effects: { money: 1_000_000, morale: 4 }, text: 'La empresa despega: recuperas tu dinero y un millón más.' },
         { weight: 3, effects: { money: -500_000, morale: -5, pressure: 3 }, text: 'La empresa quiebra. Adiós a la inversión.' } ] },
       { label: 'No, gracias', desc: 'El dinero, en el banco.', effects: {}, text: 'Prudencia financiera.' },
+    ] },
+  { id: 'gamble-allin', category: 'money', title: 'Doble o nada', weight: 30, cooldown: 500, maxSeen: 3,
+    text: 'Un inversor te propone una operación exprés: pones todo tu efectivo sobre la mesa y, en una semana, o lo doblas o lo pierdes. Sin garantías.',
+    when: { modes: ['full', 'quick'], phases: ['offseason', 'preseason', 'regular'], minAge: 18, minCash: 30_000 },
+    options: [
+      { label: 'Jugártelo todo', desc: 'Apuestas todo tu efectivo: doblarlo o quedarte en la ruina.', outcomes: [
+        { weight: 1, effects: { allIn: 'double', morale: 10, fame: 5 }, text: 'La operación sale redonda. Tu cuenta se dobla y suena el teléfono.' },
+        { weight: 1, effects: { allIn: 'lose', bankrupt: true, pressure: 20 }, text: 'El inversor desaparece. Pierdes todo tu efectivo y el banco ejecuta tus bienes.' } ] },
+      { label: 'No jugártela', desc: 'El dinero quieto no se pierde.', effects: { morale: 2 }, text: 'Prefieres dormir tranquilo. El inversor busca a otro.' },
     ] },
   // ---------------- Injury / rest ----------------
   { id: 'injury-minor', category: 'injury', title: 'Molestias físicas', weight: 0, priority: 10,
@@ -739,7 +749,7 @@ export const EVENTS: EventDef[] = [
   { id: 'mg-threes', category: 'contest', title: 'Concurso de triples del All-Star', weight: 10, cooldown: 300,
     text: 'La liga te invita al concurso de triples del fin de semana del All-Star. Diez balones, los mejores tiradores del mundo y millones de espectadores.',
     when: { phases: ['regular'], nba: true, minOvr: 70, minRep: 25, beforeDeadline: true },
-    minigame: { kind: 'threes', attempts: 10, attrs: ['three', 'consistency'], pressure: 0.45, great: 7, ok: 4,
+    minigame: { kind: 'threes', mechanic: 'drag', attempts: 10, attrs: ['three', 'consistency'], pressure: 0.45, great: 7, ok: 4,
       positions: ['PG', 'SG', 'SF', 'PF'],
       outcomes: {
         great: { effects: { fame: 10, reputation: 5, morale: 6, endorsement: 200000, trophy: 'threeContest' }, text: '¡Campeón del concurso de triples! Levantas el trofeo entre confeti.' },
@@ -750,7 +760,7 @@ export const EVENTS: EventDef[] = [
   { id: 'mg-drill', category: 'training', title: 'Reto de tiro en el entrenamiento', weight: 7, cooldown: 220,
     text: '{coach} propone un reto al final de la sesión: cinco tiros desde la esquina. Quien gane elige la música del vestuario un mes.',
     when: { phases: ['regular', 'preseason'], nba: true },
-    minigame: { kind: 'drill', attempts: 5, attrs: ['three', 'mid'], pressure: 0.2, great: 4, ok: 2,
+    minigame: { kind: 'drill', mechanic: 'drag', attempts: 5, attrs: ['three', 'mid'], pressure: 0.2, great: 4, ok: 2,
       positions: ['PG', 'SG', 'SF', 'PF', 'C'],
       outcomes: {
         great: { effects: { attrs: { three: 1 }, trust: 4, chemistry: 3 }, text: 'Ganas el reto con autoridad. El cuerpo técnico toma nota.' },
@@ -762,18 +772,18 @@ export const EVENTS: EventDef[] = [
   { id: 'mg-spotlight', category: 'media', title: 'La diana de la prensa', weight: 7, cooldown: 200,
     text: 'Un periodista te propone un reto para la portada: cinco dianas desde la zona de tiro y la cámara encendida. Si fallas, mañana se verá en todas partes.',
     when: { phases: ['regular', 'postseason'], nba: true, minFame: 20 },
-    minigame: { kind: 'spotlight', mechanic: 'target', positions: ['PG', 'SG'], attempts: 5, attrs: ['three', 'consistency'],
-      pressure: 0.5, great: 4, ok: 2, tiers: ['easy', 'normal', 'hard'], defaultTier: 'normal',
+    minigame: { kind: 'spotlight', mechanic: 'target', positions: ['SG'], attempts: 5, attrs: ['three', 'consistency'],
+      pressure: 0.5, great: 4, ok: 2, tiers: ['easy', 'normal', 'hard'], defaultTier: 'normal', slots: 2,
       outcomes: {
         great: { effects: { fame: 8, reputation: 3, morale: 4, pressure: -4 }, text: 'Cinco dianas seguidas delante de la cámara. El vídeo se comparte solo.' },
         ok: { effects: { fame: 3, chemistry: 2 }, text: 'Cumples el reto justo a tiempo. Los compañeros te lo reconocen.' },
         fail: { effects: { fame: -2, pressure: 5, morale: -3 }, text: 'La cámara capta todos los fallos. El clip circula con burla.' },
       } },
     options: [] },
-  { id: 'mg-dunk', category: 'contest', title: 'El mate del concurso', weight: 7, cooldown: 250,
+  { id: 'mg-dunk', category: 'contest', title: 'El mate del concurso', weight: 12, cooldown: 150,
     text: 'El concurso de mates del All-Star busca participantes. Te dan tres intentos y un pabellón entero esperando algo irrepetible.',
     when: { phases: ['regular'], nba: true, minOvr: 62, beforeDeadline: true },
-    minigame: { kind: 'dunk', mechanic: 'power', positions: ['SG', 'SF', 'PF'], attempts: 3, attrs: ['dunk', 'vert', 'strength'],
+    minigame: { kind: 'dunk', mechanic: 'power', positions: ['SF'], attempts: 3, attrs: ['dunk', 'vert', 'strength'],
       pressure: 0.55, great: 3, ok: 2, tiers: ['easy', 'normal', 'hard'], defaultTier: 'normal',
       outcomes: {
         great: { effects: { fame: 6, form: 3, morale: 5, chemistry: 4, attrs: { vert: 1 } }, text: 'Los tres mates entran limpios. El pabellón se levanta y tus compañeros invaden la pista.' },
@@ -781,10 +791,21 @@ export const EVENTS: EventDef[] = [
         fail: { effects: { form: -3, pressure: 4, chemistry: -2, fatigue: 4 }, text: 'Ni uno. El concurso se convierte en un chiste y las piernas te pesan.' },
       } },
     options: [] },
+  { id: 'mg-power', category: 'training', title: 'Prueba de potencia', weight: 10, cooldown: 160,
+    text: 'El preparador físico te reta a una prueba de potencia: carga, explota y suelta en el punto exacto. Todo el vestuario mira.',
+    when: { phases: ['regular', 'preseason'], nba: true, minOvr: 55 },
+    minigame: { kind: 'dunk', mechanic: 'power', positions: ['PG', 'SG', 'SF', 'PF', 'C'], attempts: 3, attrs: ['strength', 'vert', 'dunk'],
+      pressure: 0.35, great: 3, ok: 2, autoScale: true,
+      outcomes: {
+        great: { effects: { attrs: { strength: 1, vert: 1 }, trust: 3, form: 2 }, text: 'Tres repeticiones perfectas. El preparador se queda con tu marca.' },
+        ok: { effects: { chemistry: 2, form: 1 }, text: 'Dos buenas y una justa. El grupo lo celebra igual.' },
+        fail: { effects: { fatigue: 6, morale: -2 }, text: 'Te falta explosividad. El preparador te manda a descansar.' },
+      } },
+    options: [] },
   { id: 'mg-boards', category: 'coach', title: 'Guerra en el rebote', weight: 7, cooldown: 220,
     text: '{coach} insiste en el vídeo: os están matando en el rebote. Te reta a cerrar el aro en cinco posesiones seguidas sin ceder una segunda oportunidad.',
     when: { phases: ['regular', 'postseason'], nba: true, roles: ['star', 'starter', 'rotation'], minOvr: 60 },
-    minigame: { kind: 'boards', mechanic: 'reaction', positions: ['PF', 'C'], attempts: 5, attrs: ['dreb', 'oreb', 'strength'],
+    minigame: { kind: 'boards', mechanic: 'reaction', positions: ['PF'], attempts: 5, attrs: ['dreb', 'oreb', 'strength'],
       pressure: 0.4, great: 4, ok: 2, autoScale: true, slots: 4, windowMs: 1500,
       outcomes: {
         great: { effects: { trust: 5, attrs: { dreb: 1 }, chemistry: 3, morale: 3 }, text: 'Ganas todos los rebotes del ejercicio. {coach} da la sesión por ganada.' },
@@ -795,7 +816,7 @@ export const EVENTS: EventDef[] = [
   { id: 'mg-steal', category: 'clutch', title: 'Lectura de robo', weight: 7, cooldown: 220,
     text: 'El análisis previo señala la línea de pase que {opp} repite en los momentos calientes. Toca leerla antes de que la lance.',
     when: { phases: ['regular', 'postseason'], nba: true, roles: ['star', 'starter', 'rotation'], minOvr: 60 },
-    minigame: { kind: 'steal', mechanic: 'reaction', positions: ['PG', 'SG', 'SF'], attempts: 4, attrs: ['steal', 'perD', 'defIQ'],
+    minigame: { kind: 'steal', mechanic: 'reaction', positions: ['PG', 'SG'], attempts: 4, attrs: ['steal', 'perD', 'defIQ'],
       pressure: 0.6, great: 3, ok: 2, autoScale: true, slots: 3, windowMs: 1300,
       outcomes: {
         great: { effects: { attrs: { perD: 1 }, trust: 5, reputation: 3, form: 2 }, text: 'Robas tres balones en el momento justo. La grada rival se queda muda.' },
@@ -806,8 +827,8 @@ export const EVENTS: EventDef[] = [
   { id: 'mg-pass', category: 'teammates', title: 'El pase imposible', weight: 6, cooldown: 200,
     text: 'En el entrenamiento, {coach} coloca tres defensas y un solo compañero libre. Hay que encontrar el pase antes de que se cierre la línea.',
     when: { phases: ['regular', 'postseason'], nba: true, roles: ['star', 'starter', 'rotation'] },
-    minigame: { kind: 'pass', mechanic: 'choice', positions: ['PG', 'SG'], attempts: 3, attrs: ['pass', 'vision'],
-      pressure: 0.5, great: 3, ok: 2, tiers: ['easy', 'normal', 'hard'], defaultTier: 'normal', slots: 3,
+    minigame: { kind: 'pass', mechanic: 'reaction', positions: ['PG'], attempts: 3, attrs: ['pass', 'vision'],
+      pressure: 0.5, great: 3, ok: 2, tiers: ['easy', 'normal', 'hard'], defaultTier: 'normal', slots: 3, windowMs: 1500,
       outcomes: {
         great: { effects: { attrs: { pass: 1 }, trust: 5, chemistry: 5, fame: 2 }, text: 'Tres asistencias imposibles. El vestuario habla de tu visión de juego.' },
         ok: { effects: { chemistry: 3, trust: 2 }, text: 'Dos pases buenos y uno forzado. El grupo lo agradece igual.' },
@@ -817,12 +838,42 @@ export const EVENTS: EventDef[] = [
   { id: 'mg-close', category: 'clutch', title: 'Finalización en el uno contra uno', weight: 7, cooldown: 220,
     text: 'Última posesión del entrenamiento: {coach} te pone un defensor encima y pide que la metas como sea. Tres intentos, sin ayudas.',
     when: { phases: ['regular', 'postseason'], nba: true, roles: ['star', 'starter', 'rotation'] },
-    minigame: { kind: 'close', mechanic: 'meter', positions: ['PG', 'SF', 'PF', 'C'], attempts: 3, attrs: ['layup', 'close', 'vert'],
+    minigame: { kind: 'close', mechanic: 'meter', positions: ['C'], attempts: 3, attrs: ['layup', 'close', 'vert'],
       pressure: 0.65, great: 3, ok: 2, autoScale: true,
       outcomes: {
         great: { effects: { attrs: { layup: 1 }, form: 3, fame: 3, trust: 2 }, text: 'Las tres finalizaciones entran con contacto. {coach} asiente sin decir nada.' },
         ok: { effects: { form: 1 }, text: 'Dos de tres. Suficiente para cerrar la sesión con buen sabor.' },
         fail: { effects: { form: -3, pressure: 4, fatigue: 4 }, text: 'Te barren dos veces y la tercera la fuerzas. El entrenador no está contento.' },
+      } },
+    options: [] },
+  { id: 'mg-reflex', category: 'training', title: 'Reflejos en el túnel', weight: 11, cooldown: 140,
+    text: 'El preparador enciende luces al azar en el túnel de acceso. Tienes que tocar la que se ilumina antes de que se apague; el vestuario apuesta por ti.',
+    when: { phases: ['regular', 'preseason'], minOvr: 52 },
+    minigame: { kind: 'reflex', mechanic: 'reaction', positions: ['PG','SG','SF','PF','C'], attempts: 5, attrs: ['speed', 'accel', 'perD'], pressure: 0.45, great: 4, ok: 2, tiers: ['easy', 'normal', 'hard'], defaultTier: 'normal', slots: 4, windowMs: 1700,
+      outcomes: {
+        great: { effects: { attrs: { speed: 1 }, trust: 3, form: 3 }, text: 'Aciertas cuatro de cinco. El preparador apunta tu nombre para las transiciones.' },
+        ok: { effects: { chemistry: 2, form: 1 }, text: 'Tres aciertos y algún titubeo. El grupo lo celebra sin darle importancia.' },
+        fail: { effects: { fatigue: 4, morale: -2 }, text: 'Las luces te ganan. El preparador te manda a repetir el ejercicio.' },
+      } },
+    options: [] },
+  { id: 'mg-precision', category: 'media', title: 'La diana de precisión', weight: 10, cooldown: 150,
+    text: 'La marca que te patrocina monta una diana móvil para un anuncio. Cuanto más pequeño el centro, mejor sale el plano. La cámara no perdona.',
+    when: { phases: ['regular', 'preseason'], minOvr: 52 },
+    minigame: { kind: 'spotlight', mechanic: 'target', positions: ['PG','SG','SF','PF','C'], attempts: 6, attrs: ['three', 'mid', 'consistency'], pressure: 0.55, great: 5, ok: 3, tiers: ['easy', 'normal', 'hard'], defaultTier: 'normal', slots: 3,
+      outcomes: {
+        great: { effects: { fame: 6, reputation: 2, morale: 3, attrs: { three: 1 } }, text: 'Cinco dianas limpias para el anuncio. La marca quiere renovarte.' },
+        ok: { effects: { fame: 2, chemistry: 1 }, text: 'El anuncio sale, aunque el director pide otro plano.' },
+        fail: { effects: { fame: -2, pressure: 4, morale: -3 }, text: 'La diana se resiste y el clip se queda corto. La marca no llama.' },
+      } },
+    options: [] },
+  { id: 'mg-memory', category: 'teammates', title: 'Memoria de carriles', weight: 10, cooldown: 160,
+    text: '{coach} pinta cinco carriles en el parqué y enciende una secuencia de luces. Hay que repetir el orden sin dudar; el que falla paga la cena.',
+    when: { phases: ['regular', 'preseason'], minOvr: 52 },
+    minigame: { kind: 'memory', mechanic: 'choice', positions: ['PG','SG','SF','PF','C'], attempts: 3, attrs: ['vision', 'pass', 'offIQ'], pressure: 0.4, great: 3, ok: 2, tiers: ['easy', 'normal', 'hard'], defaultTier: 'normal', slots: 5,
+      outcomes: {
+        great: { effects: { attrs: { vision: 1 }, trust: 4, chemistry: 4 }, text: 'Repites la secuencia sin fallar. {coach} te señala como ejemplo.' },
+        ok: { effects: { chemistry: 3, trust: 1 }, text: 'Aciertas la secuencia justa. El grupo respira y sigue.' },
+        fail: { effects: { chemistry: -3, trust: -2, morale: -2 }, text: 'Pierdes el orden y pagas la cena. {coach} no olvida el fallo.' },
       } },
     options: [] },
   // ---------------- Pre-draft ----------------
@@ -837,7 +888,7 @@ export const EVENTS: EventDef[] = [
   // ---------------- Assets and loans (full mode only) ----------------
   { id: 'asset-mansion', category: 'money', title: 'La casa de tus sueños', weight: 5, cooldown: 700,
     text: 'Tu agente te enseña un catálogo de propiedades: desde una mansión con vistas hasta un ático en el centro.',
-    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 21, minCash: 900_000, notFlags: ['asset:mansion'] },
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 21, notFlags: ['asset:mansion'] },
     options: [
       { label: 'Comprar la mansión ($4.5M)', desc: 'Cancha privada, gimnasio y vistas. Mantenimiento alto.', effects: { buyAsset: 'mansion', morale: 5, fame: 6 }, text: 'La firma de la hipoteca pesa, pero la casa es espectacular.' },
       { label: 'Comprar un ático ($900K)', desc: 'Menos lujo, menos gastos.', effects: { buyAsset: 'apartment', morale: 3, fame: 2 }, text: 'Un ático elegante en el centro. El recibo es asumible.' },
@@ -845,7 +896,7 @@ export const EVENTS: EventDef[] = [
     ] },
   { id: 'asset-supercar', category: 'money', title: 'El coche del vestuario', weight: 5, cooldown: 600,
     text: 'Un concesionario de la ciudad te ofrece condiciones de jugador estrella para un superdeportivo.',
-    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 20, minCash: 650_000, notFlags: ['asset:supercar'] },
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 20, notFlags: ['asset:supercar'] },
     options: [
       { label: 'Comprar el deportivo ($650K)', desc: 'Un superdeportivo para tu aparcamiento.', effects: { buyAsset: 'supercar', morale: 2, fame: 4 }, text: 'El aparcamiento del pabellón ya tiene dueño.' },
       { label: 'Alquilarlo un mes ($60K)', desc: 'El gusto temporal, sin compromiso.', effects: { money: -60_000, fame: 2, morale: 1 }, text: 'Disfrutas del coche sin quedártelo.' },
@@ -853,7 +904,7 @@ export const EVENTS: EventDef[] = [
     ] },
   { id: 'asset-jet', category: 'money', title: 'Volar sin escalas', weight: 4, cooldown: 900,
     text: 'Una operadora de aviación privada te propone hacerte socio de su flota de jets.',
-    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 24, minCash: 1_500_000, notFlags: ['asset:jet'] },
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 24, notFlags: ['asset:jet'] },
     options: [
       { label: 'Comprar el jet ($9M)', desc: 'Privacidad total y horarios propios.', effects: { buyAsset: 'jet', morale: 3, fame: 8 }, text: 'Tu nombre en el fuselaje. La factura del hangar también.' },
       { label: 'Alquilar un jet por temporada ($250K)', desc: 'Comodidad sin comprar el avión.', effects: { money: -250_000, fame: 3, morale: 2 }, text: 'Viajas como una estrella sin comprar el avión.' },
@@ -861,7 +912,7 @@ export const EVENTS: EventDef[] = [
     ] },
   { id: 'asset-entourage', category: 'money', title: 'Tu gente', weight: 5, cooldown: 600,
     text: 'Varios profesionales se ofrecen a formar tu equipo personal: preparador, fisio, cocinero y escolta.',
-    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 22, minCash: 350_000, notFlags: ['asset:entourage'] },
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 22, notFlags: ['asset:entourage'] },
     options: [
       { label: 'Contratar equipo personal ($350K)', desc: 'Un séquito completo a tu alrededor.', effects: { buyAsset: 'entourage', morale: 4, fame: 3 }, text: 'Preparador, fisio, cocinero y escolta. Todo el mundo cobra.' },
       { label: 'Solo un preparador ($80K)', desc: 'Profesionalidad sin excesos.', effects: { money: -80_000, workEthic: 2, form: 2 }, text: 'Un profesional de confianza, sin séquito.' },
@@ -869,7 +920,7 @@ export const EVENTS: EventDef[] = [
     ] },
   { id: 'asset-rentals', category: 'money', title: 'Dinero que trabaja', weight: 4, cooldown: 800,
     text: 'Tu asesor financiero te propone entrar en el mercado inmobiliario con una cartera de alquileres.',
-    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 23, minCash: 900_000, notFlags: ['asset:rentals'] },
+    when: { modes: ['full'], financeOnly: true, phases: ['offseason', 'preseason'], minAge: 23, notFlags: ['asset:rentals'] },
     options: [
       { label: 'Comprar una cartera de alquileres ($1.8M)', desc: 'Inmuebles que generan ingresos.', effects: { buyAsset: 'rentals', reputation: 2 }, text: 'Los inmuebles empiezan a pagar el mantenimiento.' },
       { label: 'Entrar en un fondo inmobiliario ($300K)', desc: 'Inversión pasiva, sin gestionar pisos.', effects: { money: -300_000, workEthic: 1 }, text: 'Una inversión pasiva y aburrida. A veces es lo mejor.' },

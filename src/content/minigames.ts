@@ -28,7 +28,7 @@ export const MINIGAME_TIERS: MinigameTierDef[] = [
   { id: 'normal', label: 'Normal', desc: 'El equilibrio de siempre.',
     zoneMul: 1, speedMul: 1, probMul: 1, rewardMul: 1, riskMul: 1, injury: 0.06, windowMul: 1 },
   { id: 'hard', label: 'Exigente', desc: 'Zona mínima y más castigo. Si fallas, duele.',
-    zoneMul: 0.72, speedMul: 1.25, probMul: 0.9, rewardMul: 1.5, riskMul: 1.6, injury: 0.18, windowMul: 0.72 },
+    zoneMul: 0.62, speedMul: 1.32, probMul: 0.82, rewardMul: 1.8, riskMul: 2.0, injury: 0.24, windowMul: 0.64 },
 ];
 
 export const MINIGAME_TIER_LABEL: Record<MinigameTierId, string> = {
@@ -52,6 +52,8 @@ export const MINIGAME_HINTS: Record<MinigameKind, string> = {
   steal: 'Cuatro robos. Toca la dirección correcta a tiempo.',
   pass: 'Tres pases. Elige al compañero con el carril libre.',
   close: 'Tres finalizaciones. Timing y control.',
+  reflex: 'Toca la celda iluminada antes de que se apague.',
+  memory: 'Memoriza el orden de los carriles y repítelo.',
 };
 
 /** Safe reader: unknown kinds fall back instead of rendering `undefined`. */
