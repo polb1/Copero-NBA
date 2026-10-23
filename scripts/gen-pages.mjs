@@ -1,8 +1,9 @@
 // Generates en/index.html and ca/index.html from index.html (the Spanish page) before each build:
 // translated <head> metadata, JSON-LD and crawlable guide, so every language is indexable on its own URL.
+// Absolute URLs keep the __SITE_URL__ token; the Vite plugin swaps in the real origin per environment.
 import fs from 'node:fs';
+import { SITE_TOKEN as SITE } from './site.mjs';
 
-const SITE = 'https://nba.polb.dev';
 const src = fs.readFileSync('index.html', 'utf8');
 
 const PAGES = {
