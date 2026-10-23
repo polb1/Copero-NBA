@@ -65,8 +65,8 @@ export function dragGeometry(attempt: number, spec: Pick<MinigameSpec, 'kind' | 
     optimalAngle: (Math.atan2(dy, dx) * 180) / Math.PI,
     distance,
     idealPower: clamp(distance, 0.3, 0.9),
-    angleTol: clamp((spec.zone * 0.45 - 4) * 0.85, 2.5, 15),
-    powerTol: clamp((spec.zone / 300) * 0.85, 0.045, 0.14),
+    angleTol: clamp((spec.zone * 0.45 - 4) * 0.72, 2.5, 15),
+    powerTol: clamp((spec.zone / 300) * 0.72, 0.045, 0.14),
   };
 }
 
@@ -157,11 +157,11 @@ export function flightPlan(
     }
   }
 
-  let base = hit ? 520 + 120 * power : 420 + 140 * power;
-  if (board) base += 160;
-  if (!hit) base += 400;
+  let base = hit ? 820 + 240 * power : 700 + 260 * power;
+  if (board) base += 180;
+  if (!hit) base += 520;
 
-  const plan: FlightPlan = { verdict: hit ? 'make' : 'miss', board, segs, totalMs: base + 220 };
+  const plan: FlightPlan = { verdict: hit ? 'make' : 'miss', board, segs, totalMs: base + 260 };
   if (miss) plan.miss = miss;
   return plan;
 }

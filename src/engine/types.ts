@@ -307,7 +307,8 @@ export type MinigameTierId = 'easy' | 'normal' | 'hard';
 
 export type MinigameKind =
   | 'clutch' | 'freethrows' | 'threes' | 'drill'   // existing
-  | 'spotlight' | 'dunk' | 'boards' | 'steal' | 'pass' | 'close'; // phase 2
+  | 'spotlight' | 'dunk' | 'boards' | 'steal' | 'pass' | 'close' // phase 2
+  | 'reflex' | 'memory';
 
 /** Interactive challenge. Zone and speed come from the player's attributes and the pressure. */
 export interface MinigameSpec {

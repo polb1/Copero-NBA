@@ -40,6 +40,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
   const [phase, setPhase] = useState<Phase>('aim');
   const [aimTone, setAimTone] = useState<AimTone>('bad');
   const [plan, setPlan] = useState<FlightPlan | null>(null);
+  const [pull, setPull] = useState<{ x: number; y: number } | null>(null);
 
   const arena = useRef<HTMLDivElement>(null);
   const ballEl = useRef<HTMLSpanElement>(null);
@@ -117,9 +118,11 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     setRebound(false);
     setFlash(null);
     setPlan(null);
+    setPull(null);
     setAngle(0);
     setPower(0);
     setLocked(false);
+    setAimTone('bad');
     phaseRef.current = 'aim';
     setPhase('aim');
     const next = attemptRef.current + 1;
@@ -179,6 +182,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     setPhase('flight');
     setLocked(true);
     setPlan(shotPlan);
+    setPull(null);
     draggingRef.current = false;
     if (motionReduced()) {
       const last = shotPlan.segs[shotPlan.segs.length - 1].to;
@@ -215,9 +219,11 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     setRebound(false);
     setFlash(null);
     setPlan(null);
+    setPull(null);
     setLocked(false);
     setAngle(0);
     setPower(0);
+    setAimTone('bad');
     phaseRef.current = 'aim';
     setPhase('aim');
     placeBall(ballX(attemptRef.current), ballY(attemptRef.current));
@@ -233,6 +239,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     setAngle(0);
     setPower(0);
     setAimTone('bad');
+    setPull(null);
   }, []);
 
   useEffect(() => {
@@ -291,6 +298,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     powerRef.current = a.power;
     setAngle(a.angleDeg);
     setPower(a.power);
+    setPull({ x: clamp(x, 2, 98), y: clamp(y, 2, 98) });
     const err = shotError(g, a.angleDeg, a.power);
     if (err.hit) {
       setAimTone('good');
@@ -348,6 +356,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     setAngle(0);
     setPower(0);
     setAimTone('bad');
+    setPull(null);
   };
 
   const bx = ballX(attempt);
@@ -373,16 +382,28 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
         role="application"
         aria-label={t(`Arrastra y suelta. Tiro ${num} de ${spec.attempts}`)}
       >
-        <span className="drag-board" style={{ left: `${rX}%`, top: `${RIM_Y - 18}%` }} />
-        <span className="drag-net" style={{ left: `${rX}%`, top: `${RIM_Y + 2}%` }} />
-        <span className="drag-rim" style={{ left: `${rX}%`, top: `${RIM_Y}%` }} />
+        <span className={`drag-board${plan?.board ? ' shake' : ''}`} style={{ left: `${rX}%`, top: `${RIM_Y - 18}%` }} />
+        <span className={`drag-net${flash === 'in' ? ' swish' : ''}`} style={{ left: `${rX}%`, top: `${RIM_Y + 2}%` }} />
+        <span className={`drag-rim${flash === 'out' && !plan?.board ? ' clang' : ''}`} style={{ left: `${rX}%`, top: `${RIM_Y}%` }} />
         <svg className={`drag-arc ${aimTone}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <path d={arcD} />
         </svg>
-        <svg className="drag-trail" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          <path d={plan ? flightPathD(plan) : ''} />
+        <svg className={`drag-trail${phase === 'flight' ? ' drawing' : ''}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <path
+            d={plan ? flightPathD(plan) : ''}
+            pathLength={1}
+            style={plan ? { animationDuration: `${plan.totalMs}ms` } : undefined}
+          />
         </svg>
-        <span className="drag-ball" ref={ballEl} style={{ left: `${bx}%`, top: `${by}%` }} />
+        {phase === 'aim' && pull && (
+          <>
+            <svg className="drag-pull" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <line x1={bx} y1={by} x2={pull.x} y2={pull.y} />
+            </svg>
+            <span className="drag-ghost" style={{ left: `${pull.x}%`, top: `${pull.y}%` }} />
+          </>
+        )}
+        <span className={`drag-ball${phase === 'flight' ? ' flying' : ''}${phase === 'rebound' ? ' rebounding' : ''}`} ref={ballEl} style={{ left: `${bx}%`, top: `${by}%` }} />
         {rebound && (
           <button
             type="button"

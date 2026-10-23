@@ -52,6 +52,8 @@ export const MINIGAME_HINTS: Record<MinigameKind, string> = {
   steal: 'Cuatro robos. Toca la dirección correcta a tiempo.',
   pass: 'Tres pases. Elige al compañero con el carril libre.',
   close: 'Tres finalizaciones. Timing y control.',
+  reflex: 'Toca la celda iluminada antes de que se apague.',
+  memory: 'Memoriza el orden de los carriles y repítelo.',
 };
 
 /** Safe reader: unknown kinds fall back instead of rendering `undefined`. */
