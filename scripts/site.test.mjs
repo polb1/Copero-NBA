@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { headersFile, renderHtml, robotsTxt, siteConfig, sitemapXml } from './site.mjs';
+import { headersFile, llmsTxt, publicUrls, renderHtml, robotsTxt, siteConfig, sitemapXml } from './site.mjs';
 
 describe('siteConfig', () => {
   test('main and local builds are production on anillero.com', () => {
@@ -31,10 +31,19 @@ describe('outputs', () => {
     expect(robotsTxt(prod)).toContain('Sitemap: https://anillero.com/sitemap.xml');
     expect(robotsTxt(pre)).not.toContain('Sitemap');
     const map = sitemapXml(prod, '2026-10-23');
-    expect(map.match(/<loc>/g)).toHaveLength(3);
+    expect(map.match(/<loc>/g)).toHaveLength(5);
+    expect(map).toContain('<loc>https://anillero.com/mejores-simuladores-baloncesto/</loc>');
     expect(map).toContain('<loc>https://anillero.com/en/</loc>');
     expect(map).not.toContain('polb.dev');
     expect(headersFile(prod)).toBeNull();
     expect(headersFile(pre)).toContain('X-Robots-Tag: noindex');
+  });
+  test('llms.txt and IndexNow list only production URLs', () => {
+    expect(llmsTxt(prod)).toContain('https://anillero.com/en/best-basketball-simulators/');
+    expect(llmsTxt(prod)).not.toContain('polb.dev');
+    expect(publicUrls(prod)).toEqual([
+      'https://anillero.com/', 'https://anillero.com/en/', 'https://anillero.com/ca/',
+      'https://anillero.com/mejores-simuladores-baloncesto/', 'https://anillero.com/en/best-basketball-simulators/',
+    ]);
   });
 });

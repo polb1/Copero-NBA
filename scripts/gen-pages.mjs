@@ -14,6 +14,7 @@ const PAGES = {
     ogTitle: 'NBA Legacy · Free basketball career simulator',
     ogDescription: 'Create your player, enter the NBA draft and build your legacy. Free, in your browser and on your phone.',
     loading: 'Loading…',
+    guide: ['/en/best-basketball-simulators/', 'Compared: the best free basketball simulator games'],
     slow: 'This is taking longer than usual.',
     reload: 'Reload',
     broken: 'Your browser could not start the game.<br>Update it or open it in Safari or Chrome.',
@@ -59,6 +60,7 @@ const PAGES = {
     ogTitle: 'NBA Legacy · Simulador de carrera de bàsquet gratis',
     ogDescription: 'Crea el teu jugador, entra al draft de l\'NBA i construeix el teu llegat. Gratis, al navegador i al mòbil.',
     loading: 'Carregant…',
+    guide: ['/mejores-simuladores-baloncesto/', 'Comparativa: els millors simuladors de bàsquet gratis (en castellà)'],
     slow: 'Està trigant més del normal.',
     reload: 'Recarregar',
     broken: 'El teu navegador no ha pogut iniciar el joc.<br>Actualitza’l o obre’l amb Safari o Chrome.',
@@ -139,6 +141,7 @@ ${p.feat.map((x) => `            <li>${x}</li>`).join('\n')}
 ${p.faq.map(([q, a]) => `          <details><summary>${q}</summary><p>${a}</p></details>`).join('\n')}
         </details>
       </div>
+      <p class="about-links"><a href="${p.guide[0]}">${p.guide[1]}</a></p>
       <p class="about-note">© NBA Legacy · ${p.note}</p>
     </footer>`;
   h = swap(h, /<footer id="about" class="about">[\s\S]*?<\/footer>/, about, 'about footer');
