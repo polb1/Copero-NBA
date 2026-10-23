@@ -3,11 +3,11 @@ import type { MinigameSpec } from '../../engine/types';
 import { minigameHint } from '../../content/minigames';
 import { t } from '../../i18n/i18n';
 
-const slotPos = (attempt: number, slot: number, sec: number) => {
+const slotPos = (attempt: number, slot: number, sec: number, motion: number) => {
   const phase = ((attempt * 37 + slot * 91) % 360) * (Math.PI / 180);
   return {
-    x: 50 + 34 * Math.sin(sec * 1.3 + phase + slot * 1.7),
-    y: 50 + 28 * Math.cos(sec * 1.1 + phase + slot * 2.3),
+    x: 50 + 34 * Math.sin(sec * motion * 1.3 + phase + slot * 1.7),
+    y: 50 + 28 * Math.cos(sec * motion * 1.1 + phase + slot * 2.3),
   };
 };
 
@@ -16,9 +16,10 @@ export function TargetGame({ spec, onDone, onSimulate }: {
   onDone: (made: number) => void;
   onSimulate: () => void;
 }) {
-  const slots = Math.min(2, Math.max(1, spec.slots ?? 1));
+  const slots = Math.min(4, Math.max(1, spec.slots ?? 1));
   const attempts = Math.max(1, spec.attempts);
-  const timeoutMs = Math.max(1500, Math.min(3500, 3500 - spec.speed * 1200));
+  const timeoutMs = Math.max(900, Math.min(2600, 3000 - spec.speed * 1200));
+  const motion = 1.1 + Math.min(1, Math.max(0, spec.speed)) * 0.9;
   const [attempt, setAttempt] = useState(0);
   const [made, setMade] = useState(0);
   const [shots, setShots] = useState<boolean[]>([]);
@@ -68,7 +69,7 @@ export function TargetGame({ spec, onDone, onSimulate }: {
       const sec = (now - start) / 1000;
       refs.current.forEach((el, i) => {
         if (!el) return;
-        const p = slotPos(attempt, i, sec);
+        const p = slotPos(attempt, i, sec, motion);
         el.style.left = `${p.x}%`;
         el.style.top = `${p.y}%`;
       });
@@ -77,21 +78,11 @@ export function TargetGame({ spec, onDone, onSimulate }: {
     raf.current = requestAnimationFrame(tick);
     timer.current = window.setTimeout(() => resolve(false), timeoutMs);
     return clear;
-  }, [attempt, timeoutMs, resolve, clear]);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== ' ' && e.key !== 'Enter') return;
-      e.preventDefault();
-      resolve(true);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [resolve]);
+  }, [attempt, timeoutMs, resolve, clear, motion]);
 
   useEffect(() => () => clear(), [clear]);
 
-  const size = Math.max(22, Math.min(54, spec.zone * 0.85));
+  const size = Math.max(16, Math.min(42, spec.zone * 0.65));
 
   return (
     <div className={`target-game ${flash ?? ''}`}>

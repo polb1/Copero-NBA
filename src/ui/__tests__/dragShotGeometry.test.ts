@@ -22,8 +22,8 @@ describe('dragShot geometry', () => {
     expect(g.aspect).toBe(1);
     expect(g.optimalAngle).toBeCloseTo(-23.43, 2);
     expect(g.idealPower).toBeCloseTo(0.654, 3);
-    expect(g.angleTol).toBeCloseTo(8.075, 3);
-    expect(g.powerTol).toBeCloseTo(0.085, 3);
+    expect(g.angleTol).toBeCloseTo(6.84, 3);
+    expect(g.powerTol).toBeCloseTo(0.072, 3);
   });
 
   it('falls back to aspect 1 when it is not finite or not positive', () => {
@@ -112,6 +112,19 @@ describe('dragShot flight plan', () => {
     expect(end.seg).toBe(plan.segs.length - 1);
     expect({ x: end.x, y: end.y }).toEqual(plan.segs[plan.segs.length - 1].to);
     allFinite(plan);
+  });
+
+  it('keeps the flight long enough for the animation to read', () => {
+    const g = dragGeometry(0, spec, 1);
+    const make = flightPlan(0, g.optimalAngle, g.idealPower, spec, 1);
+    expect(make.verdict).toBe('make');
+    expect(make.totalMs).toBeGreaterThanOrEqual(1000);
+    const miss = flightPlan(0, g.optimalAngle, g.idealPower - 0.2, spec, 1);
+    expect(miss.verdict).toBe('miss');
+    expect(miss.totalMs).toBeGreaterThanOrEqual(1500);
+    const board = flightPlan(0, g.optimalAngle, g.idealPower + 0.2, spec, 1);
+    expect(board.board).toBe(true);
+    expect(board.totalMs).toBeGreaterThanOrEqual(1500);
   });
 
   it('builds short miss plans without a board bounce', () => {

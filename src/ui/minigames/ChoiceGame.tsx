@@ -4,32 +4,52 @@ import { minigameHint } from '../../content/minigames';
 import { hashString } from '../../engine/rng';
 import { t } from '../../i18n/i18n';
 
-const LANES = 3;
-/** The open lane stays visible this long, then hides. Longer zones = more reading time. */
-const readMs = (zone: number) => 900 + zone * 20;
-/** After the lane hides, the player has this long to pick before it counts as a miss. */
-const pickMs = 2000;
-
-/** Deterministic per-attempt draw: which lane is open. */
-function roll(kind: string, attempt: number) {
-  return hashString(`${kind}|${attempt}|choice|${LANES}`) % LANES;
-}
+const LANES = 5;
+/** How many lanes light up per attempt: easier levels ask for a shorter sequence. */
+const seqLenFor = (tier: MinigameSpec['tier']) => (tier === 'hard' ? 4 : tier === 'easy' ? 2 : 3);
+/** Reading time before the sequence starts. */
+const leadMs = 450;
+/** How long each lane of the sequence stays lit. */
+const flashMsFor = (tier: MinigameSpec['tier']) => (tier === 'hard' ? 360 : tier === 'easy' ? 560 : 450);
+/** Dark pause between two steps of the sequence. */
+const gapMs = 120;
+/** Time to repeat the whole sequence on the buttons. */
+const inputMs = 3000;
+/** Feedback pause between attempts. */
+const stepMs = 800;
 
 /**
- * Memory minigame: one of three lanes is shown open for a moment; when all lanes look the same the
- * player taps the one that was open. Too slow (or the wrong lane) is a miss.
+ * Deterministic per-attempt sequence. Two consecutive steps never share a lane: on a collision the
+ * lane moves one place forward (modulo LANES), so the memory test always has a visible order.
+ */
+function buildSequence(kind: string, attempt: number, length: number): number[] {
+  const seq: number[] = [];
+  for (let i = 0; i < length; i++) {
+    let lane = hashString(`${kind}|${attempt}|memory|${LANES}|${i}`) % LANES;
+    if (i > 0 && lane === seq[i - 1]) lane = (lane + 1) % LANES;
+    seq.push(lane);
+  }
+  return seq;
+}
+
+type Phase = 'lead' | 'show' | 'input' | 'done';
+
+/**
+ * Memory minigame: a deterministic sequence of lanes lights up; when the buttons wake up the player
+ * repeats it in order. A wrong lane, or not finishing inside the input window, is a miss.
  */
 export function ChoiceGame({ spec, onDone, onSimulate }: { spec: MinigameSpec; onDone: (made: number) => void; onSimulate: () => void }) {
   const attempts = Math.max(1, spec.attempts);
-  const stepMs = attempts > 5 ? 520 : 800;
-  const readingMs = readMs(spec.zone);
+  const seqLen = seqLenFor(spec.tier);
+  const flashMs = flashMsFor(spec.tier);
   const [attempt, setAttempt] = useState(0);
   const [made, setMade] = useState(0);
   const [shots, setShots] = useState<boolean[]>([]);
-  const [open, setOpen] = useState(false);
+  const [phase, setPhase] = useState<Phase>('lead');
+  const [lit, setLit] = useState<number | null>(null);
   const [picked, setPicked] = useState<number | null>(null);
   const [flash, setFlash] = useState<'in' | 'out' | null>(null);
-  const [locked, setLocked] = useState(false);
+  const [entry, setEntry] = useState(0);
 
   const timers = useRef<number[]>([]);
   const endTimer = useRef(0);
@@ -37,8 +57,9 @@ export function ChoiceGame({ spec, onDone, onSimulate }: { spec: MinigameSpec; o
   const done = useRef(false);
   const attemptRef = useRef(0);
   const madeRef = useRef(0);
-  const correctRef = useRef(0);
-  const hidden = useRef(false);
+  const seqRef = useRef<number[]>([]);
+  const entryRef = useRef(0);
+  const phaseRef = useRef<Phase>('lead');
   const onDoneRef = useRef(onDone);
   onDoneRef.current = onDone;
 
@@ -57,7 +78,9 @@ export function ChoiceGame({ spec, onDone, onSimulate }: { spec: MinigameSpec; o
   const resolve = useCallback((hit: boolean, touched: number | null) => {
     if (resolved.current) return;
     resolved.current = true;
-    setLocked(true);
+    phaseRef.current = 'done';
+    setPhase('done');
+    setLit(null);
     setPicked(touched);
     setFlash(hit ? 'in' : 'out');
     try { navigator.vibrate?.(hit ? [18, 40, 18] : 35); } catch { /* not supported */ }
@@ -67,7 +90,6 @@ export function ChoiceGame({ spec, onDone, onSimulate }: { spec: MinigameSpec; o
     schedule(() => {
       setFlash(null);
       setPicked(null);
-      setOpen(false);
       const next = attemptRef.current + 1;
       if (next >= attempts) {
         // Own timer: the attempt effect clears its own timers, not this one.
@@ -81,35 +103,64 @@ export function ChoiceGame({ spec, onDone, onSimulate }: { spec: MinigameSpec; o
       attemptRef.current = next;
       setAttempt(next);
     }, stepMs);
-  }, [schedule, stepMs, attempts]);
+  }, [schedule, attempts]);
 
-  /** Arms the next attempt: show the open lane, hide it, then start the pick clock. */
+  /** Arms the next attempt: lead-in, one lit lane per step, then the input window. */
   useEffect(() => {
     if (attempt >= attempts) return;
     clearTimers();
     attemptRef.current = attempt;
     resolved.current = false;
-    hidden.current = false;
-    correctRef.current = roll(spec.kind, attempt);
-    setOpen(true);
+    const seq = buildSequence(spec.kind, attempt, seqLen);
+    seqRef.current = seq;
+    entryRef.current = 0;
+    phaseRef.current = 'lead';
+    setPhase('lead');
+    setEntry(0);
+    setLit(null);
     setPicked(null);
     setFlash(null);
-    setLocked(false);
+
+    let at = leadMs;
+    for (let i = 0; i < seq.length; i++) {
+      const lane = seq[i];
+      const last = i === seq.length - 1;
+      schedule(() => {
+        if (resolved.current || attemptRef.current !== attempt) return;
+        phaseRef.current = 'show';
+        setPhase('show');
+        setLit(lane);
+      }, at);
+      at += flashMs;
+      schedule(() => {
+        if (resolved.current || attemptRef.current !== attempt) return;
+        setLit(null);
+      }, at);
+      if (!last) at += gapMs;
+    }
     schedule(() => {
       if (resolved.current || attemptRef.current !== attempt) return;
-      hidden.current = true;
-      setOpen(false);
+      phaseRef.current = 'input';
+      setPhase('input');
+      setLit(null);
       schedule(() => {
         if (resolved.current || attemptRef.current !== attempt) return;
         resolve(false, null);
-      }, pickMs);
-    }, readingMs);
-  }, [attempt, attempts, spec.kind, readingMs, schedule, resolve, clearTimers]);
+      }, inputMs);
+    }, at);
+  }, [attempt, attempts, spec.kind, seqLen, flashMs, schedule, resolve, clearTimers]);
 
-  const pick = useCallback((i: number) => {
-    if (resolved.current) return;
-    if (!hidden.current) return; // the memory phase: touching an open lane is not scored
-    resolve(i === correctRef.current, i);
+  const tap = useCallback((i: number) => {
+    if (resolved.current || phaseRef.current !== 'input') return;
+    const seq = seqRef.current;
+    if (entryRef.current >= seq.length) return;
+    if (i !== seq[entryRef.current]) {
+      resolve(false, i);
+      return;
+    }
+    entryRef.current += 1;
+    setEntry(entryRef.current);
+    if (entryRef.current >= seq.length) resolve(true, i);
   }, [resolve]);
 
   useEffect(() => {
@@ -118,11 +169,11 @@ export function ChoiceGame({ spec, onDone, onSimulate }: { spec: MinigameSpec; o
       const n = Number(e.key);
       if (!Number.isInteger(n) || n < 1 || n > LANES) return;
       e.preventDefault();
-      pick(n - 1);
+      tap(n - 1);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [pick]);
+  }, [tap]);
 
   useEffect(() => () => {
     clearTimers();
@@ -140,10 +191,10 @@ export function ChoiceGame({ spec, onDone, onSimulate }: { spec: MinigameSpec; o
           <button
             key={i}
             type="button"
-            className={`choice-lane${open && correctRef.current === i ? ' open' : ''}${picked === i ? ' picked' : ''}`}
-            onPointerDown={(e) => { e.preventDefault(); pick(i); }}
-            onClick={(e) => { if (e.detail === 0) pick(i); }}
-            disabled={locked}
+            className={`choice-lane${lit === i ? ' open' : ''}${picked === i ? ' picked' : ''}`}
+            onPointerDown={(e) => { e.preventDefault(); tap(i); }}
+            onClick={(e) => { if (e.detail === 0) tap(i); }}
+            disabled={phase !== 'input'}
             aria-label={t(`Carril ${i + 1}. Intento ${Math.min(attempt + 1, attempts)} de ${attempts}`)}
           >
             {i + 1}
@@ -151,14 +202,20 @@ export function ChoiceGame({ spec, onDone, onSimulate }: { spec: MinigameSpec; o
         ))}
       </div>
       <div className="choice-msg" role="status">
-        {flash ? (flash === 'in' ? t('¡CORRECTO!') : t('FALLO')) : open ? t('Memoriza el carril abierto') : t('Toca el carril que estaba abierto')}
+        {flash
+          ? (flash === 'in' ? t('¡CORRECTO!') : t('FALLO'))
+          : phase === 'input'
+            ? t('Repite la secuencia')
+            : phase === 'show'
+              ? t('Memoriza la secuencia')
+              : t('Prepárate…')}
       </div>
       <div className="mg-dots" aria-label={`${made} aciertos`}>
         {Array.from({ length: attempts }, (_, i) => <span key={i} className={i < shots.length ? (shots[i] ? 'hit' : 'miss') : ''} />)}
       </div>
       <div className="row between" style={{ marginTop: 10 }}>
-        <span className="tiny dim">{t('Toca el carril o pulsa 1-3')} · {t('lectura')} {readingMs} ms</span>
-        {!locked && shots.length === 0 && <button type="button" className="btn sm ghost" onClick={onSimulate}>{t('Simular')}</button>}
+        <span className="tiny dim">{t('Toca los carriles o pulsa 1-5')} · {entry} / {seqLen}</span>
+        {phase !== 'done' && shots.length === 0 && <button type="button" className="btn sm ghost" onClick={onSimulate}>{t('Simular')}</button>}
       </div>
     </div>
   );

@@ -181,8 +181,8 @@
 
 /* ---------- Choice (memory) minigame ---------- */
 .choice-game { margin-top: 14px; background: var(--panel); border: 1px solid var(--line-2); border-radius: 14px; padding: 14px; }
-.choice-lanes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 10px 0 12px; }
-.choice-lane { display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 110px; padding: 10px 6px; border: 1px solid var(--line-2); border-radius: 14px; background: #1d2026; color: var(--text-2); font-size: 1.5rem; font-weight: 800; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background 0.12s var(--ease), border-color 0.12s var(--ease), color 0.12s var(--ease); }
+.choice-lanes { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin: 10px 0 12px; }
+.choice-lane { display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 96px; padding: 6px 2px; border: 1px solid var(--line-2); border-radius: 14px; background: #1d2026; color: var(--text-2); font-size: 1.15rem; font-weight: 800; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background 0.12s var(--ease), border-color 0.12s var(--ease), color 0.12s var(--ease); }
 .choice-lane:disabled { cursor: default; }
 .choice-lane.open { background: rgba(52, 211, 153, 0.22); border-color: var(--good); color: var(--text); box-shadow: inset 0 0 0 1px var(--good); }
 .choice-lane.picked { outline: 3px solid var(--bad); outline-offset: -3px; }
@@ -194,7 +194,8 @@
 /* Phones: big touch areas, no horizontal scroll. */
 @media (max-width: 560px) {
   .react-cell { min-height: 76px; }
-  .choice-lane { min-height: 96px; }
+  .choice-lane { min-height: 78px; font-size: 1rem; }
+  .choice-lanes { gap: 5px; }
   .react-msg, .choice-msg { font-size: 1rem; }
   .react-game, .choice-game { padding: 12px; }
 }
@@ -410,7 +411,7 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
   .target-arena { height: 150px; }
   .target-msg { font-size: 1.1rem; }
   .shot, .target-game, .power-game, .drag-game { padding: 12px; }
-  .drag-arena { height: 170px; }
+  .drag-arena { height: 210px; }
 }
 
 .challenge { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line-2); }
@@ -854,15 +855,42 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 
 /* ---------- P1b: vuelo y trayectoria del tiro ---------- */
 @media (min-width: 561px) {
-  .drag-arena { height: clamp(180px, 34vh, 240px); }
+  .drag-arena { height: clamp(190px, 36vh, 250px); }
 }
 .drag-ball { will-change: left, top; }
 .drag-trail { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
-.drag-trail path { fill:none; stroke:rgba(255,255,255,.34); stroke-width:.45; stroke-dasharray:1.2 1.8; stroke-linecap:round; }
+.drag-trail path { fill:none; stroke:rgba(255,255,255,.34); stroke-width:.45; stroke-dasharray:1; stroke-dashoffset:0; stroke-linecap:round; }
+.drag-trail.drawing path { animation: drag-draw linear forwards; }
+@keyframes drag-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+.drag-pull { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
+.drag-pull line { stroke: rgba(245, 196, 81, .55); stroke-width: .7; stroke-dasharray: 1.5 1.2; stroke-linecap: round; }
+.drag-ghost { position:absolute; width:20px; height:20px; border:2px dashed rgba(245,196,81,.8); border-radius:50%; transform: translate(-50%, -50%); pointer-events:none; opacity:.8; }
+.drag-net.swish { animation: net-swish .45s var(--ease); }
+@keyframes net-swish {
+  0% { transform: translate(-50%, 0) scaleY(1); }
+  45% { transform: translate(-50%, 0) scaleY(1.35); }
+  100% { transform: translate(-50%, 0) scaleY(1); }
+}
+.drag-board.shake { animation: board-shake .35s var(--ease); }
+@keyframes board-shake {
+  0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+  35% { transform: translate(-50%, -50%) rotate(2.4deg); }
+  70% { transform: translate(-50%, -50%) rotate(-1.8deg); }
+}
+.drag-rim.clang { animation: rim-clang .35s var(--ease); }
+@keyframes rim-clang {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  40% { transform: translate(-50%, -50%) scale(1.18); }
+}
+.drag-ball.flying { filter: drop-shadow(0 0 6px rgba(255, 107, 26, .55)); }
+.drag-ball.rebounding { box-shadow: 0 0 0 4px rgba(245, 196, 81, .18); }
 .drag-arc.good path { stroke: var(--good); }
 .drag-arc.near path { stroke: var(--gold); }
 .drag-arc.bad path { stroke: var(--bad); }
 .drag-rebound { min-height: 2.75rem; }
+@media (prefers-reduced-motion: reduce) {
+  .drag-trail.drawing path, .drag-net.swish, .drag-board.shake, .drag-rim.clang { animation: none; }
+}
 .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 
 /* ---------- P4b: puerta del draft ---------- */

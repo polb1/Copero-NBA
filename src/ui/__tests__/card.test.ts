@@ -14,3 +14,12 @@ test('medalSlots devuelve una posición por medalla', () => {
     expect(s.x + s.size).toBeLessThanOrEqual(432);
   }
 });
+
+test('medalSlots puede usarse con diferente posición inicial (30 medallas)', () => {
+  const slots = medalSlots(30, 584, 936);
+  expect(slots).toHaveLength(30);
+  for (const s of slots) {
+    expect(s.x).toBeGreaterThanOrEqual(584);
+    expect(s.x + s.size).toBeLessThanOrEqual(1008);
+  }
+});
