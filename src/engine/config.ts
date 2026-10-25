@@ -132,13 +132,26 @@ export const EVENT_RATE: Record<'express' | 'quick' | 'full' | 'daily', { min: n
 export const DAILY_MAX_SEASONS = 12;
 export const MAX_AGE = 42;
 
+/** Reglas de ritmo de entrada al draft: pruebas, entrevistas, plan. */
+export interface DraftRule {
+  plan: boolean;
+  interviews: number;
+  tests: number;
+}
+export const DRAFT_RULES: Record<'express' | 'quick' | 'full' | 'daily', DraftRule> = {
+  express: { plan: false, interviews: 1, tests: 1 },
+  quick: { plan: true, interviews: 1, tests: 2 },
+  full: { plan: true, interviews: 2, tests: 3 },
+  daily: { plan: false, interviews: 1, tests: 1 },
+};
+
 /** Puerta de entrada al draft: valor de tablero mínimo y castigos del combine. */
 export const DRAFT_GATE = {
   picks: 60,          // el corte se calcula sobre el pick (picks - 3)
   cutoffPick: 57,
   margin: 1.5,
   failRatio: 0.5,     // proporción de pruebas falladas que retira del draft
-  maxFailures: 2,     // pruebas falladas que retiran del draft
+  maxFailures: 2,     // pruebas falladas que retira del draft
   minAccuracy: 0.4,   // acierto global mínimo del combine
   maxWaits: 3,        // años de espera antes de cerrar la puerta NBA
   penaltyLow: 16,     // OVR < 58

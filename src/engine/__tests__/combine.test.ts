@@ -3,12 +3,12 @@ import { userOf } from '../career';
 import { combineTestIds, COMBINE_TESTS } from '../../content/combine';
 import { combineTier, userDraftValue } from '../offseason';
 import { generateDraftClass, runLottery, simulateDraft } from '../draft';
-import type { Career, Pos } from '../types';
+import type { Career, Mode, Pos } from '../types';
 import { baseInput } from './autopilot';
 
 /** Reaches the draft combine through the real college path (club → season → decision). */
-function toCombine(seed: number): Career {
-  const c = api.newCareer(baseInput({ route: 'college', origin: '' }), seed);
+function toCombine(seed: number, mode: Mode = 'full'): Career {
+  const c = api.newCareer(baseInput({ route: 'college', origin: '', mode }), seed);
   const p = c.predraft!;
   expect(p.step).toBe('club');
   if (c.pendingEvent) {
@@ -123,11 +123,11 @@ describe('draft combine', () => {
   });
 
   test('a perfect hard combine pays more stock than a perfect safe one', () => {
-    const hard = toCombine(13);
+    const hard = toCombine(13, 'quick');
     api.doCombine(hard, 'hard');
     playAllPerfect(hard);
 
-    const safe = toCombine(13);
+    const safe = toCombine(13, 'quick');
     api.doCombine(safe, 'safe');
     playAllPerfect(safe);
 

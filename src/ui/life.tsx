@@ -5,7 +5,7 @@ import { fmtDate, seasonLabel } from '../engine/schedule';
 import { teamOf, userOf } from '../engine/career';
 import { Scene, type SceneKind } from './Scene';
 import { Icon } from './icons';
-import { GOLD_OVR, ovrTone } from './simple';
+import { DIAMOND_OVR, GOLD_OVR, ovrTier, ovrTone } from './simple';
 import { store, useStore } from '../store/store';
 
 /** Animates a number towards its new value and reports the last change. */
@@ -35,13 +35,16 @@ export function useCountUp(value: number, ms = 900) {
 
 export function OvrTile({ ovr }: { ovr: number }) {
   const { shown, delta } = useCountUp(ovr);
-  const gold = shown >= GOLD_OVR;
-  const wentGold = !!delta && ovr >= GOLD_OVR && ovr - delta.v < GOLD_OVR;
+  const tier = ovrTier(shown);
+  const diamond = tier === 'diamond';
+  const gold = tier === 'gold';
+  const wentDiamond = !!delta && ovr >= DIAMOND_OVR && ovr - delta.v < DIAMOND_OVR;
+  const wentGold = !wentDiamond && !!delta && ovr >= GOLD_OVR && ovr - delta.v < GOLD_OVR;
   return (
-    <div className={`ovr-tile ${gold ? 'gold' : ''} ${delta ? 'bump' : ''} ${wentGold ? 'went-gold' : ''}`} style={{ background: ovrTone(shown) }} key={delta?.key ?? 'ovr'} title={gold ? 'Nivel oro (80+)' : undefined}>
+    <div className={`ovr-tile ${diamond ? 'diamond' : gold ? 'gold' : ''} ${delta ? 'bump' : ''} ${wentDiamond ? 'went-diamond' : wentGold ? 'went-gold' : ''}`} style={{ background: ovrTone(shown) }} key={delta?.key ?? 'ovr'} title={diamond ? 'Nivel diamante (90+)' : gold ? 'Nivel oro (80+)' : undefined}>
       <small>OVR</small>
       <b>{shown}</b>
-      {wentGold ? <span className="ovr-delta gold-up">¡ORO!</span> : delta && <span className={`ovr-delta ${delta.v > 0 ? 'up' : 'down'}`}>{delta.v > 0 ? `+${delta.v}` : delta.v}</span>}
+      {wentDiamond ? <span className="ovr-delta diamond-up">¡DIAMANTE!</span> : wentGold ? <span className="ovr-delta gold-up">¡ORO!</span> : delta && <span className={`ovr-delta ${delta.v > 0 ? 'up' : 'down'}`}>{delta.v > 0 ? `+${delta.v}` : delta.v}</span>}
     </div>
   );
 }

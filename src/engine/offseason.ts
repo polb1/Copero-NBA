@@ -15,7 +15,7 @@ import { pickEvent, instantiate, markEventSeen } from './events';
 import { eventContext } from './career';
 import { achievementsCheck } from './flow';
 import { legacyScore, hofProbability, hofVerdict, legacyTier, careerTotals, playoffTotals, awardCounts } from './legacy';
-import { DAILY_MAX_SEASONS, DRAFT_GATE, MAX_AGE, RULES, minSalary, rookieScale, scaled } from './config';
+import { DAILY_MAX_SEASONS, DRAFT_GATE, DraftRule, DRAFT_RULES, MAX_AGE, RULES, minSalary, rookieScale, scaled } from './config';
 import { clamp, rngFor, type Rng } from './rng';
 import { seasonLabel } from './schedule';
 import { SATELLITES } from './satellite';
@@ -27,6 +27,10 @@ import { startingSalary } from './mindset';
 export function userDraftValue(u: Player, stockBonus: number) {
   const penalty = u.ovr < 58 ? DRAFT_GATE.penaltyLow : u.ovr < 62 ? DRAFT_GATE.penaltyMid : u.ovr < 66 ? DRAFT_GATE.penaltyHigh : 0;
   return prospectValue(u.ovr, u.pot, u.age) + stockBonus - penalty - Math.max(0, u.age - 19) * DRAFT_GATE.agePenalty;
+}
+
+export function draftRuleFor(mode: Career['mode']): DraftRule {
+  return DRAFT_RULES[mode] ?? DRAFT_RULES.quick;
 }
 
 export interface NbaInterest { interested: boolean; value: number; cutoff: number; rank: number; waits: number; }
@@ -637,6 +641,13 @@ function combineDef(t: CombineTestDef): MinigameDef {
   return def;
 }
 
+function toMock(c: Career, rng: Rng) {
+  const p = c.predraft!;
+  const range = mockRange(p.draftClass!, 'user', rng);
+  p.mock = { pickLow: range.pickLow, pickHigh: range.pickHigh, text: mockText(range.pickLow, range.pickHigh) };
+  p.step = 'mock';
+}
+
 /** Legacy tail of the combine: the user's board value, the mock range and the interview teams. */
 function afterCombine(c: Career, rng: Rng): boolean {
   const p = c.predraft!;
@@ -651,8 +662,13 @@ function afterCombine(c: Career, rng: Rng): boolean {
   const range = mockRange(p.draftClass!, 'user', rng);
   const order = runLotteryPreview(c);
   const teams = order.slice(Math.max(0, range.pickLow - 2), Math.min(order.length, range.pickHigh + 2));
-  p.interviewTeams = rng.shuffle([...new Set(teams)]).slice(0, c.mode === 'full' ? 3 : 1);
+  const rule = draftRuleFor(c.mode);
+  p.interviewTeams = rng.shuffle([...new Set(teams)]).slice(0, rule.interviews);
   p.interviewQuestions = p.interviewTeams.map((teamId, i) => INTERVIEW_QUESTIONS[(i + Math.floor(rng.next() * INTERVIEW_QUESTIONS.length)) % INTERVIEW_QUESTIONS.length]).map((q, i) => ({ teamId: p.interviewTeams[i], question: q.q, answers: q.a }));
+  if (rule.interviews === 0) {
+    toMock(c, rng);
+    return true;
+  }
   p.step = 'interviews';
   return true;
 }
@@ -685,8 +701,9 @@ export function doCombine(c: Career, choice: CombinePlan) {
   // Played plans: the measurements are taken now and the stock waits for the tests.
   p.combine = { sprint, vertical, lane, shooting, grade: 'Pendiente' };
   p.combinePlan = choice;
+  const rule = draftRuleFor(c.mode);
   const tier: MinigameTierId = choice === 'hard' ? 'hard' : choice === 'safe' ? 'easy' : combineTier(u);
-  const ids = choice === 'safe' ? ['shooting', 'athletic'] : combineTestIds(u.pos);
+  const ids = combineTestIds(u.pos).slice(0, rule.tests);
   p.combineTests = ids.map((id) => {
     const def = COMBINE_TESTS.find((t) => t.id === id)!;
     return { id: def.id, label: def.label, desc: def.desc, weight: def.weight, spec: buildSpec(combineDef(def), u, c, tier) };
@@ -774,9 +791,7 @@ export function answerInterview(c: Career, index: number, answer: number) {
   const me = p.draftClass?.find((x) => x.isUser);
   if (me) me.value = userDraftValue(u, p.stockBonus);
   if (p.interviews.length >= p.interviewQuestions!.length) {
-    const range = mockRange(p.draftClass!, 'user', rngFor(c.seed, 'mock', c.league.season));
-    p.mock = { pickLow: range.pickLow, pickHigh: range.pickHigh, text: mockText(range.pickLow, range.pickHigh) };
-    p.step = 'mock';
+    toMock(c, rngFor(c.seed, 'mock', c.league.season));
   }
 }
 

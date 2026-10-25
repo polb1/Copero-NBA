@@ -7,6 +7,7 @@ import type { Career, Offer, SeasonRecord, SeasonSummary } from '../../engine/ty
 import * as api from '../../engine/api';
 import { teamOf, userOf } from '../../engine/career';
 import { inSeason } from '../../engine/flow';
+import { DRAFT_RULES } from '../../engine/config';
 import { championOf, teamName } from '../../engine/league';
 import { averages, f1, sumStats } from '../../engine/stats';
 import { shownValue, fmtMoney, makeSalaries } from '../../engine/contracts';
@@ -19,7 +20,7 @@ import { annualUpkeep, financeOf, financeOn, lifestyleCost, netWorth } from '../
 import { assetById } from '../../content/assets';
 import { careerHistory, store, useCareer, useStore } from '../../store/store';
 import { EventModalInline } from './EventInline';
-import { TeamBadge, ovrTone } from '../../ui/simple';
+import { TeamBadge, ovrClass, ovrTone } from '../../ui/simple';
 import { OvrTile, SimProgress, useCountUp } from '../../ui/life';
 import { downloadPNG } from "../../ui/download";
 import { Scene, type SceneKind } from '../../ui/Scene';
@@ -576,12 +577,24 @@ function Decision({ c }: { c: Career }) {
         );
       }
       if (p.step === 'combine') {
+        const rule = DRAFT_RULES[c.mode] ?? DRAFT_RULES.quick;
+        const decisions = rule.interviews + (rule.plan ? 1 : 0);
+        const pace = `Draft: ${decisions} ${decisions === 1 ? 'decisión' : 'decisiones'} + ${rule.tests} ${rule.tests === 1 ? 'prueba' : 'pruebas'}`;
+        if (!rule.plan) {
+          return (
+            <Block scene={'training'} title="Draft Combine" desc="Formato Exprés: una prueba y una entrevista para entrar al draft. Sin plan de combine.">
+              <div className="risk-row"><span className="chip accent">{pace}</span></div>
+              <Choice top="Exprés" title="Empezar el combine" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'full'))}>Una prueba según tu proyección y una entrevista.</Choice>
+            </Block>
+          );
+        }
+        const testsWord = rule.tests === 2 ? 'Dos' : 'Tres';
         return (
-          <Block scene={'training'} title="Draft Combine" desc="Las franquicias miden velocidad, salto, agilidad y tiro… y ahora también te ponen a prueba. Si fallas demasiadas pruebas o no acudes, no entrarás al draft: volverás al club.">
-            <Choice top="Riesgo alto" title="Demostrar todo" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'full'))}>Tres pruebas con dificultad según tu proyección.</Choice>
-            <Choice top="Sin red" title="A lo bestia" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'hard'))}>Tres pruebas al máximo: más recompensa y más riesgo.</Choice>
-            <Choice top="Prudente" title="Ir con calma" scene="training" onClick={() => store.act((x) => api.doCombine(x, 'safe'))}>Dos pruebas fáciles; menos margen de subida.</Choice>
-            <Choice top="Prudente" title="Solo medidas" scene="training" onClick={() => store.act((x) => api.doCombine(x, 'measure'))}>Leve penalización.</Choice>
+          <Block scene={'training'} title="Draft Combine" desc={`Formato ${c.mode === 'full' ? 'Larga' : 'Normal'}: plan, ${rule.interviews} entrevista${rule.interviews === 1 ? '' : 's'} y ${rule.tests} pruebas. Si fallas demasiadas pruebas o no acudes, no entrarás al draft.`}>
+            <div className="risk-row"><span className="chip accent">{pace}</span></div>
+            <Choice top="Riesgo alto" title="Demostrar todo" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'full'))}>{`${testsWord} pruebas con dificultad según tu proyección.`}</Choice>
+            <Choice top="Sin red" title="A lo bestia" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'hard'))}>{`${testsWord} pruebas al máximo: más recompensa y más riesgo.`}</Choice>
+            <Choice top="Prudente" title="Ir con calma" scene="training" onClick={() => store.act((x) => api.doCombine(x, 'safe'))}>{`${testsWord} pruebas fáciles; menos margen de subida.`}</Choice>
             <Choice top="Confianza" title="No acudir" scene="rest" onClick={() => store.act((x) => api.doCombine(x, 'skip'))}>Los equipos lo notarán.</Choice>
           </Block>
         );
@@ -614,13 +627,12 @@ function Decision({ c }: { c: Career }) {
             scene={'press'}
             title={`Entrevista con ${teamName(c.league, q.teamId)}`}
             desc={`«${q.question}»`}
-            meta={p.combineResult ? (
+            meta={(
               <div className="risk-row">
-                <span className="chip accent">Combine {p.combineResult.grade}</span>
-                <span className="chip">{p.combineResult.detail}</span>
-                <span className="chip">Bonus {p.combineResult.bonus >= 0 ? '+' : ''}{p.combineResult.bonus.toFixed(1)}</span>
+                <span className="chip">Entrevista {i + 1}/{p.interviewQuestions.length}</span>
+                {p.combineResult && <><span className="chip accent">Combine {p.combineResult.grade}</span><span className="chip">{p.combineResult.detail}</span><span className="chip">Bonus {p.combineResult.bonus >= 0 ? '+' : ''}{p.combineResult.bonus.toFixed(1)}</span></>}
               </div>
-            ) : undefined}
+            )}
           >
             {q.answers.map((a, k) => <Choice key={k} title={a} scene="press" onClick={() => store.act((x) => api.answerInterview(x, i, k))} />)}
           </Block>
@@ -769,6 +781,7 @@ function Timeline({ c }: { c: Career }) {
   const u = userOf(c);
   // Season totals or per-game averages (the header button switches; remembered on this device).
   const [perGame, setPerGame] = useState(() => { try { return localStorage.getItem('nbalegacy:perGame') === '1'; } catch { return false; } });
+  const [showAll, setShowAll] = useState(false);
   const togglePerGame = () => setPerGame((v) => { try { localStorage.setItem('nbalegacy:perGame', v ? '0' : '1'); } catch { /* private mode */ } return !v; });
   const byAge = new Map<number, SeasonRecord>();
   const groups = new Map<number, SeasonRecord[]>();
@@ -789,6 +802,8 @@ function Timeline({ c }: { c: Career }) {
   const rows: ReactNode[] = [];
   // Phones hide the far-off empty years so the decision stays within reach.
   const lastAge = Math.max(pendingAge ?? 0, ...byAge.keys());
+  const collapseFrom = Math.max(startAge, lastAge - 3);
+  const hasOld = startAge < collapseFrom;
   for (let age = startAge; age <= endAge; age++) {
     const r = byAge.get(age);
     if (r) {
@@ -796,10 +811,10 @@ function Timeline({ c }: { c: Career }) {
       const tm = r.teamId ? c.league.teams[r.teamId] : null;
       const won = r.awards.includes('champion');
       rows.push(
-        <div key={age} className="tl-row in" style={{ animationDelay: `${Math.min(12, age - startAge) * 45}ms` }} title={`${seasonLabel(r.season)} · ${r.result}`}>
+        <div key={age} className={`tl-row in ${age < collapseFrom ? 'old' : ''}`} style={{ animationDelay: `${Math.min(12, age - startAge) * 45}ms` }} title={`${seasonLabel(r.season)} · ${r.result}`}>
           <span className="age-badge" style={{ background: tm?.color ?? '#334155' }}>{age}</span>
           <span className="tl-club">{tm && r.comp === 'NBA' ? <TeamBadge id={tm.id} color={tm.color} size={16} /> : r.comp === 'GLG' ? <span className="tiny"><Icon name="ball" size={13} /></span> : <ClubLogo name={r.teamName} size={16} />}<span>{r.teamName}</span>{r.comp !== 'NBA' && <span className="tiny dim">{r.comp === 'GLG' ? 'G League' : r.comp === 'EUR' ? findClub(r.teamName)?.league ?? 'Internacional' : 'NCAA'}</span>}{won && <span title="Campeón">💍</span>}{r.awards.filter((k) => k !== 'champion').slice(0, 2).map((k) => <span key={k} title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'}</span>)}</span>
-          <span className={`ovr-pill ${r.ovrEnd >= 80 ? 'gold' : ''}`} style={{ background: ovrTone(r.ovrEnd) }}>{r.ovrEnd}</span>
+          <span className={`ovr-pill ${ovrClass(r.ovrEnd)}`} style={{ background: ovrTone(r.ovrEnd) }}>{r.ovrEnd}</span>
           <span className="tl-num">{r.stats.gp}</span>
           <span className="tl-num">{perGame ? f1(a.ppg) : num(r.stats.pts)}</span>
           <span className="tl-num">{perGame ? f1(a.rpg) : num(r.stats.oreb + r.stats.dreb)}</span>
@@ -814,47 +829,54 @@ function Timeline({ c }: { c: Career }) {
             {t && (c.phase === 'preseason' || inSeason(c)) ? <TeamBadge id={t.id} color={t.color} size={16} /> : c.satellite ? <ClubLogo name={c.satellite.teamName} size={16} /> : <span className="q">?</span>}
             <span className="dim">{pendingLabel()}</span>
           </span>
-          <span className={`ovr-pill ${u.ovr >= 80 ? 'gold' : ''}`} style={{ background: ovrTone(u.ovr) }}>{u.ovr}</span>
+          <span className={`ovr-pill ${ovrClass(u.ovr)}`} style={{ background: ovrTone(u.ovr) }}>{u.ovr}</span>
           <span className="tl-live" style={{ gridColumn: 'span 4' }}>{inSeason(c) && c.league.day > 0 ? 'Temporada en curso' : ''}</span>
         </div>,
       );
     } else {
-      rows.push(<div key={age} className={`tl-row empty ${age > lastAge + 2 ? 'far' : ''}`}><span className="age-empty">{age}</span></div>);
+      rows.push(<div key={age} className={`tl-row empty ${age > lastAge + 2 ? 'far' : ''} ${age < collapseFrom ? 'old' : ''}`}><span className="age-empty">{age}</span></div>);
     }
   }
   const nba = sumStats(c.seasons.filter((s) => s.comp === 'NBA').map((s) => s.stats));
   const abroad = sumStats(c.seasons.filter((s) => s.comp === 'EUR').map((s) => s.stats));
   const country = countryByCode(u.nat);
   return (
-    <div className="tl">
-      <div className="tl-row head">
-        <span>EDAD</span><span>EQUIPO <button type="button" className="tl-mode" onClick={togglePerGame} aria-pressed={perGame}>{perGame ? 'Por partido' : 'Totales'} ⇄</button></span><span>OVR</span><span className="tl-num">PJ</span><span className="tl-num">PTS</span><span className="tl-num">REB</span><span className="tl-num">AST</span>
-      </div>
-      <div className="tl-body">{rows}</div>
-      <div className="tl-row foot">
-        <span className="age-badge" style={{ background: '#1f2937' }}>Σ</span>
-        <span className="tl-club"><span>Total carrera NBA</span></span>
-        <span />
-        <span className="tl-num">{num(nba.gp)}</span>
-        <span className="tl-num">{perGame ? f1(averages(nba).ppg) : num(nba.pts)}</span>
-        <span className="tl-num">{perGame ? f1(averages(nba).rpg) : num(nba.oreb + nba.dreb)}</span>
-        <span className="tl-num">{perGame ? f1(averages(nba).apg) : num(nba.ast)}</span>
-      </div>
-      {abroad.gp > 0 && (
-        <div className="tl-row foot" style={{ marginTop: 2 }}>
-          <span className="age-badge" style={{ background: '#1f2937' }}><Icon name="globe" size={13} /></span>
-          <span className="tl-club"><span>Total fuera de la NBA</span></span>
-          <span />
-          <span className="tl-num">{num(abroad.gp)}</span>
-          <span className="tl-num">{perGame ? f1(averages(abroad).ppg) : num(abroad.pts)}</span>
-          <span className="tl-num">{perGame ? f1(averages(abroad).rpg) : num(abroad.oreb + abroad.dreb)}</span>
-          <span className="tl-num">{perGame ? f1(averages(abroad).apg) : num(abroad.ast)}</span>
+    <div className="tl-scroll">
+      <div className={`tl ${showAll ? 'open' : ''}`}>
+        <div className="tl-row head">
+          <span>EDAD</span><span>EQUIPO <button type="button" className="tl-mode" onClick={togglePerGame} aria-pressed={perGame}>{perGame ? 'Por partido' : 'Totales'} ⇄</button></span><span>OVR</span><span className="tl-num">PJ</span><span className="tl-num">PTS</span><span className="tl-num">REB</span><span className="tl-num">AST</span>
         </div>
-      )}
-      {(c.flags.nationalCaps ?? 0) > 0 && <div className="nat-row">
-        <Flag code={u.nat} size={22} />
-        <span><b>Selección de {country.name}</b> · {c.flags.nationalCaps ? `${c.flags.nationalCaps} convocatoria${c.flags.nationalCaps > 1 ? 's' : ''}` : c.flags.nationalTeam ? 'Internacional' : 'Aún sin convocatorias'}{c.flags.medals ? <> · <Icon name="medal" size={13} /> {c.flags.medals} medalla{c.flags.medals > 1 ? 's' : ''}</> : ''}</span>
-      </div>}
+        {hasOld && (
+          <button type="button" className="tl-more" aria-expanded={showAll} onClick={() => setShowAll((v) => !v)}>
+            {showAll ? 'Ver menos' : 'Ver toda la carrera'}
+          </button>
+        )}
+        <div className="tl-body">{rows}</div>
+        <div className="tl-row foot">
+          <span className="age-badge" style={{ background: '#1f2937' }}>Σ</span>
+          <span className="tl-club"><span>Total carrera NBA</span></span>
+          <span />
+          <span className="tl-num">{num(nba.gp)}</span>
+          <span className="tl-num">{perGame ? f1(averages(nba).ppg) : num(nba.pts)}</span>
+          <span className="tl-num">{perGame ? f1(averages(nba).rpg) : num(nba.oreb + nba.dreb)}</span>
+          <span className="tl-num">{perGame ? f1(averages(nba).apg) : num(nba.ast)}</span>
+        </div>
+        {abroad.gp > 0 && (
+          <div className="tl-row foot" style={{ marginTop: 2 }}>
+            <span className="age-badge" style={{ background: '#1f2937' }}><Icon name="globe" size={13} /></span>
+            <span className="tl-club"><span>Total fuera de la NBA</span></span>
+            <span />
+            <span className="tl-num">{num(abroad.gp)}</span>
+            <span className="tl-num">{perGame ? f1(averages(abroad).ppg) : num(abroad.pts)}</span>
+            <span className="tl-num">{perGame ? f1(averages(abroad).rpg) : num(abroad.oreb + abroad.dreb)}</span>
+            <span className="tl-num">{perGame ? f1(averages(abroad).apg) : num(abroad.ast)}</span>
+          </div>
+        )}
+        {(c.flags.nationalCaps ?? 0) > 0 && <div className="nat-row">
+          <Flag code={u.nat} size={22} />
+          <span><b>Selección de {country.name}</b> · {c.flags.nationalCaps ? `${c.flags.nationalCaps} convocatoria${c.flags.nationalCaps > 1 ? 's' : ''}` : c.flags.nationalTeam ? 'Internacional' : 'Aún sin convocatorias'}{c.flags.medals ? <> · <Icon name="medal" size={13} /> {c.flags.medals} medalla{c.flags.medals > 1 ? 's' : ''}</> : ''}</span>
+        </div>}
+      </div>
     </div>
   );
 }

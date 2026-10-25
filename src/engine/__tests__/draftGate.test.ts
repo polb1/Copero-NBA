@@ -5,9 +5,10 @@ import { generateDraftClass, draftCutoff, draftVerdict } from '../draft';
 import { userDraftValue } from '../offseason';
 import { prospectValue } from '../draft';
 import { baseInput } from './autopilot';
+import type { Mode } from '../types';
 
-function atDecision(seed: number, ovr: number, pot: number, age = 19) {
-  const c = api.newCareer(baseInput({ route: 'college', origin: 'Duke' }), seed);
+function atDecision(seed: number, ovr: number, pot: number, age = 19, mode: Mode = 'quick') {
+  const c = api.newCareer(baseInput({ route: 'college', origin: 'Duke', mode }), seed);
   const p = c.predraft!;
   const u = userOf(c);
   u.ovr = ovr; u.pot = pot; u.age = age;
@@ -107,7 +108,7 @@ describe('draft gate', () => {
   });
 
   test('a combine with one bad test of three reaches the interviews', () => {
-    const { c, p } = atDecision(108, 88, 95, 19);
+    const { c, p } = atDecision(108, 88, 95, 19, 'full');
     api.predraftDecision(c, true);
     api.doCombine(c, 'full');
 

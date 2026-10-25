@@ -89,12 +89,27 @@ export function CourtPicker({ value, onChange }: { value: Pos; onChange: (p: Pos
   );
 }
 
-/** Card colours by OVR: gold from 80, silver 70-79, orange 60-69, bronze below. */
+/** Card colours by OVR: diamond 90+, gold 80-89, silver 70-79, orange 60-69, bronze below. */
 export const GOLD_OVR = 80;
+export const DIAMOND_OVR = 90;
+export type OvrTier = 'diamond' | 'gold' | 'silver' | 'orange' | 'bronze';
+export function ovrTier(ovr: number): OvrTier {
+  if (ovr >= DIAMOND_OVR) return 'diamond';
+  if (ovr >= GOLD_OVR) return 'gold';
+  if (ovr >= 70) return 'silver';
+  if (ovr >= 60) return 'orange';
+  return 'bronze';
+}
+export function ovrClass(ovr: number): 'diamond' | 'gold' | '' {
+  const tier = ovrTier(ovr);
+  return tier === 'diamond' ? 'diamond' : tier === 'gold' ? 'gold' : '';
+}
 export function ovrTone(ovr: number) {
-  if (ovr >= GOLD_OVR) return 'linear-gradient(160deg, #fff3b0 0%, #f5c451 35%, #c9971c 70%, #8a6410 100%)';
-  if (ovr >= 70) return 'linear-gradient(160deg, #e2e8f0, #94a3b8 55%, #475569)';
-  if (ovr >= 60) return 'linear-gradient(160deg, #fb923c, #c2410c)';
+  const tier = ovrTier(ovr);
+  if (tier === 'diamond') return 'linear-gradient(160deg, #e0f7ff 0%, #7dd3fc 30%, #38bdf8 62%, #0369a1 100%)';
+  if (tier === 'gold') return 'linear-gradient(160deg, #fff3b0 0%, #f5c451 35%, #c9971c 70%, #8a6410 100%)';
+  if (tier === 'silver') return 'linear-gradient(160deg, #e2e8f0, #94a3b8 55%, #475569)';
+  if (tier === 'orange') return 'linear-gradient(160deg, #fb923c, #c2410c)';
   return 'linear-gradient(160deg, #d97706, #92400e)';
 }
 

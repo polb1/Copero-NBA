@@ -8,6 +8,7 @@ import { POS_LABEL } from '../engine/attributes';
 import { fmtMoney, shownValue } from '../engine/contracts';
 import { countryByCode } from '../content/names';
 import { t } from '../i18n/i18n';
+import { DIAMOND_OVR } from './simple';
 
 const natName = (code: string) => t(countryByCode(code).name);
 const COND = '"Barlow Condensed", Arial Narrow, sans-serif';
@@ -187,10 +188,15 @@ export function drawCard(c: Career): string {
   gold.addColorStop(0, '#fff3b0');
   gold.addColorStop(0.4, '#f5c451');
   gold.addColorStop(1, '#8a6410');
-  g.fillStyle = r.peakOvr >= 80 ? gold : '#ff6b1a';
+  const diamond = g.createLinearGradient(hx, hy, hx + hw, hy + hh);
+  diamond.addColorStop(0, '#e0f7ff');
+  diamond.addColorStop(0.35, '#7dd3fc');
+  diamond.addColorStop(0.7, '#38bdf8');
+  diamond.addColorStop(1, '#0369a1');
+  g.fillStyle = r.peakOvr >= DIAMOND_OVR ? diamond : r.peakOvr >= 80 ? gold : '#ff6b1a';
   roundRect(g, hx, hy, hw, hh, 28);
   g.fill();
-  g.fillStyle = '#1a1205';
+  g.fillStyle = r.peakOvr >= DIAMOND_OVR ? '#062a3a' : '#1a1205';
   g.textAlign = 'center';
   g.font = `700 30px ${COND}`;
   g.fillText(t('OVR MÁXIMO'), hx + hw / 2, hy + 56);
