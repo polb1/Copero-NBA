@@ -1,32 +1,34 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { MinigameSpec } from '../../engine/types';
 import { minigameHint } from '../../content/minigames';
-import { hashString } from '../../engine/rng';
 import { t } from '../../i18n/i18n';
 
 const LANES = 5;
 /** How many lanes light up per attempt: easier levels ask for a shorter sequence. */
 const seqLenFor = (tier: MinigameSpec['tier']) => (tier === 'hard' ? 4 : tier === 'easy' ? 2 : 3);
 /** Reading time before the sequence starts. */
-const leadMs = 450;
+const leadMs = 300;
 /** How long each lane of the sequence stays lit. */
-const flashMsFor = (tier: MinigameSpec['tier']) => (tier === 'hard' ? 360 : tier === 'easy' ? 560 : 450);
+const flashMsFor = (tier: MinigameSpec['tier']) => (tier === 'hard' ? 240 : tier === 'easy' ? 400 : 320);
 /** Dark pause between two steps of the sequence. */
-const gapMs = 120;
+const gapMs = 90;
 /** Time to repeat the whole sequence on the buttons. */
-const inputMs = 3000;
+const inputMs = 2800;
 /** Feedback pause between attempts. */
-const stepMs = 800;
+const stepMs = 520;
 
 /**
- * Deterministic per-attempt sequence. Two consecutive steps never share a lane: on a collision the
- * lane moves one place forward (modulo LANES), so the memory test always has a visible order.
+ * Varied sequence per attempt. Consecutive steps never share a lane.
+ * Generates an unpredictable pattern across games and attempts.
  */
-function buildSequence(kind: string, attempt: number, length: number): number[] {
+function buildSequence(_kind: string, _attempt: number, length: number): number[] {
   const seq: number[] = [];
   for (let i = 0; i < length; i++) {
-    let lane = hashString(`${kind}|${attempt}|memory|${LANES}|${i}`) % LANES;
-    if (i > 0 && lane === seq[i - 1]) lane = (lane + 1) % LANES;
+    let lane = Math.floor(Math.random() * LANES);
+    if (i > 0 && lane === seq[i - 1]) {
+      // Pick randomly from the other 4 lanes so there is no fixed "+1 modulo" pattern
+      lane = (lane + 1 + Math.floor(Math.random() * (LANES - 1))) % LANES;
+    }
     seq.push(lane);
   }
   return seq;

@@ -127,7 +127,7 @@ function maybeSatelliteGame(c: Career, playedNbaTeamToday: boolean) {
   }
   const s = c.satellite;
   if (s.w + s.l >= s.gamesPlanned) return;
-  const res = playSatelliteGame(c.seed, comp, c.league.season, s.w + s.l, u, s.level, (1 + (c.trust - 50) / 200) * (s.minutes ?? 1), opponentsFor(comp, s.teamName, u.teamId), mindsetBoost(c));
+  const res = playSatelliteGame(c.seed, comp, c.league.season, s.w + s.l, u, s.level, (1 + (c.trust - 50) / 200) * (s.minutes ?? 1), opponentsFor(comp, s.teamName, u.teamId), mindsetBoost(c), s.teamName);
   if (res.teamScore > res.oppScore) s.w++;
   else s.l++;
   addBox(c.satStats, res.line);

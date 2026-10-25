@@ -5,6 +5,7 @@ import { makeSalaries } from './contracts';
 import { newPlayerId } from './league';
 import { clamp, rngFor, type Rng } from './rng';
 import { standings } from './season';
+import { DRAFT_REAL_PROSPECTS, realProspectToPlayer } from '../data/realPlayers';
 
 export function prospectValue(ovr: number, pot: number, age: number) {
   return pot * 0.62 + ovr * 0.48 - (age - 19) * 1.6;
@@ -14,8 +15,11 @@ const CLASS_SIZE = 72;
 
 /** Each prospect has its own RNG stream, so any one can be regenerated exactly. */
 function prospectPlayer(seed: number, season: number, i: number): { p: Player; value: number } {
-  const strength = rngFor(seed, 'draft-strength', season).normal(0, 1.5); // some classes are deeper
   const rng = rngFor(seed, 'draft-class', season, i);
+  if (i < DRAFT_REAL_PROSPECTS.length) {
+    return realProspectToPlayer(DRAFT_REAL_PROSPECTS[i], `dp-${season}-${i}`, season, rng);
+  }
+  const strength = rngFor(seed, 'draft-strength', season).normal(0, 1.5); // some classes are deeper
   const age = rng.weighted([19, 20, 21, 22, 23], (a) => [30, 26, 20, 16, 8][a - 19]);
   const tier = i / CLASS_SIZE;
   const ovr = Math.round(clamp(rng.normal(68 - tier * 13 + strength, 3), 48, 78));

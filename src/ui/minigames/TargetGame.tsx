@@ -18,8 +18,8 @@ export function TargetGame({ spec, onDone, onSimulate }: {
 }) {
   const slots = Math.min(4, Math.max(1, spec.slots ?? 1));
   const attempts = Math.max(1, spec.attempts);
-  const timeoutMs = Math.max(900, Math.min(2600, 3000 - spec.speed * 1200));
-  const motion = 1.1 + Math.min(1, Math.max(0, spec.speed)) * 0.9;
+  const timeoutMs = Math.max(1050, Math.min(2800, 3200 - spec.speed * 1100));
+  const motion = 0.92 + Math.min(1, Math.max(0, spec.speed)) * 0.76;
   const [attempt, setAttempt] = useState(0);
   const [made, setMade] = useState(0);
   const [shots, setShots] = useState<boolean[]>([]);
@@ -82,7 +82,7 @@ export function TargetGame({ spec, onDone, onSimulate }: {
 
   useEffect(() => () => clear(), [clear]);
 
-  const size = Math.max(16, Math.min(42, spec.zone * 0.65));
+  const size = Math.max(22, Math.min(50, spec.zone * 0.78));
 
   return (
     <div className={`target-game ${flash ?? ''}`}>

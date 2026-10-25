@@ -3,6 +3,7 @@ import { generatePlayer } from './players';
 import { simulateGame, type SimPlayer, type SimTeam } from './gamesim';
 import { MINUTES_TEMPLATE } from './config';
 import { rngFor } from './rng';
+import { getClubRealRoster, realToSimPlayer } from '../data/realPlayers';
 
 /** Competitions outside the fully simulated NBA. Adding a league = adding an entry here. */
 export interface SatelliteDef {
@@ -30,6 +31,21 @@ function synthPlayer(seed: number, key: string, idx: number, level: number): Sim
   return { id: p.id, attrs: p.attrs, ovr: p.ovr, arch: p.arch, pos: p.pos, form: 0, fatigue: 0, hurt: false, minutes: 0, starter: false };
 }
 
+function teamSquadPlayers(seed: number, clubName: string | undefined, key: string, count: number, fallbackLevel: number): SimPlayer[] {
+  const realList = clubName ? getClubRealRoster(clubName) : undefined;
+  if (realList && realList.length > 0) {
+    const rng = rngFor(seed, 'real-squad', key);
+    const squad: SimPlayer[] = realList.slice(0, count).map((r, i) =>
+      realToSimPlayer(r, `r-${key}-${i}-${r.name.replace(/\s+/g, '_')}`, rng)
+    );
+    while (squad.length < count) {
+      squad.push(synthPlayer(seed, key, squad.length, fallbackLevel));
+    }
+    return squad;
+  }
+  return Array.from({ length: count }, (_, i) => synthPlayer(seed, key, i, fallbackLevel));
+}
+
 function assignMinutes(players: SimPlayer[], total: number) {
   players.sort((a, b) => b.ovr - a.ovr);
   const raw = players.map((_, i) => MINUTES_TEMPLATE[i] ?? 0);
@@ -49,8 +65,8 @@ export interface SatelliteGameResult {
   ot: number;
 }
 
-/** User's satellite game: user + synthetic teammates vs synthetic opponent around the competition level. */
-export function playSatelliteGame(seed: number, comp: Exclude<Competition, 'NBA'>, season: number, gameNo: number, user: Player, teamLevel: number, minutesBoost = 1, opponents?: string[], boost = 0): SatelliteGameResult {
+/** User's satellite game: user + real/synthetic teammates vs real/synthetic opponent. */
+export function playSatelliteGame(seed: number, comp: Exclude<Competition, 'NBA'>, season: number, gameNo: number, user: Player, teamLevel: number, minutesBoost = 1, opponents?: string[], boost = 0, userClubName?: string): SatelliteGameResult {
   const def = SATELLITES[comp];
   const key = `${comp}-${season}-${gameNo}`;
   const rng = rngFor(seed, 'sat', key);
@@ -58,7 +74,7 @@ export function playSatelliteGame(seed: number, comp: Exclude<Competition, 'NBA'
   // Conference/league rivals appear twice as often as the rest.
   const oppName = pool[(gameNo * 7 + Math.floor(gameNo / pool.length)) % pool.length];
   const oppLevel = def.level + rng.normal(0, 3.5);
-  const mates = Array.from({ length: 9 }, (_, i) => synthPlayer(seed, `${comp}-${season}-team`, i, teamLevel));
+  const mates = teamSquadPlayers(seed, userClubName, `${comp}-${season}-team`, 9, teamLevel);
   // Stars well above the league get double-teamed: their edge over the competition is softened.
   const cap = def.level + 6;
   const damped = { ...user.attrs };
@@ -70,7 +86,7 @@ export function playSatelliteGame(seed: number, comp: Exclude<Competition, 'NBA'
   if (minutesBoost !== 1) {
     me.minutes = Math.min(def.minutes - 2, me.minutes * minutesBoost);
   }
-  const opp = Array.from({ length: 10 }, (_, i) => synthPlayer(seed, key + '-opp', i, oppLevel));
+  const opp = teamSquadPlayers(seed, oppName, key + '-opp', 10, oppLevel);
   assignMinutes(opp, totalMin);
   const home = rng.chance(0.5);
   const mine: SimTeam = { id: 'U', pace: def.pace, style: 'balanced', players: team };
