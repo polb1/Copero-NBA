@@ -4,8 +4,18 @@ import { userOf } from '../career';
 import { generateDraftClass, draftCutoff, draftVerdict } from '../draft';
 import { userDraftValue } from '../offseason';
 import { prospectValue } from '../draft';
+import { clamp } from '../rng';
 import { baseInput } from './autopilot';
-import type { Mode } from '../types';
+import type { Mode, Player } from '../types';
+
+function attrBonus(u: Player): number {
+  return clamp(
+    ((u.attrs.vert + u.attrs.speed + u.attrs.accel) / 3 - 50) * 0.04
+    + ((u.attrs.three + u.attrs.mid + u.attrs.handle) / 3 - 50) * 0.03,
+    -2.0,
+    2.0,
+  );
+}
 
 function atDecision(seed: number, ovr: number, pot: number, age = 19, mode: Mode = 'quick') {
   const c = api.newCareer(baseInput({ route: 'college', origin: 'Duke', mode }), seed);
@@ -22,24 +32,24 @@ describe('draft gate', () => {
     const s = 101;
 
     const low = atDecision(s, 57, 70);
-    expect(userDraftValue(low.u, 0)).toBeCloseTo(prospectValue(57, 70, 19) - 16, 6);
+    expect(userDraftValue(low.u, 0)).toBeCloseTo(prospectValue(57, 70, 19) - 16 + attrBonus(low.u), 6);
 
     const mid = atDecision(s, 61, 70);
-    expect(userDraftValue(mid.u, 0)).toBeCloseTo(prospectValue(61, 70, 19) - 9, 6);
+    expect(userDraftValue(mid.u, 0)).toBeCloseTo(prospectValue(61, 70, 19) - 9 + attrBonus(mid.u), 6);
 
     const high = atDecision(s, 65, 70);
-    expect(userDraftValue(high.u, 0)).toBeCloseTo(prospectValue(65, 70, 19) - 4, 6);
+    expect(userDraftValue(high.u, 0)).toBeCloseTo(prospectValue(65, 70, 19) - 4 + attrBonus(high.u), 6);
 
     const clear = atDecision(s, 70, 70);
-    expect(userDraftValue(clear.u, 0)).toBeCloseTo(prospectValue(70, 70, 19) - 0, 6);
+    expect(userDraftValue(clear.u, 0)).toBeCloseTo(prospectValue(70, 70, 19) - 0 + attrBonus(clear.u), 6);
 
     const older = atDecision(s, 61, 70, 21);
-    expect(userDraftValue(older.u, 0)).toBeCloseTo(prospectValue(61, 70, 21) - 9 - 2.4, 6);
+    expect(userDraftValue(older.u, 0)).toBeCloseTo(prospectValue(61, 70, 21) - 9 - 2.4 + attrBonus(older.u), 6);
   });
 
   test('draftCutoff is the pick-57 board value plus the margin, and draftVerdict gates on it', () => {
     const cls = generateDraftClass(11, 2027);
-    const expected = [...cls].sort((a, b) => b.value - a.value)[57].value + 1.5;
+    const expected = [...cls].sort((a, b) => b.value - a.value)[57].value + 0.25;
     const cutoff = draftCutoff(cls);
 
     expect(cutoff).toBeCloseTo(expected, 6);

@@ -66,6 +66,8 @@ export function Play() {
           <div className="divider" style={{ margin: '12px 0' }} />
           {sim ? <SimProgress c={c} label={sim} /> : <Decision c={c} />}
           {!sim && <SeasonRecap c={c} />}
+          {!sim && <DraftGatePopup c={c} />}
+          {!sim && <UndraftedPopup c={c} />}
         </div>
         <div className="play-right">
           <MemoTimeline c={c} sig={viewSig(c)} />
@@ -478,6 +480,57 @@ function OfferChoice({ c, o, onPick, top = 'Firmar con' }: { c: Career; o: Offer
   );
 }
 
+function DraftGatePopup({ c }: { c: Career }) {
+  const p = c.predraft;
+  if (!p) return null;
+  const outcome = p.lastOutcome;
+  if (!outcome || p.outcomeSeen) return null;
+  if (outcome === 'undrafted') return null;
+
+  const title = outcome === 'no-interest'
+    ? 'Los equipos no te ven listo'
+    : outcome === 'combine-failed'
+      ? 'El combine no convence'
+      : 'No acudiste al combine';
+  const reason = outcome === 'no-interest'
+    ? 'Tu nivel actual no llega al corte del draft. Sigue trabajando y vuelve a intentarlo.'
+    : outcome === 'combine-failed'
+      ? 'Fallaste demasiadas pruebas o el acierto global fue demasiado bajo. No entras al draft.'
+      : 'Los equipos notaron tu ausencia en el combine. Tu cotización baja.';
+
+  const close = () => store.act((x) => { x.predraft!.outcomeSeen = true; });
+
+  return (
+    <div className="recap" role="dialog" aria-label="No entras al draft" onClick={close}>
+      <div className="recap-box" onClick={(e) => e.stopPropagation()}>
+        <span className="recap-kicker">No entras al draft</span>
+        <h2>{title}</h2>
+        <p className="recap-line">{reason}</p>
+        <p className="recap-line small muted">Siguiente paso: vuelve al club, mejora tu cotización y vuelve a intentarlo el año que viene.</p>
+        <button type="button" className="btn pill light" onClick={close} autoFocus>Continuar</button>
+      </div>
+    </div>
+  );
+}
+
+function UndraftedPopup({ c }: { c: Career }) {
+  if (c.phase !== 'signing') return null;
+  if (!c.flags.undrafted || c.flags.undraftedSeen) return null;
+
+  const close = () => store.act((x) => { x.flags.undraftedSeen = 1; });
+
+  return (
+    <div className="recap" role="dialog" aria-label="Sin llamada en el draft" onClick={close}>
+      <div className="recap-box" onClick={(e) => e.stopPropagation()}>
+        <span className="recap-kicker">Noche del draft</span>
+        <h2>Nadie te eligió</h2>
+        <p className="recap-line">Ninguna franquicia apostó por ti esta noche. No es el final: el mercado, Europa y la G League siguen abiertos.</p>
+        <button type="button" className="btn pill light" onClick={close} autoFocus>Ver opciones</button>
+      </div>
+    </div>
+  );
+}
+
 function Decision({ c }: { c: Career }) {
   const u = userOf(c);
   const t = teamOf(c);
@@ -588,9 +641,9 @@ function Decision({ c }: { c: Career }) {
         const testsWord = rule.tests === 2 ? 'Dos' : 'Tres';
         return (
           <Block scene={'training'} title="Draft Combine" desc={`Formato ${c.mode === 'full' ? 'Larga' : 'Normal'}: plan, ${rule.interviews} entrevista${rule.interviews === 1 ? '' : 's'} y ${rule.tests} pruebas. Si fallas demasiadas pruebas o no acudes, no entrarás al draft.`}>
-            <Choice top="Riesgo alto" title="Demostrar todo" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'full'))}>{`${testsWord} pruebas con dificultad según tu proyección.`}</Choice>
-            <Choice top="Sin red" title="A lo bestia" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'hard'))}>{`${testsWord} pruebas al máximo: más recompensa y más riesgo.`}</Choice>
-            <Choice top="Prudente" title="Ir con calma" scene="training" onClick={() => store.act((x) => api.doCombine(x, 'safe'))}>{`${testsWord} pruebas fáciles; menos margen de subida.`}</Choice>
+            <Choice top="Normal" title="Demostrar todo" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'full'))}>{`${testsWord} pruebas a tu nivel. Bonus estándar.`}</Choice>
+            <Choice top="Exigente" title="A lo bestia" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'hard'))}>{`${testsWord} pruebas al máximo: bonus ×1.2 y riesgo real.`}</Choice>
+            <Choice top="Fácil" title="Ir con calma" scene="training" onClick={() => store.act((x) => api.doCombine(x, 'safe'))}>{`${testsWord} pruebas sencillas: zona amplia, bonus ×0.85.`}</Choice>
             <Choice top="Confianza" title="No acudir" scene="rest" onClick={() => store.act((x) => api.doCombine(x, 'skip'))}>Los equipos lo notarán.</Choice>
           </Block>
         );

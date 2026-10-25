@@ -49,26 +49,20 @@ describe('draft combine', () => {
     const c = api.newCareer(baseInput({ route: 'college', origin: '' }), 7);
     const u = userOf(c);
 
-    u.ovr = 55;
-    u.pot = 65; // 59.5
-    expect(combineTier(u)).toBe('easy');
-    u.ovr = 60;
-    u.pot = 68; // 63.6
-    expect(combineTier(u)).toBe('easy');
+    u.ovr = 55; u.pot = 65;
+    expect(combineTier(u)).toBe('easy');  // ovr 55 < 64
+    u.ovr = 63; u.pot = 80;
+    expect(combineTier(u)).toBe('easy');  // ovr 63 < 64
 
-    u.ovr = 64;
-    u.pot = 64; // 64.0
-    expect(combineTier(u)).toBe('normal');
-    u.ovr = 70;
-    u.pot = 74; // 71.8
-    expect(combineTier(u)).toBe('normal');
+    u.ovr = 64; u.pot = 64;
+    expect(combineTier(u)).toBe('normal'); // ovr 64 >= 64, < 72
+    u.ovr = 71; u.pot = 90;
+    expect(combineTier(u)).toBe('normal'); // ovr 71 < 72
 
-    u.ovr = 72;
-    u.pot = 72; // 72.0
-    expect(combineTier(u)).toBe('hard');
-    u.ovr = 80;
-    u.pot = 90; // 84.5
-    expect(combineTier(u)).toBe('hard');
+    u.ovr = 72; u.pot = 72;
+    expect(combineTier(u)).toBe('hard');  // ovr 72 >= 72
+    u.ovr = 80; u.pot = 90;
+    expect(combineTier(u)).toBe('hard');  // ovr 80 >= 72
   });
 
   test('the third test depends on the position', () => {

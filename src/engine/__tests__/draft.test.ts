@@ -44,7 +44,7 @@ test('a high-profile prospect is drafted', () => {
 test('a bad interview lowers the board value and a good one raises it', () => {
   const good = atLottery(33, 65, 78);
   const gp = good.predraft!;
-  gp.interviewQuestions = [{ teamId: 'ATL', question: 'q', answers: ['a', 'b', 'c'] }];
+  gp.interviewQuestions = [{ teamId: 'ATL', question: 'q', answers: ['a', 'b', 'c'], correctIndex: 0 }];
   gp.interviews = [];
   gp.userBoosts = {};
   const goodBefore = gp.stockBonus;
@@ -53,7 +53,7 @@ test('a bad interview lowers the board value and a good one raises it', () => {
 
   const bad = atLottery(34, 65, 78);
   const bp = bad.predraft!;
-  bp.interviewQuestions = [{ teamId: 'ATL', question: 'q', answers: ['a', 'b', 'c'] }];
+  bp.interviewQuestions = [{ teamId: 'ATL', question: 'q', answers: ['a', 'b', 'c'], correctIndex: 0 }];
   bp.interviews = [];
   bp.userBoosts = {};
   const badBefore = bp.stockBonus;

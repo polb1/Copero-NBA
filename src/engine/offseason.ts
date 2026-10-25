@@ -26,7 +26,16 @@ import { startingSalary } from './mindset';
 /** Board value used by the draft: a low OVR is heavily discounted so mock and simulation agree. */
 export function userDraftValue(u: Player, stockBonus: number) {
   const penalty = u.ovr < 58 ? DRAFT_GATE.penaltyLow : u.ovr < 62 ? DRAFT_GATE.penaltyMid : u.ovr < 66 ? DRAFT_GATE.penaltyHigh : 0;
-  return prospectValue(u.ovr, u.pot, u.age) + stockBonus - penalty - Math.max(0, u.age - 19) * DRAFT_GATE.agePenalty;
+  // Bonus de atributos clave: athleticism + skill. Tie-breaker real, clamped ±2.
+  const attrBonus = clamp(
+    ((u.attrs.vert + u.attrs.speed + u.attrs.accel) / 3 - 50) * 0.04
+    + ((u.attrs.three + u.attrs.mid + u.attrs.handle) / 3 - 50) * 0.03,
+    -2.0,
+    2.0,
+  );
+  return prospectValue(u.ovr, u.pot, u.age) + stockBonus - penalty
+    - Math.max(0, u.age - 19) * DRAFT_GATE.agePenalty
+    + attrBonus;
 }
 
 export function draftRuleFor(mode: Career['mode']): DraftRule {
@@ -527,7 +536,7 @@ export function chooseEuroCareer(c: Career) {
   addNews(c, 'contract', 'Carrera en el extranjero', `${fullName(u)} renuncia al draft de la NBA para hacer carrera fuera. La puerta de la NBA seguirá abierta si su nivel lo merece.`, 'neutral');
 }
 
-export function returnToClub(c: Career, outcome?: 'no-interest' | 'combine-failed' | 'skipped-combine') {
+export function returnToClub(c: Career, outcome?: 'no-interest' | 'combine-failed' | 'skipped-combine' | 'wildcard-failed') {
   const p = c.predraft;
   if (!p) return;
   const u = userOf(c);
@@ -543,6 +552,7 @@ export function returnToClub(c: Career, outcome?: 'no-interest' | 'combine-faile
   p.step = 'season';
   p.waits = (p.waits ?? 0) + 1;
   p.lastOutcome = outcome;
+  p.outcomeSeen = outcome ? false : true;
   if (p.waits >= DRAFT_GATE.maxWaits) p.noNbaInterest = true;
   p.combineTests = undefined;
   p.combinePlan = undefined;
@@ -556,11 +566,14 @@ export function returnToClub(c: Career, outcome?: 'no-interest' | 'combine-faile
   p.userPick = null;
   p.draftClass = undefined;
   p.stockBonus = 0;
-  const title = outcome === 'combine-failed' ? 'El combine no convence'
+  const title = outcome === 'wildcard-failed' ? 'No convences en el entrenamiento'
+    : outcome === 'combine-failed' ? 'El combine no convence'
     : outcome === 'skipped-combine' ? 'No acudió al combine'
     : outcome === 'no-interest' ? 'Sin interés NBA'
     : 'Un año más de formación';
-  const text = outcome === 'combine-failed'
+  const text = outcome === 'wildcard-failed'
+    ? `El entrenamiento a puerta cerrada no convence: ${fullName(u)} no entra al draft y seguirá en ${p.clubName}.`
+    : outcome === 'combine-failed'
     ? `El combine no deja buen sabor: ${fullName(u)} no entra al draft y seguirá en ${p.clubName}.`
     : outcome === 'skipped-combine'
       ? `${fullName(u)} no se presenta al combine. Las franquicias lo notan y seguirá en ${p.clubName}.`
@@ -572,6 +585,14 @@ export function returnToClub(c: Career, outcome?: 'no-interest' | 'combine-faile
 
 export function waitAnotherYear(c: Career) {
   returnToClub(c);
+}
+
+function buildUserClass(c: Career, stockBonus: number): void {
+  const p = c.predraft!;
+  const u = userOf(c);
+  const cls = generateDraftClass(c.seed, c.league.season + 1);
+  const me: Prospect = { id: 'user', name: fullName(u), nat: u.nat, pos: u.pos, age: u.age, ovr: u.ovr, pot: u.pot, arch: u.arch, isUser: true, value: userDraftValue(u, stockBonus) };
+  p.draftClass = [...cls.slice(0, 71), me].sort((a, b) => b.value - a.value);
 }
 
 export function predraftDecision(c: Career, declare: boolean): boolean {
@@ -600,25 +621,22 @@ export function predraftDecision(c: Career, declare: boolean): boolean {
   p.interviewTeams = [];
   p.mock = undefined;
   p.step = 'combine';
-  const cls = generateDraftClass(c.seed, c.league.season + 1);
+  p.outcomeSeen = true;
   const stats = c.satStats;
   const gp = Math.max(1, stats.gp);
   const prod = clamp((stats.gmsc / gp - 10) * 0.5, -4, 6);
   p.stockBonus = prod;
-  const u = userOf(c);
-  const me: Prospect = { id: 'user', name: fullName(u), nat: u.nat, pos: u.pos, age: u.age, ovr: u.ovr, pot: u.pot, arch: u.arch, isUser: true, value: userDraftValue(u, prod) };
-  p.draftClass = [...cls.slice(0, 71), me].sort((a, b) => b.value - a.value);
-  addNews(c, 'draft', `${fullName(u)} se declara elegible para el draft`, `Tras promediar ${(stats.pts / gp).toFixed(1)} puntos, el ${u.pos} da el salto. Próximo paso: el Draft Combine.`, 'good');
+  buildUserClass(c, prod);
+  addNews(c, 'draft', `${fullName(userOf(c))} se declara elegible para el draft`, `Tras promediar ${(stats.pts / gp).toFixed(1)} puntos, el ${userOf(c).pos} da el salto. Próximo paso: el Draft Combine.`, 'good');
   return true;
 }
 
-/** Level of the combine tests implied by the prospect projection (OVR 55% + potential 45%). */
+/** Level of the combine tests implied by the prospect's OVR. */
 export function combineTier(u: Player): MinigameTierId {
-  const projected = u.ovr * 0.55 + u.pot * 0.45;
-  return projected < 64 ? 'easy' : projected < 72 ? 'normal' : 'hard';
+  return u.ovr < 64 ? 'easy' : u.ovr < 72 ? 'normal' : 'hard';
 }
 
-export type CombinePlan = 'full' | 'hard' | 'safe' | 'measure' | 'skip';
+export type CombinePlan = 'full' | 'hard' | 'safe' | 'measure' | 'skip' | 'partial';
 
 /** Event-level shape of a combine test: the combine is scored, so the outcomes carry no effects. */
 function combineDef(t: CombineTestDef): MinigameDef {
@@ -648,6 +666,15 @@ function toMock(c: Career, rng: Rng) {
   p.step = 'mock';
 }
 
+function shuffleArray<T>(arr: T[], rng: Rng): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rng.next() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 /** Legacy tail of the combine: the user's board value, the mock range and the interview teams. */
 function afterCombine(c: Career, rng: Rng): boolean {
   const p = c.predraft!;
@@ -664,7 +691,15 @@ function afterCombine(c: Career, rng: Rng): boolean {
   const teams = order.slice(Math.max(0, range.pickLow - 2), Math.min(order.length, range.pickHigh + 2));
   const rule = draftRuleFor(c.mode);
   p.interviewTeams = rng.shuffle([...new Set(teams)]).slice(0, rule.interviews);
-  p.interviewQuestions = p.interviewTeams.map((teamId, i) => INTERVIEW_QUESTIONS[(i + Math.floor(rng.next() * INTERVIEW_QUESTIONS.length)) % INTERVIEW_QUESTIONS.length]).map((q, i) => ({ teamId: p.interviewTeams[i], question: q.q, answers: q.a }));
+  p.interviewQuestions = p.interviewTeams.map((teamId, i) => {
+    const qIdx = (i + Math.floor(rng.next() * INTERVIEW_QUESTIONS.length)) % INTERVIEW_QUESTIONS.length;
+    const q = INTERVIEW_QUESTIONS[qIdx];
+    const shuffleRng = rngFor(c.seed, 'interview-shuffle', c.league.season, i);
+    const indices = shuffleArray([0, 1, 2], shuffleRng);
+    const shuffledAnswers = indices.map(k => q.a[k]);
+    const correctIndex = indices.indexOf(0);
+    return { teamId, question: q.q, answers: shuffledAnswers, correctIndex };
+  });
   if (rule.interviews === 0) {
     toMock(c, rng);
     return true;
@@ -701,8 +736,20 @@ export function doCombine(c: Career, choice: CombinePlan) {
   // Played plans: the measurements are taken now and the stock waits for the tests.
   p.combine = { sprint, vertical, lane, shooting, grade: 'Pendiente' };
   p.combinePlan = choice;
+  if (choice === 'partial') {
+    const ids = combineTestIds(u.pos);
+    const all = ids.map((id) => {
+      const def = COMBINE_TESTS.find((t) => t.id === id)!;
+      return { id: def.id, label: def.label, desc: def.desc, weight: def.weight, spec: buildSpec(combineDef(def), u, c, 'normal') };
+    });
+    // Choose the test with the highest autoProb (tie: first in combineTestIds order).
+    const best = all.reduce((acc, curr) => curr.spec.autoProb > acc.spec.autoProb ? curr : acc);
+    p.combineTests = [best];
+    p.step = 'combineTests';
+    return;
+  }
   const rule = draftRuleFor(c.mode);
-  const tier: MinigameTierId = choice === 'hard' ? 'hard' : choice === 'safe' ? 'easy' : combineTier(u);
+  const tier: MinigameTierId = choice === 'hard' ? 'hard' : choice === 'safe' ? 'easy' : 'normal';
   const ids = combineTestIds(u.pos).slice(0, rule.tests);
   p.combineTests = ids.map((id) => {
     const def = COMBINE_TESTS.find((t) => t.id === id)!;
@@ -752,7 +799,10 @@ export function finishCombine(c: Career) {
   p.combineResult = { grade, bonus, detail: `${Math.round(q * 100)}% de acierto · cobertura ${Math.round(coverage * 100)}%` };
   if (p.combine) p.combine.grade = grade;
   const failedTests = tests.filter((t) => ((t.made ?? 0) / Math.max(1, t.spec.attempts)) < DRAFT_GATE.minAccuracy).length;
-  const failed = failedTests >= DRAFT_GATE.maxFailures || failedTests / tests.length >= DRAFT_GATE.failRatio || q < DRAFT_GATE.minAccuracy;
+  const partial = p.combinePlan === 'partial';
+  const failed = partial
+    ? failedTests >= 1 || q < DRAFT_GATE.partialMinAccuracy
+    : failedTests >= DRAFT_GATE.maxFailures || q < DRAFT_GATE.minAccuracy;
   if (failed) {
     returnToClub(c, 'combine-failed');
     return;
@@ -781,7 +831,9 @@ export function answerInterview(c: Career, index: number, answer: number) {
   const u = userOf(c);
   const q = p.interviewQuestions![index];
   const rng = rngFor(c.seed, 'interview', index, answer);
-  const base = answer === 0 ? 1.6 : answer === 1 ? (c.reputation > 40 ? 0.8 : -0.6) : -1.5;
+  const correctIndex = q.correctIndex ?? 0;
+  const neutralIndex = [0, 1, 2].find(k => k !== correctIndex && k !== (correctIndex === 0 ? 2 : correctIndex === 2 ? 0 : 2)) ?? 1;
+  const base = answer === correctIndex ? 1.6 : answer === neutralIndex ? (c.reputation > 40 ? 0.8 : -0.6) : -1.5;
   const val = base + rng.normal(0, 0.6);
   const result = val > 0.8 ? 'good' : val > -0.4 ? 'neutral' : 'bad';
   p.interviews.push({ teamId: q.teamId, result, answer });

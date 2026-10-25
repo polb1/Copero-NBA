@@ -24,11 +24,11 @@ export interface MinigameTierDef {
 
 export const MINIGAME_TIERS: MinigameTierDef[] = [
   { id: 'easy', label: 'Suave', desc: 'Zona amplia, menos castigo. Recompensa menor.',
-    zoneMul: 1.35, speedMul: 0.82, probMul: 1.08, rewardMul: 0.70, riskMul: 0.60, injury: 0, windowMul: 1.35 },
+    zoneMul: 1.35, speedMul: 0.82, probMul: 1.08, rewardMul: 0.85, riskMul: 0.60, injury: 0, windowMul: 1.35 },
   { id: 'normal', label: 'Normal', desc: 'El equilibrio de siempre.',
-    zoneMul: 1, speedMul: 1, probMul: 1, rewardMul: 1, riskMul: 1, injury: 0.06, windowMul: 1 },
+    zoneMul: 1, speedMul: 1, probMul: 1, rewardMul: 1.0, riskMul: 1, injury: 0.06, windowMul: 1 },
   { id: 'hard', label: 'Exigente', desc: 'Zona mínima y más castigo. Si fallas, duele.',
-    zoneMul: 0.62, speedMul: 1.32, probMul: 0.82, rewardMul: 1.8, riskMul: 2.0, injury: 0.24, windowMul: 0.64 },
+    zoneMul: 0.62, speedMul: 1.32, probMul: 0.82, rewardMul: 1.2, riskMul: 2.0, injury: 0.24, windowMul: 0.64 },
 ];
 
 export const MINIGAME_TIER_LABEL: Record<MinigameTierId, string> = {

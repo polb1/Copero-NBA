@@ -149,13 +149,17 @@ export const DRAFT_RULES: Record<'express' | 'quick' | 'full' | 'daily', DraftRu
 export const DRAFT_GATE = {
   picks: 60,          // el corte se calcula sobre el pick (picks - 3)
   cutoffPick: 57,
-  margin: 1.5,
+  margin: 0.25,
   failRatio: 0.5,     // proporción de pruebas falladas que retira del draft
   maxFailures: 2,     // pruebas falladas que retira del draft
   minAccuracy: 0.4,   // acierto global mínimo del combine
+  partialMinAccuracy: 0.6, // acierto mínimo del combine parcial
   maxWaits: 3,        // años de espera antes de cerrar la puerta NBA
   penaltyLow: 16,     // OVR < 58
   penaltyMid: 9,      // OVR < 62
   penaltyHigh: 4,     // OVR < 66
   agePenalty: 1.2,    // castigo adicional por año a partir de 19
+  wildcardAttempts: 5, // intentos del drill de wildcard
+  wildcardOk: 2,      // aciertos mínimos para ganar el wildcard
+  wildcardStock: -1,  // bonus de stock al ganar el wildcard
 } as const;

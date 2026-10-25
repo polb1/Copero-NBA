@@ -377,9 +377,9 @@ export interface Prospect {
 
 export interface PreDraft {
   route: 'college' | 'international' | 'alternative' | 'drafted';
-  step: 'club' | 'season' | 'decision' | 'combine' | 'combineTests' | 'interviews' | 'mock' | 'lottery' | 'draft' | 'done';
+  step: 'club' | 'season' | 'decision' | 'combine' | 'combineTests' | 'interviews' | 'mock' | 'lottery' | 'draft' | 'done' | 'wildcard';
   /** Plan chosen at the combine. Absent on saves v1. */
-  combinePlan?: 'full' | 'hard' | 'safe' | 'measure' | 'skip';
+  combinePlan?: 'full' | 'hard' | 'safe' | 'measure' | 'skip' | 'partial';
   /** Tests of the phase-2 combine. Absent on saves v1. */
   combineTests?: { id: string; label: string; desc: string; weight: number; spec: MinigameSpec; made?: number }[];
   /** Result of the phase-2 combine. Absent on saves v1. */
@@ -387,7 +387,7 @@ export interface PreDraft {
   /** Starting clubs offered after the agency decision (simple flow). */
   clubChoices?: { name: string; comp: 'NCAA' | 'EUR' }[];
   userBoosts: Record<string, number>;
-  interviewQuestions?: { teamId: string; question: string; answers: string[] }[];
+  interviewQuestions?: { teamId: string; question: string; answers: string[]; correctIndex: number }[];
   seasonLog?: string;
   clubName: string;
   satelliteDone: boolean;
@@ -402,9 +402,15 @@ export interface PreDraft {
   lottery?: { teamId: string; from: number; to: number }[];
   picks?: { pick: number; teamId: string; prospectId: string }[];
   userPick?: { pick: number; round: number; teamId: string } | null;
+  /** @true cuando el jugador ha visto el outcome del último intento (popup ya mostrado). */
+  outcomeSeen?: boolean;
+  /** @true cuando el jugador ha ganado el wildcard. */
+  wildcard?: boolean;
+  /** Prueba de wildcard pendiente: spec y made (si se jugó). */
+  wildcardTest?: { spec: MinigameSpec; made?: number };
   workouts: string[];
   /** Motivo por el que el último intento no llegó al draft (ausente en saves v1). */
-  lastOutcome?: 'no-interest' | 'combine-failed' | 'skipped-combine';
+  lastOutcome?: 'no-interest' | 'combine-failed' | 'skipped-combine' | 'wildcard-failed' | 'undrafted';
   /** Años de espera acumulados tras no entrar al draft. */
   waits?: number;
   /** La puerta NBA se ha cerrado: solo quedan ofertas exteriores. */
