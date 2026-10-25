@@ -578,12 +578,9 @@ function Decision({ c }: { c: Career }) {
       }
       if (p.step === 'combine') {
         const rule = DRAFT_RULES[c.mode] ?? DRAFT_RULES.quick;
-        const decisions = rule.interviews + (rule.plan ? 1 : 0);
-        const pace = `Draft: ${decisions} ${decisions === 1 ? 'decisión' : 'decisiones'} + ${rule.tests} ${rule.tests === 1 ? 'prueba' : 'pruebas'}`;
         if (!rule.plan) {
           return (
             <Block scene={'training'} title="Draft Combine" desc="Formato Exprés: una prueba y una entrevista para entrar al draft. Sin plan de combine.">
-              <div className="risk-row"><span className="chip accent">{pace}</span></div>
               <Choice top="Exprés" title="Empezar el combine" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'full'))}>Una prueba según tu proyección y una entrevista.</Choice>
             </Block>
           );
@@ -591,7 +588,6 @@ function Decision({ c }: { c: Career }) {
         const testsWord = rule.tests === 2 ? 'Dos' : 'Tres';
         return (
           <Block scene={'training'} title="Draft Combine" desc={`Formato ${c.mode === 'full' ? 'Larga' : 'Normal'}: plan, ${rule.interviews} entrevista${rule.interviews === 1 ? '' : 's'} y ${rule.tests} pruebas. Si fallas demasiadas pruebas o no acudes, no entrarás al draft.`}>
-            <div className="risk-row"><span className="chip accent">{pace}</span></div>
             <Choice top="Riesgo alto" title="Demostrar todo" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'full'))}>{`${testsWord} pruebas con dificultad según tu proyección.`}</Choice>
             <Choice top="Sin red" title="A lo bestia" scene="clutch" onClick={() => store.act((x) => api.doCombine(x, 'hard'))}>{`${testsWord} pruebas al máximo: más recompensa y más riesgo.`}</Choice>
             <Choice top="Prudente" title="Ir con calma" scene="training" onClick={() => store.act((x) => api.doCombine(x, 'safe'))}>{`${testsWord} pruebas fáciles; menos margen de subida.`}</Choice>
