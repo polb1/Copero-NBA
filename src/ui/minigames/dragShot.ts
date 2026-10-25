@@ -73,9 +73,10 @@ export function dragGeometry(
   attempt: number,
   spec: Pick<MinigameSpec, 'kind' | 'zone'>,
   aspect = 1,
+  customOrigin?: { x: number; y: number },
 ): ShotGeometry {
   const a = safeAspect(aspect);
-  const origin = ballOrigin(attempt);
+  const origin = customOrigin ?? ballOrigin(attempt);
   const rim = rimPoint(attempt);
   const dx = (rim.x - origin.x) / 100;
   const dy = ((rim.y - origin.y) / 100) * a;
@@ -149,8 +150,9 @@ export function resolveDragShot(
   pointer: { x: number; y: number },
   spec: Pick<MinigameSpec, 'kind' | 'zone'>,
   aspect = 1,
+  customOrigin?: { x: number; y: number },
 ): boolean {
-  const g = dragGeometry(attempt, spec, aspect);
+  const g = dragGeometry(attempt, spec, aspect, customOrigin);
   const aim = aimFromDrag(g.origin, pointer, aspect);
   if (aim.length < g.minPull) return false;
   return shotError(g, aim.angleDeg, aim.power).hit;
@@ -171,8 +173,9 @@ export function flightPlan(
   power: number,
   spec: Pick<MinigameSpec, 'kind' | 'zone'>,
   aspect = 1,
+  customOrigin?: { x: number; y: number },
 ): FlightPlan {
-  const g = dragGeometry(attempt, spec, aspect);
+  const g = dragGeometry(attempt, spec, aspect, customOrigin);
   const e = shotError(g, angleDeg, power);
   const hit = e.hit;
   const board = !hit && boardBounce(g, e);
@@ -181,9 +184,10 @@ export function flightPlan(
   const origin = g.origin;
   const rim = g.rim;
   const net = { x: rim.x, y: RIM_Y + 3 };
+  // Natural parabolic arc peaking high above the line of sight:
   const ctrl = {
     x: (origin.x + rim.x) / 2,
-    y: Math.min(origin.y, rim.y - 1) - 18 - 15 * power,
+    y: Math.min(origin.y, rim.y - 1) - 22 - 16 * power,
   };
 
   const segs: PathSeg[] = [];
@@ -191,33 +195,43 @@ export function flightPlan(
   if (hit) {
     const apex = { x: rim.x, y: rim.y - 1 };
     segs.push({ from: clip(origin), to: clip(apex), curve: clip(ctrl) });
-    segs.push({ from: clip(apex), to: clip(net) });
+    segs.push({ from: clip(apex), to: clip(net), curve: clip({ x: rim.x, y: rim.y + 1 }) });
   } else if (miss === 'short') {
-    const end = clip({
-      x: origin.x + (rim.x - origin.x) * 0.55,
-      y: origin.y + (rim.y - origin.y) * 0.55,
-    });
-    segs.push({ from: clip(origin), to: end, curve: clip(ctrl) });
-    segs.push({ from: end, to: clip({ x: end.x, y: 92 }) });
+    // Hits front rim and bounces backwards and down:
+    const frontRim = clip({ x: rim.x - 3.5, y: rim.y + 0.5 });
+    segs.push({ from: clip(origin), to: frontRim, curve: clip(ctrl) });
+    const floor = clip({ x: rim.x - 12, y: 92 });
+    const bounceCtrl = clip({ x: rim.x - 7, y: rim.y - 3 });
+    segs.push({ from: frontRim, to: floor, curve: bounceCtrl });
   } else if (miss === 'long') {
-    const first = clip({ x: rim.x + 8, y: rim.y - 6 });
-    segs.push({ from: clip(origin), to: first, curve: clip(ctrl) });
     if (board) {
+      // Hits backboard, ricochets and bounces down:
+      const boardHit = clip({ x: rim.x + 8, y: rim.y - 6 });
+      segs.push({ from: clip(origin), to: boardHit, curve: clip(ctrl) });
       const bounce = clip({ x: rim.x + 14, y: rim.y + 2 });
-      segs.push({ from: first, to: bounce });
-      segs.push({ from: bounce, to: clip({ x: rim.x + 18, y: 92 }) });
+      segs.push({ from: boardHit, to: bounce });
+      const floor = clip({ x: rim.x + 18, y: 92 });
+      const bounceCtrl = clip({ x: rim.x + 16, y: rim.y + 4 });
+      segs.push({ from: bounce, to: floor, curve: bounceCtrl });
     } else {
-      segs.push({ from: first, to: clip({ x: rim.x + 18, y: 92 }) });
+      // Hits back rim and ricochets:
+      const backRim = clip({ x: rim.x + 4, y: rim.y });
+      segs.push({ from: clip(origin), to: backRim, curve: clip(ctrl) });
+      const floor = clip({ x: rim.x + 18, y: 92 });
+      const bounceCtrl = clip({ x: rim.x + 11, y: rim.y - 5 });
+      segs.push({ from: backRim, to: floor, curve: bounceCtrl });
     }
   } else {
-    // wide-left or wide-right
+    // wide-left or wide-right: grazes rim side and curves out to floor
     const wx = rim.x + (miss === 'wide-left' ? -14 : 14);
-    const first = clip({ x: wx, y: rim.y - 2 });
-    segs.push({ from: clip(origin), to: first, curve: clip(ctrl) });
-    segs.push({ from: first, to: clip({ x: wx, y: 92 }) });
+    const sideRim = clip({ x: wx, y: rim.y - 2 });
+    segs.push({ from: clip(origin), to: sideRim, curve: clip(ctrl) });
+    const floor = clip({ x: wx + (miss === 'wide-left' ? -6 : 6), y: 92 });
+    const bounceCtrl = clip({ x: wx + (miss === 'wide-left' ? -3 : 3), y: rim.y - 2 });
+    segs.push({ from: sideRim, to: floor, curve: bounceCtrl });
   }
 
-  const base = hit ? 1000 : 1500;
+  const base = hit ? 1050 : 1450;
   const extra = hit ? 250 * power : 200 * power + (board ? 180 : 0);
   const totalMs = Math.round(base + extra);
 
@@ -241,10 +255,39 @@ export function flightPoint(plan: FlightPlan, tMs: number): { x: number; y: numb
     const last = segs[n - 1];
     return { x: last.to.x, y: last.to.y, seg: n - 1 };
   }
-  const seg = Math.min(n - 1, Math.floor((t / total) * n));
+
+  let seg = 0;
+  let u = 0;
+  if (n === 2) {
+    // 76% of time spent on the majestic high arc flight, 24% on net/rebound
+    const tSplit = total * 0.76;
+    if (t < tSplit) {
+      seg = 0;
+      u = clamp(t / tSplit, 0, 1);
+    } else {
+      seg = 1;
+      u = clamp((t - tSplit) / (total - tSplit), 0, 1);
+    }
+  } else if (n === 3) {
+    const t1 = total * 0.62;
+    const t2 = total * 0.82;
+    if (t < t1) {
+      seg = 0;
+      u = clamp(t / t1, 0, 1);
+    } else if (t < t2) {
+      seg = 1;
+      u = clamp((t - t1) / (t2 - t1), 0, 1);
+    } else {
+      seg = 2;
+      u = clamp((t - t2) / (total - t2), 0, 1);
+    }
+  } else {
+    const span = total / n;
+    seg = Math.min(n - 1, Math.floor(t / span));
+    u = clamp((t - seg * span) / span, 0, 1);
+  }
+
   const cur = segs[seg];
-  const span = total / n;
-  const u = span > 0 ? clamp((t - seg * span) / span, 0, 1) : 0;
   if (u <= 0) return { x: cur.from.x, y: cur.from.y, seg };
   if (u >= 1) return { x: cur.to.x, y: cur.to.y, seg };
   if (cur.curve) {
@@ -274,4 +317,29 @@ export function flightPathD(plan: FlightPlan): string {
     );
   }
   return parts.join(' ');
+}
+
+export const COURT_SPOTS: Array<{ x: number; y: number }> = [
+  { x: 26, y: 76 }, // 45º izquierda
+  { x: 48, y: 82 }, // frontal cabecera
+  { x: 70, y: 74 }, // 45º derecha
+  { x: 36, y: 64 }, // media distancia izquierda
+  { x: 60, y: 65 }, // media distancia derecha
+  { x: 22, y: 58 }, // esquina izquierda
+  { x: 78, y: 60 }, // esquina derecha
+];
+
+/**
+ * Random court position for shooting attempts.
+ * Spawns the player across distinct court locations with jitter.
+ */
+export function randomCourtOrigin(attempt: number, salt = 0): { x: number; y: number } {
+  const idx = (attempt * 3 + salt * 7) % COURT_SPOTS.length;
+  const base = COURT_SPOTS[idx];
+  const jx = (((attempt * 17 + salt * 5 + 3) % 9) - 4) * 0.9;
+  const jy = (((attempt * 13 + salt * 7 + 1) % 9) - 4) * 0.9;
+  return {
+    x: clamp(Math.round((base.x + jx) * 10) / 10, 18, 82),
+    y: clamp(Math.round((base.y + jy) * 10) / 10, 56, 86),
+  };
 }

@@ -8,12 +8,11 @@ import {
   MIN_PULL,
   RIM_Y,
   aimFromDrag,
-  ballOrigin,
   canStartDrag,
   dragGeometry,
-  flightPathD,
   flightPoint,
   flightPlan,
+  randomCourtOrigin,
   resolveDragShot,
   rimPoint,
   type FlightPlan,
@@ -42,12 +41,13 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
   onDone: (made: number) => void;
   onSimulate: () => void;
 }) {
+  const [sessionSeed] = useState(() => Math.floor(Math.random() * 100));
   const [attempt, setAttempt] = useState(0);
   const [made, setMade] = useState(0);
   const [shots, setShots] = useState<boolean[]>([]);
   const [flash, setFlash] = useState<'in' | 'out' | null>(null);
   const [phase, setPhase] = useState<Phase>('aim');
-  const [angle, setAngle] = useState(0);
+  const [, setAngle] = useState(0);
   const [power, setPower] = useState(0);
   const [plan, setPlan] = useState<FlightPlan | null>(null);
   const [pull, setPull] = useState<Pull | null>(null);
@@ -65,6 +65,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
   const powerRef = useRef(0);
   const madeRef = useRef(0);
   const attemptRef = useRef(0);
+  const originRef = useRef(randomCourtOrigin(0, sessionSeed));
   const done = useRef(false);
   const rafRef = useRef(0);
   const timers = useRef<number[]>([]);
@@ -127,8 +128,8 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
 
   const applyAim = useCallback((pointer: { x: number; y: number }) => {
     const aspect = aspectRef.current;
-    const g = dragGeometry(attemptRef.current, specRef.current, aspect);
-    const aim = aimFromDrag(g.origin, pointer, aspect);
+    const currentOrigin = originRef.current;
+    const aim = aimFromDrag(currentOrigin, pointer, aspect);
     angleRef.current = aim.angleDeg;
     powerRef.current = aim.power;
     setAngle(aim.angleDeg);
@@ -156,16 +157,17 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     const next = attemptRef.current + 1;
     if (next >= Math.max(1, Math.floor(specRef.current.attempts) || 1)) {
       done.current = true;
-      const last = ballOrigin(attemptRef.current);
+      const last = randomCourtOrigin(attemptRef.current, sessionSeed);
       placeBall(last.x, last.y);
       onDoneRef.current(madeRef.current);
       return;
     }
     attemptRef.current = next;
     setAttempt(next);
-    const origin = ballOrigin(next);
-    placeBall(origin.x, origin.y);
-  }, [clearTimers, placeBall, resetAim, stopRaf]);
+    const nextOrigin = randomCourtOrigin(next, sessionSeed);
+    originRef.current = nextOrigin;
+    placeBall(nextOrigin.x, nextOrigin.y);
+  }, [clearTimers, placeBall, resetAim, sessionSeed, stopRaf]);
 
   /** Verdict of a finished flight: scores it, flashes it and queues the next attempt. */
   const finish = useCallback((hit: boolean) => {
@@ -191,9 +193,10 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     const shotAttempt = attemptRef.current;
     const shotSpec = specRef.current;
     const aspect = aspectRef.current;
-    const shotPlan = flightPlan(shotAttempt, angleDeg, pwr, shotSpec, aspect);
+    const currentOrigin = originRef.current;
+    const shotPlan = flightPlan(shotAttempt, angleDeg, pwr, shotSpec, aspect, currentOrigin);
     const hit = pointer
-      ? resolveDragShot(shotAttempt, pointer, shotSpec, aspect)
+      ? resolveDragShot(shotAttempt, pointer, shotSpec, aspect, currentOrigin)
       : shotPlan.verdict === 'make';
 
     phaseRef.current = 'flight';
@@ -247,9 +250,10 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
 
   useLayoutEffect(() => {
     if (phaseRef.current !== 'aim') return;
-    const origin = ballOrigin(attemptRef.current);
+    const origin = randomCourtOrigin(attemptRef.current, sessionSeed);
+    originRef.current = origin;
     placeBall(origin.x, origin.y);
-  }, [attempt, placeBall]);
+  }, [attempt, placeBall, sessionSeed]);
 
   useEffect(() => {
     measureAspect();
@@ -329,11 +333,12 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     if (phaseRef.current !== 'aim' || done.current || draggingRef.current) return;
     measureAspect();
     const p = point(e);
-    const g = dragGeometry(attemptRef.current, specRef.current, aspectRef.current);
+    const currentOrigin = originRef.current;
+    const g = dragGeometry(attemptRef.current, specRef.current, aspectRef.current, currentOrigin);
     const rimDx = (p.x - g.rim.x) / 100;
     const rimDy = ((p.y - g.rim.y) / 100) * aspectRef.current;
     if (Math.hypot(rimDx, rimDy) <= RIM_TOUCH) return; // Touching the rim does nothing.
-    if (!canStartDrag(g.origin, p, aspectRef.current)) {
+    if (!canStartDrag(currentOrigin, p, aspectRef.current)) {
       resetAim();
       setHint(HINT_BALL);
       return;
@@ -387,23 +392,10 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     resetAim();
   };
 
-  const origin = ballOrigin(attempt);
+  const origin = randomCourtOrigin(attempt, sessionSeed);
   const rim = rimPoint(attempt);
   const aspect = Number.isFinite(aspectRef.current) && aspectRef.current > 0 ? aspectRef.current : 1;
   const num = Math.min(attempt + 1, attempts);
-  const reduced = motionReduced();
-
-  const rad = (angle * Math.PI) / 180;
-  const showArrow = phase === 'aim' && power > 0.015;
-  const arrowLen = 13 + 20 * power;
-  const tipX = origin.x + Math.cos(rad) * arrowLen;
-  const tipY = origin.y + (Math.sin(rad) * arrowLen) / aspect;
-  const head = 2.6;
-  const baseX = tipX - Math.cos(rad) * head;
-  const baseY = tipY - (Math.sin(rad) * head) / aspect;
-  const wing = head * 0.62;
-  const wingX = Math.sin(rad) * wing;
-  const wingY = (Math.cos(rad) * wing) / aspect;
 
   let bandD = '';
   if (pull) {
@@ -459,7 +451,6 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
           <path className="drag-court-line" d={`M ${rimL} ${RIM_Y} A 7 7 0 0 0 ${rimR} ${RIM_Y}`} vectorEffect="non-scaling-stroke" />
         </svg>
 
-        <span className={`drag-target${phase === 'aim' ? ' live' : ''}`} style={{ left: `${rim.x}%`, top: `${RIM_Y}%` }} aria-hidden="true" />
         <span
           className={`drag-board${plan?.board && phase === 'flight' ? ' shake' : ''}`}
           style={{
@@ -476,22 +467,6 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
           aria-hidden="true"
         />
 
-        {plan && phase === 'flight' && (
-          <svg
-            className={`drag-trail${reduced ? '' : ' drawing'}`}
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <path
-              d={flightPathD(plan)}
-              pathLength={1}
-              vectorEffect="non-scaling-stroke"
-              style={reduced ? undefined : { animationDuration: `${plan.totalMs}ms` }}
-            />
-          </svg>
-        )}
-
         {phase === 'aim' && pull && (
           <>
             <svg className="drag-pull" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -499,21 +474,6 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
             </svg>
             <span className="drag-ghost" style={{ left: `${pull.x}%`, top: `${pull.y}%` }} aria-hidden="true" />
           </>
-        )}
-
-        {showArrow && (
-          <svg className="drag-arrow" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <line
-              x1={origin.x}
-              y1={origin.y}
-              x2={baseX}
-              y2={baseY}
-              vectorEffect="non-scaling-stroke"
-            />
-            <polygon
-              points={`${tipX},${tipY} ${baseX - wingX},${baseY - wingY} ${baseX + wingX},${baseY + wingY}`}
-            />
-          </svg>
         )}
 
         <span
