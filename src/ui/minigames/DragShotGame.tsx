@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import type { PointerEvent as ReactPointerEvent } from 'react';
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react';
 import type { MinigameSpec } from '../../engine/types';
 import { clamp } from '../../engine/rng';
 import { t } from '../../i18n/i18n';
 import { motionReduced } from '../motion';
 import {
+  BALL_R,
+  FLOOR_Y,
   MIN_PULL,
   RIM_Y,
   aimFromDrag,
@@ -12,9 +14,10 @@ import {
   dragGeometry,
   flightPoint,
   flightPlan,
+  hoopLayout,
   randomCourtOrigin,
   resolveDragShot,
-  rimPoint,
+  trajectoryPreview,
   type FlightPlan,
 } from './dragShot';
 
@@ -29,6 +32,7 @@ const HINT_BALL = 'Toca el balón y arrastra hacia atrás';
 const HINT_SHORT = 'Arrastra más';
 /** Hoop touch radius in arena-width fractions: pressing the rim does nothing. */
 const RIM_TOUCH = 0.055;
+const BOARD_W = 1.2; // % del ancho
 
 const isInteractiveTarget = (target: EventTarget | null): boolean => {
   const el = target as HTMLElement | null;
@@ -52,6 +56,8 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
   const [plan, setPlan] = useState<FlightPlan | null>(null);
   const [pull, setPull] = useState<Pull | null>(null);
   const [hint, setHint] = useState<string | null>(null);
+  /** Aspect (alto/ancho) medido: en estado para que el aro/tablero se dibujen bien. */
+  const [aspectView, setAspectView] = useState(1);
 
   const arena = useRef<HTMLDivElement>(null);
   const ballEl = useRef<HTMLSpanElement>(null);
@@ -105,15 +111,15 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
 
   const measureAspect = useCallback(() => {
     const el = arena.current;
-    if (!el) {
-      aspectRef.current = 1;
-      return;
+    let v = 1;
+    if (el) {
+      const r = el.getBoundingClientRect();
+      if (Number.isFinite(r.width) && r.width > 0 && Number.isFinite(r.height) && r.height > 0) {
+        v = r.height / r.width;
+      }
     }
-    const r = el.getBoundingClientRect();
-    aspectRef.current =
-      Number.isFinite(r.width) && r.width > 0 && Number.isFinite(r.height) && r.height > 0
-        ? r.height / r.width
-        : 1;
+    aspectRef.current = v;
+    setAspectView((prev) => (Math.abs(prev - v) > 0.005 ? v : prev));
   }, []);
 
   const resetAim = useCallback(() => {
@@ -188,16 +194,15 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     schedule(advance, specRef.current.attempts > 5 ? 520 : 800);
   }, [advance, resetAim, schedule, stopRaf]);
 
-  const shoot = useCallback((angleDeg: number, pwr: number, pointer?: { x: number; y: number }) => {
+  const shoot = useCallback((angleDeg: number, pwr: number) => {
     if (phaseRef.current !== 'aim' || done.current || !mounted.current) return;
     const shotAttempt = attemptRef.current;
     const shotSpec = specRef.current;
     const aspect = aspectRef.current;
     const currentOrigin = originRef.current;
     const shotPlan = flightPlan(shotAttempt, angleDeg, pwr, shotSpec, aspect, currentOrigin);
-    const hit = pointer
-      ? resolveDragShot(shotAttempt, pointer, shotSpec, aspect, currentOrigin)
-      : shotPlan.verdict === 'make';
+    // El veredicto sale de la misma simulación que dibuja el vuelo.
+    const hit = shotPlan.verdict === 'make';
 
     phaseRef.current = 'flight';
     setPhase('flight');
@@ -379,7 +384,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
       return;
     }
     setHint(null);
-    shoot(aim.angleDeg, aim.power, p);
+    shoot(aim.angleDeg, aim.power);
   };
 
   const cancel = (e: ReactPointerEvent<HTMLDivElement>) => {
@@ -393,9 +398,26 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
   };
 
   const origin = randomCourtOrigin(attempt, sessionSeed);
-  const rim = rimPoint(attempt);
-  const aspect = Number.isFinite(aspectRef.current) && aspectRef.current > 0 ? aspectRef.current : 1;
+  const aspect = aspectView;
+  const g = dragGeometry(attempt, spec, aspect, origin);
+  const rim = g.rim;
+  const layout = hoopLayout(g);
+  const rimWidth = layout.rimRight.x - layout.rimLeft.x;
+  const floorLineY = FLOOR_Y + BALL_R / aspect;
   const num = Math.min(attempt + 1, attempts);
+
+  // Eventos del vuelo (para sincronizar animaciones con los impactos reales).
+  const evMs = (kind: 'rim' | 'board' | 'net'): number | undefined =>
+    plan?.events?.find((ev) => ev.kind === kind)?.tMs;
+  const flying = phase === 'flight' || phase === 'result';
+  const boardMs = flying ? evMs('board') : undefined;
+  const rimMs = flying ? evMs('rim') : undefined;
+  const netMs = flying ? evMs('net') : undefined;
+
+  // Guía de puntería: solo el primer tramo del arco.
+  const dots = phase === 'aim' && pull
+    ? trajectoryPreview(attempt, { x: pull.x, y: pull.y }, spec, aspect, origin)
+    : [];
 
   let bandD = '';
   if (pull) {
@@ -410,18 +432,19 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     bandD = `M ${origin.x} ${origin.y} Q ${ctrlX} ${ctrlY} ${pull.x} ${pull.y}`;
   }
 
-  const paintX = clamp(rim.x - 15, 3, 66);
-  const rimL = rim.x - 7;
-  const rimR = rim.x + 7;
-  const arcL = rim.x - 40;
-  const arcR = rim.x + 40;
-  const freeThrowX = paintX + 15;
-
   const live = hint
     ? t(hint)
     : flash
       ? t(`Tiro ${num} de ${attempts}: ${flash === 'in' ? 'Dentro' : 'Fuera'}`)
       : '';
+
+  const ballStyle: CSSProperties = {
+    left: `${origin.x}%`,
+    top: `${origin.y}%`,
+    width: `${BALL_R * 2}%`,
+    height: 'auto',
+    aspectRatio: '1',
+  };
 
   return (
     <div className={`drag-game ${flash ?? ''}`}>
@@ -441,31 +464,84 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
         tabIndex={0}
         aria-label={t(`Toca el balón y arrastra hacia atrás. Tiro ${num} de ${attempts}`)}
       >
+        {/* Cancha de perfil: la misma vista en la que se simula el tiro. */}
         <svg className="drag-court" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <rect className="drag-court-floor" x="0" y="0" width="100" height="100" />
-          <line className="drag-court-line" x1="2" y1="7" x2="98" y2="7" vectorEffect="non-scaling-stroke" />
-          <rect className="drag-court-paint" x={paintX} y="7" width="30" height="42" vectorEffect="non-scaling-stroke" />
-          <line className="drag-court-line" x1={paintX} y1="49" x2={paintX + 30} y2="49" vectorEffect="non-scaling-stroke" />
-          <circle className="drag-court-line" cx={freeThrowX} cy="49" r="8" vectorEffect="non-scaling-stroke" />
-          <path className="drag-court-line" d={`M ${arcL} 7 A 40 37 0 0 0 ${arcR} 7`} vectorEffect="non-scaling-stroke" />
-          <path className="drag-court-line" d={`M ${rimL} ${RIM_Y} A 7 7 0 0 0 ${rimR} ${RIM_Y}`} vectorEffect="non-scaling-stroke" />
+          <rect className="drag-court-paint" x="0" y={floorLineY} width="100" height={100 - floorLineY} vectorEffect="non-scaling-stroke" />
+          <line className="drag-court-line" x1="0" y1={floorLineY} x2="100" y2={floorLineY} vectorEffect="non-scaling-stroke" />
+          {/* Poste del tablero */}
+          <line
+            className="drag-court-line"
+            x1={layout.board.x}
+            y1={layout.board.bottom}
+            x2={layout.board.x}
+            y2={floorLineY}
+            vectorEffect="non-scaling-stroke"
+          />
+          {/* Brazo del aro */}
+          <line
+            className="drag-court-line"
+            x1={layout.rimRight.x}
+            y1={RIM_Y}
+            x2={layout.board.x}
+            y2={RIM_Y}
+            vectorEffect="non-scaling-stroke"
+          />
+          {/* Marca en el suelo bajo el tirador (da sensación de distancia) */}
+          <ellipse className="drag-court-line" cx={origin.x} cy={floorLineY} rx="4" ry={1.2 / aspect} vectorEffect="non-scaling-stroke" />
         </svg>
 
         <span
-          className={`drag-board${plan?.board && phase === 'flight' ? ' shake' : ''}`}
+          className={`drag-board${boardMs !== undefined ? ' shake' : ''}`}
           style={{
-            left: `${rim.x}%`,
-            top: `${RIM_Y - 13}%`,
-            animationDelay: plan?.board && phase === 'flight' ? `${Math.round(plan.totalMs * 0.64)}ms` : undefined,
+            left: `${layout.board.x}%`,
+            top: `${layout.board.top}%`,
+            width: `${BOARD_W}%`,
+            height: `${layout.board.bottom - layout.board.top}%`,
+            transform: 'translateX(-50%)',
+            animationDelay: boardMs !== undefined ? `${boardMs}ms` : undefined,
           }}
           aria-hidden="true"
         />
-        <span className={`drag-net${flash === 'in' ? ' swish' : ''}`} style={{ left: `${rim.x}%`, top: `${RIM_Y + 2}%` }} aria-hidden="true" />
         <span
-          className={`drag-rim${flash === 'out' && plan && !plan.board ? ' clang' : ''}`}
-          style={{ left: `${rim.x}%`, top: `${RIM_Y}%` }}
+          className={`drag-net${netMs !== undefined ? ' swish' : ''}`}
+          style={{
+            left: `${rim.x}%`,
+            top: `${RIM_Y + 2}%`,
+            width: `${rimWidth * 0.9}%`,
+            animationDelay: netMs !== undefined ? `${netMs}ms` : undefined,
+          }}
           aria-hidden="true"
         />
+        <span
+          className={`drag-rim${rimMs !== undefined ? ' clang' : ''}`}
+          style={{
+            left: `${rim.x}%`,
+            top: `${RIM_Y}%`,
+            width: `${rimWidth}%`,
+            animationDelay: rimMs !== undefined ? `${rimMs}ms` : undefined,
+          }}
+          aria-hidden="true"
+        />
+
+        {dots.map((d, i) => (
+          <span
+            key={i}
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              left: `${d.x}%`,
+              top: `${d.y}%`,
+              width: '1.1%',
+              aspectRatio: '1',
+              borderRadius: '50%',
+              background: 'rgba(255,255,255,0.9)',
+              transform: 'translate(-50%, -50%)',
+              opacity: 1 - i / (dots.length + 2),
+              pointerEvents: 'none',
+            }}
+          />
+        ))}
 
         {phase === 'aim' && pull && (
           <>
@@ -477,9 +553,9 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
         )}
 
         <span
-          className={`drag-ball${phase === 'flight' || phase === 'result' ? ' flying' : ''}`}
+          className={`drag-ball${flying ? ' flying' : ''}`}
           ref={ballEl}
-          style={{ left: `${origin.x}%`, top: `${origin.y}%` }}
+          style={ballStyle}
           aria-hidden="true"
         />
 
