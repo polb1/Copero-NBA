@@ -1,0 +1,4006 @@
+{
+  "version": 1,
+  "asOf": "2026-10-26",
+  "source": "euroleague-api",
+  "clubs": {
+    "Real Madrid": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "Real Madrid",
+      "coach": "Pedro Martinez",
+      "coachNat": "ESP",
+      "players": [
+        {
+          "name": "Alberto Abalde",
+          "pos": "PF",
+          "nat": "ESP",
+          "age": 30,
+          "heightCm": 202,
+          "number": 6
+        },
+        {
+          "name": "Facundo Campazzo",
+          "pos": "PG",
+          "nat": "ESP",
+          "age": 35,
+          "heightCm": 181,
+          "number": 7
+        },
+        {
+          "name": "Chuma Okeke",
+          "pos": "C",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 201,
+          "number": 8
+        },
+        {
+          "name": "Gabriele Procida",
+          "pos": "SF",
+          "nat": "ITA",
+          "age": 24,
+          "heightCm": 201,
+          "number": 9
+        },
+        {
+          "name": "Theo Maledon",
+          "pos": "SG",
+          "nat": "FRA",
+          "age": 25,
+          "heightCm": 193,
+          "number": 12
+        },
+        {
+          "name": "Gabriel Deck",
+          "pos": "SF",
+          "nat": "ESP",
+          "age": 31,
+          "heightCm": 198,
+          "number": 14
+        },
+        {
+          "name": "Usman Garuba",
+          "pos": "C",
+          "nat": "ESP",
+          "age": 24,
+          "heightCm": 203,
+          "number": 16
+        },
+        {
+          "name": "Walter Tavares",
+          "pos": "C",
+          "nat": "CPV",
+          "age": 34,
+          "heightCm": 220,
+          "number": 22
+        },
+        {
+          "name": "Andres Feliz",
+          "pos": "PG",
+          "nat": "ESP",
+          "age": 29,
+          "heightCm": 186,
+          "number": 24
+        },
+        {
+          "name": "Olivier Sarr",
+          "pos": "C",
+          "nat": "FRA",
+          "age": 27,
+          "heightCm": 210,
+          "number": 33
+        },
+        {
+          "name": "Maksym Shulga",
+          "pos": "SF",
+          "nat": "UKR",
+          "age": 24,
+          "heightCm": 195,
+          "number": 2
+        },
+        {
+          "name": "Timothe Luwawu-Cabarrot",
+          "pos": "SF",
+          "nat": "FRA",
+          "age": 31,
+          "heightCm": 201,
+          "number": 3
+        },
+        {
+          "name": "Jaime Pradilla",
+          "pos": "PF",
+          "nat": "ESP",
+          "age": 25,
+          "heightCm": 205,
+          "number": 4
+        },
+        {
+          "name": "Mikael Jantunen",
+          "pos": "PF",
+          "nat": "FIN",
+          "age": 26,
+          "heightCm": 205,
+          "number": 20
+        },
+        {
+          "name": "Sergio Llull",
+          "pos": "SG",
+          "nat": "ESP",
+          "age": 38,
+          "heightCm": 190,
+          "number": 23
+        },
+        {
+          "name": "Damian Jones",
+          "pos": "C",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 210,
+          "number": 30
+        }
+      ]
+    },
+    "FC Barcelona": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "FC Barcelona",
+      "coach": "Aleksander Sekulic",
+      "coachNat": "SLO",
+      "players": [
+        {
+          "name": "Kevin Punter",
+          "pos": "PG",
+          "nat": "SRB",
+          "age": 33,
+          "heightCm": 193,
+          "number": 0
+        },
+        {
+          "name": "Dario Brizuela",
+          "pos": "PG",
+          "nat": "ESP",
+          "age": 31,
+          "heightCm": 188,
+          "number": 8
+        },
+        {
+          "name": "Juan Nunez",
+          "pos": "SG",
+          "nat": "ESP",
+          "age": 22,
+          "heightCm": 193,
+          "number": 17
+        },
+        {
+          "name": "Joel Parra",
+          "pos": "SF",
+          "nat": "ESP",
+          "age": 26,
+          "heightCm": 201,
+          "number": 44
+        },
+        {
+          "name": "Umoja Gibson",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 185,
+          "number": 1
+        },
+        {
+          "name": "Tyrese Martin",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 198,
+          "number": 2
+        },
+        {
+          "name": "Stanley Umude",
+          "pos": "SF",
+          "nat": "NGR",
+          "age": 27,
+          "heightCm": 198,
+          "number": 3
+        },
+        {
+          "name": "Justin Robinson",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 185,
+          "number": 5
+        },
+        {
+          "name": "Agustin Ubal",
+          "pos": "SG",
+          "nat": "ITA",
+          "age": 23,
+          "heightCm": 198,
+          "number": 10
+        },
+        {
+          "name": "Olivier Nkamhoua",
+          "pos": "PF",
+          "nat": "FIN",
+          "age": 26,
+          "heightCm": 203,
+          "number": 13
+        },
+        {
+          "name": "Tosan Evbuomwan",
+          "pos": "PF",
+          "nat": "UK",
+          "age": 25,
+          "heightCm": 203,
+          "number": 20
+        },
+        {
+          "name": "Olek Balcerowski",
+          "pos": "C",
+          "nat": "POL",
+          "age": 25,
+          "heightCm": 216,
+          "number": 22
+        },
+        {
+          "name": "Justin Minaya",
+          "pos": "SG",
+          "nat": "DOM",
+          "age": 27,
+          "heightCm": 196,
+          "number": 24
+        },
+        {
+          "name": "Josh Nebo",
+          "pos": "C",
+          "nat": "SLO",
+          "age": 29,
+          "heightCm": 206,
+          "number": 32
+        },
+        {
+          "name": "Yoan Makoundou",
+          "pos": "C",
+          "nat": "FRA",
+          "age": 26,
+          "heightCm": 207,
+          "number": 55
+        }
+      ]
+    },
+    "Baskonia": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "Kosner Baskonia Vitoria-Gasteiz",
+      "coach": "Velimir Perasovic",
+      "coachNat": "CRO",
+      "players": [
+        {
+          "name": "Markus Howard",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 178,
+          "number": 0
+        },
+        {
+          "name": "Rodions Kurucs",
+          "pos": "PF",
+          "nat": "LAT",
+          "age": 28,
+          "heightCm": 206,
+          "number": 7
+        },
+        {
+          "name": "Tadas Sedekerskis",
+          "pos": "PF",
+          "nat": "LTU",
+          "age": 28,
+          "heightCm": 206,
+          "number": 8
+        },
+        {
+          "name": "Matteo Spagnolo",
+          "pos": "SG",
+          "nat": "ITA",
+          "age": 23,
+          "heightCm": 193,
+          "number": 10
+        },
+        {
+          "name": "Clement Frisch",
+          "pos": "PF",
+          "nat": "FRA",
+          "age": 24,
+          "heightCm": 201,
+          "number": 25
+        },
+        {
+          "name": "A.j. Lawson",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 198,
+          "number": 1
+        },
+        {
+          "name": "Kobi Simmons",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 192,
+          "number": 2
+        },
+        {
+          "name": "Chris Duarte",
+          "pos": "SF",
+          "nat": "DOM",
+          "age": 29,
+          "heightCm": 196,
+          "number": 5
+        },
+        {
+          "name": "Damion Baugh",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 193,
+          "number": 12
+        },
+        {
+          "name": "DJ Stewart",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 196,
+          "number": 3
+        },
+        {
+          "name": "Kenneth Faried",
+          "pos": "C",
+          "nat": "USA",
+          "age": 36,
+          "heightCm": 203,
+          "number": 35
+        },
+        {
+          "name": "Thierry Henry Alves de Souza",
+          "pos": "C",
+          "nat": "BRA",
+          "age": 18,
+          "heightCm": 211,
+          "number": 16
+        },
+        {
+          "name": "Alex Len",
+          "pos": "C",
+          "nat": "UKR",
+          "age": 33,
+          "heightCm": 213,
+          "number": 21
+        },
+        {
+          "name": "Marcio Santos",
+          "pos": "C",
+          "nat": "BRA",
+          "age": 23,
+          "heightCm": 204,
+          "number": 21
+        }
+      ]
+    },
+    "Valencia Basket": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "Valencia Basket",
+      "coach": "Xavier Albert",
+      "coachNat": "ESP",
+      "players": [
+        {
+          "name": "Kameron Taylor",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 32,
+          "heightCm": 198,
+          "number": 1
+        },
+        {
+          "name": "Josep Puerto",
+          "pos": "SG",
+          "nat": "ESP",
+          "age": 27,
+          "heightCm": 202,
+          "number": 2
+        },
+        {
+          "name": "Neal Sako",
+          "pos": "C",
+          "nat": "FRA",
+          "age": 28,
+          "heightCm": 210,
+          "number": 13
+        },
+        {
+          "name": "Yankuba Sima",
+          "pos": "C",
+          "nat": "ESP",
+          "age": 30,
+          "heightCm": 209,
+          "number": 77
+        },
+        {
+          "name": "TJ Shorts",
+          "pos": "PG",
+          "nat": "MKD",
+          "age": 29,
+          "heightCm": 175,
+          "number": 0
+        },
+        {
+          "name": "Nathan Reuvers",
+          "pos": "PF",
+          "nat": "HUN",
+          "age": 28,
+          "heightCm": 209,
+          "number": 3
+        },
+        {
+          "name": "Dylan Osetkowski",
+          "pos": "SF",
+          "nat": "GER",
+          "age": 30,
+          "heightCm": 206,
+          "number": 8
+        },
+        {
+          "name": "Omari Moore",
+          "pos": "SG",
+          "nat": "MKD",
+          "age": 26,
+          "heightCm": 198,
+          "number": 10
+        },
+        {
+          "name": "Armoni Brooks",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 194,
+          "number": 12
+        },
+        {
+          "name": "Mouhamadou Gueye",
+          "pos": "PF",
+          "nat": "SEN",
+          "age": 28,
+          "heightCm": 208,
+          "number": 16
+        },
+        {
+          "name": "Gonzalo Corbalan",
+          "pos": "SF",
+          "nat": "ESP",
+          "age": 24,
+          "heightCm": 193,
+          "number": 20
+        },
+        {
+          "name": "Alvaro Cardenas",
+          "pos": "PG",
+          "nat": "ESP",
+          "age": 24,
+          "heightCm": 185,
+          "number": 7
+        },
+        {
+          "name": "Mario Saint-Supery",
+          "pos": "PG",
+          "nat": "ESP",
+          "age": 20,
+          "heightCm": 192,
+          "number": 5
+        },
+        {
+          "name": "Lucas Mari",
+          "pos": "SG",
+          "nat": "ESP",
+          "age": 21,
+          "heightCm": 198,
+          "number": 23
+        },
+        {
+          "name": "Jasiel Rivero",
+          "pos": "SF",
+          "nat": "ESP",
+          "age": 32,
+          "heightCm": 206,
+          "number": 41
+        },
+        {
+          "name": "Nikola Mirotic",
+          "pos": "PF",
+          "nat": "ESP",
+          "age": 35,
+          "heightCm": 208,
+          "number": 33
+        }
+      ]
+    },
+    "La Laguna Tenerife": {
+      "source": "euroleague-api",
+      "comp": "U",
+      "apiName": "La Laguna Tenerife",
+      "coach": "Jaka Lakovic",
+      "coachNat": "SLO",
+      "players": [
+        {
+          "name": "Bamba Tijani",
+          "pos": "SF",
+          "nat": "SEN",
+          "age": 25,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Kyle Guy",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 188,
+          "number": 2
+        },
+        {
+          "name": "Jaime Fernandez",
+          "pos": "PG",
+          "nat": "ESP",
+          "age": 33,
+          "heightCm": 186,
+          "number": 3
+        },
+        {
+          "name": "Wesley van Beck",
+          "pos": "SF",
+          "nat": "AZE",
+          "age": 30,
+          "heightCm": 192,
+          "number": 4
+        },
+        {
+          "name": "Bruno Fitipaldo",
+          "pos": "PG",
+          "nat": "ITA",
+          "age": 35,
+          "heightCm": 184,
+          "number": 6
+        },
+        {
+          "name": "Xabi Lopez-Arostegui",
+          "pos": "PF",
+          "nat": "ESP",
+          "age": 29,
+          "heightCm": 200,
+          "number": 7
+        },
+        {
+          "name": "Marcelinho Huertas",
+          "pos": "SG",
+          "nat": "ITA",
+          "age": 43,
+          "heightCm": 190,
+          "number": 9
+        },
+        {
+          "name": "Ethan Happ",
+          "pos": "C",
+          "nat": "MKD",
+          "age": 30,
+          "heightCm": 206,
+          "number": 22
+        },
+        {
+          "name": "Vince Hunter",
+          "pos": "C",
+          "nat": "USA",
+          "age": 32,
+          "heightCm": 203,
+          "number": 32
+        },
+        {
+          "name": "Hector Alderete",
+          "pos": "PF",
+          "nat": "ESP",
+          "age": 24,
+          "heightCm": 203,
+          "number": 33
+        },
+        {
+          "name": "Arturs Kurucs",
+          "pos": "SG",
+          "nat": "LAT",
+          "age": 26,
+          "heightCm": 190,
+          "number": 47
+        },
+        {
+          "name": "Tim Abromaitis",
+          "pos": "C",
+          "nat": "USA",
+          "age": 37,
+          "heightCm": 203,
+          "number": 21
+        },
+        {
+          "name": "Aaron Doornekamp",
+          "pos": "PF",
+          "nat": "NED",
+          "age": 40,
+          "heightCm": 201,
+          "number": 42
+        },
+        {
+          "name": "Giorgi Shermadini",
+          "pos": "C",
+          "nat": "GEO",
+          "age": 37,
+          "heightCm": 217,
+          "number": 19
+        }
+      ]
+    },
+    "Fenerbahçe": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "Fenerbahce Tarfin Istanbul",
+      "coach": "Saras Jasikevicius",
+      "coachNat": "LTU",
+      "players": [
+        {
+          "name": "Wade Baldwin IV",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 30,
+          "heightCm": 193,
+          "number": 2
+        },
+        {
+          "name": "Talen Horton Tucker",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 25,
+          "heightCm": 193,
+          "number": 8
+        },
+        {
+          "name": "Onuralp Bitim",
+          "pos": "SF",
+          "nat": "TUR",
+          "age": 27,
+          "heightCm": 196,
+          "number": 17
+        },
+        {
+          "name": "Chris Silva",
+          "pos": "C",
+          "nat": "GAB",
+          "age": 30,
+          "heightCm": 203,
+          "number": 30
+        },
+        {
+          "name": "Marcus Bingham",
+          "pos": "C",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 213,
+          "number": 1
+        },
+        {
+          "name": "Johnny Juzang",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 25,
+          "heightCm": 201,
+          "number": 9
+        },
+        {
+          "name": "Trent Forrest",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 193,
+          "number": 11
+        },
+        {
+          "name": "Braxton Key",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 203,
+          "number": 12
+        },
+        {
+          "name": "Will Clyburn",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 36,
+          "heightCm": 201,
+          "number": 21
+        },
+        {
+          "name": "Shavon Shields",
+          "pos": "PF",
+          "nat": "DEN",
+          "age": 32,
+          "heightCm": 201,
+          "number": 31
+        },
+        {
+          "name": "Ignas Sargiunas",
+          "pos": "SG",
+          "nat": "LTU",
+          "age": 27,
+          "heightCm": 193,
+          "number": 43
+        },
+        {
+          "name": "Nicolo Melli",
+          "pos": "PF",
+          "nat": "ITA",
+          "age": 35,
+          "heightCm": 205,
+          "number": 4
+        },
+        {
+          "name": "Sertac Sanli",
+          "pos": "C",
+          "nat": "TUR",
+          "age": 35,
+          "heightCm": 212,
+          "number": 5
+        },
+        {
+          "name": "Melih Mahmutoglu",
+          "pos": "PG",
+          "nat": "TUR",
+          "age": 36,
+          "heightCm": 191,
+          "number": 10
+        },
+        {
+          "name": "Shane Larkin",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 34,
+          "heightCm": 180,
+          "number": 0
+        }
+      ]
+    },
+    "Anadolu Efes": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "Anadolu Efes Istanbul",
+      "coach": "Pablo Laso",
+      "coachNat": "ESP",
+      "players": [
+        {
+          "name": "Georgios Papagiannis",
+          "pos": "C",
+          "nat": "GRE",
+          "age": 29,
+          "heightCm": 220,
+          "number": 9
+        },
+        {
+          "name": "Isaia Cordinier",
+          "pos": "SG",
+          "nat": "FRA",
+          "age": 29,
+          "heightCm": 196,
+          "number": 10
+        },
+        {
+          "name": "PJ Dozier",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 30,
+          "heightCm": 198,
+          "number": 15
+        },
+        {
+          "name": "David Mutaf",
+          "pos": "SG",
+          "nat": "TUR",
+          "age": 24,
+          "heightCm": 198,
+          "number": 23
+        },
+        {
+          "name": "Ercan Osmani",
+          "pos": "PF",
+          "nat": "TUR",
+          "age": 28,
+          "heightCm": 210,
+          "number": 24
+        },
+        {
+          "name": "Erkan Yilmaz",
+          "pos": "SF",
+          "nat": "TUR",
+          "age": 28,
+          "heightCm": 197,
+          "number": 33
+        },
+        {
+          "name": "Jordan Loyd",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 33,
+          "heightCm": 193,
+          "number": 3
+        },
+        {
+          "name": "Daron Russell",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 180,
+          "number": 11
+        },
+        {
+          "name": "Collin Malcolm",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 200,
+          "number": 17
+        },
+        {
+          "name": "Santi Yusta",
+          "pos": "SF",
+          "nat": "ESP",
+          "age": 29,
+          "heightCm": 200,
+          "number": 4
+        },
+        {
+          "name": "Bruno Fernando",
+          "pos": "C",
+          "nat": "ANG",
+          "age": 28,
+          "heightCm": 208,
+          "number": 20
+        },
+        {
+          "name": "Dario Saric",
+          "pos": "PF",
+          "nat": "CRO",
+          "age": 32,
+          "heightCm": 207,
+          "number": 5
+        },
+        {
+          "name": "Matthew Strazel",
+          "pos": "PG",
+          "nat": "FRA",
+          "age": 24,
+          "heightCm": 184,
+          "number": 32
+        },
+        {
+          "name": "Mike James",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 36,
+          "heightCm": 185,
+          "number": 55
+        },
+        {
+          "name": "Kai Jones",
+          "pos": "C",
+          "nat": "BAH",
+          "age": 25,
+          "heightCm": 211,
+          "number": 88
+        },
+        {
+          "name": "Ruzgar Fenemen",
+          "pos": "PG",
+          "nat": "TUR",
+          "age": 18,
+          "heightCm": 185,
+          "number": 16
+        }
+      ]
+    },
+    "Beşiktaş": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "Besiktas Istanbul",
+      "coach": "Dusan Alimpijevic",
+      "coachNat": "SRB",
+      "players": [
+        {
+          "name": "Devon Dotson",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 188,
+          "number": 1
+        },
+        {
+          "name": "Daquan Jeffries",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 196,
+          "number": 2
+        },
+        {
+          "name": "David Dejulius",
+          "pos": "PG",
+          "nat": "SVK",
+          "age": 27,
+          "heightCm": 183,
+          "number": 5
+        },
+        {
+          "name": "Conor Morgan",
+          "pos": "C",
+          "nat": "CAN",
+          "age": 32,
+          "heightCm": 208,
+          "number": 9
+        },
+        {
+          "name": "Scottie Wilbekin",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 33,
+          "heightCm": 188,
+          "number": 12
+        },
+        {
+          "name": "Eugene Omoruyi",
+          "pos": "C",
+          "nat": "CAN",
+          "age": 29,
+          "heightCm": 198,
+          "number": 20
+        },
+        {
+          "name": "Anthony Brown",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 34,
+          "heightCm": 203,
+          "number": 21
+        },
+        {
+          "name": "Ante Zizic",
+          "pos": "C",
+          "nat": "CRO",
+          "age": 29,
+          "heightCm": 210,
+          "number": 41
+        },
+        {
+          "name": "Wenyen Gabriel",
+          "pos": "C",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 206,
+          "number": 32
+        },
+        {
+          "name": "Berk Ugurlu",
+          "pos": "SG",
+          "nat": "TUR",
+          "age": 30,
+          "heightCm": 192,
+          "number": 6
+        },
+        {
+          "name": "Yagiz Aksu",
+          "pos": "SG",
+          "nat": "TUR",
+          "age": 20,
+          "heightCm": 197,
+          "number": 10
+        },
+        {
+          "name": "Metecan Birsen",
+          "pos": "C",
+          "nat": "IRL",
+          "age": 31,
+          "heightCm": 205,
+          "number": 11
+        },
+        {
+          "name": "Furkan Korkmaz",
+          "pos": "SF",
+          "nat": "TUR",
+          "age": 29,
+          "heightCm": 202,
+          "number": 30
+        },
+        {
+          "name": "Jaylen Nowell",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 191,
+          "number": 24
+        },
+        {
+          "name": "Lonnie Walker IV",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 196,
+          "number": 4
+        }
+      ]
+    },
+    "Türk Telekom": {
+      "source": "euroleague-api",
+      "comp": "U",
+      "apiName": "Turk Telekom Ankara",
+      "coach": "Erdem Can",
+      "coachNat": "TUR",
+      "players": [
+        {
+          "name": "Ata Kahraman",
+          "pos": "SG",
+          "nat": "TUR",
+          "age": 27,
+          "heightCm": 195,
+          "number": 6
+        },
+        {
+          "name": "Omer Can",
+          "pos": "PF",
+          "nat": "TUR",
+          "age": 18,
+          "heightCm": 204,
+          "number": 8
+        },
+        {
+          "name": "Emircan Kosut",
+          "pos": "C",
+          "nat": "TUR",
+          "age": 31,
+          "heightCm": 216,
+          "number": 9
+        },
+        {
+          "name": "Dogus Ozdemiroglu",
+          "pos": "SG",
+          "nat": "TUR",
+          "age": 30,
+          "heightCm": 194,
+          "number": 18
+        },
+        {
+          "name": "Tony Taylor",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 36,
+          "heightCm": 185,
+          "number": 21
+        },
+        {
+          "name": "Anthony Lamb",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 198,
+          "number": 22
+        },
+        {
+          "name": "Mete Tekcevik",
+          "pos": "PG",
+          "nat": "TUR",
+          "age": 25,
+          "heightCm": 185,
+          "number": 55
+        },
+        {
+          "name": "Goktug Bas",
+          "pos": "SF",
+          "nat": "TUR",
+          "age": 25,
+          "heightCm": 201,
+          "number": 57
+        },
+        {
+          "name": "Shaquielle Mckissic",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 36,
+          "heightCm": 196,
+          "number": 77
+        },
+        {
+          "name": "Tim Schneider",
+          "pos": "PF",
+          "nat": "GER",
+          "age": 29,
+          "heightCm": 208,
+          "number": 3
+        },
+        {
+          "name": "Ismael Bako",
+          "pos": "C",
+          "nat": "BEL",
+          "age": 31,
+          "heightCm": 208,
+          "number": 28
+        },
+        {
+          "name": "Jerrick Harding",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 185,
+          "number": 7
+        },
+        {
+          "name": "Uros Trifunovic",
+          "pos": "SF",
+          "nat": "SRB",
+          "age": 25,
+          "heightCm": 200,
+          "number": 10
+        },
+        {
+          "name": "Kris Bankston",
+          "pos": "C",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 205,
+          "number": 30
+        },
+        {
+          "name": "Anil Alyanak",
+          "pos": "PF",
+          "nat": "TUR",
+          "age": 18,
+          "heightCm": 208,
+          "number": 0
+        }
+      ]
+    },
+    "Olympiacos": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "Olympiacos Piraeus",
+      "coach": "Georgios Bartzokas",
+      "coachNat": "GRE",
+      "players": [
+        {
+          "name": "Tyson Ward",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 198,
+          "number": 3
+        },
+        {
+          "name": "Sasha Vezenkov",
+          "pos": "PF",
+          "nat": "GRE",
+          "age": 31,
+          "heightCm": 206,
+          "number": 14
+        },
+        {
+          "name": "Omiros Netzipoglou",
+          "pos": "SG",
+          "nat": "GRE",
+          "age": 23,
+          "heightCm": 193,
+          "number": 21
+        },
+        {
+          "name": "Tyler Dorsey",
+          "pos": "SG",
+          "nat": "GRE",
+          "age": 30,
+          "heightCm": 196,
+          "number": 22
+        },
+        {
+          "name": "Nikola Milutinov",
+          "pos": "C",
+          "nat": "SRB",
+          "age": 31,
+          "heightCm": 213,
+          "number": 33
+        },
+        {
+          "name": "Cory Joseph",
+          "pos": "PG",
+          "nat": "CAN",
+          "age": 35,
+          "heightCm": 188,
+          "number": 34
+        },
+        {
+          "name": "Donta Hall",
+          "pos": "C",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 208,
+          "number": 45
+        },
+        {
+          "name": "Tyrique Jones",
+          "pos": "C",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 206,
+          "number": 88
+        },
+        {
+          "name": "Evan Fournier",
+          "pos": "SF",
+          "nat": "FRA",
+          "age": 33,
+          "heightCm": 200,
+          "number": 94
+        },
+        {
+          "name": "Kostas Papanikolaou",
+          "pos": "SF",
+          "nat": "GRE",
+          "age": 36,
+          "heightCm": 204,
+          "number": 16
+        },
+        {
+          "name": "Codi Miller-Mcintyre",
+          "pos": "PG",
+          "nat": "BUL",
+          "age": 32,
+          "heightCm": 191,
+          "number": 0
+        },
+        {
+          "name": "Mbaye Ndiaye",
+          "pos": "PF",
+          "nat": "SEN",
+          "age": 27,
+          "heightCm": 204,
+          "number": 24
+        },
+        {
+          "name": "Jean Montero",
+          "pos": "PG",
+          "nat": "DOM",
+          "age": 23,
+          "heightCm": 188,
+          "number": 8
+        },
+        {
+          "name": "Antonis Karagiannidis",
+          "pos": "C",
+          "nat": "GRE",
+          "age": 24,
+          "heightCm": 206,
+          "number": 29
+        },
+        {
+          "name": "Georgios Bourneles",
+          "pos": "PG",
+          "nat": "GRE",
+          "age": 19,
+          "heightCm": 192,
+          "number": 4
+        },
+        {
+          "name": "Nikolaos Plotas",
+          "pos": "SG",
+          "nat": "GRE",
+          "age": 22,
+          "heightCm": 195,
+          "number": 9
+        }
+      ]
+    },
+    "Panathinaikos": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "Panathinaikos AKTOR Athens",
+      "coach": "Zeljko Obradovic",
+      "coachNat": "SRB",
+      "players": [
+        {
+          "name": "Panagiotis Kalaitzakis",
+          "pos": "SG",
+          "nat": "GRE",
+          "age": 27,
+          "heightCm": 200,
+          "number": 0
+        },
+        {
+          "name": "Nigel Hayes-Davis",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 203,
+          "number": 11
+        },
+        {
+          "name": "Nikolaos Rogkavopoulos",
+          "pos": "SF",
+          "nat": "GRE",
+          "age": 25,
+          "heightCm": 201,
+          "number": 17
+        },
+        {
+          "name": "Jerian Grant",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 34,
+          "heightCm": 196,
+          "number": 22
+        },
+        {
+          "name": "Ioannis Kouzeloglou",
+          "pos": "C",
+          "nat": "GRE",
+          "age": 31,
+          "heightCm": 204,
+          "number": 24
+        },
+        {
+          "name": "Kendrick Nunn",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 195,
+          "number": 25
+        },
+        {
+          "name": "Mathias Lessort",
+          "pos": "C",
+          "nat": "FRA",
+          "age": 31,
+          "heightCm": 206,
+          "number": 26
+        },
+        {
+          "name": "Juancho Hernangomez",
+          "pos": "PF",
+          "nat": "ESP",
+          "age": 31,
+          "heightCm": 206,
+          "number": 41
+        },
+        {
+          "name": "Guerschon Yabusele",
+          "pos": "SF",
+          "nat": "FRA",
+          "age": 30,
+          "heightCm": 201,
+          "number": 28
+        },
+        {
+          "name": "Isaac Bonga",
+          "pos": "PF",
+          "nat": "GER",
+          "age": 26,
+          "heightCm": 203,
+          "number": 32
+        },
+        {
+          "name": "Konstantinos Mitoglou",
+          "pos": "PF",
+          "nat": "GRE",
+          "age": 30,
+          "heightCm": 210,
+          "number": 44
+        },
+        {
+          "name": "Sylvain Francisco",
+          "pos": "PG",
+          "nat": "FRA",
+          "age": 29,
+          "heightCm": 185,
+          "number": 3
+        },
+        {
+          "name": "Kostas Sloukas",
+          "pos": "PG",
+          "nat": "GRE",
+          "age": 36,
+          "heightCm": 190,
+          "number": 10
+        },
+        {
+          "name": "Moustapha Fall",
+          "pos": "C",
+          "nat": "FRA",
+          "age": 34,
+          "heightCm": 218,
+          "number": 93
+        },
+        {
+          "name": "Brancou Badio",
+          "pos": "PG",
+          "nat": "SEN",
+          "age": 27,
+          "heightCm": 191,
+          "number": 7
+        },
+        {
+          "name": "Dimitris Moraitis",
+          "pos": "PG",
+          "nat": "GRE",
+          "age": 27,
+          "heightCm": 190,
+          "number": 6
+        }
+      ]
+    },
+    "PAOK": {
+      "source": "euroleague-api",
+      "comp": "U",
+      "apiName": "PAOK Thessaloniki",
+      "coach": "Andrea Trinchieri",
+      "coachNat": "ITA",
+      "players": [
+        {
+          "name": "Raiquan Gray",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 203,
+          "number": 0
+        },
+        {
+          "name": "Naz Mitrou Long",
+          "pos": "PG",
+          "nat": "CAN",
+          "age": 33,
+          "heightCm": 193,
+          "number": 1
+        },
+        {
+          "name": "Breein Tyree",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 188,
+          "number": 5
+        },
+        {
+          "name": "Cedi Osman",
+          "pos": "PF",
+          "nat": "TUR",
+          "age": 31,
+          "heightCm": 204,
+          "number": 6
+        },
+        {
+          "name": "Kyle Alexander",
+          "pos": "C",
+          "nat": "CAN",
+          "age": 30,
+          "heightCm": 208,
+          "number": 8
+        },
+        {
+          "name": "Nikos Chougkaz",
+          "pos": "PF",
+          "nat": "GRE",
+          "age": 26,
+          "heightCm": 204,
+          "number": 9
+        },
+        {
+          "name": "Clifford Omoruyi",
+          "pos": "C",
+          "nat": "NGR",
+          "age": 25,
+          "heightCm": 211,
+          "number": 11
+        },
+        {
+          "name": "Trevor Hudgins",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 180,
+          "number": 12
+        },
+        {
+          "name": "Dimitrios Kaklamanakis",
+          "pos": "C",
+          "nat": "GRE",
+          "age": 32,
+          "heightCm": 206,
+          "number": 14
+        },
+        {
+          "name": "Marcus Foster",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 191,
+          "number": 17
+        },
+        {
+          "name": "Nikolaos Persidis",
+          "pos": "SF",
+          "nat": "GRE",
+          "age": 31,
+          "heightCm": 201,
+          "number": 18
+        },
+        {
+          "name": "Ben Moore",
+          "pos": "C",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 203,
+          "number": 26
+        },
+        {
+          "name": "Nick Calathes",
+          "pos": "SG",
+          "nat": "GRE",
+          "age": 37,
+          "heightCm": 196,
+          "number": 33
+        },
+        {
+          "name": "Athanasios Bazinas",
+          "pos": "SG",
+          "nat": "GRE",
+          "age": 23,
+          "heightCm": 194,
+          "number": 77
+        },
+        {
+          "name": "Georgios Fillios",
+          "pos": "SG",
+          "nat": "GRE",
+          "age": 24,
+          "heightCm": 195,
+          "number": 25
+        },
+        {
+          "name": "Donatas Motiejunas",
+          "pos": "C",
+          "nat": "LTU",
+          "age": 36,
+          "heightCm": 213,
+          "number": 20
+        }
+      ]
+    },
+    "Aris Salónica": {
+      "source": "euroleague-api",
+      "comp": "U",
+      "apiName": "Aris Thessaloniki",
+      "coach": "Vassilis Spanoulis",
+      "coachNat": "GRE",
+      "players": [
+        {
+          "name": "Elijah Mitrou - Long",
+          "pos": "PG",
+          "nat": "GRE",
+          "age": 29,
+          "heightCm": 185,
+          "number": 0
+        },
+        {
+          "name": "Jeremiah Robinson - Earl",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 25,
+          "heightCm": 206,
+          "number": 3
+        },
+        {
+          "name": "Neno Dimitrijevic",
+          "pos": "PG",
+          "nat": "MKD",
+          "age": 28,
+          "heightCm": 190,
+          "number": 7
+        },
+        {
+          "name": "Stylianos Poulianitis",
+          "pos": "SG",
+          "nat": "GRE",
+          "age": 31,
+          "heightCm": 190,
+          "number": 11
+        },
+        {
+          "name": "Eleftherios Bochoridis",
+          "pos": "SG",
+          "nat": "GRE",
+          "age": 32,
+          "heightCm": 196,
+          "number": 13
+        },
+        {
+          "name": "Stefan Jovic",
+          "pos": "SG",
+          "nat": "SRB",
+          "age": 35,
+          "heightCm": 196,
+          "number": 24
+        },
+        {
+          "name": "Matthew Morgan",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 188,
+          "number": 30
+        },
+        {
+          "name": "E.j Liddell",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 25,
+          "heightCm": 200,
+          "number": 32
+        },
+        {
+          "name": "Khem Birch",
+          "pos": "C",
+          "nat": "CAN",
+          "age": 34,
+          "heightCm": 206,
+          "number": 92
+        },
+        {
+          "name": "Adam Mokoka",
+          "pos": "SF",
+          "nat": "FRA",
+          "age": 28,
+          "heightCm": 196,
+          "number": 95
+        },
+        {
+          "name": "Thanasis Antetokounmpo",
+          "pos": "SF",
+          "nat": "GRE",
+          "age": 34,
+          "heightCm": 200,
+          "number": 43
+        },
+        {
+          "name": "Vassilis Toliopoulos",
+          "pos": "PG",
+          "nat": "GRE",
+          "age": 30,
+          "heightCm": 187,
+          "number": 4
+        },
+        {
+          "name": "Vasilis Charalampopoulos",
+          "pos": "PF",
+          "nat": "GRE",
+          "age": 29,
+          "heightCm": 204,
+          "number": 33
+        },
+        {
+          "name": "Chrysostomos Chatzilamprou",
+          "pos": "SG",
+          "nat": "GRE",
+          "age": 18,
+          "heightCm": 200,
+          "number": 10
+        },
+        {
+          "name": "Georgios Tanoulis",
+          "pos": "C",
+          "nat": "GRE",
+          "age": 24,
+          "heightCm": 210,
+          "number": 50
+        },
+        {
+          "name": "Kostas Antetokounmpo",
+          "pos": "C",
+          "nat": "GRE",
+          "age": 28,
+          "heightCm": 208,
+          "number": 37
+        }
+      ]
+    },
+    "Olimpia Milano": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "Armani Olimpia Milan",
+      "coach": "Giuseppe Poeta",
+      "coachNat": "ITA",
+      "players": [
+        {
+          "name": "Devin Booker",
+          "pos": "C",
+          "nat": "USA",
+          "age": 35,
+          "heightCm": 205,
+          "number": 31
+        },
+        {
+          "name": "Leandro Bolmaro",
+          "pos": "SG",
+          "nat": "ITA",
+          "age": 26,
+          "heightCm": 200,
+          "number": 10
+        },
+        {
+          "name": "Giampaolo Ricci",
+          "pos": "SF",
+          "nat": "ITA",
+          "age": 35,
+          "heightCm": 201,
+          "number": 17
+        },
+        {
+          "name": "Diego Flaccadori",
+          "pos": "PG",
+          "nat": "ITA",
+          "age": 30,
+          "heightCm": 193,
+          "number": 21
+        },
+        {
+          "name": "Marko Guduric",
+          "pos": "SG",
+          "nat": "SRB",
+          "age": 31,
+          "heightCm": 196,
+          "number": 23
+        },
+        {
+          "name": "Moses Wright",
+          "pos": "C",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 207,
+          "number": 5
+        },
+        {
+          "name": "Stefano Tonut",
+          "pos": "PG",
+          "nat": "ITA",
+          "age": 32,
+          "heightCm": 194,
+          "number": 7
+        },
+        {
+          "name": "Darius Thompson",
+          "pos": "PG",
+          "nat": "ITA",
+          "age": 31,
+          "heightCm": 193,
+          "number": 13
+        },
+        {
+          "name": "Devon Hall",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 196,
+          "number": 22
+        },
+        {
+          "name": "Ousmane Diop",
+          "pos": "C",
+          "nat": "SEN",
+          "age": 26,
+          "heightCm": 204,
+          "number": 6
+        },
+        {
+          "name": "Alec Peters",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 206,
+          "number": 25
+        },
+        {
+          "name": "Jason Burnell",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 201,
+          "number": 0
+        },
+        {
+          "name": "RJ Cole",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 185,
+          "number": 2
+        },
+        {
+          "name": "Nicola Akele",
+          "pos": "PF",
+          "nat": "ITA",
+          "age": 30,
+          "heightCm": 203,
+          "number": 45
+        },
+        {
+          "name": "Garrison Mathews",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 30,
+          "heightCm": 196,
+          "number": 24
+        }
+      ]
+    },
+    "Virtus Bologna": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "Virtus Bologna",
+      "coach": "Alex Mumbru",
+      "coachNat": "ESP",
+      "players": [
+        {
+          "name": "Derrick Alston Jr.",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 207,
+          "number": 21
+        },
+        {
+          "name": "Francesco Ferrari",
+          "pos": "SF",
+          "nat": "ITA",
+          "age": 21,
+          "heightCm": 204,
+          "number": 24
+        },
+        {
+          "name": "Aliou Diarra",
+          "pos": "C",
+          "nat": "MLI",
+          "age": 24,
+          "heightCm": 206,
+          "number": 31
+        },
+        {
+          "name": "Marcus Carr",
+          "pos": "PG",
+          "nat": "CAN",
+          "age": 27,
+          "heightCm": 188,
+          "number": 2
+        },
+        {
+          "name": "Kevin Kokila",
+          "pos": "C",
+          "nat": "FRA",
+          "age": 25,
+          "heightCm": 205,
+          "number": 3
+        },
+        {
+          "name": "Wendell Moore",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 25,
+          "heightCm": 196,
+          "number": 8
+        },
+        {
+          "name": "Kessler Edwards",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 204,
+          "number": 9
+        },
+        {
+          "name": "BO Klintman",
+          "pos": "PF",
+          "nat": "SWE",
+          "age": 23,
+          "heightCm": 205,
+          "number": 34
+        },
+        {
+          "name": "Rasheed Bello",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 23,
+          "heightCm": 183,
+          "number": 0
+        },
+        {
+          "name": "Daniel Hackett",
+          "pos": "SG",
+          "nat": "ITA",
+          "age": 38,
+          "heightCm": 196,
+          "number": 23
+        },
+        {
+          "name": "Mouhamet Diouf",
+          "pos": "C",
+          "nat": "ITA",
+          "age": 25,
+          "heightCm": 208,
+          "number": 35
+        },
+        {
+          "name": "Trent Frazier",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 188,
+          "number": 1
+        },
+        {
+          "name": "Tommaso Baldasso",
+          "pos": "PG",
+          "nat": "ITA",
+          "age": 28,
+          "heightCm": 190,
+          "number": 11
+        },
+        {
+          "name": "Davide Casarin",
+          "pos": "SG",
+          "nat": "ITA",
+          "age": 23,
+          "heightCm": 197,
+          "number": 7
+        },
+        {
+          "name": "Matteo Baiocchi",
+          "pos": "SG",
+          "nat": "ITA",
+          "age": 19,
+          "heightCm": 196,
+          "number": 13
+        }
+      ]
+    },
+    "Reyer Venezia": {
+      "source": "euroleague-api",
+      "comp": "U",
+      "apiName": "Umana Reyer Venice",
+      "coach": "Neven Spahija",
+      "coachNat": "CRO",
+      "players": [
+        {
+          "name": "Amedeo Tessitori",
+          "pos": "C",
+          "nat": "ITA",
+          "age": 32,
+          "heightCm": 208,
+          "number": 0
+        },
+        {
+          "name": "Octavio Maretto",
+          "pos": "SG",
+          "nat": "ITA",
+          "age": 22,
+          "heightCm": 198,
+          "number": 1
+        },
+        {
+          "name": "Giovanni de Nicolao",
+          "pos": "PG",
+          "nat": "ITA",
+          "age": 30,
+          "heightCm": 187,
+          "number": 5
+        },
+        {
+          "name": "Leonardo Candi",
+          "pos": "PG",
+          "nat": "ITA",
+          "age": 29,
+          "heightCm": 190,
+          "number": 7
+        },
+        {
+          "name": "KY Bowman",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 190,
+          "number": 8
+        },
+        {
+          "name": "Sir'Jabari Rice",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 193,
+          "number": 10
+        },
+        {
+          "name": "Enoch Boakye",
+          "pos": "C",
+          "nat": "CAN",
+          "age": 23,
+          "heightCm": 208,
+          "number": 13
+        },
+        {
+          "name": "Giga Janelidze",
+          "pos": "SF",
+          "nat": "ITA",
+          "age": 31,
+          "heightCm": 201,
+          "number": 14
+        },
+        {
+          "name": "Louis Olinde",
+          "pos": "PF",
+          "nat": "GER",
+          "age": 28,
+          "heightCm": 205,
+          "number": 19
+        },
+        {
+          "name": "Jordan Parks",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 32,
+          "heightCm": 201,
+          "number": 22
+        },
+        {
+          "name": "Glynn Watson",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 183,
+          "number": 30
+        },
+        {
+          "name": "Kyle Wiltjer",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 34,
+          "heightCm": 208,
+          "number": 33
+        },
+        {
+          "name": "Sasha Grant",
+          "pos": "SF",
+          "nat": "ITA",
+          "age": 24,
+          "heightCm": 201,
+          "number": 44
+        },
+        {
+          "name": "Erick Green",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 34,
+          "heightCm": 191,
+          "number": 32
+        },
+        {
+          "name": "Federico Fasolo",
+          "pos": "PG",
+          "nat": "ITA",
+          "age": 18,
+          "heightCm": 185,
+          "number": 45
+        }
+      ]
+    },
+    "Partizan": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "Partizan Mozzart Bet Belgrade",
+      "coach": "Joan Penarroya",
+      "coachNat": "ESP",
+      "players": [
+        {
+          "name": "Mario Nakic",
+          "pos": "PF",
+          "nat": "SRB",
+          "age": 25,
+          "heightCm": 202,
+          "number": 7
+        },
+        {
+          "name": "Arijan Lakic",
+          "pos": "SF",
+          "nat": "SRB",
+          "age": 26,
+          "heightCm": 199,
+          "number": 19
+        },
+        {
+          "name": "Kyle Allman",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 191,
+          "number": 0
+        },
+        {
+          "name": "Luca Vildoza",
+          "pos": "SG",
+          "nat": "ITA",
+          "age": 31,
+          "heightCm": 191,
+          "number": 3
+        },
+        {
+          "name": "Ethan Thompson",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 193,
+          "number": 5
+        },
+        {
+          "name": "Vanja Marinkovic",
+          "pos": "SF",
+          "nat": "SRB",
+          "age": 29,
+          "heightCm": 199,
+          "number": 9
+        },
+        {
+          "name": "Nikola Tanaskovic",
+          "pos": "C",
+          "nat": "SRB",
+          "age": 29,
+          "heightCm": 205,
+          "number": 10
+        },
+        {
+          "name": "Lamar Stevens",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 201,
+          "number": 11
+        },
+        {
+          "name": "Kevarrius Hayes",
+          "pos": "C",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 206,
+          "number": 13
+        },
+        {
+          "name": "Tonye Jekiri",
+          "pos": "C",
+          "nat": "NGR",
+          "age": 32,
+          "heightCm": 213,
+          "number": 23
+        },
+        {
+          "name": "Derek Willis",
+          "pos": "C",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 205,
+          "number": 35
+        },
+        {
+          "name": "Alessandro Pajola",
+          "pos": "SG",
+          "nat": "ITA",
+          "age": 26,
+          "heightCm": 194,
+          "number": 66
+        },
+        {
+          "name": "Joffrey Lauvergne",
+          "pos": "C",
+          "nat": "FRA",
+          "age": 35,
+          "heightCm": 211,
+          "number": 77
+        },
+        {
+          "name": "Carlik Jones",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 183,
+          "number": 1
+        },
+        {
+          "name": "Uros Danilovic",
+          "pos": "PF",
+          "nat": "SRB",
+          "age": 19,
+          "heightCm": 203,
+          "number": 44
+        },
+        {
+          "name": "Bandja SY",
+          "pos": "PF",
+          "nat": "FRA",
+          "age": 36,
+          "heightCm": 205,
+          "number": 95
+        }
+      ]
+    },
+    "Estrella Roja": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "Crvena Zvezda Meridianbet Belgrade",
+      "coach": "Ibon Navarro",
+      "coachNat": "ESP",
+      "players": [
+        {
+          "name": "Stefan Miljenovic",
+          "pos": "PG",
+          "nat": "SRB",
+          "age": 25,
+          "heightCm": 193,
+          "number": 2
+        },
+        {
+          "name": "Jared Butler",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 191,
+          "number": 6
+        },
+        {
+          "name": "Tyson Carter",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 193,
+          "number": 11
+        },
+        {
+          "name": "Ognjen Dobric",
+          "pos": "SF",
+          "nat": "SRB",
+          "age": 32,
+          "heightCm": 200,
+          "number": 13
+        },
+        {
+          "name": "Ebuka Izundu",
+          "pos": "C",
+          "nat": "SRB",
+          "age": 30,
+          "heightCm": 208,
+          "number": 15
+        },
+        {
+          "name": "Jordan Nwora",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 203,
+          "number": 33
+        },
+        {
+          "name": "Semi Ojeleye",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 198,
+          "number": 37
+        },
+        {
+          "name": "Chima Moneke",
+          "pos": "SF",
+          "nat": "NGR",
+          "age": 30,
+          "heightCm": 196,
+          "number": 95
+        },
+        {
+          "name": "Nick Weiler-Babb",
+          "pos": "SG",
+          "nat": "GER",
+          "age": 30,
+          "heightCm": 194,
+          "number": 3
+        },
+        {
+          "name": "Dejan Davidovac",
+          "pos": "PF",
+          "nat": "SRB",
+          "age": 31,
+          "heightCm": 202,
+          "number": 7
+        },
+        {
+          "name": "Nikola Djurisic",
+          "pos": "SG",
+          "nat": "SRB",
+          "age": 22,
+          "heightCm": 204,
+          "number": 23
+        },
+        {
+          "name": "Patrick Baldwin",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 23,
+          "heightCm": 208,
+          "number": 24
+        },
+        {
+          "name": "David Kramer",
+          "pos": "SG",
+          "nat": "GER",
+          "age": 29,
+          "heightCm": 198,
+          "number": 44
+        },
+        {
+          "name": "Johnathan Motley",
+          "pos": "C",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 206,
+          "number": 0
+        },
+        {
+          "name": "Chris Jones",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 33,
+          "heightCm": 188,
+          "number": 1
+        },
+        {
+          "name": "Andrej Bjelic",
+          "pos": "SG",
+          "nat": "SRB",
+          "age": 18,
+          "heightCm": 193,
+          "number": 30
+        }
+      ]
+    },
+    "Cedevita Olimpija": {
+      "source": "euroleague-api",
+      "comp": "U",
+      "apiName": "Cedevita Olimpija Ljubljana",
+      "coach": "Zvezdan Mitrovic",
+      "coachNat": "MNE",
+      "players": [
+        {
+          "name": "Brandon Murray",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 24,
+          "heightCm": 191,
+          "number": 0
+        },
+        {
+          "name": "Anthony Cowan Jr.",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 180,
+          "number": 1
+        },
+        {
+          "name": "Rok Radovic",
+          "pos": "SF",
+          "nat": "SLO",
+          "age": 25,
+          "heightCm": 198,
+          "number": 3
+        },
+        {
+          "name": "Jordan Gainey",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 24,
+          "heightCm": 187,
+          "number": 4
+        },
+        {
+          "name": "Derin Can Ustun",
+          "pos": "PG",
+          "nat": "CAN",
+          "age": 19,
+          "heightCm": 191,
+          "number": 7
+        },
+        {
+          "name": "Cameron Houindo",
+          "pos": "C",
+          "nat": "FRA",
+          "age": 18,
+          "heightCm": 206,
+          "number": 8
+        },
+        {
+          "name": "Jaka Blazic",
+          "pos": "SG",
+          "nat": "SLO",
+          "age": 36,
+          "heightCm": 196,
+          "number": 11
+        },
+        {
+          "name": "Miha Cerkvenik",
+          "pos": "PF",
+          "nat": "SLO",
+          "age": 24,
+          "heightCm": 201,
+          "number": 20
+        },
+        {
+          "name": "Noah Kirkwood",
+          "pos": "SF",
+          "nat": "CAN",
+          "age": 26,
+          "heightCm": 200,
+          "number": 22
+        },
+        {
+          "name": "Urban Kroflic",
+          "pos": "SG",
+          "nat": "SLO",
+          "age": 20,
+          "heightCm": 198,
+          "number": 23
+        },
+        {
+          "name": "David Skara",
+          "pos": "C",
+          "nat": "CRO",
+          "age": 31,
+          "heightCm": 201,
+          "number": 24
+        },
+        {
+          "name": "Jayce Johnson",
+          "pos": "C",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 207,
+          "number": 34
+        },
+        {
+          "name": "Matthew Hurt",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 204,
+          "number": 21
+        },
+        {
+          "name": "Osayi Osifo",
+          "pos": "C",
+          "nat": "RSA",
+          "age": 26,
+          "heightCm": 200,
+          "number": 14
+        },
+        {
+          "name": "Rihards Lomazs",
+          "pos": "SG",
+          "nat": "LAT",
+          "age": 30,
+          "heightCm": 191,
+          "number": 6
+        }
+      ]
+    },
+    "Budućnost": {
+      "source": "euroleague-api",
+      "comp": "U",
+      "apiName": "Buducnost VOLI Podgorica",
+      "coach": "Andrej Zakelj",
+      "coachNat": "SLO",
+      "players": [
+        {
+          "name": "Justin Smith",
+          "pos": "C",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 201,
+          "number": 0
+        },
+        {
+          "name": "Marial Shayok",
+          "pos": "SF",
+          "nat": "CAN",
+          "age": 31,
+          "heightCm": 196,
+          "number": 1
+        },
+        {
+          "name": "Fletcher Magee",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 193,
+          "number": 3
+        },
+        {
+          "name": "Andrija Slavkovic",
+          "pos": "PF",
+          "nat": "MNE",
+          "age": 27,
+          "heightCm": 203,
+          "number": 7
+        },
+        {
+          "name": "Emir Hadzibegovic",
+          "pos": "PF",
+          "nat": "MNE",
+          "age": 30,
+          "heightCm": 206,
+          "number": 8
+        },
+        {
+          "name": "Iverson Molinar",
+          "pos": "SG",
+          "nat": "PAN",
+          "age": 26,
+          "heightCm": 193,
+          "number": 10
+        },
+        {
+          "name": "Dordije Jovanovic",
+          "pos": "SF",
+          "nat": "MNE",
+          "age": 23,
+          "heightCm": 200,
+          "number": 13
+        },
+        {
+          "name": "Juwan Morgan",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 201,
+          "number": 15
+        },
+        {
+          "name": "Jerry Boutsiele",
+          "pos": "C",
+          "nat": "FRA",
+          "age": 33,
+          "heightCm": 208,
+          "number": 16
+        },
+        {
+          "name": "Stefan Dordevic",
+          "pos": "C",
+          "nat": "SRB",
+          "age": 27,
+          "heightCm": 203,
+          "number": 45
+        },
+        {
+          "name": "Oleksandr Kovliar",
+          "pos": "SF",
+          "nat": "UKR",
+          "age": 24,
+          "heightCm": 191,
+          "number": 50
+        },
+        {
+          "name": "Axel Bouteille",
+          "pos": "PF",
+          "nat": "FRA",
+          "age": 31,
+          "heightCm": 201,
+          "number": 83
+        },
+        {
+          "name": "Yogi Ferrell",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 33,
+          "heightCm": 182,
+          "number": 11
+        }
+      ]
+    },
+    "Žalgiris Kaunas": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "Zalgiris Kaunas",
+      "coach": "Tomas Masiulis",
+      "coachNat": "LTU",
+      "players": [
+        {
+          "name": "Nigel Williams-Goss",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 32,
+          "heightCm": 191,
+          "number": 1
+        },
+        {
+          "name": "Dovydas Giedraitis",
+          "pos": "SG",
+          "nat": "LTU",
+          "age": 26,
+          "heightCm": 193,
+          "number": 9
+        },
+        {
+          "name": "Azuolas Tubelis",
+          "pos": "PF",
+          "nat": "LTU",
+          "age": 24,
+          "heightCm": 208,
+          "number": 10
+        },
+        {
+          "name": "Dustin Sleva",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 203,
+          "number": 14
+        },
+        {
+          "name": "Arnas Butkevicius",
+          "pos": "SF",
+          "nat": "LTU",
+          "age": 34,
+          "heightCm": 197,
+          "number": 51
+        },
+        {
+          "name": "Deividas Sirvydis",
+          "pos": "SG",
+          "nat": "LTU",
+          "age": 26,
+          "heightCm": 204,
+          "number": 91
+        },
+        {
+          "name": "Edgaras Ulanovas",
+          "pos": "SF",
+          "nat": "LTU",
+          "age": 34,
+          "heightCm": 199,
+          "number": 92
+        },
+        {
+          "name": "Sterling Brown",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 198,
+          "number": 0
+        },
+        {
+          "name": "Kaodirichi Akobundu-Ehiogu",
+          "pos": "C",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 208,
+          "number": 2
+        },
+        {
+          "name": "Carsen Edwards",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 180,
+          "number": 3
+        },
+        {
+          "name": "Saben Lee",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 188,
+          "number": 7
+        },
+        {
+          "name": "Marius Grigonis",
+          "pos": "SG",
+          "nat": "LTU",
+          "age": 32,
+          "heightCm": 198,
+          "number": 40
+        },
+        {
+          "name": "Maodo LO",
+          "pos": "PG",
+          "nat": "GER",
+          "age": 33,
+          "heightCm": 192,
+          "number": 12
+        },
+        {
+          "name": "Marek Blazevic",
+          "pos": "C",
+          "nat": "LTU",
+          "age": 25,
+          "heightCm": 211,
+          "number": 22
+        },
+        {
+          "name": "Jonas Valanciunas",
+          "pos": "C",
+          "nat": "LTU",
+          "age": 34,
+          "heightCm": 211,
+          "number": 17
+        }
+      ]
+    },
+    "Lietkabelis": {
+      "source": "euroleague-api",
+      "comp": "U",
+      "apiName": "Lietkabelis Panevezys",
+      "coach": "Nenad Canak",
+      "coachNat": "SRB",
+      "players": [
+        {
+          "name": "Keondre Kennedy",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 198,
+          "number": 0
+        },
+        {
+          "name": "Alexander Schumacher",
+          "pos": "SG",
+          "nat": "SUI",
+          "age": 25,
+          "heightCm": 190,
+          "number": 2
+        },
+        {
+          "name": "Zygimantas Simonis",
+          "pos": "SF",
+          "nat": "LTU",
+          "age": 31,
+          "heightCm": 194,
+          "number": 3
+        },
+        {
+          "name": "Veljko Ilic",
+          "pos": "C",
+          "nat": "SRB",
+          "age": 24,
+          "heightCm": 208,
+          "number": 8
+        },
+        {
+          "name": "Daniel Baslyk",
+          "pos": "SF",
+          "nat": "LTU",
+          "age": 25,
+          "heightCm": 198,
+          "number": 9
+        },
+        {
+          "name": "Ognjen Jaramaz",
+          "pos": "SG",
+          "nat": "SRB",
+          "age": 31,
+          "heightCm": 193,
+          "number": 10
+        },
+        {
+          "name": "Milos Ilic",
+          "pos": "PF",
+          "nat": "SRB",
+          "age": 24,
+          "heightCm": 205,
+          "number": 11
+        },
+        {
+          "name": "Ivan Fevrier",
+          "pos": "PF",
+          "nat": "FRA",
+          "age": 27,
+          "heightCm": 205,
+          "number": 23
+        },
+        {
+          "name": "Gytis Nemeiksa",
+          "pos": "PF",
+          "nat": "LTU",
+          "age": 25,
+          "heightCm": 201,
+          "number": 50
+        },
+        {
+          "name": "Marius Valinskas",
+          "pos": "PG",
+          "nat": "LTU",
+          "age": 27,
+          "heightCm": 189,
+          "number": 99
+        },
+        {
+          "name": "Nojus Radzius",
+          "pos": "PG",
+          "nat": "LTU",
+          "age": 21,
+          "heightCm": 184,
+          "number": 5
+        },
+        {
+          "name": "Gabrielius Maldunas",
+          "pos": "C",
+          "nat": "LTU",
+          "age": 33,
+          "heightCm": 206,
+          "number": 12
+        }
+      ]
+    },
+    "LDLC ASVEL": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "LDLC ASVEL Villeurbanne",
+      "coach": "Tony Parker",
+      "coachNat": "FRA",
+      "players": [
+        {
+          "name": "Bodian Massa",
+          "pos": "PF",
+          "nat": "FRA",
+          "age": 29,
+          "heightCm": 210,
+          "number": 10
+        },
+        {
+          "name": "Myles Cale",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 198,
+          "number": 0
+        },
+        {
+          "name": "Marc-Owen Fodzo Dada",
+          "pos": "PG",
+          "nat": "FRA",
+          "age": 19,
+          "heightCm": 187,
+          "number": 1
+        },
+        {
+          "name": "Tyty Washington Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 24,
+          "heightCm": 189,
+          "number": 3
+        },
+        {
+          "name": "Patty Mills",
+          "pos": "PG",
+          "nat": "AUS",
+          "age": 38,
+          "heightCm": 181,
+          "number": 8
+        },
+        {
+          "name": "Edwin Jackson",
+          "pos": "SF",
+          "nat": "FRA",
+          "age": 37,
+          "heightCm": 190,
+          "number": 11
+        },
+        {
+          "name": "Mathis Dossou-Yovo",
+          "pos": "C",
+          "nat": "FRA",
+          "age": 25,
+          "heightCm": 206,
+          "number": 12
+        },
+        {
+          "name": "Both Gach",
+          "pos": "PF",
+          "nat": "SSD",
+          "age": 27,
+          "heightCm": 200,
+          "number": 14
+        },
+        {
+          "name": "Joel Bolomboy",
+          "pos": "C",
+          "nat": "USA",
+          "age": 32,
+          "heightCm": 204,
+          "number": 21
+        },
+        {
+          "name": "David Lighty",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 38,
+          "heightCm": 198,
+          "number": 23
+        },
+        {
+          "name": "Hugo Besson",
+          "pos": "SG",
+          "nat": "FRA",
+          "age": 25,
+          "heightCm": 194,
+          "number": 25
+        },
+        {
+          "name": "Yves Pons",
+          "pos": "PF",
+          "nat": "FRA",
+          "age": 27,
+          "heightCm": 198,
+          "number": 35
+        },
+        {
+          "name": "Tremont Waters",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 180,
+          "number": 51
+        },
+        {
+          "name": "Nathan Sestina",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 203,
+          "number": 77
+        },
+        {
+          "name": "Jae Crowder",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 36,
+          "heightCm": 195,
+          "number": 99
+        },
+        {
+          "name": "Juhann Begarin",
+          "pos": "SF",
+          "nat": "FRA",
+          "age": 24,
+          "heightCm": 196,
+          "number": 97
+        }
+      ]
+    },
+    "Paris Basketball": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "Paris Basketball",
+      "coach": "Maxime Lefevre",
+      "coachNat": "FRA",
+      "players": [
+        {
+          "name": "Nadir Hifi",
+          "pos": "PG",
+          "nat": "FRA",
+          "age": 24,
+          "heightCm": 185,
+          "number": 2
+        },
+        {
+          "name": "Sebastian Herrera",
+          "pos": "PG",
+          "nat": "CHI",
+          "age": 28,
+          "heightCm": 193,
+          "number": 7
+        },
+        {
+          "name": "Jared Rhoden",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 198,
+          "number": 8
+        },
+        {
+          "name": "Joel Ayayi",
+          "pos": "SG",
+          "nat": "FRA",
+          "age": 26,
+          "heightCm": 196,
+          "number": 11
+        },
+        {
+          "name": "Allan Dokossi",
+          "pos": "C",
+          "nat": "FRA",
+          "age": 26,
+          "heightCm": 203,
+          "number": 13
+        },
+        {
+          "name": "Mouhamed Faye",
+          "pos": "C",
+          "nat": "SEN",
+          "age": 21,
+          "heightCm": 209,
+          "number": 15
+        },
+        {
+          "name": "Jeremy Morgan",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 199,
+          "number": 20
+        },
+        {
+          "name": "Amath M'Baye",
+          "pos": "PF",
+          "nat": "FRA",
+          "age": 36,
+          "heightCm": 206,
+          "number": 22
+        },
+        {
+          "name": "Terry Tarpey",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 32,
+          "heightCm": 196,
+          "number": 3
+        },
+        {
+          "name": "Leopold Cavaliere",
+          "pos": "SF",
+          "nat": "FRA",
+          "age": 30,
+          "heightCm": 202,
+          "number": 4
+        },
+        {
+          "name": "Daulton Hommes",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 30,
+          "heightCm": 203,
+          "number": 34
+        },
+        {
+          "name": "Maozinha Pereira",
+          "pos": "SF",
+          "nat": "BRA",
+          "age": 26,
+          "heightCm": 203,
+          "number": 45
+        },
+        {
+          "name": "Tyson Etienne",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 184,
+          "number": 9
+        },
+        {
+          "name": "Alize Johnson",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 30,
+          "heightCm": 206,
+          "number": 24
+        },
+        {
+          "name": "TJ Warren",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 33,
+          "heightCm": 203,
+          "number": 1
+        },
+        {
+          "name": "Frank Ntilikina",
+          "pos": "PG",
+          "nat": "FRA",
+          "age": 28,
+          "heightCm": 194,
+          "number": 5
+        }
+      ]
+    },
+    "JL Bourg": {
+      "source": "euroleague-api",
+      "comp": "U",
+      "apiName": "Cosea JL Bourg-en-Bresse",
+      "coach": "Frederic Fauthoux",
+      "coachNat": "FRA",
+      "players": [
+        {
+          "name": "Keith Jordan Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 199,
+          "number": 2
+        },
+        {
+          "name": "Assemian Moulare",
+          "pos": "PG",
+          "nat": "FRA",
+          "age": 23,
+          "heightCm": 186,
+          "number": 3
+        },
+        {
+          "name": "Adrian Nelson",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 199,
+          "number": 4
+        },
+        {
+          "name": "Trey Woodbury",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 193,
+          "number": 22
+        },
+        {
+          "name": "Tyrese Samuel",
+          "pos": "PF",
+          "nat": "ANT",
+          "age": 26,
+          "heightCm": 206,
+          "number": 5
+        },
+        {
+          "name": "Antony Labanca",
+          "pos": "SG",
+          "nat": "FRA",
+          "age": 32,
+          "heightCm": 192,
+          "number": 8
+        },
+        {
+          "name": "Tyson Walker",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 184,
+          "number": 12
+        },
+        {
+          "name": "Lionel Gaudoux",
+          "pos": "C",
+          "nat": "FRA",
+          "age": 31,
+          "heightCm": 200,
+          "number": 13
+        },
+        {
+          "name": "Kadin Shedrick",
+          "pos": "C",
+          "nat": "USA",
+          "age": 25,
+          "heightCm": 211,
+          "number": 21
+        },
+        {
+          "name": "Hugo Robineau",
+          "pos": "SG",
+          "nat": "FRA",
+          "age": 26,
+          "heightCm": 195,
+          "number": 87
+        },
+        {
+          "name": "Leni Monnet",
+          "pos": "SG",
+          "nat": "FRA",
+          "age": 20,
+          "heightCm": 196,
+          "number": 55
+        },
+        {
+          "name": "Morgan Selebangue",
+          "pos": "PG",
+          "nat": "FRA",
+          "age": 19,
+          "heightCm": 173,
+          "number": 23
+        },
+        {
+          "name": "Julien Taponat",
+          "pos": "SF",
+          "nat": "FRA",
+          "age": 18,
+          "heightCm": 202,
+          "number": 20
+        },
+        {
+          "name": "Tyger Campbell",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 180,
+          "number": 10
+        },
+        {
+          "name": "Johnny Berhanemeskel",
+          "pos": "PG",
+          "nat": "CAN",
+          "age": 33,
+          "heightCm": 188,
+          "number": 9
+        }
+      ]
+    },
+    "Bayern Múnich": {
+      "source": "euroleague-api",
+      "comp": "E",
+      "apiName": "FC Bayern Munich",
+      "coach": "Anton Gavel",
+      "coachNat": "GER",
+      "players": [
+        {
+          "name": "Oscar da Silva",
+          "pos": "PF",
+          "nat": "GER",
+          "age": 28,
+          "heightCm": 205,
+          "number": 1
+        },
+        {
+          "name": "Niels Giffey",
+          "pos": "SF",
+          "nat": "GER",
+          "age": 35,
+          "heightCm": 200,
+          "number": 5
+        },
+        {
+          "name": "Johannes Voigtmann",
+          "pos": "C",
+          "nat": "GER",
+          "age": 34,
+          "heightCm": 211,
+          "number": 7
+        },
+        {
+          "name": "Justinian Jessup",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 198,
+          "number": 10
+        },
+        {
+          "name": "Vladimir Lucic",
+          "pos": "SF",
+          "nat": "SRB",
+          "age": 37,
+          "heightCm": 204,
+          "number": 11
+        },
+        {
+          "name": "Justus Hollatz",
+          "pos": "PG",
+          "nat": "GER",
+          "age": 25,
+          "heightCm": 195,
+          "number": 21
+        },
+        {
+          "name": "Kamar Baldwin",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 185,
+          "number": 44
+        },
+        {
+          "name": "Miles Norris",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 206,
+          "number": 0
+        },
+        {
+          "name": "Marjon Beauchamp",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 201,
+          "number": 3
+        },
+        {
+          "name": "Duane Washington",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 191,
+          "number": 4
+        },
+        {
+          "name": "Tobias Jensen",
+          "pos": "SG",
+          "nat": "DEN",
+          "age": 22,
+          "heightCm": 197,
+          "number": 8
+        },
+        {
+          "name": "Andreas Obst",
+          "pos": "PG",
+          "nat": "GER",
+          "age": 30,
+          "heightCm": 191,
+          "number": 13
+        },
+        {
+          "name": "Kilian Fischer",
+          "pos": "C",
+          "nat": "GER",
+          "age": 19,
+          "heightCm": 205,
+          "number": 17
+        },
+        {
+          "name": "Johannes Thiemann",
+          "pos": "C",
+          "nat": "GER",
+          "age": 32,
+          "heightCm": 205,
+          "number": 32
+        },
+        {
+          "name": "Niko Jerkic",
+          "pos": "SG",
+          "nat": "GER",
+          "age": 19,
+          "heightCm": 203,
+          "number": 39
+        },
+        {
+          "name": "Andrija Susic",
+          "pos": "SG",
+          "nat": "SRB",
+          "age": 18,
+          "heightCm": 195,
+          "number": 42
+        }
+      ]
+    },
+    "ratiopharm Ulm": {
+      "source": "euroleague-api",
+      "comp": "U",
+      "apiName": "ratiopharm ulm",
+      "coach": "TY Harrelson",
+      "coachNat": "USA",
+      "players": [
+        {
+          "name": "Adam Atamna",
+          "pos": "SG",
+          "nat": "FRA",
+          "age": 18,
+          "heightCm": 192,
+          "number": 0
+        },
+        {
+          "name": "Namori Omog",
+          "pos": "PG",
+          "nat": "GER",
+          "age": 20,
+          "heightCm": 188,
+          "number": 1
+        },
+        {
+          "name": "Ibi Watson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 194,
+          "number": 2
+        },
+        {
+          "name": "Teo Milicic",
+          "pos": "SG",
+          "nat": "GER",
+          "age": 18,
+          "heightCm": 193,
+          "number": 4
+        },
+        {
+          "name": "Devin Schmidt",
+          "pos": "PG",
+          "nat": "GER",
+          "age": 31,
+          "heightCm": 190,
+          "number": 8
+        },
+        {
+          "name": "Meissa Faye",
+          "pos": "SF",
+          "nat": "FRA",
+          "age": 18,
+          "heightCm": 200,
+          "number": 11
+        },
+        {
+          "name": "Michael Rataj",
+          "pos": "PF",
+          "nat": "GER",
+          "age": 23,
+          "heightCm": 200,
+          "number": 12
+        },
+        {
+          "name": "Jaylen Sims",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 194,
+          "number": 30
+        },
+        {
+          "name": "Lucas Fischer",
+          "pos": "PG",
+          "nat": "FRA",
+          "age": 22,
+          "heightCm": 191,
+          "number": 43
+        },
+        {
+          "name": "Simisola Shittu",
+          "pos": "C",
+          "nat": "CAN",
+          "age": 26,
+          "heightCm": 203,
+          "number": 45
+        },
+        {
+          "name": "Lenny Liedtke",
+          "pos": "SF",
+          "nat": "GER",
+          "age": 22,
+          "heightCm": 198,
+          "number": 55
+        },
+        {
+          "name": "Armel Traore",
+          "pos": "PF",
+          "nat": "FRA",
+          "age": 23,
+          "heightCm": 203,
+          "number": 94
+        },
+        {
+          "name": "Dwayne Koroma",
+          "pos": "SF",
+          "nat": "GER",
+          "age": 25,
+          "heightCm": 197,
+          "number": 3
+        },
+        {
+          "name": "CJ Anthony Jr.",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 24,
+          "heightCm": 186,
+          "number": 25
+        },
+        {
+          "name": "Marvin Heckel",
+          "pos": "PG",
+          "nat": "GER",
+          "age": 29,
+          "heightCm": 190,
+          "number": 47
+        },
+        {
+          "name": "Nil Failenschmid",
+          "pos": "PF",
+          "nat": "GER",
+          "age": 21,
+          "heightCm": 204,
+          "number": 15
+        }
+      ]
+    },
+    "Niners Chemnitz": {
+      "source": "euroleague-api",
+      "comp": "U",
+      "apiName": "NINERS Chemnitz",
+      "coach": "Rodrigo Pastore",
+      "coachNat": "ITA",
+      "players": [
+        {
+          "name": "Phlandrous Fleming Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 193,
+          "number": 1
+        },
+        {
+          "name": "Stefan Smith",
+          "pos": "PG",
+          "nat": "CAN",
+          "age": 27,
+          "heightCm": 188,
+          "number": 2
+        },
+        {
+          "name": "Yohan Choupas",
+          "pos": "SG",
+          "nat": "GER",
+          "age": 26,
+          "heightCm": 193,
+          "number": 6
+        },
+        {
+          "name": "Alexander Richardson",
+          "pos": "C",
+          "nat": "GER",
+          "age": 23,
+          "heightCm": 206,
+          "number": 9
+        },
+        {
+          "name": "Elias Roedl",
+          "pos": "SF",
+          "nat": "GER",
+          "age": 24,
+          "heightCm": 198,
+          "number": 11
+        },
+        {
+          "name": "Luca Kellig",
+          "pos": "PG",
+          "nat": "GER",
+          "age": 20,
+          "heightCm": 192,
+          "number": 13
+        },
+        {
+          "name": "Darion Atkins",
+          "pos": "C",
+          "nat": "USA",
+          "age": 34,
+          "heightCm": 203,
+          "number": 17
+        },
+        {
+          "name": "Alfons Milatz",
+          "pos": "SF",
+          "nat": "GER",
+          "age": 19,
+          "heightCm": 200,
+          "number": 19
+        },
+        {
+          "name": "Urald King",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 36,
+          "heightCm": 198,
+          "number": 20
+        },
+        {
+          "name": "Mateo Seric",
+          "pos": "PF",
+          "nat": "GER",
+          "age": 27,
+          "heightCm": 204,
+          "number": 21
+        },
+        {
+          "name": "Nighael Ceaser",
+          "pos": "C",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 203,
+          "number": 22
+        },
+        {
+          "name": "Cobe Williams",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 183,
+          "number": 24
+        },
+        {
+          "name": "Ben Burnham",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 24,
+          "heightCm": 201,
+          "number": 25
+        },
+        {
+          "name": "Jannis von Seckendorff",
+          "pos": "PF",
+          "nat": "GER",
+          "age": 24,
+          "heightCm": 204,
+          "number": 90
+        },
+        {
+          "name": "Ryan Mikesell",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 201,
+          "number": 33
+        }
+      ]
+    },
+    "Śląsk Wrocław": {
+      "source": "euroleague-api",
+      "comp": "U",
+      "apiName": "Slask Wroclaw",
+      "coach": "Danny Franco",
+      "coachNat": "ISR",
+      "players": [
+        {
+          "name": "Anthony Hickey",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 33,
+          "heightCm": 180,
+          "number": 2
+        },
+        {
+          "name": "Malik Parsons",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 190,
+          "number": 3
+        },
+        {
+          "name": "Devin Robinson",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 203,
+          "number": 5
+        },
+        {
+          "name": "Anthony Wrzeszcz",
+          "pos": "SG",
+          "nat": "POL",
+          "age": 22,
+          "heightCm": 193,
+          "number": 8
+        },
+        {
+          "name": "Leon Dunin-Wasowicz",
+          "pos": "C",
+          "nat": "POL",
+          "age": 19,
+          "heightCm": 210,
+          "number": 17
+        },
+        {
+          "name": "Kyrell Luc",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 24,
+          "heightCm": 180,
+          "number": 4
+        },
+        {
+          "name": "Blazej Kulikowski",
+          "pos": "SG",
+          "nat": "POL",
+          "age": 25,
+          "heightCm": 193,
+          "number": 11
+        },
+        {
+          "name": "Tymoteusz Sternicki",
+          "pos": "PF",
+          "nat": "POL",
+          "age": 20,
+          "heightCm": 204,
+          "number": 22
+        },
+        {
+          "name": "Blazej Czerniewicz",
+          "pos": "SG",
+          "nat": "POL",
+          "age": 23,
+          "heightCm": 198,
+          "number": 27
+        },
+        {
+          "name": "Jakub Niziol",
+          "pos": "SF",
+          "nat": "POL",
+          "age": 30,
+          "heightCm": 201,
+          "number": 35
+        },
+        {
+          "name": "John Egbunu",
+          "pos": "C",
+          "nat": "NGR",
+          "age": 31,
+          "heightCm": 208,
+          "number": 15
+        },
+        {
+          "name": "Isaih Moore",
+          "pos": "C",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 208,
+          "number": 13
+        },
+        {
+          "name": "Paul Scruggs",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 191,
+          "number": 10
+        }
+      ]
+    },
+    "U-BT Cluj-Napoca": {
+      "source": "euroleague-api",
+      "comp": "U",
+      "apiName": "U-BT Cluj-Napoca",
+      "coach": "Mihai Silvasan",
+      "coachNat": "ROU",
+      "players": [
+        {
+          "name": "Otis Livingston II",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 30,
+          "heightCm": 177,
+          "number": 0
+        },
+        {
+          "name": "Javonte Smart",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 193,
+          "number": 1
+        },
+        {
+          "name": "Dusan Beslac",
+          "pos": "PF",
+          "nat": "SRB",
+          "age": 28,
+          "heightCm": 204,
+          "number": 3
+        },
+        {
+          "name": "Andrei Cepoi",
+          "pos": "PG",
+          "nat": "ROU",
+          "age": 18,
+          "heightCm": 186,
+          "number": 7
+        },
+        {
+          "name": "Jalyn MC Creary",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 202,
+          "number": 8
+        },
+        {
+          "name": "Christian Bishop",
+          "pos": "C",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 200,
+          "number": 13
+        },
+        {
+          "name": "Javon Bess",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 30,
+          "heightCm": 195,
+          "number": 20
+        },
+        {
+          "name": "Malcolm Hill",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 197,
+          "number": 21
+        },
+        {
+          "name": "Uros Plavsic",
+          "pos": "C",
+          "nat": "SRB",
+          "age": 27,
+          "heightCm": 215,
+          "number": 22
+        },
+        {
+          "name": "Bobe Nicolescu",
+          "pos": "SF",
+          "nat": "ROU",
+          "age": 29,
+          "heightCm": 199,
+          "number": 24
+        },
+        {
+          "name": "Patrick Richard",
+          "pos": "PG",
+          "nat": "ROU",
+          "age": 36,
+          "heightCm": 194,
+          "number": 35
+        },
+        {
+          "name": "Kristian Kullamae",
+          "pos": "SG",
+          "nat": "EST",
+          "age": 27,
+          "heightCm": 194,
+          "number": 77
+        },
+        {
+          "name": "Luca-Ionut Illes",
+          "pos": "SG",
+          "nat": "ROU",
+          "age": 19,
+          "heightCm": 197,
+          "number": 88
+        }
+      ]
+    },
+    "London Lions": {
+      "source": "euroleague-api",
+      "comp": "U",
+      "apiName": "London Lions",
+      "coach": "Tautvydas Sabonis",
+      "coachNat": "LTU",
+      "players": [
+        {
+          "name": "Joel Scott",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 25,
+          "heightCm": 201,
+          "number": 1
+        },
+        {
+          "name": "Devante Jones",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 183,
+          "number": 3
+        },
+        {
+          "name": "MO Soluade",
+          "pos": "SG",
+          "nat": "GBR",
+          "age": 31,
+          "heightCm": 196,
+          "number": 6
+        },
+        {
+          "name": "Emilis Zibuda",
+          "pos": "SF",
+          "nat": "UK",
+          "age": 18,
+          "heightCm": 198,
+          "number": 8
+        },
+        {
+          "name": "Ethan Price",
+          "pos": "PF",
+          "nat": "GBR",
+          "age": 25,
+          "heightCm": 206,
+          "number": 10
+        },
+        {
+          "name": "Keenan Evans",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 30,
+          "heightCm": 191,
+          "number": 12
+        },
+        {
+          "name": "Aaryn Rai",
+          "pos": "SF",
+          "nat": "UK",
+          "age": 28,
+          "heightCm": 197,
+          "number": 21
+        },
+        {
+          "name": "Tarik Phillip",
+          "pos": "PG",
+          "nat": "UK",
+          "age": 33,
+          "heightCm": 191,
+          "number": 22
+        },
+        {
+          "name": "Deane Williams",
+          "pos": "PF",
+          "nat": "GBR",
+          "age": 30,
+          "heightCm": 203,
+          "number": 31
+        },
+        {
+          "name": "Thomas Kennedy",
+          "pos": "C",
+          "nat": "IRL",
+          "age": 26,
+          "heightCm": 207,
+          "number": 54
+        },
+        {
+          "name": "Maxwell Lewis III",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 24,
+          "heightCm": 201,
+          "number": 2
+        },
+        {
+          "name": "Joshua O'Garro",
+          "pos": "SF",
+          "nat": "UK",
+          "age": 25,
+          "heightCm": null,
+          "number": 7
+        },
+        {
+          "name": "Landrius Horton",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 28,
+          "heightCm": 193,
+          "number": 23
+        }
+      ]
+    }
+  }
+}

@@ -17,12 +17,47 @@ export interface SatelliteDef {
 }
 
 export const SATELLITES: Record<Exclude<Competition, 'NBA'>, SatelliteDef> = {
-  NCAA: { id: 'NCAA', name: 'NCAA División I', games: 32, level: 57, minutes: 40, pace: 69,
-    opponents: ['Bayview State', 'Northern Plains', 'Coastal Tech', 'Midland University', 'Ridgewood College', 'Granite State', 'Lakeshore A&M', 'Desert Valley', 'Pinecrest', 'Redstone University'] },
-  EUR: { id: 'EUR', name: 'Baloncesto internacional', games: 34, level: 62, minutes: 40, pace: 72,
-    opponents: ['Helios Basket', 'Olimpia Adriatica', 'Panthers Belgrade', 'Dynamo Kaunas', 'Galata Istanbul', 'Paris Lumière BC', 'Bavaria Ballers', 'Ionian Athens', 'Ljubljana Dragons', 'Real Club Cantábrico'] },
-  GLG: { id: 'GLG', name: 'NBA G League', games: 50, level: 61, minutes: 48, pace: 101,
-    opponents: ['Capital City Rush', 'Lakeside Storm', 'Mountain Peaks', 'Gulf Coast Pelicans', 'Prairie Wolves', 'Bay Area Surge', 'Delta Kings', 'Iron Range', 'Sunbelt Suns', 'Harbor Hawks'] },
+  NCAA: {
+    id: 'NCAA',
+    name: 'NCAA División I',
+    games: 32,
+    level: 57,
+    minutes: 40,
+    pace: 69,
+    opponents: [
+      'Duke', 'North Carolina', 'Kansas', 'Kentucky', 'UConn',
+      'Gonzaga', 'Alabama', 'Houston', 'Baylor', 'Auburn',
+      'Purdue', 'Rutgers', 'Arizona', 'Michigan State', 'UCLA', 'Arkansas',
+    ],
+  },
+  EUR: {
+    id: 'EUR',
+    name: 'Baloncesto internacional',
+    games: 34,
+    level: 62,
+    minutes: 40,
+    pace: 72,
+    opponents: [
+      'Real Madrid', 'FC Barcelona', 'Panathinaikos', 'Olympiacos',
+      'Fenerbahçe', 'Anadolu Efes', 'Partizan', 'Estrella Roja',
+      'AS Monaco', 'Paris Basketball', 'Olimpia Milano', 'Virtus Bologna',
+      'Žalgiris Kaunas', 'Bayern Múnich', 'Baskonia', 'Valencia Basket',
+      'Unicaja Málaga', 'Joventut Badalona', 'La Laguna Tenerife', 'Maccabi Tel Aviv',
+    ],
+  },
+  GLG: {
+    id: 'GLG',
+    name: 'NBA G League',
+    games: 50,
+    level: 61,
+    minutes: 48,
+    pace: 101,
+    opponents: [
+      'Maine Celtics', 'South Bay Lakers', 'Santa Cruz Warriors', 'Austin Spurs',
+      'Rip City Remix', 'Long Island Nets', 'Windy City Bulls', 'Delaware Blue Coats',
+      'Sioux Falls Skyforce', 'Oklahoma City Blue', 'Osceola Magic', 'Stockton Kings',
+    ],
+  },
 };
 
 function synthPlayer(seed: number, key: string, idx: number, level: number): SimPlayer {

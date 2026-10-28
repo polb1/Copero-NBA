@@ -8,6 +8,7 @@ import { clamp, rngFor, type Rng } from './rng';
 import { minSalary, rookieScale } from './config';
 import { buildSchedule } from './schedule';
 import { NBA_ROSTER } from '../data/nbaRoster';
+import { getRealNbaCoach, pickRealReplacementCoach } from '../data/realCoaches';
 import { assignRealContracts, buildTeamPlayers, selectRoster, statusesByStrength } from './realroster';
 
 const TIER_CURVES: Record<TeamStatus, number[]> = {
@@ -33,7 +34,10 @@ export const STATUS_LABEL: Record<TeamStatus, string> = {
   rebuild: 'En reconstrucción',
 };
 
-export function makeCoach(rng: Rng, season: number): Coach {
+export function makeCoach(rng: Rng, season: number, isReal = true): Coach {
+  if (isReal) {
+    return pickRealReplacementCoach(rng, season);
+  }
   return {
     name: `${rng.pick(COACH_FIRST)} ${rng.pick(COACH_LAST)}`,
     rating: Math.round(rng.range(50, 92)),
@@ -136,7 +140,7 @@ export function createRealLeague(seed: number, season: number): League {
     rosterSource: 'real',
   };
   TEAM_SEEDS.forEach((s) => {
-    const coach = makeCoach(rng, season);
+    const coach = getRealNbaCoach(s.id, season);
     const team: Team = {
       ...s,
       coach,

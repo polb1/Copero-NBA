@@ -1,0 +1,1719 @@
+{
+  "version": 1,
+  "asOf": "2026-10-26",
+  "note": "Plantillas reales de fuentes adicionales (Wikipedia ES/KO y LNB Dominicana).",
+  "clubs": {
+    "Vaqueros de Bayamón": {
+      "source": "wikipedia-es",
+      "sourceUrl": "https://es.wikipedia.org/w/index.php?title=Vaqueros%20de%20Bayam%C3%B3n&action=raw",
+      "coach": "Christian Dalmau",
+      "coachNat": "PUR",
+      "players": [
+        {
+          "name": "Stephen Thompson Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 1
+        },
+        {
+          "name": "Gary Browne",
+          "pos": "PG",
+          "nat": "PUR",
+          "age": null,
+          "heightCm": 185,
+          "number": 14
+        },
+        {
+          "name": "Renaldo Balkman",
+          "pos": "C",
+          "nat": "PUR",
+          "age": null,
+          "heightCm": 203,
+          "number": 32
+        },
+        {
+          "name": "Danilo Gallinari",
+          "pos": "PF",
+          "nat": "ITA",
+          "age": null,
+          "heightCm": 208,
+          "number": 8
+        },
+        {
+          "name": "JaVale McGee",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 213,
+          "number": 0
+        },
+        {
+          "name": "Chris Duarte",
+          "pos": "SG",
+          "nat": "DOM",
+          "age": null,
+          "heightCm": 196,
+          "number": 27
+        },
+        {
+          "name": "Rayjon Tucker",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 59
+        },
+        {
+          "name": "Javier Ezquerra",
+          "pos": "PG",
+          "nat": "PUR",
+          "age": null,
+          "heightCm": 185,
+          "number": 22
+        },
+        {
+          "name": "Isaiah Palermo",
+          "pos": "SF",
+          "nat": "PUR",
+          "age": null,
+          "heightCm": 196,
+          "number": 0
+        },
+        {
+          "name": "Jordan Cintron",
+          "pos": "PF",
+          "nat": "PUR",
+          "age": null,
+          "heightCm": 203,
+          "number": 20
+        },
+        {
+          "name": "Luis Hernandez",
+          "pos": "C",
+          "nat": "PUR",
+          "age": null,
+          "heightCm": 206,
+          "number": 35
+        },
+        {
+          "name": "Alexander Abreu",
+          "pos": "PG",
+          "nat": "PUR",
+          "age": null,
+          "heightCm": 180,
+          "number": 21
+        },
+        {
+          "name": "Raymond Cintron",
+          "pos": "PG",
+          "nat": "PUR",
+          "age": null,
+          "heightCm": 183,
+          "number": 26
+        },
+        {
+          "name": "Javier Mojica",
+          "pos": "SG",
+          "nat": "PUR",
+          "age": null,
+          "heightCm": 191,
+          "number": 44
+        },
+        {
+          "name": "Neftalí Acevedo",
+          "pos": "PG",
+          "nat": "PUR",
+          "age": null,
+          "heightCm": 180,
+          "number": 55
+        },
+        {
+          "name": "Rychell Janga",
+          "pos": "SG",
+          "nat": "PUR",
+          "age": null,
+          "heightCm": 191,
+          "number": 19
+        }
+      ]
+    },
+    "Titanes de Barranquilla": {
+      "source": "wikipedia-es",
+      "sourceUrl": "https://es.wikipedia.org/w/index.php?title=Titanes%20de%20Barranquilla&action=raw",
+      "coach": "Tomás Díaz",
+      "coachNat": "COL",
+      "players": [
+        {
+          "name": "Nacho Laterza",
+          "pos": null,
+          "nat": "ARG",
+          "age": null,
+          "heightCm": null,
+          "number": 9
+        },
+        {
+          "name": "Jhonatan Rodrigues",
+          "pos": "SG",
+          "nat": "PUR",
+          "age": null,
+          "heightCm": 196,
+          "number": 7
+        },
+        {
+          "name": "Juan Palacios",
+          "pos": "PF",
+          "nat": "COL",
+          "age": null,
+          "heightCm": 201,
+          "number": 3
+        },
+        {
+          "name": "Orlando Palma",
+          "pos": "PG",
+          "nat": "COL",
+          "age": null,
+          "heightCm": 185,
+          "number": 23
+        },
+        {
+          "name": "Gianluca Bacchi",
+          "pos": "SG",
+          "nat": "COL",
+          "age": null,
+          "heightCm": 196,
+          "number": 12
+        },
+        {
+          "name": "Hector Díaz",
+          "pos": "SF",
+          "nat": "VEN",
+          "age": null,
+          "heightCm": 198,
+          "number": 8
+        },
+        {
+          "name": "Luis Santos",
+          "pos": null,
+          "nat": "DOM",
+          "age": null,
+          "heightCm": null,
+          "number": 5
+        },
+        {
+          "name": "Jesús Medina",
+          "pos": "PG",
+          "nat": "VEN",
+          "age": null,
+          "heightCm": 188,
+          "number": 5
+        },
+        {
+          "name": "Soren Deluque",
+          "pos": null,
+          "nat": "COL",
+          "age": null,
+          "heightCm": null,
+          "number": 13
+        },
+        {
+          "name": "Jerson Quintana",
+          "pos": null,
+          "nat": "COL",
+          "age": null,
+          "heightCm": null,
+          "number": 10
+        },
+        {
+          "name": "Moisés Parra",
+          "pos": null,
+          "nat": "JPN",
+          "age": null,
+          "heightCm": null,
+          "number": 18
+        }
+      ]
+    },
+    "Cimarrones del Chocó": {
+      "source": "wikipedia-es",
+      "sourceUrl": "https://es.wikipedia.org/w/index.php?title=Cimarrones%20del%20Choc%C3%B3&action=raw",
+      "coach": "Edgar Moreno",
+      "coachNat": "COL",
+      "players": [
+        {
+          "name": "José Rodríguez",
+          "pos": "SF",
+          "nat": "VEN",
+          "age": null,
+          "heightCm": null,
+          "number": 35
+        },
+        {
+          "name": "Rodrigo Caicedo",
+          "pos": "PG",
+          "nat": "COL",
+          "age": null,
+          "heightCm": 180,
+          "number": 44
+        },
+        {
+          "name": "Eleutherio Renteria",
+          "pos": "SF",
+          "nat": "COL",
+          "age": null,
+          "heightCm": 196,
+          "number": 11
+        },
+        {
+          "name": "Cesar Cortez",
+          "pos": "PF",
+          "nat": "COL",
+          "age": null,
+          "heightCm": 201,
+          "number": 13
+        },
+        {
+          "name": "Edgar Moreno",
+          "pos": "PG",
+          "nat": "COL",
+          "age": null,
+          "heightCm": 191,
+          "number": 4
+        },
+        {
+          "name": "Larry Cardona",
+          "pos": null,
+          "nat": "COL",
+          "age": null,
+          "heightCm": null,
+          "number": 14
+        },
+        {
+          "name": "Duvan Hinesteoza",
+          "pos": "PG",
+          "nat": "COL",
+          "age": null,
+          "heightCm": 183,
+          "number": 5
+        },
+        {
+          "name": "Salomon Mosquera",
+          "pos": "PG",
+          "nat": "COL",
+          "age": null,
+          "heightCm": 180,
+          "number": 10
+        },
+        {
+          "name": "Cesar Ordóñez",
+          "pos": "SF",
+          "nat": "COL",
+          "age": null,
+          "heightCm": 196,
+          "number": 7
+        },
+        {
+          "name": "Luís Moreno",
+          "pos": "PG",
+          "nat": "COL",
+          "age": null,
+          "heightCm": 180,
+          "number": 6
+        },
+        {
+          "name": "Hernan Mosquera",
+          "pos": null,
+          "nat": "COL",
+          "age": null,
+          "heightCm": null,
+          "number": 15
+        },
+        {
+          "name": "Andres Bejarano",
+          "pos": null,
+          "nat": "COL",
+          "age": null,
+          "heightCm": null,
+          "number": 12
+        },
+        {
+          "name": "Fernando Mena",
+          "pos": "PG",
+          "nat": "COL",
+          "age": null,
+          "heightCm": 165,
+          "number": 24
+        }
+      ]
+    },
+    "Seoul SK Knights": {
+      "source": "wikipedia-ko",
+      "sourceUrl": "https://ko.wikipedia.org/w/index.php?title=%ED%8B%80%3A%EC%84%9C%EC%9A%B8%20SK%20%EB%82%98%EC%9D%B4%EC%B8%A0%20%EB%A1%9C%EC%8A%A4%ED%84%B0&action=raw",
+      "coach": "Chun Hee-chul",
+      "coachNat": "KOR",
+      "players": [
+        {
+          "name": "우동현",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 30,
+          "heightCm": 176,
+          "number": 1
+        },
+        {
+          "name": "최준용",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 32,
+          "heightCm": 200,
+          "number": 2
+        },
+        {
+          "name": "최원혁",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 34,
+          "heightCm": 183,
+          "number": 3
+        },
+        {
+          "name": "김선형",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 38,
+          "heightCm": 187,
+          "number": 5
+        },
+        {
+          "name": "변기훈",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 37,
+          "heightCm": 187,
+          "number": 7
+        },
+        {
+          "name": "안영준",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 31,
+          "heightCm": 196,
+          "number": 8
+        },
+        {
+          "name": "김건우",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 37,
+          "heightCm": 194,
+          "number": 9
+        },
+        {
+          "name": "송창무",
+          "pos": "C",
+          "nat": "KOR",
+          "age": 43,
+          "heightCm": 205,
+          "number": 12
+        },
+        {
+          "name": "최부경",
+          "pos": "C",
+          "nat": "KOR",
+          "age": 37,
+          "heightCm": 200,
+          "number": 14
+        },
+        {
+          "name": "김민수",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 44,
+          "heightCm": 200,
+          "number": 15
+        },
+        {
+          "name": "김동욱",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 36,
+          "heightCm": 196,
+          "number": 17
+        },
+        {
+          "name": "최성원",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 30,
+          "heightCm": 184,
+          "number": 19
+        },
+        {
+          "name": "박상권",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 29,
+          "heightCm": 194,
+          "number": 20
+        },
+        {
+          "name": "오재현",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 26,
+          "heightCm": 186,
+          "number": 22
+        },
+        {
+          "name": "김형빈",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 26,
+          "heightCm": 201,
+          "number": 23
+        },
+        {
+          "name": "김승원",
+          "pos": "C",
+          "nat": "KOR",
+          "age": 37,
+          "heightCm": 202,
+          "number": 31
+        },
+        {
+          "name": "애런 헤인즈",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 45,
+          "heightCm": 199,
+          "number": 32
+        },
+        {
+          "name": "류종현",
+          "pos": "C",
+          "nat": "KOR",
+          "age": 40,
+          "heightCm": 205,
+          "number": 38
+        }
+      ]
+    },
+    "Ulsan Hyundai Mobis Phoebus": {
+      "source": "wikipedia-ko",
+      "sourceUrl": "https://ko.wikipedia.org/w/index.php?title=%ED%8B%80%3A%EC%9A%B8%EC%82%B0%20%EB%AA%A8%EB%B9%84%EC%8A%A4%20%ED%94%BC%EB%B2%84%EC%8A%A4%20%EB%A1%9C%EC%8A%A4%ED%84%B0&action=raw",
+      "coach": "Yang Dong-geun",
+      "coachNat": "KOR",
+      "players": [
+        {
+          "name": "김영현",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 35,
+          "heightCm": 186,
+          "number": 1
+        },
+        {
+          "name": "최지훈",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 37,
+          "heightCm": 192,
+          "number": 2
+        },
+        {
+          "name": "이진석",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 29,
+          "heightCm": 196,
+          "number": 3
+        },
+        {
+          "name": "김상규",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 37,
+          "heightCm": 201,
+          "number": 5
+        },
+        {
+          "name": "양동근",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 45,
+          "heightCm": 180,
+          "number": 6
+        },
+        {
+          "name": "김수찬",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 34,
+          "heightCm": 188,
+          "number": 7
+        },
+        {
+          "name": "손홍준",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 31,
+          "heightCm": 186,
+          "number": 8
+        },
+        {
+          "name": "박경상",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 36,
+          "heightCm": 179,
+          "number": 9
+        },
+        {
+          "name": "배수용",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 34,
+          "heightCm": 194,
+          "number": 11
+        },
+        {
+          "name": "함지훈",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 41,
+          "heightCm": 197,
+          "number": 12
+        },
+        {
+          "name": "남영길",
+          "pos": "C",
+          "nat": "KOR",
+          "age": 31,
+          "heightCm": 187,
+          "number": 13
+        },
+        {
+          "name": "박지훈",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 37,
+          "heightCm": 193,
+          "number": 15
+        },
+        {
+          "name": "김세창",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 29,
+          "heightCm": 180,
+          "number": 19
+        },
+        {
+          "name": "오용준",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 46,
+          "heightCm": 193,
+          "number": 21
+        },
+        {
+          "name": "자코리 윌리엄스",
+          "pos": "PF",
+          "nat": "USA",
+          "age": 32,
+          "heightCm": 203,
+          "number": 22
+        },
+        {
+          "name": "천재민",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 29,
+          "heightCm": 190,
+          "number": 23
+        },
+        {
+          "name": "박준은",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 29,
+          "heightCm": 194,
+          "number": 24
+        },
+        {
+          "name": "김국찬",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 30,
+          "heightCm": 190,
+          "number": 30
+        },
+        {
+          "name": "이종현",
+          "pos": "C",
+          "nat": "KOR",
+          "age": 32,
+          "heightCm": 203,
+          "number": 32
+        },
+        {
+          "name": "리온 윌리엄스",
+          "pos": "C",
+          "nat": "USA",
+          "age": 40,
+          "heightCm": 197,
+          "number": 34
+        },
+        {
+          "name": "서명진",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 27,
+          "heightCm": 190,
+          "number": 77
+        }
+      ]
+    },
+    "Wonju DB Promy": {
+      "source": "wikipedia-ko",
+      "sourceUrl": "https://ko.wikipedia.org/w/index.php?title=%ED%8B%80%3A%EC%9B%90%EC%A3%BC%20DB%20%ED%94%84%EB%A1%9C%EB%AF%B8%20%EB%A1%9C%EC%8A%A4%ED%84%B0&action=raw",
+      "coach": "Lee Sang-beom",
+      "coachNat": "KOR",
+      "players": [
+        {
+          "name": "이민석",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 27,
+          "heightCm": 188,
+          "number": 2
+        },
+        {
+          "name": "서현석",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 31,
+          "heightCm": 198,
+          "number": 4
+        },
+        {
+          "name": "이준희",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 26,
+          "heightCm": 192,
+          "number": 5
+        },
+        {
+          "name": "김현호",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 38,
+          "heightCm": 184,
+          "number": 7
+        },
+        {
+          "name": "박상권",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 29,
+          "heightCm": 194,
+          "number": 11
+        },
+        {
+          "name": "김훈",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 30,
+          "heightCm": 193,
+          "number": 12
+        },
+        {
+          "name": "윤호영",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 42,
+          "heightCm": 196,
+          "number": 13
+        },
+        {
+          "name": "이윤수",
+          "pos": "C",
+          "nat": "KOR",
+          "age": 30,
+          "heightCm": 203,
+          "number": 14
+        },
+        {
+          "name": "김종규",
+          "pos": "C",
+          "nat": "KOR",
+          "age": 35,
+          "heightCm": 207,
+          "number": 15
+        },
+        {
+          "name": "이선 알바노",
+          "pos": "SF",
+          "nat": "PHI",
+          "age": 30,
+          "heightCm": 185,
+          "number": 17
+        },
+        {
+          "name": "정호영",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 28,
+          "heightCm": 186,
+          "number": 19
+        },
+        {
+          "name": "윤성원",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 31,
+          "heightCm": 196,
+          "number": 21
+        },
+        {
+          "name": "강상재",
+          "pos": "SF",
+          "nat": "KOR",
+          "age": 31,
+          "heightCm": 200,
+          "number": 26
+        },
+        {
+          "name": "이용우",
+          "pos": "PG",
+          "nat": "KOR",
+          "age": 26,
+          "heightCm": 184,
+          "number": 30
+        }
+      ]
+    },
+    "Metros de Santiago": {
+      "source": "lnb-do",
+      "sourceUrl": "https://www.lnb.do/equipo/Metros/2",
+      "coach": "David Diaz",
+      "coachNat": "DOM",
+      "players": [
+        {
+          "name": "Brahiam Méndez",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Raimer Santana",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 22
+        },
+        {
+          "name": "Omar Silverio",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Angel Nunez",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Jhery Matos",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Oliver Garcia",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Juan Guerrero",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Luis Almanza",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Jeffry Arias",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Janiel R. Rosario",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "David Acosta",
+          "pos": "PG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Jordan Geronimo",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Adonis Lopez",
+          "pos": "C",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Adris de Leon",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Jordan Hall",
+          "pos": "PG",
+          "nat": null,
+          "age": 24,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Brayan Rosado",
+          "pos": "PG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Victor Liz",
+          "pos": "PG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Yormi Almonte",
+          "pos": "PG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Miguel Dicent",
+          "pos": "PG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Geronimo Rubio",
+          "pos": "PG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Jaden Pena",
+          "pos": "PG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Florent Thamba",
+          "pos": "PG",
+          "nat": null,
+          "age": 27,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Troy Cracknell",
+          "pos": "PG",
+          "nat": null,
+          "age": 27,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Luis del Orbe",
+          "pos": "PG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Roddy Peters Jr.",
+          "pos": "PG",
+          "nat": null,
+          "age": 31,
+          "heightCm": null,
+          "number": 1
+        }
+      ]
+    },
+    "BC Vienna": {
+      "source": "bcvienna-oficial",
+      "sourceUrl": "https://bcvienna.com/spieler/",
+      "coach": "DRAGAN BAJIĆ",
+      "coachNat": "BIH",
+      "players": [
+        {
+          "name": "KREŠIMIR RADOVČIĆ",
+          "pos": "SG",
+          "nat": "CRO",
+          "age": 29,
+          "heightCm": 195,
+          "number": 3
+        },
+        {
+          "name": "BOGDAN ZIMONJIĆ",
+          "pos": "PG",
+          "nat": "SRB",
+          "age": 23,
+          "heightCm": 191,
+          "number": 5
+        },
+        {
+          "name": "JD MUILA",
+          "pos": "C",
+          "nat": "CAN",
+          "age": 26,
+          "heightCm": 203,
+          "number": 8
+        },
+        {
+          "name": "NIKOLA JOVANOVIĆ",
+          "pos": "C",
+          "nat": "SRB",
+          "age": 32,
+          "heightCm": 211,
+          "number": 10
+        },
+        {
+          "name": "ALEKSANDAR LANGOVIĆ",
+          "pos": "PF",
+          "nat": "SRB",
+          "age": 25,
+          "heightCm": 206,
+          "number": 11
+        },
+        {
+          "name": "BARRA NJIE",
+          "pos": "PG",
+          "nat": "SWE",
+          "age": 25,
+          "heightCm": 191,
+          "number": 13
+        },
+        {
+          "name": "ALEKSA NOVAKOVIĆ",
+          "pos": "SF",
+          "nat": "SRB",
+          "age": 30,
+          "heightCm": 200,
+          "number": 19
+        },
+        {
+          "name": "ARON STAZIĆ",
+          "pos": "PF",
+          "nat": "AUT",
+          "age": 19,
+          "heightCm": 207,
+          "number": 21
+        },
+        {
+          "name": "RJ GUNN",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 201,
+          "number": 22
+        },
+        {
+          "name": "LUKAS CVETKOVA",
+          "pos": "PG",
+          "nat": "AUT",
+          "age": 19,
+          "heightCm": 192,
+          "number": 23
+        },
+        {
+          "name": "GRANT SHERFIELD",
+          "pos": "PG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 188,
+          "number": 25
+        },
+        {
+          "name": "LUKA KUREŠ",
+          "pos": "PG",
+          "nat": "SVN",
+          "age": 28,
+          "heightCm": 192,
+          "number": 35
+        }
+      ]
+    },
+    "Leones de Santo Domingo": {
+      "source": "lnb-do",
+      "sourceUrl": "https://www.lnb.do/equipo/Leones/3",
+      "coach": "Eulis Báez",
+      "coachNat": "DOM",
+      "players": [
+        {
+          "name": "Gerardo Suero",
+          "pos": "SG",
+          "nat": null,
+          "age": 36,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Yeison Rivera",
+          "pos": "SG",
+          "nat": null,
+          "age": 36,
+          "heightCm": null,
+          "number": 21
+        },
+        {
+          "name": "Leo Cabrera",
+          "pos": "PF",
+          "nat": null,
+          "age": 36,
+          "heightCm": null,
+          "number": 20
+        },
+        {
+          "name": "Jose Liriano",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 0
+        },
+        {
+          "name": "Roberto Tamarez",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Miguel Evangelista",
+          "pos": "C",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 11
+        },
+        {
+          "name": "Yeikson Montero",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Brayan Saviñón",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "A J Bramah",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Sebastián Saiz",
+          "pos": "C",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Angel Puello",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Kevin Perez",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Sahvir Wheeler",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Jeromy Rodriguez",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Alex Abreu",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Joel Soriano",
+          "pos": "C",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Kelvin Fulcar",
+          "pos": "PG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Chad Baker Mazara",
+          "pos": "PG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Justin Perez",
+          "pos": "PG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Reggie Quezada",
+          "pos": "PG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Marquis Holloway",
+          "pos": "PG",
+          "nat": null,
+          "age": 26,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Romaine Thomas",
+          "pos": "PG",
+          "nat": null,
+          "age": 32,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Kerry Richardson",
+          "pos": "PG",
+          "nat": null,
+          "age": 26,
+          "heightCm": null,
+          "number": 1
+        },
+        {
+          "name": "Jimmy Mendez",
+          "pos": "PG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 1
+        }
+      ]
+    },
+    "Halcones de Xalapa": {
+      "source": "latinbasket",
+      "sourceUrl": "https://basketball.latinbasket.com/team/Halcones-UV-Xalapa/5224/Roster",
+      "coach": "Paco Olmos",
+      "coachNat": "ESP",
+      "players": [
+        {
+          "name": "Jaysean Paige",
+          "pos": "SG",
+          "nat": null,
+          "age": 31,
+          "heightCm": 188,
+          "number": 6
+        },
+        {
+          "name": "Justin Bibbs",
+          "pos": "SG",
+          "nat": null,
+          "age": 29,
+          "heightCm": 196,
+          "number": null
+        },
+        {
+          "name": "Fernando Zurbriggen",
+          "pos": "PG",
+          "nat": null,
+          "age": 28,
+          "heightCm": 185,
+          "number": null
+        },
+        {
+          "name": "Thad McFadden",
+          "pos": "PG",
+          "nat": null,
+          "age": 38,
+          "heightCm": 188,
+          "number": 21
+        },
+        {
+          "name": "Gabriel Giron",
+          "pos": "SG",
+          "nat": null,
+          "age": 37,
+          "heightCm": 192,
+          "number": 24
+        },
+        {
+          "name": "Sek Henry",
+          "pos": "SG",
+          "nat": null,
+          "age": 38,
+          "heightCm": 196,
+          "number": 5
+        },
+        {
+          "name": "Paul Stoll",
+          "pos": "PG",
+          "nat": null,
+          "age": 40,
+          "heightCm": 180,
+          "number": 21
+        },
+        {
+          "name": "Donte Clark",
+          "pos": "SG",
+          "nat": null,
+          "age": 31,
+          "heightCm": 194,
+          "number": null
+        },
+        {
+          "name": "Jorge Camacho",
+          "pos": "PF",
+          "nat": null,
+          "age": 36,
+          "heightCm": 205,
+          "number": 15
+        },
+        {
+          "name": "Jy'Lan Washington",
+          "pos": "PF",
+          "nat": null,
+          "age": 28,
+          "heightCm": 206,
+          "number": 22
+        },
+        {
+          "name": "Reggie Lynch",
+          "pos": "C",
+          "nat": null,
+          "age": 31,
+          "heightCm": 207,
+          "number": 50
+        },
+        {
+          "name": "Dragan Zekovic",
+          "pos": "PF",
+          "nat": null,
+          "age": 38,
+          "heightCm": 209,
+          "number": null
+        },
+        {
+          "name": "Rasid Mahalbasic",
+          "pos": "C",
+          "nat": null,
+          "age": 35,
+          "heightCm": 210,
+          "number": 24
+        },
+        {
+          "name": "Jose Israel-Gutierrez",
+          "pos": "C",
+          "nat": null,
+          "age": 32,
+          "heightCm": 206,
+          "number": 25
+        },
+        {
+          "name": "Matic Rebec",
+          "pos": "PG",
+          "nat": null,
+          "age": 30,
+          "heightCm": 183,
+          "number": null
+        },
+        {
+          "name": "Victor Ramirez",
+          "pos": "PG",
+          "nat": null,
+          "age": null,
+          "heightCm": 180,
+          "number": 2
+        }
+      ]
+    },
+    "São Paulo": {
+      "source": "latinbasket",
+      "sourceUrl": "https://basketball.latinbasket.com/team/Sao-Paulo-FC/50954/Roster",
+      "coach": "Guerrinha",
+      "coachNat": "BRA",
+      "players": [
+        {
+          "name": "Vitor Faverani",
+          "pos": "C",
+          "nat": null,
+          "age": 36,
+          "heightCm": 212,
+          "number": 13
+        },
+        {
+          "name": "Paulo Da Costa",
+          "pos": "SG",
+          "nat": null,
+          "age": 30,
+          "heightCm": 194,
+          "number": 13
+        },
+        {
+          "name": "Henrique Coelho",
+          "pos": "PG",
+          "nat": null,
+          "age": 31,
+          "heightCm": 184,
+          "number": 10
+        },
+        {
+          "name": "Andre Bresolin",
+          "pos": "SG",
+          "nat": null,
+          "age": 37,
+          "heightCm": 195,
+          "number": 40
+        },
+        {
+          "name": "Cordero Bennett",
+          "pos": "PG",
+          "nat": null,
+          "age": 36,
+          "heightCm": 184,
+          "number": 3
+        },
+        {
+          "name": "Ricardo Fischer",
+          "pos": "PG",
+          "nat": null,
+          "age": 33,
+          "heightCm": 185,
+          "number": null
+        },
+        {
+          "name": "Malcolm Miller",
+          "pos": "SG",
+          "nat": null,
+          "age": 33,
+          "heightCm": 201,
+          "number": 33
+        },
+        {
+          "name": "Tyrone Curnell",
+          "pos": "PF",
+          "nat": null,
+          "age": 36,
+          "heightCm": 203,
+          "number": 0
+        },
+        {
+          "name": "Ralfi Ansaloni",
+          "pos": "C",
+          "nat": null,
+          "age": 37,
+          "heightCm": 209,
+          "number": 22
+        },
+        {
+          "name": "Jonathan Moreira",
+          "pos": "PG",
+          "nat": null,
+          "age": 18,
+          "heightCm": 186,
+          "number": 6
+        },
+        {
+          "name": "Isaque Duarte",
+          "pos": "C",
+          "nat": null,
+          "age": 18,
+          "heightCm": 204,
+          "number": 13
+        },
+        {
+          "name": "Igor Andrade",
+          "pos": "SF",
+          "nat": null,
+          "age": 19,
+          "heightCm": 195,
+          "number": 12
+        },
+        {
+          "name": "Jackson Oliveira",
+          "pos": "SG",
+          "nat": null,
+          "age": 18,
+          "heightCm": 184,
+          "number": 55
+        },
+        {
+          "name": "Thiago Nunes",
+          "pos": "PG",
+          "nat": null,
+          "age": 25,
+          "heightCm": 190,
+          "number": 20
+        },
+        {
+          "name": "Luis Salvador",
+          "pos": "SF",
+          "nat": null,
+          "age": 18,
+          "heightCm": 200,
+          "number": 88
+        },
+        {
+          "name": "Tiago Schiavetto",
+          "pos": "PG",
+          "nat": null,
+          "age": 20,
+          "heightCm": 192,
+          "number": 11
+        }
+      ]
+    },
+    "Prometey": {
+      "source": "basketnews",
+      "sourceUrl": "https://basketnews.com/teams/3231-prometey-slobozhanske/roster.html",
+      "coach": "Ronen Ginzburg",
+      "coachNat": "CZE",
+      "players": [
+        {
+          "name": "Caleb Agada",
+          "pos": "SG",
+          "nat": null,
+          "age": 32,
+          "heightCm": 193,
+          "number": 0
+        },
+        {
+          "name": "Davon Reed",
+          "pos": "SG",
+          "nat": null,
+          "age": 31,
+          "heightCm": 198,
+          "number": 1
+        },
+        {
+          "name": "Marcus Keene",
+          "pos": "PG",
+          "nat": null,
+          "age": 31,
+          "heightCm": 175,
+          "number": 3
+        },
+        {
+          "name": "Gian Clavell",
+          "pos": "SG",
+          "nat": null,
+          "age": 32,
+          "heightCm": 193,
+          "number": 3
+        },
+        {
+          "name": "Ronald March",
+          "pos": "SF",
+          "nat": null,
+          "age": 33,
+          "heightCm": 196,
+          "number": 4
+        },
+        {
+          "name": "Ivan Tkachenko",
+          "pos": "SF",
+          "nat": null,
+          "age": 29,
+          "heightCm": 197,
+          "number": 5
+        },
+        {
+          "name": "PF,",
+          "pos": "SF",
+          "nat": null,
+          "age": 31,
+          "heightCm": 203,
+          "number": null
+        },
+        {
+          "name": "Denys Lukashov",
+          "pos": "PG",
+          "nat": null,
+          "age": 37,
+          "heightCm": 191,
+          "number": 7
+        },
+        {
+          "name": "Vyacheslav Bobrov",
+          "pos": "PF",
+          "nat": null,
+          "age": 34,
+          "heightCm": 203,
+          "number": 8
+        },
+        {
+          "name": "Oleksandr Lipovyy",
+          "pos": "SF",
+          "nat": null,
+          "age": 35,
+          "heightCm": 200,
+          "number": 11
+        },
+        {
+          "name": "Ondrej Balvin",
+          "pos": "C",
+          "nat": null,
+          "age": 36,
+          "heightCm": 217,
+          "number": 12
+        },
+        {
+          "name": "David Kennedy",
+          "pos": "SG",
+          "nat": null,
+          "age": 36,
+          "heightCm": 198,
+          "number": 17
+        },
+        {
+          "name": "Tai Odiase",
+          "pos": "C",
+          "nat": null,
+          "age": 31,
+          "heightCm": 206,
+          "number": 21
+        },
+        {
+          "name": "Viacheslav Petrov",
+          "pos": "C",
+          "nat": null,
+          "age": 30,
+          "heightCm": 204,
+          "number": 22
+        },
+        {
+          "name": "Issuf Sanon",
+          "pos": "SG",
+          "nat": null,
+          "age": 26,
+          "heightCm": 194,
+          "number": null
+        },
+        {
+          "name": "Illya Sydorov",
+          "pos": "PG",
+          "nat": null,
+          "age": 29,
+          "heightCm": 182,
+          "number": 55
+        }
+      ]
+    }
+  }
+}

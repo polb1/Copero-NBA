@@ -1,12 +1,16 @@
 import { describe, expect, test } from 'vitest';
 import {
+  CLUB_REAL_COACHES,
   CLUB_REAL_ROSTERS,
   DRAFT_REAL_PROSPECTS,
+  NBA_REAL_COACHES,
+  getClubRealCoach,
   getClubRealRoster,
   getRealPlayersStats,
   searchRealPlayers,
   realToSimPlayer,
 } from '../../data/realPlayers';
+import { EURO_CLUBS, NCAA_PROGRAMS } from '../../data/clubs';
 import { rngFor } from '../rng';
 
 describe('Real Players API', () => {
@@ -37,10 +41,10 @@ describe('Real Players API', () => {
     expect(oly?.some((p) => p.name === 'Sasha Vezenkov')).toBe(true);
 
     const fener = getClubRealRoster('Fenerbahçe');
-    expect(fener?.some((p) => p.name === 'Nigel Hayes-Davis')).toBe(true);
+    expect(fener?.some((p) => p.name === 'Shane Larkin')).toBe(true);
 
     const duke = getClubRealRoster('Duke');
-    expect(duke?.some((p) => p.name === 'Cooper Flagg')).toBe(true);
+    expect(duke?.some((p) => p.name === 'Deron Rippey Jr.')).toBe(true);
   });
 
   test('draft real prospects contain current consensus top picks', () => {
@@ -50,6 +54,43 @@ describe('Real Players API', () => {
     expect(DRAFT_REAL_PROSPECTS.some((p) => p.name === 'VJ Edgecombe')).toBe(true);
     expect(DRAFT_REAL_PROSPECTS.some((p) => p.name === 'Nolan Traore')).toBe(true);
     expect(DRAFT_REAL_PROSPECTS.some((p) => p.name === 'Hugo González')).toBe(true);
+  });
+
+  test('every club in the game has a real roster and a real coach', () => {
+    const clubs = [...EURO_CLUBS, ...NCAA_PROGRAMS];
+    expect(clubs.length).toBe(177);
+    const missingRoster: string[] = [];
+    const missingCoach: string[] = [];
+    const tooSmall: string[] = [];
+    const badData: string[] = [];
+
+    for (const club of clubs) {
+      const roster = getClubRealRoster(club.name);
+      if (!roster || roster.length === 0) { missingRoster.push(club.name); continue; }
+      if (!getClubRealCoach(club.name)) missingCoach.push(club.name);
+      if (roster.length < 8) tooSmall.push(`${club.name} (${roster.length})`);
+      const names = new Set<string>();
+      for (const p of roster) {
+        const key = p.name.toLowerCase();
+        if (names.has(key)) badData.push(`${club.name}: duplicado ${p.name}`);
+        names.add(key);
+        if (!Number.isFinite(p.ovr) || p.ovr < 40 || p.ovr > 99) badData.push(`${club.name}: OVR ${p.name}`);
+        const pot = p.pot ?? p.ovr;
+        if (!Number.isFinite(pot) || pot < p.ovr || pot > 99) badData.push(`${club.name}: POT ${p.name}`);
+        if (!Number.isFinite(p.age) || p.age < 15 || p.age > 45) badData.push(`${club.name}: edad ${p.name}`);
+        if (p.heightCm !== undefined && (p.heightCm < 150 || p.heightCm > 230)) badData.push(`${club.name}: altura ${p.name}`);
+      }
+    }
+
+    expect(missingRoster).toEqual([]);
+    expect(missingCoach).toEqual([]);
+    expect(tooSmall).toEqual([]);
+    expect(badData).toEqual([]);
+  });
+
+  test('NBA real coaches cover all 30 teams', () => {
+    expect(Object.keys(NBA_REAL_COACHES).length).toBe(30);
+    expect(Object.keys(CLUB_REAL_COACHES).length).toBeGreaterThanOrEqual(176);
   });
 
   test('converts real player to sim player correctly', () => {

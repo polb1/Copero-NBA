@@ -1,0 +1,6173 @@
+{
+  "version": 1,
+  "asOf": "2026-10-26",
+  "source": "espn",
+  "ncaa": {
+    "Duke": {
+      "espnId": "150",
+      "espnName": "Duke Blue Devils",
+      "coach": "Jon Scheyer",
+      "players": [
+        {
+          "name": "Caleb Foster",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 1
+        },
+        {
+          "name": "Cayden Boozer",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 2
+        },
+        {
+          "name": "Deron Rippey Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 3
+        },
+        {
+          "name": "Sebastian Wilkins",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 5
+        },
+        {
+          "name": "Dame Sarr",
+          "pos": "SF",
+          "nat": "ITA",
+          "age": null,
+          "heightCm": 203,
+          "number": 7
+        },
+        {
+          "name": "Drew Scharnowski",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 8
+        },
+        {
+          "name": "Bryson Howard",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 12
+        },
+        {
+          "name": "John Blackwell",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 13
+        },
+        {
+          "name": "Cameron Williams",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 213,
+          "number": 14
+        },
+        {
+          "name": "Maxime Meyer",
+          "pos": "C",
+          "nat": "CAN",
+          "age": null,
+          "heightCm": 216,
+          "number": 15
+        },
+        {
+          "name": "Patrick Ngongba II",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 21
+        },
+        {
+          "name": "Jacob Theodosiou",
+          "pos": "SG",
+          "nat": "CAN",
+          "age": null,
+          "heightCm": 193,
+          "number": 26
+        },
+        {
+          "name": "Joaquim Boumtje Boumtje",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 218,
+          "number": 30
+        },
+        {
+          "name": "Brock Davis",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 50
+        },
+        {
+          "name": "Nick Arnold",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 180,
+          "number": 55
+        }
+      ]
+    },
+    "North Carolina": {
+      "espnId": "153",
+      "espnName": "North Carolina Tar Heels",
+      "coach": "Michael Malone",
+      "players": [
+        {
+          "name": "Terrence Brown",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 1
+        },
+        {
+          "name": "Isaiah Denis",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 2
+        },
+        {
+          "name": "Matt Able",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 3
+        },
+        {
+          "name": "Jaydon Young",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 4
+        },
+        {
+          "name": "Kevin Thomas",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 5
+        },
+        {
+          "name": "Angelo Brizzi",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 14
+        },
+        {
+          "name": "Jarin Stevenson",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 15
+        },
+        {
+          "name": "Neo Avdalas",
+          "pos": "SG",
+          "nat": "GRE",
+          "age": null,
+          "heightCm": 206,
+          "number": 17
+        },
+        {
+          "name": "Sayon Keita",
+          "pos": "C",
+          "nat": "MLI",
+          "age": null,
+          "heightCm": 216,
+          "number": 21
+        },
+        {
+          "name": "Alex Samodurov",
+          "pos": "SF",
+          "nat": "GRE",
+          "age": 21,
+          "heightCm": 211,
+          "number": 22
+        },
+        {
+          "name": "Maximo Adams",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 25
+        },
+        {
+          "name": "Malloy Smith",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 30
+        },
+        {
+          "name": "Evan Smith",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 32
+        },
+        {
+          "name": "Cade Bennerman",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 213,
+          "number": 35
+        },
+        {
+          "name": "Cameron Fens",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 213,
+          "number": 54
+        },
+        {
+          "name": "John Holbrook",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 99
+        }
+      ]
+    },
+    "Kentucky": {
+      "espnId": "96",
+      "espnName": "Kentucky Wildcats",
+      "coach": "Mark Pope",
+      "players": [
+        {
+          "name": "Zyon Hawthorne",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 0
+        },
+        {
+          "name": "Jerone Morton",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 1
+        },
+        {
+          "name": "Braydon Hawthorne",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 2
+        },
+        {
+          "name": "Kam Williams",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 3
+        },
+        {
+          "name": "Mason Williams",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 4
+        },
+        {
+          "name": "Zoom Diallo",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 5
+        },
+        {
+          "name": "Trent Noah",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 9
+        },
+        {
+          "name": "Alex Wilkins",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 10
+        },
+        {
+          "name": "Franck Kepnang",
+          "pos": "C",
+          "nat": "CMR",
+          "age": null,
+          "heightCm": 213,
+          "number": 11
+        },
+        {
+          "name": "Ousmane N'Diaye",
+          "pos": "SF",
+          "nat": "SEN",
+          "age": null,
+          "heightCm": 213,
+          "number": 19
+        },
+        {
+          "name": "Justin McBride",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 21
+        },
+        {
+          "name": "Milan Momcilovic",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 22
+        },
+        {
+          "name": "Malachi Moreno",
+          "pos": "C",
+          "nat": "USA",
+          "age": 19,
+          "heightCm": 213,
+          "number": 24
+        },
+        {
+          "name": "Reece Potter",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 216,
+          "number": 33
+        }
+      ]
+    },
+    "Kansas": {
+      "espnId": "2305",
+      "espnName": "Kansas Jayhawks",
+      "coach": "Bill Self",
+      "players": [
+        {
+          "name": "Taylen Kinney",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 0
+        },
+        {
+          "name": "Leroy Blyden Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 2
+        },
+        {
+          "name": "Atticus Richmond",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 3
+        },
+        {
+          "name": "Tyran Stokes",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 4
+        },
+        {
+          "name": "Grant Mordini",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 213,
+          "number": 5
+        },
+        {
+          "name": "Kohl Rosario",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 7
+        },
+        {
+          "name": "Keanu Dawes",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 8
+        },
+        {
+          "name": "Trey Kaufman-Renn",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 24,
+          "heightCm": 206,
+          "number": 9
+        },
+        {
+          "name": "Dennis Parker Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 11
+        },
+        {
+          "name": "Luke Barnett",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 14
+        },
+        {
+          "name": "Will Thengvall",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 21
+        },
+        {
+          "name": "Trent Perry",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 23
+        },
+        {
+          "name": "Davion Adkins",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 25
+        },
+        {
+          "name": "Christian Reeves",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 218,
+          "number": 32
+        },
+        {
+          "name": "Paul Mbiya",
+          "pos": "C",
+          "nat": null,
+          "age": null,
+          "heightCm": 213,
+          "number": 34
+        }
+      ]
+    },
+    "UConn": {
+      "espnId": "41",
+      "espnName": "UConn Huskies",
+      "coach": "Dan Hurley",
+      "players": [
+        {
+          "name": "Junior County",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 0
+        },
+        {
+          "name": "Solo Ball",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 1
+        },
+        {
+          "name": "Colben Landrew",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 3
+        },
+        {
+          "name": "Nik Khamenia",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 4
+        },
+        {
+          "name": "Silas Demary Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 5
+        },
+        {
+          "name": "Jaye Nash",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 7
+        },
+        {
+          "name": "Na'jai Hines",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 9
+        },
+        {
+          "name": "Jacob Ross",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 13
+        },
+        {
+          "name": "Egor Amosov",
+          "pos": "SF",
+          "nat": "RUS",
+          "age": null,
+          "heightCm": 203,
+          "number": 17
+        },
+        {
+          "name": "Oskar Giltay",
+          "pos": "C",
+          "nat": "BEL",
+          "age": null,
+          "heightCm": 211,
+          "number": 18
+        },
+        {
+          "name": "Nils Machowski",
+          "pos": "SG",
+          "nat": "GER",
+          "age": null,
+          "heightCm": 193,
+          "number": 21
+        },
+        {
+          "name": "Jayden Ross",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 23
+        },
+        {
+          "name": "Braylon Mullins",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 24
+        },
+        {
+          "name": "Elmir Dzafic",
+          "pos": "C",
+          "nat": "BIH",
+          "age": null,
+          "heightCm": 213,
+          "number": 29
+        },
+        {
+          "name": "Isaiah Shaw",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 33
+        }
+      ]
+    },
+    "Gonzaga": {
+      "espnId": "2250",
+      "espnName": "Gonzaga Bulldogs",
+      "coach": "Mark Few",
+      "players": [
+        {
+          "name": "Luca Foster",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 0
+        },
+        {
+          "name": "Isiah Harwell",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 1
+        },
+        {
+          "name": "Javon Bennett",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 178,
+          "number": 2
+        },
+        {
+          "name": "Juwan Ekanga",
+          "pos": "SG",
+          "nat": "FRA",
+          "age": null,
+          "heightCm": 198,
+          "number": 3
+        },
+        {
+          "name": "Davis Fogle",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 4
+        },
+        {
+          "name": "Xaivian Lee",
+          "pos": "SG",
+          "nat": "CAN",
+          "age": 22,
+          "heightCm": 193,
+          "number": 5
+        },
+        {
+          "name": "Nathan De Sousa",
+          "pos": "SG",
+          "nat": "FRA",
+          "age": null,
+          "heightCm": 191,
+          "number": 7
+        },
+        {
+          "name": "Chauncey Wiggins",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 21,
+          "heightCm": 211,
+          "number": 9
+        },
+        {
+          "name": "Izan Almansa",
+          "pos": "SF",
+          "nat": "ESP",
+          "age": 21,
+          "heightCm": 208,
+          "number": 13
+        },
+        {
+          "name": "Alonzo Metz",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 180,
+          "number": 14
+        },
+        {
+          "name": "Carter Nilson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 30
+        },
+        {
+          "name": "Parker Jefferson",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 32
+        },
+        {
+          "name": "Sam Funches",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 213,
+          "number": 33
+        },
+        {
+          "name": "Braden Huff",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 34
+        },
+        {
+          "name": "Massamba Diop",
+          "pos": "C",
+          "nat": "SEN",
+          "age": null,
+          "heightCm": 216,
+          "number": 35
+        }
+      ]
+    },
+    "Arizona": {
+      "espnId": "12",
+      "espnName": "Arizona Wildcats",
+      "coach": "Tommy Lloyd",
+      "players": [
+        {
+          "name": "RJ Godfrey",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 0
+        },
+        {
+          "name": "Cameron Holmes",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 2
+        },
+        {
+          "name": "Caleb Holt",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 3
+        },
+        {
+          "name": "Bryce James",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 6
+        },
+        {
+          "name": "Derek Dixon",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 7
+        },
+        {
+          "name": "Ivan Kharchenkov",
+          "pos": "SF",
+          "nat": "GER",
+          "age": null,
+          "heightCm": 201,
+          "number": 8
+        },
+        {
+          "name": "Jackson Cook",
+          "pos": "SG",
+          "nat": "ENG",
+          "age": null,
+          "heightCm": 191,
+          "number": 11
+        },
+        {
+          "name": "Ugnius Jarusevicius",
+          "pos": "SF",
+          "nat": "LTU",
+          "age": null,
+          "heightCm": 211,
+          "number": 12
+        },
+        {
+          "name": "Motiejus Krivas",
+          "pos": "C",
+          "nat": "LTU",
+          "age": null,
+          "heightCm": 218,
+          "number": 13
+        },
+        {
+          "name": "Endurance Aiyamenkhue",
+          "pos": "SF",
+          "nat": "NED",
+          "age": null,
+          "heightCm": 211,
+          "number": 14
+        },
+        {
+          "name": "Mabil Mawut",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": 211,
+          "number": 20
+        },
+        {
+          "name": "Joaquin Rigdon",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 21
+        },
+        {
+          "name": "Addison Arnold",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 22
+        },
+        {
+          "name": "JJ Mandaquit",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 23
+        },
+        {
+          "name": "Evan Otten",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 30
+        },
+        {
+          "name": "Maksim Brnovic",
+          "pos": "SF",
+          "nat": "MTG",
+          "age": null,
+          "heightCm": 208,
+          "number": 35
+        }
+      ]
+    },
+    "UCLA": {
+      "espnId": "26",
+      "espnName": "UCLA Bruins",
+      "coach": "Mick Cronin",
+      "players": [
+        {
+          "name": "Trent Perry",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 0
+        },
+        {
+          "name": "Xavier Booker",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 1
+        },
+        {
+          "name": "Javonte Floyd",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 2
+        },
+        {
+          "name": "Eric Dailey Jr.",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 3
+        },
+        {
+          "name": "Jaylen Petty",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 4
+        },
+        {
+          "name": "Brandon Williams",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 5
+        },
+        {
+          "name": "Gunars Grinvalds",
+          "pos": "SF",
+          "nat": "LAT",
+          "age": null,
+          "heightCm": 198,
+          "number": 6
+        },
+        {
+          "name": "Joe Philon III",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 7
+        },
+        {
+          "name": "Eric Freeny",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 8
+        },
+        {
+          "name": "Markell Alston",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 10
+        },
+        {
+          "name": "Sergej Macura",
+          "pos": "SF",
+          "nat": "SLO",
+          "age": null,
+          "heightCm": 206,
+          "number": 12
+        },
+        {
+          "name": "Nikola Kusturica",
+          "pos": "SF",
+          "nat": "SER",
+          "age": null,
+          "heightCm": 206,
+          "number": 17
+        },
+        {
+          "name": "Azavier Robinson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 23
+        },
+        {
+          "name": "Filip Jovic",
+          "pos": "C",
+          "nat": "BIH",
+          "age": null,
+          "heightCm": 203,
+          "number": 38
+        }
+      ]
+    },
+    "Houston": {
+      "espnId": "248",
+      "espnName": "Houston Cougars",
+      "coach": "Kelvin Sampson",
+      "players": [
+        {
+          "name": "Kordel Jefferson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 0
+        },
+        {
+          "name": "Ikenna Alozie",
+          "pos": "SG",
+          "nat": "NGR",
+          "age": null,
+          "heightCm": 188,
+          "number": 1
+        },
+        {
+          "name": "Corey Hadnot II",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 2
+        },
+        {
+          "name": "Tyus Thomas",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 183,
+          "number": 3
+        },
+        {
+          "name": "Braden East",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 4
+        },
+        {
+          "name": "Bryce Jackson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 6
+        },
+        {
+          "name": "Chendall Weaver",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 7
+        },
+        {
+          "name": "Dedan Thomas Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 9
+        },
+        {
+          "name": "Joseph Tugler",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 11
+        },
+        {
+          "name": "Arafan Diane",
+          "pos": "C",
+          "nat": "GUI",
+          "age": null,
+          "heightCm": 213,
+          "number": 13
+        },
+        {
+          "name": "Djafar Silimana",
+          "pos": "C",
+          "nat": "MLI",
+          "age": null,
+          "heightCm": 208,
+          "number": 15
+        },
+        {
+          "name": "Delrecco Gillespie",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 23
+        },
+        {
+          "name": "Chase McCarty",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 24
+        },
+        {
+          "name": "Mercy Miller",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 25
+        }
+      ]
+    },
+    "Purdue": {
+      "espnId": "2509",
+      "espnName": "Purdue Boilermakers",
+      "coach": "Matt Painter",
+      "players": [
+        {
+          "name": "C.J. Cox",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 0
+        },
+        {
+          "name": "Antione West Jr",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 1
+        },
+        {
+          "name": "Luke Ertel",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 2
+        },
+        {
+          "name": "Sam King",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 7
+        },
+        {
+          "name": "Caden Pierce",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 8
+        },
+        {
+          "name": "Jack Lusk",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 9
+        },
+        {
+          "name": "Jacob Webber",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 11
+        },
+        {
+          "name": "Daniel Jacobsen",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 224,
+          "number": 12
+        },
+        {
+          "name": "Jack Benter",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 14
+        },
+        {
+          "name": "Omer Mayer",
+          "pos": "SG",
+          "nat": "ISR",
+          "age": null,
+          "heightCm": 193,
+          "number": 17
+        },
+        {
+          "name": "Enzo Shahrvin",
+          "pos": "SF",
+          "nat": "FRA",
+          "age": null,
+          "heightCm": 206,
+          "number": 18
+        },
+        {
+          "name": "Rivers Knight",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 21
+        },
+        {
+          "name": "Gicarri Harris",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 24
+        },
+        {
+          "name": "Jace Rayl",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 180,
+          "number": 32
+        },
+        {
+          "name": "Sinan Huan",
+          "pos": "C",
+          "nat": "CHN",
+          "age": null,
+          "heightCm": 216,
+          "number": 33
+        },
+        {
+          "name": "Raleigh Burgess",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 34
+        }
+      ]
+    },
+    "Auburn": {
+      "espnId": "2",
+      "espnName": "Auburn Tigers",
+      "coach": "Steven Pearl",
+      "players": [
+        {
+          "name": "Tahaad Pettiford",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 0
+        },
+        {
+          "name": "Kevin Overton",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 1
+        },
+        {
+          "name": "Caleb Williams",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 2
+        },
+        {
+          "name": "George Kimble III",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 3
+        },
+        {
+          "name": "Kolby King",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 4
+        },
+        {
+          "name": "Thomas Dowd",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 5
+        },
+        {
+          "name": "Drake Cardwell",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 7
+        },
+        {
+          "name": "Owen Freeman",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 8
+        },
+        {
+          "name": "Simon Walker",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 10
+        },
+        {
+          "name": "Bukky Oboye",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 216,
+          "number": 12
+        },
+        {
+          "name": "Bradley Pearson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 13
+        },
+        {
+          "name": "Joah Shay",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 168,
+          "number": 14
+        },
+        {
+          "name": "Mantas Rubstavicius",
+          "pos": "SG",
+          "nat": "LTU",
+          "age": null,
+          "heightCm": 198,
+          "number": 17
+        },
+        {
+          "name": "Jeremiah Bowman",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 20
+        },
+        {
+          "name": "Blake Muschalek",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 21
+        },
+        {
+          "name": "Adam Olsen",
+          "pos": "SF",
+          "nat": "CAN",
+          "age": null,
+          "heightCm": 203,
+          "number": 24
+        },
+        {
+          "name": "Narcisse Ngoy",
+          "pos": "C",
+          "nat": "FRA",
+          "age": null,
+          "heightCm": 213,
+          "number": 94
+        }
+      ]
+    },
+    "Florida": {
+      "espnId": "57",
+      "espnName": "Florida Gators",
+      "coach": "Todd Golden",
+      "players": [
+        {
+          "name": "Boogie Fland",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 0
+        },
+        {
+          "name": "Denzel Aberdeen",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 1
+        },
+        {
+          "name": "AJ Brown",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 3
+        },
+        {
+          "name": "Alex Lloyd",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 4
+        },
+        {
+          "name": "Urban Klavzar",
+          "pos": "SG",
+          "nat": "SLO",
+          "age": null,
+          "heightCm": 185,
+          "number": 7
+        },
+        {
+          "name": "Alex Kovatchev",
+          "pos": "SG",
+          "nat": "AUS",
+          "age": null,
+          "heightCm": 196,
+          "number": 8
+        },
+        {
+          "name": "Rueben Chinyelu",
+          "pos": "C",
+          "nat": "NGR",
+          "age": null,
+          "heightCm": 208,
+          "number": 9
+        },
+        {
+          "name": "Thomas Haugh",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 10
+        },
+        {
+          "name": "CJ Ingram",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 11
+        },
+        {
+          "name": "Viktor Mikic",
+          "pos": "C",
+          "nat": "SER",
+          "age": null,
+          "heightCm": 211,
+          "number": 12
+        },
+        {
+          "name": "Jones Lay",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 13
+        },
+        {
+          "name": "Domen Petrovic",
+          "pos": "SF",
+          "nat": "SLO",
+          "age": null,
+          "heightCm": 206,
+          "number": 19
+        },
+        {
+          "name": "Isaiah Brown",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 20
+        },
+        {
+          "name": "Alex Condon",
+          "pos": "SF",
+          "nat": "AUS",
+          "age": null,
+          "heightCm": 211,
+          "number": 21
+        },
+        {
+          "name": "Arturas Butajevas",
+          "pos": "SF",
+          "nat": "LTU",
+          "age": null,
+          "heightCm": 208,
+          "number": 25
+        }
+      ]
+    },
+    "Baylor": {
+      "espnId": "239",
+      "espnName": "Baylor Bears",
+      "coach": "Scott Drew",
+      "players": [
+        {
+          "name": "Elijah Williams",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 0
+        },
+        {
+          "name": "Brett Decker Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 183,
+          "number": 2
+        },
+        {
+          "name": "Drew Perry",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 178,
+          "number": 3
+        },
+        {
+          "name": "Kayden Mingo",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 4
+        },
+        {
+          "name": "Dylan Mingo",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 5
+        },
+        {
+          "name": "Andre Iguodala II",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 7
+        },
+        {
+          "name": "Isaac Celiscar",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 8
+        },
+        {
+          "name": "Isaac Williams IV",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 10
+        },
+        {
+          "name": "James Goodis",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 183,
+          "number": 13
+        },
+        {
+          "name": "Evan Chatman",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 15
+        },
+        {
+          "name": "Maikcol Perez",
+          "pos": "SF",
+          "nat": "ITA",
+          "age": null,
+          "heightCm": 203,
+          "number": 20
+        },
+        {
+          "name": "Juslin Bodo Bodo",
+          "pos": "C",
+          "nat": "CMR",
+          "age": null,
+          "heightCm": 211,
+          "number": 21
+        },
+        {
+          "name": "Tegra Makabu",
+          "pos": "C",
+          "nat": null,
+          "age": null,
+          "heightCm": 206,
+          "number": 22
+        },
+        {
+          "name": "Caden Powell",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 44
+        },
+        {
+          "name": "Mayo Soyoye",
+          "pos": "C",
+          "nat": "NGR",
+          "age": null,
+          "heightCm": 208,
+          "number": 46
+        }
+      ]
+    },
+    "Villanova": {
+      "espnId": "222",
+      "espnName": "Villanova Wildcats",
+      "coach": "Kevin Willard",
+      "players": [
+        {
+          "name": "Elijah Crawford",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 1
+        },
+        {
+          "name": "Brady Muller",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 2
+        },
+        {
+          "name": "Matt Hodge",
+          "pos": "SF",
+          "nat": "BEL",
+          "age": null,
+          "heightCm": 203,
+          "number": 3
+        },
+        {
+          "name": "Tyler Perkins",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 4
+        },
+        {
+          "name": "Carter Fisk",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 5
+        },
+        {
+          "name": "Adam Oumiddoch",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 7
+        },
+        {
+          "name": "Darryl Simmons II",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 180,
+          "number": 8
+        },
+        {
+          "name": "Abdou Samb",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 9
+        },
+        {
+          "name": "Kwame Evans Jr.",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 10
+        },
+        {
+          "name": "Wade Chiddick",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 14
+        },
+        {
+          "name": "Nico Onyekwere",
+          "pos": "C",
+          "nat": "NGR",
+          "age": null,
+          "heightCm": 216,
+          "number": 15
+        },
+        {
+          "name": "Luigi Suigo",
+          "pos": "C",
+          "nat": "ITA",
+          "age": null,
+          "heightCm": 221,
+          "number": 19
+        },
+        {
+          "name": "Devin Royal",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 21
+        },
+        {
+          "name": "Jake Fiegen",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 22
+        }
+      ]
+    },
+    "Michigan State": {
+      "espnId": "127",
+      "espnName": "Michigan State Spartans",
+      "coach": "Tom Izzo",
+      "players": [
+        {
+          "name": "Julius Avent",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 0
+        },
+        {
+          "name": "Jeremy Fears Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 1
+        },
+        {
+          "name": "Kur Teng",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 2
+        },
+        {
+          "name": "Cam Ward",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 3
+        },
+        {
+          "name": "Jordan Scott",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 6
+        },
+        {
+          "name": "Carlos Medlock Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 180,
+          "number": 7
+        },
+        {
+          "name": "Kaleb Glenn",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 8
+        },
+        {
+          "name": "Ethan Taylor",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 218,
+          "number": 10
+        },
+        {
+          "name": "Matthew Watkins",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 20
+        },
+        {
+          "name": "Jasiah Jervis",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 25
+        },
+        {
+          "name": "Anton Bonke",
+          "pos": "C",
+          "nat": "VAN",
+          "age": null,
+          "heightCm": 218,
+          "number": 34
+        },
+        {
+          "name": "Jesse McCulloch",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 35
+        },
+        {
+          "name": "Brennan Walton",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 40
+        },
+        {
+          "name": "Colin Walton",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 43
+        },
+        {
+          "name": "Coen Carr",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 55
+        }
+      ]
+    },
+    "Texas": {
+      "espnId": "251",
+      "espnName": "Texas Longhorns",
+      "coach": "Sean Miller",
+      "players": [
+        {
+          "name": "Mikey Lewis",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 0
+        },
+        {
+          "name": "Amari Evans",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 1
+        },
+        {
+          "name": "Isaiah Johnson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 2
+        },
+        {
+          "name": "Joe Sterling",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 3
+        },
+        {
+          "name": "Coleman Elkins",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 4
+        },
+        {
+          "name": "Bo Ogden",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 5
+        },
+        {
+          "name": "Elyjah Freeman",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 6
+        },
+        {
+          "name": "Matas Vokietaitis",
+          "pos": "C",
+          "nat": "LTU",
+          "age": null,
+          "heightCm": 213,
+          "number": 8
+        },
+        {
+          "name": "John Clark",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 9
+        },
+        {
+          "name": "Austin Goosby",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 10
+        },
+        {
+          "name": "David Punch",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 13
+        },
+        {
+          "name": "Lewis Obiorah",
+          "pos": "C",
+          "nat": "ENG",
+          "age": null,
+          "heightCm": 216,
+          "number": 14
+        },
+        {
+          "name": "Mantas Laurencikas",
+          "pos": "SG",
+          "nat": "LTU",
+          "age": null,
+          "heightCm": 193,
+          "number": 25
+        },
+        {
+          "name": "Marcus Spears Jr.",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 31
+        },
+        {
+          "name": "Anthon McDermott",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 33
+        }
+      ]
+    },
+    "Tennessee": {
+      "espnId": "2633",
+      "espnName": "Tennessee Volunteers",
+      "coach": "Rick Barnes",
+      "players": [
+        {
+          "name": "Braedan Lue",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 0
+        },
+        {
+          "name": "Manny Green",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 1
+        },
+        {
+          "name": "Juke Harris",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 2
+        },
+        {
+          "name": "Terrence Hill Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 3
+        },
+        {
+          "name": "Dai Dai Ames",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 4
+        },
+        {
+          "name": "DeWayne Brown II",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 6
+        },
+        {
+          "name": "Tyler Lundblade",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 7
+        },
+        {
+          "name": "Marquis Clark",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 8
+        },
+        {
+          "name": "Jalen Washington",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 23,
+          "heightCm": 208,
+          "number": 9
+        },
+        {
+          "name": "Jalen Haralson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 10
+        },
+        {
+          "name": "Gavin Paull",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 180,
+          "number": 11
+        },
+        {
+          "name": "Christian Fermin",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 12
+        },
+        {
+          "name": "Ralph Scott",
+          "pos": "SF",
+          "nat": "BER",
+          "age": null,
+          "heightCm": 203,
+          "number": 13
+        },
+        {
+          "name": "Campbell Duncan",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 21
+        },
+        {
+          "name": "Troy Henderson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 24
+        },
+        {
+          "name": "Miles Rubin",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 25
+        },
+        {
+          "name": "Chris Washington Jr.",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 33
+        }
+      ]
+    },
+    "Alabama": {
+      "espnId": "333",
+      "espnName": "Alabama Crimson Tide",
+      "coach": "Nate Oats",
+      "players": [
+        {
+          "name": "Jamarion Davis-Fleming",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 0
+        },
+        {
+          "name": "Anderson Diaz",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 1
+        },
+        {
+          "name": "Aden Holloway",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 2
+        },
+        {
+          "name": "Preston Murphy Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 183,
+          "number": 3
+        },
+        {
+          "name": "Tarris Bouie",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 4
+        },
+        {
+          "name": "Amari Allen",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 5
+        },
+        {
+          "name": "London Jemison",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 6
+        },
+        {
+          "name": "Drew Fielder",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 8
+        },
+        {
+          "name": "Brandon Garrison",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 9
+        },
+        {
+          "name": "Keitenn Bristow",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 10
+        },
+        {
+          "name": "Qayden Samuels",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 11
+        },
+        {
+          "name": "TJ St. Louis",
+          "pos": "C",
+          "nat": "CAN",
+          "age": null,
+          "heightCm": 213,
+          "number": 21
+        },
+        {
+          "name": "Jaxon Richardson",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 23
+        },
+        {
+          "name": "Cole Cloer",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 33
+        },
+        {
+          "name": "Collins Onyejiaka",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 34
+        }
+      ]
+    },
+    "Indiana": {
+      "espnId": "84",
+      "espnName": "Indiana Hoosiers",
+      "coach": "Darian DeVries",
+      "players": [
+        {
+          "name": "Trevor Manhertz",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 0
+        },
+        {
+          "name": "Darren Harris",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 1
+        },
+        {
+          "name": "Bryce Lindsay",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 2
+        },
+        {
+          "name": "Jaeden Mustaf",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 3
+        },
+        {
+          "name": "Sam Alexis",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 21,
+          "heightCm": 206,
+          "number": 4
+        },
+        {
+          "name": "Markus Burton",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 183,
+          "number": 5
+        },
+        {
+          "name": "Prince-Alexander Moody",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 8
+        },
+        {
+          "name": "Drew Snively",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 10
+        },
+        {
+          "name": "Trent Sisley",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 11
+        },
+        {
+          "name": "Justin Monden",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 183,
+          "number": 12
+        },
+        {
+          "name": "Jordan Rayford",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 14
+        },
+        {
+          "name": "Clemens Sokolov",
+          "pos": "C",
+          "nat": "GER",
+          "age": null,
+          "heightCm": 213,
+          "number": 17
+        },
+        {
+          "name": "Samet Yigitoglu",
+          "pos": "C",
+          "nat": "TUR",
+          "age": null,
+          "heightCm": 218,
+          "number": 21
+        },
+        {
+          "name": "Aiden Sherrell",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 213,
+          "number": 22
+        },
+        {
+          "name": "Vaughn Karvala",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 24
+        },
+        {
+          "name": "Ian Stephens",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 30
+        },
+        {
+          "name": "Ben Winker",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 33
+        }
+      ]
+    },
+    "Arkansas": {
+      "espnId": "8",
+      "espnName": "Arkansas Razorbacks",
+      "coach": "John Calipari",
+      "players": [
+        {
+          "name": "Caleb Ourigou",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 0
+        },
+        {
+          "name": "Abdou Toure",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 1
+        },
+        {
+          "name": "Amere Brown",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 175,
+          "number": 2
+        },
+        {
+          "name": "Miikka Muurinen",
+          "pos": "SF",
+          "nat": "FIN",
+          "age": null,
+          "heightCm": 213,
+          "number": 3
+        },
+        {
+          "name": "Ayden Kelley",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 178,
+          "number": 4
+        },
+        {
+          "name": "Jeremiah Wilkinson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 5
+        },
+        {
+          "name": "JJ Andrews",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 7
+        },
+        {
+          "name": "Maper Maker",
+          "pos": "SF",
+          "nat": "AUS",
+          "age": null,
+          "heightCm": 213,
+          "number": 8
+        },
+        {
+          "name": "Davion Thompson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 9
+        },
+        {
+          "name": "Ilia Frolov",
+          "pos": "SF",
+          "nat": "RUS",
+          "age": null,
+          "heightCm": 213,
+          "number": 14
+        },
+        {
+          "name": "Cooper Bowser",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 21
+        },
+        {
+          "name": "Jordan Smith Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 23
+        },
+        {
+          "name": "Billy Richmond III",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 24
+        },
+        {
+          "name": "Isaiah Sealy",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 30
+        },
+        {
+          "name": "Paulo Semedo",
+          "pos": "SF",
+          "nat": "ANG",
+          "age": null,
+          "heightCm": 216,
+          "number": 99
+        }
+      ]
+    },
+    "Creighton": {
+      "espnId": "156",
+      "espnName": "Creighton Bluejays",
+      "coach": "Alan Huss",
+      "players": [
+        {
+          "name": "Jasen Green",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 0
+        },
+        {
+          "name": "Austin Swartz",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 1
+        },
+        {
+          "name": "Wes Enis",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 2
+        },
+        {
+          "name": "Brody Robinson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 180,
+          "number": 4
+        },
+        {
+          "name": "Katrelle Harmon",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 5
+        },
+        {
+          "name": "Kayden Edwards",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 7
+        },
+        {
+          "name": "Trevon Carter-Givens",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 8
+        },
+        {
+          "name": "Hudson Greer",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 10
+        },
+        {
+          "name": "Shane Thomas",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 12
+        },
+        {
+          "name": "Jackson McAndrew",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 23
+        },
+        {
+          "name": "BJ Davis",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 24
+        },
+        {
+          "name": "Wesly Rosa",
+          "pos": "C",
+          "nat": "CPV",
+          "age": null,
+          "heightCm": 218,
+          "number": 32
+        },
+        {
+          "name": "Fredrick King",
+          "pos": "C",
+          "nat": "BAH",
+          "age": null,
+          "heightCm": 206,
+          "number": 34
+        },
+        {
+          "name": "Isaac Traudt",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 41
+        },
+        {
+          "name": "Oswin Erhunmwunse",
+          "pos": "SF",
+          "nat": "NGR",
+          "age": null,
+          "heightCm": 208,
+          "number": 55
+        }
+      ]
+    },
+    "Marquette": {
+      "espnId": "269",
+      "espnName": "Marquette Golden Eagles",
+      "coach": "Shaka Smart",
+      "players": [
+        {
+          "name": "Nigel James Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 183,
+          "number": 0
+        },
+        {
+          "name": "Nash Walker",
+          "pos": "SG",
+          "nat": "AUS",
+          "age": null,
+          "heightCm": 198,
+          "number": 1
+        },
+        {
+          "name": "Colin Porter",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 178,
+          "number": 2
+        },
+        {
+          "name": "Nolan Minessale",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 4
+        },
+        {
+          "name": "Colton Crowdis",
+          "pos": "SG",
+          "nat": "CAN",
+          "age": null,
+          "heightCm": 193,
+          "number": 5
+        },
+        {
+          "name": "Ian Miletic",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 7
+        },
+        {
+          "name": "Joshua Clark",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 216,
+          "number": 8
+        },
+        {
+          "name": "Damarius Owens",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 9
+        },
+        {
+          "name": "Adrien Stevens",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 10
+        },
+        {
+          "name": "Sananda Fru",
+          "pos": "SF",
+          "nat": "GER",
+          "age": null,
+          "heightCm": 211,
+          "number": 11
+        },
+        {
+          "name": "Royce Parham",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 13
+        },
+        {
+          "name": "Caedin Hamilton",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 18
+        },
+        {
+          "name": "Alex Egbuonu",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 21
+        },
+        {
+          "name": "Ethan Johnston",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 33
+        },
+        {
+          "name": "Michael Phillips II",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 35
+        },
+        {
+          "name": "Braeden Brenn",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 42
+        }
+      ]
+    },
+    "Iowa State": {
+      "espnId": "66",
+      "espnName": "Iowa State Cyclones",
+      "coach": "T.J. Otzelberger",
+      "players": [
+        {
+          "name": "Tre Singleton",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 0
+        },
+        {
+          "name": "Jamarion Batemon",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 1
+        },
+        {
+          "name": "Xzavion Mitchell",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 2
+        },
+        {
+          "name": "Tamin Lipsey",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 23,
+          "heightCm": 185,
+          "number": 3
+        },
+        {
+          "name": "Ryan Prather Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 4
+        },
+        {
+          "name": "Yusef Gray Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 5
+        },
+        {
+          "name": "Leon Bond III",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 7
+        },
+        {
+          "name": "Anthony Rise",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 183,
+          "number": 9
+        },
+        {
+          "name": "Jaquan Johnson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 180,
+          "number": 11
+        },
+        {
+          "name": "Taj Manning",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 15
+        },
+        {
+          "name": "Dominykas Pleta",
+          "pos": "SF",
+          "nat": "GER",
+          "age": null,
+          "heightCm": 211,
+          "number": 21
+        },
+        {
+          "name": "Christian Wiggins",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 22
+        },
+        {
+          "name": "Blake Buchanan",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 23
+        },
+        {
+          "name": "Dorian Rinaldo-Komlan",
+          "pos": "SF",
+          "nat": "FRA",
+          "age": null,
+          "heightCm": 206,
+          "number": 24
+        },
+        {
+          "name": "Killyan Toure",
+          "pos": "SG",
+          "nat": "FRA",
+          "age": null,
+          "heightCm": 191,
+          "number": 27
+        }
+      ]
+    },
+    "Illinois": {
+      "espnId": "356",
+      "espnName": "Illinois Fighting Illini",
+      "coach": "Brad Underwood",
+      "players": [
+        {
+          "name": "David Mirkovic",
+          "pos": "SF",
+          "nat": "MTG",
+          "age": null,
+          "heightCm": 206,
+          "number": 0
+        },
+        {
+          "name": "Lincoln Williams",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 1
+        },
+        {
+          "name": "Andrej Stojakovic",
+          "pos": "SG",
+          "nat": "GRE",
+          "age": null,
+          "heightCm": 201,
+          "number": 2
+        },
+        {
+          "name": "Quentin McCoy",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 5
+        },
+        {
+          "name": "Stefan Vaaks",
+          "pos": "SG",
+          "nat": "EST",
+          "age": null,
+          "heightCm": 201,
+          "number": 7
+        },
+        {
+          "name": "Blake Fagbemi",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 183,
+          "number": 8
+        },
+        {
+          "name": "Quentin Coleman",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 11
+        },
+        {
+          "name": "Tomislav Ivisic",
+          "pos": "C",
+          "nat": "CRO",
+          "age": null,
+          "heightCm": 216,
+          "number": 13
+        },
+        {
+          "name": "Jake Davis",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 15
+        },
+        {
+          "name": "Zavier Zens",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 22
+        },
+        {
+          "name": "Landon Davis",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 27
+        },
+        {
+          "name": "Jason Jakstys",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 31
+        },
+        {
+          "name": "Ethan Brown",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 34
+        },
+        {
+          "name": "Zvonimir Ivisic",
+          "pos": "SF",
+          "nat": "CRO",
+          "age": null,
+          "heightCm": 218,
+          "number": 44
+        }
+      ]
+    },
+    "Texas Tech": {
+      "espnId": "2641",
+      "espnName": "Texas Tech Red Raiders",
+      "coach": "Grant McCasland",
+      "players": [
+        {
+          "name": "DaKari Spear",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 0
+        },
+        {
+          "name": "Damarion Dennis",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 1
+        },
+        {
+          "name": "Josiah Moseley",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 2
+        },
+        {
+          "name": "Cruz Davis",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 3
+        },
+        {
+          "name": "Dra Gibbs-Lawhorn",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 4
+        },
+        {
+          "name": "Darrion Williams",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 23,
+          "heightCm": 198,
+          "number": 5
+        },
+        {
+          "name": "Amari Barrett",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 7
+        },
+        {
+          "name": "Trey Hall",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 11
+        },
+        {
+          "name": "Donovan Atwell",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 23,
+          "heightCm": 196,
+          "number": 12
+        },
+        {
+          "name": "Marial Akuentok",
+          "pos": "SF",
+          "nat": "CAN",
+          "age": null,
+          "heightCm": 211,
+          "number": 13
+        },
+        {
+          "name": "JT Toppin",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 15
+        },
+        {
+          "name": "LaTrell Hoover",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 21
+        },
+        {
+          "name": "Bassala Bagayoko",
+          "pos": "SF",
+          "nat": "MLI",
+          "age": null,
+          "heightCm": 208,
+          "number": 33
+        },
+        {
+          "name": "Jamichael Stillwell",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 55
+        }
+      ]
+    },
+    "Michigan": {
+      "espnId": "130",
+      "espnName": "Michigan Wolverines",
+      "coach": "Mike Boynton Jr.",
+      "players": [
+        {
+          "name": "Ricky Liburd",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 0
+        },
+        {
+          "name": "Trey McKenney",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 1
+        },
+        {
+          "name": "Kenny Noland",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 2
+        },
+        {
+          "name": "Elliot Cadeau",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 3
+        },
+        {
+          "name": "Brandon McCoy Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 4
+        },
+        {
+          "name": "Lincoln Cosby",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 5
+        },
+        {
+          "name": "Howard Eisley Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 183,
+          "number": 7
+        },
+        {
+          "name": "Quinn Costello",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 8
+        },
+        {
+          "name": "Marcus Moller",
+          "pos": "C",
+          "nat": "DEN",
+          "age": null,
+          "heightCm": 221,
+          "number": 9
+        },
+        {
+          "name": "Joseph Hartman",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 10
+        },
+        {
+          "name": "Roddy Gayle Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 23,
+          "heightCm": 196,
+          "number": 11
+        },
+        {
+          "name": "Oscar Goodman",
+          "pos": "SF",
+          "nat": "NZL",
+          "age": null,
+          "heightCm": 201,
+          "number": 12
+        },
+        {
+          "name": "J.P. Estrella",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 13
+        },
+        {
+          "name": "Malachi Brown",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 15
+        },
+        {
+          "name": "Jalen Reed",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 19
+        },
+        {
+          "name": "Harrison Hochberg",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 31
+        },
+        {
+          "name": "Moustapha Thiam",
+          "pos": "C",
+          "nat": "SEN",
+          "age": null,
+          "heightCm": 218,
+          "number": 52
+        }
+      ]
+    },
+    "Ohio State": {
+      "espnId": "194",
+      "espnName": "Ohio State Buckeyes",
+      "coach": "Jake Diebler",
+      "players": [
+        {
+          "name": "John Mobley Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 0
+        },
+        {
+          "name": "Amare Bynum",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 1
+        },
+        {
+          "name": "Curtis Givens III",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 2
+        },
+        {
+          "name": "Jimmie Williams",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 3
+        },
+        {
+          "name": "Andrija Jelavic",
+          "pos": "SF",
+          "nat": "CRO",
+          "age": null,
+          "heightCm": 211,
+          "number": 4
+        },
+        {
+          "name": "Anthony Thompson",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 6
+        },
+        {
+          "name": "Ivan Njegovan",
+          "pos": "C",
+          "nat": "CRO",
+          "age": null,
+          "heightCm": 218,
+          "number": 7
+        },
+        {
+          "name": "Myles Herro",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 8
+        },
+        {
+          "name": "Alex Smith",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 9
+        },
+        {
+          "name": "Justin Pippen",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 10
+        },
+        {
+          "name": "LJ Smith",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 14
+        },
+        {
+          "name": "Josh Ojianwuna",
+          "pos": "SF",
+          "nat": "NGR",
+          "age": null,
+          "heightCm": 208,
+          "number": 17
+        },
+        {
+          "name": "Lee Aaliya",
+          "pos": "SF",
+          "nat": "ARG",
+          "age": null,
+          "heightCm": 206,
+          "number": 23
+        },
+        {
+          "name": "Braylen Nash",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 55
+        },
+        {
+          "name": "Vuk Lazarevic",
+          "pos": "SF",
+          "nat": "SER",
+          "age": null,
+          "heightCm": 216,
+          "number": 88
+        }
+      ]
+    },
+    "Oregon": {
+      "espnId": "2483",
+      "espnName": "Oregon Ducks",
+      "coach": "Tony Stubblefield",
+      "players": [
+        {
+          "name": "Tajh Ariza",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 0
+        },
+        {
+          "name": "Jerry Easter II",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 1
+        },
+        {
+          "name": "Jasper Johnson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 2
+        },
+        {
+          "name": "Dwayne Aristode",
+          "pos": "SF",
+          "nat": "NED",
+          "age": null,
+          "heightCm": 203,
+          "number": 3
+        },
+        {
+          "name": "Fred Payne",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 4
+        },
+        {
+          "name": "Tyrone Riley IV",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 5
+        },
+        {
+          "name": "Taylor Bol Bowen",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 7
+        },
+        {
+          "name": "Andrew Meadow",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 8
+        },
+        {
+          "name": "Pharaoh Compton",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 9
+        },
+        {
+          "name": "Seven Spurlock",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 11
+        },
+        {
+          "name": "Sean Stewart",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 13
+        },
+        {
+          "name": "Rian Gonzales",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 15
+        },
+        {
+          "name": "Luke Johnson",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 17
+        },
+        {
+          "name": "Wei Lin",
+          "pos": "SG",
+          "nat": "CHN",
+          "age": null,
+          "heightCm": 193,
+          "number": 23
+        }
+      ]
+    },
+    "USC": {
+      "espnId": "30",
+      "espnName": "USC Trojans",
+      "coach": "Eric Musselman",
+      "players": [
+        {
+          "name": "Alijah Arenas",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 0
+        },
+        {
+          "name": "Rodney Rice",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 1
+        },
+        {
+          "name": "KJ Lewis",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 2
+        },
+        {
+          "name": "Adonis Ratliff",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 3
+        },
+        {
+          "name": "Isaac Bruns",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 4
+        },
+        {
+          "name": "Jacob Cofie",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 5
+        },
+        {
+          "name": "Christian Collins",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 7
+        },
+        {
+          "name": "Jalen Cox",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 8
+        },
+        {
+          "name": "Eric Reibe",
+          "pos": "C",
+          "nat": "GER",
+          "age": null,
+          "heightCm": 216,
+          "number": 12
+        },
+        {
+          "name": "Darius Ratliff",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 213,
+          "number": 13
+        },
+        {
+          "name": "Jadis Jones",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 20
+        },
+        {
+          "name": "Joshua Hughes",
+          "pos": "SF",
+          "nat": "AUS",
+          "age": null,
+          "heightCm": 208,
+          "number": 22
+        },
+        {
+          "name": "Aaron Hunkin-Claytor",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 30
+        },
+        {
+          "name": "Onyeka Joe Agu",
+          "pos": "C",
+          "nat": "BEL",
+          "age": null,
+          "heightCm": 208,
+          "number": 33
+        }
+      ]
+    },
+    "Virginia": {
+      "espnId": "258",
+      "espnName": "Virginia Cavaliers",
+      "coach": "Ryan Odom",
+      "players": [
+        {
+          "name": "Owen Odom",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 0
+        },
+        {
+          "name": "Chance Mallory",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 178,
+          "number": 1
+        },
+        {
+          "name": "Christian Harmon",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 2
+        },
+        {
+          "name": "Jurian Dixon",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 4
+        },
+        {
+          "name": "Sam Lewis",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 5
+        },
+        {
+          "name": "Kalu Anya",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 6
+        },
+        {
+          "name": "Martin Carrere",
+          "pos": "SG",
+          "nat": "FRA",
+          "age": null,
+          "heightCm": 206,
+          "number": 7
+        },
+        {
+          "name": "Nick Rotter",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 8
+        },
+        {
+          "name": "Quincy Watson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 180,
+          "number": 11
+        },
+        {
+          "name": "Elijah Gertrude",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 12
+        },
+        {
+          "name": "Desmond Roberts",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 13
+        },
+        {
+          "name": "Johann Grunloh",
+          "pos": "C",
+          "nat": "GER",
+          "age": null,
+          "heightCm": 213,
+          "number": 17
+        },
+        {
+          "name": "Silas Barksdale",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 21
+        },
+        {
+          "name": "Nolan Adekunle",
+          "pos": "SF",
+          "nat": "GER",
+          "age": null,
+          "heightCm": 201,
+          "number": 22
+        },
+        {
+          "name": "Thijs De Ridder",
+          "pos": "SF",
+          "nat": "BEL",
+          "age": null,
+          "heightCm": 206,
+          "number": 28
+        },
+        {
+          "name": "Favour Ibe",
+          "pos": "C",
+          "nat": "NGR",
+          "age": null,
+          "heightCm": 216,
+          "number": 34
+        },
+        {
+          "name": "Carter Lang",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 35
+        },
+        {
+          "name": "Jan Vide",
+          "pos": "SG",
+          "nat": "SLO",
+          "age": null,
+          "heightCm": 198,
+          "number": 37
+        }
+      ]
+    },
+    "Memphis": {
+      "espnId": "235",
+      "espnName": "Memphis Tigers",
+      "coach": "Anfernee Hardaway",
+      "players": [
+        {
+          "name": "Jayden Reid",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 178,
+          "number": 0
+        },
+        {
+          "name": "Josh Holloway",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 1
+        },
+        {
+          "name": "Corneilous Williams",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 2
+        },
+        {
+          "name": "Brandin Cummings",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 3
+        },
+        {
+          "name": "Tylik Weeks",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 4
+        },
+        {
+          "name": "Julius Thedford",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 5
+        },
+        {
+          "name": "Parker Pounds",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 6
+        },
+        {
+          "name": "Jerry Deng",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 7
+        },
+        {
+          "name": "Luke Almodovar",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 10
+        },
+        {
+          "name": "Cello Jackson Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 11
+        },
+        {
+          "name": "William Whorton",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 12
+        },
+        {
+          "name": "Rihards Vavers",
+          "pos": "SF",
+          "nat": "LAT",
+          "age": null,
+          "heightCm": 201,
+          "number": 15
+        },
+        {
+          "name": "Nemanja Popovic",
+          "pos": "SF",
+          "nat": "SER",
+          "age": null,
+          "heightCm": 206,
+          "number": 17
+        },
+        {
+          "name": "Fred Smith Jr.",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 30
+        },
+        {
+          "name": "Maxim Logue",
+          "pos": "SF",
+          "nat": "FRA",
+          "age": null,
+          "heightCm": 206,
+          "number": 77
+        }
+      ]
+    },
+    "San Diego State": {
+      "espnId": "21",
+      "espnName": "San Diego State Aztecs",
+      "coach": "Brian Dutcher",
+      "players": [
+        {
+          "name": "David Torresani",
+          "pos": "SG",
+          "nat": "ITA",
+          "age": null,
+          "heightCm": 188,
+          "number": 0
+        },
+        {
+          "name": "Chance Gladden",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 2
+        },
+        {
+          "name": "Elzie Harrington",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 3
+        },
+        {
+          "name": "Zach White",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 4
+        },
+        {
+          "name": "Latrell Davis",
+          "pos": "SG",
+          "nat": "ENG",
+          "age": null,
+          "heightCm": 191,
+          "number": 5
+        },
+        {
+          "name": "Samson Mashebinu",
+          "pos": "SF",
+          "nat": "NGR",
+          "age": null,
+          "heightCm": 203,
+          "number": 6
+        },
+        {
+          "name": "Luka Skoric",
+          "pos": "SF",
+          "nat": "CRO",
+          "age": null,
+          "heightCm": 206,
+          "number": 7
+        },
+        {
+          "name": "Tae Simmons",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 8
+        },
+        {
+          "name": "Raymar Gonzales",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 9
+        },
+        {
+          "name": "Cooper Cornelius",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 10
+        },
+        {
+          "name": "Isaiah Sy",
+          "pos": "SG",
+          "nat": "FRA",
+          "age": null,
+          "heightCm": 198,
+          "number": 13
+        },
+        {
+          "name": "Luca Vincini",
+          "pos": "SF",
+          "nat": "ITA",
+          "age": null,
+          "heightCm": 208,
+          "number": 18
+        },
+        {
+          "name": "Nick Anderson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 23
+        },
+        {
+          "name": "Jel Malek",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 24
+        },
+        {
+          "name": "Thokbor Majak",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": 216,
+          "number": 33
+        },
+        {
+          "name": "Bear Cherry",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 45
+        }
+      ]
+    },
+    "Dayton": {
+      "espnId": "2168",
+      "espnName": "Dayton Flyers",
+      "coach": "Anthony Grant",
+      "players": [
+        {
+          "name": "Evan Dickey",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 0
+        },
+        {
+          "name": "Malcolm Thomas",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 1
+        },
+        {
+          "name": "Grant Randall",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 2
+        },
+        {
+          "name": "Jaiun Simon",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 3
+        },
+        {
+          "name": "Aiden Derkack",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 4
+        },
+        {
+          "name": "Tristian Ford",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 5
+        },
+        {
+          "name": "Landen Joseph",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 6
+        },
+        {
+          "name": "Zaide Lowery",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 7
+        },
+        {
+          "name": "Jaron McKie",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 8
+        },
+        {
+          "name": "Jalen Haynes",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 9
+        },
+        {
+          "name": "Cody Peck",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 10
+        },
+        {
+          "name": "Travis Perry",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 11
+        },
+        {
+          "name": "Julian Washington",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 14
+        },
+        {
+          "name": "Damon Friery",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 22
+        },
+        {
+          "name": "Will Maxwell",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 25
+        },
+        {
+          "name": "Amal L'Etang",
+          "pos": "SF",
+          "nat": "FRA",
+          "age": null,
+          "heightCm": 216,
+          "number": 29
+        },
+        {
+          "name": "Makai Grant",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 33
+        }
+      ]
+    },
+    "Wake Forest": {
+      "espnId": "154",
+      "espnName": "Wake Forest Demon Deacons",
+      "coach": "Steve Forbes",
+      "players": [
+        {
+          "name": "Gallagher Placide",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 0
+        },
+        {
+          "name": "Justin Ray",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 1
+        },
+        {
+          "name": "Vincent Chaudhri",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 2
+        },
+        {
+          "name": "Gavin Placide",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 4
+        },
+        {
+          "name": "Lukas Bojovic",
+          "pos": "SG",
+          "nat": "SLO",
+          "age": null,
+          "heightCm": 198,
+          "number": 6
+        },
+        {
+          "name": "Isaac Carr",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 7
+        },
+        {
+          "name": "Ring Nyeri",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 8
+        },
+        {
+          "name": "Vincent Ricchiuti",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 9
+        },
+        {
+          "name": "Justin Abson",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 10
+        },
+        {
+          "name": "Jamari McDowell",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 11
+        },
+        {
+          "name": "Xander Pintelon",
+          "pos": "SF",
+          "nat": "BEL",
+          "age": null,
+          "heightCm": 211,
+          "number": 17
+        },
+        {
+          "name": "Will Underwood",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 25
+        },
+        {
+          "name": "Anson Beard Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 30
+        },
+        {
+          "name": "Maddox Watson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 45
+        },
+        {
+          "name": "Kevair Kennedy",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 55
+        },
+        {
+          "name": "Antonio Dorn",
+          "pos": "C",
+          "nat": "GER",
+          "age": null,
+          "heightCm": 213,
+          "number": 77
+        }
+      ]
+    },
+    "Xavier": {
+      "espnId": "2752",
+      "espnName": "Xavier Musketeers",
+      "coach": "Richard Pitino",
+      "players": [
+        {
+          "name": "Gabriel Pozzato",
+          "pos": "SF",
+          "nat": "ITA",
+          "age": null,
+          "heightCm": 201,
+          "number": 0
+        },
+        {
+          "name": "Mike Nwoko",
+          "pos": "SF",
+          "nat": "CAN",
+          "age": null,
+          "heightCm": 208,
+          "number": 1
+        },
+        {
+          "name": "Kalek House",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 2
+        },
+        {
+          "name": "Tru Washington",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 3
+        },
+        {
+          "name": "Harrison Aligbe",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 6
+        },
+        {
+          "name": "Asher Elson",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 7
+        },
+        {
+          "name": "Rolyns Aligbe",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 8
+        },
+        {
+          "name": "Ruben Dominguez",
+          "pos": "SG",
+          "nat": "ESP",
+          "age": null,
+          "heightCm": 198,
+          "number": 9
+        },
+        {
+          "name": "Chance Westry",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 11
+        },
+        {
+          "name": "Braden Appelhans",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 12
+        },
+        {
+          "name": "Kason Westphal",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 213,
+          "number": 15
+        },
+        {
+          "name": "Nikos Chitikoudis",
+          "pos": "SF",
+          "nat": "GRE",
+          "age": null,
+          "heightCm": 206,
+          "number": 16
+        },
+        {
+          "name": "Gedeon Basson",
+          "pos": "SG",
+          "nat": "CMR",
+          "age": null,
+          "heightCm": 188,
+          "number": 17
+        },
+        {
+          "name": "Henry Thole",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 20
+        },
+        {
+          "name": "Jovan Milicevic",
+          "pos": "SF",
+          "nat": "CAN",
+          "age": null,
+          "heightCm": 208,
+          "number": 24
+        },
+        {
+          "name": "Michael Wolf",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 25
+        }
+      ]
+    },
+    "BYU": {
+      "espnId": "252",
+      "espnName": "BYU Cougars",
+      "coach": "Kevin Young",
+      "players": [
+        {
+          "name": "Jaxon Kohler",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 23,
+          "heightCm": 208,
+          "number": 0
+        },
+        {
+          "name": "Robert Wright III",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 1
+        },
+        {
+          "name": "Nate Pickens",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 2
+        },
+        {
+          "name": "Bruce Branch III",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 3
+        },
+        {
+          "name": "Brody Kozlowski",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 4
+        },
+        {
+          "name": "Collin Chandler",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 5
+        },
+        {
+          "name": "Khadim Mboup",
+          "pos": "SF",
+          "nat": "SEN",
+          "age": null,
+          "heightCm": 208,
+          "number": 7
+        },
+        {
+          "name": "Dean Rueckert",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 8
+        },
+        {
+          "name": "Tyler Betsey",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 9
+        },
+        {
+          "name": "Jake Wahlin",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 10
+        },
+        {
+          "name": "Adam Stewart",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 12
+        },
+        {
+          "name": "Brooks Bahr",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 13
+        },
+        {
+          "name": "Dovydas Buika",
+          "pos": "SF",
+          "nat": "LTU",
+          "age": null,
+          "heightCm": 198,
+          "number": 24
+        },
+        {
+          "name": "Dawson Baker",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 25
+        },
+        {
+          "name": "Petar Ostojic",
+          "pos": "C",
+          "nat": "SER",
+          "age": null,
+          "heightCm": 216,
+          "number": 33
+        }
+      ]
+    },
+    "Utah State": {
+      "espnId": "328",
+      "espnName": "Utah State Aggies",
+      "coach": "Ben Jacobson",
+      "players": [
+        {
+          "name": "Jax Allen",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 0
+        },
+        {
+          "name": "Jordan Boyd",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 1
+        },
+        {
+          "name": "Ace Reiser",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 183,
+          "number": 2
+        },
+        {
+          "name": "AJ Bates",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 3
+        },
+        {
+          "name": "Brayden Boe",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 7
+        },
+        {
+          "name": "Solomon Callaghan",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 10
+        },
+        {
+          "name": "Connor Turnbull",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 11
+        },
+        {
+          "name": "Mason Falslev",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 12
+        },
+        {
+          "name": "Will Hornseth",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 13
+        },
+        {
+          "name": "Collin Mulholland",
+          "pos": "SF",
+          "nat": "CAN",
+          "age": null,
+          "heightCm": 211,
+          "number": 21
+        },
+        {
+          "name": "Karson Templin",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 22
+        },
+        {
+          "name": "Kingston Tosi",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 203,
+          "number": 24
+        },
+        {
+          "name": "Dallin Hall",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 30
+        },
+        {
+          "name": "Sean Felts",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 213,
+          "number": 32
+        },
+        {
+          "name": "Bron Roberts",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 213,
+          "number": 48
+        }
+      ]
+    },
+    "VCU": {
+      "espnId": "2670",
+      "espnName": "VCU Rams",
+      "coach": "Phil Martelli Jr.",
+      "players": [
+        {
+          "name": "Brandon Jennings",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 0
+        },
+        {
+          "name": "Blake Harper",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 1
+        },
+        {
+          "name": "Sammy Jackson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 2
+        },
+        {
+          "name": "Ahmad Nowell",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 4
+        },
+        {
+          "name": "Nyk Lewis",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 5
+        },
+        {
+          "name": "Collin Ross",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 211,
+          "number": 7
+        },
+        {
+          "name": "Michael Belle",
+          "pos": "SF",
+          "nat": "ENG",
+          "age": null,
+          "heightCm": 203,
+          "number": 8
+        },
+        {
+          "name": "Stefan Plisnic",
+          "pos": "SF",
+          "nat": "SER",
+          "age": null,
+          "heightCm": 208,
+          "number": 9
+        },
+        {
+          "name": "Torey Alston",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 10
+        },
+        {
+          "name": "Jordan Tillery",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 14
+        },
+        {
+          "name": "Tyrell Ward",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 15
+        },
+        {
+          "name": "Lazar Djokovic",
+          "pos": "SF",
+          "nat": "SER",
+          "age": null,
+          "heightCm": 211,
+          "number": 17
+        },
+        {
+          "name": "Nyle Ralph-Beyer",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 193,
+          "number": 22
+        },
+        {
+          "name": "Joshua Wyche",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 201,
+          "number": 23
+        }
+      ]
+    },
+    "St. John's": {
+      "espnId": "2599",
+      "espnName": "St. John's Red Storm",
+      "coach": "Rick Pitino",
+      "players": [
+        {
+          "name": "Babacar Sane",
+          "pos": "SF",
+          "nat": "SEN",
+          "age": 23,
+          "heightCm": 201,
+          "number": 0
+        },
+        {
+          "name": "Donnie Freeman",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 206,
+          "number": 1
+        },
+        {
+          "name": "Fotis Konstantinidis",
+          "pos": "SG",
+          "nat": "GRE",
+          "age": null,
+          "heightCm": 188,
+          "number": 2
+        },
+        {
+          "name": "Avery Brown",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 188,
+          "number": 3
+        },
+        {
+          "name": "Quinn Ellis",
+          "pos": "SG",
+          "nat": "ENG",
+          "age": 23,
+          "heightCm": 196,
+          "number": 4
+        },
+        {
+          "name": "Kyle Cuffe Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 5
+        },
+        {
+          "name": "Casper Pohto",
+          "pos": "SG",
+          "nat": "SWE",
+          "age": null,
+          "heightCm": 191,
+          "number": 6
+        },
+        {
+          "name": "Keyshawn Hall",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 23,
+          "heightCm": 198,
+          "number": 7
+        },
+        {
+          "name": "Zsombor Maronka",
+          "pos": "SF",
+          "nat": "HUN",
+          "age": null,
+          "heightCm": 208,
+          "number": 8
+        },
+        {
+          "name": "Ian Jackson",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 196,
+          "number": 11
+        },
+        {
+          "name": "Reed Bailey",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 24,
+          "heightCm": 208,
+          "number": 13
+        },
+        {
+          "name": "Ruben Prey",
+          "pos": "SF",
+          "nat": "POR",
+          "age": null,
+          "heightCm": 211,
+          "number": 17
+        },
+        {
+          "name": "Theo Edema",
+          "pos": "C",
+          "nat": "NGR",
+          "age": null,
+          "heightCm": 211,
+          "number": 23
+        },
+        {
+          "name": "Tounde Yessoufou",
+          "pos": "SG",
+          "nat": "BEN",
+          "age": null,
+          "heightCm": 196,
+          "number": 24
+        },
+        {
+          "name": "Lazar Stojkovic",
+          "pos": "C",
+          "nat": "SER",
+          "age": null,
+          "heightCm": 216,
+          "number": 30
+        },
+        {
+          "name": "Lefteris Liotopoulos",
+          "pos": "SG",
+          "nat": "GRE",
+          "age": null,
+          "heightCm": 193,
+          "number": 31
+        }
+      ]
+    },
+    "Saint Mary's": {
+      "espnId": "2608",
+      "espnName": "Saint Mary's Gaels",
+      "coach": "Mickey McConnell",
+      "players": [
+        {
+          "name": "Mantas Juzenas",
+          "pos": "SG",
+          "nat": "LTU",
+          "age": null,
+          "heightCm": 198,
+          "number": 0
+        },
+        {
+          "name": "Darius Bivins",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 183,
+          "number": 1
+        },
+        {
+          "name": "Jeremy Dent-Smith",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 185,
+          "number": 2
+        },
+        {
+          "name": "Flynn Pavely",
+          "pos": "C",
+          "nat": "AUS",
+          "age": null,
+          "heightCm": 213,
+          "number": 5
+        },
+        {
+          "name": "Joshua Dent",
+          "pos": "SG",
+          "nat": "AUS",
+          "age": null,
+          "heightCm": 191,
+          "number": 7
+        },
+        {
+          "name": "Rory Hawke",
+          "pos": "SG",
+          "nat": "AUS",
+          "age": null,
+          "heightCm": 196,
+          "number": 8
+        },
+        {
+          "name": "Luke Fennell",
+          "pos": "SG",
+          "nat": "AUS",
+          "age": null,
+          "heightCm": 198,
+          "number": 9
+        },
+        {
+          "name": "Salih Altuntas",
+          "pos": "C",
+          "nat": "TUR",
+          "age": null,
+          "heightCm": 211,
+          "number": 11
+        },
+        {
+          "name": "Thomas Ndong",
+          "pos": "SF",
+          "nat": "CAN",
+          "age": null,
+          "heightCm": 208,
+          "number": 18
+        },
+        {
+          "name": "Cooper Lewis",
+          "pos": "SG",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 191,
+          "number": 20
+        },
+        {
+          "name": "Kevin Gad",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 198,
+          "number": 24
+        },
+        {
+          "name": "Jalen Lewis",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 21,
+          "heightCm": 206,
+          "number": 25
+        },
+        {
+          "name": "Jazz Gardner",
+          "pos": "C",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 213,
+          "number": 32
+        },
+        {
+          "name": "Vangelis Zougris",
+          "pos": "SF",
+          "nat": "GRE",
+          "age": null,
+          "heightCm": 203,
+          "number": 35
+        },
+        {
+          "name": "Trent MacLean",
+          "pos": "SF",
+          "nat": "USA",
+          "age": null,
+          "heightCm": 208,
+          "number": 42
+        }
+      ]
+    }
+  },
+  "nbl": {
+    "Perth Wildcats": {
+      "espnId": "7",
+      "espnName": "Perth Wildcats",
+      "coach": "Keegan Crawford",
+      "players": [
+        {
+          "name": "Jo Lual-Acuil Jr.",
+          "pos": "C",
+          "nat": null,
+          "age": 31,
+          "heightCm": 213,
+          "number": 0
+        },
+        {
+          "name": "Dontae Russo-Nance",
+          "pos": "SG",
+          "nat": null,
+          "age": 20,
+          "heightCm": 191,
+          "number": 1
+        },
+        {
+          "name": "Anthony Dell'Orso",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 2
+        },
+        {
+          "name": "Dylan Windler",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 29,
+          "heightCm": 201,
+          "number": 3
+        },
+        {
+          "name": "Kristian Doolittle",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 5
+        },
+        {
+          "name": "David Duke Jr.",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 193,
+          "number": 7
+        },
+        {
+          "name": "Tana Kopa",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 8
+        },
+        {
+          "name": "Jaron Rillie",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": 191,
+          "number": 9
+        },
+        {
+          "name": "Lat Mayen",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": 206,
+          "number": 11
+        },
+        {
+          "name": "Noa Kouakou-Heugue",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": 208,
+          "number": 13
+        },
+        {
+          "name": "Marley Sam",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 13
+        },
+        {
+          "name": "Mason Jones",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 193,
+          "number": 15
+        },
+        {
+          "name": "Thomas Gerovich",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 22
+        },
+        {
+          "name": "Luke Travers",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 23
+        },
+        {
+          "name": "Jesse Wagstaff",
+          "pos": "SF",
+          "nat": null,
+          "age": 38,
+          "heightCm": 203,
+          "number": 24
+        },
+        {
+          "name": "Cameron Huefner",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": 203,
+          "number": 25
+        },
+        {
+          "name": "Angus Brandt",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 26
+        },
+        {
+          "name": "Jimmy Whitt",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 33
+        },
+        {
+          "name": "David Okwera",
+          "pos": "SF",
+          "nat": null,
+          "age": 22,
+          "heightCm": 193,
+          "number": 35
+        },
+        {
+          "name": "Joe Cook-Green",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 37
+        },
+        {
+          "name": "Elijah Pepper",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 40
+        },
+        {
+          "name": "Blake Neilsen",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": null
+        }
+      ]
+    },
+    "Sydney Kings": {
+      "espnId": "9",
+      "espnName": "Sydney Kings",
+      "coach": "Bill Tomlinson",
+      "players": [
+        {
+          "name": "Bul Kuol",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 0
+        },
+        {
+          "name": "Kendric Davis",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 180,
+          "number": 1
+        },
+        {
+          "name": "Torrey Craig",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 2
+        },
+        {
+          "name": "Tyler Roberson",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 31,
+          "heightCm": 206,
+          "number": 3
+        },
+        {
+          "name": "Tyler Robertson",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 3
+        },
+        {
+          "name": "Hunter Goodrick",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": 201,
+          "number": 5
+        },
+        {
+          "name": "Jaylin Galloway",
+          "pos": "SF",
+          "nat": null,
+          "age": 23,
+          "heightCm": 201,
+          "number": 6
+        },
+        {
+          "name": "Shaun Bruce",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 7
+        },
+        {
+          "name": "Lachlan Dent",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 7
+        },
+        {
+          "name": "Jayden Stone",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 7
+        },
+        {
+          "name": "Matthew Dellavedova",
+          "pos": "SG",
+          "nat": null,
+          "age": 35,
+          "heightCm": 191,
+          "number": 8
+        },
+        {
+          "name": "Xavier Cooks",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 10
+        },
+        {
+          "name": "Andrew Carr",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 11
+        },
+        {
+          "name": "Kouat Noi",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 12
+        },
+        {
+          "name": "Tim Soares",
+          "pos": "C",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 12
+        },
+        {
+          "name": "Peitok Machar",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 13
+        },
+        {
+          "name": "Jason Spurgin",
+          "pos": "C",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 14
+        },
+        {
+          "name": "Makuach Maluach",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": 196,
+          "number": 15
+        },
+        {
+          "name": "Iggy Mitchell",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 20
+        },
+        {
+          "name": "Jett Hickson",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 25
+        },
+        {
+          "name": "Bailey Chambers",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 30
+        },
+        {
+          "name": "Lachlan Bofinger",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 32
+        },
+        {
+          "name": "Keli Leaupepe",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": 198,
+          "number": 34
+        },
+        {
+          "name": "Kouat Noi",
+          "pos": null,
+          "nat": null,
+          "age": null,
+          "heightCm": 201,
+          "number": null
+        },
+        {
+          "name": "Jason Spurgin",
+          "pos": null,
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": null
+        }
+      ]
+    },
+    "Melbourne United": {
+      "espnId": "5",
+      "espnName": "Melbourne United",
+      "coach": "Keegan Crawford",
+      "players": [
+        {
+          "name": "Melo Trimble",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 30,
+          "heightCm": 191,
+          "number": 1
+        },
+        {
+          "name": "Tyson Walker",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 25,
+          "heightCm": 185,
+          "number": 2
+        },
+        {
+          "name": "Cole Anthony",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 3
+        },
+        {
+          "name": "Campbell Blogg",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 3
+        },
+        {
+          "name": "Dash Daniels",
+          "pos": "SG",
+          "nat": null,
+          "age": 17,
+          "heightCm": 201,
+          "number": 4
+        },
+        {
+          "name": "Brad Newley",
+          "pos": "SF",
+          "nat": null,
+          "age": 40,
+          "heightCm": 198,
+          "number": 4
+        },
+        {
+          "name": "Joshua Duach",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 5
+        },
+        {
+          "name": "Joel Fowell",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 5
+        },
+        {
+          "name": "Joel Foxwell",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 5
+        },
+        {
+          "name": "Joel Foxwell",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 5
+        },
+        {
+          "name": "Austin Shelley",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 5
+        },
+        {
+          "name": "Sam Short",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 5
+        },
+        {
+          "name": "Finn Delaney",
+          "pos": "SF",
+          "nat": null,
+          "age": 30,
+          "heightCm": 201,
+          "number": 7
+        },
+        {
+          "name": "Malith Machar",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 9
+        },
+        {
+          "name": "Xavier Rathan-Mayes",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 11
+        },
+        {
+          "name": "Anthony Brown",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 33,
+          "heightCm": 201,
+          "number": 12
+        },
+        {
+          "name": "Tom Wilson",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 12
+        },
+        {
+          "name": "Tanner Krebs",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 13
+        },
+        {
+          "name": "Jesse Edwards",
+          "pos": "C",
+          "nat": null,
+          "age": 26,
+          "heightCm": 213,
+          "number": 14
+        },
+        {
+          "name": "Jack White",
+          "pos": "SF",
+          "nat": null,
+          "age": 28,
+          "heightCm": 201,
+          "number": 14
+        },
+        {
+          "name": "Jack White",
+          "pos": null,
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 14
+        },
+        {
+          "name": "Kyle Bowen",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 15
+        },
+        {
+          "name": "David Barlow",
+          "pos": "SF",
+          "nat": null,
+          "age": 42,
+          "heightCm": 206,
+          "number": 20
+        },
+        {
+          "name": "Fabijan Krslovic",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 20
+        },
+        {
+          "name": "Shawn Long",
+          "pos": "C",
+          "nat": "USA",
+          "age": 32,
+          "heightCm": 206,
+          "number": 21
+        },
+        {
+          "name": "Luke Travers",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 23
+        },
+        {
+          "name": "Jordan Caroline",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 24
+        },
+        {
+          "name": "Jai Fa'Ale",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 30
+        },
+        {
+          "name": "Tom Koppens",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 30
+        },
+        {
+          "name": "Henry Sewell",
+          "pos": "SG",
+          "nat": null,
+          "age": 18,
+          "heightCm": 206,
+          "number": 32
+        },
+        {
+          "name": "Milton Doyle",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 32,
+          "heightCm": 193,
+          "number": 35
+        },
+        {
+          "name": "Alex Pledger",
+          "pos": "C",
+          "nat": null,
+          "age": 38,
+          "heightCm": 216,
+          "number": 35
+        },
+        {
+          "name": "Chris Goulding",
+          "pos": "SG",
+          "nat": null,
+          "age": 37,
+          "heightCm": 193,
+          "number": 43
+        },
+        {
+          "name": "Shea Ili",
+          "pos": "SG",
+          "nat": null,
+          "age": 33,
+          "heightCm": 183,
+          "number": 51
+        },
+        {
+          "name": "Quincy Miller",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 33,
+          "heightCm": 208,
+          "number": 51
+        },
+        {
+          "name": "Erik Kafritsas",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 53
+        },
+        {
+          "name": "Daniel Poelsma",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 54
+        },
+        {
+          "name": "Cameron Thew",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 55
+        },
+        {
+          "name": "Rayjon Tucker",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 59
+        },
+        {
+          "name": "C.J. Asuncion-Byrd",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 60
+        },
+        {
+          "name": "Wilson Amos",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 61
+        },
+        {
+          "name": "Kingsley Box",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 61
+        },
+        {
+          "name": "Ke'Jhan Feagin",
+          "pos": "PG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 61
+        },
+        {
+          "name": "Will Hynes",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 62
+        },
+        {
+          "name": "Kaylen Kitto",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 62
+        },
+        {
+          "name": "Malik Meunier",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 62
+        },
+        {
+          "name": "Sammy Cartwright",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 63
+        },
+        {
+          "name": "Nicholas Tata",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 63
+        },
+        {
+          "name": "Corey Hastings",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 64
+        },
+        {
+          "name": "Rhys Carter",
+          "pos": null,
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": null
+        }
+      ]
+    },
+    "New Zealand Breakers": {
+      "espnId": "6",
+      "espnName": "New Zealand Breakers",
+      "coach": "Gordon Herbert",
+      "players": [
+        {
+          "name": "Alex McNaught",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 0
+        },
+        {
+          "name": "Tai Webster",
+          "pos": "SG",
+          "nat": null,
+          "age": 30,
+          "heightCm": 193,
+          "number": 0
+        },
+        {
+          "name": "Sean Bairstow",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 2
+        },
+        {
+          "name": "Sam Mennenga",
+          "pos": "C",
+          "nat": null,
+          "age": 24,
+          "heightCm": 206,
+          "number": 3
+        },
+        {
+          "name": "Sam Mennenga",
+          "pos": "C",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 3
+        },
+        {
+          "name": "Izayah Le'Afa",
+          "pos": "SG",
+          "nat": null,
+          "age": 29,
+          "heightCm": 188,
+          "number": 4
+        },
+        {
+          "name": "Taylor Britt",
+          "pos": "SG",
+          "nat": null,
+          "age": 29,
+          "heightCm": 188,
+          "number": 5
+        },
+        {
+          "name": "Parker Jackson-Cartwright",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 6
+        },
+        {
+          "name": "Reuben Te Rangi",
+          "pos": "SF",
+          "nat": null,
+          "age": 31,
+          "heightCm": 198,
+          "number": 7
+        },
+        {
+          "name": "Charles Bediako",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 8
+        },
+        {
+          "name": "Izaiah Brockington",
+          "pos": "SG",
+          "nat": "USA",
+          "age": 26,
+          "heightCm": 193,
+          "number": 8
+        },
+        {
+          "name": "Robert Baker",
+          "pos": "SF",
+          "nat": "USA",
+          "age": 27,
+          "heightCm": 208,
+          "number": 9
+        },
+        {
+          "name": "Nelson Weidemann",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 11
+        },
+        {
+          "name": "Jack Andrew",
+          "pos": "SG",
+          "nat": null,
+          "age": 24,
+          "heightCm": 208,
+          "number": 12
+        },
+        {
+          "name": "Max Darling",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 12
+        },
+        {
+          "name": "Anzac Rissetto",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 13
+        },
+        {
+          "name": "Rob Loe",
+          "pos": "C",
+          "nat": null,
+          "age": 34,
+          "heightCm": 211,
+          "number": 15
+        },
+        {
+          "name": "Chris Arcidiacono",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 16
+        },
+        {
+          "name": "Carlin Davison",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 21
+        },
+        {
+          "name": "Josiah-Jordan James",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 30
+        },
+        {
+          "name": "Freddie Gillespie",
+          "pos": "C",
+          "nat": null,
+          "age": null,
+          "heightCm": null,
+          "number": 33
+        },
+        {
+          "name": "Tukaha Cooper",
+          "pos": "SF",
+          "nat": null,
+          "age": null,
+          "heightCm": 188,
+          "number": 34
+        },
+        {
+          "name": "Liam Judd",
+          "pos": "SG",
+          "nat": null,
+          "age": null,
+          "heightCm": 196,
+          "number": 67
+        }
+      ]
+    }
+  }
+}

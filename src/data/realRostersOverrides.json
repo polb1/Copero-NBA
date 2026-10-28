@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "asOf": "2026-10-26",
+  "note": "Datos verificados a mano para clubes sin plantilla publica fiable en la API 2026. Fuente indicada por club.",
+  "clubs": {
+    "AS Monaco": {
+      "source": "eurobasket-2025-26",
+      "sourceUrl": "https://basketball.eurobasket.com/team/AS-Monaco-Basket/407/Roster",
+      "coach": "Sasa Obradovic",
+      "coachNat": "SRB",
+      "players": [
+        { "name": "Mike James", "pos": "PG", "nat": "USA", "age": 35, "heightCm": 185, "number": 55 },
+        { "name": "Elie Okobo", "pos": "SG", "nat": "FRA", "age": 28, "heightCm": 191, "number": 0 },
+        { "name": "Matthew Strazel", "pos": "PG", "nat": "FRA", "age": 23, "heightCm": 184, "number": 32 },
+        { "name": "Nemanja Nedovic", "pos": "SG", "nat": "SRB", "age": 34, "heightCm": 192, "number": 8 },
+        { "name": "Juhann Begarin", "pos": "SG", "nat": "FRA", "age": 23, "heightCm": 196, "number": 26 },
+        { "name": "Terry Tarpey", "pos": "SF", "nat": "FRA", "age": 31, "heightCm": 195, "number": 23 },
+        { "name": "Jaron Blossomgame", "pos": "PF", "nat": "USA", "age": 32, "heightCm": 199, "number": 12 },
+        { "name": "Nikola Mirotic", "pos": "PF", "nat": "ESP", "age": 34, "heightCm": 208, "number": 33 },
+        { "name": "Daniel Theis", "pos": "C", "nat": "GER", "age": 33, "heightCm": 205, "number": 6 },
+        { "name": "Kevarrius Hayes", "pos": "C", "nat": "USA", "age": 28, "heightCm": 206, "number": 13 },
+        { "name": "Kyllian Michee", "pos": "PG", "nat": "FRA", "age": 18, "heightCm": 185, "number": 4 },
+        { "name": "Zakaria Mechergui", "pos": "SG", "nat": "FRA", "age": 19, "heightCm": 195, "number": 9 }
+      ]
+    }
+  }
+}

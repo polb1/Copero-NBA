@@ -1,0 +1,258 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "openrouter/deepseek/deepseek-v4.1-flash",
+  "provider": {
+    "openrouter": {
+      "models": {
+        "deepseek/deepseek-v4.1-flash": {},
+        "deepseek/deepseek-v4.1-flash-1017": {},
+        "deepseek/deepseek-v4-pro-0813": {},
+        "deepseek/deepseek-v4-flash": {},
+        "deepseek/deepseek-v3.2": {},
+        "z-ai/glm-5.3-flash": {},
+        "z-ai/glm-5.3-flashx": {},
+        "xiaomi/mimo-v2.6-flash": {},
+        "xiaomi/mimo-v2.6-pro-ultraspeed": {},
+        "poolside/laguna-s-2.1:free": {},
+        "nvidia/nemotron-3-ultra-550b-a55b:free": {},
+        "minimax/minimax-m3.1-flash:free": {},
+        "nvidia/nemotron-3.5-lightning:free": {},
+        "nvidia/nemotron-3.5-super-vl:free": {},
+        "cohere/north-mini-code:free": {},
+        "google/gemma-4-26b-a4b-it:free": {},
+        "google/gemma-4-31b-it:free": {},
+        "thinkingmachines/inkling:free": {},
+        "thinkingmachines/inkling-small:free": {},
+        "openai/gpt-6-luna": {},
+        "openai/gpt-oss-20b": {},
+        "anthropic/claude-sonnet-5.5": {},
+        "qwen/qwen3-coder-30b-a3b-instruct": {},
+        "qwen/qwen3-coder-next": {},
+        "qwen/qwen3-coder-flash": {},
+        "qwen/qwen3.8-27b": {},
+        "qwen/qwen3.7-flash": {},
+        "qwen/qwen3.6-35b-a3b": {},
+        "meta-llama/llama-3.3-70b-instruct": {},
+        "meta-llama/llama-3.1-8b-instruct": {},
+        "mistralai/mistral-nemo": {},
+        "google/gemma-3-27b-it": {},
+        "amazon/nova-micro-v1": {},
+        "microsoft/phi-4": {}
+      },
+      "options": {
+        "order": [
+          "deepseek",
+          "z-ai",
+          "xiaomi",
+          "nvidia",
+          "minimax",
+          "poolside",
+          "cohere",
+          "google",
+          "thinkingmachines",
+          "openai",
+          "anthropic",
+          "qwen",
+          "meta-llama",
+          "mistralai",
+          "amazon",
+          "microsoft"
+        ],
+        "allow_fallbacks": true,
+        "require_parameters": true
+      }
+    },
+    "ollama": {
+      "npm": "@ai-sdk/ollama",
+      "name": "Ollama (local)",
+      "options": {
+        "baseURL": "http://127.0.0.1:11434"
+      },
+      "models": {
+        "qwen2.5-coder:7b": {
+          "name": "Qwen2.5 Coder 7B (local)",
+          "limit": { "context": 32768, "output": 8192 }
+        },
+        "qwen2.5-coder:14b": {
+          "name": "Qwen2.5 Coder 14B (local)",
+          "limit": { "context": 32768, "output": 8192 }
+        },
+        "qwen2.5:7b": {
+          "name": "Qwen2.5 7B (local)",
+          "limit": { "context": 32768, "output": 8192 }
+        },
+        "gemma2:9b": {
+          "name": "Gemma 2 9B (local)",
+          "limit": { "context": 8192, "output": 8192 }
+        },
+        "llama3.2:3b": {
+          "name": "Llama 3.2 3B (local)",
+          "limit": { "context": 131072, "output": 8192 }
+        }
+      }
+    },
+    "lmstudio": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LM Studio (local)",
+      "options": {
+        "baseURL": "http://127.0.0.1:1234/v1"
+      },
+      "models": {}
+    }
+  },
+  "agent": {
+    "orquestador": {
+      "mode": "primary",
+      "description": "Planifica, divide y delega. Nunca escribe código de producción.",
+      "model": "openrouter/deepseek/deepseek-v4.1-flash",
+      "fallbackModels": [
+        "openrouter/deepseek/deepseek-v4.1-flash-1017",
+        "openrouter/deepseek/deepseek-v4-flash",
+        "openrouter/z-ai/glm-5.3-flash",
+        "openrouter/xiaomi/mimo-v2.6-flash",
+        "openrouter/nvidia/nemotron-3.5-lightning:free",
+        "openrouter/thinkingmachines/inkling:free",
+        "ollama/qwen2.5:7b",
+        "ollama/qwen2.5-coder:7b",
+        "ollama/gemma2:9b"
+      ],
+      "temperature": 0.3
+    },
+    "arquitecto": {
+      "mode": "subagent",
+      "description": "Investiga, escribe specs, casos límite y criterios de aceptación.",
+      "model": "openrouter/deepseek/deepseek-v4-pro-0813",
+      "fallbackModels": [
+        "openrouter/deepseek/deepseek-v4.1-flash",
+        "openrouter/deepseek/deepseek-v4.1-flash-1017",
+        "openrouter/z-ai/glm-5.3-flashx",
+        "openrouter/z-ai/glm-5.3-flash",
+        "openrouter/xiaomi/mimo-v2.6-pro-ultraspeed",
+        "openrouter/xiaomi/mimo-v2.6-flash",
+        "openrouter/nvidia/nemotron-3.5-super-vl:free",
+        "openrouter/thinkingmachines/inkling:free",
+        "ollama/qwen2.5-coder:14b",
+        "ollama/qwen2.5-coder:7b",
+        "ollama/qwen2.5:7b"
+      ],
+      "temperature": 0.2
+    },
+    "auditor": {
+      "mode": "subagent",
+      "description": "Solo lectura: grep/glob, devuelve rutas y líneas. LOCAL (Ollama qwen2.5-coder:7b) - gratis, privado, 32K ctx.",
+      "model": "ollama/qwen2.5-coder:7b",
+      "fallbackModels": [
+        "ollama/qwen2.5-coder:14b",
+        "ollama/qwen2.5:7b",
+        "ollama/gemma2:9b",
+        "ollama/llama3.2:3b",
+        "openrouter/nvidia/nemotron-3.5-lightning:free",
+        "openrouter/cohere/north-mini-code:free",
+        "openrouter/google/gemma-4-26b-a4b-it:free",
+        "openrouter/thinkingmachines/inkling-small:free",
+        "openrouter/xiaomi/mimo-v2.6-flash",
+        "openrouter/z-ai/glm-5.3-flash",
+        "openrouter/deepseek/deepseek-v4.1-flash"
+      ],
+      "temperature": 0.1
+    },
+    "constructor": {
+      "mode": "subagent",
+      "description": "OpenRouter (cloud): transcribe la spec a código. qwen3-coder-30b-a3b-instruct @ $0.07/$0.28 por M.",
+      "model": "openrouter/qwen/qwen3-coder-30b-a3b-instruct",
+      "fallbackModels": [
+        "openrouter/qwen/qwen3-coder-next",
+        "openrouter/qwen/qwen3-coder-flash",
+        "openrouter/qwen/qwen3.8-27b",
+        "openrouter/qwen/qwen3.7-flash",
+        "openrouter/qwen/qwen3.6-35b-a3b",
+        "openrouter/deepseek/deepseek-v4.1-flash",
+        "openrouter/z-ai/glm-5.3-flash",
+        "openrouter/xiaomi/mimo-v2.6-flash",
+        "openrouter/poolside/laguna-s-2.1:free",
+        "openrouter/cohere/north-mini-code:free",
+        "ollama/qwen2.5-coder:14b",
+        "ollama/qwen2.5-coder:7b",
+        "ollama/qwen2.5:7b"
+      ],
+      "temperature": 0.2
+    },
+    "escritor2": {
+      "mode": "subagent",
+      "description": "Desborde: archivos asignados sin solape.",
+      "model": "openrouter/z-ai/glm-5.3-flash",
+      "fallbackModels": [
+        "openrouter/z-ai/glm-5.3-flashx",
+        "openrouter/xiaomi/mimo-v2.6-flash",
+        "openrouter/deepseek/deepseek-v4.1-flash",
+        "openrouter/qwen/qwen3.7-flash",
+        "openrouter/nvidia/nemotron-3.5-lightning:free",
+        "openrouter/thinkingmachines/inkling:free",
+        "ollama/qwen2.5:7b",
+        "ollama/qwen2.5-coder:7b"
+      ],
+      "temperature": 0.3
+    },
+    "escritor3": {
+      "mode": "subagent",
+      "description": "Rutinario: tareas pequeñas asignadas (modelo gratuito).",
+      "model": "openrouter/poolside/laguna-s-2.1:free",
+      "fallbackModels": [
+        "openrouter/cohere/north-mini-code:free",
+        "openrouter/google/gemma-4-26b-a4b-it:free",
+        "openrouter/thinkingmachines/inkling:free",
+        "openrouter/nvidia/nemotron-3.5-lightning:free",
+        "openrouter/xiaomi/mimo-v2.6-flash",
+        "ollama/qwen2.5-coder:7b",
+        "ollama/qwen2.5:7b"
+      ],
+      "temperature": 0.3
+    },
+    "juez1": {
+      "mode": "subagent",
+      "description": "Diff vs spec: APROBADO/RECHAZADO con motivos.",
+      "model": "openrouter/nvidia/nemotron-3-ultra-550b-a55b:free",
+      "fallbackModels": [
+        "openrouter/minimax/minimax-m3.1-flash:free",
+        "openrouter/nvidia/nemotron-3.5-super-vl:free",
+        "openrouter/thinkingmachines/inkling:free",
+        "openrouter/google/gemma-4-31b-it:free",
+        "openrouter/xiaomi/mimo-v2.6-flash",
+        "openrouter/z-ai/glm-5.3-flash",
+        "ollama/qwen2.5-coder:14b",
+        "ollama/qwen2.5-coder:7b"
+      ],
+      "temperature": 0.1
+    },
+    "juez2": {
+      "mode": "subagent",
+      "description": "Segunda opinión independiente (familia distinta a Juez 1).",
+      "model": "openrouter/minimax/minimax-m3.1-flash:free",
+      "fallbackModels": [
+        "openrouter/nvidia/nemotron-3-ultra-550b-a55b:free",
+        "openrouter/nvidia/nemotron-3.5-super-vl:free",
+        "openrouter/thinkingmachines/inkling:free",
+        "openrouter/google/gemma-4-26b-a4b-it:free",
+        "openrouter/xiaomi/mimo-v2.6-flash",
+        "openrouter/z-ai/glm-5.3-flash",
+        "ollama/qwen2.5:7b",
+        "ollama/gemma2:9b"
+      ],
+      "temperature": 0.1
+    },
+    "juez3": {
+      "mode": "subagent",
+      "description": "Desempate. Solo se invoca si Juez 1 y Juez 2 discrepan en algo crítico.",
+      "model": "openrouter/anthropic/claude-sonnet-5.5",
+      "fallbackModels": [
+        "openrouter/openai/gpt-6-luna",
+        "openrouter/openai/gpt-oss-20b",
+        "openrouter/deepseek/deepseek-v4-pro-0813",
+        "openrouter/z-ai/glm-5.3-flashx",
+        "openrouter/meta-llama/llama-3.3-70b-instruct",
+        "ollama/qwen2.5-coder:14b"
+      ],
+      "temperature": 0.1
+    }
+  }
+}

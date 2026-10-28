@@ -111,6 +111,9 @@ export function markEventSeen(c: Career, id: string, day: number) {
   c.flags['seen:' + id] = (c.flags['seen:' + id] ?? 0) + 1;
 }
 
+import { getClubRealCoach } from '../data/realCoaches';
+import { getClubRealRoster } from '../data/realPlayers';
+
 function fill(text: string, vars: Record<string, string>) {
   return text.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? k);
 }
@@ -120,14 +123,17 @@ export function eventVars(ctx: EventContext, rng: Rng): Record<string, string> {
   const league = c.league;
   const mates = team ? team.roster.map((id) => league.players[id]).filter((p) => p && !p.isUser) : [];
   const vet = [...mates].sort((a, b) => b.age - a.age)[0];
+  const satMates = c.satellite?.teamName ? getClubRealRoster(c.satellite.teamName) : undefined;
+  const satMateNames = satMates?.map((p) => p.name) ?? [];
+  const satVet = satMates ? [...satMates].sort((a, b) => b.age - a.age)[0]?.name : undefined;
   const others = Object.values(league.players).filter((p) => p.teamId && p.teamId !== u.teamId && p.pos === u.pos && p.ovr >= u.ovr - 6);
   const rival = others.length ? rng.pick(others) : null;
   return {
     team: team ? `${team.city} ${team.name}` : c.satellite?.teamName ?? 'tu equipo',
     city: team?.city ?? 'tu ciudad',
-    coach: team?.coach.name ?? 'Tu entrenador',
-    teammate: mates.length ? fullName(rng.pick(mates)) : 'Un compañero',
-    vet: vet ? fullName(vet) : 'un veterano',
+    coach: team?.coach.name ?? (c.satellite?.teamName ? (getClubRealCoach(c.satellite.teamName)?.name ?? 'Tu entrenador') : 'Tu entrenador'),
+    teammate: mates.length ? fullName(rng.pick(mates)) : satMateNames.length ? rng.pick(satMateNames) : 'Un compañero',
+    vet: vet ? fullName(vet) : satVet ?? 'un veterano',
     rival: rival ? fullName(rival) : 'Un rival',
     agent: c.agent.name,
     country: countryByCode(u.nat).name,

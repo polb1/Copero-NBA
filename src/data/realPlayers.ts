@@ -6,6 +6,11 @@ import { HEIGHT_RANGE, applyPhysique, emptyStats } from '../engine/players';
 import { prospectValue } from '../engine/draft';
 import type { SimPlayer } from '../engine/gamesim';
 import nbaRosterSnap from './nbaRoster2026.json';
+import realRostersSnap from './realRosters2026.json';
+import {
+  NBA_REAL_COACHES as VERIFIED_NBA_COACHES,
+  CLUB_REAL_COACHES as VERIFIED_CLUB_COACHES,
+} from './realCoaches';
 
 export interface RealClubPlayer {
   name: string;
@@ -16,6 +21,7 @@ export interface RealClubPlayer {
   nat: string; // ISO 3 country code
   arch?: Archetype;
   number?: number;
+  heightCm?: number;
 }
 
 export interface RealDraftProspect {
@@ -30,7 +36,7 @@ export interface RealDraftProspect {
 }
 
 /** Real rosters of European clubs and international teams. */
-export const CLUB_REAL_ROSTERS: Record<string, RealClubPlayer[]> = {
+const MANUAL_CLUB_ROSTERS: Record<string, RealClubPlayer[]> = {
   // España - Liga ACB / Euroliga
   'Real Madrid': [
     { name: 'Facundo Campazzo', pos: 'PG', ovr: 81, pot: 81, age: 33, nat: 'ARG', arch: 'playmaker', number: 7 },
@@ -68,7 +74,11 @@ export const CLUB_REAL_ROSTERS: Record<string, RealClubPlayer[]> = {
     { name: 'Kamar Baldwin', pos: 'PG', ovr: 75, pot: 76, age: 27, nat: 'USA', arch: 'playmaker', number: 2 },
     { name: 'Trent Forrest', pos: 'PG', ovr: 74, pot: 75, age: 26, nat: 'USA', arch: 'playmaker', number: 5 },
     { name: 'Nikos Rogkavopoulos', pos: 'SF', ovr: 74, pot: 77, age: 23, nat: 'GRE', arch: 'sharpshooter', number: 17 },
+    { name: 'Timothé Luwawu-Cabarrot', pos: 'SF', ovr: 75, pot: 75, age: 29, nat: 'FRA', arch: 'twoWay', number: 7 },
     { name: 'Ognjen Jaramaz', pos: 'SG', ovr: 73, pot: 73, age: 29, nat: 'SRB', arch: 'twoWay', number: 10 },
+    { name: 'Khalifa Diop', pos: 'C', ovr: 73, pot: 76, age: 22, nat: 'SEN', arch: 'rimProtector', number: 18 },
+    { name: 'Sander Raieste', pos: 'SF', ovr: 72, pot: 74, age: 25, nat: 'EST', arch: 'twoWay', number: 24 },
+    { name: 'Ousmane N\'Diaye', pos: 'PF', ovr: 71, pot: 77, age: 20, nat: 'SEN', arch: 'stretchBig', number: 21 },
   ],
   'Valencia Basket': [
     { name: 'Chris Jones', pos: 'PG', ovr: 77, pot: 77, age: 31, nat: 'ARM', arch: 'allAround', number: 7 },
@@ -78,6 +88,11 @@ export const CLUB_REAL_ROSTERS: Record<string, RealClubPlayer[]> = {
     { name: 'Jaime Pradilla', pos: 'PF', ovr: 74, pot: 77, age: 23, nat: 'ESP', arch: 'postScorer', number: 4 },
     { name: 'Xabi López-Arostegui', pos: 'SF', ovr: 74, pot: 74, age: 27, nat: 'ESP', arch: 'twoWay', number: 6 },
     { name: 'Brancou Badio', pos: 'PG', ovr: 73, pot: 76, age: 25, nat: 'SEN', arch: 'playmaker', number: 0 },
+    { name: 'Stefan Jovic', pos: 'PG', ovr: 74, pot: 74, age: 34, nat: 'SRB', arch: 'playmaker', number: 16 },
+    { name: 'Josep Puerto', pos: 'SF', ovr: 73, pot: 75, age: 25, nat: 'ESP', arch: 'twoWay', number: 2 },
+    { name: 'Nate Reuvers', pos: 'PF', ovr: 73, pot: 75, age: 26, nat: 'USA', arch: 'stretchBig', number: 5 },
+    { name: 'Ethan Happ', pos: 'C', ovr: 74, pot: 75, age: 28, nat: 'MKD', arch: 'postScorer', number: 22 },
+    { name: 'Amida Brimah', pos: 'C', ovr: 72, pot: 73, age: 30, nat: 'GHA', arch: 'rimProtector', number: 33 },
   ],
   'Unicaja Málaga': [
     { name: 'Kendrick Perry', pos: 'PG', ovr: 76, pot: 76, age: 32, nat: 'MNE', arch: 'allAround', number: 55 },
@@ -86,13 +101,25 @@ export const CLUB_REAL_ROSTERS: Record<string, RealClubPlayer[]> = {
     { name: 'Kameron Taylor', pos: 'SF', ovr: 75, pot: 75, age: 30, nat: 'USA', arch: 'twoWay', number: 7 },
     { name: 'David Kravish', pos: 'C', ovr: 75, pot: 75, age: 32, nat: 'BUL', arch: 'postScorer', number: 45 },
     { name: 'Alberto Díaz', pos: 'PG', ovr: 74, pot: 74, age: 30, nat: 'ESP', arch: 'twoWay', number: 9 },
+    { name: 'Tyler Kalinoski', pos: 'SG', ovr: 74, pot: 74, age: 32, nat: 'USA', arch: 'sharpshooter', number: 4 },
+    { name: 'Nihad Djedovic', pos: 'SF', ovr: 73, pot: 73, age: 34, nat: 'BIH', arch: 'allAround', number: 14 },
+    { name: 'Melvin Ejim', pos: 'PF', ovr: 73, pot: 73, age: 33, nat: 'CAN', arch: 'twoWay', number: 3 },
+    { name: 'Killian Tillie', pos: 'PF', ovr: 74, pot: 76, age: 26, nat: 'FRA', arch: 'stretchBig', number: 33 },
+    { name: 'Jonathan Barreiro', pos: 'SF', ovr: 72, pot: 73, age: 27, nat: 'ESP', arch: 'twoWay', number: 7 },
+    { name: 'Yankuba Sima', pos: 'C', ovr: 73, pot: 75, age: 28, nat: 'ESP', arch: 'rimProtector', number: 77 },
   ],
   'Joventut Badalona': [
     { name: 'Ante Tomic', pos: 'C', ovr: 76, pot: 76, age: 37, nat: 'CRO', arch: 'postScorer', number: 19 },
     { name: 'Kassius Robertson', pos: 'SG', ovr: 75, pot: 75, age: 30, nat: 'CAN', arch: 'sharpshooter', number: 30 },
     { name: 'Devon Dotson', pos: 'PG', ovr: 75, pot: 76, age: 25, nat: 'USA', arch: 'playmaker', number: 1 },
     { name: 'Artem Pustovyi', pos: 'C', ovr: 74, pot: 74, age: 32, nat: 'UKR', arch: 'rimProtector', number: 37 },
+    { name: 'Adam Hanga', pos: 'SF', ovr: 74, pot: 74, age: 35, nat: 'HUN', arch: 'twoWay', number: 8 },
     { name: 'Guillem Vives', pos: 'PG', ovr: 73, pot: 73, age: 31, nat: 'ESP', arch: 'playmaker', number: 16 },
+    { name: 'Pau Ribas', pos: 'SG', ovr: 73, pot: 73, age: 37, nat: 'ESP', arch: 'playmaker', number: 4 },
+    { name: 'Yannick Kraag', pos: 'SF', ovr: 73, pot: 78, age: 22, nat: 'NED', arch: 'slasher', number: 2 },
+    { name: 'Kaiser Gates', pos: 'PF', ovr: 73, pot: 74, age: 28, nat: 'USA', arch: 'stretchBig', number: 12 },
+    { name: 'Michael Ruzic', pos: 'PF', ovr: 72, pot: 85, age: 19, nat: 'CRO', arch: 'stretchBig', number: 23 },
+    { name: 'Pep Busquets', pos: 'SF', ovr: 72, pot: 74, age: 25, nat: 'ESP', arch: 'twoWay', number: 11 },
   ],
   'Gran Canaria': [
     { name: 'Nicolas Brussino', pos: 'SF', ovr: 75, pot: 75, age: 31, nat: 'ARG', arch: 'sharpshooter', number: 9 },
@@ -100,13 +127,47 @@ export const CLUB_REAL_ROSTERS: Record<string, RealClubPlayer[]> = {
     { name: 'Andrew Albicy', pos: 'PG', ovr: 74, pot: 74, age: 34, nat: 'FRA', arch: 'twoWay', number: 6 },
     { name: 'John Shurna', pos: 'PF', ovr: 74, pot: 74, age: 34, nat: 'USA', arch: 'sharpshooter', number: 14 },
     { name: 'Caleb Homesley', pos: 'SG', ovr: 74, pot: 75, age: 28, nat: 'USA', arch: 'allAround', number: 3 },
+    { name: 'Joe Thomasson', pos: 'SG', ovr: 74, pot: 74, age: 31, nat: 'USA', arch: 'allAround', number: 32 },
+    { name: 'Carlos Alocen', pos: 'PG', ovr: 73, pot: 76, age: 24, nat: 'ESP', arch: 'playmaker', number: 11 },
+    { name: 'George Conditt IV', pos: 'C', ovr: 74, pot: 76, age: 24, nat: 'PUR', arch: 'rimProtector', number: 4 },
+    { name: 'Miquel Salvó', pos: 'SF', ovr: 73, pot: 73, age: 30, nat: 'ESP', arch: 'twoWay', number: 13 },
+    { name: 'Pierre Pelos', pos: 'PF', ovr: 73, pot: 73, age: 32, nat: 'FRA', arch: 'stretchBig', number: 18 },
   ],
   'La Laguna Tenerife': [
     { name: 'Marcelinho Huertas', pos: 'PG', ovr: 77, pot: 77, age: 41, nat: 'BRA', arch: 'playmaker', number: 9 },
     { name: 'Giorgi Shermadini', pos: 'C', ovr: 77, pot: 77, age: 35, nat: 'GEO', arch: 'postScorer', number: 19 },
     { name: 'Bruno Fitipaldo', pos: 'PG', ovr: 74, pot: 74, age: 33, nat: 'URU', arch: 'sharpshooter', number: 6 },
     { name: 'Fran Guerra', pos: 'C', ovr: 74, pot: 74, age: 32, nat: 'ESP', arch: 'postScorer', number: 35 },
+    { name: 'Jaime Fernández', pos: 'SG', ovr: 74, pot: 74, age: 31, nat: 'ESP', arch: 'playmaker', number: 3 },
     { name: 'Joan Sastre', pos: 'SF', ovr: 73, pot: 73, age: 33, nat: 'ESP', arch: 'twoWay', number: 15 },
+    { name: 'Aaron Doornekamp', pos: 'PF', ovr: 73, pot: 73, age: 39, nat: 'CAN', arch: 'stretchBig', number: 42 },
+    { name: 'Tim Abromaitis', pos: 'PF', ovr: 73, pot: 73, age: 35, nat: 'USA', arch: 'stretchBig', number: 21 },
+    { name: 'David Krämer', pos: 'SG', ovr: 73, pot: 75, age: 27, nat: 'GER', arch: 'sharpshooter', number: 8 },
+    { name: 'Thomas Scrubb', pos: 'SF', ovr: 73, pot: 73, age: 33, nat: 'CAN', arch: 'twoWay', number: 11 },
+  ],
+  'UCAM Murcia': [
+    { name: 'Dylan Ennis', pos: 'SG', ovr: 76, pot: 76, age: 32, nat: 'CAN', arch: 'allAround', number: 31 },
+    { name: 'Howard Sant-Roos', pos: 'SF', ovr: 75, pot: 75, age: 33, nat: 'CUB', arch: 'twoWay', number: 77 },
+    { name: 'Rodions Kurucs', pos: 'PF', ovr: 75, pot: 76, age: 26, nat: 'LAT', arch: 'twoWay', number: 0 },
+    { name: 'Marko Todorovic', pos: 'C', ovr: 75, pot: 75, age: 32, nat: 'MNE', arch: 'postScorer', number: 11 },
+    { name: 'Ludde Hakanson', pos: 'PG', ovr: 74, pot: 75, age: 28, nat: 'SWE', arch: 'playmaker', number: 8 },
+    { name: 'Jonah Radebaugh', pos: 'SG', ovr: 74, pot: 74, age: 27, nat: 'MNE', arch: 'twoWay', number: 10 },
+    { name: 'Simon Birgander', pos: 'C', ovr: 74, pot: 75, age: 27, nat: 'SWE', arch: 'rimProtector', number: 35 },
+    { name: 'Nemanja Radovic', pos: 'PF', ovr: 73, pot: 73, age: 33, nat: 'MNE', arch: 'postScorer', number: 21 },
+    { name: 'Troy Caupain', pos: 'PG', ovr: 73, pot: 73, age: 28, nat: 'USA', arch: 'playmaker', number: 5 },
+    { name: 'Moussa Diagne', pos: 'C', ovr: 72, pot: 72, age: 30, nat: 'SEN', arch: 'rimProtector', number: 25 },
+  ],
+  'Bàsquet Girona': [
+    { name: 'Ike Iroegbu', pos: 'PG', ovr: 75, pot: 76, age: 29, nat: 'NGA', arch: 'allAround', number: 0 },
+    { name: 'Yves Pons', pos: 'PF', ovr: 74, pot: 76, age: 25, nat: 'FRA', arch: 'twoWay', number: 23 },
+    { name: 'James Nnaji', pos: 'C', ovr: 74, pot: 79, age: 20, nat: 'NGA', arch: 'rimProtector', number: 46 },
+    { name: 'Aljami Durham', pos: 'SG', ovr: 73, pot: 75, age: 26, nat: 'USA', arch: 'slasher', number: 5 },
+    { name: 'Juani Marcos', pos: 'PG', ovr: 73, pot: 76, age: 24, nat: 'ARG', arch: 'playmaker', number: 11 },
+    { name: 'Mindaugas Susinskas', pos: 'SF', ovr: 73, pot: 73, age: 29, nat: 'LTU', arch: 'sharpshooter', number: 22 },
+    { name: 'Sergi Martínez', pos: 'SF', ovr: 73, pot: 75, age: 25, nat: 'ESP', arch: 'twoWay', number: 7 },
+    { name: 'Maxi Fjellerup', pos: 'SG', ovr: 72, pot: 73, age: 26, nat: 'ARG', arch: 'slasher', number: 8 },
+    { name: 'Nike Sibande', pos: 'SG', ovr: 73, pot: 74, age: 25, nat: 'USA', arch: 'allAround', number: 2 },
+    { name: 'Juan Fernández', pos: 'C', ovr: 72, pot: 75, age: 22, nat: 'ARG', arch: 'stretchBig', number: 15 },
   ],
 
   // Grecia
@@ -263,12 +324,21 @@ export const CLUB_REAL_ROSTERS: Record<string, RealClubPlayer[]> = {
     { name: 'Tyrese Proctor', pos: 'PG', ovr: 72, pot: 84, age: 20, nat: 'AUS', arch: 'playmaker', number: 5 },
     { name: 'Sion James', pos: 'SG', ovr: 71, pot: 82, age: 21, nat: 'USA', arch: 'twoWay', number: 14 },
     { name: 'Caleb Foster', pos: 'PG', ovr: 71, pot: 83, age: 19, nat: 'USA', arch: 'allAround', number: 1 },
+    { name: 'Mason Gillis', pos: 'PF', ovr: 71, pot: 78, age: 23, nat: 'USA', arch: 'stretchBig', number: 23 },
+    { name: 'Maliq Brown', pos: 'PF', ovr: 71, pot: 80, age: 21, nat: 'USA', arch: 'twoWay', number: 6 },
+    { name: 'Patrick Ngongba II', pos: 'C', ovr: 70, pot: 83, age: 19, nat: 'USA', arch: 'postScorer', number: 34 },
+    { name: 'Isaiah Evans', pos: 'SF', ovr: 70, pot: 85, age: 19, nat: 'USA', arch: 'sharpshooter', number: 3 },
   ],
   'Rutgers': [
     { name: 'Dylan Harper', pos: 'PG', ovr: 77, pot: 93, age: 18, nat: 'USA', arch: 'playmaker', number: 2 },
     { name: 'Ace Bailey', pos: 'SF', ovr: 77, pot: 93, age: 18, nat: 'USA', arch: 'allAround', number: 1 },
     { name: 'Jeremiah Williams', pos: 'SG', ovr: 71, pot: 80, age: 22, nat: 'USA', arch: 'twoWay', number: 0 },
     { name: 'Lathan Sommerville', pos: 'C', ovr: 70, pot: 82, age: 19, nat: 'USA', arch: 'postScorer', number: 99 },
+    { name: 'Jordan Derkack', pos: 'PG', ovr: 71, pot: 79, age: 21, nat: 'USA', arch: 'allAround', number: 5 },
+    { name: 'PJ Hayes', pos: 'SF', ovr: 70, pot: 77, age: 22, nat: 'USA', arch: 'sharpshooter', number: 24 },
+    { name: 'Tyson Acuff', pos: 'SG', ovr: 70, pot: 78, age: 22, nat: 'USA', arch: 'sharpshooter', number: 4 },
+    { name: 'Zach Martini', pos: 'PF', ovr: 69, pot: 76, age: 23, nat: 'USA', arch: 'stretchBig', number: 21 },
+    { name: 'Jamichael Davis', pos: 'PG', ovr: 69, pot: 79, age: 20, nat: 'USA', arch: 'playmaker', number: 3 },
   ],
   'UConn': [
     { name: 'Alex Karaban', pos: 'PF', ovr: 74, pot: 85, age: 22, nat: 'USA', arch: 'stretchBig', number: 11 },
@@ -276,6 +346,10 @@ export const CLUB_REAL_ROSTERS: Record<string, RealClubPlayer[]> = {
     { name: 'Tarris Reed Jr.', pos: 'C', ovr: 72, pot: 83, age: 21, nat: 'USA', arch: 'rimProtector', number: 32 },
     { name: 'Solo Ball', pos: 'SG', ovr: 71, pot: 83, age: 20, nat: 'USA', arch: 'allAround', number: 1 },
     { name: 'Hassan Diarra', pos: 'PG', ovr: 71, pot: 80, age: 23, nat: 'USA', arch: 'twoWay', number: 10 },
+    { name: 'Aidan Mahaney', pos: 'PG', ovr: 72, pot: 82, age: 21, nat: 'USA', arch: 'sharpshooter', number: 20 },
+    { name: 'Samson Johnson', pos: 'C', ovr: 71, pot: 79, age: 22, nat: 'TOG', arch: 'rimProtector', number: 35 },
+    { name: 'Jaylin Stewart', pos: 'SF', ovr: 70, pot: 82, age: 20, nat: 'USA', arch: 'allAround', number: 3 },
+    { name: 'Ahmad Nowell', pos: 'PG', ovr: 70, pot: 83, age: 19, nat: 'USA', arch: 'twoWay', number: 2 },
   ],
   'Kansas': [
     { name: 'Hunter Dickinson', pos: 'C', ovr: 76, pot: 80, age: 24, nat: 'USA', arch: 'postScorer', number: 1 },
@@ -283,6 +357,10 @@ export const CLUB_REAL_ROSTERS: Record<string, RealClubPlayer[]> = {
     { name: 'AJ Storr', pos: 'SF', ovr: 73, pot: 84, age: 21, nat: 'USA', arch: 'allAround', number: 2 },
     { name: 'KJ Adams Jr.', pos: 'PF', ovr: 73, pot: 81, age: 22, nat: 'USA', arch: 'twoWay', number: 24 },
     { name: 'Zeke Mayo', pos: 'SG', ovr: 72, pot: 80, age: 23, nat: 'USA', arch: 'sharpshooter', number: 4 },
+    { name: 'Rylan Griffen', pos: 'SG', ovr: 72, pot: 82, age: 21, nat: 'USA', arch: 'sharpshooter', number: 5 },
+    { name: 'Flory Bidunga', pos: 'C', ovr: 71, pot: 86, age: 19, nat: 'COD', arch: 'rimProtector', number: 40 },
+    { name: 'David Coit', pos: 'PG', ovr: 71, pot: 78, age: 23, nat: 'USA', arch: 'sharpshooter', number: 11 },
+    { name: 'Shakeel Moore', pos: 'PG', ovr: 70, pot: 78, age: 23, nat: 'USA', arch: 'twoWay', number: 0 },
   ],
   'North Carolina': [
     { name: 'RJ Davis', pos: 'PG', ovr: 76, pot: 80, age: 23, nat: 'USA', arch: 'allAround', number: 4 },
@@ -290,6 +368,10 @@ export const CLUB_REAL_ROSTERS: Record<string, RealClubPlayer[]> = {
     { name: 'Ian Jackson', pos: 'SG', ovr: 73, pot: 88, age: 19, nat: 'USA', arch: 'slasher', number: 11 },
     { name: 'Elliot Cadeau', pos: 'PG', ovr: 72, pot: 84, age: 20, nat: 'SWE', arch: 'playmaker', number: 2 },
     { name: 'Jae\'Lyn Withers', pos: 'PF', ovr: 70, pot: 78, age: 24, nat: 'USA', arch: 'twoWay', number: 24 },
+    { name: 'Seth Trimble', pos: 'SG', ovr: 71, pot: 81, age: 20, nat: 'USA', arch: 'twoWay', number: 7 },
+    { name: 'Jalen Washington', pos: 'C', ovr: 71, pot: 82, age: 20, nat: 'USA', arch: 'stretchBig', number: 13 },
+    { name: 'Ven-Allen Lubin', pos: 'PF', ovr: 71, pot: 81, age: 21, nat: 'USA', arch: 'postScorer', number: 22 },
+    { name: 'Cade Tyson', pos: 'SF', ovr: 71, pot: 81, age: 21, nat: 'USA', arch: 'sharpshooter', number: 5 },
   ],
   'Kentucky': [
     { name: 'Jaxson Robinson', pos: 'SG', ovr: 73, pot: 82, age: 22, nat: 'USA', arch: 'sharpshooter', number: 2 },
@@ -297,34 +379,146 @@ export const CLUB_REAL_ROSTERS: Record<string, RealClubPlayer[]> = {
     { name: 'Lamont Butler', pos: 'PG', ovr: 72, pot: 79, age: 22, nat: 'USA', arch: 'twoWay', number: 5 },
     { name: 'Otega Oweh', pos: 'SG', ovr: 72, pot: 81, age: 21, nat: 'USA', arch: 'twoWay', number: 0 },
     { name: 'Kerr Kriisa', pos: 'PG', ovr: 71, pot: 78, age: 23, nat: 'EST', arch: 'playmaker', number: 77 },
+    { name: 'Andrew Carr', pos: 'PF', ovr: 72, pot: 79, age: 22, nat: 'USA', arch: 'stretchBig', number: 7 },
+    { name: 'Koby Brea', pos: 'SG', ovr: 71, pot: 81, age: 22, nat: 'DOM', arch: 'sharpshooter', number: 4 },
+    { name: 'Brandon Garrison', pos: 'C', ovr: 71, pot: 82, age: 20, nat: 'USA', arch: 'rimProtector', number: 10 },
+    { name: 'Travis Perry', pos: 'PG', ovr: 70, pot: 83, age: 19, nat: 'USA', arch: 'sharpshooter', number: 11 },
   ],
   'Baylor': [
     { name: 'VJ Edgecombe', pos: 'SG', ovr: 76, pot: 93, age: 19, nat: 'BAH', arch: 'slasher', number: 24 },
     { name: 'Norchad Omier', pos: 'PF', ovr: 74, pot: 80, age: 23, nat: 'NCA', arch: 'postScorer', number: 15 },
     { name: 'Jeremy Roach', pos: 'PG', ovr: 73, pot: 78, age: 23, nat: 'USA', arch: 'playmaker', number: 3 },
     { name: 'Robert Wright III', pos: 'PG', ovr: 71, pot: 84, age: 19, nat: 'USA', arch: 'playmaker', number: 1 },
+    { name: 'Jalen Celestine', pos: 'SF', ovr: 71, pot: 78, age: 22, nat: 'CAN', arch: 'threeAndD', number: 10 },
+    { name: 'Langston Love', pos: 'SG', ovr: 71, pot: 80, age: 22, nat: 'USA', arch: 'sharpshooter', number: 13 },
+    { name: 'Josh Ojianwuna', pos: 'C', ovr: 71, pot: 80, age: 21, nat: 'NGA', arch: 'rimProtector', number: 33 },
+    { name: 'Jason Asemota', pos: 'SF', ovr: 70, pot: 83, age: 19, nat: 'USA', arch: 'sharpshooter', number: 0 },
   ],
   'Gonzaga': [
     { name: 'Ryan Nembhard', pos: 'PG', ovr: 74, pot: 80, age: 21, nat: 'CAN', arch: 'playmaker', number: 0 },
     { name: 'Graham Ike', pos: 'C', ovr: 74, pot: 80, age: 22, nat: 'USA', arch: 'postScorer', number: 13 },
     { name: 'Nolan Hickman', pos: 'SG', ovr: 72, pot: 78, age: 21, nat: 'USA', arch: 'sharpshooter', number: 11 },
     { name: 'Ben Gregg', pos: 'PF', ovr: 71, pot: 77, age: 22, nat: 'USA', arch: 'stretchBig', number: 33 },
+    { name: 'Michael Ajayi', pos: 'SF', ovr: 72, pot: 82, age: 21, nat: 'USA', arch: 'twoWay', number: 24 },
+    { name: 'Khalif Battle', pos: 'SG', ovr: 72, pot: 79, age: 23, nat: 'USA', arch: 'slasher', number: 99 },
+    { name: 'Braden Huff', pos: 'PF', ovr: 71, pot: 81, age: 21, nat: 'USA', arch: 'stretchBig', number: 34 },
+    { name: 'Dusty Stromer', pos: 'SF', ovr: 70, pot: 80, age: 20, nat: 'USA', arch: 'sharpshooter', number: 3 },
   ],
   'Alabama': [
     { name: 'Mark Sears', pos: 'PG', ovr: 76, pot: 81, age: 23, nat: 'USA', arch: 'allAround', number: 1 },
     { name: 'Grant Nelson', pos: 'PF', ovr: 73, pot: 80, age: 22, nat: 'USA', arch: 'stretchBig', number: 2 },
     { name: 'Clifford Omoruyi', pos: 'C', ovr: 73, pot: 80, age: 23, nat: 'NGA', arch: 'rimProtector', number: 11 },
     { name: 'Latrell Wrightsell Jr.', pos: 'SG', ovr: 71, pot: 78, age: 23, nat: 'USA', arch: 'sharpshooter', number: 12 },
+    { name: 'Aden Holloway', pos: 'PG', ovr: 71, pot: 83, age: 20, nat: 'USA', arch: 'sharpshooter', number: 3 },
+    { name: 'Jarin Stevenson', pos: 'PF', ovr: 71, pot: 85, age: 19, nat: 'USA', arch: 'stretchBig', number: 15 },
+    { name: 'Derrion Reid', pos: 'SF', ovr: 71, pot: 86, age: 19, nat: 'USA', arch: 'twoWay', number: 0 },
+    { name: 'Labaron Philon', pos: 'PG', ovr: 70, pot: 85, age: 19, nat: 'USA', arch: 'playmaker', number: 24 },
+    { name: 'Chris Youngblood', pos: 'SG', ovr: 71, pot: 78, age: 23, nat: 'USA', arch: 'sharpshooter', number: 8 },
   ],
   'Houston': [
     { name: 'LJ Cryer', pos: 'SG', ovr: 74, pot: 79, age: 23, nat: 'USA', arch: 'sharpshooter', number: 4 },
     { name: 'J\'Wan Roberts', pos: 'PF', ovr: 73, pot: 78, age: 23, nat: 'USA', arch: 'postScorer', number: 13 },
     { name: 'Emanuel Sharp', pos: 'SG', ovr: 72, pot: 80, age: 20, nat: 'USA', arch: 'allAround', number: 21 },
     { name: 'Milos Uzan', pos: 'PG', ovr: 72, pot: 80, age: 21, nat: 'USA', arch: 'playmaker', number: 7 },
+    { name: 'Ja\'Vier Francis', pos: 'C', ovr: 72, pot: 79, age: 21, nat: 'USA', arch: 'rimProtector', number: 5 },
+    { name: 'Joseph Tugler', pos: 'PF', ovr: 71, pot: 83, age: 20, nat: 'USA', arch: 'twoWay', number: 23 },
+    { name: 'Terrance Arceneaux', pos: 'SF', ovr: 71, pot: 81, age: 21, nat: 'USA', arch: 'twoWay', number: 12 },
+    { name: 'Mercy Miller', pos: 'SG', ovr: 70, pot: 83, age: 19, nat: 'USA', arch: 'allAround', number: 2 },
   ],
 };
 
-/** Real prospects of the incoming draft class (2025/2026). */
+/** Snapshot generado por scripts/build-real-rosters.mjs (Euroliga, EuroCup, ESPN, Wikipedia y overrides). */
+interface SnapshotClubPlayer {
+  name: string;
+  pos: Pos;
+  nat: string;
+  age: number | null;
+  heightCm: number | null;
+  number: number | null;
+  ovr: number;
+  pot: number;
+  arch: Archetype;
+}
+
+interface SnapshotClub {
+  league: string;
+  country: string;
+  tier: number;
+  comp: string;
+  source: string;
+  coach: string | null;
+  coachNat: string | null;
+  players: SnapshotClubPlayer[];
+}
+
+const SNAPSHOT = realRostersSnap as unknown as {
+  clubs: Record<string, SnapshotClub>;
+  nbaCoaches?: Record<string, string>;
+};
+
+const SNAPSHOT_CLUB_ROSTERS: Record<string, RealClubPlayer[]> = Object.fromEntries(
+  Object.entries(SNAPSHOT.clubs).map(([club, entry]) => [
+    club,
+    entry.players.map((p) => ({
+      name: p.name,
+      pos: p.pos,
+      ovr: p.ovr,
+      pot: p.pot,
+      age: Math.min(44, Math.max(16, p.age ?? 25)),
+      nat: p.nat,
+      arch: p.arch,
+      number: p.number ?? undefined,
+      heightCm: p.heightCm ?? undefined,
+    })),
+  ])
+);
+
+const mergeRosters = (
+  snapshotMap: Record<string, RealClubPlayer[]>,
+  manualMap: Record<string, RealClubPlayer[]>
+): Record<string, RealClubPlayer[]> => {
+  const result: Record<string, RealClubPlayer[]> = { ...snapshotMap };
+  for (const [club, manualPlayers] of Object.entries(manualMap)) {
+    const snapPlayers = result[club] ?? [];
+    const map = new Map<string, RealClubPlayer>();
+    for (const p of snapPlayers) map.set(p.name.toLowerCase(), p);
+    for (const p of manualPlayers) map.set(p.name.toLowerCase(), p);
+    result[club] = Array.from(map.values());
+  }
+  return result;
+};
+
+/** Rosters reales: manuales verificados combinados con snapshot (mínimo 10-16 jugadores por club). */
+export const CLUB_REAL_ROSTERS: Record<string, RealClubPlayer[]> = mergeRosters(
+  SNAPSHOT_CLUB_ROSTERS,
+  MANUAL_CLUB_ROSTERS
+);
+
+/** Entrenador real por club (nombre completo). Los verificados tienen prioridad. */
+export const CLUB_REAL_COACHES: Record<string, string> = {
+  ...Object.fromEntries(
+    Object.entries(SNAPSHOT.clubs)
+      .filter(([, entry]) => Boolean(entry.coach))
+      .map(([club, entry]) => [club, entry.coach as string])
+  ),
+  ...Object.fromEntries(
+    Object.entries(VERIFIED_CLUB_COACHES).map(([club, c]) => [club, c.name])
+  ),
+};
+
+/** Nacionalidad del entrenador real por club (ISO 3). */
+export const CLUB_REAL_COACH_NATS: Record<string, string> = Object.fromEntries(
+  Object.entries(SNAPSHOT.clubs)
+    .filter(([, entry]) => Boolean(entry.coachNat))
+    .map(([club, entry]) => [club, entry.coachNat as string])
+);
+
+/** Entrenadores reales de la NBA por abreviatura de equipo oficial (30 franquicias). */
+export const NBA_REAL_COACHES: Record<string, string> = Object.fromEntries(
+  Object.entries(VERIFIED_NBA_COACHES).map(([tid, c]) => [tid, c.name])
+);
+
+/** Real prospects of the incoming draft class (2025/2026) - 75 authentic prospects. */
 export const DRAFT_REAL_PROSPECTS: RealDraftProspect[] = [
   { name: 'Cooper Flagg', pos: 'SF', age: 19, nat: 'USA', ovr: 77, pot: 96, arch: 'twoWay', college: 'Duke' },
   { name: 'Dylan Harper', pos: 'PG', age: 19, nat: 'USA', ovr: 76, pot: 94, arch: 'playmaker', college: 'Rutgers' },
@@ -356,6 +550,51 @@ export const DRAFT_REAL_PROSPECTS: RealDraftProspect[] = [
   { name: 'Hunter Dickinson', pos: 'C', age: 23, nat: 'USA', ovr: 76, pot: 80, arch: 'postScorer', college: 'Kansas' },
   { name: 'RJ Davis', pos: 'PG', age: 23, nat: 'USA', ovr: 75, pot: 80, arch: 'allAround', college: 'North Carolina' },
   { name: 'Mark Sears', pos: 'PG', age: 23, nat: 'USA', ovr: 75, pot: 81, arch: 'playmaker', college: 'Alabama' },
+  { name: 'Cedric Coward', pos: 'SF', age: 21, nat: 'USA', ovr: 71, pot: 84, arch: 'twoWay', college: 'Washington State' },
+  { name: 'Walter Rouse', pos: 'PF', age: 21, nat: 'USA', ovr: 70, pot: 83, arch: 'postScorer', college: 'Stanford' },
+  { name: 'Donnie Freeman', pos: 'PF', age: 19, nat: 'USA', ovr: 71, pot: 84, arch: 'stretchBig', college: 'Syracuse' },
+  { name: 'Jarin Stevenson', pos: 'PF', age: 19, nat: 'USA', ovr: 70, pot: 83, arch: 'stretchBig', college: 'Alabama' },
+  { name: 'Nique Clifford', pos: 'SG', age: 22, nat: 'USA', ovr: 71, pot: 82, arch: 'threeAndD', college: 'Colorado State' },
+  { name: 'Kam Jones', pos: 'SG', age: 22, nat: 'USA', ovr: 72, pot: 82, arch: 'sharpshooter', college: 'Marquette' },
+  { name: 'Chaz Lanier', pos: 'SG', age: 22, nat: 'USA', ovr: 72, pot: 81, arch: 'sharpshooter', college: 'Tennessee' },
+  { name: 'Johni Broome', pos: 'C', age: 22, nat: 'USA', ovr: 73, pot: 81, arch: 'postScorer', college: 'Auburn' },
+  { name: 'Ryan Kalkbrenner', pos: 'C', age: 22, nat: 'USA', ovr: 72, pot: 81, arch: 'rimProtector', college: 'Creighton' },
+  { name: 'Payton Sandfort', pos: 'SF', age: 22, nat: 'USA', ovr: 71, pot: 80, arch: 'sharpshooter', college: 'Iowa' },
+  { name: 'Coleman Hawkins', pos: 'PF', age: 22, nat: 'USA', ovr: 71, pot: 80, arch: 'allAround', college: 'Kansas State' },
+  { name: 'Jaxson Robinson', pos: 'SG', age: 22, nat: 'USA', ovr: 71, pot: 80, arch: 'sharpshooter', college: 'Kentucky' },
+  { name: 'Sion James', pos: 'SG', age: 21, nat: 'USA', ovr: 70, pot: 79, arch: 'twoWay', college: 'Duke' },
+  { name: 'Tyrese Proctor', pos: 'PG', age: 20, nat: 'AUS', ovr: 71, pot: 80, arch: 'playmaker', college: 'Duke' },
+  { name: 'Great Osobor', pos: 'PF', age: 22, nat: 'GBR', ovr: 71, pot: 79, arch: 'postScorer', college: 'Washington' },
+  { name: 'Maxime Raynaud', pos: 'C', age: 21, nat: 'FRA', ovr: 71, pot: 80, arch: 'postScorer', college: 'Stanford' },
+  { name: 'Michael Ajayi', pos: 'SF', age: 21, nat: 'USA', ovr: 70, pot: 79, arch: 'twoWay', college: 'Gonzaga' },
+  { name: 'Koby Brea', pos: 'SG', age: 22, nat: 'DOM', ovr: 70, pot: 78, arch: 'sharpshooter', college: 'Kentucky' },
+  { name: 'Kadary Richmond', pos: 'PG', age: 23, nat: 'USA', ovr: 71, pot: 78, arch: 'playmaker', college: 'St. John\'s' },
+  { name: 'Kobe Johnson', pos: 'SG', age: 21, nat: 'USA', ovr: 70, pot: 78, arch: 'twoWay', college: 'UCLA' },
+  { name: 'Jamir Watkins', pos: 'SF', age: 22, nat: 'USA', ovr: 70, pot: 78, arch: 'slasher', college: 'Florida State' },
+  { name: 'Arthur Kaluma', pos: 'PF', age: 22, nat: 'UGA', ovr: 70, pot: 78, arch: 'twoWay', college: 'Texas' },
+  { name: 'Vladislav Goldin', pos: 'C', age: 23, nat: 'RUS', ovr: 71, pot: 77, arch: 'postScorer', college: 'Michigan' },
+  { name: 'Motiejus Krivas', pos: 'C', age: 20, nat: 'LTU', ovr: 69, pot: 78, arch: 'rimProtector', college: 'Arizona' },
+  { name: 'Michael Ruzic', pos: 'PF', age: 19, nat: 'CRO', ovr: 69, pot: 79, arch: 'stretchBig', college: 'Joventut Badalona' },
+  { name: 'Hansen Yang', pos: 'C', age: 19, nat: 'CHN', ovr: 69, pot: 78, arch: 'postScorer', college: 'Qingdao Eagles' },
+  { name: 'Bogoljub Markovic', pos: 'PF', age: 19, nat: 'SRB', ovr: 68, pot: 77, arch: 'stretchBig', college: 'Mega Basket' },
+  { name: 'Dame Sarr', pos: 'SG', age: 19, nat: 'ITA', ovr: 68, pot: 77, arch: 'threeAndD', college: 'FC Barcelona' },
+  { name: 'Mohamed Diawara', pos: 'SF', age: 19, nat: 'FRA', ovr: 68, pot: 76, arch: 'twoWay', college: 'Cholet' },
+  { name: 'Alex Condon', pos: 'C', age: 20, nat: 'AUS', ovr: 69, pot: 77, arch: 'rimProtector', college: 'Florida' },
+  { name: 'Miles Kelly', pos: 'SG', age: 21, nat: 'USA', ovr: 69, pot: 76, arch: 'sharpshooter', college: 'Auburn' },
+  { name: 'Matthew Murrell', pos: 'SG', age: 22, nat: 'USA', ovr: 69, pot: 76, arch: 'slasher', college: 'Ole Miss' },
+  { name: 'Clifford Omoruyi', pos: 'C', age: 23, nat: 'NGA', ovr: 70, pot: 76, arch: 'rimProtector', college: 'Alabama' },
+  { name: 'Norchad Omier', pos: 'PF', age: 23, nat: 'NCA', ovr: 70, pot: 76, arch: 'postScorer', college: 'Baylor' },
+  { name: 'Graham Ike', pos: 'C', age: 22, nat: 'USA', ovr: 70, pot: 76, arch: 'postScorer', college: 'Gonzaga' },
+  { name: 'Ryan Nembhard', pos: 'PG', age: 21, nat: 'CAN', ovr: 70, pot: 76, arch: 'playmaker', college: 'Gonzaga' },
+  { name: 'Elliot Cadeau', pos: 'PG', age: 20, nat: 'SWE', ovr: 69, pot: 77, arch: 'playmaker', college: 'North Carolina' },
+  { name: 'Caleb Foster', pos: 'PG', age: 19, nat: 'USA', ovr: 68, pot: 77, arch: 'allAround', college: 'Duke' },
+  { name: 'AJ Storr', pos: 'SF', age: 21, nat: 'USA', ovr: 69, pot: 76, arch: 'allAround', college: 'Kansas' },
+  { name: 'Dajuan Harris Jr.', pos: 'PG', age: 23, nat: 'USA', ovr: 70, pot: 75, arch: 'playmaker', college: 'Kansas' },
+  { name: 'Tarris Reed Jr.', pos: 'C', age: 21, nat: 'USA', ovr: 69, pot: 76, arch: 'rimProtector', college: 'UConn' },
+  { name: 'Jeremy Roach', pos: 'PG', age: 23, nat: 'USA', ovr: 70, pot: 75, arch: 'playmaker', college: 'Baylor' },
+  { name: 'Milan Momcilovic', pos: 'PF', age: 20, nat: 'USA', ovr: 68, pot: 76, arch: 'sharpshooter', college: 'Iowa State' },
+  { name: 'Adou Thiero', pos: 'SF', age: 20, nat: 'USA', ovr: 68, pot: 76, arch: 'twoWay', college: 'Arkansas' },
+  { name: 'Chibuzo Agbo', pos: 'SF', age: 23, nat: 'USA', ovr: 68, pot: 75, arch: 'threeAndD', college: 'USC' },
 ];
 
 /**
@@ -370,11 +609,22 @@ export function getClubRealRoster(clubName: string): RealClubPlayer[] | undefine
 }
 
 /**
+ * Returns the real head coach for a club if available, or undefined if procedural generation is needed.
+ */
+export function getClubRealCoach(clubName: string): string | undefined {
+  if (CLUB_REAL_COACHES[clubName]) return CLUB_REAL_COACHES[clubName];
+  const key = Object.keys(CLUB_REAL_COACHES).find(
+    (k) => clubName.toLowerCase().includes(k.toLowerCase()) || k.toLowerCase().includes(clubName.toLowerCase())
+  );
+  return key ? CLUB_REAL_COACHES[key] : undefined;
+}
+
+/**
  * Builds a SimPlayer for game simulation from a real player entry.
  */
 export function realToSimPlayer(real: RealClubPlayer, id: string, rng: Rng): SimPlayer {
   const [lo, hi] = HEIGHT_RANGE[real.pos];
-  const height = Math.round((lo + hi) / 2);
+  const height = real.heightCm ?? Math.round((lo + hi) / 2);
   const weight = Math.round(height * 0.52 - 6);
   const arch = real.arch ?? 'twoWay';
   const noise = () => rng.normal(0, 2);
@@ -449,12 +699,14 @@ export function getRealPlayersStats() {
   const clubCount = Object.keys(CLUB_REAL_ROSTERS).length;
   const clubPlayersCount = Object.values(CLUB_REAL_ROSTERS).reduce((sum, list) => sum + list.length, 0);
   const draftProspectsCount = DRAFT_REAL_PROSPECTS.length;
+  const clubCoachesCount = Object.keys(CLUB_REAL_COACHES).length;
 
   return {
     nbaTeams: nbaRosterSnap.teams.length,
     nbaPlayers: nbaCount,
     clubTeams: clubCount,
     clubPlayers: clubPlayersCount,
+    clubCoaches: clubCoachesCount,
     draftProspects: draftProspectsCount,
     totalRealPlayers: nbaCount + clubPlayersCount + draftProspectsCount,
   };

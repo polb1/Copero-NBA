@@ -1,0 +1,187 @@
+{
+  "version": 1,
+  "ncaa": {
+    "Duke": {
+      "id": "150",
+      "displayName": "Duke Blue Devils"
+    },
+    "North Carolina": {
+      "id": "153",
+      "displayName": "North Carolina Tar Heels"
+    },
+    "Kentucky": {
+      "id": "96",
+      "displayName": "Kentucky Wildcats"
+    },
+    "Kansas": {
+      "id": "2305",
+      "displayName": "Kansas Jayhawks"
+    },
+    "UConn": {
+      "id": "41",
+      "displayName": "UConn Huskies"
+    },
+    "Gonzaga": {
+      "id": "2250",
+      "displayName": "Gonzaga Bulldogs"
+    },
+    "Arizona": {
+      "id": "12",
+      "displayName": "Arizona Wildcats"
+    },
+    "UCLA": {
+      "id": "26",
+      "displayName": "UCLA Bruins"
+    },
+    "Houston": {
+      "id": "248",
+      "displayName": "Houston Cougars"
+    },
+    "Purdue": {
+      "id": "2509",
+      "displayName": "Purdue Boilermakers"
+    },
+    "Auburn": {
+      "id": "2",
+      "displayName": "Auburn Tigers"
+    },
+    "Florida": {
+      "id": "57",
+      "displayName": "Florida Gators"
+    },
+    "Baylor": {
+      "id": "239",
+      "displayName": "Baylor Bears"
+    },
+    "Villanova": {
+      "id": "222",
+      "displayName": "Villanova Wildcats"
+    },
+    "Michigan State": {
+      "id": "127",
+      "displayName": "Michigan State Spartans"
+    },
+    "Texas": {
+      "id": "251",
+      "displayName": "Texas Longhorns"
+    },
+    "Tennessee": {
+      "id": "2633",
+      "displayName": "Tennessee Volunteers"
+    },
+    "Alabama": {
+      "id": "333",
+      "displayName": "Alabama Crimson Tide"
+    },
+    "Indiana": {
+      "id": "84",
+      "displayName": "Indiana Hoosiers"
+    },
+    "Arkansas": {
+      "id": "8",
+      "displayName": "Arkansas Razorbacks"
+    },
+    "Creighton": {
+      "id": "156",
+      "displayName": "Creighton Bluejays"
+    },
+    "Marquette": {
+      "id": "269",
+      "displayName": "Marquette Golden Eagles"
+    },
+    "Iowa State": {
+      "id": "66",
+      "displayName": "Iowa State Cyclones"
+    },
+    "Illinois": {
+      "id": "356",
+      "displayName": "Illinois Fighting Illini"
+    },
+    "Texas Tech": {
+      "id": "2641",
+      "displayName": "Texas Tech Red Raiders"
+    },
+    "Michigan": {
+      "id": "130",
+      "displayName": "Michigan Wolverines"
+    },
+    "Ohio State": {
+      "id": "194",
+      "displayName": "Ohio State Buckeyes"
+    },
+    "Oregon": {
+      "id": "2483",
+      "displayName": "Oregon Ducks"
+    },
+    "USC": {
+      "id": "30",
+      "displayName": "USC Trojans"
+    },
+    "Virginia": {
+      "id": "258",
+      "displayName": "Virginia Cavaliers"
+    },
+    "Memphis": {
+      "id": "235",
+      "displayName": "Memphis Tigers"
+    },
+    "San Diego State": {
+      "id": "21",
+      "displayName": "San Diego State Aztecs"
+    },
+    "Dayton": {
+      "id": "2168",
+      "displayName": "Dayton Flyers"
+    },
+    "Wake Forest": {
+      "id": "154",
+      "displayName": "Wake Forest Demon Deacons"
+    },
+    "Xavier": {
+      "id": "2752",
+      "displayName": "Xavier Musketeers"
+    },
+    "BYU": {
+      "id": "252",
+      "displayName": "BYU Cougars"
+    },
+    "Utah State": {
+      "id": "328",
+      "displayName": "Utah State Aggies"
+    },
+    "VCU": {
+      "id": "2670",
+      "displayName": "VCU Rams"
+    },
+    "St. John's": {
+      "id": "2599",
+      "displayName": "St. John's Red Storm"
+    },
+    "Saint Mary's": {
+      "id": "2608",
+      "displayName": "Saint Mary's Gaels"
+    }
+  },
+  "nbl": {
+    "Perth Wildcats": {
+      "id": "7",
+      "displayName": "Perth Wildcats"
+    },
+    "Sydney Kings": {
+      "id": "9",
+      "displayName": "Sydney Kings"
+    },
+    "Melbourne United": {
+      "id": "5",
+      "displayName": "Melbourne United"
+    },
+    "New Zealand Breakers": {
+      "id": "6",
+      "displayName": "New Zealand Breakers"
+    }
+  },
+  "unmatched": {
+    "ncaa": [],
+    "nbl": []
+  }
+}
