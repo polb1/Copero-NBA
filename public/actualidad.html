@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Actualidad — NBA / EuroLeague / B.League | Copero NBA</title><meta name="description" content="Últimas noticias reales de la NBA, EuroLeague y B.League, curadas para jugadores."><style>
+:root{--bg:#0b0c0e;--panel:#15181d;--line:#262b34;--gold:#f5c451;--text:#f4f5f7;}
+*{box-sizing:border-box}
+body{font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0}
+.container{max-width:960px;margin:0 auto;padding:20px 16px}
+h1{font-family:'Barlow Condensed',sans-serif;letter-spacing:-.02em;font-size:clamp(1.6rem,5vw,2.2rem);font-weight:800;color:var(--gold);margin-bottom:4px}
+.p{color:#b0b6c1;font-size:.85rem;margin-bottom:1.2rem}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem;transition:.2s}
+.card:hover{border-color:#ff6b1a;transform:translateY(-3px)}
+.badge{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;padding:3px 8px;border-radius:999px;font-weight:700;color:#fff;display:inline-block;margin-bottom:6px}
+.badge-nba{background:#ff6b1a}
+.badge-eu{background:#b30000}
+.badge-b{background:#0022a7}
+h3{font-size:1.05rem;line-height:1.25;margin:0 0 .4rem}
+.meta{font-size:.78rem;color:#8b93a3}
+a{text-decoration:none;color:inherit}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Actualidad</h1>
+  <p class="p">NBA · EuroLeague · B.League — actualizado diariamente desde fuentes oficiales. Sin inventar.</p>
+  <div id="items" class="grid"></div>
+  <div style="margin-top:1.2rem;color:#8b93a3;font-size:.78rem">Fuente: datos agregados de NBA.com, EuroLeague Basket, B.League. <a href="/" style="color:var(--gold)">← Volver al simulador</a></div>
+</div>
+<script>
+fetch('data/actualidad.json')
+.then(r=>r.json())
+.then(data=>{
+  const grid=document.getElementById('items');
+  data.forEach(item=>{
+    const cat=item.category==='B.League'?'badge-b':(item.category==='EU'?'badge-eu':'badge-nba');
+    const el=document.createElement('a');
+    el.href=item.url;el.target='_blank';el.rel='noopener';el.className='card';
+    el.innerHTML=`<div><span class="badge ${cat}">${item.category}</span> <small style="color:#8b93a3">${item.date}</small></div><h3>${item.title}</h3><p class="meta">${item.summary}</p><div class="meta">${item.source}</div>`;
+    grid.appendChild(el);
+  });
+})
+.catch(()=>document.getElementById('items').innerHTML='<p>No se cargaron las noticias. Intenta recargar.</p>');
+</script>
+</body>
+</html>
