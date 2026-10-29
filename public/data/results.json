@@ -1,11 +1,98 @@
 [
- {"league":"NBA","date":"29 Oct","home":"Houston Rockets","away":"Milwaukee Bucks","hs":132,"as":100},
- {"league":"NBA","date":"29 Oct","home":"Golden State Warriors","away":"Minnesota Timberwolves","hs":119,"as":114},
- {"league":"NBA","date":"29 Oct","home":"Denver Nuggets","away":"New Orleans Pelicans","hs":104,"as":91},
- {"league":"NBA","date":"29 Oct","home":"San Antonio Spurs","away":"Utah Jazz","hs":117,"as":111},
- {"league":"EU","date":"28 Oct","home":"Real Madrid","away":"Olympiacos Piraeus","hs":93,"as":89},
- {"league":"EU","date":"28 Oct","home":"FC Barcelona","away":"Panathinaikos","hs":88,"as":82},
- {"league":"EU","date":"28 Oct","home":"Partizan","away":"Baskonia","hs":79,"as":74},
- {"league":"B.League","date":"27 Oct","home":"Chiba Jets","away":"Utsunomiya Brex","hs":84,"as":77},
- {"league":"B.League","date":"27 Oct","home":"Alvark Tokyo","away":"Ryukyu Golden Kings","hs":91,"as":85}
+ {
+  "date": "27 Oct",
+  "home": "Boston Celtics",
+  "away": "Brooklyn Nets",
+  "hs": 125,
+  "as": 124,
+  "league": "NBA"
+ },
+ {
+  "date": "27 Oct",
+  "home": "New York Knicks",
+  "away": "Detroit Pistons",
+  "hs": 111,
+  "as": 97,
+  "league": "NBA"
+ },
+ {
+  "date": "27 Oct",
+  "home": "San Antonio Spurs",
+  "away": "Sacramento Kings",
+  "hs": 130,
+  "as": 103,
+  "league": "NBA"
+ },
+ {
+  "date": "27 Oct",
+  "home": "Los Angeles Lakers",
+  "away": "Portland Trail Blazers",
+  "hs": 129,
+  "as": 136,
+  "league": "NBA"
+ },
+ {
+  "date": "28 Oct",
+  "home": "Atlanta Hawks",
+  "away": "Miami Heat",
+  "hs": 117,
+  "as": 129,
+  "league": "NBA"
+ },
+ {
+  "date": "28 Oct",
+  "home": "Cleveland Cavaliers",
+  "away": "Washington Wizards",
+  "hs": 121,
+  "as": 111,
+  "league": "NBA"
+ },
+ {
+  "date": "28 Oct",
+  "home": "Detroit Pistons",
+  "away": "Charlotte Hornets",
+  "hs": 97,
+  "as": 89,
+  "league": "NBA"
+ },
+ {
+  "date": "28 Oct",
+  "home": "Indiana Pacers",
+  "away": "Philadelphia 76ers",
+  "hs": 109,
+  "as": 114,
+  "league": "NBA"
+ },
+ {
+  "date": "28 Oct",
+  "home": "Toronto Raptors",
+  "away": "Orlando Magic",
+  "hs": 129,
+  "as": 99,
+  "league": "NBA"
+ },
+ {
+  "date": "28 Oct",
+  "home": "Chicago Bulls",
+  "away": "New York Knicks",
+  "hs": 127,
+  "as": 133,
+  "league": "NBA"
+ },
+ {
+  "date": "28 Oct",
+  "home": "Milwaukee Bucks",
+  "away": "Houston Rockets",
+  "hs": 100,
+  "as": 132,
+  "league": "NBA"
+ },
+ {
+  "date": "28 Oct",
+  "home": "Minnesota Timberwolves",
+  "away": "Golden State Warriors",
+  "hs": 114,
+  "as": 119,
+  "league": "NBA"
+ }
 ]
