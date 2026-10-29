@@ -1,5 +1,29 @@
 [
  {
+  "date": "Hoy",
+  "time": "19:05",
+  "home": "Shinshu Brave Warriors",
+  "away": "Kyoto Hannaryz",
+  "event": "",
+  "league": "B.League"
+ },
+ {
+  "date": "Hoy",
+  "time": "19:30",
+  "home": "Akita Northern Happinets",
+  "away": "Chiba Jets",
+  "event": "",
+  "league": "B.League"
+ },
+ {
+  "date": "Hoy",
+  "time": "19:35",
+  "home": "Nagoya Diamond Dolphins",
+  "away": "Shiga Lakes",
+  "event": "",
+  "league": "B.League"
+ },
+ {
   "date": "29 Oct",
   "time": "01:00",
   "home": "Atlanta Hawks",
@@ -52,30 +76,6 @@
   "time": "00:30",
   "home": "Philadelphia 76ers",
   "away": "New York Knicks",
-  "event": "NBA Cup - Group Play",
-  "league": "NBA"
- },
- {
-  "date": "30 Oct",
-  "time": "00:30",
-  "home": "Toronto Raptors",
-  "away": "Orlando Magic",
-  "event": "NBA Cup - Group Play",
-  "league": "NBA"
- },
- {
-  "date": "30 Oct",
-  "time": "01:00",
-  "home": "Miami Heat",
-  "away": "Indiana Pacers",
-  "event": "NBA Cup - Group Play",
-  "league": "NBA"
- },
- {
-  "date": "30 Oct",
-  "time": "01:00",
-  "home": "Dallas Mavericks",
-  "away": "Houston Rockets",
   "event": "NBA Cup - Group Play",
   "league": "NBA"
  }

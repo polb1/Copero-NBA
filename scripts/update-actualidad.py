@@ -118,6 +118,141 @@ def scoreboard(slug, days_back=2, days_ahead=2):
     return results, fixtures
 
 
+
+# ---------------------------------------------------------------- B.League
+BL_NAMES = {
+    "アルバルク東京": "Alvark Tokyo",
+    "千葉ジェッツ": "Chiba Jets",
+    "宇都宮ブレックス": "Utsunomiya Brex",
+    "琉球ゴールデンキングス": "Ryukyu Golden Kings",
+    "秋田ノーザンハピネッツ": "Akita Northern Happinets",
+    "群馬クレインサンダーズ": "Gunma Crane Thunders",
+    "サンロッカーズ渋谷": "Sunrockers Shibuya",
+    "川崎ブレイブサンダース": "Kawasaki Brave Thunders",
+    "横浜ビー・コルセアーズ": "Yokohama B-Corsairs",
+    "信州ブレイブウォリアーズ": "Shinshu Brave Warriors",
+    "三遠ネオフェニックス": "San-en NeoPhoenix",
+    "名古屋ダイヤモンドドルフィンズ": "Nagoya Diamond Dolphins",
+    "ファイティングイーグルス名古屋": "Fighting Eagles Nagoya",
+    "京都ハンナリーズ": "Kyoto Hannaryz",
+    "大阪エヴェッサ": "Osaka Evessa",
+    "島根スサノオマジック": "Shimane Susanoo Magic",
+    "広島ドラゴンフライズ": "Hiroshima Dragonflies",
+    "佐賀バルーナーズ": "Saga Ballooners",
+    "長崎ヴェルカ": "Nagasaki Velca",
+    "越谷アルファーズ": "Koshigaya Alphas",
+    "茨城ロボッツ": "Ibaraki Robots",
+    "滋賀レイクス": "Shiga Lakes",
+    "富山グラウジーズ": "Toyama Grouses",
+    "新潟アルビレックスBB": "Niigata Albirex BB",
+    "仙台89ERS": "Sendai 89ers",
+    "レバンガ北海道": "Levanga Hokkaido",
+    "サンロッカーズ": "Sunrockers Shibuya",
+    "横浜ビー・コルセアーズ": "Yokohama B-Corsairs",
+    "ファイティングイーグルス": "Fighting Eagles Nagoya",
+    "名古屋ダイヤモンドドルフィンズ": "Nagoya Diamond Dolphins",
+    "茨城ロボッツ": "Ibaraki Robots",
+    "富山グラウジーズ": "Toyama Grouses",
+    "新潟アルビレックス": "Niigata Albirex BB",
+    "滋賀レイクス": "Shiga Lakes",
+    "京都ハンナリーズ": "Kyoto Hannaryz",
+    "大阪エヴェッサ": "Osaka Evessa",
+    "島根スサノオマジック": "Shimane Susanoo Magic",
+    "広島ドラゴンフライズ": "Hiroshima Dragonflies",
+    "佐賀バルーナーズ": "Saga Ballooners",
+    "長崎ヴェルカ": "Nagasaki Velca",
+    "越谷アルファーズ": "Koshigaya Alphas",
+    "三遠ネオフェニックス": "San-en NeoPhoenix",
+    "群馬クレインサンダーズ": "Gunma Crane Thunders",
+    "川崎ブレイブサンダース": "Kawasaki Brave Thunders",
+    "秋田ノーザンハピネッツ": "Akita Northern Happinets",
+    "宇都宮ブレックス": "Utsunomiya Brex",
+    "千葉ジェッツ": "Chiba Jets",
+    "アルバルク東京": "Alvark Tokyo",
+    "琉球ゴールデンキングス": "Ryukyu Golden Kings",
+}
+BL_SHORT = {
+    "A東京": "Alvark Tokyo", "A千葉": "Chiba Jets", "千葉": "Chiba Jets",
+    "宇都宮": "Utsunomiya Brex", "琉球": "Ryukyu Golden Kings", "秋田": "Akita Northern Happinets",
+    "群馬": "Gunma Crane Thunders", "渋谷": "Sunrockers Shibuya", "川崎": "Kawasaki Brave Thunders",
+    "横浜": "Yokohama B-Corsairs", "信州": "Shinshu Brave Warriors", "三遠": "San-en NeoPhoenix",
+    "名古屋D": "Nagoya Diamond Dolphins", "FE名古屋": "Fighting Eagles Nagoya", "京都": "Kyoto Hannaryz",
+    "大阪": "Osaka Evessa", "島根": "Shimane Susanoo Magic", "広島": "Hiroshima Dragonflies",
+    "佐賀": "Saga Ballooners", "長崎": "Nagasaki Velca", "越谷": "Koshigaya Alphas",
+    "茨城": "Ibaraki Robots", "滋賀": "Shiga Lakes", "富山": "Toyama Grouses", "新潟": "Niigata Albirex BB",
+}
+
+
+def bl_en(name):
+    text = name.strip()
+    for jp, en in BL_NAMES.items():
+        if jp and jp in text:
+            return en
+    for jp, en in BL_SHORT.items():
+        if text.endswith(jp) or text.startswith(jp):
+            return en
+    return text
+
+
+def bleague_standings():
+    import re
+    req = urllib.request.Request("https://www.bleague.jp/standings/", headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=25) as r:
+        html = r.read().decode("utf-8", "replace")
+    table = re.search(r"<table[^>]*>(.*?)</table>", html, re.S)
+    if not table:
+        return None
+    rows = []
+    for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", table.group(1), re.S)[1:]:
+        cells = [re.sub(r"<[^>]+>", "", c).strip() for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", tr, re.S)]
+        if len(cells) < 5 or not cells[0].isdigit():
+            continue
+        try:
+            wins, losses = int(cells[2]), int(cells[3])
+        except ValueError:
+            continue
+        rows.append({
+            "rank": int(cells[0]),
+            "team": bl_en(cells[1]),
+            "w": wins,
+            "l": losses,
+            "form": "",
+            "conf": "B1",
+        })
+    return rows[:10] or None
+
+
+def bleague_today():
+    """Marcadores de hoy desde la web oficial (schedule + endpoint JSON)."""
+    import re
+    req = urllib.request.Request("https://www.bleague.jp/schedule/", headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=25) as r:
+        html = r.read().decode("utf-8", "replace")
+    games = []
+    for m in re.finditer(r'<li class="list-item" id="(\d+)">(.*?)</li>', html, re.S):
+        key, body = m.group(1), m.group(2)
+        teams = re.findall(r'class="team-name">([^<]+)<', body)
+        times = re.findall(r'(\d{1,2}:\d{2})', body)
+        if len(teams) >= 2:
+            games.append({"key": key, "home": bl_en(teams[0]), "away": bl_en(teams[1]), "time": times[0] if times else ""})
+    if not games:
+        return [], []
+    keys = ",".join(g["key"] for g in games)
+    data = get_json(f"https://www.bleague.jp/direct/bleague/get_today_games_score/?ScheduleKey={keys}")
+    if not isinstance(data, dict):
+        data = {}
+    results, fixtures = [], []
+    for g in games:
+        info = (data.get(g["key"]) or {}).get("Game") or {}
+        hs, as_ = info.get("HomeTeamScore"), info.get("AwayTeamScore")
+        ended = str(info.get("GameEndedFlg")) == "1"
+        if ended and str(hs).isdigit() and str(as_).isdigit():
+            results.append({"date": "Hoy", "home": g["home"], "away": g["away"], "hs": int(hs), "as": int(as_)})
+        else:
+            fixtures.append({"date": "Hoy", "time": g["time"], "home": g["home"], "away": g["away"], "event": ""})
+    return results, fixtures
+
+
 def main():
     changed = []
 
@@ -159,6 +294,32 @@ def main():
             changed.append(f"EU {len(res)} res / {len(fix)} próx")
     except Exception as e:
         print(f"[warn] EuroLeague: {e}")
+
+    # ---- B.League (web oficial)
+    try:
+        bl = bleague_standings()
+        if bl:
+            standings = read_json("standings.json", {})
+            standings["B.League"] = bl
+            write_json("standings.json", standings)
+            changed.append(f"B.League tabla {len(bl)}")
+    except Exception as e:
+        print(f"[warn] B.League tabla: {e}")
+
+    try:
+        res, fix = bleague_today()
+        if res:
+            old = read_json("results.json", [])
+            others = [r for r in old if r.get("league") != "B.League"]
+            write_json("results.json", ([dict(r, league="B.League") for r in res] + others)[:12])
+            changed.append(f"B.League {len(res)} resultados")
+        if fix:
+            oldf = read_json("fixtures.json", [])
+            othersf = [f for f in oldf if f.get("league") != "B.League"]
+            write_json("fixtures.json", ([dict(f, league="B.League") for f in fix] + othersf)[:10])
+            changed.append(f"B.League {len(fix)} próximos")
+    except Exception as e:
+        print(f"[warn] B.League partidos: {e}")
 
     stamp = datetime.now().strftime("%Y-%m-%d %H:%M")
     print(f"[{stamp}] " + ("Actualizado: " + " · ".join(changed) if changed else "Sin cambios; se conserva lo anterior."))
