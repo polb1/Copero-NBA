@@ -170,4 +170,11 @@ export const CLUB_LOGOS: Record<string, string> = {
   "Žalgiris Kaunas": '/crests/zalgiris-kaunas.png',
   "Zamalek": '/crests/zamalek.png',
   "Zenit San Petersburgo": '/crests/zenit-san-petersburgo.png',
+  "LDLC ASVEL": "/crests/ldlc-asvel.png",
+  "Maccabi Tel Aviv": "/crests/maccabi-tel-aviv.png",
+  "Hapoel Tel Aviv": "/crests/hapoel-tel-aviv.png",
+  "VEF Rīga": "/crests/vef-riga.png",
+  "Obras Sanitarias": "/crests/obras-sanitarias.png",
+  "Chiba Jets": "/crests/chiba-jets.png",
+  "Illinois": "/crests/illinois.png",
 };

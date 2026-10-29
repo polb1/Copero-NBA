@@ -185,34 +185,54 @@
 .power-game.in .power-msg { color: #052e16; }
 .power-game.out .power-msg { color: #fff; }
 
-/* ---------- Drag shot (slingshot) minigame ---------- */
-.drag-game { margin-top: 14px; background: var(--panel); border: 1px solid var(--line-2); border-radius: 14px; padding: 14px; }
-.drag-arena { position: relative; display: block; width: 100%; height: clamp(200px, 36vh, 270px); margin: 8px 0 10px; border: 1px solid var(--line-2); border-radius: 12px; background: radial-gradient(120% 90% at 72% 16%, #3a2b1d, #1c1712 58%, #121010 100%); overflow: hidden; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+/* ---------- Drag shot (2.5D) minigame ---------- */
+.drag-game { margin-top: 14px; background: linear-gradient(180deg, #14161b, #0e1013); border: 1px solid var(--line-2); border-radius: 16px; padding: 14px; box-shadow: 0 18px 40px -28px #000; }
+.drag-arena {
+  position: relative; display: block; width: 100%; aspect-ratio: 16 / 10; min-height: 190px; margin: 10px 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; overflow: hidden; cursor: grab;
+  touch-action: none; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
+  background: radial-gradient(120% 100% at 60% 10%, #3c2a1a, #241a12 55%, #150f0b 100%);
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.55);
+}
 .drag-arena:active { cursor: grabbing; }
 .drag-court { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.drag-court-floor { fill: rgba(255, 255, 255, 0.015); }
-.drag-court-paint { fill: rgba(245, 196, 81, 0.10); stroke: rgba(245, 196, 81, 0.28); stroke-width: 1; }
-.drag-court-line { fill: none; stroke: rgba(255, 255, 255, 0.20); stroke-width: 1; }
-.drag-target { position: absolute; width: 58px; height: 58px; transform: translate(-50%, -50%); border: 1px dashed rgba(245, 196, 81, 0.55); border-radius: 50%; pointer-events: none; }
-.drag-target.live { animation: drag-target-pulse 2.2s ease-in-out infinite; }
-@keyframes drag-target-pulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.55; }
-  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.9; }
+.drag-line { fill: none; stroke: rgba(255, 255, 255, 0.22); stroke-width: 1.6; }
+.drag-paint { fill: rgba(245, 196, 81, 0.12); stroke: rgba(245, 196, 81, 0.35); stroke-width: 1.4; }
+.drag-rim { stroke: #ff6f1f; stroke-width: 6; stroke-linecap: round; filter: drop-shadow(0 0 6px rgba(255, 111, 31, 0.65)); }
+.drag-board { stroke: rgba(255, 255, 255, 0.62); stroke-width: 5; stroke-linecap: round; }
+.drag-pole { stroke: rgba(255, 255, 255, 0.34); stroke-width: 3; }
+.drag-wood line { stroke: rgba(255, 255, 255, 0.045); stroke-width: 1.4; }
+.drag-net { fill: none; stroke: rgba(255, 255, 255, 0.6); stroke-width: 1.8; stroke-dasharray: 2.4 2.4; }
+.drag-trail { fill: none; stroke: rgba(255, 173, 112, 0.4); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.drag-pull { fill: none; stroke: rgba(245, 196, 81, 0.75); stroke-width: 2; stroke-dasharray: 5 4; stroke-linecap: round; }
+.drag-shadow { position: absolute; width: 26px; height: 9px; transform: translate(-50%, -50%); border-radius: 50%; background: rgba(0, 0, 0, 0.5); filter: blur(2px); pointer-events: none; }
+.drag-player { position: absolute; width: 16px; height: 26px; transform: translate(-50%, -100%); pointer-events: none; }
+.drag-player::before { content: ""; position: absolute; left: 50%; top: 0; width: 9px; height: 9px; transform: translateX(-50%); border-radius: 50%; background: #e8edf5; box-shadow: 0 0 0 2px rgba(0,0,0,.35); }
+.drag-player::after { content: ""; position: absolute; left: 50%; top: 8px; bottom: 0; width: 12px; transform: translateX(-50%); border-radius: 6px 6px 3px 3px; background: linear-gradient(180deg, #f5c451, #c2410c); }
+.drag-ball {
+  position: absolute; width: 19px; height: 19px; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle at 34% 28%, #ffc38f, #e2620f 62%, #8f3405 100%);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.55), inset -2px -3px 6px rgba(0, 0, 0, 0.35);
+  will-change: left, top;
 }
-.drag-rim { position: absolute; width: 46px; height: 14px; transform: translate(-50%, -50%); border: 3px solid #ff6b1a; border-radius: 50%; box-shadow: 0 0 14px rgba(255, 107, 26, 0.5); }
-.drag-board { position: absolute; width: 18%; min-width: 46px; max-width: 92px; height: 24%; min-height: 30px; transform: translate(-50%, -50%); border: 2px solid rgba(255, 255, 255, 0.58); background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04)); border-radius: 3px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45); }
-.drag-board::after { content: ""; position: absolute; left: 50%; top: 54%; width: 40%; height: 34%; transform: translate(-50%, -50%); border: 1px solid rgba(255, 255, 255, 0.55); }
-.drag-net { position: absolute; width: 30px; height: 22px; transform: translate(-50%, 0); transform-origin: top center; border-left: 2px solid rgba(255, 255, 255, 0.6); border-right: 2px solid rgba(255, 255, 255, 0.6); border-bottom: 2px solid rgba(255, 255, 255, 0.6); background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.22) 0 1px, transparent 1px 7px); clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%); }
-.drag-ball { position: absolute; width: 28px; height: 28px; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffb37a, #c2410c 70%); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); pointer-events: none; }
-.drag-ball::before { content: ""; position: absolute; left: 50%; top: 6%; bottom: 6%; width: 1px; transform: translateX(-50%); background: rgba(70, 25, 8, 0.55); }
-.drag-ball::after { content: ""; position: absolute; top: 50%; left: 6%; right: 6%; height: 1px; transform: translateY(-50%); background: rgba(70, 25, 8, 0.55); }
-.drag-power { height: 10px; margin-top: 8px; border-radius: 999px; background: #1d2026; border: 1px solid var(--line-2); overflow: hidden; }
-.drag-power span { display: block; height: 100%; background: linear-gradient(90deg, #22c55e, #eab308, #ef4444); transition: width 0.06s linear; }
-.drag-meta { margin-top: 6px; }
-.drag-hint { position: absolute; left: 12px; right: 12px; bottom: 10px; width: fit-content; max-width: calc(100% - 24px); margin-inline: auto; padding: 6px 12px; border-radius: 999px; background: rgba(10, 12, 15, 0.86); border: 1px solid rgba(245, 196, 81, 0.45); color: var(--gold); font-size: 0.8rem; font-weight: 800; text-align: center; pointer-events: none; animation: pop 0.25s var(--ease) both; }
-.drag-msg { position: absolute; right: 10px; top: 8px; font-weight: 900; font-size: 1.3rem; letter-spacing: 0.04em; animation: pop 0.35s var(--ease) both; }
-.drag-game.in .drag-msg { color: var(--good); }
-.drag-game.out .drag-msg { color: var(--bad); }
+.drag-ball::before { content: ""; position: absolute; left: 50%; top: 4%; bottom: 4%; width: 1.5px; transform: translateX(-50%); background: rgba(70, 25, 8, 0.6); }
+.drag-ball::after { content: ""; position: absolute; top: 50%; left: 4%; right: 4%; height: 1.5px; transform: translateY(-50%); background: rgba(70, 25, 8, 0.6); }
+.drag-ball.flying { animation: drag-spin 0.5s linear infinite; }
+@keyframes drag-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+.drag-ghost { position: absolute; width: 22px; height: 22px; transform: translate(-50%, -50%); border: 2px dashed rgba(245, 196, 81, 0.85); border-radius: 50%; pointer-events: none; }
+.drag-power { height: 9px; margin-top: 6px; border-radius: 999px; background: #1b1e24; border: 1px solid var(--line-2); overflow: hidden; }
+.drag-power span { display: block; height: 100%; background: linear-gradient(90deg, #3ddc84, #f5c451, #ff5252); transition: width 0.05s linear; }
+.drag-meta { margin-top: 8px; }
+.drag-hint { position: absolute; left: 12px; right: 12px; bottom: 10px; width: fit-content; max-width: calc(100% - 24px); margin-inline: auto; padding: 6px 12px; border-radius: 999px; background: rgba(10, 12, 15, 0.88); border: 1px solid rgba(245, 196, 81, 0.45); color: var(--gold); font-size: 0.78rem; font-weight: 800; text-align: center; pointer-events: none; animation: pop 0.25s var(--ease) both; }
+.drag-msg { position: absolute; left: 50%; top: 42%; transform: translate(-50%, -50%); font-weight: 900; font-size: clamp(1.5rem, 5vw, 2rem); letter-spacing: 0.06em; text-shadow: 0 4px 18px rgba(0, 0, 0, 0.8); animation: pop 0.3s var(--ease) both; pointer-events: none; }
+.drag-msg.in { color: #3ddc84; }
+.drag-msg.out { color: #ff6b6b; }
+.drag-game.in .drag-arena { box-shadow: inset 0 0 60px rgba(61, 220, 132, 0.18); }
+.drag-game.out .drag-arena { box-shadow: inset 0 0 60px rgba(255, 107, 107, 0.14); }
+@media (max-width: 520px) {
+  .drag-arena { aspect-ratio: 4 / 3; }
+  .drag-ball { width: 20px; height: 20px; }
+}
 .target-dot { position: absolute; transform: translate(-50%, -50%); border-radius: 50%; border: 2px solid rgba(255,255,255,.5); padding: 0; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 .target-dot.active { background: radial-gradient(circle, rgba(52,211,153,.9), rgba(16,185,129,.35)); border-color: var(--good); box-shadow: 0 0 20px rgba(52,211,153,.6); cursor: pointer; }
 .target-dot.decoy { background: rgba(100,116,139,.28); border-color: rgba(148,163,184,.45); pointer-events: none; }

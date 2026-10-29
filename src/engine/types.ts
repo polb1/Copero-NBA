@@ -482,6 +482,8 @@ export interface Career {
   achievements: string[];
   predraft: PreDraft | null;
   satellite: Satellite | null;
+  /** Campeón de la liga no NBA en la que se jugó (temporada, liga y club). */
+  satChampion?: { season: number; comp: Competition; league: string; team: string };
   satStats: StatLine; // current satellite season stats (G League / college / Europe)
   assignment: 'NBA' | 'GLG';
   twoWayNbaGames: number;

@@ -9,7 +9,7 @@ import { applyInjuryAftermath, injuryRisk, rollInjury } from './injuries';
 import { trainWeek } from './progression';
 import { pickEvent, instantiate, absDay, markEventSeen } from './events';
 import { playSatelliteGame, SATELLITES } from './satellite';
-import { findClub, opponentsFor } from '../data/clubs';
+import { EURO_CLUBS, findClub, G_LEAGUE, NCAA_PROGRAMS, opponentsFor } from '../data/clubs';
 import { addBox, averages, f1, fpct, doubleCount } from './stats';
 import { gameScore } from './gamesim';
 import { goalDef, updateGoalProgress } from './goals';
@@ -391,6 +391,32 @@ export function endSeason(c: Career) {
       c.reputation = clamp(c.reputation + (a === 'euroMvp' ? 5 : 4), 0, 100);
       addNews(c, 'award', a === 'euroMvp' ? `MVP de ${s.league ?? 'la liga'}` : `¡Campeones de ${s.league ?? 'liga'}!`, a === 'euroMvp' ? `${fullName(u)} es elegido MVP de la temporada con ${s.teamName}.` : `${s.teamName} gana el título con ${fullName(u)}.`, 'good');
       if (!myAwards.includes(a)) myAwards.push(a);
+    }
+  }
+  // ---- Campeón de la liga jugada cuando NO es la NBA (B.League, ACB, EuroLeague…)
+  if (c.satellite && c.satStats.gp > 0) {
+    const sat = c.satellite;
+    const comp = sat.comp;
+    const leagueName = sat.league
+      ?? (comp === 'NBA' ? 'NBA' : SATELLITES[comp as 'NCAA' | 'EUR' | 'GLG'].name);
+    const pool: string[] = comp === 'GLG'
+      ? Object.keys(G_LEAGUE)
+      : (comp === 'NCAA' ? NCAA_PROGRAMS : EURO_CLUBS)
+          .filter((club) => club.league === leagueName)
+          .map((club) => club.name);
+    const candidates = pool.length ? pool : (comp === 'GLG' ? [] : SATELLITES[comp as 'NCAA' | 'EUR'].opponents);
+    let champion = sat.teamName;
+    if (!myAwards.includes('euroChampion') && candidates.length) {
+      const rngC = rngFor(c.seed, 'sat-champion', L.season, comp, leagueName);
+      // Los clubes grandes ganan más: peso por nivel.
+      champion = rngC.weighted(candidates, (name) => {
+        const tier = findClub(name)?.tier ?? 3;
+        return tier === 1 ? 6 : tier === 2 ? 3 : 1;
+      });
+    }
+    c.satChampion = { season: L.season, comp, league: leagueName, team: champion };
+    if (champion !== sat.teamName) {
+      addNews(c, 'league', `${champion}, campeón de ${leagueName}`, `Título para ${champion} en la temporada ${seasonLabel(L.season)}. ${sat.teamName} no pudo levantar el trofeo.`, 'neutral');
     }
   }
   c.seasons.push(...records);

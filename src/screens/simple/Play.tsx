@@ -308,6 +308,18 @@ function CountUp({ value }: { value: number }) {
  * After a summer with a national-team medal, the medal gets its own moment. Each shows once.
  */
 function ChampionLine({ c, season, size = 16, className = '' }: { c: Career; season: number; size?: number; className?: string }) {
+  // ¿Esa temporada se jugó fuera de la NBA? Entonces el título que importa es el de esa liga.
+  const abroad = c.satChampion && c.satChampion.season === season ? c.satChampion : null;
+  if (abroad) {
+    return (
+      <div className={`champ-line ${className}`.trim()}>
+        <span aria-hidden="true" style={{ fontSize: size }}>🏆</span>
+        <b>{`Campeón de ${abroad.league}:`}</b>
+        <span className="champ-team">{abroad.team}</span>
+        <span className="champ-season">{` · ${seasonLabel(season)}`}</span>
+      </div>
+    );
+  }
   const champ = championOf(c.league, season);
   if (!champ || champ.season !== season) return null;
   return (
