@@ -91,6 +91,22 @@ table.tbl tr:hover td{background:rgba(255,255,255,.025)}
 .stat .k{font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);font-weight:700}
 .stat .v{font-family:'Barlow Condensed',sans-serif;font-size:1.7rem;font-weight:800;color:var(--gold);line-height:1.1;margin:5px 0 2px}
 .stat .n{font-size:.82rem;color:var(--t2)}
+/* ---- partidos ---- */
+.fxgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;padding:14px}
+.fxcard{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 13px;display:flex;flex-direction:column;gap:9px;transition:.18s}
+.fxcard:hover{border-color:#3a3f4b;transform:translateY(-2px)}
+.fx-top{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--t3)}
+.fx-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fx-team{display:flex;align-items:center;gap:8px;font-size:.92rem;font-weight:600;min-width:0}
+.fx-team span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.av{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:.6rem;font-weight:800;color:#fff;flex:0 0 26px}
+.fx-vs{font-size:.68rem;color:var(--t3);font-weight:800;letter-spacing:.08em}
+.chip{font-size:.62rem;font-weight:800;padding:2px 7px;border-radius:5px}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.lgbox{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:11px 12px;transition:.15s;cursor:pointer}
+.lgbox:hover{border-color:var(--gold);transform:translateY(-2px)}
+.lgbox b{display:block;font-size:.86rem;margin-bottom:2px}
+.lgbox span{font-size:.72rem;color:var(--t3)}
 footer{margin-top:38px;border-top:1px solid var(--line);padding:24px 0 40px;color:var(--t3);font-size:.78rem}
 footer .cols2{display:flex;gap:26px;flex-wrap:wrap;justify-content:space-between}
 footer b{color:var(--t2)}footer a{color:var(--gold)}
@@ -136,6 +152,11 @@ footer b{color:var(--t2)}footer a{color:var(--gold)}
     </div>
   </section>
 
+  <section class="block" id="ligas">
+    <div class="head"><h3>Todas las ligas</h3><div class="line"></div><span class="more" id="leagues-count"></span></div>
+    <div class="lgrid" id="leagues-grid"></div>
+  </section>
+
   <section class="block" id="calendario">
     <div class="head"><h3>Próximos partidos</h3><div class="line"></div></div>
     <div class="panelbox" id="fixtures"></div>
@@ -163,13 +184,19 @@ const CREST = {
 const ABBR = {'Oklahoma City Thunder':'OKC','Boston Celtics':'BOS','Denver Nuggets':'DEN','Houston Rockets':'HOU','Los Angeles Lakers':'LAL','New York Knicks':'NYK','Golden State Warriors':'GSW','Minnesota Timberwolves':'MIN','San Antonio Spurs':'SAS','Philadelphia 76ers':'PHI'};
 const lg = k => L[k] || ['NBA','t-nba'];
 const teamCell = n => CREST[n] ? `<img src="${CREST[n]}" alt="">` : `<span class="badge-init">${ABBR[n]||n.slice(0,3).toUpperCase()}</span>`;
+const COLORS=['#c8102e','#1d4ed8','#0f766e','#b45309','#6d28d9','#be123c','#0369a1','#4d7c0f','#a16207','#7c3aed'];
+const AB = {'Atlanta Hawks':'ATL','Boston Celtics':'BOS','Brooklyn Nets':'BKN','Charlotte Hornets':'CHA','Chicago Bulls':'CHI','Cleveland Cavaliers':'CLE','Dallas Mavericks':'DAL','Denver Nuggets':'DEN','Detroit Pistons':'DET','Golden State Warriors':'GSW','Houston Rockets':'HOU','Indiana Pacers':'IND','LA Clippers':'LAC','Los Angeles Clippers':'LAC','Los Angeles Lakers':'LAL','Memphis Grizzlies':'MEM','Miami Heat':'MIA','Milwaukee Bucks':'MIL','Minnesota Timberwolves':'MIN','New Orleans Pelicans':'NOP','New York Knicks':'NYK','Oklahoma City Thunder':'OKC','Orlando Magic':'ORL','Philadelphia 76ers':'PHI','Phoenix Suns':'PHX','Portland Trail Blazers':'POR','Sacramento Kings':'SAC','San Antonio Spurs':'SAS','Toronto Raptors':'TOR','Utah Jazz':'UTA','Washington Wizards':'WAS','Real Madrid':'RMB','FC Barcelona':'BAR','Baskonia':'BKN','Olympiacos Piraeus':'OLY','Panathinaikos':'PAO','Partizan':'PAR','AS Monaco':'MON','Fenerbahçe':'FEN','Alvark Tokyo':'ALV','Chiba Jets':'CHB','Utsunomiya Brex':'UTS','Ryukyu Golden Kings':'RYU'};
+const abbr = n => AB[n] || (n||'').replace(/[^A-Za-z0-9 ]/g,'').split(' ').filter(Boolean).map(w=>w[0]).join('').slice(0,3).toUpperCase() || '??';
+const color = n => { let h=0; for(const ch of (n||'')) h=(h*31+ch.charCodeAt(0))>>>0; return COLORS[h%COLORS.length]; };
+const avatar = n => `<span class="av" style="background:${color(n)}">${abbr(n)}</span>`;
 const pct = (w,l) => (w+l) ? (w/(w+l)).toFixed(3).replace('0.','.').replace('1.000','1.000') : '—';
 async function load(u,f){try{const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw 0;return await r.json()}catch{return f}}
 
 (async()=>{
- const [news,standings,fixtures,results,stats] = await Promise.all([
+ const [news,standings,fixtures,results,stats,leagues] = await Promise.all([
   load('./data/actualidad.json',[]), load('./data/standings.json',{}),
-  load('./data/fixtures.json',[]), load('./data/results.json',[]), load('./data/stats.json',[])
+  load('./data/fixtures.json',[]), load('./data/results.json',[]), load('./data/stats.json',[]),
+  load('./data/leagues.json',{})
  ]);
 
  if(news.length){
@@ -193,18 +220,36 @@ async function load(u,f){try{const r=await fetch(u,{cache:'no-store'});if(!r.ok)
   </a>`).join('');
  document.getElementById('news-count').textContent = news.length+' artículos';
 
- const leagues=Object.keys(standings), tabs=document.getElementById('tabs-standings'), body=document.getElementById('standings-body');
+ const liveNames=Object.keys(standings);
+ const allNames=[...new Set([...liveNames, ...Object.keys(leagues)])].sort((a,b)=>{
+   const ia=liveNames.indexOf(a), ib=liveNames.indexOf(b);
+   if(ia>=0&&ib>=0) return ia-ib;
+   if(ia>=0) return -1; if(ib>=0) return 1;
+   return a.localeCompare(b);
+ });
+ const tabs=document.getElementById('tabs-standings'), body=document.getElementById('standings-body');
  const draw=(name)=>{
-  body.innerHTML=(standings[name]||[]).map(r=>`
-   <tr><td class="rk ${r.rank<=4?'top':''}">${r.rank}</td>
-   <td><span class="tm">${teamCell(r.team)}${r.team}</span></td>
-   <td class="mono">${r.w+r.l}</td><td class="mono">${r.w}</td><td class="mono">${r.l}</td>
-   <td class="mono">${pct(r.w,r.l)}</td>
-   <td><span class="form">${(r.form||'').split('').map(c=>`<i class="${c==='W'?'w':'l'}">${c}</i>`).join('')}</span></td></tr>`).join('');
+  const rows=standings[name];
+  if(rows && rows.length){
+    body.innerHTML=rows.map(r=>`
+     <tr><td class="rk ${r.rank<=4?'top':''}">${r.rank}</td>
+     <td><span class="tm">${CREST[r.team]?`<img src="${CREST[r.team]}" alt="">`:avatar(r.team)}${r.team}</span></td>
+     <td class="mono">${r.w+r.l}</td><td class="mono">${r.w}</td><td class="mono">${r.l}</td>
+     <td class="mono">${pct(r.w,r.l)}</td>
+     <td><span class="form">${(r.form||'').split('').map(c=>`<i class="${c==='W'?'w':'l'}">${c}</i>`).join('')}</span></td></tr>`).join('');
+    return;
+  }
+  const clubs=(leagues[name]||[]);
+  body.innerHTML = `<tr><td colspan="7" style="padding:12px 10px;color:var(--t3);font-size:.78rem">
+     ${clubs.length} clubes reales · sin resultados en vivo disponibles todavía para esta liga
+   </td></tr>` + clubs.map((c,i)=>`
+   <tr><td class="rk">${i+1}</td>
+   <td><span class="tm">${CREST[c.name]?`<img src="${CREST[c.name]}" alt="">`:avatar(c.name)}${c.name}</span></td>
+   <td class="mono" colspan="5" style="color:var(--t3)">Tier ${c.tier}</td></tr>`).join('');
  };
- tabs.innerHTML=leagues.map((n,i)=>`<button class="tab ${i?'':'on'}" data-lg="${n}">${n}</button>`).join('');
+ tabs.innerHTML=allNames.map((n,i)=>`<button class="tab ${i?'':'on'}" data-lg="${n}">${n}</button>`).join('');
  tabs.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{tabs.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');draw(b.dataset.lg)});
- if(leagues.length) draw(leagues[0]);
+ if(allNames.length) draw(allNames[0]);
 
  document.getElementById('results').innerHTML = results.map(r=>{
   const [lbl,cls]=lg(r.league), hw=r.hs>r.as, aw=r.as>r.hs;
@@ -213,12 +258,27 @@ async function load(u,f){try{const r=await fetch(u,{cache:'no-store'});if(!r.ok)
     <span class="row ${aw?'win':''}"><span>${r.away}</span><span>${r.as}</span></span></span></div>`;
  }).join('') || '<div class="res">Sin resultados.</div>';
 
- document.getElementById('fixtures').innerHTML = fixtures.map(f=>{
-  const [lbl]=lg(f.league);
-  return `<div class="fx"><span class="when">${f.date}<br>${f.time||''}</span>
-   <span class="match">${f.home} <span style="color:var(--t3)">vs</span> ${f.away}
-   <span class="evt">${f.event||f.note||''}${(f.event||f.note||'').includes(lbl) ? '' : ' · ' + lbl}</span></span></div>`;
- }).join('') || '<div class="fx">Sin partidos.</div>';
+ document.getElementById('fixtures').innerHTML = fixtures.length ? '<div class="fxgrid">' + fixtures.map(f=>{
+  const [lbl,cls]=lg(f.league);
+  return `<div class="fxcard">
+    <div class="fx-top"><span class="chip ${cls}">${lbl}</span><span>${f.date}${f.time?` · ${f.time}`:''}</span></div>
+    <div class="fx-row"><span class="fx-team">${avatar(f.home)}<span>${f.home}</span></span></div>
+    <div class="fx-vs">VS</div>
+    <div class="fx-row"><span class="fx-team">${avatar(f.away)}<span>${f.away}</span></span></div>
+    ${f.event?`<div class="fx-top" style="color:var(--t3)"><span>${f.event}</span></div>`:''}
+  </div>`;
+ }).join('') + '</div>' : '<div class="fx">Sin partidos programados.</div>';
+
+ const lgrid=document.getElementById('leagues-grid');
+ document.getElementById('leagues-count').textContent=allNames.length+' ligas';
+ lgrid.innerHTML = allNames.map(n=>{
+   const clubs=(leagues[n]||[]).length;
+   return `<div class="lgbox" data-go="${n}"><b>${n}</b><span>${clubs?(clubs===1?'1 club':clubs+' clubes'):'en vivo'}</span></div>`;
+ }).join('');
+ lgrid.querySelectorAll('.lgbox').forEach(b=>b.onclick=()=>{
+   const t=[...tabs.querySelectorAll('.tab')].find(x=>x.dataset.lg===b.dataset.go);
+   if(t){t.click();document.getElementById('clasificaciones').scrollIntoView({behavior:'smooth'});}
+ });
 
  document.getElementById('stats').innerHTML = stats.map(s=>`
   <div class="stat"><div class="k">${s.league} · ${s.stat}</div><div class="v">${s.value}</div>
