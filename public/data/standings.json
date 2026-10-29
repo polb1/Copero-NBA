@@ -1,16 +1,30 @@
-{"NBA (2026)": [{"rank":1,"team":"Los Angeles Lakers","league":"NBA","w":12,"l":3,"note":"Real roster 2026"},
-{"rank":2,"team":"Boston Celtics","league":"NBA","w":11,"l":4,"note":"Top seed"},
-{"rank":3,"team":"Denver Nuggets","league":"NBA","w":10,"l":5,"note":"Jokić 200 triple-doubles"},
-{"rank":4,"team":"New York Knicks","league":"NBA","w":9,"l":6,"note":"Knicks vs 76ers"},
-{"rank":5,"team":"Oklahoma City Thunder","league":"NBA","w":9,"l":7,"note":"Wembanyama OT win"},
-{"rank":6,"team":"Houston Rockets","league":"NBA","w":8,"l":7,"note":"5-0 start"}],
-"EuroLeague (2026)": [{"rank":1,"team":"Real Madrid","league":"EuroLeague","w":28,"l":8,"note":"Tavares MVP / SuperCup"},
-{"rank":2,"team":"Olympiacos Piraeus","league":"EuroLeague","w":26,"l":10,"note":"Real roster EU"},
-{"rank":3,"team":"FC Barcelona","league":"EuroLeague","w":24,"l":12,"note":"Campazzo / Abalde"},
-{"rank":4,"team":"Panathinaikos","league":"EuroLeague","w":23,"l":13,"note":"Real roster EU"},
-{"rank":5,"team":"Partizan","league":"EuroLeague (Liga ABA)","w":22,"l":14,"note":"Real roster EU"},
-{"rank":6,"team":"Baskonia","league":"EuroLeague (Liga ACB)","w":21,"l":15,"note":"Real roster EU"}],
-"B.League (Japón)": [{"rank":1,"team":"Alvark Tokyo","league":"B.League","w":18,"l":8,"note":"Real club (tier 1)"},
-{"rank":2,"team":"Chiba Jets","league":"B.League","w":16,"l":10,"note":"Real club; escudo actualizado"},
-{"rank":3,"team":"Utsunomiya Brex","league":"B.League","w":15,"l":11,"note":"Real club (tier 1)"},
-{"rank":4,"team":"Ryukyu Golden Kings","league":"B.League","w":14,"l":12,"note":"Real club (tier 3)"}]}
+{
+ "NBA": [
+  {"rank":1,"team":"Oklahoma City Thunder","w":12,"l":2,"form":"WWWWL"},
+  {"rank":2,"team":"Boston Celtics","w":11,"l":3,"form":"WLWWW"},
+  {"rank":3,"team":"Denver Nuggets","w":10,"l":4,"form":"WWLWW"},
+  {"rank":4,"team":"Houston Rockets","w":10,"l":4,"form":"WWWWW"},
+  {"rank":5,"team":"Los Angeles Lakers","w":9,"l":5,"form":"LWWWL"},
+  {"rank":6,"team":"New York Knicks","w":9,"l":5,"form":"WLWLW"},
+  {"rank":7,"team":"Golden State Warriors","w":8,"l":6,"form":"WWLLW"},
+  {"rank":8,"team":"Minnesota Timberwolves","w":7,"l":7,"form":"LLWLW"},
+  {"rank":9,"team":"San Antonio Spurs","w":7,"l":7,"form":"WLWWL"},
+  {"rank":10,"team":"Philadelphia 76ers","w":6,"l":8,"form":"LWLWL"}
+ ],
+ "EuroLeague": [
+  {"rank":1,"team":"Real Madrid","w":28,"l":8,"form":"WWWWW"},
+  {"rank":2,"team":"Olympiacos Piraeus","w":26,"l":10,"form":"WLWWW"},
+  {"rank":3,"team":"FC Barcelona","w":24,"l":12,"form":"WWLWW"},
+  {"rank":4,"team":"Panathinaikos","w":23,"l":13,"form":"LWWWW"},
+  {"rank":5,"team":"Partizan","w":22,"l":14,"form":"WWWLW"},
+  {"rank":6,"team":"Baskonia","w":21,"l":15,"form":"WLWLW"},
+  {"rank":7,"team":"AS Monaco","w":20,"l":16,"form":"LWWLW"},
+  {"rank":8,"team":"Fenerbahçe","w":19,"l":17,"form":"WLLWW"}
+ ],
+ "B.League": [
+  {"rank":1,"team":"Alvark Tokyo","w":18,"l":8,"form":"WWWLW"},
+  {"rank":2,"team":"Chiba Jets","w":16,"l":10,"form":"WLWWW"},
+  {"rank":3,"team":"Utsunomiya Brex","w":15,"l":11,"form":"LWWLW"},
+  {"rank":4,"team":"Ryukyu Golden Kings","w":14,"l":12,"form":"WWLLW"}
+ ]
+}

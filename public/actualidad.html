@@ -1,44 +1,229 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Actualidad — NBA / EuroLeague / B.League | Copero NBA</title><meta name="description" content="Últimas noticias reales de la NBA, EuroLeague y B.League, curadas para jugadores."><style>
-:root{--bg:#0b0c0e;--panel:#15181d;--line:#262b34;--gold:#f5c451;--text:#f4f5f7;}
-*{box-sizing:border-box}
-body{font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0}
-.container{max-width:960px;margin:0 auto;padding:20px 16px}
-h1{font-family:'Barlow Condensed',sans-serif;letter-spacing:-.02em;font-size:clamp(1.6rem,5vw,2.2rem);font-weight:800;color:var(--gold);margin-bottom:4px}
-.p{color:#b0b6c1;font-size:.85rem;margin-bottom:1.2rem}
-.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem;transition:.2s}
-.card:hover{border-color:#ff6b1a;transform:translateY(-3px)}
-.badge{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;padding:3px 8px;border-radius:999px;font-weight:700;color:#fff;display:inline-block;margin-bottom:6px}
-.badge-nba{background:#ff6b1a}
-.badge-eu{background:#b30000}
-.badge-b{background:#0022a7}
-h3{font-size:1.05rem;line-height:1.25;margin:0 0 .4rem}
-.meta{font-size:.78rem;color:#8b93a3}
-a{text-decoration:none;color:inherit}
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Actualidad NBA, EuroLeague y B.League · Resultados y clasificaciones | Copero NBA</title>
+<meta name="description" content="Resultados, clasificaciones, próximos partidos, estadísticas y noticias de la NBA, EuroLeague y B.League.">
+<meta property="og:title" content="Actualidad NBA, EuroLeague y B.League | Copero NBA">
+<meta property="og:description" content="Resultados, clasificaciones, calendario y noticias de las principales ligas de baloncesto.">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.ico">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+:root{--bg:#08090b;--panel:#111318;--panel2:#171a21;--line:#23262e;--gold:#f5c451;--orange:#ff6b1a;--text:#f4f5f7;--t2:#a9b0bd;--t3:#7b8494;--good:#3ddc84;--nba:#ff6b1a;--eu:#c8102e;--bl:#1d4ed8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.4}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(8,9,11,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:22px;height:58px}
+.brand{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.45rem;letter-spacing:-.02em;white-space:nowrap}
+.brand b{color:var(--orange)}
+.nav{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}
+.nav a{font-size:.86rem;font-weight:600;color:var(--t2);padding:6px 2px;border-bottom:2px solid transparent;white-space:nowrap}
+.nav a:hover{color:#fff;border-bottom-color:var(--orange)}
+.top-cta{margin-left:auto;background:var(--orange);color:#170700;font-weight:700;font-size:.82rem;padding:8px 15px;border-radius:999px;white-space:nowrap}
+@media(max-width:780px){.nav{display:none}}
+.hero{padding:26px 0 6px}
+.hero-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:18px}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
+.feature{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);min-height:340px;display:flex;align-items:flex-end;background:linear-gradient(135deg,#1b1207,#0d0f14)}
+.feature img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.62}
+.feature .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,9,11,.05) 25%,rgba(8,9,11,.96) 100%)}
+.feature .body{position:relative;padding:20px}
+.feature h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.5rem,3.2vw,2.1rem);line-height:1.08;margin:7px 0 8px}
+.feature p{color:var(--t2);font-size:.9rem;margin:0;max-width:62ch}
+.side{display:flex;flex-direction:column;gap:12px}
+.mini{display:flex;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px;transition:.18s}
+.mini:hover{border-color:#3a3f4b;transform:translateY(-2px)}
+.mini .thumb{width:74px;height:60px;flex:0 0 74px;border-radius:9px;background:linear-gradient(135deg,#20242d,#0f1116);overflow:hidden;display:grid;place-items:center;font-size:1.3rem}
+.mini .thumb img{width:100%;height:100%;object-fit:cover}
+.mini h4{margin:0 0 3px;font-size:.9rem;line-height:1.25}
+.mini small{color:var(--t3);font-size:.72rem}
+section.block{padding:30px 0 4px}
+.head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.head h3{font-family:'Barlow Condensed',sans-serif;font-size:1.35rem;font-weight:700;margin:0;letter-spacing:-.01em}
+.head .line{flex:1;height:1px;background:var(--line)}
+.head .more{font-size:.78rem;color:var(--t3);font-weight:600}
+.news{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:15px}
+.ncard{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden;display:flex;flex-direction:column;transition:.18s}
+.ncard:hover{transform:translateY(-3px);border-color:#3a3f4b}
+.ncard .pic{height:132px;background:linear-gradient(135deg,#1d2129,#0e1014);position:relative;overflow:hidden}
+.ncard .pic img{width:100%;height:100%;object-fit:cover}
+.ncard .txt{padding:12px 13px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.ncard h4{margin:0;font-size:.98rem;line-height:1.28}
+.ncard p{margin:0;font-size:.8rem;color:var(--t2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ncard .src{margin-top:auto;font-size:.72rem;color:var(--t3)}
+.tag{font-size:.66rem;text-transform:uppercase;letter-spacing:.07em;font-weight:800;padding:3px 8px;border-radius:999px;display:inline-block;position:absolute;top:9px;left:9px}
+.t-nba{background:var(--nba);color:#170700}.t-eu{background:var(--eu);color:#fff}.t-bl{background:var(--bl);color:#fff}
+.tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:var(--panel);color:var(--t2);font-size:.8rem;font-weight:700;padding:7px 14px;border-radius:999px;cursor:pointer;transition:.15s}
+.tab:hover{color:#fff}.tab.on{background:var(--orange);color:#170700;border-color:var(--orange)}
+.cols{display:grid;grid-template-columns:1.35fr 1fr;gap:18px}
+@media(max-width:900px){.cols{grid-template-columns:1fr}}
+.panelbox{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden}
+table.tbl{width:100%;border-collapse:collapse;font-size:.85rem}
+table.tbl th{background:var(--panel2);color:var(--t3);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;text-align:left;padding:9px 10px;font-weight:700}
+table.tbl td{padding:9px 10px;border-top:1px solid var(--line)}
+table.tbl tr:hover td{background:rgba(255,255,255,.025)}
+.rk{width:34px;color:var(--gold);font-weight:800}.rk.top{color:var(--good)}
+.tm{display:flex;align-items:center;gap:9px;font-weight:600}
+.tm img{width:22px;height:22px;border-radius:50%;object-fit:contain;background:#fff;padding:1px}
+.badge-init{width:22px;height:22px;border-radius:50%;background:#22262f;display:grid;place-items:center;font-size:.55rem;font-weight:800;color:var(--t2);letter-spacing:.02em}
+.mono{font-variant-numeric:tabular-nums;color:var(--t2)}
+.form{display:flex;gap:3px}
+.form i{width:15px;height:15px;border-radius:4px;font-style:normal;font-size:.6rem;font-weight:800;display:grid;place-items:center}
+.form .w{background:var(--good);color:#08120b}.form .l{background:#5b2a2a;color:#ffd9d9}
+.res{display:flex;align-items:center;gap:10px;padding:10px 12px;border-top:1px solid var(--line);font-size:.86rem}
+.res:first-child{border-top:0}
+.res .lg{font-size:.62rem;font-weight:800;padding:2px 6px;border-radius:5px;flex:0 0 auto}
+.res .teams{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
+.res .row{display:flex;justify-content:space-between;gap:10px}
+.res .row.win{font-weight:800;color:#fff}
+.fx{display:flex;align-items:center;gap:10px;padding:11px 12px;border-top:1px solid var(--line);font-size:.85rem}
+.fx:first-child{border-top:0}
+.fx .when{flex:0 0 66px;color:var(--t3);font-size:.72rem;line-height:1.25}
+.fx .match{flex:1;font-weight:600;min-width:0}
+.fx .evt{display:block;font-weight:400;color:var(--t3);font-size:.72rem;margin-top:2px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:13px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:14px}
+.stat .k{font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);font-weight:700}
+.stat .v{font-family:'Barlow Condensed',sans-serif;font-size:1.7rem;font-weight:800;color:var(--gold);line-height:1.1;margin:5px 0 2px}
+.stat .n{font-size:.82rem;color:var(--t2)}
+footer{margin-top:38px;border-top:1px solid var(--line);padding:24px 0 40px;color:var(--t3);font-size:.78rem}
+footer .cols2{display:flex;gap:26px;flex-wrap:wrap;justify-content:space-between}
+footer b{color:var(--t2)}footer a{color:var(--gold)}
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>Actualidad</h1>
-  <p class="p">NBA · EuroLeague · B.League — actualizado diariamente desde fuentes oficiales. Sin inventar.</p>
-  <div id="items" class="grid"></div>
-  <div style="margin-top:1.2rem;color:#8b93a3;font-size:.78rem">Fuente: datos agregados de NBA.com, EuroLeague Basket, B.League. <a href="/" style="color:var(--gold)">← Volver al simulador</a></div>
+
+<div class="topbar"><div class="wrap">
+  <a class="brand" href="/">COPERO <b>NBA</b></a>
+  <nav class="nav">
+    <a href="#noticias">Noticias</a><a href="#clasificaciones">Clasificaciones</a>
+    <a href="#resultados">Resultados</a><a href="#calendario">Calendario</a><a href="#estadisticas">Estadísticas</a>
+  </nav>
+  <a class="top-cta" href="/">Jugar al simulador</a>
+</div></div>
+
+<div class="wrap">
+  <div class="hero"><div class="hero-grid">
+    <a class="feature" id="feature" href="#noticias"><div class="veil"></div><div class="body">
+      <span class="tag t-nba" id="feature-tag">NBA</span>
+      <h2 id="feature-title">Cargando portada…</h2><p id="feature-sum"></p>
+    </div></a>
+    <div class="side" id="side"></div>
+  </div></div>
+
+  <section class="block" id="noticias">
+    <div class="head"><h3>Últimas noticias</h3><div class="line"></div><span class="more" id="news-count"></span></div>
+    <div class="news" id="news"></div>
+  </section>
+
+  <section class="block" id="clasificaciones">
+    <div class="head"><h3>Clasificaciones</h3><div class="line"></div></div>
+    <div class="tabs" id="tabs-standings"></div>
+    <div class="cols">
+      <div class="panelbox"><table class="tbl">
+        <thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>G</th><th>P</th><th>%</th><th>Racha</th></tr></thead>
+        <tbody id="standings-body"></tbody>
+      </table></div>
+      <div class="panelbox" id="resultados">
+        <div style="background:var(--panel2);color:var(--t3);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;padding:9px 12px">Resultados recientes</div>
+        <div id="results"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="calendario">
+    <div class="head"><h3>Próximos partidos</h3><div class="line"></div></div>
+    <div class="panelbox" id="fixtures"></div>
+  </section>
+
+  <section class="block" id="estadisticas">
+    <div class="head"><h3>Líderes estadísticos</h3><div class="line"></div></div>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <footer><div class="cols2">
+    <div><b>Copero NBA</b> · Simulador de carrera con rosters reales.<br>NBA · EuroLeague · B.League</div>
+    <div><a href="/">Volver al simulador</a> · <a href="#noticias">Noticias</a> · <a href="#clasificaciones">Clasificaciones</a></div>
+  </div></footer>
 </div>
+
 <script>
-fetch('data/actualidad.json')
-.then(r=>r.json())
-.then(data=>{
-  const grid=document.getElementById('items');
-  data.forEach(item=>{
-    const cat=item.category==='B.League'?'badge-b':(item.category==='EU'?'badge-eu':'badge-nba');
-    const el=document.createElement('a');
-    el.href=item.url;el.target='_blank';el.rel='noopener';el.className='card';
-    el.innerHTML=`<div><span class="badge ${cat}">${item.category}</span> <small style="color:#8b93a3">${item.date}</small></div><h3>${item.title}</h3><p class="meta">${item.summary}</p><div class="meta">${item.source}</div>`;
-    grid.appendChild(el);
-  });
-})
-.catch(()=>document.getElementById('items').innerHTML='<p>No se cargaron las noticias. Intenta recargar.</p>');
+const L = { NBA:['NBA','t-nba'], EU:['EuroLeague','t-eu'], EuroLeague:['EuroLeague','t-eu'], B1:['B.League','t-bl'], 'B.League':['B.League','t-bl'] };
+const CREST = {
+ 'Real Madrid':'/crests/real-madrid.png','FC Barcelona':'/crests/fc-barcelona.png','Baskonia':'/crests/baskonia.png',
+ 'Olympiacos Piraeus':'/crests/olympiacos.png','Panathinaikos':'/crests/panathinaikos.png','Partizan':'/crests/partizan.png',
+ 'AS Monaco':'/crests/as-monaco.png','Fenerbahçe':'/crests/fenerbahce.png',
+ 'Alvark Tokyo':'/crests/alvark-tokyo.png','Chiba Jets':'/crests/chiba-jets.png','Utsunomiya Brex':'/crests/utsunomiya-brex.png','Ryukyu Golden Kings':'/crests/ryukyu-golden-kings.png'
+};
+const ABBR = {'Oklahoma City Thunder':'OKC','Boston Celtics':'BOS','Denver Nuggets':'DEN','Houston Rockets':'HOU','Los Angeles Lakers':'LAL','New York Knicks':'NYK','Golden State Warriors':'GSW','Minnesota Timberwolves':'MIN','San Antonio Spurs':'SAS','Philadelphia 76ers':'PHI'};
+const lg = k => L[k] || ['NBA','t-nba'];
+const teamCell = n => CREST[n] ? `<img src="${CREST[n]}" alt="">` : `<span class="badge-init">${ABBR[n]||n.slice(0,3).toUpperCase()}</span>`;
+const pct = (w,l) => (w+l) ? (w/(w+l)).toFixed(3).replace('0.','.').replace('1.000','1.000') : '—';
+async function load(u,f){try{const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw 0;return await r.json()}catch{return f}}
+
+(async()=>{
+ const [news,standings,fixtures,results,stats] = await Promise.all([
+  load('./data/actualidad.json',[]), load('./data/standings.json',{}),
+  load('./data/fixtures.json',[]), load('./data/results.json',[]), load('./data/stats.json',[])
+ ]);
+
+ if(news.length){
+  const f=news[0], ft=document.getElementById('feature');
+  ft.href=f.url; ft.target='_blank'; ft.rel='noopener';
+  if(f.image){const i=new Image();i.src=f.image;i.alt='';i.onerror=()=>i.remove();ft.prepend(i)}
+  const tg=document.getElementById('feature-tag'); tg.className='tag '+lg(f.category)[1]; tg.textContent=lg(f.category)[0];
+  document.getElementById('feature-title').textContent=f.title;
+  document.getElementById('feature-sum').textContent=f.summary;
+ }
+ document.getElementById('side').innerHTML = news.slice(1,5).map(n=>`
+  <a class="mini" href="${n.url}" target="_blank" rel="noopener">
+    <span class="thumb">${n.image?`<img src="${n.image}" alt="" onerror="this.remove()">`:'🏀'}</span>
+    <span><h4>${n.title}</h4><small>${n.source} · ${n.date}</small></span>
+  </a>`).join('');
+
+ document.getElementById('news').innerHTML = news.map(n=>`
+  <a class="ncard" href="${n.url}" target="_blank" rel="noopener">
+    <div class="pic">${n.image?`<img src="${n.image}" alt="" onerror="this.remove()">`:''}<span class="tag ${lg(n.category)[1]}">${lg(n.category)[0]}</span></div>
+    <div class="txt"><h4>${n.title}</h4><p>${n.summary}</p><span class="src">${n.source} · ${n.date}</span></div>
+  </a>`).join('');
+ document.getElementById('news-count').textContent = news.length+' artículos';
+
+ const leagues=Object.keys(standings), tabs=document.getElementById('tabs-standings'), body=document.getElementById('standings-body');
+ const draw=(name)=>{
+  body.innerHTML=(standings[name]||[]).map(r=>`
+   <tr><td class="rk ${r.rank<=4?'top':''}">${r.rank}</td>
+   <td><span class="tm">${teamCell(r.team)}${r.team}</span></td>
+   <td class="mono">${r.w+r.l}</td><td class="mono">${r.w}</td><td class="mono">${r.l}</td>
+   <td class="mono">${pct(r.w,r.l)}</td>
+   <td><span class="form">${(r.form||'').split('').map(c=>`<i class="${c==='W'?'w':'l'}">${c}</i>`).join('')}</span></td></tr>`).join('');
+ };
+ tabs.innerHTML=leagues.map((n,i)=>`<button class="tab ${i?'':'on'}" data-lg="${n}">${n}</button>`).join('');
+ tabs.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{tabs.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');draw(b.dataset.lg)});
+ if(leagues.length) draw(leagues[0]);
+
+ document.getElementById('results').innerHTML = results.map(r=>{
+  const [lbl,cls]=lg(r.league), hw=r.hs>r.as, aw=r.as>r.hs;
+  return `<div class="res"><span class="lg ${cls}">${lbl}</span><span class="teams">
+    <span class="row ${hw?'win':''}"><span>${r.home}</span><span>${r.hs}</span></span>
+    <span class="row ${aw?'win':''}"><span>${r.away}</span><span>${r.as}</span></span></span></div>`;
+ }).join('') || '<div class="res">Sin resultados.</div>';
+
+ document.getElementById('fixtures').innerHTML = fixtures.map(f=>{
+  const [lbl]=lg(f.league);
+  return `<div class="fx"><span class="when">${f.date}<br>${f.time||''}</span>
+   <span class="match">${f.home} <span style="color:var(--t3)">vs</span> ${f.away}
+   <span class="evt">${f.event||f.note||''}${(f.event||f.note||'').includes(lbl) ? '' : ' · ' + lbl}</span></span></div>`;
+ }).join('') || '<div class="fx">Sin partidos.</div>';
+
+ document.getElementById('stats').innerHTML = stats.map(s=>`
+  <div class="stat"><div class="k">${s.league} · ${s.stat}</div><div class="v">${s.value}</div>
+  <div class="n">${s.leader} <span style="color:var(--t3)">· ${s.team}</span></div></div>`).join('');
+})();
 </script>
 </body>
 </html>

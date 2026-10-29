@@ -1,0 +1,11 @@
+[
+ {"league":"NBA","date":"29 Oct","home":"Houston Rockets","away":"Milwaukee Bucks","hs":132,"as":100},
+ {"league":"NBA","date":"29 Oct","home":"Golden State Warriors","away":"Minnesota Timberwolves","hs":119,"as":114},
+ {"league":"NBA","date":"29 Oct","home":"Denver Nuggets","away":"New Orleans Pelicans","hs":104,"as":91},
+ {"league":"NBA","date":"29 Oct","home":"San Antonio Spurs","away":"Utah Jazz","hs":117,"as":111},
+ {"league":"EU","date":"28 Oct","home":"Real Madrid","away":"Olympiacos Piraeus","hs":93,"as":89},
+ {"league":"EU","date":"28 Oct","home":"FC Barcelona","away":"Panathinaikos","hs":88,"as":82},
+ {"league":"EU","date":"28 Oct","home":"Partizan","away":"Baskonia","hs":79,"as":74},
+ {"league":"B.League","date":"27 Oct","home":"Chiba Jets","away":"Utsunomiya Brex","hs":84,"as":77},
+ {"league":"B.League","date":"27 Oct","home":"Alvark Tokyo","away":"Ryukyu Golden Kings","hs":91,"as":85}
+]

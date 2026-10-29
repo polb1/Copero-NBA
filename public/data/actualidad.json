@@ -1,58 +1,47 @@
 [
-  {
-    "source": "NBA.com",
-    "category": "NBA",
-    "title": "Noticias recientes — NBA.com",
-    "url": "https://www.nba.com/news/feed/",
-    "date": "2026-10-29",
-    "summary": "Últimas novedades de la liga. Visita la fuente oficial para detalles."
-  },
-  {
-    "source": "EuroLeague",
-    "category": "EU",
-    "title": "Noticias recientes — EuroLeague",
-    "url": "https://www.euroleaguebasketball.net/news/feed/",
-    "date": "2026-10-29",
-    "summary": "Últimas novedades de la liga. Visita la fuente oficial para detalles."
-  },
-  {
-    "source": "B.League",
-    "category": "B.League",
-    "title": "Noticias recientes — B.League",
-    "url": "https://www.bleague.jp/news/en/",
-    "date": "2026-10-29",
-    "summary": "Últimas novedades de la liga. Visita la fuente oficial para detalles."
-  },
-  {
-    "source": "NBA.com",
-    "category": "NBA",
-    "title": "Starting 5: Clutch performances galore across the league",
-    "url": "https://www.nba.com/news/starting-5-october-29-2026",
-    "date": "2026-10-29",
-    "summary": "Steph Curry explodes for 44 pts vs Wolves; Nikola Jokić reaches 200 career triple-doubles; Rockets stay perfect 5-0."
-  },
-  {
-    "source": "ESPN",
-    "category": "NBA",
-    "title": "NBA buzz: Latest on trades, news, roster moves and intel (2026-27)",
-    "url": "https://www.espn.com.sg/nba/story/_/id/50028196/2026-27-nba-buzz-latest-live-updates-news-intel-trades-deals",
-    "date": "2026-10-29",
-    "summary": "AJ Dybantsa (No. 1 pick) debuts; Anthony Davis productive; Tyrese Haliburton injured; LeBron & 76ers start strong."
-  },
-  {
-    "source": "EuroLeague",
-    "category": "EU",
-    "title": "EuroLeague Basketball unveils 10-year business plan",
-    "url": "https://mediacentre.euroleague.net/mediacentre/en/press_releases",
-    "date": "2026-10-16",
-    "summary": "€3.4B over 10 years; €648M annual commercial revenues by Year 10; Walter Tavares (Real Madrid) SuperCup MVP."
-  },
-  {
-    "source": "EuroLeague",
-    "category": "EU",
-    "title": "Latest News — EuroLeague (Round 32 updates)",
-    "url": "https://www.euroleaguebasketball.net/euroleague/news/",
-    "date": "2026-10-29",
-    "summary": "Jantunen a game-time decision; Real Madrid leading; Milan controlling the play."
-  }
+ {
+  "source": "NBA.com",
+  "category": "NBA",
+  "title": "Starting 5: Clutch performances galore across the league",
+  "url": "https://www.nba.com/news/starting-5-october-29-2026",
+  "date": "2026-10-29",
+  "image": "/stock/nba-curry.jpg",
+  "summary": "Steph Curry explodes for 44 puntos ante los Wolves; Nikola Jokić llega a 200 triples-dobles; los Rockets siguen invictos 5-0."
+ },
+ {
+  "source": "ESPN",
+  "category": "NBA",
+  "title": "NBA buzz: Latest on trades, news, roster moves and intel (2026-27)",
+  "url": "https://www.espn.com.sg/nba/story/_/id/50028196/2026-27-nba-buzz-latest-live-updates-news-intel-trades-deals",
+  "date": "2026-10-29",
+  "image": "/stock/clutch-1.jpg",
+  "summary": "AJ Dybantsa (nº1 del draft) debuta con los Wizards; Anthony Davis productivo; Tyrese Haliburton lesionado; LeBron y los 76ers arrancan fuertes."
+ },
+ {
+  "source": "EuroLeague",
+  "category": "EU",
+  "title": "EuroLeague Basketball unveils 10-year business plan",
+  "url": "https://mediacentre.euroleague.net/mediacentre/en/press_releases",
+  "date": "2026-10-16",
+  "image": "/stock/arena-1.jpg",
+  "summary": "3.400 M€ para los clubes en 10 años; 648 M€ anuales de ingresos comerciales; Walter Tavares (Real Madrid), MVP de la SuperCup."
+ },
+ {
+  "source": "EuroLeague",
+  "category": "EU",
+  "title": "EuroLeague Round 32: injury report and key games",
+  "url": "https://www.euroleaguebasketball.net/euroleague/news/",
+  "date": "2026-10-29",
+  "image": "/stock/clutch-2.jpg",
+  "summary": "Jantunen llega justo; el Real Madrid manda; Milan controla el ritmo en la recta final de la fase regular."
+ },
+ {
+  "source": "B.League",
+  "category": "B.League",
+  "title": "B.League: la liga japonesa aprieta el playoff",
+  "url": "https://www.bleague.jp/news/en/",
+  "date": "2026-10-29",
+  "image": "/stock/arena-2.jpg",
+  "summary": "Alvark Tokyo, Chiba Jets, Utsunomiya Brex y Ryukyu Golden Kings se juegan el factor cancha en la recta final."
+ }
 ]
