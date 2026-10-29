@@ -78,5 +78,21 @@
   "away": "New York Knicks",
   "event": "NBA Cup - Group Play",
   "league": "NBA"
+ },
+ {
+  "date": "30 Oct",
+  "time": "21:00",
+  "league": "EuroLeague",
+  "home": "Real Madrid",
+  "away": "Olympiacos Piraeus",
+  "event": "SuperCup rematch (Real Madrid MVP Tavares)"
+ },
+ {
+  "date": "31 Oct",
+  "time": "20:45",
+  "league": "EuroLeague",
+  "home": "Fenerbahçe",
+  "away": "Panathinaikos",
+  "event": "Playoff race"
  }
 ]
