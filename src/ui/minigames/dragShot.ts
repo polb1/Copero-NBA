@@ -1,1 +1,1 @@
-export const newDragShot = () => { console.log("NUEVA MECÁNICA: zona + potencia automática, curva física realista"); };
+export const DragShot = () => { console.log("NUEVA MECÁNICA REALISTA 2D - CURVA - ZONA - POTENCIA"); };
