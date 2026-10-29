@@ -34,11 +34,15 @@ export const BACKBOARD_BOTTOM = RIM_HEIGHT - 1;
 /** Gravedad en unidades de distancia por segundo². */
 export const GRAVITY = 70;
 /** Mapeo potencia → velocidad inicial. */
-export const SPEED_MIN = 42;
-export const SPEED_MAX = 92;
+export const SPEED_MIN = 20;
+export const SPEED_MAX = 150;
 /** Arrastre necesario para lanzar / potencia máxima. */
 export const MIN_PULL = 0.05;
-export const MAX_PULL = 0.42;
+/** Ángulo de referencia: arrastrar recto hacia atrás lanza a 50°. */
+export const AIM_BASE_ANGLE = 50;
+/** Cuánto sube/baja el ángulo al desviar el arrastre de la recta. */
+export const AIM_TILT_GAIN = 0.4;
+export const MAX_PULL = 0.55;
 /** Paso fijo (240 Hz) para que el balón no atraviese el aro. */
 export const SUBSTEP = 1 / 240;
 export const MAX_FLIGHT_S = 5;
@@ -128,23 +132,59 @@ export function project(setup: Setup, s: number, h: number): Vec {
  * El balón tiene que caer dentro, no colarse plano: la velocidad vertical de
  * bajada debe superar esta fracción de la horizontal (45° de entrada).
  */
-export const MIN_ENTRY_SLOPE = 0.7;
+export const MIN_ENTRY_SLOPE = 0.45;
 
 /** Franja de acierto alrededor del centro del aro. */
+/**
+ * Margen de ayuda a la puntería: si el balón cruza el plano del aro dentro de
+ * este margen (algo mayor que el aro real) cuenta como dentro y se centra en el
+ * aro al dibujarlo. Sin esto el gesto exigía una precisión de milímetros y no
+ * entraba nunca.
+ */
+export function assistBand(zone: number): number {
+  return scoringBand(zone) * 1.8;
+}
+
 export function scoringBand(zone: number): number {
   const z = Number.isFinite(zone) ? zone : 30;
   return clamp(RIM_HALF + z * 0.05, RIM_HALF, RIM_HALF + 2.2);
 }
 
-export function launchVelocity(angleDeg: number, power: number): { vs: number; vh: number } {
+/**
+ * Velocidad que haría entrar el balón justo en el aro desde `origin` con este
+ * ángulo. Es la referencia con la que se normaliza la potencia: así el punto
+ * dulce cae siempre hacia el 50 % del arrastre, en vez de moverse entre el 16 %
+ * y el 66 % según la distancia.
+ */
+export function idealSpeed(origin: Vec, angleDeg: number, aspect = 1): number {
+  const distance = shotDistance(origin, aspect);
+  const theta = rad(clamp(angleDeg, 20, 84));
+  const rise = RIM_HEIGHT - RELEASE_HEIGHT;
+  const denom = 2 * Math.cos(theta) ** 2 * (distance * Math.tan(theta) - rise);
+  if (!(denom > 0.5)) return 60;
+  const v2 = (GRAVITY * distance * distance) / denom;
+  return clamp(Math.sqrt(Math.max(0, v2)), 18, 150);
+}
+
+/**
+ * Velocidad de salida. La potencia ya viene normalizada por `idealSpeed` de la
+ * distancia: 0.5 = tiro perfecto, menos se queda corto, más se pasa.
+ */
+export function launchVelocity(
+  angleDeg: number,
+  power: number,
+  origin?: Vec,
+  aspect = 1,
+): { vs: number; vh: number } {
   const p = clamp(Number.isFinite(power) ? power : 0, 0, 1);
-  const speed = SPEED_MIN + p * (SPEED_MAX - SPEED_MIN);
+  const reference = origin ? idealSpeed(origin, angleDeg, aspect) : 60;
+  const speed = clamp(reference * (0.72 + 0.56 * p), SPEED_MIN, SPEED_MAX);
   const theta = rad(clamp(Number.isFinite(angleDeg) ? angleDeg : 0, -30, 85));
   return { vs: speed * Math.cos(theta), vh: speed * Math.sin(theta) };
 }
 
 export function createFlight(origin: Vec, angleDeg: number, power: number, aspect = 1): Flight {
-  const v = launchVelocity(angleDeg, power);
+  const v = launchVelocity(angleDeg, power, origin, aspect);
   return {
     s: 0,
     h: RELEASE_HEIGHT,
@@ -190,7 +230,7 @@ export function stepFlight(
 
   // --- Acierto: el balón cruza el plano del aro bajando, dentro de la
   // abertura y sin haber tocado tablero ni suelo antes.
-  const band = scoringBand(spec.zone);
+  const band = assistBand(spec.zone);
   if (
     !f.made &&
     !f.touchedBoard &&
@@ -204,6 +244,9 @@ export function stepFlight(
   ) {
     f.made = true;
     f.done = true;
+    // Se centra en el aro para que el dibujo coincida con el acierto.
+    f.s = D;
+    f.h = RIM_HEIGHT;
     events.push('score');
     return events;
   }
@@ -307,13 +350,33 @@ export function aimFromDrag(
   aspect = 1,
 ): { angleDeg: number; power: number; length: number; pullX: number; pullY: number } {
   const a = safeAspect(aspect);
-  const dx = (origin.x - pointer.x) / 100;
+  const dx = origin.x - pointer.x;
   // Arrastrar hacia abajo (y de pantalla mayor) lanza hacia arriba.
-  const dy = ((pointer.y - origin.y) / 100) * a;
-  const length = Math.hypot(dx, dy);
-  const angleDeg = (Math.atan2(dy, dx) * 180) / Math.PI;
+  const dy = (pointer.y - origin.y) * a;
+  const length = Math.hypot(dx, dy) / 100;
+
+  // Eje de referencia: desde el BALÓN (las manos, que es donde se agarra y
+  // donde el jugador ve la línea) hasta el aro, no desde los pies.
+  const handY = origin.y - RELEASE_LIFT;
+  const axisX = RIM_X - origin.x;
+  const axisY = -(RIM_Y - handY) * a;
+  const axisDeg = (Math.atan2(axisY, axisX) * 180) / Math.PI;
+
+  // Ángulo respecto a "tirar recto hacia atrás" (el lanzamiento apunta al aro):
+  // ese gesto da el arco de referencia (50°) y desviarse hacia abajo lo sube.
+  // Así el gesto natural entra, en vez de salir plano como antes.
+  const dragDeg = (Math.atan2(dy, dx) * 180) / Math.PI;
+  // El lanzamiento "recto" apunta justo al aro; su ángulo es el del eje.
+  let delta = dragDeg - axisDeg;
+  while (delta > 180) delta -= 360;
+  while (delta < -180) delta += 360;
+
+  // Cuanto más cerca está el aro, más vertical tiene que ser el tiro.
+  const distance = shotDistance(origin, a);
+  const base = AIM_BASE_ANGLE + Math.max(0, 32 - distance) * 1.7;
+
   return {
-    angleDeg: clamp(angleDeg, -30, 85),
+    angleDeg: clamp(base + delta * AIM_TILT_GAIN, 20, 84),
     power: clamp(length / MAX_PULL, 0, 1),
     length,
     pullX: clamp(pointer.x, 0, 100),
@@ -366,7 +429,7 @@ export function courtSpot(attempt: number, seed = 0): Vec {
  * (entre ~35° y ~65° sobre la horizontal).
  */
 export function entryAngle(origin: Vec, angleDeg: number, power: number, aspect = 1): number {
-  const v = launchVelocity(angleDeg, power);
+  const v = launchVelocity(angleDeg, power, origin, aspect);
   const disc = v.vh * v.vh + 2 * GRAVITY * (RELEASE_HEIGHT - RIM_HEIGHT);
   if (disc < 0) return NaN;
   const t = (v.vh + Math.sqrt(disc)) / GRAVITY;

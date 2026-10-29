@@ -10,6 +10,8 @@ import {
   BACKBOARD_TOP,
   MIN_PULL,
   RIM_HEIGHT,
+  RIM_X,
+  RIM_Y,
   RIM_HALF,
   SUBSTEP,
   aimFromDrag,
@@ -402,9 +404,10 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     return p.y;
   })();
 
-  const rimProj = project(setup, setup.distance, RIM_HEIGHT);
-  const rimStart = project(setup, setup.distance - RIM_HALF, RIM_HEIGHT);
-  const rimEnd = project(setup, setup.distance + RIM_HALF, RIM_HEIGHT);
+  // Ancho del aro en pantalla, con un mínimo para que siempre se vea.
+  const rimWidth = Math.max(7, (Math.abs(RIM_X - setup.origin.x) * (2 * RIM_HALF)) / Math.max(1, setup.distance));
+  const rimStart = { x: RIM_X - rimWidth / 2, y: RIM_Y };
+  const rimEnd = { x: RIM_X + rimWidth / 2, y: RIM_Y };
 
   const pullPath = (() => {
     if (!aim) return '';
@@ -465,16 +468,17 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
           <path className="drag-line" d="M 0 74 L 22 56" vectorEffect="non-scaling-stroke" />
           <ellipse className="drag-line" cx={boardX - 60} cy="78" rx="30" ry="9" vectorEffect="non-scaling-stroke" />
           {/* poste y tablero */}
-          <line className="drag-pole" x1={boardX} y1={rimProj.y} x2={boardX} y2="92" vectorEffect="non-scaling-stroke" />
+          <line className="drag-pole" x1={boardX} y1={RIM_Y} x2={boardX} y2="94" vectorEffect="non-scaling-stroke" />
           <line className="drag-board" x1={boardX} y1={boardTopY} x2={boardX} y2={boardBottomY} vectorEffect="non-scaling-stroke" />
           {/* aro */}
           <line className="drag-rim" x1={rimStart.x} y1={rimStart.y} x2={rimEnd.x} y2={rimEnd.y} vectorEffect="non-scaling-stroke" />
           {/* red */}
           <path
             className="drag-net"
-            d={`M ${rimStart.x} ${rimStart.y} L ${rimStart.x + (rimEnd.x - rimStart.x) * 0.2} ${rimStart.y + 11} L ${rimStart.x + (rimEnd.x - rimStart.x) * 0.8} ${rimStart.y + 11} L ${rimEnd.x} ${rimEnd.y}`}
+            d={`M ${rimStart.x} ${rimStart.y} L ${rimStart.x + rimWidth * 0.18} ${rimStart.y + 9} L ${rimStart.x + rimWidth * 0.82} ${rimStart.y + 9} L ${rimEnd.x} ${rimEnd.y}`}
             vectorEffect="non-scaling-stroke"
           />
+          <path className="drag-net-line" d={`M ${rimStart.x + rimWidth * 0.5} ${rimStart.y + 9} L ${rimStart.x + rimWidth * 0.5} ${rimStart.y + 1}`} vectorEffect="non-scaling-stroke" />
           <polyline className="drag-trail" ref={trailEl} points="" />
           {aim && <path className="drag-pull" d={pullPath} vectorEffect="non-scaling-stroke" />}
         </svg>

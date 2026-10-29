@@ -5,6 +5,7 @@ import {
   RIM_X,
   RIM_Y,
   MAX_FLIGHT_S,
+  MIN_ENTRY_SLOPE,
   MIN_PULL,
   RIM_HALF,
   RIM_HEIGHT,
@@ -78,10 +79,14 @@ describe('física de proyectil', () => {
     expect(peakH).toBeGreaterThan(RIM_HEIGHT + 4);
   });
 
-  it('el ángulo de entrada en el aro es realista (35°–80°)', () => {
+  it('el balón entra cayendo, con un ángulo de entrada creíble', () => {
     const entry = entryAngle(spot, shot.angle, shot.power, ASPECT);
-    expect(entry).toBeGreaterThan(35);
+    // Como mínimo, el que exige MIN_ENTRY_SLOPE; nunca entra subiendo.
+    expect(entry).toBeGreaterThan((Math.atan(MIN_ENTRY_SLOPE) * 180) / Math.PI - 0.5);
     expect(entry).toBeLessThan(80);
+    const sim = simulateShot(spot, shot.angle, shot.power, spec, ASPECT);
+    const ys = sim.path.map((q) => q.y);
+    expect(Math.min(...ys)).toBeLessThan(ys[ys.length - 1]);
   });
 
   it('poca potencia se queda corta y mucha se pasa', () => {

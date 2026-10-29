@@ -202,7 +202,8 @@
 .drag-board { stroke: rgba(255, 255, 255, 0.62); stroke-width: 5; stroke-linecap: round; }
 .drag-pole { stroke: rgba(255, 255, 255, 0.34); stroke-width: 3; }
 .drag-wood line { stroke: rgba(255, 255, 255, 0.045); stroke-width: 1.4; }
-.drag-net { fill: none; stroke: rgba(255, 255, 255, 0.6); stroke-width: 1.8; stroke-dasharray: 2.4 2.4; }
+.drag-net { fill: none; stroke: rgba(255, 255, 255, 0.66); stroke-width: 1.6; stroke-dasharray: 3 3; }
+.drag-net-line { stroke: rgba(255, 255, 255, 0.35); stroke-width: 1; }
 .drag-trail { fill: none; stroke: rgba(255, 173, 112, 0.4); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .drag-pull { fill: none; stroke: rgba(245, 196, 81, 0.75); stroke-width: 2; stroke-dasharray: 5 4; stroke-linecap: round; }
 .drag-shadow { position: absolute; width: 26px; height: 9px; transform: translate(-50%, -50%); border-radius: 50%; background: rgba(0, 0, 0, 0.5); filter: blur(2px); pointer-events: none; }
