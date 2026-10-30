@@ -1,1 +1,362 @@
-{"Liga ACB":["Real Madrid","FC Barcelona","Baskonia","Valencia Basket","Unicaja Málaga","Joventut Badalona","Gran Canaria","UCAM Murcia","La Laguna Tenerife","Bàsquet Girona","Casademont Zaragoza","Río Breogán","Surne Bilbao"],"Basketbol Süper Ligi":["Fenerbahçe","Anadolu Efes","Galatasaray","Beşiktaş","Türk Telekom"],"Greek Basket League":["Olympiacos","Panathinaikos","AEK Atenas","PAOK","Aris Salónica"],"Lega Basket Serie A":["Olimpia Milano","Virtus Bologna","Reyer Venezia","Dinamo Sassari","Pallacanestro Trieste"],"Liga ABA":["Partizan","Estrella Roja","Cedevita Olimpija","Budućnost","Mega Basket","FMP","Cibona","KK Split","KK Zadar","Igokea","Krka Novo Mesto"],"LKL":["Žalgiris Kaunas","Rytas Vilnius","Lietkabelis"],"LNB Élite":["AS Monaco","LDLC ASVEL","Paris Basketball","Metropolitans 92","JL Bourg","Cholet Basket"],"Basketball Bundesliga":["Bayern Múnich","ALBA Berlín","ratiopharm Ulm","Niners Chemnitz"],"NBL Australia":["Perth Wildcats","Sydney Kings","Melbourne United","New Zealand Breakers"],"Liga Portuguesa":["Benfica","FC Porto","Sporting CP"],"BNXT League":["Filou Oostende","Antwerp Giants","Heroes Den Bosch"],"PLK":["Śląsk Wrocław","Anwil Włocławek","Legia Varsovia"],"NBL Chequia":["ERA Nymburk"],"Liga Letona-Estonia":["VEF Rīga","BC Kalev"],"Korisliiga":["Kauhajoki Karhu"],"Superliga Ucrania":["Prometey"],"VTB United League":["CSKA Moscú","UNICS Kazán","Zenit San Petersburgo"],"NB I/A":["Falco Szombathely"],"Liga Națională":["U-BT Cluj-Napoca"],"NBL Bulgaria":["Levski Sofía"],"Super League Basketball":["London Lions"],"BSL Austria":["BC Vienna"],"SB League":["Fribourg Olympic"],"Basketligaen":["Bakken Bears"],"Basketligan":["Norrköping Dolphins"],"Superliga Georgia":["Rustavi"],"Liga Nacional":["Boca Juniors","Quimsa","Instituto de Córdoba","Obras Sanitarias"],"NBB":["Flamengo","Franca","Minas","São Paulo"],"LNBP":["Diablos Rojos del México","Halcones de Xalapa","Astros de Jalisco"],"BSN":["Cangrejeros de Santurce","Vaqueros de Bayamón","Capitanes de Arecibo"],"SPB":["Guaros de Lara","Trotamundos de Carabobo","Spartans Distrito Capital"],"Liga Uruguaya":["Nacional","Peñarol","Aguada"],"Liga Colombiana":["Titanes de Barranquilla","Cimarrones del Chocó"],"LNB Dominicana":["Leones de Santo Domingo","Metros de Santiago"],"CEBL":["Calgary Surge","Niagara River Lions","Vancouver Bandits"],"CBA":["Guangdong Southern Tigers","Liaoning Flying Leopards","Beijing Ducks","Shanghai Sharks"],"B.League":["Alvark Tokyo","Chiba Jets","Utsunomiya Brex","Ryukyu Golden Kings"],"KBL":["Seoul SK Knights","Ulsan Hyundai Mobis Phoebus","Wonju DB Promy"],"PBA":["San Miguel Beermen","Barangay Ginebra","TNT Tropang Giga"],"Liga Libanesa":["Al Riyadi","Sagesse"],"Basketball Africa League":["Petro de Luanda","Primeiro de Agosto","Al Ahly","Zamalek","US Monastir","FUS Rabat","AS Douanes","Rivers Hoopers","APR","Stade Malien"],"ACC":["Duke","North Carolina","Virginia","Wake Forest"],"SEC":["Kentucky","Auburn","Florida","Texas","Tennessee","Alabama","Arkansas"],"Big 12":["Kansas","Arizona","Houston","Baylor","Iowa State","Texas Tech","BYU"],"Big East":["UConn","Villanova","Creighton","Marquette","Xavier"],"WCC":["Gonzaga"],"Big Ten":["UCLA","Purdue","Michigan State","Indiana","Illinois","Michigan","Ohio State","Oregon","USC"],"AAC":["Memphis"],"Mountain West":["San Diego State","Utah State"],"Atlantic 10":["Dayton","VCU"]}
+{
+ "Liga ACB": [
+  "Joventut Badalona",
+  "FC Barcelona Bàsquet",
+  "Basket Zaragoza",
+  "Bàsquet Girona",
+  "Força Lleida CE",
+  "Saski Baskonia",
+  "CB Canarias",
+  "Básquet Coruña",
+  "Obradoiro CAB",
+  "BC Andorra",
+  "Real Madrid Baloncesto",
+  "CB San Pablo Burgos",
+  "CB Breogán",
+  "Bilbao Basket",
+  "UCAM Murcia CB",
+  "Baloncesto Málaga",
+  "Valencia Basket"
+ ],
+ "Basketbol Süper Ligi": [
+  "Anadolu Efes S.K.",
+  "Bahçeşehir Koleji S.K.",
+  "Beşiktaş J.K. (men's basketball)",
+  "Körfez Basket",
+  "Bursaspor Basketbol",
+  "Esenler Erokspor (basketball)",
+  "Fenerbahçe S.K. (basketball)",
+  "Galatasaray S.K. (men's basketball)",
+  "Çayırova Belediyespor",
+  "Karşıyaka Basket",
+  "Petkim Spor",
+  "Bandırma Bordo Basketbol",
+  "Tofaş S.K.",
+  "Trabzonspor B.K.",
+  "Türk Telekom B.K.",
+  "Denizli Basket"
+ ],
+ "Greek Basket League": [
+  "Olympiacos",
+  "Panathinaikos",
+  "AEK Atenas",
+  "PAOK",
+  "Aris Salónica"
+ ],
+ "Lega Basket Serie A": [
+  "Olimpia Milano",
+  "Virtus Bologna",
+  "Reyer Venezia",
+  "Dinamo Sassari",
+  "Pallacanestro Trieste"
+ ],
+ "Liga ABA": [
+  "Partizan",
+  "Estrella Roja",
+  "Cedevita Olimpija",
+  "Budućnost",
+  "Mega Basket",
+  "FMP",
+  "Cibona",
+  "KK Split",
+  "KK Zadar",
+  "Igokea",
+  "Krka Novo Mesto"
+ ],
+ "LKL": [
+  "BC Gargždai (2024)",
+  "BC Jonava",
+  "BC Juventus",
+  "BC Lietkabelis",
+  "BC Neptūnas",
+  "BC Nevėžis",
+  "BC Rytas",
+  "BC Šiauliai",
+  "BC Tauragė",
+  "BC Žalgiris"
+ ],
+ "LNB Élite": [
+  "AS Monaco",
+  "LDLC ASVEL",
+  "Paris Basketball",
+  "Metropolitans 92",
+  "JL Bourg",
+  "Cholet Basket"
+ ],
+ "Basketball Bundesliga": [
+  "Bamberg Baskets",
+  "Alba Berlin",
+  "Telekom Baskets Bonn",
+  "Basketball Löwen Braunschweig",
+  "Niners Chemnitz",
+  "Skyliners Frankfurt",
+  "Phoenix Hagen",
+  "Hamburg Towers",
+  "Science City Jena",
+  "Riesen Ludwigsburg",
+  "Mitteldeutscher BC",
+  "FC Bayern Munich (basketball)",
+  "Baskets Oldenburg",
+  "Rostock Seawolves",
+  "Gladiators Trier",
+  "Ratiopharm Ulm",
+  "SC Rasta Vechta",
+  "Würzburg Baskets"
+ ],
+ "NBL Australia": [
+  "Perth Wildcats",
+  "Sydney Kings",
+  "Melbourne United",
+  "New Zealand Breakers"
+ ],
+ "Liga Portuguesa": [
+  "Benfica",
+  "FC Porto",
+  "Sporting CP"
+ ],
+ "BNXT League": [
+  "Filou Oostende",
+  "Antwerp Giants",
+  "Heroes Den Bosch"
+ ],
+ "PLK": [
+  "Anwil Włocławek",
+  "Czarni Słupsk",
+  "Dziki Warsaw",
+  "Arka Gdynia (basketball)",
+  "Astoria Bydgoszcz",
+  "GTK Gliwice",
+  "Legia Warsaw (basketball)",
+  "Start Lublin",
+  "MKS Dąbrowa Górnicza (basketball)",
+  "Trefl Sopot",
+  "Stal Ostrów Wielkopolski",
+  "Wilki Morskie Szczecin",
+  "Twarde Pierniki Toruń",
+  "Górnik Wałbrzych (basketball)",
+  "Śląsk Wrocław (basketball)",
+  "Basket Zielona Góra"
+ ],
+ "NBL Chequia": [
+  "ERA Nymburk"
+ ],
+ "Liga Letona-Estonia": [
+  "VEF Rīga",
+  "BC Kalev"
+ ],
+ "Korisliiga": [
+  "Kauhajoki Karhu"
+ ],
+ "Superliga Ucrania": [
+  "Prometey"
+ ],
+ "VTB United League": [
+  "CSKA Moscú",
+  "UNICS Kazán",
+  "Zenit San Petersburgo"
+ ],
+ "NB I/A": [
+  "Falco Szombathely"
+ ],
+ "Liga Națională": [
+  "U-BT Cluj-Napoca"
+ ],
+ "NBL Bulgaria": [
+  "Levski Sofía"
+ ],
+ "Super League Basketball": [
+  "London Lions"
+ ],
+ "BSL Austria": [
+  "BC Vienna"
+ ],
+ "SB League": [
+  "Fribourg Olympic"
+ ],
+ "Basketligaen": [
+  "Bakken Bears"
+ ],
+ "Basketligan": [
+  "Norrköping Dolphins"
+ ],
+ "Superliga Georgia": [
+  "Rustavi"
+ ],
+ "Liga Nacional": [
+  "Boca Juniors",
+  "Quimsa",
+  "Instituto de Córdoba",
+  "Obras Sanitarias"
+ ],
+ "NBB": [
+  "Flamengo",
+  "Franca",
+  "Minas",
+  "São Paulo"
+ ],
+ "LNBP": [
+  "Diablos Rojos del México",
+  "Halcones de Xalapa",
+  "Astros de Jalisco"
+ ],
+ "BSN": [
+  "Cangrejeros de Santurce",
+  "Vaqueros de Bayamón",
+  "Capitanes de Arecibo"
+ ],
+ "SPB": [
+  "Guaros de Lara",
+  "Trotamundos de Carabobo",
+  "Spartans Distrito Capital"
+ ],
+ "Liga Uruguaya": [
+  "Nacional",
+  "Peñarol",
+  "Aguada"
+ ],
+ "Liga Colombiana": [
+  "Titanes de Barranquilla",
+  "Cimarrones del Chocó"
+ ],
+ "LNB Dominicana": [
+  "Leones de Santo Domingo",
+  "Metros de Santiago"
+ ],
+ "CEBL": [
+  "Calgary Surge",
+  "Niagara River Lions",
+  "Vancouver Bandits"
+ ],
+ "CBA": [
+  "Guangdong Southern Tigers",
+  "Liaoning Flying Leopards",
+  "Beijing Ducks",
+  "Shanghai Sharks"
+ ],
+ "B.League": [
+  "Alvark Tokyo",
+  "Sendai 89ers",
+  "Sunrockers Shibuya",
+  "Gunma Crane Thunders",
+  "Levanga Hokkaido",
+  "Toyama Grouses",
+  "Utsunomiya Brex",
+  "Ibaraki Robots",
+  "Yokohama B-Corsairs",
+  "Kawasaki Brave Thunders",
+  "Chiba Jets",
+  "Akita Northern Happinets",
+  "アルティーリ千葉A千葉",
+  "Nagoya Diamond Dolphins",
+  "Hiroshima Dragonflies",
+  "San-en NeoPhoenix",
+  "Kyoto Hannaryz",
+  "シーホース三河三河",
+  "Ryukyu Golden Kings",
+  "Shiga Lakes",
+  "Nagasaki Velca",
+  "Shimane Susanoo Magic",
+  "Shinshu Brave Warriors",
+  "神戸ストークス神戸",
+  "Saga Ballooners",
+  "Osaka Evessa"
+ ],
+ "KBL": [
+  "Seoul SK Knights",
+  "Ulsan Hyundai Mobis Phoebus",
+  "Wonju DB Promy"
+ ],
+ "PBA": [
+  "San Miguel Beermen",
+  "Barangay Ginebra",
+  "TNT Tropang Giga"
+ ],
+ "Liga Libanesa": [
+  "Al Riyadi",
+  "Sagesse"
+ ],
+ "Basketball Africa League": [
+  "Petro de Luanda",
+  "Primeiro de Agosto",
+  "Al Ahly",
+  "Zamalek",
+  "US Monastir",
+  "FUS Rabat",
+  "AS Douanes",
+  "Rivers Hoopers",
+  "APR",
+  "Stade Malien"
+ ],
+ "ACC": [
+  "Duke",
+  "North Carolina",
+  "Virginia",
+  "Wake Forest"
+ ],
+ "SEC": [
+  "Kentucky",
+  "Auburn",
+  "Florida",
+  "Texas",
+  "Tennessee",
+  "Alabama",
+  "Arkansas"
+ ],
+ "Big 12": [
+  "Kansas",
+  "Arizona",
+  "Houston",
+  "Baylor",
+  "Iowa State",
+  "Texas Tech",
+  "BYU"
+ ],
+ "Big East": [
+  "UConn",
+  "Villanova",
+  "Creighton",
+  "Marquette",
+  "Xavier"
+ ],
+ "WCC": [
+  "Gonzaga"
+ ],
+ "Big Ten": [
+  "UCLA",
+  "Purdue",
+  "Michigan State",
+  "Indiana",
+  "Illinois",
+  "Michigan",
+  "Ohio State",
+  "Oregon",
+  "USC"
+ ],
+ "AAC": [
+  "Memphis"
+ ],
+ "Mountain West": [
+  "San Diego State",
+  "Utah State"
+ ],
+ "Atlantic 10": [
+  "Dayton",
+  "VCU"
+ ],
+ "Ligat ha'Al": [
+  "Hapoel Jerusalem B.C.",
+  "Maccabi Tel Aviv B.C.",
+  "Hapoel Tel Aviv B.C.",
+  "Hapoel Ironi Eilat",
+  "Maccabi Ironi Ramat Gan",
+  "Bnei Herzliya Basket",
+  "Hapoel Galil Elyon",
+  "Hapoel HaEmek",
+  "Ironi Ness Ziona B.C.",
+  "Maccabi Ashdod B.C.",
+  "Hapoel Holon B.C.",
+  "Maccabi Rishon LeZion (basketball)",
+  "Ironi Kiryat Ata B.C.",
+  "Hapoel Be'er Sheva B.C."
+ ]
+}

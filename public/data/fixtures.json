@@ -24,30 +24,6 @@
   "league": "B.League"
  },
  {
-  "date": "29 Oct",
-  "time": "01:00",
-  "home": "Atlanta Hawks",
-  "away": "Cleveland Cavaliers",
-  "event": "",
-  "league": "NBA"
- },
- {
-  "date": "29 Oct",
-  "time": "01:00",
-  "home": "New Orleans Pelicans",
-  "away": "Sacramento Kings",
-  "event": "",
-  "league": "NBA"
- },
- {
-  "date": "29 Oct",
-  "time": "03:00",
-  "home": "Portland Trail Blazers",
-  "away": "Memphis Grizzlies",
-  "event": "",
-  "league": "NBA"
- },
- {
   "date": "30 Oct",
   "time": "00:00",
   "home": "Washington Wizards",
@@ -81,18 +57,26 @@
  },
  {
   "date": "30 Oct",
-  "time": "21:00",
-  "league": "EuroLeague",
-  "home": "Real Madrid",
-  "away": "Olympiacos Piraeus",
-  "event": "SuperCup rematch (Real Madrid MVP Tavares)"
+  "time": "00:30",
+  "home": "Toronto Raptors",
+  "away": "Orlando Magic",
+  "event": "NBA Cup - Group Play",
+  "league": "NBA"
  },
  {
-  "date": "31 Oct",
-  "time": "20:45",
-  "league": "EuroLeague",
-  "home": "Fenerbahçe",
-  "away": "Panathinaikos",
-  "event": "Playoff race"
+  "date": "30 Oct",
+  "time": "01:00",
+  "home": "Miami Heat",
+  "away": "Indiana Pacers",
+  "event": "NBA Cup - Group Play",
+  "league": "NBA"
+ },
+ {
+  "date": "30 Oct",
+  "time": "01:00",
+  "home": "Dallas Mavericks",
+  "away": "Houston Rockets",
+  "event": "NBA Cup - Group Play",
+  "league": "NBA"
  }
 ]

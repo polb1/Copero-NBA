@@ -1,0 +1,34 @@
+{
+ "Liga ACB": {
+  "source": "https://en.wikipedia.org/wiki/2026–27_ACB_season",
+  "teams": 17
+ },
+ "Basketbol Süper Ligi": {
+  "source": "https://en.wikipedia.org/wiki/2026–27_Basketbol_Süper_Ligi",
+  "teams": 16
+ },
+ "Liga ABA": {
+  "source": "https://en.wikipedia.org/wiki/2026–27_ABA_League_First_Division",
+  "teams": 32
+ },
+ "Basketball Bundesliga": {
+  "source": "https://en.wikipedia.org/wiki/2026–27_Basketball_Bundesliga",
+  "teams": 18
+ },
+ "LKL": {
+  "source": "https://en.wikipedia.org/wiki/2026–27_LKL_season",
+  "teams": 10
+ },
+ "PLK": {
+  "source": "https://en.wikipedia.org/wiki/2026–27_PLK_season",
+  "teams": 16
+ },
+ "NBL Australia": {
+  "source": "https://en.wikipedia.org/wiki/2026–27_NBL_season",
+  "teams": 47
+ },
+ "Ligat ha'Al": {
+  "source": "https://en.wikipedia.org/wiki/2026–27_Israeli_Basketball_Premier_League",
+  "teams": 14
+ }
+}

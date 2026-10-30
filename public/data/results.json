@@ -1,37 +1,5 @@
 [
  {
-  "date": "27 Oct",
-  "home": "Boston Celtics",
-  "away": "Brooklyn Nets",
-  "hs": 125,
-  "as": 124,
-  "league": "NBA"
- },
- {
-  "date": "27 Oct",
-  "home": "New York Knicks",
-  "away": "Detroit Pistons",
-  "hs": 111,
-  "as": 97,
-  "league": "NBA"
- },
- {
-  "date": "27 Oct",
-  "home": "San Antonio Spurs",
-  "away": "Sacramento Kings",
-  "hs": 130,
-  "as": 103,
-  "league": "NBA"
- },
- {
-  "date": "27 Oct",
-  "home": "Los Angeles Lakers",
-  "away": "Portland Trail Blazers",
-  "hs": 129,
-  "as": 136,
-  "league": "NBA"
- },
- {
   "date": "28 Oct",
   "home": "Atlanta Hawks",
   "away": "Miami Heat",
@@ -93,6 +61,38 @@
   "away": "Golden State Warriors",
   "hs": 114,
   "as": 119,
+  "league": "NBA"
+ },
+ {
+  "date": "28 Oct",
+  "home": "New Orleans Pelicans",
+  "away": "Denver Nuggets",
+  "hs": 91,
+  "as": 104,
+  "league": "NBA"
+ },
+ {
+  "date": "28 Oct",
+  "home": "Utah Jazz",
+  "away": "San Antonio Spurs",
+  "hs": 111,
+  "as": 117,
+  "league": "NBA"
+ },
+ {
+  "date": "28 Oct",
+  "home": "Dallas Mavericks",
+  "away": "Oklahoma City Thunder",
+  "hs": 120,
+  "as": 96,
+  "league": "NBA"
+ },
+ {
+  "date": "28 Oct",
+  "home": "LA Clippers",
+  "away": "Los Angeles Lakers",
+  "hs": 87,
+  "as": 103,
   "league": "NBA"
  }
 ]

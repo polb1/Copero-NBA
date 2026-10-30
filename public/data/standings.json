@@ -11,21 +11,13 @@
   {
    "rank": 2,
    "team": "Memphis Grizzlies",
-   "w": 4,
+   "w": 5,
    "l": 0,
    "form": "",
    "conf": "West"
   },
   {
    "rank": 3,
-   "team": "Portland Trail Blazers",
-   "w": 3,
-   "l": 0,
-   "form": "",
-   "conf": "West"
-  },
-  {
-   "rank": 4,
    "team": "Detroit Pistons",
    "w": 4,
    "l": 1,
@@ -33,12 +25,20 @@
    "conf": "East"
   },
   {
-   "rank": 5,
+   "rank": 4,
    "team": "Philadelphia 76ers",
    "w": 4,
    "l": 1,
    "form": "",
    "conf": "East"
+  },
+  {
+   "rank": 5,
+   "team": "Oklahoma City Thunder",
+   "w": 4,
+   "l": 1,
+   "form": "",
+   "conf": "West"
   },
   {
    "rank": 6,
@@ -50,11 +50,11 @@
   },
   {
    "rank": 7,
-   "team": "Oklahoma City Thunder",
-   "w": 4,
+   "team": "Boston Celtics",
+   "w": 3,
    "l": 1,
    "form": "",
-   "conf": "West"
+   "conf": "East"
   },
   {
    "rank": 8,
@@ -66,17 +66,17 @@
   },
   {
    "rank": 9,
-   "team": "Boston Celtics",
+   "team": "Portland Trail Blazers",
    "w": 3,
    "l": 1,
    "form": "",
-   "conf": "East"
+   "conf": "West"
   },
   {
    "rank": 10,
-   "team": "Cleveland Cavaliers",
+   "team": "Charlotte Hornets",
    "w": 3,
-   "l": 1,
+   "l": 2,
    "form": "",
    "conf": "East"
   }
