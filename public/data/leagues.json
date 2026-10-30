@@ -39,9 +39,17 @@
  "Greek Basket League": [
   "Olympiacos",
   "Panathinaikos",
-  "AEK Atenas",
+  "AEK Athens",
+  "Aris Thessaloniki",
   "PAOK",
-  "Aris Salónica"
+  "Peristeri",
+  "Promitheas Patras",
+  "Kolossos Rhodes",
+  "Lavrio",
+  "Maroussi",
+  "Panionios",
+  "Iraklis",
+  "Rodos"
  ],
  "Lega Basket Serie A": [
   "Olimpia Milano",
@@ -51,17 +59,26 @@
   "Pallacanestro Trieste"
  ],
  "Liga ABA": [
-  "Partizan",
-  "Estrella Roja",
-  "Cedevita Olimpija",
-  "Budućnost",
-  "Mega Basket",
-  "FMP",
+  "Borac Mozzart",
+  "Bosna BH Telecom",
+  "Budućnost VOLI",
   "Cibona",
-  "KK Split",
-  "KK Zadar",
-  "Igokea",
-  "Krka Novo Mesto"
+  "U-BT Cluj-Napoca",
+  "Cedevita Olimpija",
+  "Crvena zvezda Meridianbet",
+  "Dubai Basketball",
+  "FMP",
+  "Igokea m:tel",
+  "Perspektiva Ilirija",
+  "Krka",
+  "Mega Superbet",
+  "Partizan Mozzart Bet",
+  "Slovan Bratislava",
+  "SC Derby",
+  "HKK Široki TT Kabeli",
+  "Spartak Office Shoes",
+  "BC Vienna",
+  "Zadar"
  ],
  "LKL": [
   "BC Gargždai (2024)",
@@ -104,10 +121,16 @@
   "Würzburg Baskets"
  ],
  "NBL Australia": [
-  "Perth Wildcats",
-  "Sydney Kings",
+  "Adelaide 36ers",
+  "Brisbane Bullets",
+  "Cairns Taipans",
+  "Illawarra Hawks",
   "Melbourne United",
-  "New Zealand Breakers"
+  "New Zealand Breakers",
+  "Perth Wildcats",
+  "South East Melbourne Phoenix",
+  "Sydney Kings",
+  "Tasmania Jackjumpers"
  ],
  "Liga Portuguesa": [
   "Benfica",
