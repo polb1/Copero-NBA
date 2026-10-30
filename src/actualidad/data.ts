@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import crestMapData from './crestMap.json';
 
 export interface NewsItem {
   source: string;
@@ -122,7 +123,10 @@ export const teamColor = (name: string) => {
   return palette[h % palette.length];
 };
 
-export const CRESTS: Record<string, string> = {
+const GENERATED: Record<string, string> = crestMapData as Record<string, string>;
+
+/** Escudo de cada equipo: mapa generado (scripts/fetch-crests-auto.py) + overrides. */
+const MANUAL: Record<string, string> = {
   'Real Madrid': '/crests/real-madrid.png',
   'FC Barcelona': '/crests/fc-barcelona.png',
   Baskonia: '/crests/baskonia.png',
@@ -131,8 +135,7 @@ export const CRESTS: Record<string, string> = {
   Partizan: '/crests/partizan.png',
   'AS Monaco': '/crests/as-monaco.png',
   'Fenerbahçe': '/crests/fenerbahce.png',
-  'Alvark Tokyo': '/crests/alvark-tokyo.png',
   'Chiba Jets': '/crests/chiba-jets.png',
-  'Utsunomiya Brex': '/crests/utsunomiya-brex.png',
-  'Ryukyu Golden Kings': '/crests/ryukyu-golden-kings.png',
 };
+
+export const crestFor = (name: string): string | undefined => MANUAL[name] || GENERATED[name];

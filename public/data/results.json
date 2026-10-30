@@ -94,5 +94,29 @@
   "hs": 87,
   "as": 103,
   "league": "NBA"
+ },
+ {
+  "date": "29 Oct",
+  "home": "Atlanta Hawks",
+  "away": "Cleveland Cavaliers",
+  "hs": 114,
+  "as": 111,
+  "league": "NBA"
+ },
+ {
+  "date": "29 Oct",
+  "home": "New Orleans Pelicans",
+  "away": "Sacramento Kings",
+  "hs": 132,
+  "as": 120,
+  "league": "NBA"
+ },
+ {
+  "date": "29 Oct",
+  "home": "Portland Trail Blazers",
+  "away": "Memphis Grizzlies",
+  "hs": 103,
+  "as": 124,
+  "league": "NBA"
  }
 ]

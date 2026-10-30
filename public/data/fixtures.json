@@ -78,5 +78,117 @@
   "away": "Houston Rockets",
   "event": "NBA Cup - Group Play",
   "league": "NBA"
+ },
+ {
+  "date": "30 Oct",
+  "time": "01:00",
+  "home": "Minnesota Timberwolves",
+  "away": "LA Clippers",
+  "event": "NBA Cup - Group Play",
+  "league": "NBA"
+ },
+ {
+  "date": "30 Oct",
+  "time": "03:00",
+  "home": "Golden State Warriors",
+  "away": "Los Angeles Lakers",
+  "event": "NBA Cup - Group Play",
+  "league": "NBA"
+ },
+ {
+  "date": "30 Oct",
+  "time": "03:00",
+  "home": "Phoenix Suns",
+  "away": "Denver Nuggets",
+  "event": "NBA Cup - Group Play",
+  "league": "NBA"
+ },
+ {
+  "date": "31 Oct",
+  "time": "20:00",
+  "home": "Utah Jazz",
+  "away": "Portland Trail Blazers",
+  "event": "",
+  "league": "NBA"
+ },
+ {
+  "date": "31 Oct",
+  "time": "23:00",
+  "home": "Charlotte Hornets",
+  "away": "Philadelphia 76ers",
+  "event": "",
+  "league": "NBA"
+ },
+ {
+  "date": "31 Oct",
+  "time": "00:00",
+  "home": "New Orleans Pelicans",
+  "away": "Atlanta Hawks",
+  "event": "",
+  "league": "NBA"
+ },
+ {
+  "date": "31 Oct",
+  "time": "01:00",
+  "home": "Memphis Grizzlies",
+  "away": "Sacramento Kings",
+  "event": "",
+  "league": "NBA"
+ },
+ {
+  "date": "31 Oct",
+  "time": "01:00",
+  "home": "Milwaukee Bucks",
+  "away": "Cleveland Cavaliers",
+  "event": "",
+  "league": "NBA"
+ },
+ {
+  "date": "31 Oct",
+  "time": "01:00",
+  "home": "San Antonio Spurs",
+  "away": "Minnesota Timberwolves",
+  "event": "",
+  "league": "NBA"
+ },
+ {
+  "date": "31 Oct",
+  "time": "01:30",
+  "home": "Houston Rockets",
+  "away": "Oklahoma City Thunder",
+  "event": "",
+  "league": "NBA"
+ },
+ {
+  "date": "01 Nov",
+  "time": "21:30",
+  "home": "Orlando Magic",
+  "away": "Boston Celtics",
+  "event": "",
+  "league": "NBA"
+ },
+ {
+  "date": "01 Nov",
+  "time": "23:00",
+  "home": "Indiana Pacers",
+  "away": "Brooklyn Nets",
+  "event": "",
+  "league": "NBA"
+ },
+ {
+  "date": "01 Nov",
+  "time": "02:30",
+  "home": "Golden State Warriors",
+  "away": "LA Clippers",
+  "event": "",
+  "league": "NBA"
+ },
+ {
+  "date": "01 Nov",
+  "time": "03:00",
+  "home": "Los Angeles Lakers",
+  "away": "Toronto Raptors",
+  "event": "",
+  "league": "NBA"
  }
 ]

@@ -74,7 +74,7 @@ def nba_standings():
     rows.sort(key=lambda r: (-r["pct"], -r["w"], r["seed"]))
     return [
         {"rank": i, "team": r["team"], "w": r["w"], "l": r["l"], "form": "", "conf": r["conf"]}
-        for i, r in enumerate(rows[:10], start=1)
+        for i, r in enumerate(rows, start=1)
     ]
 
 
@@ -219,7 +219,7 @@ def bleague_standings():
             "form": "",
             "conf": "B1",
         })
-    return rows[:10] or None
+    return rows or None
 
 
 def bleague_today():
@@ -273,10 +273,10 @@ def main():
         if res or fix:
             old = read_json("results.json", [])
             others = [r for r in old if r.get("league") != "NBA"]
-            write_json("results.json", ([dict(r, league="NBA") for r in res] + others)[:12])
+            write_json("results.json", ([dict(r, league="NBA") for r in res] + others)[:60])
             oldf = read_json("fixtures.json", [])
             othersf = [f for f in oldf if f.get("league") != "NBA"]
-            write_json("fixtures.json", ([dict(f, league="NBA") for f in fix] + othersf)[:10])
+            write_json("fixtures.json", ([dict(f, league="NBA") for f in fix] + othersf)[:60])
             changed.append(f"NBA {len(res)} res / {len(fix)} próx")
     except Exception as e:
         print(f"[warn] NBA marcador: {e}")
@@ -287,10 +287,10 @@ def main():
         if res or fix:
             old = read_json("results.json", [])
             others = [r for r in old if r.get("league") != "EU"]
-            write_json("results.json", ([dict(r, league="EU") for r in res] + others)[:12])
+            write_json("results.json", ([dict(r, league="EU") for r in res] + others)[:60])
             oldf = read_json("fixtures.json", [])
             othersf = [f for f in oldf if f.get("league") != "EU"]
-            write_json("fixtures.json", ([dict(f, league="EU") for f in fix] + othersf)[:10])
+            write_json("fixtures.json", ([dict(f, league="EU") for f in fix] + othersf)[:60])
             changed.append(f"EU {len(res)} res / {len(fix)} próx")
     except Exception as e:
         print(f"[warn] EuroLeague: {e}")
@@ -311,12 +311,12 @@ def main():
         if res:
             old = read_json("results.json", [])
             others = [r for r in old if r.get("league") != "B.League"]
-            write_json("results.json", ([dict(r, league="B.League") for r in res] + others)[:12])
+            write_json("results.json", ([dict(r, league="B.League") for r in res] + others)[:60])
             changed.append(f"B.League {len(res)} resultados")
         if fix:
             oldf = read_json("fixtures.json", [])
             othersf = [f for f in oldf if f.get("league") != "B.League"]
-            write_json("fixtures.json", ([dict(f, league="B.League") for f in fix] + othersf)[:10])
+            write_json("fixtures.json", ([dict(f, league="B.League") for f in fix] + othersf)[:60])
             changed.append(f"B.League {len(fix)} próximos")
     except Exception as e:
         print(f"[warn] B.League partidos: {e}")

@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { CRESTS, initials, leagueMeta, pct, teamColor, type FixtureRow, type NewsItem, type ResultRow, type StandingRow, type StatRow } from '../data';
+import { crestFor, initials, leagueMeta, pct, teamColor, type FixtureRow, type NewsItem, type ResultRow, type StandingRow, type StatRow } from '../data';
 
 export function SectionHeader({ title, right, id }: { title: string; right?: ReactNode; id?: string }) {
   return (
@@ -15,23 +15,26 @@ export function SectionHeader({ title, right, id }: { title: string; right?: Rea
 }
 
 export function TeamBadge({ name, size = 24 }: { name: string; size?: number }) {
-  const crest = CRESTS[name];
-  if (crest) {
+  const crest = crestFor(name);
+  const [broken, setBroken] = useState(false);
+  if (crest && !broken) {
     return (
       <img
         src={crest}
-        alt=""
+        alt={name}
         width={size}
         height={size}
-        className="rounded-full bg-court-surface-high object-contain p-[2px] shrink-0"
-        onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+        loading="lazy"
+        className="rounded-full bg-white/95 object-contain p-[2px] shrink-0 ring-1 ring-black/20"
+        onError={() => setBroken(true)}
       />
     );
   }
   return (
     <span
-      className="rounded-full grid place-items-center font-display font-bold text-white shrink-0"
-      style={{ width: size, height: size, background: teamColor(name), fontSize: size * 0.34 }}
+      className="rounded-full grid place-items-center font-display font-bold text-white shrink-0 ring-1 ring-black/20"
+      style={{ width: size, height: size, background: teamColor(name), fontSize: Math.max(8, size * 0.34) }}
+      title={name}
     >
       {initials(name)}
     </span>

@@ -8,6 +8,7 @@ import { Careers } from './screens/simple/Careers';
 import { HubLayout } from './actualidad/components/HubLayout';
 import { Home as HubHome } from './actualidad/pages/Home';
 import { Noticias, Clasificaciones, Resultados, Calendario, Estadisticas } from './actualidad/pages/Pages';
+import { LeaguePage } from './actualidad/pages/League';
 import './actualidad/tailwind.css';
 
 // Dev-only scene gallery loads on demand.
@@ -63,6 +64,7 @@ export function App() {
             <Route path="/actualidad" element={<HubLayout><HubHome /></HubLayout>} />
             <Route path="/noticias" element={<HubLayout><Noticias /></HubLayout>} />
             <Route path="/clasificaciones" element={<HubLayout><Clasificaciones /></HubLayout>} />
+            <Route path="/liga/:league" element={<HubLayout><LeaguePage /></HubLayout>} />
             <Route path="/resultados" element={<HubLayout><Resultados /></HubLayout>} />
             <Route path="/calendario" element={<HubLayout><Calendario /></HubLayout>} />
             <Route path="/estadisticas" element={<HubLayout><Estadisticas /></HubLayout>} />

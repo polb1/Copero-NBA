@@ -79,6 +79,166 @@
    "l": 2,
    "form": "",
    "conf": "East"
+  },
+  {
+   "rank": 11,
+   "team": "Cleveland Cavaliers",
+   "w": 3,
+   "l": 2,
+   "form": "",
+   "conf": "East"
+  },
+  {
+   "rank": 12,
+   "team": "San Antonio Spurs",
+   "w": 3,
+   "l": 2,
+   "form": "",
+   "conf": "West"
+  },
+  {
+   "rank": 13,
+   "team": "Dallas Mavericks",
+   "w": 3,
+   "l": 2,
+   "form": "",
+   "conf": "West"
+  },
+  {
+   "rank": 14,
+   "team": "Minnesota Timberwolves",
+   "w": 3,
+   "l": 2,
+   "form": "",
+   "conf": "West"
+  },
+  {
+   "rank": 15,
+   "team": "Atlanta Hawks",
+   "w": 3,
+   "l": 3,
+   "form": "",
+   "conf": "East"
+  },
+  {
+   "rank": 16,
+   "team": "Denver Nuggets",
+   "w": 2,
+   "l": 2,
+   "form": "",
+   "conf": "West"
+  },
+  {
+   "rank": 17,
+   "team": "New York Knicks",
+   "w": 2,
+   "l": 3,
+   "form": "",
+   "conf": "East"
+  },
+  {
+   "rank": 18,
+   "team": "Washington Wizards",
+   "w": 2,
+   "l": 3,
+   "form": "",
+   "conf": "East"
+  },
+  {
+   "rank": 19,
+   "team": "Indiana Pacers",
+   "w": 2,
+   "l": 3,
+   "form": "",
+   "conf": "East"
+  },
+  {
+   "rank": 20,
+   "team": "Golden State Warriors",
+   "w": 2,
+   "l": 3,
+   "form": "",
+   "conf": "West"
+  },
+  {
+   "rank": 21,
+   "team": "Phoenix Suns",
+   "w": 1,
+   "l": 2,
+   "form": "",
+   "conf": "West"
+  },
+  {
+   "rank": 22,
+   "team": "Orlando Magic",
+   "w": 1,
+   "l": 3,
+   "form": "",
+   "conf": "East"
+  },
+  {
+   "rank": 23,
+   "team": "LA Clippers",
+   "w": 1,
+   "l": 3,
+   "form": "",
+   "conf": "West"
+  },
+  {
+   "rank": 24,
+   "team": "Chicago Bulls",
+   "w": 1,
+   "l": 4,
+   "form": "",
+   "conf": "East"
+  },
+  {
+   "rank": 25,
+   "team": "Miami Heat",
+   "w": 1,
+   "l": 4,
+   "form": "",
+   "conf": "East"
+  },
+  {
+   "rank": 26,
+   "team": "Utah Jazz",
+   "w": 1,
+   "l": 4,
+   "form": "",
+   "conf": "West"
+  },
+  {
+   "rank": 27,
+   "team": "Milwaukee Bucks",
+   "w": 1,
+   "l": 4,
+   "form": "",
+   "conf": "East"
+  },
+  {
+   "rank": 28,
+   "team": "New Orleans Pelicans",
+   "w": 1,
+   "l": 4,
+   "form": "",
+   "conf": "West"
+  },
+  {
+   "rank": 29,
+   "team": "Brooklyn Nets",
+   "w": 0,
+   "l": 4,
+   "form": "",
+   "conf": "East"
+  },
+  {
+   "rank": 30,
+   "team": "Sacramento Kings",
+   "w": 0,
+   "l": 5,
+   "form": "",
+   "conf": "West"
   }
  ],
  "EuroLeague": [
@@ -217,6 +377,30 @@
    "team": "Kawasaki Brave Thunders",
    "w": 4,
    "l": 7,
+   "form": "",
+   "conf": "B1"
+  },
+  {
+   "rank": 11,
+   "team": "Chiba Jets",
+   "w": 4,
+   "l": 7,
+   "form": "",
+   "conf": "B1"
+  },
+  {
+   "rank": 12,
+   "team": "Akita Northern Happinets",
+   "w": 4,
+   "l": 7,
+   "form": "",
+   "conf": "B1"
+  },
+  {
+   "rank": 13,
+   "team": "Chiba Jets",
+   "w": 3,
+   "l": 9,
    "form": "",
    "conf": "B1"
   }

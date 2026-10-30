@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
-import { Card, NewsCard, SectionHeader, StandingsTable, TeamBadge } from '../components/ui';
+import { Link } from 'react-router-dom';
+import { LEAGUE_COUNTRY, leaguePath } from '../leagues';
+import { Card, NewsCard, SectionHeader, TeamBadge } from '../components/ui';
 import { useHubData } from '../data';
 
 /* ---------------- Noticias ---------------- */
@@ -28,62 +30,43 @@ export function Noticias() {
   );
 }
 
-/* ---------------- Clasificaciones ---------------- */
+/* ---------------- Clasificaciones (índice de ligas) ---------------- */
 export function Clasificaciones() {
   const { standings, leagues, loading } = useHubData();
-  const liveNames = Object.keys(standings);
   const all = useMemo(() => {
-    const names = [...new Set([...liveNames, ...Object.keys(leagues)])];
-    return names.sort((a, b) => {
-      const ia = liveNames.indexOf(a), ib = liveNames.indexOf(b);
-      if (ia >= 0 && ib >= 0) return ia - ib;
-      if (ia >= 0) return -1;
-      if (ib >= 0) return 1;
-      return a.localeCompare(b);
-    });
-  }, [standings, leagues, liveNames]);
-  const [sel, setSel] = useState<string>(all[0] || 'NBA');
-  const rows = standings[sel];
-  const clubs = leagues[sel] || [];
+    const names = [...new Set([...Object.keys(standings), ...Object.keys(leagues)])];
+    return names.sort((a, b) => a.localeCompare(b));
+  }, [standings, leagues]);
 
   return (
     <div className="max-w-[1200px] mx-auto flex flex-col gap-space-md">
-      <SectionHeader title="Clasificaciones" right={`${all.length} ligas`} />
-      <div className="flex flex-wrap gap-2">
-        {all.map((lg) => (
-          <button
-            key={lg}
-            onClick={() => setSel(lg)}
-            className={`px-3 py-1 rounded font-display text-label-table-header uppercase tracking-wider border-0 cursor-pointer ${
-              sel === lg ? 'bg-primary-container text-on-primary-container' : 'bg-court-surface text-on-surface-variant hover:text-text-primary'
-            }`}
-          >
-            {lg}
-          </button>
-        ))}
-      </div>
-
-      {loading ? (
-        <Card className="p-space-lg text-text-muted text-body-sm">Cargando…</Card>
-      ) : rows && rows.length ? (
-        <Card className="p-space-sm overflow-hidden">
-          <StandingsTable rows={rows} />
-        </Card>
-      ) : (
-        <Card className="p-space-md">
-          <p className="text-body-sm text-text-muted m-0 mb-space-sm">
-            {clubs.length} equipos · plantilla de la temporada (sin marcadores en vivo para esta liga)
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
-            {clubs.map((c) => (
-              <div key={typeof c === 'string' ? c : (c as { name: string }).name} className="flex items-center gap-2 bg-court-surface-elevated rounded px-2 py-1.5">
-                <TeamBadge name={typeof c === 'string' ? c : (c as { name: string }).name} size={20} />
-                <span className="text-body-sm text-text-primary truncate">{typeof c === 'string' ? c : (c as { name: string }).name}</span>
+      <SectionHeader title="Competiciones" right={`${all.length} ligas`} />
+      {loading && <Card className="p-space-lg text-text-muted text-body-sm">Cargando…</Card>}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-space-sm">
+        {all.map((name) => {
+          const rows = standings[name];
+          const clubs = leagues[name] || [];
+          return (
+            <Link
+              key={name}
+              to={leaguePath(name)}
+              className="bg-court-surface border border-court-border rounded-lg p-space-sm hover:border-primary-container transition-colors flex flex-col gap-1"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className="font-display text-headline-md font-bold uppercase text-text-primary truncate">{name}</span>
+                <span className="font-display text-label-table-header text-text-muted">{LEAGUE_COUNTRY[name] || 'INT'}</span>
               </div>
-            ))}
-          </div>
-        </Card>
-      )}
+              <span className="text-body-sm text-text-muted">
+                {rows ? `${rows.length} equipos · clasificación` : `${clubs.length} equipos`}
+              </span>
+              <span className="mt-1 inline-flex items-center gap-1 font-display text-label-table-header uppercase text-primary">
+                Ver liga
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </span>
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -1,51 +1,18 @@
-import type { ReactNode } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useMemo, useState, type ReactNode } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import { leaguePath, LEAGUE_COUNTRY } from '../leagues';
+import { useHubData } from '../data';
 
 const NAV = [
   { to: '/actualidad', label: 'Partidos de Hoy' },
   { to: '/noticias', label: 'Noticias' },
-  { to: '/clasificaciones', label: 'Clasificaciones' },
+  { to: '/clasificaciones', label: 'Competiciones' },
   { to: '/resultados', label: 'Resultados' },
   { to: '/calendario', label: 'Calendario' },
   { to: '/estadisticas', label: 'Estadísticas' },
 ];
 
-const SIDEBAR = [
-  {
-    title: 'DESTACADO',
-    items: [
-      { label: 'NBA Este', tag: 'USA', to: '/clasificaciones?liga=NBA' },
-      { label: 'NBA Oeste', tag: 'USA', to: '/clasificaciones?liga=NBA' },
-      { label: 'EuroLeague', tag: 'EUR', to: '/clasificaciones?liga=EU' },
-      { label: 'B.League', tag: 'JPN', to: '/clasificaciones?liga=B.League' },
-      { label: 'Liga ACB', tag: 'ESP', to: '/clasificaciones?liga=Liga%20ACB' },
-    ],
-  },
-  {
-    title: 'INTERNACIONAL',
-    items: [
-      { label: 'EuroLeague', tag: '18 EQ', to: '/clasificaciones?liga=EU' },
-      { label: 'EuroCup', tag: '20 EQ', to: '/clasificaciones' },
-      { label: 'BCL', tag: 'FIBA', to: '/clasificaciones' },
-    ],
-  },
-  {
-    title: 'AMÉRICA',
-    items: [
-      { label: 'NBA', tag: '30 EQ', to: '/clasificaciones?liga=NBA' },
-      { label: 'G-League', tag: 'USA', to: '/clasificaciones' },
-      { label: 'BCLA', tag: 'AMER', to: '/clasificaciones' },
-    ],
-  },
-  {
-    title: 'LIGAS NACIONALES',
-    items: [
-      { label: 'ACB España', tag: '18 EQ', to: '/clasificaciones?liga=Liga%20ACB' },
-      { label: 'Lega Basket Italia', tag: '16 EQ', to: '/clasificaciones?liga=Lega%20Basket%20Serie%20A' },
-      { label: 'BBL Alemania', tag: '18 EQ', to: '/clasificaciones?liga=Basketball%20Bundesliga' },
-    ],
-  },
-];
+const FEATURED = ['NBA', 'EuroLeague', 'B.League', 'Liga ACB'];
 
 function NavLink({ to, label }: { to: string; label: string }) {
   const { pathname } = useLocation();
@@ -54,13 +21,93 @@ function NavLink({ to, label }: { to: string; label: string }) {
     <Link
       to={to}
       className={`font-display text-label-table-header font-semibold uppercase tracking-wider transition-colors py-space-sm border-b-2 ${
-        active
-          ? 'text-primary border-primary-container'
-          : 'text-on-surface-variant border-transparent hover:text-on-surface'
+        active ? 'text-primary border-primary-container' : 'text-on-surface-variant border-transparent hover:text-on-surface'
       }`}
     >
       {label}
     </Link>
+  );
+}
+
+function Sidebar() {
+  const { standings, leagues, loading } = useHubData();
+  const { league: currentSlug } = useParams<{ league: string }>();
+  const [q, setQ] = useState('');
+
+  const all = useMemo(() => {
+    const names = [...new Set([...Object.keys(standings), ...Object.keys(leagues)])];
+    return names.sort((a, b) => a.localeCompare(b));
+  }, [standings, leagues]);
+
+  const featured = FEATURED
+    .map((f) => all.find((n) => n.toLowerCase() === f.toLowerCase()))
+    .filter((n): n is string => Boolean(n));
+  const rest = all
+    .filter((n) => !featured.includes(n))
+    .filter((n) => !q || n.toLowerCase().includes(q.toLowerCase()));
+
+  const item = (name: string) => {
+    const active = leaguePath(name) === `/liga/${currentSlug || ''}`;
+    return (
+      <Link
+        key={name}
+        to={leaguePath(name)}
+        className={`flex items-center justify-between gap-2 px-space-sm py-1.5 rounded transition-colors text-body-sm border-l-2 ${
+          active
+            ? 'bg-primary-container/20 text-primary border-primary-container'
+            : 'text-on-surface-variant border-transparent hover:bg-court-surface-elevated hover:text-on-surface'
+        }`}
+      >
+        <span className="truncate">{name}</span>
+        <span className="font-display text-label-table-header text-text-muted shrink-0">
+          {LEAGUE_COUNTRY[name] || 'INT'}
+        </span>
+      </Link>
+    );
+  };
+
+  return (
+    <aside className="hidden xl:block fixed left-0 top-16 bottom-0 w-64 bg-court-surface z-40 overflow-y-auto">
+      <div className="py-space-md px-space-sm flex flex-col gap-space-md">
+        <div className="flex items-center justify-between px-space-sm py-space-xs rounded bg-court-surface-elevated">
+          <span className="font-display text-label-table-header uppercase text-secondary tracking-widest">
+            COMPETICIONES
+          </span>
+          <span className="font-mono text-data-mono text-live-red flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-live-red animate-pulse" />EN VIVO
+          </span>
+        </div>
+
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Buscar liga…"
+          className="w-full bg-court-surface-elevated border border-court-border rounded px-space-sm py-1.5 text-body-sm text-text-primary outline-none focus:border-primary-container"
+        />
+
+        <nav className="flex flex-col gap-space-lg">
+          <div className="flex flex-col gap-0.5">
+            <div className="px-space-sm py-space-xs text-text-muted font-display text-label-table-header uppercase tracking-wider">
+              Destacado
+            </div>
+            {featured.map(item)}
+          </div>
+
+          <div className="flex flex-col gap-0.5">
+            <div className="flex items-center justify-between px-space-sm py-space-xs text-text-muted">
+              <span className="font-display text-label-table-header uppercase tracking-wider">
+                Todas las ligas
+              </span>
+              <span className="font-display text-label-table-header">{loading ? '…' : all.length}</span>
+            </div>
+            {rest.map(item)}
+            {!loading && rest.length === 0 && (
+              <span className="px-space-sm text-body-sm text-text-dim">Sin coincidencias</span>
+            )}
+          </div>
+        </nav>
+      </div>
+    </aside>
   );
 }
 
@@ -103,43 +150,7 @@ export function HubLayout({ children }: { children: ReactNode }) {
         </div>
       </header>
 
-      {/* Sidebar */}
-      <aside className="hidden xl:block fixed left-0 top-16 bottom-0 w-64 bg-court-surface z-40 overflow-y-auto">
-        <div className="py-space-md px-space-sm flex flex-col gap-space-md">
-          <div className="flex items-center justify-between px-space-sm py-space-xs rounded bg-court-surface-elevated">
-            <span className="font-display text-label-table-header uppercase text-secondary tracking-widest">
-              TORNEOS ACTIVOS
-            </span>
-            <span className="font-mono text-data-mono text-live-red flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-live-red animate-pulse" />EN VIVO
-            </span>
-          </div>
-          <nav className="flex flex-col gap-space-lg">
-            {SIDEBAR.map((group) => (
-              <div key={group.title} className="flex flex-col gap-1">
-                <div className="flex items-center justify-between px-space-sm py-space-xs text-text-muted">
-                  <span className="font-display text-label-table-header uppercase tracking-wider">
-                    {group.title}
-                  </span>
-                  <span className="material-symbols-outlined text-[16px]">expand_more</span>
-                </div>
-                <div className="flex flex-col gap-0.5">
-                  {group.items.map((item) => (
-                    <Link
-                      key={group.title + item.label}
-                      to={item.to}
-                      className="flex items-center justify-between px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-court-surface-elevated hover:text-on-surface transition-colors text-body-sm"
-                    >
-                      <span className="font-body text-body-sm">{item.label}</span>
-                      <span className="font-display text-label-table-header text-text-muted">{item.tag}</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </nav>
-        </div>
-      </aside>
+      <Sidebar />
 
       {/* Contenido */}
       <div className="xl:pl-64">
