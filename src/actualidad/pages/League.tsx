@@ -113,7 +113,7 @@ export function LeaguePage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-space-md">
           <div className="lg:col-span-2 flex flex-col gap-space-md">
             <Card className="p-space-sm">
-              <SectionHeader title="Clasificación" right={rows.length ? 'En vivo' : 'Plantilla'} />
+              <SectionHeader title={rows.length ? 'Clasificación' : 'Equipos'} right={rows.length ? 'En vivo' : 'Plantilla 2026-27'} />
               {rows.length ? (
                 <StandingsTable rows={rows.slice(0, 10)} />
               ) : (
@@ -161,7 +161,7 @@ export function LeaguePage() {
           ) : (
             <>
               <p className="text-body-sm text-text-muted px-space-sm py-space-xs m-0">
-                {clubs.length} equipos de la temporada · sin clasificación en vivo disponible
+                {clubs.length} equipos · tabla oficial no disponible en fuentes gratuitas (resultados y calendario sí son reales)
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 p-2">
                 {clubs.map((c) => {

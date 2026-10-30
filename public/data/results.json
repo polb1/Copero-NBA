@@ -118,5 +118,437 @@
   "hs": 103,
   "as": 124,
   "league": "NBA"
+ },
+ {
+  "date": "3 oct",
+  "home": "Baloncesto Málaga",
+  "away": "CB 1939 Canarias",
+  "hs": 75,
+  "as": 80,
+  "league": "Liga ACB"
+ },
+ {
+  "date": "3 oct",
+  "home": "Basquet Manresa",
+  "away": "CB Breogán",
+  "hs": 95,
+  "as": 101,
+  "league": "Liga ACB"
+ },
+ {
+  "date": "4 oct",
+  "home": "Força Lleida CE",
+  "away": "CB San Pablo Burgos",
+  "hs": 81,
+  "as": 94,
+  "league": "Liga ACB"
+ },
+ {
+  "date": "4 oct",
+  "home": "Básquet Coruña",
+  "away": "Bilbao Basket",
+  "hs": 104,
+  "as": 101,
+  "league": "Liga ACB"
+ },
+ {
+  "date": "4 oct",
+  "home": "Obradoiro CAB",
+  "away": "Real Madrid Baloncesto",
+  "hs": 107,
+  "as": 114,
+  "league": "Liga ACB"
+ },
+ {
+  "date": "4 oct",
+  "home": "Basket Zaragoza",
+  "away": "Valencia Basket",
+  "hs": 82,
+  "as": 97,
+  "league": "Liga ACB"
+ },
+ {
+  "date": "3 oct",
+  "home": "Napoli Basket",
+  "away": "Pallacanestro Reggiana",
+  "hs": 99,
+  "as": 93,
+  "league": "Lega Basket Serie A"
+ },
+ {
+  "date": "4 oct",
+  "home": "Pallacanestro Trieste",
+  "away": "Reyer Venezia Mestre",
+  "hs": 82,
+  "as": 87,
+  "league": "Lega Basket Serie A"
+ },
+ {
+  "date": "4 oct",
+  "home": "Scafati Basket",
+  "away": "Pallacanestro Varese",
+  "hs": 77,
+  "as": 85,
+  "league": "Lega Basket Serie A"
+ },
+ {
+  "date": "4 oct",
+  "home": "BC Roma SPQR",
+  "away": "Derthona Basket",
+  "hs": 108,
+  "as": 70,
+  "league": "Lega Basket Serie A"
+ },
+ {
+  "date": "4 oct",
+  "home": "Virtus Pallacanestro Bologna",
+  "away": "Maxima Roma",
+  "hs": 98,
+  "as": 89,
+  "league": "Lega Basket Serie A"
+ },
+ {
+  "date": "5 oct",
+  "home": "Scaligera Basket Verona",
+  "away": "Olimpia Milano",
+  "hs": 75,
+  "as": 72,
+  "league": "Lega Basket Serie A"
+ },
+ {
+  "date": "24 sep",
+  "home": "Rasta Vechta",
+  "away": "Bamberg Baskets",
+  "hs": 67,
+  "as": 108,
+  "league": "Basketball Bundesliga"
+ },
+ {
+  "date": "25 sep",
+  "home": "Phoenix Hagen",
+  "away": "Ulm",
+  "hs": 78,
+  "as": 93,
+  "league": "Basketball Bundesliga"
+ },
+ {
+  "date": "25 sep",
+  "home": "Gladiators Trier",
+  "away": "Bonn",
+  "hs": 106,
+  "as": 80,
+  "league": "Basketball Bundesliga"
+ },
+ {
+  "date": "25 sep",
+  "home": "Hamburg Towers",
+  "away": "Niners Chemnitz",
+  "hs": 94,
+  "as": 90,
+  "league": "Basketball Bundesliga"
+ },
+ {
+  "date": "25 sep",
+  "home": "Mitteldeutscher BC",
+  "away": "Science City Jena",
+  "hs": 77,
+  "as": 62,
+  "league": "Basketball Bundesliga"
+ },
+ {
+  "date": "25 sep",
+  "home": "s.Oliver Würzburg",
+  "away": "Baskets Oldenburg",
+  "hs": 68,
+  "as": 77,
+  "league": "Basketball Bundesliga"
+ },
+ {
+  "date": "3 oct",
+  "home": "SLUC Nancy Basket",
+  "away": "Cholet",
+  "hs": 76,
+  "as": 85,
+  "league": "LNB Élite"
+ },
+ {
+  "date": "3 oct",
+  "home": "Strasbourg",
+  "away": "Boulazac Basket Dordogne",
+  "hs": 87,
+  "as": 75,
+  "league": "LNB Élite"
+ },
+ {
+  "date": "3 oct",
+  "home": "Limoges",
+  "away": "Saint-Quentin Basket-Ball",
+  "hs": 92,
+  "as": 75,
+  "league": "LNB Élite"
+ },
+ {
+  "date": "3 oct",
+  "home": "Élan Béarnais",
+  "away": "Dijon",
+  "hs": 61,
+  "as": 89,
+  "league": "LNB Élite"
+ },
+ {
+  "date": "3 oct",
+  "home": "Bourg-en-Bresse",
+  "away": "Élan Chalon",
+  "hs": 90,
+  "as": 77,
+  "league": "LNB Élite"
+ },
+ {
+  "date": "4 oct",
+  "home": "Gravelines-Dunkerque",
+  "away": "Lyon-Villeurbanne",
+  "hs": 65,
+  "as": 70,
+  "league": "LNB Élite"
+ },
+ {
+  "date": "10 oct",
+  "home": "Aris BC",
+  "away": "AEK BC",
+  "hs": 88,
+  "as": 58,
+  "league": "Greek Basket League"
+ },
+ {
+  "date": "10 oct",
+  "home": "Promitheas Patras BC",
+  "away": "Panathinaikos BC",
+  "hs": 59,
+  "as": 84,
+  "league": "Greek Basket League"
+ },
+ {
+  "date": "10 oct",
+  "home": "ASK Karditsas BC",
+  "away": "Vikos Falcons BC",
+  "hs": 85,
+  "as": 74,
+  "league": "Greek Basket League"
+ },
+ {
+  "date": "10 oct",
+  "home": "PAOK BC",
+  "away": "Doxa Lefkadas BC",
+  "hs": 86,
+  "as": 73,
+  "league": "Greek Basket League"
+ },
+ {
+  "date": "11 oct",
+  "home": "Olympiacos BC",
+  "away": "Kolossos BC",
+  "hs": 99,
+  "as": 83,
+  "league": "Greek Basket League"
+ },
+ {
+  "date": "17 oct",
+  "home": "AEK BC",
+  "away": "Mykonos BC",
+  "hs": 84,
+  "as": 79,
+  "league": "Greek Basket League"
+ },
+ {
+  "date": "18 oct",
+  "home": "Maccabi Tel Aviv B.C.",
+  "away": "Ironi Kiryat Ata B.C.",
+  "hs": 116,
+  "as": 89,
+  "league": "Ligat ha'Al"
+ },
+ {
+  "date": "18 oct",
+  "home": "Hapoel Tel Aviv B.C.",
+  "away": "Maccabi Ashdod B.C.",
+  "hs": 81,
+  "as": 67,
+  "league": "Ligat ha'Al"
+ },
+ {
+  "date": "19 oct",
+  "home": "Hapoel Eilat BC",
+  "away": "Hapoel Holon",
+  "hs": 78,
+  "as": 69,
+  "league": "Ligat ha'Al"
+ },
+ {
+  "date": "19 oct",
+  "home": "Hapoel HaEmek",
+  "away": "Maccabi Rishon LeZion",
+  "hs": 60,
+  "as": 80,
+  "league": "Ligat ha'Al"
+ },
+ {
+  "date": "19 oct",
+  "home": "Hapoel Galil Elyon",
+  "away": "Maccabi Ironi Ramat Gan",
+  "hs": 104,
+  "as": 101,
+  "league": "Ligat ha'Al"
+ },
+ {
+  "date": "23 oct",
+  "home": "Hapoel Beer Sheva BC",
+  "away": "Hapoel Holon",
+  "hs": 75,
+  "as": 91,
+  "league": "Ligat ha'Al"
+ },
+ {
+  "date": "26 sep",
+  "home": "BC Lietkabelis",
+  "away": "BC Tauragė",
+  "hs": 85,
+  "as": 79,
+  "league": "LKL"
+ },
+ {
+  "date": "27 sep",
+  "home": "BC Žalgiris",
+  "away": "BC Šiauliai",
+  "hs": 101,
+  "as": 82,
+  "league": "LKL"
+ },
+ {
+  "date": "27 sep",
+  "home": "BC Juventus",
+  "away": "BC Nevėžis",
+  "hs": 94,
+  "as": 77,
+  "league": "LKL"
+ },
+ {
+  "date": "3 oct",
+  "home": "BC Lietuvos rytas",
+  "away": "BC Gargždai-SC",
+  "hs": 102,
+  "as": 105,
+  "league": "LKL"
+ },
+ {
+  "date": "3 oct",
+  "home": "BC Neptūnas",
+  "away": "BC Nevėžis",
+  "hs": 89,
+  "as": 62,
+  "league": "LKL"
+ },
+ {
+  "date": "3 oct",
+  "home": "BC Jonava",
+  "away": "BC Šiauliai",
+  "hs": 63,
+  "as": 79,
+  "league": "LKL"
+ },
+ {
+  "date": "27 sep",
+  "home": "Bahçeşehir Koleji SK",
+  "away": "Fenerbahçe Basketbol",
+  "hs": 98,
+  "as": 83,
+  "league": "Basketbol Süper Ligi"
+ },
+ {
+  "date": "2 oct",
+  "home": "Merkezefendi Belediyesi Denizli Basket",
+  "away": "Tofaş SK",
+  "hs": 101,
+  "as": 87,
+  "league": "Basketbol Süper Ligi"
+ },
+ {
+  "date": "2 oct",
+  "home": "Karşıyaka Basket",
+  "away": "Galatasaray SK",
+  "hs": 78,
+  "as": 71,
+  "league": "Basketbol Süper Ligi"
+ },
+ {
+  "date": "3 oct",
+  "home": "Esenler Erokspor (basketball)",
+  "away": "Petkim Spor",
+  "hs": 96,
+  "as": 87,
+  "league": "Basketbol Süper Ligi"
+ },
+ {
+  "date": "3 oct",
+  "home": "Bursaspor Basketbol",
+  "away": "Türk Telekom BK",
+  "hs": 69,
+  "as": 78,
+  "league": "Basketbol Süper Ligi"
+ },
+ {
+  "date": "4 oct",
+  "home": "Çayirova",
+  "away": "Bahçeşehir Koleji SK",
+  "hs": 76,
+  "as": 84,
+  "league": "Basketbol Süper Ligi"
+ },
+ {
+  "date": "25 sep",
+  "home": "Brisbane Bullets",
+  "away": "Illawarra Hawks",
+  "hs": 103,
+  "as": 95,
+  "league": "NBL Australia"
+ },
+ {
+  "date": "26 sep",
+  "home": "Perth Wildcats",
+  "away": "New Zealand Breakers",
+  "hs": 97,
+  "as": 93,
+  "league": "NBL Australia"
+ },
+ {
+  "date": "27 sep",
+  "home": "Adelaide 36ers",
+  "away": "Cairns Taipans",
+  "hs": 83,
+  "as": 69,
+  "league": "NBL Australia"
+ },
+ {
+  "date": "27 sep",
+  "home": "Sydney Kings",
+  "away": "Illawarra Hawks",
+  "hs": 121,
+  "as": 100,
+  "league": "NBL Australia"
+ },
+ {
+  "date": "30 sep",
+  "home": "New Zealand Breakers",
+  "away": "Cairns Taipans",
+  "hs": 98,
+  "as": 75,
+  "league": "NBL Australia"
+ },
+ {
+  "date": "30 sep",
+  "home": "Sydney Kings",
+  "away": "Brisbane Bullets",
+  "hs": 93,
+  "as": 78,
+  "league": "NBL Australia"
  }
 ]

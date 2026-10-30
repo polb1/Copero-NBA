@@ -15,6 +15,7 @@ Nunca deja la web vacía: si una fuente falla, conserva el archivo anterior.
 import gzip
 import json
 import os
+import time
 import urllib.request
 from datetime import datetime, timedelta, timezone
 
@@ -253,6 +254,244 @@ def bleague_today():
     return results, fixtures
 
 
+
+# ---------------------------------------------------------------- TheSportsDB
+TSDB = "https://www.thesportsdb.com/api/v1/json/123"
+TSDB_LEAGUES = {
+    4408: "Liga ACB",
+    4433: "Lega Basket Serie A",
+    4441: "Basketball Bundesliga",
+    4423: "LNB Élite",
+    4452: "Greek Basket League",
+    4474: "Ligat ha'Al",
+    4478: "LKL",
+    4475: "Basketbol Süper Ligi",
+    4434: "NBL Australia",
+}
+
+MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
+
+
+def corta_fecha(iso):
+    try:
+        d = datetime.strptime(iso[:10], "%Y-%m-%d")
+        return f"{d.day} {MESES[d.month - 1]}"
+    except Exception:
+        return iso[:10]
+
+
+def _canon(name, index):
+    import re as _re
+    key = _re.sub(r"[^a-z0-9]+", "", (name or "").lower())
+    return index.get(key, name)
+
+
+def _name_index():
+    """Índice de nombres normalizados -> nombre original (para cuadrar equipos)."""
+    import re as _re
+    import unicodedata
+    path = os.path.join(DATA, "..", "..", "src", "actualidad", "crestMap.json")
+    try:
+        with open(path, encoding="utf-8") as f:
+            names = list(json.load(f).keys())
+    except Exception:
+        names = []
+    idx = {}
+    for n in names:
+        s = unicodedata.normalize("NFD", n.lower())
+        s = "".join(c for c in s if unicodedata.category(c) != "Mn")
+        idx[_re.sub(r"[^a-z0-9]+", "", s)] = n
+    return idx
+
+
+def _tsdb(url, intentos=3):
+    for i in range(intentos):
+        try:
+            return get_json(url)
+        except Exception as e:  # noqa: BLE001
+            if "429" in str(e) and i < intentos - 1:
+                time.sleep(9 * (i + 1))
+                continue
+            raise
+    return {}
+
+
+def tsdb_events(league_id):
+    """Resultados (season) y próximos partidos de una liga. Respeta el rate limit."""
+    last, nxt, proximos_season = [], [], []
+    season = "2026-2027"
+    try:
+        d = _tsdb(f"{TSDB}/eventsseason.php?id={league_id}&s={season}")
+        todos = d.get("events") or []
+        jugados = [e for e in todos if e.get("intHomeScore") not in (None, "")]
+        jugados.sort(key=lambda e: e.get("dateEvent") or "")
+        last = jugados[-8:]
+        hoy = datetime.now().strftime("%Y-%m-%d")
+        pendientes = [e for e in todos
+                      if e.get("intHomeScore") in (None, "") and (e.get("dateEvent") or "") >= hoy]
+        pendientes.sort(key=lambda e: e.get("dateEvent") or "")
+        proximos_season = pendientes[:8]
+    except Exception as e:  # noqa: BLE001
+        print(f"[warn] tsdb season {league_id}: {e}")
+    nxt = proximos_season
+    if not nxt:
+        time.sleep(2.5)
+        try:
+            d = _tsdb(f"{TSDB}/eventsnextleague.php?id={league_id}")
+            nxt = (d.get("events") or [])[:8]
+        except Exception as e:  # noqa: BLE001
+            print(f"[warn] tsdb next {league_id}: {e}")
+    time.sleep(2.5)
+    return last, nxt
+
+
+def update_otras_ligas():
+    idx = _name_index()
+    results = read_json("results.json", [])
+    fixtures = read_json("fixtures.json", [])
+    tocadas = []
+    for lid, liga in TSDB_LEAGUES.items():
+        last, nxt = tsdb_events(lid)
+        if not last and not nxt:
+            continue
+        results = [r for r in results if r.get("league") != liga]
+        fixtures = [f for f in fixtures if f.get("league") != liga]
+        for e in last[-6:]:
+            try:
+                hs, as_ = int(e.get("intHomeScore")), int(e.get("intAwayScore"))
+            except (TypeError, ValueError):
+                continue
+            results.append({
+                "date": corta_fecha(e.get("dateEvent") or ""),
+                "home": _canon(e.get("strHomeTeam"), idx),
+                "away": _canon(e.get("strAwayTeam"), idx),
+                "hs": hs, "as": as_, "league": liga,
+            })
+        for e in nxt[:6]:
+            fixtures.append({
+                "date": corta_fecha(e.get("dateEvent") or ""),
+                "time": (e.get("strTime") or "")[:5],
+                "home": _canon(e.get("strHomeTeam"), idx),
+                "away": _canon(e.get("strAwayTeam"), idx),
+                "event": e.get("strVenue") or "",
+                "league": liga,
+            })
+        tocadas.append(f"{liga} {len(last[-6:])}/{len(nxt[:6])}")
+    write_json("results.json", results)
+    write_json("fixtures.json", fixtures)
+    return tocadas
+
+
+# ---------------------------------------------------------------------- Noticias
+FEEDS = [
+    ("NBA Maniacs", "https://www.nbamaniacs.com/feed/", "NBA"),
+    ("Gigantes del Basket", "https://www.gigantes.com/feed/", "BALONCESTO"),
+    ("Relevo", "https://relevo.com/rss", "BALONCESTO"),
+    ("Mundo Deportivo", "https://www.mundodeportivo.com/rss/baloncesto", "BALONCESTO"),
+]
+CUOTA_FUENTE = 7
+
+
+def _clean(txt):
+    import html as _html
+    import re as _re
+    txt = _re.sub(r"<[^>]+>", " ", txt or "")
+    txt = _html.unescape(txt)
+    return _re.sub(r"\s+", " ", txt).strip()
+
+
+def _image(item):
+    import re as _re
+    for pat in (r'media:content[^>]*url="([^"]+)"', r'enclosure[^>]*url="([^"]+)"',
+                r'<img[^>]+src="([^"]+)"'):
+        m = _re.search(pat, item, _re.I)
+        if m:
+            return m.group(1)
+    return ""
+
+
+def _cat(title, default):
+    t = (title or "").lower()
+    if "nba" in t or "lakers" in t or "celtics" in t:
+        return "NBA"
+    if "euroliga" in t or "euroleague" in t:
+        return "EUROLEAGUE"
+    if "acb" in t or "liga endesa" in t:
+        return "LIGA ACB"
+    if "b.league" in t or "b-league" in t:
+        return "B.LEAGUE"
+    return default
+
+
+def update_noticias():
+    import re as _re
+    from email.utils import parsedate_to_datetime
+
+    items, seen = [], set()
+    for source, url, default_cat in FEEDS:
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=25) as r:
+                xml = r.read().decode("utf-8", "ignore")
+        except Exception as e:  # noqa: BLE001
+            print(f"[warn] feed {source}: {e}")
+            continue
+        for raw in _re.findall(r"<item>(.*?)</item>", xml, _re.S):
+            t = _re.search(r"<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?</title>", raw, _re.S)
+            l = _re.search(r"<link>(.*?)</link>", raw, _re.S)
+            d = _re.search(r"<pubDate>(.*?)</pubDate>", raw, _re.S)
+            desc = _re.search(r"<description>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?</description>", raw, _re.S)
+            if not (t and l):
+                continue
+            title = _clean(t.group(1))
+            link = _clean(l.group(1))
+            if not title or link in seen:
+                continue
+            try:
+                dt = parsedate_to_datetime(d.group(1)) if d else datetime.now(timezone.utc)
+            except Exception:
+                dt = datetime.now(timezone.utc)
+            seen.add(link)
+            items.append({
+                "source": source,
+                "category": _cat(title, default_cat),
+                "title": title,
+                "url": link,
+                "date": dt.strftime("%Y-%m-%d"),
+                "ts": dt.timestamp(),
+                "image": _image(raw),
+                "summary": _clean(desc.group(1))[:260] if desc else "",
+            })
+    # cuota por fuente: que no la copen los feeds con más volumen
+    items.sort(key=lambda i: i["ts"], reverse=True)
+    recuento, filtrados = {}, []
+    for it in items:
+        if recuento.get(it["source"], 0) >= CUOTA_FUENTE:
+            continue
+        recuento[it["source"]] = recuento.get(it["source"], 0) + 1
+        filtrados.append(it)
+    items = filtrados
+
+    # imagen de portada para las que no traen ninguna (og:image)
+    faltan = [i for i in items if not i["image"]][:12]
+    for it in faltan:
+        try:
+            req = urllib.request.Request(it["url"], headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=15) as r:
+                html = r.read().decode("utf-8", "ignore")
+            m = _re.search(r'property=["\']og:image["\'][^>]*content=["\']([^"\']+)', html)
+            if m:
+                it["image"] = m.group(1)
+        except Exception:
+            pass
+
+    for i in items:
+        i.pop("ts", None)
+    if items:
+        write_json("actualidad.json", items[:30])
+    return len(items[:30])
+
+
 def main():
     changed = []
 
@@ -320,6 +559,22 @@ def main():
             changed.append(f"B.League {len(fix)} próximos")
     except Exception as e:
         print(f"[warn] B.League partidos: {e}")
+
+    # ---- Otras ligas (TheSportsDB): resultados y próximos
+    try:
+        otras = update_otras_ligas()
+        if otras:
+            changed.append("ligas: " + ", ".join(otras))
+    except Exception as e:
+        print(f"[warn] otras ligas: {e}")
+
+    # ---- Noticias (RSS)
+    try:
+        n = update_noticias()
+        if n:
+            changed.append(f"noticias {n}")
+    except Exception as e:
+        print(f"[warn] noticias: {e}")
 
     stamp = datetime.now().strftime("%Y-%m-%d %H:%M")
     print(f"[{stamp}] " + ("Actualizado: " + " · ".join(changed) if changed else "Sin cambios; se conserva lo anterior."))

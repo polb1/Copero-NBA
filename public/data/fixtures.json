@@ -1,35 +1,83 @@
 [
  {
   "date": "Hoy",
-  "time": "19:05",
-  "home": "Shinshu Brave Warriors",
-  "away": "Kyoto Hannaryz",
+  "time": "13:35",
+  "home": "Shimane Susanoo Magic",
+  "away": "Hiroshima Dragonflies",
   "event": "",
   "league": "B.League"
  },
  {
   "date": "Hoy",
-  "time": "19:30",
-  "home": "Akita Northern Happinets",
-  "away": "Chiba Jets",
+  "time": "14:05",
+  "home": "仙台",
+  "away": "東京SR",
   "event": "",
   "league": "B.League"
  },
  {
   "date": "Hoy",
-  "time": "19:35",
-  "home": "Nagoya Diamond Dolphins",
-  "away": "Shiga Lakes",
+  "time": "14:05",
+  "home": "Chiba Jets",
+  "away": "Toyama Grouses",
   "event": "",
   "league": "B.League"
  },
  {
-  "date": "30 Oct",
-  "time": "00:00",
-  "home": "Washington Wizards",
-  "away": "Charlotte Hornets",
-  "event": "NBA Cup - Group Play",
-  "league": "NBA"
+  "date": "Hoy",
+  "time": "14:05",
+  "home": "神戸",
+  "away": "Nagasaki Velca",
+  "event": "",
+  "league": "B.League"
+ },
+ {
+  "date": "Hoy",
+  "time": "15:05",
+  "home": "Ibaraki Robots",
+  "away": "北海道",
+  "event": "",
+  "league": "B.League"
+ },
+ {
+  "date": "Hoy",
+  "time": "15:05",
+  "home": "Gunma Crane Thunders",
+  "away": "Osaka Evessa",
+  "event": "",
+  "league": "B.League"
+ },
+ {
+  "date": "Hoy",
+  "time": "17:05",
+  "home": "Alvark Tokyo",
+  "away": "Utsunomiya Brex",
+  "event": "",
+  "league": "B.League"
+ },
+ {
+  "date": "Hoy",
+  "time": "17:05",
+  "home": "三河",
+  "away": "Saga Ballooners",
+  "event": "",
+  "league": "B.League"
+ },
+ {
+  "date": "Hoy",
+  "time": "18:05",
+  "home": "Kawasaki Brave Thunders",
+  "away": "Yokohama B-Corsairs",
+  "event": "",
+  "league": "B.League"
+ },
+ {
+  "date": "Hoy",
+  "time": "18:05",
+  "home": "Ryukyu Golden Kings",
+  "away": "San-en NeoPhoenix",
+  "event": "",
+  "league": "B.League"
  },
  {
   "date": "30 Oct",
@@ -190,5 +238,77 @@
   "away": "Toronto Raptors",
   "event": "",
   "league": "NBA"
+ },
+ {
+  "date": "31 oct",
+  "time": "17:00",
+  "home": "Basket Zaragoza",
+  "away": "Bàsquet Girona",
+  "event": "Pabellon Principe Felipe",
+  "league": "Liga ACB"
+ },
+ {
+  "date": "31 oct",
+  "time": "19:00",
+  "home": "Scaligera Basket Verona",
+  "away": "Pallacanestro Varese",
+  "event": "PalaOlimpia",
+  "league": "Lega Basket Serie A"
+ },
+ {
+  "date": "31 oct",
+  "time": "17:30",
+  "home": "Braunschweig",
+  "away": "s.Oliver Würzburg",
+  "event": "Volkswagen Halle Braunschweig",
+  "league": "Basketball Bundesliga"
+ },
+ {
+  "date": "31 oct",
+  "time": "17:00",
+  "home": "Gravelines-Dunkerque",
+  "away": "Chorale Roanne Basket",
+  "event": "Stades de Flandres",
+  "league": "LNB Élite"
+ },
+ {
+  "date": "31 oct",
+  "time": "13:00",
+  "home": "Vikos Falcons BC",
+  "away": "AEK BC",
+  "event": "",
+  "league": "Greek Basket League"
+ },
+ {
+  "date": "31 oct",
+  "time": "17:15",
+  "home": "Hapoel HaEmek",
+  "away": "Maccabi Ironi Ramat Gan",
+  "event": "",
+  "league": "Ligat ha'Al"
+ },
+ {
+  "date": "31 oct",
+  "time": "14:50",
+  "home": "BC Lietkabelis",
+  "away": "BC Neptūnas",
+  "event": "Kalnapilio arena",
+  "league": "LKL"
+ },
+ {
+  "date": "1 nov",
+  "time": "10:00",
+  "home": "Esenler Erokspor (basketball)",
+  "away": "Türk Telekom BK",
+  "event": "Ahmet Cömert Sport Hall",
+  "league": "Basketbol Süper Ligi"
+ },
+ {
+  "date": "31 oct",
+  "time": "08:30",
+  "home": "Cairns Taipans",
+  "away": "Melbourne United",
+  "event": "Cairns Convention Centre",
+  "league": "NBL Australia"
  }
 ]
