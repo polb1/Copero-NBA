@@ -5,6 +5,10 @@ import { applySettings, consolidateSaves, lastSlotId, loadCareer, store, useCare
 import { Start } from './screens/simple/Start';
 import { Play } from './screens/simple/Play';
 import { Careers } from './screens/simple/Careers';
+import { HubLayout } from './actualidad/components/HubLayout';
+import { Home as HubHome } from './actualidad/pages/Home';
+import { Noticias, Clasificaciones, Resultados, Calendario, Estadisticas } from './actualidad/pages/Pages';
+import './actualidad/tailwind.css';
 
 // Dev-only scene gallery loads on demand.
 const lazyNamed = <K extends string>(load: () => Promise<Record<K, ComponentType>>, name: K) =>
@@ -56,6 +60,12 @@ export function App() {
             <Route path="/start" element={<Start />} />
             <Route path="/play" element={<Play />} />
             <Route path="/careers" element={<Careers />} />
+            <Route path="/actualidad" element={<HubLayout><HubHome /></HubLayout>} />
+            <Route path="/noticias" element={<HubLayout><Noticias /></HubLayout>} />
+            <Route path="/clasificaciones" element={<HubLayout><Clasificaciones /></HubLayout>} />
+            <Route path="/resultados" element={<HubLayout><Resultados /></HubLayout>} />
+            <Route path="/calendario" element={<HubLayout><Calendario /></HubLayout>} />
+            <Route path="/estadisticas" element={<HubLayout><Estadisticas /></HubLayout>} />
             {import.meta.env.DEV && <Route path="/gallery" element={<Gallery />} />}
             {/* Old links (detailed view, daily, saves, settings…) land on the game. */}
             <Route path="*" element={<Navigate to="/" replace />} />

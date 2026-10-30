@@ -32,7 +32,10 @@ function site(): Plugin {
 export default defineConfig({
   base: '/',
   plugins: [react(), site()],
+  esbuild: { legalComments: 'none' },
   build: {
+    minify: 'terser',
+    terserOptions: { format: { comments: false } },
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
