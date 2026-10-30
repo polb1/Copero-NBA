@@ -7,7 +7,7 @@ import { Play } from './screens/simple/Play';
 import { Careers } from './screens/simple/Careers';
 import { HubLayout } from './actualidad/components/HubLayout';
 import { Home as HubHome } from './actualidad/pages/Home';
-import { Noticias, Clasificaciones, Resultados, Calendario, Estadisticas } from './actualidad/pages/Pages';
+import { Noticias, Resultados, Calendario, Estadisticas } from './actualidad/pages/Pages';
 import { LeaguePage } from './actualidad/pages/League';
 import './actualidad/tailwind.css';
 
@@ -63,7 +63,7 @@ export function App() {
             <Route path="/careers" element={<Careers />} />
             <Route path="/actualidad" element={<HubLayout><HubHome /></HubLayout>} />
             <Route path="/noticias" element={<HubLayout><Noticias /></HubLayout>} />
-            <Route path="/clasificaciones" element={<HubLayout><Clasificaciones /></HubLayout>} />
+            <Route path="/clasificaciones" element={<Navigate to="/actualidad" replace />} />
             <Route path="/liga/:league" element={<HubLayout><LeaguePage /></HubLayout>} />
             <Route path="/resultados" element={<HubLayout><Resultados /></HubLayout>} />
             <Route path="/calendario" element={<HubLayout><Calendario /></HubLayout>} />

@@ -6,7 +6,6 @@ import { useHubData } from '../data';
 const NAV = [
   { to: '/actualidad', label: 'Partidos de Hoy' },
   { to: '/noticias', label: 'Noticias' },
-  { to: '/clasificaciones', label: 'Competiciones' },
   { to: '/resultados', label: 'Resultados' },
   { to: '/calendario', label: 'Calendario' },
   { to: '/estadisticas', label: 'Estadísticas' },

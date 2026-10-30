@@ -151,7 +151,13 @@ export function NewsCard({ item, large = false }: { item: NewsItem; large?: bool
     >
       <div className={`relative bg-surface-container-low overflow-hidden ${large ? 'aspect-[16/9]' : 'aspect-[16/9]'}`}>
         {item.image ? (
-          <img src={item.image} alt="" className="w-full h-full object-cover" onError={(e) => { (e.currentTarget as HTMLImageElement).style.opacity = '0'; }} />
+          <img
+            src={item.image.startsWith('/') ? item.image : `https://images.weserv.nl/?url=${encodeURIComponent(item.image.replace(/^https?:\/\//, ''))}&w=640&fit=cover`}
+            alt=""
+            loading="lazy"
+            className="w-full h-full object-cover"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).style.opacity = '0'; }}
+          />
         ) : null}
         <span className="absolute top-2 left-2"><LeagueChip league={item.category} /></span>
       </div>

@@ -1,6 +1,6 @@
 [
  {
-  "date": "Hoy",
+  "date": "31 oct",
   "time": "13:35",
   "home": "Shimane Susanoo Magic",
   "away": "Hiroshima Dragonflies",
@@ -8,15 +8,15 @@
   "league": "B.League"
  },
  {
-  "date": "Hoy",
+  "date": "31 oct",
   "time": "14:05",
-  "home": "仙台",
-  "away": "東京SR",
+  "home": "Sendai 89ers",
+  "away": "Sunrockers Shibuya",
   "event": "",
   "league": "B.League"
  },
  {
-  "date": "Hoy",
+  "date": "31 oct",
   "time": "14:05",
   "home": "Chiba Jets",
   "away": "Toyama Grouses",
@@ -24,23 +24,23 @@
   "league": "B.League"
  },
  {
-  "date": "Hoy",
+  "date": "31 oct",
   "time": "14:05",
-  "home": "神戸",
+  "home": "Kobe Storks",
   "away": "Nagasaki Velca",
   "event": "",
   "league": "B.League"
  },
  {
-  "date": "Hoy",
+  "date": "31 oct",
   "time": "15:05",
   "home": "Ibaraki Robots",
-  "away": "北海道",
+  "away": "Levanga Hokkaido",
   "event": "",
   "league": "B.League"
  },
  {
-  "date": "Hoy",
+  "date": "31 oct",
   "time": "15:05",
   "home": "Gunma Crane Thunders",
   "away": "Osaka Evessa",
@@ -48,7 +48,7 @@
   "league": "B.League"
  },
  {
-  "date": "Hoy",
+  "date": "31 oct",
   "time": "17:05",
   "home": "Alvark Tokyo",
   "away": "Utsunomiya Brex",
@@ -56,15 +56,15 @@
   "league": "B.League"
  },
  {
-  "date": "Hoy",
+  "date": "31 oct",
   "time": "17:05",
-  "home": "三河",
+  "home": "SeaHorses Mikawa",
   "away": "Saga Ballooners",
   "event": "",
   "league": "B.League"
  },
  {
-  "date": "Hoy",
+  "date": "31 oct",
   "time": "18:05",
   "home": "Kawasaki Brave Thunders",
   "away": "Yokohama B-Corsairs",
@@ -72,44 +72,12 @@
   "league": "B.League"
  },
  {
-  "date": "Hoy",
+  "date": "31 oct",
   "time": "18:05",
   "home": "Ryukyu Golden Kings",
   "away": "San-en NeoPhoenix",
   "event": "",
   "league": "B.League"
- },
- {
-  "date": "30 Oct",
-  "time": "00:30",
-  "home": "Boston Celtics",
-  "away": "Chicago Bulls",
-  "event": "NBA Cup - Group Play",
-  "league": "NBA"
- },
- {
-  "date": "30 Oct",
-  "time": "00:30",
-  "home": "Brooklyn Nets",
-  "away": "Detroit Pistons",
-  "event": "NBA Cup - Group Play",
-  "league": "NBA"
- },
- {
-  "date": "30 Oct",
-  "time": "00:30",
-  "home": "Philadelphia 76ers",
-  "away": "New York Knicks",
-  "event": "NBA Cup - Group Play",
-  "league": "NBA"
- },
- {
-  "date": "30 Oct",
-  "time": "00:30",
-  "home": "Toronto Raptors",
-  "away": "Orlando Magic",
-  "event": "NBA Cup - Group Play",
-  "league": "NBA"
  },
  {
   "date": "30 Oct",

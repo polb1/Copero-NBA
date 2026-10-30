@@ -181,6 +181,8 @@ BL_SHORT = {
     "大阪": "Osaka Evessa", "島根": "Shimane Susanoo Magic", "広島": "Hiroshima Dragonflies",
     "佐賀": "Saga Ballooners", "長崎": "Nagasaki Velca", "越谷": "Koshigaya Alphas",
     "茨城": "Ibaraki Robots", "滋賀": "Shiga Lakes", "富山": "Toyama Grouses", "新潟": "Niigata Albirex BB",
+    "三河": "SeaHorses Mikawa", "仙台": "Sendai 89ers", "北海道": "Levanga Hokkaido",
+    "東京SR": "Sunrockers Shibuya", "神戸": "Kobe Storks", "千葉J": "Chiba Jets",
 }
 
 
@@ -224,6 +226,7 @@ def bleague_standings():
 
 
 def bleague_today():
+    hoy_corto = corta_fecha(datetime.now().strftime("%Y-%m-%d"))
     """Marcadores de hoy desde la web oficial (schedule + endpoint JSON)."""
     import re
     req = urllib.request.Request("https://www.bleague.jp/schedule/", headers={"User-Agent": UA})
@@ -248,9 +251,9 @@ def bleague_today():
         hs, as_ = info.get("HomeTeamScore"), info.get("AwayTeamScore")
         ended = str(info.get("GameEndedFlg")) == "1"
         if ended and str(hs).isdigit() and str(as_).isdigit():
-            results.append({"date": "Hoy", "home": g["home"], "away": g["away"], "hs": int(hs), "as": int(as_)})
+            results.append({"date": hoy_corto, "home": g["home"], "away": g["away"], "hs": int(hs), "as": int(as_)})
         else:
-            fixtures.append({"date": "Hoy", "time": g["time"], "home": g["home"], "away": g["away"], "event": ""})
+            fixtures.append({"date": hoy_corto, "time": g["time"], "home": g["home"], "away": g["away"], "event": ""})
     return results, fixtures
 
 
@@ -395,8 +398,10 @@ CUOTA_FUENTE = 7
 def _clean(txt):
     import html as _html
     import re as _re
-    txt = _re.sub(r"<[^>]+>", " ", txt or "")
+    txt = _html.unescape(txt or "")
+    txt = _re.sub(r"<[^>]+>", " ", txt)
     txt = _html.unescape(txt)
+    txt = _re.sub(r"<[^>]+>", " ", txt)
     return _re.sub(r"\s+", " ", txt).strip()
 
 
@@ -492,6 +497,22 @@ def update_noticias():
     return len(items[:30])
 
 
+def _dedupe_rows(rows):
+    """Quita equipos duplicados y renumera (B.League trae filas repetidas)."""
+    best = {}
+    for r in rows or []:
+        t = (r.get("team") or "").strip()
+        if not t:
+            continue
+        if t not in best or (r.get("w", 0) + r.get("l", 0)) > (best[t].get("w", 0) + best[t].get("l", 0)):
+            r = dict(r, team=t)
+            best[t] = r
+    out = sorted(best.values(), key=lambda r: (-(r.get("w", 0) / max(1, r.get("w", 0) + r.get("l", 0))), -r.get("w", 0)))
+    for i, r in enumerate(out, 1):
+        r["rank"] = i
+    return out
+
+
 def main():
     changed = []
 
@@ -536,7 +557,7 @@ def main():
 
     # ---- B.League (web oficial)
     try:
-        bl = bleague_standings()
+        bl = _dedupe_rows(bleague_standings())
         if bl:
             standings = read_json("standings.json", {})
             standings["B.League"] = bl
