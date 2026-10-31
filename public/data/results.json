@@ -1,102 +1,262 @@
 [
  {
-  "date": "28 Oct",
-  "home": "Atlanta Hawks",
-  "away": "Miami Heat",
-  "hs": 117,
-  "as": 129,
-  "league": "NBA"
+  "date": "31 oct",
+  "home": "Shimane Susanoo Magic",
+  "away": "Hiroshima Dragonflies",
+  "hs": 47,
+  "as": 47,
+  "league": "B.League"
  },
  {
-  "date": "28 Oct",
-  "home": "Cleveland Cavaliers",
-  "away": "Washington Wizards",
-  "hs": 121,
-  "as": 111,
-  "league": "NBA"
+  "date": "31 oct",
+  "home": "Sendai 89ers",
+  "away": "Sunrockers Shibuya",
+  "hs": 42,
+  "as": 34,
+  "league": "B.League"
  },
  {
-  "date": "28 Oct",
-  "home": "Detroit Pistons",
-  "away": "Charlotte Hornets",
-  "hs": 97,
-  "as": 89,
-  "league": "NBA"
+  "date": "31 oct",
+  "home": "Chiba Jets",
+  "away": "Toyama Grouses",
+  "hs": 51,
+  "as": 51,
+  "league": "B.League"
  },
  {
-  "date": "28 Oct",
-  "home": "Indiana Pacers",
-  "away": "Philadelphia 76ers",
-  "hs": 109,
-  "as": 114,
-  "league": "NBA"
+  "date": "31 oct",
+  "home": "Kobe Storks",
+  "away": "Nagasaki Velca",
+  "hs": 36,
+  "as": 33,
+  "league": "B.League"
  },
  {
-  "date": "28 Oct",
-  "home": "Toronto Raptors",
-  "away": "Orlando Magic",
-  "hs": 129,
-  "as": 99,
-  "league": "NBA"
+  "date": "31 oct",
+  "home": "Shimane Susanoo Magic",
+  "away": "Hiroshima Dragonflies",
+  "hs": 47,
+  "as": 47,
+  "league": "B.League"
  },
  {
-  "date": "28 Oct",
-  "home": "Chicago Bulls",
-  "away": "New York Knicks",
-  "hs": 127,
-  "as": 133,
-  "league": "NBA"
+  "date": "31 oct",
+  "home": "Sendai 89ers",
+  "away": "Sunrockers Shibuya",
+  "hs": 42,
+  "as": 34,
+  "league": "B.League"
  },
  {
-  "date": "28 Oct",
-  "home": "Milwaukee Bucks",
-  "away": "Houston Rockets",
-  "hs": 100,
-  "as": 132,
-  "league": "NBA"
+  "date": "31 oct",
+  "home": "Chiba Jets",
+  "away": "Toyama Grouses",
+  "hs": 51,
+  "as": 51,
+  "league": "B.League"
  },
  {
-  "date": "28 Oct",
-  "home": "Minnesota Timberwolves",
-  "away": "Golden State Warriors",
-  "hs": 114,
-  "as": 119,
-  "league": "NBA"
+  "date": "31 oct",
+  "home": "Kobe Storks",
+  "away": "Nagasaki Velca",
+  "hs": 36,
+  "as": 33,
+  "league": "B.League"
  },
  {
-  "date": "28 Oct",
-  "home": "New Orleans Pelicans",
-  "away": "Denver Nuggets",
-  "hs": 91,
-  "as": 104,
-  "league": "NBA"
+  "date": "31 oct",
+  "home": "Shimane Susanoo Magic",
+  "away": "Hiroshima Dragonflies",
+  "hs": 47,
+  "as": 47,
+  "league": "B.League"
  },
  {
-  "date": "28 Oct",
-  "home": "Utah Jazz",
-  "away": "San Antonio Spurs",
-  "hs": 111,
-  "as": 117,
-  "league": "NBA"
+  "date": "31 oct",
+  "home": "Sendai 89ers",
+  "away": "Sunrockers Shibuya",
+  "hs": 42,
+  "as": 34,
+  "league": "B.League"
  },
  {
-  "date": "28 Oct",
-  "home": "Dallas Mavericks",
-  "away": "Oklahoma City Thunder",
-  "hs": 120,
-  "as": 96,
-  "league": "NBA"
+  "date": "31 oct",
+  "home": "Chiba Jets",
+  "away": "Toyama Grouses",
+  "hs": 51,
+  "as": 51,
+  "league": "B.League"
  },
  {
-  "date": "28 Oct",
-  "home": "LA Clippers",
-  "away": "Los Angeles Lakers",
-  "hs": 87,
+  "date": "31 oct",
+  "home": "Kobe Storks",
+  "away": "Nagasaki Velca",
+  "hs": 36,
+  "as": 33,
+  "league": "B.League"
+ },
+ {
+  "date": "30 oct",
+  "home": "VIRTUS BOLOGNA",
+  "away": "BESIKTAS ISTANBUL",
+  "hs": 101,
   "as": 103,
-  "league": "NBA"
+  "league": "EuroLeague"
  },
  {
-  "date": "29 Oct",
+  "date": "25 sep",
+  "home": "PARTIZAN MOZZART BET BELGRADE",
+  "away": "ARMANI OLIMPIA MILAN",
+  "hs": 92,
+  "as": 76,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "9 oct",
+  "home": "OLYMPIACOS PIRAEUS",
+  "away": "ANADOLU EFES ISTANBUL",
+  "hs": 89,
+  "as": 66,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "13 oct",
+  "home": "KOSNER BASKONIA VITORIA-GASTEIZ",
+  "away": "DUBAI BASKETBALL",
+  "hs": 79,
+  "as": 93,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "28 oct",
+  "home": "VIRTUS BOLOGNA",
+  "away": "ZALGIRIS KAUNAS",
+  "hs": 74,
+  "as": 91,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "24 sep",
+  "home": "HAPOEL IBI TEL AVIV",
+  "away": "FC BAYERN MUNICH",
+  "hs": 84,
+  "as": 86,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "13 oct",
+  "home": "FC BARCELONA",
+  "away": "MACCABI RAPYD TEL AVIV",
+  "hs": 90,
+  "as": 87,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "24 sep",
+  "home": "FC BARCELONA",
+  "away": "ANADOLU EFES ISTANBUL",
+  "hs": 89,
+  "as": 82,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "15 oct",
+  "home": "VALENCIA BASKET",
+  "away": "MACCABI RAPYD TEL AVIV",
+  "hs": 88,
+  "as": 91,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "15 oct",
+  "home": "FENERBAHCE TARFIN ISTANBUL",
+  "away": "PARTIZAN MOZZART BET BELGRADE",
+  "hs": 74,
+  "as": 65,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "24 sep",
+  "home": "DUBAI BASKETBALL",
+  "away": "REAL MADRID",
+  "hs": 78,
+  "as": 77,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "27 oct",
+  "home": "KOSNER BASKONIA VITORIA-GASTEIZ",
+  "away": "REAL MADRID",
+  "hs": 86,
+  "as": 104,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "29 sep",
+  "home": "VALENCIA BASKET",
+  "away": "KOSNER BASKONIA VITORIA-GASTEIZ",
+  "hs": 111,
+  "as": 88,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "16 oct",
+  "home": "VIRTUS BOLOGNA",
+  "away": "KOSNER BASKONIA VITORIA-GASTEIZ",
+  "hs": 86,
+  "as": 78,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "2 oct",
+  "home": "FENERBAHCE TARFIN ISTANBUL",
+  "away": "DUBAI BASKETBALL",
+  "hs": 76,
+  "as": 66,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "8 oct",
+  "home": "FC BAYERN MUNICH",
+  "away": "VIRTUS BOLOGNA",
+  "hs": 87,
+  "as": 94,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "16 oct",
+  "home": "FC BARCELONA",
+  "away": "OLYMPIACOS PIRAEUS",
+  "hs": 100,
+  "as": 105,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "8 oct",
+  "home": "DUBAI BASKETBALL",
+  "away": "CRVENA ZVEZDA MERIDIANBET BELGRADE",
+  "hs": 58,
+  "as": 77,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "29 oct",
+  "home": "CRVENA ZVEZDA MERIDIANBET BELGRADE",
+  "away": "FC BAYERN MUNICH",
+  "hs": 103,
+  "as": 73,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "22 oct",
+  "home": "MACCABI RAPYD TEL AVIV",
+  "away": "REAL MADRID",
+  "hs": 99,
+  "as": 113,
+  "league": "EuroLeague"
+ },
+ {
+  "date": "29 oct",
   "home": "Atlanta Hawks",
   "away": "Cleveland Cavaliers",
   "hs": 114,
@@ -104,7 +264,7 @@
   "league": "NBA"
  },
  {
-  "date": "29 Oct",
+  "date": "29 oct",
   "home": "New Orleans Pelicans",
   "away": "Sacramento Kings",
   "hs": 132,
@@ -112,11 +272,91 @@
   "league": "NBA"
  },
  {
-  "date": "29 Oct",
+  "date": "29 oct",
   "home": "Portland Trail Blazers",
   "away": "Memphis Grizzlies",
   "hs": 103,
   "as": 124,
+  "league": "NBA"
+ },
+ {
+  "date": "30 oct",
+  "home": "Washington Wizards",
+  "away": "Charlotte Hornets",
+  "hs": 95,
+  "as": 79,
+  "league": "NBA"
+ },
+ {
+  "date": "30 oct",
+  "home": "Boston Celtics",
+  "away": "Chicago Bulls",
+  "hs": 125,
+  "as": 111,
+  "league": "NBA"
+ },
+ {
+  "date": "30 oct",
+  "home": "Brooklyn Nets",
+  "away": "Detroit Pistons",
+  "hs": 94,
+  "as": 110,
+  "league": "NBA"
+ },
+ {
+  "date": "30 oct",
+  "home": "Philadelphia 76ers",
+  "away": "New York Knicks",
+  "hs": 98,
+  "as": 93,
+  "league": "NBA"
+ },
+ {
+  "date": "30 oct",
+  "home": "Toronto Raptors",
+  "away": "Orlando Magic",
+  "hs": 114,
+  "as": 121,
+  "league": "NBA"
+ },
+ {
+  "date": "30 oct",
+  "home": "Miami Heat",
+  "away": "Indiana Pacers",
+  "hs": 145,
+  "as": 125,
+  "league": "NBA"
+ },
+ {
+  "date": "30 oct",
+  "home": "Dallas Mavericks",
+  "away": "Houston Rockets",
+  "hs": 116,
+  "as": 111,
+  "league": "NBA"
+ },
+ {
+  "date": "30 oct",
+  "home": "Minnesota Timberwolves",
+  "away": "LA Clippers",
+  "hs": 127,
+  "as": 101,
+  "league": "NBA"
+ },
+ {
+  "date": "30 oct",
+  "home": "Golden State Warriors",
+  "away": "Los Angeles Lakers",
+  "hs": 112,
+  "as": 95,
+  "league": "NBA"
+ },
+ {
+  "date": "30 oct",
+  "home": "Phoenix Suns",
+  "away": "Denver Nuggets",
+  "hs": 120,
+  "as": 127,
   "league": "NBA"
  },
  {
@@ -502,53 +742,5 @@
   "hs": 76,
   "as": 84,
   "league": "Basketbol Süper Ligi"
- },
- {
-  "date": "25 sep",
-  "home": "Brisbane Bullets",
-  "away": "Illawarra Hawks",
-  "hs": 103,
-  "as": 95,
-  "league": "NBL Australia"
- },
- {
-  "date": "26 sep",
-  "home": "Perth Wildcats",
-  "away": "New Zealand Breakers",
-  "hs": 97,
-  "as": 93,
-  "league": "NBL Australia"
- },
- {
-  "date": "27 sep",
-  "home": "Adelaide 36ers",
-  "away": "Cairns Taipans",
-  "hs": 83,
-  "as": 69,
-  "league": "NBL Australia"
- },
- {
-  "date": "27 sep",
-  "home": "Sydney Kings",
-  "away": "Illawarra Hawks",
-  "hs": 121,
-  "as": 100,
-  "league": "NBL Australia"
- },
- {
-  "date": "30 sep",
-  "home": "New Zealand Breakers",
-  "away": "Cairns Taipans",
-  "hs": 98,
-  "as": 75,
-  "league": "NBL Australia"
- },
- {
-  "date": "30 sep",
-  "home": "Sydney Kings",
-  "away": "Brisbane Bullets",
-  "hs": 93,
-  "as": 78,
-  "league": "NBL Australia"
  }
 ]

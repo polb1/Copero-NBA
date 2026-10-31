@@ -79,6 +79,11 @@ def nba_standings():
     ]
 
 
+def fecha_corta(day):
+    """date -> '31 oct' (siempre en español y en minúsculas)."""
+    return f"{day.day} {MESES[day.month - 1]}"
+
+
 def scoreboard(slug, days_back=2, days_ahead=2):
     results, fixtures = [], []
     today = datetime.now(timezone.utc).date()
@@ -104,7 +109,7 @@ def scoreboard(slug, days_back=2, days_ahead=2):
                     as_ = int(next(t for t in teams if t.get("homeAway") == "away").get("score"))
                 except (TypeError, ValueError, StopIteration):
                     continue
-                results.append({"date": day.strftime("%d %b"), "home": home, "away": away, "hs": hs, "as": as_})
+                results.append({"date": fecha_corta(day), "home": home, "away": away, "hs": hs, "as": as_})
             elif state == "pre":
                 when = ""
                 try:
@@ -115,7 +120,7 @@ def scoreboard(slug, days_back=2, days_ahead=2):
                 note = ""
                 if comp.get("notes"):
                     note = (comp["notes"][0] or {}).get("headline", "") or ""
-                fixtures.append({"date": day.strftime("%d %b"), "time": when, "home": home, "away": away, "event": note})
+                fixtures.append({"date": fecha_corta(day), "time": when, "home": home, "away": away, "event": note})
     return results, fixtures
 
 
@@ -513,6 +518,131 @@ def _dedupe_rows(rows):
     return out
 
 
+
+# ------------------------------------------------------- EuroLeague (API oficial)
+EL_API = "https://api-live.euroleague.net/v1"
+
+
+def _xml(url):
+    import xml.etree.ElementTree as ET
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return ET.fromstring(r.read())
+
+
+def euroleague_all():
+    """Resultados, calendario y clasificación completos de la Euroliga."""
+    resultados, fixtures, rows = [], [], []
+    season = "E2026"
+    try:
+        root = _xml(f"{EL_API}/results?seasonCode={season}")
+        games = []
+        for g in root.findall("game"):
+            def t(tag):
+                el = g.find(tag)
+                return (el.text or "").strip() if el is not None else ""
+            hs, as_ = t("homescore"), t("awayscore")
+            played = t("played").lower() == "true" and hs.isdigit() and as_.isdigit()
+            games.append({
+                "date": t("date"), "home": t("hometeam"), "away": t("awayteam"),
+                "hs": int(hs) if hs.isdigit() else None,
+                "as": int(as_) if as_.isdigit() else None,
+                "round": t("gameday"), "played": played,
+            })
+        jugados = [g for g in games if g["played"]]
+        pendientes = [g for g in games if not g["played"]]
+        resultados = jugados[-20:]
+        fixtures = pendientes[:20]
+    except Exception as e:  # noqa: BLE001
+        print(f"[warn] Euroliga resultados: {e}")
+
+    try:
+        root = _xml(f"{EL_API}/standings?seasonCode={season}")
+        for i, team in enumerate(root.iter("team"), 1):
+            def t(tag):
+                el = team.find(tag)
+                return (el.text or "").strip() if el is not None else ""
+            w, l = int(t("wins") or 0), int(t("losses") or 0)
+            rows.append({"rank": int(t("ranking") or i), "team": t("name"), "w": w, "l": l,
+                         "form": "", "conf": "EL"})
+        rows.sort(key=lambda r: r["rank"])
+    except Exception as e:  # noqa: BLE001
+        print(f"[warn] Euroliga tabla: {e}")
+    return resultados, fixtures, rows
+
+
+# ------------------------------------------------------------- B.League (meses)
+MESES_EN = {1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun",
+            7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec"}
+
+
+def _fecha_el(s):
+    """'Oct 22, 2026' -> '22 oct'"""
+    try:
+        dt = datetime.strptime(s.strip(), "%b %d, %Y")
+        return f"{dt.day} {MESES[dt.month - 1]}", dt
+    except Exception:
+        return s, None
+
+
+def bleague_month(year, month):
+    import re
+    url = f"https://www.bleague.jp/schedule/?year={year}&month={month}"
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        html = r.read().decode("utf-8", "replace")
+    out = []
+    for m in re.finditer(r'<li class="list-item"[^>]*>(.*?)</li>', html, re.S):
+        body = m.group(1)
+        teams = re.findall(r'class="team-name">([^<]+)<', body)
+        if len(teams) < 2:
+            continue
+        hs = re.search(r'class="number home-score[^"]*">\s*<span>(\d{1,3})</span>', body)
+        as_ = re.search(r'class="number away-score[^"]*">\s*<span>(\d{1,3})</span>', body)
+        ts = re.search(r'"GameDateTime":\s*"(\d{9,11})"', body)
+        fecha, hora = "", ""
+        if ts:
+            raw = int(ts.group(1))
+            if raw > 10**12:  # milisegundos
+                raw //= 1000
+            try:
+                dt = datetime.fromtimestamp(raw)
+                if 1 <= dt.day <= 31:
+                    fecha = f"{dt.day} {MESES[dt.month - 1]}"
+                    hora = dt.strftime("%H:%M")
+            except (ValueError, OSError):
+                pass
+        out.append({
+            "date": fecha,
+            "home": bl_en(teams[0]),
+            "away": bl_en(teams[1]),
+            "hs": int(hs.group(1)) if hs else None,
+            "as": int(as_.group(1)) if as_ else None,
+            "time": hora,
+        })
+    return out
+
+
+def bleague_all():
+    res, fix = [], []
+    hoy = datetime.now()
+    for delta in (0, 1, 2):
+        y, mth = hoy.year, hoy.month + delta
+        while mth > 12:
+            mth -= 12
+            y += 1
+        try:
+            for g in bleague_month(y, mth):
+                row = {"date": g["date"], "home": g["home"], "away": g["away"], "league": "B.League"}
+                if g["hs"] is not None and g["as"] is not None:
+                    res.append(dict(row, hs=g["hs"], as_=g["as"]))
+                else:
+                    fix.append(dict(row, time=g["time"], event=""))
+        except Exception as e:  # noqa: BLE001
+            print(f"[warn] B.League {y}-{mth}: {e}")
+    return res, fix
+
+
 def main():
     changed = []
 
@@ -580,6 +710,47 @@ def main():
             changed.append(f"B.League {len(fix)} próximos")
     except Exception as e:
         print(f"[warn] B.League partidos: {e}")
+
+    # ---- Euroliga (API oficial): resultados, calendario y tabla completa
+    try:
+        el_res, el_fix, el_rows = euroleague_all()
+        if el_rows:
+            standings = read_json("standings.json", {})
+            standings["EuroLeague"] = el_rows
+            standings["EU"] = el_rows
+            write_json("standings.json", standings)
+            changed.append(f"Euroliga tabla {len(el_rows)}")
+        if el_res or el_fix:
+            old = read_json("results.json", [])
+            others = [r for r in old if r.get("league") not in ("EU", "EuroLeague")]
+            nuevos = [{"date": _fecha_el(g["date"])[0], "home": g["home"], "away": g["away"],
+                       "hs": g["hs"], "as": g["as"], "league": "EuroLeague"} for g in el_res]
+            write_json("results.json", nuevos + others)
+            oldf = read_json("fixtures.json", [])
+            othersf = [f for f in oldf if f.get("league") not in ("EU", "EuroLeague")]
+            newf = [{"date": _fecha_el(g["date"])[0], "time": "", "home": g["home"], "away": g["away"],
+                     "event": f"Jornada {g['round']}", "league": "EuroLeague"} for g in el_fix]
+            write_json("fixtures.json", newf + othersf)
+            changed.append(f"Euroliga {len(el_res)} res / {len(el_fix)} próx")
+    except Exception as e:
+        print(f"[warn] Euroliga: {e}")
+
+    # ---- B.League resultados + calendario (web oficial, varios meses)
+    try:
+        bl_res, bl_fix = bleague_all()
+        if bl_res or bl_fix:
+            old = read_json("results.json", [])
+            others = [r for r in old if r.get("league") != "B.League"]
+            nuevos = [{"date": g["date"], "home": g["home"], "away": g["away"],
+                       "hs": g["hs"], "as": g["as_"], "league": "B.League"} for g in bl_res]
+            write_json("results.json", nuevos + others)
+            oldf = read_json("fixtures.json", [])
+            othersf = [f for f in oldf if f.get("league") != "B.League"]
+            nuevos_f = [dict(f, league="B.League") for f in bl_fix]
+            write_json("fixtures.json", nuevos_f + othersf)
+            changed.append(f"B.League {len(nuevos)} res / {len(bl_fix)} próx")
+    except Exception as e:
+        print(f"[warn] B.League meses: {e}")
 
     # ---- Otras ligas (TheSportsDB): resultados y próximos
     try:

@@ -87,57 +87,79 @@ const parseFecha = (s: string): { day: number; month: number } | null => {
 };
 
 export function Calendario() {
-  const { fixtures, loading } = useHubData();
+  const { fixtures, results, loading } = useHubData();
   const [sel, setSel] = useState<string | null>(null);
+  const [league, setLeague] = useState('TODAS');
+  const [offset, setOffset] = useState(0);
+
+  // Unificamos jugados (resultados) y próximos (calendario)
+  const events = useMemo(() => {
+    const jugados = results.map((r) => ({ ...r, played: true, time: '' }));
+    const proximos = fixtures.map((f) => ({ ...f, played: false, hs: null as number | null, as: null as number | null, time: f.time || '' }));
+    return [...jugados, ...proximos];
+  }, [results, fixtures]);
+
+  const leagues = useMemo(() => ['TODAS', ...new Set(events.map((e) => e.league))], [events]);
+  const filtrados = league === 'TODAS' ? events : events.filter((e) => e.league === league);
 
   const byDay = useMemo(() => {
-    const map = new Map<string, typeof fixtures>();
-    for (const f of fixtures) {
+    const map = new Map<string, typeof filtrados>();
+    for (const f of filtrados) {
       const key = (f.date || '').slice(0, 10);
       if (!map.has(key)) map.set(key, []);
       map.get(key)!.push(f);
     }
     return map;
-  }, [fixtures]);
+  }, [filtrados]);
 
-  const ref = useMemo(() => {
-    for (const f of fixtures) {
+  const base = useMemo(() => {
+    for (const f of filtrados) {
       const p = parseFecha(f.date);
-      if (p) return p;
+      if (p) return p.month;
     }
-    const now = new Date();
-    return { day: now.getDate(), month: now.getMonth() };
-  }, [fixtures]);
+    return new Date().getMonth();
+  }, [filtrados]);
 
-  const year = new Date().getFullYear() + (ref.month < new Date().getMonth() ? 1 : 0);
-  const first = new Date(year, ref.month, 1);
-  const startOffset = (first.getDay() + 6) % 7;
-  const daysInMonth = new Date(year, ref.month + 1, 0).getDate();
+  const monthIndex = (base + offset + 12) % 12;
+  const year = new Date().getFullYear() + Math.floor((base + offset) / 12);
+  const startOffset = (new Date(year, monthIndex, 1).getDay() + 6) % 7;
+  const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
   const cells: (number | null)[] = [
     ...Array(startOffset).fill(null),
     ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
   ];
 
-  const dayKey = (d: number) => `${String(d).padStart(2, '0')} ${MESES[ref.month]}`;
+  const dayKey = (d: number) => `${String(d).padStart(2, '0')} ${MESES[monthIndex]}`;
   const dayMatches = (d: number) => byDay.get(dayKey(d)) || [];
-  const list = sel ? (byDay.get(sel) || []) : fixtures;
+  const list = sel ? (byDay.get(sel) || []) : filtrados;
 
   return (
     <div className="max-w-[1200px] mx-auto flex flex-col gap-space-md">
-      <SectionHeader title="Calendario" right={`${fixtures.length} próximos partidos`} />
+      <SectionHeader title="Calendario" right={`${filtrados.length} partidos`} />
+
+      <div className="flex flex-wrap gap-2">
+        {leagues.map((l) => (
+          <button key={l} onClick={() => { setLeague(l); setSel(null); }}
+            className={`px-3 py-1 rounded font-display text-label-table-header uppercase border-0 cursor-pointer ${
+              league === l ? 'bg-primary-container text-on-primary-container' : 'bg-court-surface text-on-surface-variant hover:text-text-primary'
+            }`}>{l}</button>
+        ))}
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-space-md">
         <Card className="p-space-sm lg:col-span-2">
           <div className="flex items-center justify-between px-space-sm py-space-xs">
+            <button
+              onClick={() => { setOffset(offset - 1); setSel(null); }}
+              className="font-display text-label-table-header uppercase text-on-surface-variant bg-transparent border-0 cursor-pointer hover:text-primary"
+            >← {MES_LARGO[(monthIndex + 11) % 12]}</button>
             <span className="font-display text-headline-md font-bold uppercase text-text-primary">
-              {MES_LARGO[ref.month]} {year}
+              {MES_LARGO[monthIndex]} {year}
             </span>
             <button
-              onClick={() => setSel(null)}
-              className="font-display text-label-table-header uppercase text-primary bg-transparent border-0 cursor-pointer"
-            >
-              Ver todos
-            </button>
+              onClick={() => { setOffset(offset + 1); setSel(null); }}
+              className="font-display text-label-table-header uppercase text-on-surface-variant bg-transparent border-0 cursor-pointer hover:text-primary"
+            >{MES_LARGO[(monthIndex + 1) % 12]} →</button>
           </div>
           <div className="grid grid-cols-7 gap-1 mt-1">
             {DIAS.map((d) => (
@@ -146,7 +168,9 @@ export function Calendario() {
             {cells.map((d, i) => {
               if (d === null) return <div key={`e${i}`} />;
               const key = dayKey(d);
-              const n = dayMatches(d).length;
+              const partidos = dayMatches(d);
+              const jugados = partidos.filter((p) => p.played).length;
+              const proximos = partidos.length - jugados;
               const active = sel === key;
               return (
                 <button
@@ -155,45 +179,54 @@ export function Calendario() {
                   className={`aspect-square rounded flex flex-col items-center justify-center gap-1 border transition-colors cursor-pointer ${
                     active
                       ? 'bg-primary-container/20 border-primary-container text-primary'
-                      : n
+                      : partidos.length
                         ? 'bg-court-surface-elevated border-court-border text-text-primary hover:border-primary-container'
                         : 'bg-transparent border-court-border text-text-dim'
                   }`}
                 >
                   <span className="font-display text-body-md font-semibold">{d}</span>
-                  {n > 0 && (
-                    <span className="flex gap-0.5">
-                      {Array.from({ length: Math.min(n, 3) }, (_, k) => (
-                        <span key={k} className="w-1 h-1 rounded-full bg-primary-container" />
-                      ))}
-                    </span>
-                  )}
+                  <span className="flex gap-0.5">
+                    {Array.from({ length: Math.min(jugados, 3) }, (_, k) => (
+                      <span key={`j${k}`} className="w-1 h-1 rounded-full bg-tertiary" />
+                    ))}
+                    {Array.from({ length: Math.min(proximos, 3) }, (_, k) => (
+                      <span key={`p${k}`} className="w-1 h-1 rounded-full bg-primary-container" />
+                    ))}
+                  </span>
                 </button>
               );
             })}
+          </div>
+          <div className="flex items-center gap-3 px-space-sm pt-2 text-body-sm text-text-muted">
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-tertiary" /> jugado</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-primary-container" /> programado</span>
           </div>
         </Card>
 
         <Card className="p-space-sm">
           <div className="px-space-sm py-space-xs font-display text-label-table-header uppercase text-text-muted">
-            {sel ? `Partidos del ${sel}` : 'Próximos partidos'}
+            {sel ? `Partidos del ${sel}` : 'Últimos y próximos'}
           </div>
-          <div className="max-h-[420px] overflow-y-auto">
+          <div className="max-h-[460px] overflow-y-auto">
             {loading && <p className="p-space-sm text-body-sm text-text-muted m-0">Cargando…</p>}
-            {list.slice(0, 24).map((f, i) => (
+            {list.slice(0, 30).map((f, i) => (
               <div key={i} className="flex items-center gap-space-sm px-space-sm py-2 border-b border-court-border last:border-0">
                 <span className="w-12 shrink-0 font-display text-label-match-status uppercase text-secondary">{f.date}</span>
                 <div className="flex-1 min-w-0 flex flex-col gap-1">
                   <span className="flex items-center gap-2 min-w-0">
                     <TeamBadge name={f.home} size={18} />
                     <span className="text-body-sm truncate text-text-primary">{f.home}</span>
+                    {f.played && <span className="ml-auto font-display text-data-mono text-text-primary">{f.hs}</span>}
                   </span>
                   <span className="flex items-center gap-2 min-w-0">
                     <TeamBadge name={f.away} size={18} />
                     <span className="text-body-sm truncate text-on-surface-variant">{f.away}</span>
+                    {f.played && <span className="ml-auto font-display text-data-mono text-text-primary">{f.as}</span>}
                   </span>
                 </div>
-                <span className="font-display text-label-table-header uppercase text-text-muted shrink-0">{f.time || ''}</span>
+                <span className="font-display text-label-table-header uppercase text-text-muted shrink-0">
+                  {f.played ? 'FINAL' : (f.time || '')}
+                </span>
               </div>
             ))}
             {!loading && list.length === 0 && <p className="p-space-sm text-body-sm text-text-muted m-0">Sin partidos.</p>}
