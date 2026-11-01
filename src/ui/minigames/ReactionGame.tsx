@@ -1,13 +1,22 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { MinigameSpec } from '../../engine/types';
 import { minigameHint } from '../../content/minigames';
-import { hashString } from '../../engine/rng';
 import { t } from '../../i18n/i18n';
 
-/** Deterministic per-attempt draw: which cell lights up and how long the player has to wait first. */
-function roll(kind: string, attempt: number, slots: number) {
-  const h = hashString(`${kind}|${attempt}|reaction|${slots}`);
-  return { cell: (h >>> 13) % slots, delay: 300 + (h % 601) }; // delay 300..900 ms
+/**
+ * Cada intento es aleatorio de verdad: nunca repite la casilla anterior y evita
+ * retardos casi idénticos al previo (así no se puede "adivinar" el patrón).
+ */
+function roll(slots: number, avoidCell: number | null, avoidDelay: number) {
+  let cell = Math.floor(Math.random() * slots);
+  if (slots > 1 && cell === avoidCell) {
+    // salta a otra casilla distinta de la anterior
+    const jump = 1 + Math.floor(Math.random() * (slots - 1));
+    cell = (cell + jump) % slots;
+  }
+  let delay = 260 + Math.floor(Math.random() * 900); // 260..1160 ms
+  if (Math.abs(delay - avoidDelay) < 120) delay = delay + 140 > 1160 ? delay - 200 : delay + 150;
+  return { cell, delay };
 }
 
 /** Time the player has to touch the lit cell: the declared window scaled by the zone. */
@@ -37,6 +46,8 @@ export function ReactionGame({ spec, onDone, onSimulate }: { spec: MinigameSpec;
   const madeRef = useRef(0);
   const litRef = useRef<number | null>(null);
   const litAt = useRef(0);
+  const lastCell = useRef<number | null>(null);
+  const lastDelay = useRef(0);
   const windowRef = useRef(0);
   const onDoneRef = useRef(onDone);
   onDoneRef.current = onDone;
@@ -95,7 +106,9 @@ export function ReactionGame({ spec, onDone, onSimulate }: { spec: MinigameSpec;
     setPicked(null);
     setFlash(null);
     setLocked(false);
-    const { cell, delay } = roll(spec.kind, attempt, slots);
+    const { cell, delay } = roll(slots, lastCell.current, lastDelay.current);
+    lastCell.current = cell;
+    lastDelay.current = delay;
     const reactionWindow = reactionWindowMs(spec);
     windowRef.current = reactionWindow;
     schedule(() => {

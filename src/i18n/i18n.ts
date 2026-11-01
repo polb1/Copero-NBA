@@ -24,7 +24,8 @@ export function setLang(l: Lang) {
   document.cookie = `lang=${l}; max-age=31536000; path=/; samesite=lax`;
   if (l === current) return;
   const target = LANGS.find((x) => x.id === l)!.path;
-  location.href = target + location.hash;
+  const rest = location.pathname.replace(/^\/(en|ca)/, '') || '/';
+  location.href = (target === '/' ? '' : target.replace(/\/$/, '')) + rest + location.search;
 }
 
 // ---------- Dictionary lookup ----------

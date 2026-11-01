@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, type ComponentType } from 'react';
-import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { ErrorBoundary } from './ui/ErrorBoundary';
+import { AchievementWatcher } from './ui/AchievementToast';
 import { applySettings, consolidateSaves, lastSlotId, loadCareer, store, useCareer } from './store/store';
 import { Start } from './screens/simple/Start';
 import { Play } from './screens/simple/Play';
@@ -53,7 +54,7 @@ export function App() {
   boot();
   return (
     <ErrorBoundary>
-      <HashRouter>
+      <BrowserRouter>
         <ScrollTop />
         <Suspense fallback={<Loading />}>
           <Routes>
@@ -73,7 +74,8 @@ export function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>
-      </HashRouter>
+            <AchievementWatcher />
+      </BrowserRouter>
     </ErrorBoundary>
   );
 }

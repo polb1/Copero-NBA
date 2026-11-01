@@ -29,7 +29,7 @@ import {
 
 type Phase = 'aim' | 'flight' | 'result';
 type MissKind = 'short' | 'long' | 'side';
-interface Aim { pointer: Vec; angleDeg: number; power: number }
+interface Aim { pointer: Vec; angleDeg: number; power: number; curve: number }
 
 const INSTRUCTION = 'Arrastra el balón hacia atrás y suelta para lanzar';
 const HINT_BALL = 'Empieza el arrastre sobre el balón';
@@ -55,6 +55,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
   const [shots, setShots] = useState<boolean[]>([]);
   const [phase, setPhase] = useState<Phase>('aim');
   const [aim, setAim] = useState<Aim | null>(null);
+  const curveRef = useRef(0);
   const [power, setPower] = useState(0);
   const [angle, setAngle] = useState(0);
   const [result, setResult] = useState<'in' | 'out' | null>(null);
@@ -195,9 +196,9 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
       return;
     }
     const setup = setupRef.current;
-    const flight = createFlight(setup.origin, angleDeg, pwr, setup.aspect);
+    const flight = createFlight(setup.origin, angleDeg, pwr, setup.aspect, curveRef.current);
     flightRef.current = flight;
-    trailRef.current = [project(setup, flight.s, flight.h)];
+    trailRef.current = [project(setup, flight.s, flight.h, flight.lat)];
     phaseRef.current = 'flight';
     setPhase('flight');
     setAim(null);
@@ -287,7 +288,8 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     powerRef.current = a.power;
     setAngle(a.angleDeg);
     setPower(a.power);
-    setAim({ pointer: { x: a.pullX, y: a.pullY }, angleDeg: a.angleDeg, power: a.power });
+    curveRef.current = a.curve ?? 0;
+    setAim({ pointer: { x: a.pullX, y: a.pullY }, angleDeg: a.angleDeg, power: a.power, curve: curveRef.current });
     return a;
   };
 

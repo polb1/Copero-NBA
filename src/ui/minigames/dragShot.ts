@@ -52,6 +52,12 @@ export interface Vec { x: number; y: number }
 export interface Flight {
   /** Distancia recorrida sobre la línea tirador→canasta. */
   s: number;
+  /** Desvío lateral (curva del lanzamiento), en unidades de canasta. */
+  lat: number;
+  /** Velocidad lateral inicial (efecto). */
+  vlat: number;
+  /** Aceleración lateral por efecto (curva). */
+  curve: number;
   /** Altura sobre el suelo. */
   h: number;
   vs: number;
@@ -114,7 +120,7 @@ export const RELEASE_LIFT = 7;
  * Proyecta un punto del plano (s, h) a la pantalla. Con `s=0` cae exactamente
  * en las manos del tirador y con `s=D, h=RIM_HEIGHT` exactamente en el aro.
  */
-export function project(setup: Setup, s: number, h: number): Vec {
+export function project(setup: Setup, s: number, h: number, lat = 0): Vec {
   const D = Math.max(1, setup.distance);
   const k = s / D;
   const kLine = clamp(k, -0.6, 1.6);
@@ -123,7 +129,7 @@ export function project(setup: Setup, s: number, h: number): Vec {
   // Altura que tendría la recta tirador→aro en este punto.
   const refH = RELEASE_HEIGHT + (RIM_HEIGHT - RELEASE_HEIGHT) * kRef;
   return {
-    x: setup.origin.x + (RIM_X - setup.origin.x) * kLine,
+    x: setup.origin.x + (RIM_X - setup.origin.x) * kLine + lat * 8,
     y: lineY - (h - refH) * VISUAL_ARC - RELEASE_LIFT * (1 - kRef),
   };
 }
@@ -158,7 +164,7 @@ export function scoringBand(zone: number): number {
  */
 export function idealSpeed(origin: Vec, angleDeg: number, aspect = 1): number {
   const distance = shotDistance(origin, aspect);
-  const theta = rad(clamp(angleDeg, 20, 84));
+  const theta = rad(clamp(angleDeg, 30, 80));
   const rise = RIM_HEIGHT - RELEASE_HEIGHT;
   const denom = 2 * Math.cos(theta) ** 2 * (distance * Math.tan(theta) - rise);
   if (!(denom > 0.5)) return 60;
@@ -178,15 +184,19 @@ export function launchVelocity(
 ): { vs: number; vh: number } {
   const p = clamp(Number.isFinite(power) ? power : 0, 0, 1);
   const reference = origin ? idealSpeed(origin, angleDeg, aspect) : 60;
-  const speed = clamp(reference * (0.72 + 0.56 * p), SPEED_MIN, SPEED_MAX);
+  const speed = clamp(reference * (0.70 + 0.58 * Math.pow(p, 1.12)), SPEED_MIN, SPEED_MAX);
   const theta = rad(clamp(Number.isFinite(angleDeg) ? angleDeg : 0, -30, 85));
   return { vs: speed * Math.cos(theta), vh: speed * Math.sin(theta) };
 }
 
-export function createFlight(origin: Vec, angleDeg: number, power: number, aspect = 1): Flight {
+export function createFlight(origin: Vec, angleDeg: number, power: number, aspect = 1, curve = 0): Flight {
   const v = launchVelocity(angleDeg, power, origin, aspect);
+  const c = clamp(Number.isFinite(curve) ? curve : 0, -1, 1);
   return {
     s: 0,
+    lat: 0,
+    vlat: 0,
+    curve: c,
     h: RELEASE_HEIGHT,
     vs: v.vs,
     vh: v.vh,
@@ -223,6 +233,12 @@ export function stepFlight(
   const prevH = f.h;
 
   f.vh -= GRAVITY * dt;
+  // Efecto lateral: el balón se abre hacia un lado y vuelve (curva real).
+  if (f.curve) {
+    f.vlat += -f.curve * 26 * dt;      // aceleración hacia el lado del efecto
+    f.lat += f.vlat * dt;
+    f.vlat *= 1 - 0.35 * dt;           // se frena con el aire
+  }
   f.s += f.vs * dt;
   f.h += f.vh * dt;
   f.t += dt;
@@ -240,7 +256,8 @@ export function stepFlight(
     -f.vh >= f.vs * MIN_ENTRY_SLOPE &&
     prevH >= RIM_HEIGHT &&
     f.h <= RIM_HEIGHT &&
-    Math.abs(f.s - D) <= band
+    Math.abs(f.s - D) <= band &&
+    Math.abs(f.lat) <= RIM_HALF * 0.85
   ) {
     f.made = true;
     f.done = true;
@@ -348,7 +365,7 @@ export function aimFromDrag(
   origin: Vec,
   pointer: Vec,
   aspect = 1,
-): { angleDeg: number; power: number; length: number; pullX: number; pullY: number } {
+): { angleDeg: number; power: number; length: number; pullX: number; pullY: number; curve: number } {
   const a = safeAspect(aspect);
   const dx = origin.x - pointer.x;
   // Arrastrar hacia abajo (y de pantalla mayor) lanza hacia arriba.
@@ -376,7 +393,8 @@ export function aimFromDrag(
   const base = AIM_BASE_ANGLE + Math.max(0, 32 - distance) * 1.7;
 
   return {
-    angleDeg: clamp(base + delta * AIM_TILT_GAIN, 20, 84),
+    angleDeg: clamp(base + delta * AIM_TILT_GAIN, 34, 78),
+    curve: clamp(delta / 55, -0.85, 0.85),
     power: clamp(length / MAX_PULL, 0, 1),
     length,
     pullX: clamp(pointer.x, 0, 100),

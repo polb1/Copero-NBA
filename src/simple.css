@@ -1019,3 +1019,38 @@ button, a, .choice { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .choice.locked:active { transform: none; }
 .choice-lock { display: block; margin-top: 4px; font-size: .72rem; color: var(--gold); }
 
+
+/* ------- Logro desbloqueado: modal pequeño abajo + confeti ------- */
+.ach-toast{
+  position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+  display:flex;align-items:center;gap:12px;max-width:min(92vw,520px);
+  padding:12px 14px;border-radius:14px;z-index:80;cursor:pointer;
+  background:linear-gradient(180deg,#1d2027,#14161b);
+  border:1px solid #3a2a1c;box-shadow:0 12px 40px rgba(0,0,0,.55),0 0 0 1px rgba(255,107,26,.15);
+  animation:ach-in .35s cubic-bezier(.2,.9,.3,1.2);
+  overflow:hidden;
+}
+@keyframes ach-in{from{opacity:0;transform:translate(-50%,26px)}to{opacity:1;transform:translate(-50%,0)}}
+.ach-toast-icon{font-size:28px;line-height:1;filter:drop-shadow(0 0 10px rgba(240,192,77,.45))}
+.ach-toast-body{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ach-toast-kicker{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#ff6b1a;font-weight:700}
+.ach-toast-body b{font-size:15px;color:#f4f5f7}
+.ach-toast-body small{font-size:12px;color:#9aa0ad;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ach-toast-more{margin-left:auto;font-size:11px;color:#f0c04d;background:#241d10;border-radius:999px;padding:2px 7px}
+.ach-confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.ach-confetti span{
+  position:absolute;top:-8px;width:6px;height:10px;border-radius:2px;opacity:.9;
+  animation:ach-fall 1.5s ease-in forwards;
+}
+@keyframes ach-fall{
+  0%{transform:translateY(-10px) rotate(0deg);opacity:1}
+  100%{transform:translateY(120px) rotate(320deg);opacity:0}
+}
+
+/* ------- Logros desplegables ------- */
+.ach-progress{height:6px;border-radius:999px;background:#1b1d22;overflow:hidden;margin:8px 0 14px}
+.ach-progress span{display:block;height:100%;background:linear-gradient(90deg,#ff6b1a,#f0c04d);transition:width .4s ease}
+.ach-box .ach-item{width:100%;text-align:left;font:inherit;color:inherit;background:transparent;border:1px solid #22252c;border-radius:12px;cursor:pointer}
+.ach-box .ach-item.open{border-color:#ff6b1a55;background:#171a20}
+.ach-text{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ach-text small{line-height:1.35}

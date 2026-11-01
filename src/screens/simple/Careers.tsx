@@ -90,21 +90,39 @@ export function Careers() {
   );
 }
 
-/** Achievements unlocked across all careers: a collection to complete run after run. */
+/** Logros globales: desplegables, con progreso y explicación de cada uno. */
 function Achievements() {
   const got = new Set(globalAchievements());
   const list = ACHIEVEMENTS.filter((a) => !a.id.startsWith('daily'));
   const n = list.filter((a) => got.has(a.id)).length;
+  const [open, setOpen] = useState<string | null>(null);
+  const pct = Math.round((n / Math.max(1, list.length)) * 100);
   return (
     <section className="ach-box">
       <h3>Logros <span className="dim">{n} / {list.length}</span></h3>
+      <div className="ach-progress" aria-hidden="true"><span style={{ width: `${pct}%` }} /></div>
       <div className="ach-grid">
-        {list.map((a) => (
-          <div key={a.id} className={`ach-item ${got.has(a.id) ? 'on' : ''}`} title={a.desc}>
-            <span className="ach-ic" aria-hidden="true">{got.has(a.id) ? a.icon : '🔒'}</span>
-            <span><b>{a.title}</b><small>{a.desc}</small></span>
-          </div>
-        ))}
+        {list.map((a) => {
+          const unlocked = got.has(a.id);
+          const isOpen = open === a.id;
+          return (
+            <button
+              key={a.id}
+              type="button"
+              className={`ach-item ${unlocked ? 'on' : ''} ${isOpen ? 'open' : ''}`}
+              onClick={() => setOpen(isOpen ? null : a.id)}
+              aria-expanded={isOpen}
+            >
+              <span className="ach-ic" aria-hidden="true">{unlocked ? a.icon : '🔒'}</span>
+              <span className="ach-text">
+                <b>{a.title}</b>
+                {isOpen
+                  ? <small>{a.desc} <em className="dim">{unlocked ? '· conseguido' : '· pendiente'}</em></small>
+                  : <small className="dim">{unlocked ? 'Conseguido · toca para ver' : 'Bloqueado · toca para ver'}</small>}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </section>
   );

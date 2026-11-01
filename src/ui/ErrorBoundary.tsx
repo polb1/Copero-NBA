@@ -31,7 +31,7 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, State> {
           <p className="tiny dim" style={{ marginTop: 8 }}>{this.state.error.message}</p>
           <div className="row wrap" style={{ marginTop: 18 }}>
             <button className="btn pill light" onClick={() => window.location.reload()}>Recargar</button>
-            <button className="btn pill" onClick={() => { window.location.hash = '#/'; window.location.reload(); }}>Inicio</button>
+            <button className="btn pill" onClick={() => { window.location.href = '/'; }}>Inicio</button>
             <button className="btn pill" onClick={this.exportSave}>Exportar partida</button>
           </div>
         </div>
