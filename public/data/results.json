@@ -1,98 +1,338 @@
 [
- {
-  "date": "Hoy",
-  "home": "Shimane Susanoo Magic",
-  "away": "Hiroshima Dragonflies",
-  "hs": 73,
-  "as": 74,
-  "league": "B.League"
- },
- {
-  "date": "Hoy",
-  "home": "仙台",
-  "away": "東京SR",
-  "hs": 87,
-  "as": 79,
-  "league": "B.League"
- },
- {
-  "date": "Hoy",
-  "home": "Akita Northern Happinets",
-  "away": "Chiba Jets",
-  "hs": 83,
-  "as": 102,
-  "league": "B.League"
- },
- {
-  "date": "Hoy",
-  "home": "Chiba Jets",
-  "away": "Toyama Grouses",
-  "hs": 78,
-  "as": 83,
-  "league": "B.League"
- },
- {
-  "date": "Hoy",
-  "home": "Shinshu Brave Warriors",
-  "away": "Kyoto Hannaryz",
-  "hs": 67,
-  "as": 65,
-  "league": "B.League"
- },
- {
-  "date": "Hoy",
-  "home": "神戸",
-  "away": "Nagasaki Velca",
-  "hs": 90,
-  "as": 87,
-  "league": "B.League"
- },
- {
-  "date": "Hoy",
-  "home": "Ibaraki Robots",
-  "away": "北海道",
-  "hs": 88,
-  "as": 96,
-  "league": "B.League"
- },
- {
-  "date": "Hoy",
-  "home": "Gunma Crane Thunders",
-  "away": "Osaka Evessa",
-  "hs": 102,
-  "as": 60,
-  "league": "B.League"
- },
- {
-  "date": "Hoy",
-  "home": "Alvark Tokyo",
-  "away": "Utsunomiya Brex",
-  "hs": 106,
-  "as": 71,
-  "league": "B.League"
- },
- {
-  "date": "Hoy",
-  "home": "三河",
-  "away": "Saga Ballooners",
-  "hs": 84,
-  "as": 78,
-  "league": "B.League"
- },
- {
-  "date": "Hoy",
-  "home": "Nagoya Diamond Dolphins",
-  "away": "Shiga Lakes",
-  "hs": 87,
-  "as": 64,
-  "league": "B.League"
- },
- {
-  "date": "30 Oct",
-  "home": "Washington Wizards",
-  "away": "Charlotte Hornets",
-  "hs": 95,
-  "as": 79,
-  "league": "NBA"
- }
+{
+"date": "11 oct",
+"home": "Surne Bilbao Basket",
+"away": "Hereda San Pablo Burgos",
+"hs": 96,
+"as": 87,
+"league": "Liga ACB"
+},
+{
+"date": "11 oct",
+"home": "Barça Basket",
+"away": "Valencia Basket",
+"hs": 89,
+"as": 86,
+"league": "Liga ACB"
+},
+{
+"date": "14 oct",
+"home": "Joventut Badalona",
+"away": "MoraBanc Andorra",
+"hs": 96,
+"as": 75,
+"league": "Liga ACB"
+},
+{
+"date": "17 oct",
+"home": "Kids&Us Manresa",
+"away": "Unicaja",
+"hs": 72,
+"as": 84,
+"league": "Liga ACB"
+},
+{
+"date": "17 oct",
+"home": "MoraBanc Andorra",
+"away": "Río Breogán",
+"hs": 108,
+"as": 102,
+"league": "Liga ACB"
+},
+{
+"date": "17 oct",
+"home": "Hereda San Pablo Burgos",
+"away": "Monbus Obradoiro",
+"hs": 72,
+"as": 79,
+"league": "Liga ACB"
+},
+{
+"date": "18 oct",
+"home": "Bàsquet Girona",
+"away": "Leyma Basquet Coruña",
+"hs": 110,
+"as": 90,
+"league": "Liga ACB"
+},
+{
+"date": "18 oct",
+"home": "Casademont Zaragoza",
+"away": "Força Lleida CE",
+"hs": 109,
+"as": 98,
+"league": "Liga ACB"
+},
+{
+"date": "18 oct",
+"home": "Real Madrid",
+"away": "Surne Bilbao Basket",
+"hs": 119,
+"as": 84,
+"league": "Liga ACB"
+},
+{
+"date": "18 oct",
+"home": "Valencia Basket",
+"away": "UCAM Murcia",
+"hs": 116,
+"as": 93,
+"league": "Liga ACB"
+},
+{
+"date": "18 oct",
+"home": "La Laguna Tenerife",
+"away": "Kosner Baskonia",
+"hs": 82,
+"as": 77,
+"league": "Liga ACB"
+},
+{
+"date": "18 oct",
+"home": "Joventut Badalona",
+"away": "Barça Basket",
+"hs": 113,
+"as": 89,
+"league": "Liga ACB"
+},
+{
+"date": "24 oct",
+"home": "Kids&Us Manresa",
+"away": "Hereda San Pablo Burgos",
+"hs": 81,
+"as": 99,
+"league": "Liga ACB"
+},
+{
+"date": "24 oct",
+"home": "UCAM Murcia",
+"away": "Leyma Basquet Coruña",
+"hs": 88,
+"as": 81,
+"league": "Liga ACB"
+},
+{
+"date": "24 oct",
+"home": "Barça Basket",
+"away": "Casademont Zaragoza",
+"hs": 99,
+"as": 81,
+"league": "Liga ACB"
+},
+{
+"date": "25 oct",
+"home": "Surne Bilbao Basket",
+"away": "MoraBanc Andorra",
+"hs": 88,
+"as": 76,
+"league": "Liga ACB"
+},
+{
+"date": "25 oct",
+"home": "Bàsquet Girona",
+"away": "Joventut Badalona",
+"hs": 101,
+"as": 87,
+"league": "Liga ACB"
+},
+{
+"date": "25 oct",
+"home": "La Laguna Tenerife",
+"away": "Monbus Obradoiro",
+"hs": 106,
+"as": 76,
+"league": "Liga ACB"
+},
+{
+"date": "25 oct",
+"home": "Valencia Basket",
+"away": "Kosner Baskonia",
+"hs": 84,
+"as": 75,
+"league": "Liga ACB"
+},
+{
+"date": "25 oct",
+"home": "Río Breogán",
+"away": "Unicaja",
+"hs": 90,
+"as": 103,
+"league": "Liga ACB"
+},
+{
+"date": "25 oct",
+"home": "Força Lleida CE",
+"away": "Real Madrid",
+"hs": 86,
+"as": 122,
+"league": "Liga ACB"
+},
+{
+"date": "31 oct",
+"home": "Casademont Zaragoza",
+"away": "Bàsquet Girona",
+"hs": 107,
+"as": 78,
+"league": "Liga ACB"
+},
+{
+"date": "31 oct",
+"home": "UCAM Murcia",
+"away": "Força Lleida CE",
+"hs": 125,
+"as": 98,
+"league": "Liga ACB"
+},
+{
+"date": "31 oct",
+"home": "Leyma Basquet Coruña",
+"away": "La Laguna Tenerife",
+"hs": 93,
+"as": 89,
+"league": "Liga ACB"
+},
+{
+"date": "1 nov",
+"home": "Monbus Obradoiro",
+"away": "Río Breogán",
+"hs": 90,
+"as": 110,
+"league": "Liga ACB"
+},
+{
+"date": "1 nov",
+"home": "Joventut Badalona",
+"away": "Surne Bilbao Basket",
+"hs": 78,
+"as": 81,
+"league": "Liga ACB"
+},
+{
+"date": "1 nov",
+"home": "Real Madrid",
+"away": "Hereda San Pablo Burgos",
+"hs": 90,
+"as": 79,
+"league": "Liga ACB"
+},
+{
+"date": "1 nov",
+"home": "Kosner Baskonia",
+"away": "Kids&Us Manresa",
+"hs": 106,
+"as": 83,
+"league": "Liga ACB"
+},
+{
+"date": "1 nov",
+"home": "MoraBanc Andorra",
+"away": "Valencia Basket",
+"hs": 79,
+"as": 111,
+"league": "Liga ACB"
+},
+{
+"date": "1 nov",
+"home": "Unicaja",
+"away": "Barça Basket",
+"hs": 89,
+"as": 92,
+"league": "Liga ACB"
+},
+{
+"date": "Hoy",
+"home": "Shimane Susanoo Magic",
+"away": "Hiroshima Dragonflies",
+"hs": 73,
+"as": 74,
+"league": "B.League"
+},
+{
+"date": "Hoy",
+"home": "仙台",
+"away": "東京SR",
+"hs": 87,
+"as": 79,
+"league": "B.League"
+},
+{
+"date": "Hoy",
+"home": "Akita Northern Happinets",
+"away": "Chiba Jets",
+"hs": 83,
+"as": 102,
+"league": "B.League"
+},
+{
+"date": "Hoy",
+"home": "Chiba Jets",
+"away": "Toyama Grouses",
+"hs": 78,
+"as": 83,
+"league": "B.League"
+},
+{
+"date": "Hoy",
+"home": "Shinshu Brave Warriors",
+"away": "Kyoto Hannaryz",
+"hs": 67,
+"as": 65,
+"league": "B.League"
+},
+{
+"date": "Hoy",
+"home": "神戸",
+"away": "Nagasaki Velca",
+"hs": 90,
+"as": 87,
+"league": "B.League"
+},
+{
+"date": "Hoy",
+"home": "Ibaraki Robots",
+"away": "北海道",
+"hs": 88,
+"as": 96,
+"league": "B.League"
+},
+{
+"date": "Hoy",
+"home": "Gunma Crane Thunders",
+"away": "Osaka Evessa",
+"hs": 102,
+"as": 60,
+"league": "B.League"
+},
+{
+"date": "Hoy",
+"home": "Alvark Tokyo",
+"away": "Utsunomiya Brex",
+"hs": 106,
+"as": 71,
+"league": "B.League"
+},
+{
+"date": "Hoy",
+"home": "三河",
+"away": "Saga Ballooners",
+"hs": 84,
+"as": 78,
+"league": "B.League"
+},
+{
+"date": "Hoy",
+"home": "Nagoya Diamond Dolphins",
+"away": "Shiga Lakes",
+"hs": 87,
+"as": 64,
+"league": "B.League"
+},
+{
+"date": "30 Oct",
+"home": "Washington Wizards",
+"away": "Charlotte Hornets",
+"hs": 95,
+"as": 79,
+"league": "NBA"
+}
 ]

@@ -1,0 +1,190 @@
+#!/usr/bin/env python3
+"""Ingesta de datos de baloncesto vía Apify (actor sian.agency/basketball-api-scraper).
+
+- Clasificaciones completas (posición, G/P, % victorias, racha, puntos a favor/en contra).
+- Calendario: partidos jugados (con marcador y parciales) y próximos.
+- Guarda presupuesto: si el saldo mensual de Apify baja del mínimo, no ejecuta nada.
+
+El token se lee de la variable APIFY_TOKEN o de ~/.hermes/apify.env (nunca del repo).
+
+Uso:
+  python3 scripts/apify-ingest.py                 # ligas activas
+  python3 scripts/apify-ingest.py --liga "Liga ACB"
+  python3 scripts/apify-ingest.py --solo-clasificacion
+"""
+from __future__ import annotations
+
+import json
+import os
+import sys
+import urllib.error
+import urllib.request
+from datetime import datetime
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+DATA = ROOT / "public" / "data"
+MAP = DATA / "apify-map.json"
+ACTOR = "sian.agency~basketball-api-scraper"
+API = "https://api.apify.com/v2"
+MIN_BUDGET_USD = 1.2  # no arrancar si queda menos que esto en el ciclo
+
+# competitionId / seasonId de la temporada en curso.
+LIGAS = {
+    "Liga ACB": {"competitionId": "264", "seasonId": "100873"},
+}
+
+MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
+
+
+def token() -> str:
+    tok = os.environ.get("APIFY_TOKEN", "").strip()
+    if tok:
+        return tok
+    env = Path.home() / ".hermes" / "apify.env"
+    if env.exists():
+        for line in env.read_text().splitlines():
+            if line.startswith("APIFY_TOKEN="):
+                return line.split("=", 1)[1].strip()
+    raise SystemExit("Falta APIFY_TOKEN (variable de entorno o ~/.hermes/apify.env)")
+
+
+TOKEN = token()
+
+
+def api_get(path: str) -> dict:
+    req = urllib.request.Request(f"{API}{path}", headers={"Authorization": f"Bearer {TOKEN}"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.loads(r.read().decode())
+
+
+def run_actor(payload: dict) -> list[dict]:
+    url = f"{API}/acts/{ACTOR}/run-sync-get-dataset-items?token={TOKEN}"
+    req = urllib.request.Request(url, data=json.dumps(payload).encode(),
+                                 headers={"Content-Type": "application/json"}, method="POST")
+    try:
+        with urllib.request.urlopen(req, timeout=240) as r:
+            data = json.loads(r.read().decode())
+        return data if isinstance(data, list) else []
+    except urllib.error.HTTPError as err:
+        body = err.read().decode()[:300]
+        print(f"[apify] {err.code}: {body}")
+        return []
+
+
+def presupuesto_restante() -> float:
+    try:
+        d = api_get("/users/me/limits")["data"]
+        return float(d["limits"]["maxMonthlyUsageUsd"]) - float(d["current"]["monthlyUsageUsd"])
+    except Exception as e:  # noqa: BLE001
+        print(f"[apify] no pude leer el presupuesto: {e}")
+        return 0.0
+
+
+def fecha(iso: str) -> str:
+    try:
+        dt = datetime.strptime(iso[:10], "%Y-%m-%d")
+        return f"{dt.day} {MESES[dt.month - 1]}"
+    except Exception:
+        return ""
+
+
+def hora(iso: str) -> str:
+    try:
+        return datetime.strptime(iso[:19], "%Y-%m-%dT%H:%M:%S").strftime("%H:%M")
+    except Exception:
+        return ""
+
+
+def leer(nombre: str, defecto):
+    p = DATA / nombre
+    if p.exists():
+        try:
+            return json.loads(p.read_text())
+        except Exception:
+            return defecto
+    return defecto
+
+
+def escribir(nombre: str, valor) -> None:
+    (DATA / nombre).write_text(json.dumps(valor, ensure_ascii=False, indent=0))
+
+
+def ingesta_liga(nombre: str, ids: dict, solo_clasificacion: bool = False) -> list[str]:
+    hechos = []
+    cid, sid = ids["competitionId"], ids["seasonId"]
+
+    # --- Clasificación
+    rows = run_actor({"operation": "leagueStandings", "competitionId": cid,
+                      "seasonId": sid, "standingsType": "total"})
+    if rows:
+        tabla = []
+        for r in sorted(rows, key=lambda x: x.get("position") or 99):
+            w, l = int(r.get("wins") or 0), int(r.get("losses") or 0)
+            streak = int(r.get("streak") or 0)
+            form = ("W" * streak if streak > 0 else "L" * abs(streak))[:5]
+            tabla.append({
+                "rank": int(r.get("position") or 0),
+                "team": r.get("teamName") or (r.get("team") or {}).get("name") or "",
+                "w": w, "l": l, "form": form, "conf": nombre,
+            })
+        if tabla:
+            st = leer("standings.json", {})
+            st[nombre] = tabla
+            escribir("standings.json", st)
+            hechos.append(f"{nombre} tabla {len(tabla)}")
+    if solo_clasificacion:
+        return hechos
+
+    # --- Calendario
+    res, fix = [], []
+    for ventana, destino in (("played", res), ("upcoming", fix)):
+        for g in run_actor({"operation": "seasonSchedule", "competitionId": cid, "seasonId": sid,
+                            "gameWindow": ventana, "maxPages": 1}):
+            home = (g.get("homeTeam") or {}).get("name") or ""
+            away = (g.get("awayTeam") or {}).get("name") or ""
+            if not home or not away:
+                continue
+            if ventana == "played" and g.get("homePoints") is not None:
+                destino.append({"date": fecha(g.get("startTime", "")), "home": home, "away": away,
+                                "hs": int(g["homePoints"]), "as": int(g["awayPoints"]), "league": nombre})
+            elif ventana == "upcoming":
+                destino.append({"date": fecha(g.get("startTime", "")), "time": hora(g.get("startTime", "")),
+                                "home": home, "away": away, "event": g.get("round") or "", "league": nombre})
+
+    if res:
+        old = [r for r in leer("results.json", []) if r.get("league") != nombre]
+        escribir("results.json", res + old)
+        hechos.append(f"{nombre} {len(res)} resultados")
+    if fix:
+        oldf = [f for f in leer("fixtures.json", []) if f.get("league") != nombre]
+        escribir("fixtures.json", fix + oldf)
+        hechos.append(f"{nombre} {len(fix)} próximos")
+    return hechos
+
+
+def main() -> None:
+    objetivo = None
+    solo_clasificacion = "--solo-clasificacion" in sys.argv
+    if "--liga" in sys.argv:
+        objetivo = sys.argv[sys.argv.index("--liga") + 1]
+
+    restante = presupuesto_restante()
+    print(f"presupuesto restante: ${restante:.2f}")
+    if restante < MIN_BUDGET_USD:
+        print(f"[apify] saldo insuficiente (< ${MIN_BUDGET_USD}); no se ejecuta nada")
+        return
+
+    mapa = leer("apify-map.json", {}) or {}
+    ligas = {k: v for k, v in LIGAS.items() if not objetivo or k == objetivo}
+    hechos: list[str] = []
+    for nombre, ids in ligas.items():
+        print(f"→ {nombre} (comp {ids['competitionId']} · temporada {ids['seasonId']})")
+        hechos += ingesta_liga(nombre, ids, solo_clasificacion)
+        mapa[nombre] = ids
+    escribir("apify-map.json", mapa)
+    print("hecho: " + (" · ".join(hechos) if hechos else "sin datos nuevos"))
+
+
+if __name__ == "__main__":
+    main()
