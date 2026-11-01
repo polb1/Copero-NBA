@@ -79,6 +79,166 @@
 "l": 2,
 "form": "",
 "conf": "West"
+},
+{
+"rank": 11,
+"team": "Dallas Mavericks",
+"w": 4,
+"l": 2,
+"form": "",
+"conf": "West"
+},
+{
+"rank": 12,
+"team": "Toronto Raptors",
+"w": 3,
+"l": 2,
+"form": "",
+"conf": "East"
+},
+{
+"rank": 13,
+"team": "Denver Nuggets",
+"w": 3,
+"l": 2,
+"form": "",
+"conf": "West"
+},
+{
+"rank": 14,
+"team": "Minnesota Timberwolves",
+"w": 4,
+"l": 3,
+"form": "",
+"conf": "West"
+},
+{
+"rank": 15,
+"team": "Washington Wizards",
+"w": 3,
+"l": 3,
+"form": "",
+"conf": "East"
+},
+{
+"rank": 16,
+"team": "Golden State Warriors",
+"w": 3,
+"l": 3,
+"form": "",
+"conf": "West"
+},
+{
+"rank": 17,
+"team": "Atlanta Hawks",
+"w": 3,
+"l": 4,
+"form": "",
+"conf": "East"
+},
+{
+"rank": 18,
+"team": "Charlotte Hornets",
+"w": 3,
+"l": 4,
+"form": "",
+"conf": "East"
+},
+{
+"rank": 19,
+"team": "Orlando Magic",
+"w": 2,
+"l": 3,
+"form": "",
+"conf": "East"
+},
+{
+"rank": 20,
+"team": "Miami Heat",
+"w": 2,
+"l": 4,
+"form": "",
+"conf": "East"
+},
+{
+"rank": 21,
+"team": "New York Knicks",
+"w": 2,
+"l": 4,
+"form": "",
+"conf": "East"
+},
+{
+"rank": 22,
+"team": "New Orleans Pelicans",
+"w": 2,
+"l": 4,
+"form": "",
+"conf": "West"
+},
+{
+"rank": 23,
+"team": "Indiana Pacers",
+"w": 2,
+"l": 4,
+"form": "",
+"conf": "East"
+},
+{
+"rank": 24,
+"team": "Phoenix Suns",
+"w": 1,
+"l": 3,
+"form": "",
+"conf": "West"
+},
+{
+"rank": 25,
+"team": "LA Clippers",
+"w": 1,
+"l": 4,
+"form": "",
+"conf": "West"
+},
+{
+"rank": 26,
+"team": "Chicago Bulls",
+"w": 1,
+"l": 5,
+"form": "",
+"conf": "East"
+},
+{
+"rank": 27,
+"team": "Milwaukee Bucks",
+"w": 1,
+"l": 5,
+"form": "",
+"conf": "East"
+},
+{
+"rank": 28,
+"team": "Utah Jazz",
+"w": 1,
+"l": 5,
+"form": "",
+"conf": "West"
+},
+{
+"rank": 29,
+"team": "Brooklyn Nets",
+"w": 0,
+"l": 5,
+"form": "",
+"conf": "East"
+},
+{
+"rank": 30,
+"team": "Sacramento Kings",
+"w": 0,
+"l": 6,
+"form": "",
+"conf": "West"
 }
 ],
 "EuroLeague": [
@@ -247,22 +407,22 @@
 {
 "rank": 1,
 "team": "Alvark Tokyo",
-"w": 10,
+"w": 11,
 "l": 3,
 "form": "",
 "conf": "B1"
 },
 {
 "rank": 2,
-"team": "Sunrockers Shibuya",
-"w": 9,
+"team": "Sendai 89ers",
+"w": 10,
 "l": 4,
 "form": "",
 "conf": "B1"
 },
 {
 "rank": 3,
-"team": "Sendai 89ers",
+"team": "Gunma Crane Thunders",
 "w": 9,
 "l": 4,
 "form": "",
@@ -270,16 +430,16 @@
 },
 {
 "rank": 4,
-"team": "Gunma Crane Thunders",
-"w": 8,
-"l": 4,
+"team": "Sunrockers Shibuya",
+"w": 9,
+"l": 5,
 "form": "",
 "conf": "B1"
 },
 {
 "rank": 5,
 "team": "Toyama Grouses",
-"w": 7,
+"w": 8,
 "l": 5,
 "form": "",
 "conf": "B1"
@@ -287,24 +447,24 @@
 {
 "rank": 6,
 "team": "Levanga Hokkaido",
-"w": 6,
+"w": 7,
 "l": 5,
 "form": "",
 "conf": "B1"
 },
 {
 "rank": 7,
-"team": "Ibaraki Robots",
-"w": 6,
+"team": "Yokohama B-Corsairs",
+"w": 7,
 "l": 7,
 "form": "",
 "conf": "B1"
 },
 {
 "rank": 8,
-"team": "Yokohama B-Corsairs",
+"team": "Ibaraki Robots",
 "w": 6,
-"l": 7,
+"l": 8,
 "form": "",
 "conf": "B1"
 },
@@ -312,15 +472,31 @@
 "rank": 9,
 "team": "Utsunomiya Brex",
 "w": 5,
-"l": 7,
+"l": 8,
 "form": "",
 "conf": "B1"
 },
 {
 "rank": 10,
+"team": "Chiba Jets",
+"w": 5,
+"l": 9,
+"form": "",
+"conf": "B1"
+},
+{
+"rank": 11,
 "team": "Kawasaki Brave Thunders",
 "w": 4,
-"l": 8,
+"l": 9,
+"form": "",
+"conf": "B1"
+},
+{
+"rank": 12,
+"team": "Akita Northern Happinets",
+"w": 4,
+"l": 9,
 "form": "",
 "conf": "B1"
 }

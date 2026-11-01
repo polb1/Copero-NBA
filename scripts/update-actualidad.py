@@ -266,7 +266,6 @@ def bleague_today():
 # ---------------------------------------------------------------- TheSportsDB
 TSDB = "https://www.thesportsdb.com/api/v1/json/123"
 TSDB_LEAGUES = {
-    4408: "Liga ACB",
     4433: "Lega Basket Serie A",
     4441: "Basketball Bundesliga",
     4423: "LNB Élite",
@@ -531,30 +530,37 @@ def _xml(url):
 
 
 def euroleague_all():
-    """Resultados, calendario y clasificación completos de la Euroliga."""
+    """Resultados, calendario y clasificación completos (API v2 oficial)."""
     resultados, fixtures, rows = [], [], []
     season = "E2026"
     try:
-        root = _xml(f"{EL_API}/results?seasonCode={season}")
-        games = []
-        for g in root.findall("game"):
-            def t(tag):
-                el = g.find(tag)
-                return (el.text or "").strip() if el is not None else ""
-            hs, as_ = t("homescore"), t("awayscore")
-            played = t("played").lower() == "true" and hs.isdigit() and as_.isdigit()
-            games.append({
-                "date": t("date"), "home": t("hometeam"), "away": t("awayteam"),
-                "hs": int(hs) if hs.isdigit() else None,
-                "as": int(as_) if as_.isdigit() else None,
-                "round": t("gameday"), "played": played,
-            })
-        jugados = [g for g in games if g["played"]]
-        pendientes = [g for g in games if not g["played"]]
-        resultados = jugados[-20:]
-        fixtures = pendientes[:20]
+        req = urllib.request.Request(f"{EL_API.replace('/v1','/v2')}/competitions/E/seasons/{season}/games",
+                                     headers={"User-Agent": UA})
+        with urllib.request.urlopen(req, timeout=45) as r:
+            games = json.loads(r.read().decode()).get("data") or []
+        jugados, pendientes = [], []
+        for g in games:
+            loc, road = g.get("local") or {}, g.get("road") or {}
+            home = ((loc.get("club") or {}).get("name") or "").strip()
+            away = ((road.get("club") or {}).get("name") or "").strip()
+            if not home or not away:
+                continue
+            item = {
+                "date": (g.get("date") or "")[:10],
+                "home": home, "away": away,
+                "hs": int(loc.get("score") or 0), "as": int(road.get("score") or 0),
+                "round": g.get("round"),
+            }
+            if g.get("played"):
+                jugados.append(item)
+            else:
+                pendientes.append(item)
+        jugados.sort(key=lambda x: x["date"])
+        pendientes.sort(key=lambda x: x["date"])
+        resultados = jugados[-40:]
+        fixtures = pendientes[:30]
     except Exception as e:  # noqa: BLE001
-        print(f"[warn] Euroliga resultados: {e}")
+        print(f"[warn] Euroliga partidos: {e}")
 
     try:
         root = _xml(f"{EL_API}/standings?seasonCode={season}")

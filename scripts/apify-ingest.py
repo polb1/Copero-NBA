@@ -176,12 +176,32 @@ def main() -> None:
         return
 
     mapa = leer("apify-map.json", {}) or {}
+    # Cadencia mínima: por defecto, un refresco cada 7 días por liga (el plan
+    # gratuito son 5 $/mes y cada liga cuesta ~0,40 $).
+    min_dias = 7
+    if "--cada-dias" in sys.argv:
+        min_dias = int(sys.argv[sys.argv.index("--cada-dias") + 1])
+    if "--fuerza" not in sys.argv:
+        recientes = []
+        for nombre, ids in mapa.items():
+            ultimo = ids.get("lastRun")
+            if not ultimo:
+                continue
+            try:
+                dias = (datetime.now() - datetime.fromisoformat(ultimo)).total_seconds() / 86400
+            except Exception:
+                continue
+            if dias < min_dias:
+                recientes.append(f"{nombre} ({dias:.1f}d)")
+        if recientes and not objetivo:
+            print("[apify] aún no toca: " + ", ".join(recientes))
+            return
     ligas = {k: v for k, v in LIGAS.items() if not objetivo or k == objetivo}
     hechos: list[str] = []
     for nombre, ids in ligas.items():
         print(f"→ {nombre} (comp {ids['competitionId']} · temporada {ids['seasonId']})")
         hechos += ingesta_liga(nombre, ids, solo_clasificacion)
-        mapa[nombre] = ids
+        mapa[nombre] = dict(ids, lastRun=datetime.now().isoformat(timespec="seconds"))
     escribir("apify-map.json", mapa)
     print("hecho: " + (" · ".join(hechos) if hechos else "sin datos nuevos"))
 
