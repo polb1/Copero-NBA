@@ -35,10 +35,13 @@ import { MINIGAME_TIER_LABEL } from '../../content/minigames';
 
 const num = (n: number) => Math.round(n).toLocaleString('es-ES');
 
-const AWARD_ICON: Record<string, string> = { champion: '💍', mvp: '👑', fmvp: '🥇', dpoy: '🛡️', roy: '🌱', smoy: '🔋', mip: '📈', allStar: '⭐', allNba1: '🏅', allNba2: '🏅', allNba3: '🏅', allDef1: '🧱', allDef2: '🧱', threeContest: '🎯', euroChampion: '🏆', euroMvp: '🌟', nationalMedal: '🥇' };
+const AWARD_ICON: Record<string, string> = { champion: '💍', mvp: '👑', fmvp: '🥇', dpoy: '🛡️', roy: '🌱', smoy: '🔋', mip: '📈', allStar: '⭐', allNba1: '🏅', allNba2: '🏅', allNba3: '🏅', allDef1: '🧱', allDef2: '🧱', threeContest: '🎯', euroChampion: '🏆',
+  localChampion: '🏆', euroMvp: '🌟', nationalMedal: '🥇' };
 const AWARD_ICON_BY_LABEL: Record<string, string> = Object.fromEntries(
   Object.entries(AWARD_LABEL).map(([id, label]) => [label, AWARD_ICON[id] ?? '🏆']),
 );
+
+function leagueNameOr(l?: string) { return l ? (l.replace('EuroLeague','Euroliga') || l) : 'liga'; }
 
 export function Play() {
   const c = useCareer();
@@ -208,7 +211,7 @@ function CardTabs({ c, awards, totals }: { c: Career; awards: Record<string, num
         <div className="card-panel anim-in">
           {trophies === 0 ? <p className="tiny dim" style={{ margin: 0, textAlign: 'center' }}>Aún no has ganado ningún trofeo.</p> : (
             <div className="row wrap" style={{ justifyContent: 'center', gap: 6 }}>
-              {Object.entries(awards).sort((x, y) => y[1] - x[1]).map(([k, n]) => <span key={k} className="chip gold" title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'} {n > 1 ? `${n}× ` : ''}{AWARD_LABEL[k] ?? k}</span>)}
+              {Object.entries(awards).sort((x, y) => y[1] - x[1]).map(([k, n]) => <span key={k} className="chip gold" title={AWARD_LABEL[k]}>{AWARD_ICON[k] ?? '🏆'} {n > 1 ? `${n}× ` : ''}{(k === 'localChampion' && c.satChampion ? `Campeón de ${leagueNameOr(c.satChampion.league)}` : (AWARD_LABEL[k] ?? k))}</span>)}
               {Array.from({ length: medals }, (_, i) => <span key={`medal-${i}`} className="chip gold" title="Medalla con la selección">🥇 Medalla</span>)}
             </div>
           )}
@@ -378,7 +381,7 @@ function SeasonRecap({ c }: { c: Career }) {
             {keys.map((k, i) => (
               <div key={k} className="recap-trophy" style={{ animationDelay: `${0.5 + i * 0.35}s` }}>
                 <span>{AWARD_ICON[k] ?? '🏆'}</span>
-                <b>{AWARD_LABEL[k] ?? k}</b>
+                <b>{(k === 'localChampion' && c.satChampion ? `Campeón de ${leagueNameOr(c.satChampion.league)}` : (AWARD_LABEL[k] ?? k))}</b>
               </div>
             ))}
           </div>

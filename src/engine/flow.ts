@@ -363,6 +363,13 @@ export function endSeason(c: Career) {
     myAwards.push('champion');
     u.rings = (u.rings ?? 0) + 1;
   }
+  // ---- Campeonato local (satélite): cuenta como trofeo diferenciado
+  if (c.satChampion && c.satChampion.season === L.season) {
+    const satTeam = teamOf(c);
+    if (satTeam && (c.satChampion.team === satTeam.name || c.satChampion.team === (satTeam?.name ?? ''))){
+      myAwards.push('localChampion');
+    }
+  }
   // Season role from actual usage, not from the final-day rotation.
   const sa = averages(u.season);
   const role = !u.season.gp ? userRole(c).label : u.season.gs / u.season.gp >= 0.5 ? (u.ovr >= 80 && sa.mpg >= 32 ? 'Estrella' : 'Titular') : sa.mpg >= 16 ? 'Rotación' : 'Fondo de banquillo';
