@@ -47,7 +47,7 @@ function site(): Plugin {
   };
 }
 
-// One HTML page per language (/, /en/, /ca/) so each can be indexed; en/ and ca/ are generated from
+// One HTML page per language (/, /en/, /ca) so each can be indexed; en/ and ca/ are generated from
 // index.html by scripts/gen-pages.mjs before the build.
 export default defineConfig({
   base: '/',

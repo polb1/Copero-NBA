@@ -21,7 +21,7 @@ export function RouteSeo() {
     document.body.dataset.baseTitle ??= document.title;
     document.title = titleFor(pathname, document.body.dataset.baseTitle);
     const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    if (canonical && pathname in HUB_TITLES) canonical.href = `${location.origin}${pathname}/`;
+    if (canonical && pathname in HUB_TITLES) canonical.href = location.origin + pathname.replace(/\/$/, '');
     const meta = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
     if (!meta) return;
     meta.dataset.base ??= meta.content;

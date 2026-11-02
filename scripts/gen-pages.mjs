@@ -14,7 +14,7 @@ const PAGES = {
     ogTitle: 'NBA Legacy · Free basketball career simulator',
     ogDescription: 'Create your player, enter the NBA draft and build your legacy. Free, in your browser and on your phone.',
     loading: 'Loading…',
-    guide: ['/en/best-basketball-simulators/', 'Compared: the best free basketball simulator games'],
+    guide: ['/en/best-basketball-simulators', 'Compared: the best free basketball simulator games'],
     slow: 'This is taking longer than usual.',
     reload: 'Reload',
     broken: 'Your browser could not start the game.<br>Update it or open it in Safari or Chrome.',
@@ -60,7 +60,7 @@ const PAGES = {
     ogTitle: 'NBA Legacy · Simulador de carrera de bàsquet gratis',
     ogDescription: 'Crea el teu jugador, entra al draft de l\'NBA i construeix el teu llegat. Gratis, al navegador i al mòbil.',
     loading: 'Carregant…',
-    guide: ['/mejores-simuladores-baloncesto/', 'Comparativa: els millors simuladors de bàsquet gratis (en castellà)'],
+    guide: ['/mejores-simuladores-baloncesto', 'Comparativa: els millors simuladors de bàsquet gratis (en castellà)'],
     slow: 'Està trigant més del normal.',
     reload: 'Recarregar',
     broken: 'El teu navegador no ha pogut iniciar el joc.<br>Actualitza’l o obre’l amb Safari o Chrome.',
@@ -109,7 +109,7 @@ const swap = (html, re, value, label) => {
 
 for (const [lang, p] of Object.entries(PAGES)) {
   let h = src;
-  const url = `${SITE}/${lang}/`;
+  const url = `${SITE}/${lang}`;
   h = swap(h, /<html lang="es">/, `<html lang="${lang}">`, 'html lang');
   h = swap(h, /<title>[^<]*<\/title>/, `<title>${p.title}</title>`, 'title');
   h = swap(h, /<meta name="description" content="[^"]*" \/>/, `<meta name="description" content="${esc(p.description)}" />`, 'description');
@@ -149,7 +149,6 @@ ${p.faq.map(([q, a]) => `          <details><summary>${q}</summary><p>${a}</p></
   h = swap(h, /Está tardando más de lo normal\.<br><button onclick="location\.reload\(\)"([^>]*)>Recargar<\/button>/, `${p.slow}<br><button onclick="location.reload()"$1>${p.reload}</button>`, 'slow message');
   h = swap(h, /Tu navegador no pudo iniciar el juego\.<br>Actualízalo o ábrelo en Safari o Chrome\./, p.broken, 'error message');
   // Only the Spanish root redirects to the language saved in the cookie.
-  h = swap(h, /\s*<script data-lang-redirect>[\s\S]*?<\/script>/, '', 'language redirect');
   fs.mkdirSync(lang, { recursive: true });
   fs.writeFileSync(`${lang}/index.html`, h);
 }

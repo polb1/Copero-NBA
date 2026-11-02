@@ -8,7 +8,7 @@ export const LANGS = ['es', 'en', 'ca'];
 // IndexNow (Bing, Yandex…): public by design, served as /<key>.txt to prove we own the site.
 export const INDEXNOW_KEY = '320dd01b51d83aa0c00fc827baf16335';
 // Editorial pages besides the three game landings, with their translations.
-export const GUIDES = [{ es: '/mejores-simuladores-baloncesto/', en: '/en/best-basketball-simulators/' }];
+export const GUIDES = [{ es: '/mejores-simuladores-baloncesto', en: '/en/best-basketball-simulators' }];
 
 export function siteConfig(env = process.env) {
   const branch = env.WORKERS_CI_BRANCH;
@@ -18,7 +18,7 @@ export function siteConfig(env = process.env) {
   return { url, production, kind };
 }
 
-const pageUrl = (site, lang) => `${site.url}/${lang === 'es' ? '' : `${lang}/`}`;
+const pageUrl = (site, lang) => `${site.url}/${lang === 'es' ? '' : lang}`;
 
 /** Puts the real origin into the HTML and keeps pre-production pages out of the index. */
 // Cloudflare Web Analytics beacon, injected only in production so pre traffic stays out of the stats.
@@ -39,8 +39,8 @@ const PRIVATE_ROUTES = ['start', 'play', 'careers'];
 
 /** Static copy of the app shell for one route, with its own canonical (and noindex for game screens). */
 export function routeHtml(html, site, route) {
-  let out = html.replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${site.url}/${route}/" />`);
-  out = out.replace(/<meta property="og:url" content="[^"]*" \/>/, `<meta property="og:url" content="${site.url}/${route}/" />`);
+  let out = html.replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${site.url}/${route}" />`);
+  out = out.replace(/<meta property="og:url" content="[^"]*" \/>/, `<meta property="og:url" content="${site.url}/${route}" />`);
   if (PRIVATE_ROUTES.includes(route.split('/')[0])) out = out.replace(/<meta name="robots" content="[^"]*" \/>/, '<meta name="robots" content="noindex, follow" />');
   return out;
 }
@@ -87,12 +87,12 @@ Key facts:
 
 ## Play
 - [Play in Spanish](${u}/): main page
-- [Play in English](${u}/en/)
-- [Play in Catalan](${u}/ca/)
+- [Play in English](${u}/en)
+- [Play in Catalan](${u}/ca)
 
 ## Guides
-- [Best free basketball simulator games (2026)](${u}/en/best-basketball-simulators/): comparison with Basketball GM, HoopDreams, DRAFTBOUND, My NBA Career Simulator and NBA 2K MyCareer
-- [Mejores simuladores de baloncesto gratis (2026)](${u}/mejores-simuladores-baloncesto/): the same comparison in Spanish
+- [Best free basketball simulator games (2026)](${u}/en/best-basketball-simulators): comparison with Basketball GM, HoopDreams, DRAFTBOUND, My NBA Career Simulator and NBA 2K MyCareer
+- [Mejores simuladores de baloncesto gratis (2026)](${u}/mejores-simuladores-baloncesto): the same comparison in Spanish
 `;
 }
 

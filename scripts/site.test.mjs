@@ -34,18 +34,18 @@ describe('outputs', () => {
     expect(robotsTxt(pre)).not.toContain('Sitemap');
     const map = sitemapXml(prod, '2026-10-23');
     expect(map.match(/<loc>/g)).toHaveLength(5);
-    expect(map).toContain('<loc>https://anillero.com/mejores-simuladores-baloncesto/</loc>');
-    expect(map).toContain('<loc>https://anillero.com/en/</loc>');
+    expect(map).toContain('<loc>https://anillero.com/mejores-simuladores-baloncesto</loc>');
+    expect(map).toContain('<loc>https://anillero.com/en</loc>');
     expect(map).not.toContain('polb.dev');
     expect(headersFile(prod)).toBeNull();
     expect(headersFile(pre)).toContain('X-Robots-Tag: noindex');
   });
   test('llms.txt and IndexNow list only production URLs', () => {
-    expect(llmsTxt(prod)).toContain('https://anillero.com/en/best-basketball-simulators/');
+    expect(llmsTxt(prod)).toContain('https://anillero.com/en/best-basketball-simulators');
     expect(llmsTxt(prod)).not.toContain('polb.dev');
     expect(publicUrls(prod)).toEqual([
-      'https://anillero.com/', 'https://anillero.com/en/', 'https://anillero.com/ca/',
-      'https://anillero.com/mejores-simuladores-baloncesto/', 'https://anillero.com/en/best-basketball-simulators/',
+      'https://anillero.com/', 'https://anillero.com/en', 'https://anillero.com/ca',
+      'https://anillero.com/mejores-simuladores-baloncesto', 'https://anillero.com/en/best-basketball-simulators',
     ]);
   });
 });
@@ -54,7 +54,7 @@ describe('app routes', () => {
   const html = '<link rel="canonical" href="https://x/" /><meta property="og:url" content="https://x/" /><meta name="robots" content="index, follow" />';
   test('each route gets its own canonical, game screens are noindex', () => {
     const prod = siteConfig({ WORKERS_CI_BRANCH: 'main' });
-    expect(routeHtml(html, prod, 'noticias')).toContain(`href="${prod.url}/noticias/"`);
+    expect(routeHtml(html, prod, 'noticias')).toContain(`href="${prod.url}/noticias"`);
     expect(routeHtml(html, prod, 'noticias')).toContain('index, follow');
     expect(routeHtml(html, prod, 'play')).toContain('noindex, follow');
     expect(APP_ROUTES).toContain('play');

@@ -6,26 +6,28 @@ import type { Dict } from './types';
 export type Lang = 'es' | 'en' | 'ca';
 export const LANGS: { id: Lang; label: string; path: string }[] = [
   { id: 'es', label: 'ES', path: '/' },
-  { id: 'en', label: 'EN', path: '/en/' },
-  { id: 'ca', label: 'CA', path: '/ca/' },
+  { id: 'en', label: 'EN', path: '/en' },
+  { id: 'ca', label: 'CA', path: '/ca' },
 ];
 
-/** The page's language comes from its URL (/en/, /ca/ or the Spanish root). */
+/** The language comes from the URL (/en, /ca), else from the saved choice (cookie), else Spanish. */
 export function pageLang(): Lang {
   const seg = location.pathname.split('/')[1];
-  return seg === 'en' || seg === 'ca' ? seg : 'es';
+  if (seg === 'en' || seg === 'ca') return seg;
+  const saved = document.cookie.match(/(?:^|; )lang=(en|ca|es)(?:;|$)/);
+  return saved ? (saved[1] as Lang) : 'es';
 }
 
 let current: Lang = typeof location !== 'undefined' ? pageLang() : 'es';
 export const lang = () => current;
 
-/** Remembers the choice in a cookie (the root page redirects to it) and opens that language's page. */
+/** Remembers the choice in a cookie and reloads the page in that language. */
 export function setLang(l: Lang) {
   document.cookie = `lang=${l}; max-age=31536000; path=/; samesite=lax`;
   if (l === current) return;
-  const target = LANGS.find((x) => x.id === l)!.path;
-  const rest = location.pathname.replace(/^\/(en|ca)/, '') || '/';
-  location.href = (target === '/' ? '' : target.replace(/\/$/, '')) + rest + location.search;
+  const bare = location.pathname.replace(/^\/(en|ca)(?=\/|$)/, '') || '/';
+  if (bare !== location.pathname) location.href = bare + location.search;
+  else location.reload();
 }
 
 // ---------- Dictionary lookup ----------
