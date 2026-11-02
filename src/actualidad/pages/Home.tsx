@@ -126,7 +126,27 @@ export function Home() {
                     <span className="font-display text-label-table-header text-text-muted">{list.length} partidos</span>
                   </div>
                   {list.map((m, i) => (
-                    <MatchRow key={`${league}-${i}`} match={m as never} status={m.status} />
+                    <a key={`${league}-${i}`} href={m.league === 'EuroLeague' ? '/liga/euroleague' : m.league === 'B.League' ? '/liga/b-league' : m.league === 'NBA' ? '/liga/nba' : '/actualidad'} className="block hover:bg-court-surface-elevated transition-colors rounded-md px-2 py-2">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 flex flex-col items-center shrink-0">
+                          <TeamBadge name={m.home} size={22} />
+                          <span className="text-[9px] font-display font-bold uppercase text-text-dim">{m.home.split(' ').slice(0,1).join(' ')}</span>
+                        </div>
+                        <div className="flex-1 min-w-0 flex flex-col">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="font-display text-body-sm font-bold truncate">{m.home}</span>
+                            {(m as any).hs !== undefined ? <b className="font-display text-score-display text-secondary tabular-nums">{(m as any).hs}</b> : <span className="font-display text-label-match-status text-secondary">{m.status === 'live' ? 'EN VIVO' : m.status === 'final' ? 'FINAL' : m.time || ''}</span>}
+                          </div>
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="font-display text-body-sm truncate text-on-surface-variant">{m.away}</span>
+                            {(m as any).as !== undefined ? <b className="font-display text-score-display text-secondary tabular-nums">{(m as any).as}</b> : null}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className="font-display text-label-table-header uppercase text-text-muted">{m.league}</span>
+                        </div>
+                      </div>
+                    </a>
                   ))}
                 </div>
               ))}
