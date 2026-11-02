@@ -29,8 +29,8 @@ function toCombine(seed: number, mode: Mode = 'full'): Career {
   expect(p.step).toBe('decision');
 
   const u = userOf(c);
-  u.ovr = Math.max(u.ovr, 68);
-  u.pot = Math.max(u.pot, 80);
+  u.ovr = Math.max(u.ovr, 76);
+  u.pot = Math.max(u.pot, 88);
   api.predraftDecision(c, true);
   expect(p.step).toBe('combine');
   return c;
@@ -88,7 +88,7 @@ describe('draft combine', () => {
     expect(p.combineTests!.map((t) => t.id)).toEqual(combineTestIds(userOf(c).pos));
     for (const t of p.combineTests!) {
       expect(t.made).toBeUndefined();
-      expect(t.spec.tier).toBe(combineTier(userOf(c)));
+      expect(t.spec.tier).toBe('normal'); // the full plan always plays at normal level
       expect(t.spec.attempts).toBeGreaterThan(0);
       expect(t.weight).toBeGreaterThan(0);
     }

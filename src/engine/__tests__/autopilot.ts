@@ -42,8 +42,11 @@ export function autopilot(c: Career, opts: { pick?: (n: number, i: number) => nu
         break;
       }
       case 'signing':
-        if (c.offers.length) api.acceptOffer(c, c.offers[0].id);
-        else api.retire(c, 'Sin ofertas');
+        if (c.offers.length) {
+          // Real rosters are deep: a bench role means no games, so take the first offer with minutes.
+          const offer = c.offers.find((o) => !/^(Banquillo|G League)/.test(o.role)) ?? c.offers[0];
+          api.acceptOffer(c, offer.id);
+        } else api.retire(c, 'Sin ofertas');
         break;
       case 'preseason':
         api.setGoals(c, goalOptions(c, u).slice(0, 2).map((g) => g.id));
