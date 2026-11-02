@@ -7,6 +7,7 @@ import { Start } from './screens/simple/Start';
 import { Play } from './screens/simple/Play';
 import { Careers } from './screens/simple/Careers';
 import { HubLayout } from './actualidad/components/HubLayout';
+import { RouteSeo } from './seo';
 import { Home as HubHome } from './actualidad/pages/Home';
 import { Noticias, Resultados, Calendario, Estadisticas } from './actualidad/pages/Pages';
 import { LeaguePage } from './actualidad/pages/League';
@@ -56,6 +57,7 @@ export function App() {
     <ErrorBoundary>
       <BrowserRouter>
         <ScrollTop />
+        <RouteSeo />
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<Root />} />
