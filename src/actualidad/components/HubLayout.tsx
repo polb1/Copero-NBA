@@ -4,7 +4,7 @@ import { leaguePath, LEAGUE_COUNTRY } from '../leagues';
 import { useHubData } from '../data';
 
 const NAV = [
-  { to: '/actualidad', label: 'Partidos de Hoy' },
+  { to: '/', label: 'Partidos de Hoy' },
   { to: '/noticias', label: 'Noticias' },
   { to: '/resultados', label: 'Resultados' },
   { to: '/calendario', label: 'Calendario' },
@@ -117,7 +117,7 @@ export function HubLayout({ children }: { children: ReactNode }) {
       <header className="fixed top-0 left-0 right-0 h-16 z-50 bg-court-surface/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
         <div className="w-full h-full px-space-lg flex items-center justify-between gap-space-md">
           <div className="flex items-center gap-space-lg">
-            <Link to="/actualidad" className="flex items-center gap-space-sm group">
+            <Link to="/" className="flex items-center gap-space-sm group">
               <div className="w-9 h-9 rounded bg-primary-container flex items-center justify-center text-on-primary-container group-hover:bg-secondary transition-colors">
                 <span className="material-symbols-outlined text-[22px]">sports_basketball</span>
               </div>

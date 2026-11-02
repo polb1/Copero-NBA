@@ -2,7 +2,20 @@
 import { resolve } from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
-import { INDEXNOW_KEY, headersFile, llmsTxt, renderHtml, robotsTxt, siteConfig, sitemapXml } from './scripts/site.mjs';
+import { readFileSync } from 'node:fs';
+import { APP_ROUTES, INDEXNOW_KEY, headersFile, llmsTxt, redirectsFile, renderHtml, robotsTxt, routeHtml, siteConfig, sitemapXml } from './scripts/site.mjs';
+import { slugify } from './src/actualidad/leagues';
+
+/** Leagues with a page in the hub: the names in the data files, as URL slugs. */
+function leagueSlugs(): string[] {
+  const names = new Set<string>();
+  for (const f of ['leagues', 'standings']) {
+    try {
+      for (const k of Object.keys(JSON.parse(readFileSync(resolve(__dirname, `public/data/${f}.json`), 'utf8')))) names.add(slugify(k));
+    } catch { /* data file missing: no league pages */ }
+  }
+  return [...names];
+}
 
 // Production (main) vs pre-production (any other branch): real origin in the HTML, and robots.txt,
 // sitemap.xml and _headers generated for that environment.
@@ -11,7 +24,14 @@ function site(): Plugin {
   return {
     name: 'site-env',
     transformIndexHtml: (html) => renderHtml(html, cfg),
-    generateBundle() {
+    generateBundle: { order: 'post', handler(_, bundle) {
+      // Cloudflare answers 404 for any path without a file, so every real route of the app gets its own copy of the shell.
+      const shell = bundle['index.html'];
+      if (shell && shell.type === 'asset') {
+        const routes = [...APP_ROUTES, ...leagueSlugs().map((s) => `liga/${s}`)];
+        for (const r of routes) this.emitFile({ type: 'asset', fileName: `${r}/index.html`, source: routeHtml(String(shell.source), cfg, r) });
+      }
+      this.emitFile({ type: 'asset', fileName: '_redirects', source: redirectsFile() });
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robotsTxt(cfg) });
       if (cfg.production) {
         this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemapXml(cfg, new Date().toISOString().slice(0, 10)) });
@@ -20,7 +40,7 @@ function site(): Plugin {
       }
       const headers = headersFile(cfg);
       if (headers) this.emitFile({ type: 'asset', fileName: '_headers', source: headers });
-    },
+    } },
     buildStart() {
       this.info?.(`site: ${cfg.kind} → ${cfg.url}`);
     },

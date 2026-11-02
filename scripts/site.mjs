@@ -33,6 +33,21 @@ export function renderHtml(html, site) {
   return out;
 }
 
+/** Pages of the app that exist as real URLs. Everything else answers 404 (dist/404.html). */
+export const APP_ROUTES = ['start', 'play', 'careers', 'noticias', 'resultados', 'calendario', 'estadisticas'];
+const PRIVATE_ROUTES = ['start', 'play', 'careers'];
+
+/** Static copy of the app shell for one route, with its own canonical (and noindex for game screens). */
+export function routeHtml(html, site, route) {
+  let out = html.replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${site.url}/${route}/" />`);
+  out = out.replace(/<meta property="og:url" content="[^"]*" \/>/, `<meta property="og:url" content="${site.url}/${route}/" />`);
+  if (PRIVATE_ROUTES.includes(route.split('/')[0])) out = out.replace(/<meta name="robots" content="[^"]*" \/>/, '<meta name="robots" content="noindex, follow" />');
+  return out;
+}
+
+/** Old hub URLs now live at the root. */
+export const redirectsFile = () => ['/actualidad / 301', '/clasificaciones / 301', ''].join(String.fromCharCode(10));
+
 export function robotsTxt(site) {
   // Pre-production stays crawlable on purpose: a Disallow would hide the noindex header from Google.
   return site.production ? `User-agent: *\nAllow: /\n\nSitemap: ${site.url}/sitemap.xml\n` : 'User-agent: *\nAllow: /\n';

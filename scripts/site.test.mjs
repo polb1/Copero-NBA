@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { headersFile, llmsTxt, publicUrls, renderHtml, robotsTxt, siteConfig, sitemapXml } from './site.mjs';
+import { APP_ROUTES, headersFile, redirectsFile, routeHtml, llmsTxt, publicUrls, renderHtml, robotsTxt, siteConfig, sitemapXml } from './site.mjs';
 
 describe('siteConfig', () => {
   test('main and local builds are production on anillero.com', () => {
@@ -47,5 +47,17 @@ describe('outputs', () => {
       'https://anillero.com/', 'https://anillero.com/en/', 'https://anillero.com/ca/',
       'https://anillero.com/mejores-simuladores-baloncesto/', 'https://anillero.com/en/best-basketball-simulators/',
     ]);
+  });
+});
+
+describe('app routes', () => {
+  const html = '<link rel="canonical" href="https://x/" /><meta property="og:url" content="https://x/" /><meta name="robots" content="index, follow" />';
+  test('each route gets its own canonical, game screens are noindex', () => {
+    const prod = siteConfig({ WORKERS_CI_BRANCH: 'main' });
+    expect(routeHtml(html, prod, 'noticias')).toContain(`href="${prod.url}/noticias/"`);
+    expect(routeHtml(html, prod, 'noticias')).toContain('index, follow');
+    expect(routeHtml(html, prod, 'play')).toContain('noindex, follow');
+    expect(APP_ROUTES).toContain('play');
+    expect(redirectsFile()).toContain('/actualidad / 301');
   });
 });

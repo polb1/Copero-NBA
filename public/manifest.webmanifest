@@ -3,7 +3,7 @@
   "short_name": "NBA Legacy",
   "description": "Simulador de carrera de baloncesto: crea tu jugador y construye tu legado.",
   "lang": "es",
-  "start_url": "/",
+  "start_url": "/play",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",

@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, type ComponentType } from 'react';
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { ErrorBoundary } from './ui/ErrorBoundary';
 import { AchievementWatcher } from './ui/AchievementToast';
 import { applySettings, consolidateSaves, lastSlotId, loadCareer, store, useCareer } from './store/store';
@@ -27,10 +27,28 @@ function ScrollTop() {
   return null;
 }
 
-/** The app is just the game: straight into the current career, or into creating one. */
-function Root() {
+/** Language landings (/en/, /ca/) go straight into the game: the current career, or creating one. */
+function GameEntry() {
   const c = useCareer();
   return <Navigate to={c ? '/play' : '/start'} replace />;
+}
+
+/** /play only makes sense with a career: without one, start creating it. */
+function PlayEntry() {
+  const c = useCareer();
+  return c ? <Play /> : <Navigate to="/start" replace />;
+}
+
+/** Only reached by in-app navigation: direct visits to unknown URLs get the static 404 page. */
+function NotFound() {
+  return (
+    <main style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', textAlign: 'center', padding: 24 }}>
+      <div>
+        <h1>Esta página no existe</h1>
+        <Link to="/">Ir a la portada</Link>
+      </div>
+    </main>
+  );
 }
 
 function Loading() {
@@ -60,20 +78,21 @@ export function App() {
         <RouteSeo />
         <Suspense fallback={<Loading />}>
           <Routes>
-            <Route path="/" element={<Root />} />
+            <Route path="/" element={<HubLayout><HubHome /></HubLayout>} />
+            <Route path="/en" element={<GameEntry />} />
+            <Route path="/ca" element={<GameEntry />} />
             <Route path="/start" element={<Start />} />
-            <Route path="/play" element={<Play />} />
+            <Route path="/play" element={<PlayEntry />} />
             <Route path="/careers" element={<Careers />} />
-            <Route path="/actualidad" element={<HubLayout><HubHome /></HubLayout>} />
+            <Route path="/actualidad" element={<Navigate to="/" replace />} />
             <Route path="/noticias" element={<HubLayout><Noticias /></HubLayout>} />
-            <Route path="/clasificaciones" element={<Navigate to="/actualidad" replace />} />
+            <Route path="/clasificaciones" element={<Navigate to="/" replace />} />
             <Route path="/liga/:league" element={<HubLayout><LeaguePage /></HubLayout>} />
             <Route path="/resultados" element={<HubLayout><Resultados /></HubLayout>} />
             <Route path="/calendario" element={<HubLayout><Calendario /></HubLayout>} />
             <Route path="/estadisticas" element={<HubLayout><Estadisticas /></HubLayout>} />
             {import.meta.env.DEV && <Route path="/gallery" element={<Gallery />} />}
-            {/* Old links (detailed view, daily, saves, settings…) land on the game. */}
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
             <AchievementWatcher />
