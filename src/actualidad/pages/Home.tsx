@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, MatchRow, MoreLink, NewsCard, SectionHeader, StatLeader, StandingsTable, TeamBadge } from '../components/ui';
+import { Card, MoreLink, NewsCard, SectionHeader, StatLeader, StandingsTable, TeamBadge } from '../components/ui';
 import { useHubData } from '../data';
 
 export function Home() {
