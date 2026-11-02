@@ -21,9 +21,13 @@ export function siteConfig(env = process.env) {
 const pageUrl = (site, lang) => `${site.url}/${lang === 'es' ? '' : `${lang}/`}`;
 
 /** Puts the real origin into the HTML and keeps pre-production pages out of the index. */
+// Cloudflare Web Analytics beacon, injected only in production so pre traffic stays out of the stats.
+const BEACON = `<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "1c9cfbb4c45244808cc28e5587e79e49"}'></script>`;
+
 export function renderHtml(html, site) {
   let out = html.split(SITE_TOKEN).join(site.url);
-  if (!site.production) {
+  if (site.production) out = out.replace('</body>', `${BEACON}</body>`);
+  else {
     out = out.replace(/<meta name="robots" content="[^"]*" \/>/, '<meta name="robots" content="noindex, nofollow" />');
   }
   return out;

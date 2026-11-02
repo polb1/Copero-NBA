@@ -26,6 +26,8 @@ describe('outputs', () => {
     expect(p).toContain('href="https://anillero.com/"');
     expect(p).toContain('index, follow');
     expect(renderHtml(html, pre)).toContain('content="noindex, nofollow"');
+    expect(renderHtml('<body></body>', prod)).toContain('cloudflareinsights');
+    expect(renderHtml('<body></body>', pre)).not.toContain('cloudflareinsights');
   });
   test('robots, sitemap and headers per environment', () => {
     expect(robotsTxt(prod)).toContain('Sitemap: https://anillero.com/sitemap.xml');
