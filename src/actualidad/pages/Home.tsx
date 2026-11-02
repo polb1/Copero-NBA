@@ -57,7 +57,29 @@ export function Home() {
         </span>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-space-md">
+      <div>
+  <SectionHeader title="Hoy" right={`Resultados recientes · ${results.length} partidos`} />
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-space-md mb-space-md">
+    {results.filter((r) => r.date && r.date.toLowerCase().includes("31 oct")).slice(0, 3).map((r, i) => (
+      <Card key={i} className="p-space-md flex flex-col gap-2 hover:border-primary-container transition-colors">
+        <div className="flex items-center gap-space-xs text-body-sm text-secondary">
+          <span className="font-display text-label-match-status uppercase">{r.league}</span>
+          <span>· {r.date}</span>
+        </div>
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 truncate"><TeamBadge name={r.home} size={22} /><span className="font-display text-headline-md font-bold truncate">{r.home}</span></div>
+          <span className="font-display text-score-display text-secondary tabular-nums">{r.hs}</span>
+        </div>
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 truncate"><TeamBadge name={r.away} size={22} /><span className="font-body text-body-sm truncate">{r.away}</span></div>
+          <span className="font-display text-score-display text-secondary tabular-nums">{r.as}</span>
+        </div>
+      </Card>
+    ))}
+  </div>
+</div>
+
+<div className="grid grid-cols-1 xl:grid-cols-12 gap-space-md">
         {/* Columna principal */}
         <section className="xl:col-span-8 flex flex-col gap-space-md">
           <Card className="p-space-sm">
