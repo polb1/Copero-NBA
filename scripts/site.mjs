@@ -37,11 +37,37 @@ export function renderHtml(html, site) {
 export const APP_ROUTES = ['start', 'play', 'careers', 'noticias', 'resultados', 'calendario', 'estadisticas'];
 const PRIVATE_ROUTES = ['start', 'play', 'careers'];
 
+/** Own title, description and H1 for each hub page, so crawlers that do not run JavaScript see them too. */
+const HUB_META = {
+  noticias: ['Noticias de baloncesto: NBA, EuroLeague y Liga ACB | NBA Legacy', 'Titulares de baloncesto de la NBA, la EuroLeague y la Liga ACB, con enlace a la fuente original.', 'Noticias de baloncesto'],
+  resultados: ['Resultados de baloncesto en directo | NBA Legacy', 'Últimos resultados de la NBA, la EuroLeague, la Liga ACB y otras ligas. Datos no oficiales.', 'Resultados de baloncesto'],
+  calendario: ['Calendario de partidos de baloncesto | NBA Legacy', 'Próximos partidos de la NBA, la EuroLeague y la Liga ACB.', 'Calendario de partidos'],
+  estadisticas: ['Estadísticas de baloncesto: líderes NBA y Europa | NBA Legacy', 'Líderes estadísticos de la NBA y de las ligas europeas. Datos no oficiales.', 'Estadísticas de baloncesto'],
+};
+
+function hubMeta(route) {
+  if (HUB_META[route]) return HUB_META[route];
+  if (!route.startsWith('liga/')) return null;
+  const name = route.slice(5).split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  return [`${name}: clasificación y resultados | NBA Legacy`, `Clasificación y últimos resultados de ${name}. Datos no oficiales.`, `${name}: clasificación y resultados`];
+}
+
 /** Static copy of the app shell for one route, with its own canonical (and noindex for game screens). */
 export function routeHtml(html, site, route) {
   let out = html.replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${site.url}/${route}" />`);
   out = out.replace(/<meta property="og:url" content="[^"]*" \/>/, `<meta property="og:url" content="${site.url}/${route}" />`);
   if (PRIVATE_ROUTES.includes(route.split('/')[0])) out = out.replace(/<meta name="robots" content="[^"]*" \/>/, '<meta name="robots" content="noindex, follow" />');
+  // The game's structured data (VideoGame, FAQ) describes the home page only.
+  out = out.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>\s*/, '');
+  const meta = hubMeta(route);
+  if (meta) {
+    const [title, description, h1] = meta;
+    out = out.replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`);
+    out = out.replace(/(<meta name="description" content=")[^"]*"/, `$1${description}"`);
+    out = out.replace(/(<meta property="og:title" content=")[^"]*"/, `$1${title}"`);
+    out = out.replace(/(<meta property="og:description" content=")[^"]*"/, `$1${description}"`);
+    out = out.replace(/(<h1>)[^<]*(<\/h1>)/, `$1${h1}$2`);
+  }
   return out;
 }
 

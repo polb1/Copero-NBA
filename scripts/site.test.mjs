@@ -61,3 +61,16 @@ describe('app routes', () => {
     expect(redirectsFile()).toContain('/actualidad / 301');
   });
 });
+
+describe('hub route texts', () => {
+  const shell = '<title>Home</title><meta name="description" content="d" /><meta property="og:title" content="t" /><meta property="og:description" content="o" /><script type="application/ld+json">{}</script><h1>Home</h1>';
+  test('hub pages get their own title, description and H1, without the game JSON-LD', () => {
+    const out = routeHtml(shell, { url: 'https://x.test' }, 'noticias');
+    expect(out).toContain('<title>Noticias de baloncesto');
+    expect(out).toContain('<h1>Noticias de baloncesto</h1>');
+    expect(out).not.toContain('ld+json');
+  });
+  test('league pages are named after their slug', () => {
+    expect(routeHtml(shell, { url: 'https://x.test' }, 'liga/liga-acb')).toContain('<h1>Liga Acb: clasificación y resultados</h1>');
+  });
+});
