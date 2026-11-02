@@ -391,11 +391,13 @@ def update_otras_ligas():
 
 # ---------------------------------------------------------------------- Noticias
 FEEDS = [
-    ("NBA Maniacs", "https://www.nbamaniacs.com/feed/", "NBA"),
-    ("Gigantes del Basket", "https://www.gigantes.com/feed/", "BALONCESTO"),
-    ("Relevo", "https://relevo.com/rss", "BALONCESTO"),
-    ("Mundo Deportivo", "https://www.mundodeportivo.com/rss/baloncesto", "BALONCESTO"),
+    ("NBA Maniacs", "https://www.nbamaniacs.com/feed/", "NBA", False),
+    ("Gigantes del Basket", "https://www.gigantes.com/feed/", "BALONCESTO", False),
+    ("Relevo", "https://relevo.com/rss", "BALONCESTO", True),
+    ("Mundo Deportivo", "https://www.mundodeportivo.com/rss/baloncesto", "BALONCESTO", False),
 ]
+# Feeds generalistas (todos los deportes): solo se guardan las piezas que hablan de baloncesto.
+BASKET_WORDS = ("baloncesto", "basket", "nba", "euroliga", "euroleague", "acb", "liga endesa", "wnba", "fiba")
 CUOTA_FUENTE = 7
 
 
@@ -437,7 +439,7 @@ def update_noticias():
     from email.utils import parsedate_to_datetime
 
     items, seen = [], set()
-    for source, url, default_cat in FEEDS:
+    for source, url, default_cat, basket_only in FEEDS:
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
             with urllib.request.urlopen(req, timeout=25) as r:
@@ -456,6 +458,10 @@ def update_noticias():
             link = _clean(l.group(1))
             if not title or link in seen:
                 continue
+            if basket_only:
+                texto = (title + " " + link + " " + _clean(desc.group(1) if desc else "")).lower()
+                if not any(w in texto for w in BASKET_WORDS):
+                    continue
             try:
                 dt = parsedate_to_datetime(d.group(1)) if d else datetime.now(timezone.utc)
             except Exception:
@@ -468,8 +474,6 @@ def update_noticias():
                 "url": link,
                 "date": dt.strftime("%Y-%m-%d"),
                 "ts": dt.timestamp(),
-                "image": _image(raw),
-                "summary": _clean(desc.group(1))[:260] if desc else "",
             })
     # cuota por fuente: que no la copen los feeds con más volumen
     items.sort(key=lambda i: i["ts"], reverse=True)
@@ -480,19 +484,6 @@ def update_noticias():
         recuento[it["source"]] = recuento.get(it["source"], 0) + 1
         filtrados.append(it)
     items = filtrados
-
-    # imagen de portada para las que no traen ninguna (og:image)
-    faltan = [i for i in items if not i["image"]][:12]
-    for it in faltan:
-        try:
-            req = urllib.request.Request(it["url"], headers={"User-Agent": "Mozilla/5.0"})
-            with urllib.request.urlopen(req, timeout=15) as r:
-                html = r.read().decode("utf-8", "ignore")
-            m = _re.search(r'property=["\']og:image["\'][^>]*content=["\']([^"\']+)', html)
-            if m:
-                it["image"] = m.group(1)
-        except Exception:
-            pass
 
     for i in items:
         i.pop("ts", None)

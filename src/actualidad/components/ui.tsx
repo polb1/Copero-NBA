@@ -141,33 +141,20 @@ export function StandingsTable({ rows }: { rows: StandingRow[] }) {
   );
 }
 
+/** Headline linking to the outlet that published it: only the title, never the outlet's summary or image. */
 export function NewsCard({ item, large = false }: { item: NewsItem; large?: boolean }) {
   return (
     <a
       href={item.url}
       target="_blank"
-      rel="noopener"
-      className={`block bg-court-surface rounded-lg overflow-hidden border border-court-border hover:border-primary-container transition-colors ${large ? '' : 'flex flex-col'}`}
+      rel="noopener nofollow"
+      className="flex flex-col gap-2 bg-court-surface rounded-lg border border-court-border p-space-md hover:border-primary-container transition-colors"
     >
-      <div className={`relative bg-surface-container-low overflow-hidden ${large ? 'aspect-[16/9]' : 'aspect-[16/9]'}`}>
-        {item.image ? (
-          <img
-            src={item.image.startsWith('/') ? item.image : `https://images.weserv.nl/?url=${encodeURIComponent(item.image.replace(/^https?:\/\//, ''))}&w=640&fit=cover`}
-            alt=""
-            loading="lazy"
-            className="w-full h-full object-cover"
-            onError={(e) => { (e.currentTarget as HTMLImageElement).style.opacity = '0'; }}
-          />
-        ) : null}
-        <span className="absolute top-2 left-2"><LeagueChip league={item.category} /></span>
-      </div>
-      <div className={`p-space-md flex flex-col gap-1 ${large ? 'md:p-space-lg' : ''}`}>
-        <h3 className={`font-display font-bold text-text-primary m-0 leading-tight ${large ? 'text-headline-lg' : 'text-headline-md'}`}>
-          {item.title}
-        </h3>
-        <p className={`text-body-sm text-on-surface-variant m-0 ${large ? '' : 'line-clamp-3'}`}>{item.summary}</p>
-        <span className="text-body-sm text-text-dim mt-1">{item.source} · {item.date}</span>
-      </div>
+      <span><LeagueChip league={item.category} /></span>
+      <h3 className={`font-display font-bold text-text-primary m-0 leading-tight ${large ? 'text-headline-lg' : 'text-headline-md'}`}>
+        {item.title}
+      </h3>
+      <span className="text-body-sm text-text-dim">{item.source} · {item.date} · Leer en el medio original ↗</span>
     </a>
   );
 }

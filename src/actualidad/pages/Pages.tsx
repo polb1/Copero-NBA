@@ -7,7 +7,7 @@ export function Noticias() {
   const { news, loading } = useHubData();
   const [q, setQ] = useState('');
   const filtered = useMemo(
-    () => news.filter((n) => (n.title + n.summary + n.source).toLowerCase().includes(q.toLowerCase())),
+    () => news.filter((n) => (n.title + n.source).toLowerCase().includes(q.toLowerCase())),
     [news, q],
   );
   return (

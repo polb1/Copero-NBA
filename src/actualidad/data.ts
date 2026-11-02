@@ -7,8 +7,6 @@ export interface NewsItem {
   title: string;
   url: string;
   date: string;
-  image?: string;
-  summary: string;
 }
 
 export interface StandingRow {
