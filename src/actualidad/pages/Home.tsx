@@ -152,7 +152,7 @@ export function Home() {
                         <div className="flex-1 min-w-0 flex flex-col">
                           <div className="flex items-center justify-between gap-2">
                             <span className="font-display text-body-sm font-bold truncate">{m.home}</span>
-                            {(m as any).hs !== undefined ? <b className="font-display text-score-display text-secondary tabular-nums">{(m as any).hs}</b> : <span className="font-display text-label-match-status text-secondary">{m.status === 'live' ? 'EN VIVO' : m.status === 'final' ? 'FINAL' : m.time || ''}</span>}
+                            {(m as any).hs !== undefined ? <b className="font-display text-score-display text-secondary tabular-nums">{(m as any).hs}</b> : <span className="font-display text-label-match-status text-secondary">{(m.status as string) === 'live' ? 'EN VIVO' : m.status === 'final' ? 'FINAL' : m.time || ''}</span>}
                           </div>
                           <div className="flex items-center justify-between gap-2">
                             <span className="font-display text-body-sm truncate text-on-surface-variant">{m.away}</span>
