@@ -75,5 +75,6 @@ describe('hub route texts', () => {
   });
   test('league pages are named after their slug', () => {
     expect(routeHtml(shell, { url: 'https://x.test' }, 'liga/liga-acb')).toContain('<h1>Liga Acb: clasificación y resultados</h1>');
+    expect(routeHtml(shell, { url: 'https://x.test' }, 'liga/liga-acb', { 'liga-acb': 'Liga ACB' })).toContain('<h1>Liga ACB: clasificación y resultados</h1>');
   });
 });

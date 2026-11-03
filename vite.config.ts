@@ -6,17 +6,18 @@ import { readFileSync } from 'node:fs';
 import { APP_ROUTES, INDEXNOW_KEY, headersFile, llmsTxt, redirectsFile, renderHtml, robotsTxt, routeHtml, siteConfig, sitemapXml } from './scripts/site.mjs';
 import { slugify } from './src/actualidad/leagues';
 
-/** Leagues with a page in the hub: the names in the data files, as URL slugs. */
-function leagueSlugs(): string[] {
-  const names = new Set<string>();
+/** Leagues with a page in the hub, by URL slug: the names in the data files. */
+function leagueNames(): Record<string, string> {
+  const names: Record<string, string> = {};
   for (const f of ['leagues', 'standings']) {
     try {
-      for (const k of Object.keys(JSON.parse(readFileSync(resolve(__dirname, `public/data/${f}.json`), 'utf8')))) names.add(slugify(k));
+      for (const k of Object.keys(JSON.parse(readFileSync(resolve(__dirname, `public/data/${f}.json`), 'utf8')))) names[slugify(k)] ??= k;
     } catch { /* data file missing: no league pages */ }
   }
-  names.delete('eu'); // clave interna de standings.json: alias de EuroLeague, no una página
-  return [...names];
+  delete names.eu; // clave interna de standings.json: alias de EuroLeague, no una página
+  return names;
 }
+const leagueSlugs = () => Object.keys(leagueNames());
 
 // Production (main) vs pre-production (any other branch): real origin in the HTML, and robots.txt,
 // sitemap.xml and _headers generated for that environment.
@@ -31,7 +32,7 @@ function site(): Plugin {
       const shell = bundle['index.html'];
       if (shell && shell.type === 'asset') {
         const routes = [...APP_ROUTES, ...leagueSlugs().map((s) => `liga/${s}`)];
-        for (const r of routes) this.emitFile({ type: 'asset', fileName: `${r}/index.html`, source: routeHtml(String(shell.source), cfg, r) });
+        for (const r of routes) this.emitFile({ type: 'asset', fileName: `${r}/index.html`, source: routeHtml(String(shell.source), cfg, r, leagueNames()) });
       }
       this.emitFile({ type: 'asset', fileName: '_redirects', source: redirectsFile() });
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robotsTxt(cfg) });

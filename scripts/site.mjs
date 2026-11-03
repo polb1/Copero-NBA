@@ -45,21 +45,23 @@ const HUB_META = {
   estadisticas: ['Estadísticas de baloncesto: líderes NBA y Europa | NBA Legacy', 'Líderes estadísticos de la NBA y de las ligas europeas. Datos no oficiales.', 'Estadísticas de baloncesto'],
 };
 
-function hubMeta(route) {
+function hubMeta(route, leagues) {
   if (HUB_META[route]) return HUB_META[route];
   if (!route.startsWith('liga/')) return null;
-  const name = route.slice(5).split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  const slug = route.slice(5);
+  // shortcut: without the real name the slug is title-cased ("Liga Acb"); pass the league names to avoid it.
+  const name = leagues[slug] ?? slug.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   return [`${name}: clasificación y resultados | NBA Legacy`, `Clasificación y últimos resultados de ${name}. Datos no oficiales.`, `${name}: clasificación y resultados`];
 }
 
 /** Static copy of the app shell for one route, with its own canonical (and noindex for game screens). */
-export function routeHtml(html, site, route) {
+export function routeHtml(html, site, route, leagues = {}) {
   let out = html.replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${site.url}/${route}" />`);
   out = out.replace(/<meta property="og:url" content="[^"]*" \/>/, `<meta property="og:url" content="${site.url}/${route}" />`);
   if (PRIVATE_ROUTES.includes(route.split('/')[0])) out = out.replace(/<meta name="robots" content="[^"]*" \/>/, '<meta name="robots" content="noindex, follow" />');
   // The game's structured data (VideoGame, FAQ) describes the home page only.
   out = out.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>\s*/, '');
-  const meta = hubMeta(route);
+  const meta = hubMeta(route, leagues);
   if (meta) {
     const [title, description, h1] = meta;
     out = out.replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`);
