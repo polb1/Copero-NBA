@@ -141,7 +141,7 @@ export function HubLayout({ children }: { children: ReactNode }) {
             >
               <span className="material-symbols-outlined text-[18px]">casino</span>
               <span className="hidden sm:inline">Jugar al Simulador</span>
-            </Link>
+            </a>
             <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
               <span className="material-symbols-outlined text-on-primary text-[18px]">person</span>
             </div>
