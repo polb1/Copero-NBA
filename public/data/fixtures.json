@@ -1,5 +1,245 @@
 [
  {
+  "date": "2026-11-07",
+  "home": "Kids&Us Manresa",
+  "away": "Monbus Obradoiro",
+  "league": "Liga ACB",
+  "time": "18:00",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-07",
+  "home": "Bàsquet Girona",
+  "away": "Surne Bilbao Basket",
+  "league": "Liga ACB",
+  "time": "19:30",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-07",
+  "home": "Força Lleida CE",
+  "away": "Kosner Baskonia",
+  "league": "Liga ACB",
+  "time": "21:00",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "Barça Basket",
+  "away": "Río Breogán",
+  "league": "Liga ACB",
+  "time": "12:00",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "Hereda San Pablo Burgos",
+  "away": "Valencia Basket",
+  "league": "Liga ACB",
+  "time": "12:30",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "La Laguna Tenerife",
+  "away": "Joventut Badalona",
+  "league": "Liga ACB",
+  "time": "13:00",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "Casademont Zaragoza",
+  "away": "Unicaja",
+  "league": "Liga ACB",
+  "time": "17:00",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "Leyma Basquet Coruña",
+  "away": "MoraBanc Andorra",
+  "league": "Liga ACB",
+  "time": "18:00",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "Real Madrid",
+  "away": "UCAM Murcia",
+  "league": "Liga ACB",
+  "time": "19:00",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-14",
+  "home": "Río Breogán",
+  "away": "Hereda San Pablo Burgos",
+  "league": "Liga ACB",
+  "time": "18:00",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-14",
+  "home": "MoraBanc Andorra",
+  "away": "La Laguna Tenerife",
+  "league": "Liga ACB",
+  "time": "19:30",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-14",
+  "home": "Joventut Badalona",
+  "away": "Casademont Zaragoza",
+  "league": "Liga ACB",
+  "time": "21:00",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-15",
+  "home": "Força Lleida CE",
+  "away": "Kids&Us Manresa",
+  "league": "Liga ACB",
+  "time": "12:00",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-15",
+  "home": "Valencia Basket",
+  "away": "Leyma Basquet Coruña",
+  "league": "Liga ACB",
+  "time": "12:00",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-15",
+  "home": "Unicaja",
+  "away": "Bàsquet Girona",
+  "league": "Liga ACB",
+  "time": "12:30",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-15",
+  "home": "Barça Basket",
+  "away": "Monbus Obradoiro",
+  "league": "Liga ACB",
+  "time": "17:00",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-15",
+  "home": "Surne Bilbao Basket",
+  "away": "UCAM Murcia",
+  "league": "Liga ACB",
+  "time": "18:00",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-15",
+  "home": "Kosner Baskonia",
+  "away": "Real Madrid",
+  "league": "Liga ACB",
+  "time": "19:00",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-21",
+  "home": "Hereda San Pablo Burgos",
+  "away": "Unicaja",
+  "league": "Liga ACB",
+  "time": "18:00",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-21",
+  "home": "Kids&Us Manresa",
+  "away": "MoraBanc Andorra",
+  "league": "Liga ACB",
+  "time": "19:30",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-21",
+  "home": "UCAM Murcia",
+  "away": "Casademont Zaragoza",
+  "league": "Liga ACB",
+  "time": "21:00",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-22",
+  "home": "Monbus Obradoiro",
+  "away": "Bàsquet Girona",
+  "league": "Liga ACB",
+  "time": "12:00",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-22",
+  "home": "Surne Bilbao Basket",
+  "away": "Kosner Baskonia",
+  "league": "Liga ACB",
+  "time": "12:00",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-22",
+  "home": "Leyma Basquet Coruña",
+  "away": "Força Lleida CE",
+  "league": "Liga ACB",
+  "time": "12:30",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-22",
+  "home": "Valencia Basket",
+  "away": "Río Breogán",
+  "league": "Liga ACB",
+  "time": "17:00",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-22",
+  "home": "La Laguna Tenerife",
+  "away": "Barça Basket",
+  "league": "Liga ACB",
+  "time": "18:00",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-22",
+  "home": "Real Madrid",
+  "away": "Joventut Badalona",
+  "league": "Liga ACB",
+  "time": "19:00",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-12-05",
+  "home": "Força Lleida CE",
+  "away": "La Laguna Tenerife",
+  "league": "Liga ACB",
+  "time": "18:00",
+  "event": "Jornada 10"
+ },
+ {
+  "date": "2026-12-05",
+  "home": "Monbus Obradoiro",
+  "away": "Surne Bilbao Basket",
+  "league": "Liga ACB",
+  "time": "19:30",
+  "event": "Jornada 10"
+ },
+ {
+  "date": "2026-12-05",
+  "home": "Casademont Zaragoza",
+  "away": "Río Breogán",
+  "league": "Liga ACB",
+  "time": "21:00",
+  "event": "Jornada 10"
+ },
+ {
   "date": "2026-11-04",
   "time": "",
   "home": "Real Madrid",

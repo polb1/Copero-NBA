@@ -25,3 +25,15 @@
 - flashscore / sofascore → 403/429
 - NBA (ESPN), EuroLeague (api-live v2), B.League (bleague.jp) → OK y ya integrados
 - Apify sian.agency/basketball-api-scraper → OK (ACB completo; BBL/LBA posibles por ~0,35 $/liga)
+
+## Revisión 3-nov-2026 (fuentes verificadas)
+| Fuente | Ligas | Oficial | Notas |
+|---|---|---|---|
+| api-live.euroleague.net | EuroLeague | Sí | v1/v2 públicas, XML/JSON |
+| acb.com/es/liga/calendario | Liga ACB | **Sí** | Next.js incrusta el calendario completo como JSON (306 partidos, marcador y estado). Sin clave ni coste. Sustituye a Apify para resultados y próximos (`acb_oficial()` en update-actualidad.py). Marcador del 1-nov (Unicaja 89-92 Barça) coincide con TheSportsDB |
+| bleague.jp/schedule | B.League | Sí (web) | Solo devuelve la jornada en curso para cualquier mes; la fecha sale del enlace de entradas |
+| site.api.espn.com | NBA | No (sin documentar) | NBL y G League sin eventos en ESPN |
+| thesportsdb.com (clave 123) | Lega, BBL, LNB, Grecia, Israel, LKL, BSL, NBL | No (colaborativa) | La clave gratuita da 1 evento en `eventspastleague` y ~15 por temporada |
+| Apify sian.agency | Liga ACB (clasificación) | No (tercero) | De pago; ya solo hace falta para la clasificación |
+
+Las fechas de `results.json` y `fixtures.json` se guardan siempre en ISO (`YYYY-MM-DD`); la interfaz las muestra con `fechaCorta`.

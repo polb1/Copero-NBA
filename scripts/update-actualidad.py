@@ -19,6 +19,7 @@ import re
 import time
 import urllib.request
 from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 
 DATA = os.path.expanduser("~/codigo/copero-NBA/public/data")
 UA = "CoperoNBA/1.0 (+actualidad)"
@@ -649,6 +650,70 @@ def bleague_all():
     return res, fix
 
 
+# --------------------------------------------------------- Liga ACB (web oficial)
+# La web de la ACB (Next.js) incrusta el calendario completo como JSON; nombres como los usa la clasificación.
+ACB_NOMBRES = {
+    "Asisa Joventut": "Joventut Badalona", "Barça": "Barça Basket", "FIATC Girona": "Bàsquet Girona",
+    "iLERNA Lleida": "Força Lleida CE", "Leyma Coruña": "Leyma Basquet Coruña",
+    "Recoletas Salud San Pablo Burgos": "Hereda San Pablo Burgos", "Surne Bilbao": "Surne Bilbao Basket",
+}
+
+
+def _json_array(text, key):
+    """Lista JSON que empieza justo después de `key` (que termina en '['), respetando cadenas."""
+    i = text.index(key) + len(key) - 1
+    depth, en_cadena, escape = 0, False, False
+    for j in range(i, len(text)):
+        c = text[j]
+        if en_cadena:
+            if escape:
+                escape = False
+            elif c == "\\":
+                escape = True
+            elif c == '"':
+                en_cadena = False
+        elif c == '"':
+            en_cadena = True
+        elif c == "[":
+            depth += 1
+        elif c == "]":
+            depth -= 1
+            if depth == 0:
+                return json.loads(text[i:j + 1])
+    raise ValueError(f"no se cierra la lista {key}")
+
+
+def acb_oficial():
+    req = urllib.request.Request("https://acb.com/es/liga/calendario", headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        html = r.read().decode("utf-8", "replace")
+    trozos = re.findall(r'self\.__next_f\.push\(\[1,("(?:[^"\\]|\\.)*")\]\)', html)
+    flight = "".join(json.loads(t) for t in trozos)
+    teams = _json_array(flight, '"teams":[')
+    rounds = _json_array(flight, '"rounds":[')
+
+    def nombre(ref):  # "$4c:props:data:teams:14" -> índice 14
+        n = teams[int(ref.rsplit(":", 1)[1])]["fullName"]
+        return ACB_NOMBRES.get(n, n)
+
+    try:
+        tz = ZoneInfo("Europe/Madrid")
+    except Exception:  # shortcut: sin base de zonas (Windows sin tzdata) usa CET fijo; las horas de verano saldrían 1 h antes
+        tz = timezone(timedelta(hours=1))
+    res, fix = [], []
+    for ronda in rounds:
+        for m in ronda["matches"]:
+            if not m.get("startDateTime"):
+                continue
+            dt = datetime.fromisoformat(m["startDateTime"].replace("Z", "+00:00")).astimezone(tz)
+            fila = {"date": dt.strftime("%Y-%m-%d"), "home": nombre(m["homeTeam"]), "away": nombre(m["awayTeam"]), "league": "Liga ACB"}
+            if m["matchStatus"] == "FINALIZED":
+                res.append(dict(fila, hs=m["homeTeamScore"], **{"as": m["awayTeamScore"]}))
+            elif m["matchStatus"] == "NOT_STARTED":
+                fix.append(dict(fila, time=dt.strftime("%H:%M"), event=f"Jornada {ronda['roundNumber']}"))
+    return res, fix
+
+
 def main():
     changed = []
 
@@ -748,7 +813,7 @@ def main():
             old = read_json("results.json", [])
             others = [r for r in old if r.get("league") != "B.League"]
             nuevos = [{"date": g["date"], "home": g["home"], "away": g["away"],
-                       "hs": g["hs"], "as": g["as_"], "league": "B.League"} for g in bl_res]
+                       "hs": g["hs"], "as": g["as"], "league": "B.League"} for g in bl_res]
             write_json("results.json", nuevos + others)
             oldf = read_json("fixtures.json", [])
             othersf = [f for f in oldf if f.get("league") != "B.League"]
@@ -757,6 +822,18 @@ def main():
             changed.append(f"B.League {len(nuevos)} res / {len(bl_fix)} próx")
     except Exception as e:
         print(f"[warn] B.League meses: {e}")
+
+    # ---- Liga ACB resultados + calendario (web oficial)
+    try:
+        acb_res, acb_fix = acb_oficial()
+        if acb_res or acb_fix:
+            others = [r for r in read_json("results.json", []) if r.get("league") != "Liga ACB"]
+            write_json("results.json", sorted(acb_res, key=lambda g: g["date"], reverse=True)[:30] + others)
+            othersf = [f for f in read_json("fixtures.json", []) if f.get("league") != "Liga ACB"]
+            write_json("fixtures.json", sorted(acb_fix, key=lambda g: (g["date"], g["time"]))[:30] + othersf)
+            changed.append(f"Liga ACB {len(acb_res)} res / {len(acb_fix)} próx")
+    except Exception as e:
+        print(f"[warn] Liga ACB: {e}")
 
     # ---- Otras ligas (TheSportsDB): resultados y próximos
     try:
