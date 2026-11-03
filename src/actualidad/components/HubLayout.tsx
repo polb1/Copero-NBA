@@ -123,7 +123,7 @@ export function HubLayout({ children }: { children: ReactNode }) {
               </div>
               <div className="flex flex-col">
                 <span className="font-display text-headline-md font-bold tracking-wider uppercase text-text-primary leading-none">
-                  COPERO NBA
+                  ANILLERO
                 </span>
                 <span className="font-display text-label-table-header text-secondary tracking-widest uppercase">
                   ACTUALIDAD DE BALONCESTO
@@ -135,13 +135,13 @@ export function HubLayout({ children }: { children: ReactNode }) {
             </nav>
           </div>
           <div className="flex items-center gap-space-md">
-            <a
-              href="https://anillero.com/"
+            <Link
+              to="/play"
               className="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary-container text-on-primary font-display text-headline-md font-bold tracking-wider uppercase shadow-[0_0_12px_rgba(255,107,26,0.35)] hover:bg-secondary hover:text-on-secondary transition-all"
             >
               <span className="material-symbols-outlined text-[18px]">casino</span>
               <span className="hidden sm:inline">Jugar al Simulador</span>
-            </a>
+            </Link>
             <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
               <span className="material-symbols-outlined text-on-primary text-[18px]">person</span>
             </div>
@@ -159,7 +159,7 @@ export function HubLayout({ children }: { children: ReactNode }) {
         <footer className="w-full bg-court-surface py-space-lg px-space-lg border-t border-court-border">
           <div className="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-space-md text-body-sm text-text-muted">
             <div className="flex items-center gap-space-sm">
-              <span className="font-display text-headline-md font-bold uppercase text-text-primary">COPERO NBA</span>
+              <span className="font-display text-headline-md font-bold uppercase text-text-primary">ANILLERO</span>
               <span className="text-text-dim">·</span>
               <span>Simulador de Temporada Regular, Play-In y Playoffs de Baloncesto</span>
             </div>
