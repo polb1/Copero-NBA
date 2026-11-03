@@ -14,6 +14,7 @@ function leagueSlugs(): string[] {
       for (const k of Object.keys(JSON.parse(readFileSync(resolve(__dirname, `public/data/${f}.json`), 'utf8')))) names.add(slugify(k));
     } catch { /* data file missing: no league pages */ }
   }
+  names.delete('eu'); // clave interna de standings.json: alias de EuroLeague, no una página
   return [...names];
 }
 
@@ -35,7 +36,7 @@ function site(): Plugin {
       this.emitFile({ type: 'asset', fileName: '_redirects', source: redirectsFile() });
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robotsTxt(cfg) });
       if (cfg.production) {
-        this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemapXml(cfg, new Date().toISOString().slice(0, 10)) });
+        this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemapXml(cfg, new Date().toISOString().slice(0, 10), leagueSlugs().map((s) => `liga/${s}`)) });
         this.emitFile({ type: 'asset', fileName: 'llms.txt', source: llmsTxt(cfg) });
         this.emitFile({ type: 'asset', fileName: `${INDEXNOW_KEY}.txt`, source: INDEXNOW_KEY });
       }

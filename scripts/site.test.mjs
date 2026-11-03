@@ -33,7 +33,9 @@ describe('outputs', () => {
     expect(robotsTxt(prod)).toContain('Sitemap: https://anillero.com/sitemap.xml');
     expect(robotsTxt(pre)).not.toContain('Sitemap');
     const map = sitemapXml(prod, '2026-10-23');
-    expect(map.match(/<loc>/g)).toHaveLength(5);
+    expect(map.match(/<loc>/g)).toHaveLength(9);
+    expect(map).toContain('<loc>https://anillero.com/noticias</loc>');
+    expect(sitemapXml(prod, '2026-10-23', ['liga/nba'])).toContain('<loc>https://anillero.com/liga/nba</loc>');
     expect(map).toContain('<loc>https://anillero.com/mejores-simuladores-baloncesto</loc>');
     expect(map).toContain('<loc>https://anillero.com/en</loc>');
     expect(map).not.toContain('polb.dev');
@@ -46,6 +48,7 @@ describe('outputs', () => {
     expect(publicUrls(prod)).toEqual([
       'https://anillero.com/', 'https://anillero.com/en', 'https://anillero.com/ca',
       'https://anillero.com/mejores-simuladores-baloncesto', 'https://anillero.com/en/best-basketball-simulators',
+      'https://anillero.com/noticias', 'https://anillero.com/resultados', 'https://anillero.com/calendario', 'https://anillero.com/estadisticas',
     ]);
   });
 });

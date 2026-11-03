@@ -79,7 +79,10 @@ export function robotsTxt(site) {
   return site.production ? `User-agent: *\nAllow: /\n\nSitemap: ${site.url}/sitemap.xml\n` : 'User-agent: *\nAllow: /\n';
 }
 
-export function sitemapXml(site, lastmod) {
+/** Public hub pages (news, results, calendar, stats) plus any extra paths, e.g. one per league. */
+export const hubPaths = (extra = []) => [...Object.keys(HUB_META), ...extra].map((r) => `/${r}`);
+
+export function sitemapXml(site, lastmod, extra = []) {
   const alts = LANGS.map((l) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${pageUrl(site, l)}" />`)
     .concat(`    <xhtml:link rel="alternate" hreflang="x-default" href="${pageUrl(site, 'es')}" />`)
     .join('\n');
@@ -88,12 +91,13 @@ export function sitemapXml(site, lastmod) {
     const galts = Object.entries(g).map(([l, p]) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${site.url}${p}" />`).join('\n');
     for (const p of Object.values(g)) urls.push(`  <url>\n    <loc>${site.url}${p}</loc>\n    <lastmod>${lastmod}</lastmod>\n${galts}\n  </url>`);
   }
+  for (const p of hubPaths(extra)) urls.push(`  <url>\n    <loc>${site.url}${p}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`);
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`;
 }
 
 /** Every public URL, for IndexNow submissions. */
-export function publicUrls(site) {
-  return [...LANGS.map((l) => pageUrl(site, l)), ...GUIDES.flatMap((g) => Object.values(g).map((p) => site.url + p))];
+export function publicUrls(site, extra = []) {
+  return [...LANGS.map((l) => pageUrl(site, l)), ...GUIDES.flatMap((g) => Object.values(g).map((p) => site.url + p)), ...hubPaths(extra).map((p) => site.url + p)];
 }
 
 /** /llms.txt: a plain summary for AI assistants and their crawlers (llmstxt.org format). */
