@@ -37,3 +37,12 @@
 | Apify sian.agency | Liga ACB (clasificación) | No (tercero) | De pago; ya solo hace falta para la clasificación |
 
 Las fechas de `results.json` y `fixtures.json` se guardan siempre en ISO (`YYYY-MM-DD`); la interfaz las muestra con `fechaCorta`.
+
+## Cadencia y coste (recalculado 3-nov-2026)
+- ACB resultados y próximos: **gratis** desde acb.com (`acb_oficial()` en update-actualidad.py).
+- Apify solo para **clasificación**: ~0,045 $ por liga y refresco.
+- Rutina diaria: clasificación de 1 liga (rotando ACB/BBL/LBA) ≈ 1,35 $/mes.
+- Rutina semanal: refresco completo solo BBL y LBA ≈ 1,20 $/mes.
+- Total ≈ 2,55 $/mes de los 5 $ del plan gratuito.
+- NBA, EuroLeague y B.League: diarios y gratuitos (ESPN / API oficial / bleague.jp).
+- Prohibido `git push --force` en main: usar `git pull --rebase origin main` y push normal.
