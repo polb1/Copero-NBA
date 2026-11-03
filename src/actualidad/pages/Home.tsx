@@ -37,6 +37,23 @@ export function Home() {
 
   return (
     <div className="max-w-[1400px] mx-auto flex flex-col gap-space-md">
+      {(() => {
+        const recent = (results || []).filter((r: any) => r.date && r.hs !== undefined).sort((a: any, b: any) => (b.date || "").localeCompare(a.date || ""))[0];
+        if (!recent) return null;
+        const link = recent.league === "EuroLeague" ? "/liga/euroleague" : recent.league === "NBA" ? "/liga/nba" : recent.league === "Liga ACB" ? "/liga/liga-acb" : "/actualidad";
+        return (
+          <a href={link} className="block bg-gradient-to-r from-court-surface-elevated to-surface-container-high rounded-xl border border-court-border p-space-lg hover:border-primary-container transition-all mb-space-md">
+            <div className="flex items-center justify-between gap-space-md">
+              <div>
+                <span className="font-display text-label-table-header uppercase text-secondary tracking-widest">Destacado — {recent.league}</span>
+                <h2 className="font-display text-headline-xl font-extrabold uppercase text-text-primary m-0 leading-tight">{recent.home} <span className="text-secondary">{recent.hs}</span> — <span className="text-secondary">{recent.as}</span> {recent.away}</h2>
+                <p className="text-body-sm text-text-muted m-0 mt-1">{recent.date} · Resultado final</p>
+              </div>
+              <div className="hidden md:block font-display text-score-display text-secondary tabular-nums">{recent.hs}-{recent.as}</div>
+            </div>
+          </a>
+        );
+      })()}
       {/* Ticker */}
       <div className="flex flex-wrap items-center justify-between gap-space-sm bg-court-surface px-space-md py-1.5 rounded-lg shadow-sm">
         <div className="flex items-center gap-space-sm min-w-0">

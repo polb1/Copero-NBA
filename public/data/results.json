@@ -320,62 +320,6 @@
   "league": "EuroLeague"
  },
  {
-  "date": "31 oct",
-  "home": "Utah Jazz",
-  "away": "Portland Trail Blazers",
-  "hs": 90,
-  "as": 112,
-  "league": "NBA"
- },
- {
-  "date": "31 oct",
-  "home": "Charlotte Hornets",
-  "away": "Philadelphia 76ers",
-  "hs": 104,
-  "as": 109,
-  "league": "NBA"
- },
- {
-  "date": "31 oct",
-  "home": "New Orleans Pelicans",
-  "away": "Atlanta Hawks",
-  "hs": 121,
-  "as": 99,
-  "league": "NBA"
- },
- {
-  "date": "31 oct",
-  "home": "Memphis Grizzlies",
-  "away": "Sacramento Kings",
-  "hs": 136,
-  "as": 105,
-  "league": "NBA"
- },
- {
-  "date": "31 oct",
-  "home": "Milwaukee Bucks",
-  "away": "Cleveland Cavaliers",
-  "hs": 111,
-  "as": 136,
-  "league": "NBA"
- },
- {
-  "date": "31 oct",
-  "home": "San Antonio Spurs",
-  "away": "Minnesota Timberwolves",
-  "hs": 121,
-  "as": 111,
-  "league": "NBA"
- },
- {
-  "date": "31 oct",
-  "home": "Houston Rockets",
-  "away": "Oklahoma City Thunder",
-  "hs": 119,
-  "as": 98,
-  "league": "NBA"
- },
- {
   "date": "1 nov",
   "home": "Orlando Magic",
   "away": "Boston Celtics",
@@ -408,243 +352,131 @@
   "league": "NBA"
  },
  {
-  "date": "11 oct",
-  "home": "Surne Bilbao Basket",
-  "away": "Hereda San Pablo Burgos",
-  "hs": 96,
-  "as": 87,
-  "league": "Liga ACB"
+  "date": "2 nov",
+  "home": "Cleveland Cavaliers",
+  "away": "Oklahoma City Thunder",
+  "hs": 112,
+  "as": 117,
+  "league": "NBA"
  },
  {
-  "date": "11 oct",
-  "home": "Barça Basket",
-  "away": "Valencia Basket",
-  "hs": 89,
-  "as": 86,
-  "league": "Liga ACB"
+  "date": "2 nov",
+  "home": "Charlotte Hornets",
+  "away": "Detroit Pistons",
+  "hs": 91,
+  "as": 124,
+  "league": "NBA"
  },
  {
-  "date": "14 oct",
-  "home": "Joventut Badalona",
-  "away": "MoraBanc Andorra",
-  "hs": 96,
-  "as": 75,
-  "league": "Liga ACB"
+  "date": "2 nov",
+  "home": "Indiana Pacers",
+  "away": "Atlanta Hawks",
+  "hs": 104,
+  "as": 108,
+  "league": "NBA"
  },
  {
-  "date": "17 oct",
-  "home": "Kids&Us Manresa",
-  "away": "Unicaja",
-  "hs": 72,
-  "as": 84,
-  "league": "Liga ACB"
- },
- {
-  "date": "17 oct",
-  "home": "MoraBanc Andorra",
-  "away": "Río Breogán",
-  "hs": 108,
-  "as": 102,
-  "league": "Liga ACB"
- },
- {
-  "date": "17 oct",
-  "home": "Hereda San Pablo Burgos",
-  "away": "Monbus Obradoiro",
-  "hs": 72,
-  "as": 79,
-  "league": "Liga ACB"
- },
- {
-  "date": "18 oct",
-  "home": "Bàsquet Girona",
-  "away": "Leyma Basquet Coruña",
-  "hs": 110,
+  "date": "2 nov",
+  "home": "New York Knicks",
+  "away": "Brooklyn Nets",
+  "hs": 103,
   "as": 90,
-  "league": "Liga ACB"
+  "league": "NBA"
  },
  {
-  "date": "18 oct",
-  "home": "Casademont Zaragoza",
-  "away": "Força Lleida CE",
-  "hs": 109,
-  "as": 98,
-  "league": "Liga ACB"
- },
- {
-  "date": "18 oct",
-  "home": "Real Madrid",
-  "away": "Surne Bilbao Basket",
-  "hs": 119,
-  "as": 84,
-  "league": "Liga ACB"
- },
- {
-  "date": "18 oct",
-  "home": "Valencia Basket",
-  "away": "UCAM Murcia",
-  "hs": 116,
-  "as": 93,
-  "league": "Liga ACB"
- },
- {
-  "date": "18 oct",
-  "home": "La Laguna Tenerife",
-  "away": "Kosner Baskonia",
-  "hs": 82,
-  "as": 77,
-  "league": "Liga ACB"
- },
- {
-  "date": "18 oct",
-  "home": "Joventut Badalona",
-  "away": "Barça Basket",
-  "hs": 113,
-  "as": 89,
-  "league": "Liga ACB"
- },
- {
-  "date": "24 oct",
-  "home": "Kids&Us Manresa",
-  "away": "Hereda San Pablo Burgos",
-  "hs": 81,
-  "as": 99,
-  "league": "Liga ACB"
- },
- {
-  "date": "24 oct",
-  "home": "UCAM Murcia",
-  "away": "Leyma Basquet Coruña",
-  "hs": 88,
-  "as": 81,
-  "league": "Liga ACB"
- },
- {
-  "date": "24 oct",
-  "home": "Barça Basket",
-  "away": "Casademont Zaragoza",
-  "hs": 99,
-  "as": 81,
-  "league": "Liga ACB"
- },
- {
-  "date": "25 oct",
-  "home": "Surne Bilbao Basket",
-  "away": "MoraBanc Andorra",
-  "hs": 88,
-  "as": 76,
-  "league": "Liga ACB"
- },
- {
-  "date": "25 oct",
-  "home": "Bàsquet Girona",
-  "away": "Joventut Badalona",
-  "hs": 101,
-  "as": 87,
-  "league": "Liga ACB"
- },
- {
-  "date": "25 oct",
-  "home": "La Laguna Tenerife",
-  "away": "Monbus Obradoiro",
-  "hs": 106,
-  "as": 76,
-  "league": "Liga ACB"
- },
- {
-  "date": "25 oct",
-  "home": "Valencia Basket",
-  "away": "Kosner Baskonia",
-  "hs": 84,
-  "as": 75,
-  "league": "Liga ACB"
- },
- {
-  "date": "25 oct",
-  "home": "Río Breogán",
-  "away": "Unicaja",
-  "hs": 90,
+  "date": "2 nov",
+  "home": "Orlando Magic",
+  "away": "Washington Wizards",
+  "hs": 94,
   "as": 103,
-  "league": "Liga ACB"
+  "league": "NBA"
  },
  {
-  "date": "25 oct",
-  "home": "Força Lleida CE",
-  "away": "Real Madrid",
-  "hs": 86,
-  "as": 122,
-  "league": "Liga ACB"
+  "date": "2 nov",
+  "home": "Philadelphia 76ers",
+  "away": "Chicago Bulls",
+  "hs": 126,
+  "as": 107,
+  "league": "NBA"
  },
  {
-  "date": "31 oct",
-  "home": "Casademont Zaragoza",
-  "away": "Bàsquet Girona",
-  "hs": 107,
-  "as": 78,
-  "league": "Liga ACB"
+  "date": "2 nov",
+  "home": "Dallas Mavericks",
+  "away": "Sacramento Kings",
+  "hs": 100,
+  "as": 115,
+  "league": "NBA"
  },
  {
-  "date": "31 oct",
-  "home": "UCAM Murcia",
-  "away": "Força Lleida CE",
-  "hs": 125,
-  "as": 98,
-  "league": "Liga ACB"
+  "date": "2 nov",
+  "home": "Memphis Grizzlies",
+  "away": "New Orleans Pelicans",
+  "hs": 134,
+  "as": 135,
+  "league": "NBA"
  },
  {
-  "date": "31 oct",
-  "home": "Leyma Basquet Coruña",
-  "away": "La Laguna Tenerife",
-  "hs": 93,
-  "as": 89,
-  "league": "Liga ACB"
+  "date": "2 nov",
+  "home": "Minnesota Timberwolves",
+  "away": "Milwaukee Bucks",
+  "hs": 112,
+  "as": 100,
+  "league": "NBA"
  },
  {
-  "date": "1 nov",
-  "home": "Monbus Obradoiro",
-  "away": "Río Breogán",
-  "hs": 90,
-  "as": 110,
-  "league": "Liga ACB"
+  "date": "2 nov",
+  "home": "Houston Rockets",
+  "away": "Boston Celtics",
+  "hs": 109,
+  "as": 93,
+  "league": "NBA"
  },
  {
-  "date": "1 nov",
-  "home": "Joventut Badalona",
-  "away": "Surne Bilbao Basket",
-  "hs": 78,
-  "as": 81,
-  "league": "Liga ACB"
+  "date": "2 nov",
+  "home": "San Antonio Spurs",
+  "away": "Utah Jazz",
+  "hs": 119,
+  "as": 97,
+  "league": "NBA"
  },
  {
-  "date": "1 nov",
-  "home": "Real Madrid",
+  "date": "2 nov",
+  "home": "Denver Nuggets",
+  "away": "Portland Trail Blazers",
+  "hs": 110,
+  "as": 118,
+  "league": "NBA"
+ },
+ {
+  "date": "2 nov",
+  "home": "Golden State Warriors",
+  "away": "Phoenix Suns",
+  "hs": 116,
+  "as": 113,
+  "league": "NBA"
+ },
+ {
+  "date": "2 nov",
+  "home": "LA Clippers",
+  "away": "Toronto Raptors",
+  "hs": 118,
+  "as": 125,
+  "league": "NBA"
+ },
+ {
+  "date": "2 nov",
+  "home": "Los Angeles Lakers",
+  "away": "Miami Heat",
+  "hs": 138,
+  "as": 117,
+  "league": "NBA"
+ },
+ {
+  "date": "11 oct",
+  "home": "Surne Bilbao Basket",
   "away": "Hereda San Pablo Burgos",
-  "hs": 90,
-  "as": 79,
-  "league": "Liga ACB"
- },
- {
-  "date": "1 nov",
-  "home": "Kosner Baskonia",
-  "away": "Kids&Us Manresa",
-  "hs": 106,
-  "as": 83,
-  "league": "Liga ACB"
- },
- {
-  "date": "1 nov",
-  "home": "MoraBanc Andorra",
-  "away": "Valencia Basket",
-  "hs": 79,
-  "as": 111,
-  "league": "Liga ACB"
- },
- {
-  "date": "1 nov",
-  "home": "Unicaja",
-  "away": "Barça Basket",
-  "hs": 89,
-  "as": 92,
+  "hs": 96,
+  "as": 87,
   "league": "Liga ACB"
  },
  {

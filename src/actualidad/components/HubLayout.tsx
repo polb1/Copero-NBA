@@ -135,8 +135,8 @@ export function HubLayout({ children }: { children: ReactNode }) {
             </nav>
           </div>
           <div className="flex items-center gap-space-md">
-            <Link
-              to="/play"
+            <a
+              href="https://anillero.com/"
               className="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary-container text-on-primary font-display text-headline-md font-bold tracking-wider uppercase shadow-[0_0_12px_rgba(255,107,26,0.35)] hover:bg-secondary hover:text-on-secondary transition-all"
             >
               <span className="material-symbols-outlined text-[18px]">casino</span>
