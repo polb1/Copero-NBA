@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, MoreLink, NewsCard, SectionHeader, StatLeader, StandingsTable, TeamBadge } from '../components/ui';
-import { useHubData } from '../data';
+import { fechaCorta, useHubData } from '../data';
 
 export function Home() {
   const { news, standings, results, fixtures, stats, leagues, loading } = useHubData();
@@ -47,7 +47,7 @@ export function Home() {
               <div>
                 <span className="font-display text-label-table-header uppercase text-secondary tracking-widest">Destacado — {recent.league}</span>
                 <h2 className="font-display text-headline-xl font-extrabold uppercase text-text-primary m-0 leading-tight">{recent.home} <span className="text-secondary">{recent.hs}</span> — <span className="text-secondary">{recent.as}</span> {recent.away}</h2>
-                <p className="text-body-sm text-text-muted m-0 mt-1">{recent.date} · Resultado final</p>
+                <p className="text-body-sm text-text-muted m-0 mt-1">{fechaCorta(recent.date)} · Resultado final</p>
               </div>
               <div className="hidden md:block font-display text-score-display text-secondary tabular-nums">{recent.hs}-{recent.as}</div>
             </div>
@@ -77,11 +77,11 @@ export function Home() {
       <div>
   <SectionHeader title="Hoy" right={`Resultados recientes · ${results.length} partidos`} />
   <div className="grid grid-cols-1 md:grid-cols-3 gap-space-md mb-space-md">
-    {results.filter((r) => r.date && r.date.toLowerCase().includes("31 oct")).slice(0, 3).map((r, i) => (
+    {[...results].filter((r) => r.date && r.hs !== undefined).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3).map((r, i) => (
       <Card key={i} className="p-space-md flex flex-col gap-2 hover:border-primary-container transition-colors">
         <div className="flex items-center gap-space-xs text-body-sm text-secondary">
           <span className="font-display text-label-match-status uppercase">{r.league}</span>
-          <span>· {r.date}</span>
+          <span>· {fechaCorta(r.date)}</span>
         </div>
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 truncate"><TeamBadge name={r.home} size={22} /><span className="font-display text-headline-md font-bold truncate">{r.home}</span></div>

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Card, NewsCard, SectionHeader, TeamBadge } from '../components/ui';
-import { useHubData } from '../data';
+import { fechaCorta, useHubData } from '../data';
 
 /* ---------------- Noticias ---------------- */
 export function Noticias() {
@@ -52,7 +52,7 @@ export function Resultados() {
           const hw = r.hs > r.as, aw = r.as > r.hs;
           return (
             <div key={i} className="flex items-center gap-space-md px-space-sm py-2 border-b border-court-border last:border-0">
-              <span className="w-14 text-center font-display text-label-match-status uppercase text-text-dim">{r.date}</span>
+              <span className="w-14 text-center font-display text-label-match-status uppercase text-text-dim">{fechaCorta(r.date)}</span>
               <div className="flex-1 flex flex-col gap-1">
                 <div className={`flex justify-between ${hw ? 'text-text-primary font-semibold' : 'text-on-surface-variant'}`}>
                   <span className="flex items-center gap-2"><TeamBadge name={r.home} size={20} />{r.home}</span>
@@ -74,17 +74,8 @@ export function Resultados() {
 }
 
 /* ---------------- Calendario (rejilla mensual) ---------------- */
-const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
 const MES_LARGO = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 const DIAS = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
-
-const parseFecha = (s: string): { day: number; month: number } | null => {
-  const m = /^(\d{1,2})\s+([a-z]{3})/i.exec((s || '').trim());
-  if (!m) return null;
-  const idx = MESES.indexOf(m[2].toLowerCase());
-  if (idx < 0) return null;
-  return { day: Number(m[1]), month: idx };
-};
 
 export function Calendario() {
   const { fixtures, results, loading } = useHubData();
@@ -112,16 +103,10 @@ export function Calendario() {
     return map;
   }, [filtrados]);
 
-  const base = useMemo(() => {
-    for (const f of filtrados) {
-      const p = parseFecha(f.date);
-      if (p) return p.month;
-    }
-    return new Date().getMonth();
-  }, [filtrados]);
-
-  const monthIndex = (base + offset + 12) % 12;
-  const year = new Date().getFullYear() + Math.floor((base + offset) / 12);
+  const hoy = new Date();
+  const base = hoy.getFullYear() * 12 + hoy.getMonth();
+  const monthIndex = (base + offset) % 12;
+  const year = Math.floor((base + offset) / 12);
   const startOffset = (new Date(year, monthIndex, 1).getDay() + 6) % 7;
   const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
   const cells: (number | null)[] = [
@@ -129,7 +114,7 @@ export function Calendario() {
     ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
   ];
 
-  const dayKey = (d: number) => `${String(d).padStart(2, '0')} ${MESES[monthIndex]}`;
+  const dayKey = (d: number) => `${year}-${String(monthIndex + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
   const dayMatches = (d: number) => byDay.get(dayKey(d)) || [];
   const list = sel ? (byDay.get(sel) || []) : filtrados;
 
@@ -205,13 +190,13 @@ export function Calendario() {
 
         <Card className="p-space-sm">
           <div className="px-space-sm py-space-xs font-display text-label-table-header uppercase text-text-muted">
-            {sel ? `Partidos del ${sel}` : 'Últimos y próximos'}
+            {sel ? `Partidos del ${fechaCorta(sel)}` : 'Últimos y próximos'}
           </div>
           <div className="max-h-[460px] overflow-y-auto">
             {loading && <p className="p-space-sm text-body-sm text-text-muted m-0">Cargando…</p>}
             {list.slice(0, 30).map((f, i) => (
               <div key={i} className="flex items-center gap-space-sm px-space-sm py-2 border-b border-court-border last:border-0">
-                <span className="w-12 shrink-0 font-display text-label-match-status uppercase text-secondary">{f.date}</span>
+                <span className="w-12 shrink-0 font-display text-label-match-status uppercase text-secondary">{fechaCorta(f.date)}</span>
                 <div className="flex-1 min-w-0 flex flex-col gap-1">
                   <span className="flex items-center gap-2 min-w-0">
                     <TeamBadge name={f.home} size={18} />

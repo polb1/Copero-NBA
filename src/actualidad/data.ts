@@ -112,6 +112,13 @@ export const initials = (name: string) =>
     .join('')
     .toUpperCase() || '??';
 
+const MES_CORTO = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+/** '2026-11-03' -> '3 nov'; lo que no es una fecha ISO se devuelve tal cual. */
+export const fechaCorta = (iso: string) => {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || '');
+  return m ? `${Number(m[3])} ${MES_CORTO[Number(m[2]) - 1]}` : iso;
+};
+
 export const pct = (w: number, l: number) => (w + l ? (w / (w + l)).toFixed(3).replace(/^0/, '') : '—');
 
 export const teamColor = (name: string) => {

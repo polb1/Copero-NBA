@@ -23,7 +23,8 @@ function site(): Plugin {
   const cfg = siteConfig();
   return {
     name: 'site-env',
-    transformIndexHtml: (html) => renderHtml(html, cfg),
+    // The dev server is not production: no beacon, so local visits never reach the stats.
+    transformIndexHtml: (html, ctx) => renderHtml(html, ctx.server ? { ...cfg, production: false } : cfg),
     generateBundle: { order: 'post', handler(_, bundle) {
       // Cloudflare answers 404 for any path without a file, so every real route of the app gets its own copy of the shell.
       const shell = bundle['index.html'];

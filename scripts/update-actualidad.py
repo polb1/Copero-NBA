@@ -15,6 +15,7 @@ Nunca deja la web vacía: si una fuente falla, conserva el archivo anterior.
 import gzip
 import json
 import os
+import re
 import time
 import urllib.request
 from datetime import datetime, timedelta, timezone
@@ -41,7 +42,20 @@ def read_json(name, default):
         return default
 
 
+def iso_fecha(s):
+    """'3 nov' -> '2026-11-03' (el año más cercano a hoy); lo que ya es ISO o no se entiende queda igual."""
+    m = re.match(r"^(\d{1,2}) ([a-z]{3})$", (s or "").strip().lower())
+    if not m or m.group(2) not in MESES:
+        return s
+    hoy = datetime.now()
+    cands = [datetime(y, MESES.index(m.group(2)) + 1, int(m.group(1))) for y in (hoy.year - 1, hoy.year, hoy.year + 1)]
+    return min(cands, key=lambda d: abs(d - hoy)).strftime("%Y-%m-%d")
+
+
 def write_json(name, payload):
+    # Las fechas de resultados y calendario se guardan siempre en ISO: así se ordenan y se comparan bien.
+    if name in ("results.json", "fixtures.json"):
+        payload = [dict(x, date=iso_fecha(x.get("date", ""))) for x in payload]
     os.makedirs(DATA, exist_ok=True)
     path = os.path.join(DATA, name)
     tmp = path + ".tmp"
@@ -178,7 +192,7 @@ BL_NAMES = {
     "琉球ゴールデンキングス": "Ryukyu Golden Kings",
 }
 BL_SHORT = {
-    "A東京": "Alvark Tokyo", "A千葉": "Chiba Jets", "千葉": "Chiba Jets",
+    "A東京": "Alvark Tokyo", "A千葉": "Altiri Chiba", "千葉": "Chiba Jets",
     "宇都宮": "Utsunomiya Brex", "琉球": "Ryukyu Golden Kings", "秋田": "Akita Northern Happinets",
     "群馬": "Gunma Crane Thunders", "渋谷": "Sunrockers Shibuya", "川崎": "Kawasaki Brave Thunders",
     "横浜": "Yokohama B-Corsairs", "信州": "Shinshu Brave Warriors", "三遠": "San-en NeoPhoenix",
@@ -589,39 +603,30 @@ def bleague_month(year, month):
     with urllib.request.urlopen(req, timeout=30) as r:
         html = r.read().decode("utf-8", "replace")
     out = []
-    for m in re.finditer(r'<li class="list-item"[^>]*>(.*?)</li>', html, re.S):
-        body = m.group(1)
+    # Cada partido empieza en <div class="inner">; los <li> anidados de enlaces rompían la regex anterior.
+    for body in html.split('<div class="inner">')[1:]:
         teams = re.findall(r'class="team-name">([^<]+)<', body)
         if len(teams) < 2:
             continue
-        hs = re.search(r'class="number home-score[^"]*">\s*<span>(\d{1,3})</span>', body)
-        as_ = re.search(r'class="number away-score[^"]*">\s*<span>(\d{1,3})</span>', body)
-        ts = re.search(r'"GameDateTime":\s*"(\d{9,11})"', body)
-        fecha, hora = "", ""
-        if ts:
-            raw = int(ts.group(1))
-            if raw > 10**12:  # milisegundos
-                raw //= 1000
-            try:
-                dt = datetime.fromtimestamp(raw)
-                if 1 <= dt.day <= 31:
-                    fecha = f"{dt.day} {MESES[dt.month - 1]}"
-                    hora = dt.strftime("%H:%M")
-            except (ValueError, OSError):
-                pass
+        point = re.search(r'class="point[^"]*">(.*?)</span>', body, re.S)
+        nums = re.findall(r"\d{1,3}", point.group(1)) if point else []
+        hs, as_ = (int(nums[0]), int(nums[1])) if len(nums) == 2 else (None, None)
+        # La fecha solo aparece en el enlace de entradas (.../<club>/YYYYMMDD).
+        d = re.search(r"/(20\d{2})(\d{2})(\d{2})\"", body)
+        hora = re.search(r"<span>(\d{1,2}:\d{2})</span>", body)
         out.append({
-            "date": fecha,
+            "date": f"{d.group(1)}-{d.group(2)}-{d.group(3)}" if d else "",
             "home": bl_en(teams[0]),
             "away": bl_en(teams[1]),
-            "hs": int(hs.group(1)) if hs else None,
-            "as": int(as_.group(1)) if as_ else None,
-            "time": hora,
+            "hs": hs,
+            "as": as_,
+            "time": hora.group(1) if hora else "",
         })
     return out
 
 
 def bleague_all():
-    res, fix = [], []
+    res, fix, vistos = [], [], set()
     hoy = datetime.now()
     for delta in (0, 1, 2):
         y, mth = hoy.year, hoy.month + delta
@@ -630,9 +635,13 @@ def bleague_all():
             y += 1
         try:
             for g in bleague_month(y, mth):
+                # La web devuelve la misma jornada para cualquier mes: sin esto saldría repetida.
+                if (g["date"], g["home"], g["away"]) in vistos:
+                    continue
+                vistos.add((g["date"], g["home"], g["away"]))
                 row = {"date": g["date"], "home": g["home"], "away": g["away"], "league": "B.League"}
                 if g["hs"] is not None and g["as"] is not None:
-                    res.append(dict(row, hs=g["hs"], as_=g["as"]))
+                    res.append(dict(row, hs=g["hs"], **{"as": g["as"]}))
                 else:
                     fix.append(dict(row, time=g["time"], event=""))
         except Exception as e:  # noqa: BLE001

@@ -1,149 +1,5 @@
 [
  {
-  "date": "",
-  "home": "Levanga Hokkaido",
-  "away": "Akita Northern Happinets",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "Sendai 89ers",
-  "away": "Alvark Tokyo",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "Chiba Jets",
-  "away": "Chiba Jets",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "SeaHorses Mikawa",
-  "away": "Gunma Crane Thunders",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "Shiga Lakes",
-  "away": "Kawasaki Brave Thunders",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "Hiroshima Dragonflies",
-  "away": "Nagasaki Velca",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "Levanga Hokkaido",
-  "away": "Akita Northern Happinets",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "Sendai 89ers",
-  "away": "Alvark Tokyo",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "Chiba Jets",
-  "away": "Chiba Jets",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "SeaHorses Mikawa",
-  "away": "Gunma Crane Thunders",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "Shiga Lakes",
-  "away": "Kawasaki Brave Thunders",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "Hiroshima Dragonflies",
-  "away": "Nagasaki Velca",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "Levanga Hokkaido",
-  "away": "Akita Northern Happinets",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "Sendai 89ers",
-  "away": "Alvark Tokyo",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "Chiba Jets",
-  "away": "Chiba Jets",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "SeaHorses Mikawa",
-  "away": "Gunma Crane Thunders",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "Shiga Lakes",
-  "away": "Kawasaki Brave Thunders",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
-  "date": "",
-  "home": "Hiroshima Dragonflies",
-  "away": "Nagasaki Velca",
-  "league": "B.League",
-  "time": "",
-  "event": ""
- },
- {
   "date": "2026-11-04",
   "time": "",
   "home": "Real Madrid",
@@ -384,7 +240,7 @@
   "league": "EuroLeague"
  },
  {
-  "date": "4 nov",
+  "date": "2026-11-04",
   "time": "01:00",
   "home": "Detroit Pistons",
   "away": "Philadelphia 76ers",
@@ -392,7 +248,7 @@
   "league": "NBA"
  },
  {
-  "date": "4 nov",
+  "date": "2026-11-04",
   "time": "01:00",
   "home": "Washington Wizards",
   "away": "Atlanta Hawks",
@@ -400,7 +256,7 @@
   "league": "NBA"
  },
  {
-  "date": "4 nov",
+  "date": "2026-11-04",
   "time": "01:30",
   "home": "Boston Celtics",
   "away": "Milwaukee Bucks",
@@ -408,7 +264,7 @@
   "league": "NBA"
  },
  {
-  "date": "4 nov",
+  "date": "2026-11-04",
   "time": "01:30",
   "home": "Brooklyn Nets",
   "away": "Charlotte Hornets",
@@ -416,7 +272,7 @@
   "league": "NBA"
  },
  {
-  "date": "4 nov",
+  "date": "2026-11-04",
   "time": "01:30",
   "home": "New York Knicks",
   "away": "Chicago Bulls",
@@ -424,7 +280,7 @@
   "league": "NBA"
  },
  {
-  "date": "4 nov",
+  "date": "2026-11-04",
   "time": "02:00",
   "home": "Memphis Grizzlies",
   "away": "Indiana Pacers",
@@ -432,7 +288,7 @@
   "league": "NBA"
  },
  {
-  "date": "4 nov",
+  "date": "2026-11-04",
   "time": "02:00",
   "home": "New Orleans Pelicans",
   "away": "Utah Jazz",
@@ -440,7 +296,7 @@
   "league": "NBA"
  },
  {
-  "date": "4 nov",
+  "date": "2026-11-04",
   "time": "02:00",
   "home": "Oklahoma City Thunder",
   "away": "Cleveland Cavaliers",
@@ -448,7 +304,7 @@
   "league": "NBA"
  },
  {
-  "date": "4 nov",
+  "date": "2026-11-04",
   "time": "02:30",
   "home": "Houston Rockets",
   "away": "Minnesota Timberwolves",
@@ -456,7 +312,7 @@
   "league": "NBA"
  },
  {
-  "date": "4 nov",
+  "date": "2026-11-04",
   "time": "03:00",
   "home": "Denver Nuggets",
   "away": "Toronto Raptors",
@@ -464,7 +320,7 @@
   "league": "NBA"
  },
  {
-  "date": "4 nov",
+  "date": "2026-11-04",
   "time": "03:00",
   "home": "Phoenix Suns",
   "away": "Portland Trail Blazers",
@@ -472,7 +328,7 @@
   "league": "NBA"
  },
  {
-  "date": "4 nov",
+  "date": "2026-11-04",
   "time": "03:30",
   "home": "San Antonio Spurs",
   "away": "Dallas Mavericks",
@@ -480,7 +336,7 @@
   "league": "NBA"
  },
  {
-  "date": "4 nov",
+  "date": "2026-11-04",
   "time": "04:00",
   "home": "Sacramento Kings",
   "away": "Los Angeles Lakers",
@@ -488,7 +344,7 @@
   "league": "NBA"
  },
  {
-  "date": "4 nov",
+  "date": "2026-11-04",
   "time": "04:30",
   "home": "LA Clippers",
   "away": "Miami Heat",
@@ -496,7 +352,7 @@
   "league": "NBA"
  },
  {
-  "date": "5 nov",
+  "date": "2026-11-05",
   "time": "03:00",
   "home": "Phoenix Suns",
   "away": "Orlando Magic",
@@ -504,7 +360,7 @@
   "league": "NBA"
  },
  {
-  "date": "5 nov",
+  "date": "2026-11-05",
   "time": "04:00",
   "home": "Golden State Warriors",
   "away": "Miami Heat",
@@ -512,7 +368,7 @@
   "league": "NBA"
  },
  {
-  "date": "7 nov",
+  "date": "2026-11-07",
   "time": "19:00",
   "home": "Pallacanestro Reggiana",
   "away": "Reyer Venezia Mestre",
@@ -520,7 +376,7 @@
   "league": "Lega Basket Serie A"
  },
  {
-  "date": "3 nov",
+  "date": "2026-11-03",
   "time": "19:00",
   "home": "Bayern München Basketball",
   "away": "Braunschweig",
@@ -528,7 +384,7 @@
   "league": "Basketball Bundesliga"
  },
  {
-  "date": "3 nov",
+  "date": "2026-11-03",
   "time": "18:30",
   "home": "Cholet",
   "away": "Paris Basketball",
@@ -536,7 +392,7 @@
   "league": "LNB Élite"
  },
  {
-  "date": "7 nov",
+  "date": "2026-11-07",
   "time": "13:00",
   "home": "Doxa Lefkadas BC",
   "away": "Aris BC",
@@ -544,7 +400,7 @@
   "league": "Greek Basket League"
  },
  {
-  "date": "6 nov",
+  "date": "2026-11-06",
   "time": "11:00",
   "home": "Hapoel Holon",
   "away": "Hapoel Galil Elyon",
@@ -552,7 +408,7 @@
   "league": "Ligat ha'Al"
  },
  {
-  "date": "5 nov",
+  "date": "2026-11-05",
   "time": "16:50",
   "home": "BC Jonava",
   "away": "BC Lietuvos rytas",
@@ -560,11 +416,59 @@
   "league": "LKL"
  },
  {
-  "date": "4 nov",
+  "date": "2026-11-04",
   "time": "09:00",
   "home": "Brisbane Bullets",
   "away": "Perth Wildcats",
   "event": "Brisbane Entertainment Centre",
   "league": "NBL Australia"
+ },
+ {
+  "date": "2026-11-06",
+  "home": "Levanga Hokkaido",
+  "away": "Akita Northern Happinets",
+  "league": "B.League",
+  "time": "19:05",
+  "event": ""
+ },
+ {
+  "date": "2026-11-06",
+  "home": "Sendai 89ers",
+  "away": "Alvark Tokyo",
+  "league": "B.League",
+  "time": "19:05",
+  "event": ""
+ },
+ {
+  "date": "2026-11-06",
+  "home": "Chiba Jets",
+  "away": "Altiri Chiba",
+  "league": "B.League",
+  "time": "19:05",
+  "event": ""
+ },
+ {
+  "date": "2026-11-06",
+  "home": "SeaHorses Mikawa",
+  "away": "Gunma Crane Thunders",
+  "league": "B.League",
+  "time": "19:05",
+  "event": ""
+ },
+ {
+  "date": "2026-11-06",
+  "home": "Shiga Lakes",
+  "away": "Kawasaki Brave Thunders",
+  "league": "B.League",
+  "time": "19:05",
+  "event": ""
+ },
+ {
+  "date": "2026-11-06",
+  "home": "Hiroshima Dragonflies",
+  "away": "Nagasaki Velca",
+  "league": "B.League",
+  "time": "19:05",
+  "event": ""
  }
 ]

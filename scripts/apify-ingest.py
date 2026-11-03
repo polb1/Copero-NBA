@@ -85,8 +85,7 @@ def presupuesto_restante() -> float:
 
 def fecha(iso: str) -> str:
     try:
-        dt = datetime.strptime(iso[:10], "%Y-%m-%d")
-        return f"{dt.day} {MESES[dt.month - 1]}"
+        return datetime.strptime(iso[:10], "%Y-%m-%d").strftime("%Y-%m-%d")
     except Exception:
         return ""
 
