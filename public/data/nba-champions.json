@@ -1,0 +1,629 @@
+{
+"source": "https://en.wikipedia.org/wiki/List_of_NBA_champions",
+"license": "CC BY-SA 4.0",
+"updated": "2026-11-03",
+"champions": [
+{
+"year": 1947,
+"champion": "Philadelphia Warriors",
+"runnerUp": "Chicago Stags",
+"result": "1–4"
+},
+{
+"year": 1948,
+"champion": "Baltimore Bullets",
+"runnerUp": "Philadelphia Warriors",
+"result": "4–2"
+},
+{
+"year": 1949,
+"champion": "Minneapolis Lakers",
+"runnerUp": "Washington Capitols",
+"result": "4–2"
+},
+{
+"year": 1950,
+"champion": "Minneapolis Lakers",
+"runnerUp": "Syracuse Nationals",
+"result": "4–2"
+},
+{
+"year": 1951,
+"champion": "Rochester Royals",
+"runnerUp": "New York Knicks",
+"result": "4–3"
+},
+{
+"year": 1952,
+"champion": "Minneapolis Lakers",
+"runnerUp": "New York Knicks",
+"result": "4–3"
+},
+{
+"year": 1953,
+"champion": "Minneapolis Lakers",
+"runnerUp": "New York Knicks",
+"result": "4–1"
+},
+{
+"year": 1954,
+"champion": "Minneapolis Lakers",
+"runnerUp": "Syracuse Nationals",
+"result": "4–3"
+},
+{
+"year": 1955,
+"champion": "Syracuse Nationals",
+"runnerUp": "Fort Wayne Pistons",
+"result": "3–4"
+},
+{
+"year": 1956,
+"champion": "Philadelphia Warriors",
+"runnerUp": "Fort Wayne Pistons",
+"result": "1–4"
+},
+{
+"year": 1957,
+"champion": "Boston Celtics",
+"runnerUp": "St. Louis Hawks",
+"result": "3–4"
+},
+{
+"year": 1958,
+"champion": "St. Louis Hawks",
+"runnerUp": "Boston Celtics",
+"result": "4–2"
+},
+{
+"year": 1959,
+"champion": "Boston Celtics",
+"runnerUp": "Minneapolis Lakers",
+"result": "0–4"
+},
+{
+"year": 1960,
+"champion": "Boston Celtics",
+"runnerUp": "St. Louis Hawks",
+"result": "3–4"
+},
+{
+"year": 1961,
+"champion": "Boston Celtics",
+"runnerUp": "St. Louis Hawks",
+"result": "1–4"
+},
+{
+"year": 1962,
+"champion": "Boston Celtics",
+"runnerUp": "Los Angeles Lakers",
+"result": "3–4"
+},
+{
+"year": 1963,
+"champion": "Boston Celtics",
+"runnerUp": "Los Angeles Lakers",
+"result": "2–4"
+},
+{
+"year": 1964,
+"champion": "Boston Celtics",
+"runnerUp": "San Francisco Warriors",
+"result": "1–4"
+},
+{
+"year": 1965,
+"champion": "Boston Celtics",
+"runnerUp": "Los Angeles Lakers",
+"result": "1–4"
+},
+{
+"year": 1966,
+"champion": "Boston Celtics",
+"runnerUp": "Los Angeles Lakers",
+"result": "3–4"
+},
+{
+"year": 1967,
+"champion": "Philadelphia 76ers",
+"runnerUp": "San Francisco Warriors",
+"result": "2–4"
+},
+{
+"year": 1968,
+"champion": "Boston Celtics",
+"runnerUp": "Los Angeles Lakers",
+"result": "2–4"
+},
+{
+"year": 1969,
+"champion": "Boston Celtics",
+"runnerUp": "Los Angeles Lakers",
+"result": "3–4"
+},
+{
+"year": 1970,
+"champion": "New York Knicks",
+"runnerUp": "Los Angeles Lakers",
+"result": "3–4"
+},
+{
+"year": 1971,
+"champion": "Milwaukee Bucks",
+"runnerUp": "Baltimore Bullets",
+"result": "4–0"
+},
+{
+"year": 1972,
+"champion": "Los Angeles Lakers",
+"runnerUp": "New York Knicks",
+"result": "4–1"
+},
+{
+"year": 1973,
+"champion": "New York Knicks",
+"runnerUp": "Los Angeles Lakers",
+"result": "1–4"
+},
+{
+"year": 1974,
+"champion": "Boston Celtics",
+"runnerUp": "Milwaukee Bucks",
+"result": "3–4"
+},
+{
+"year": 1975,
+"champion": "Golden State Warriors",
+"runnerUp": "Washington Bullets",
+"result": "4–0"
+},
+{
+"year": 1976,
+"champion": "Boston Celtics",
+"runnerUp": "Phoenix Suns",
+"result": "2–4"
+},
+{
+"year": 1977,
+"champion": "Portland Trail Blazers",
+"runnerUp": "Philadelphia 76ers",
+"result": "4–2"
+},
+{
+"year": 1978,
+"champion": "Washington Bullets",
+"runnerUp": "Seattle SuperSonics",
+"result": "3–4"
+},
+{
+"year": 1979,
+"champion": "Seattle SuperSonics",
+"runnerUp": "Washington Bullets",
+"result": "4–1"
+},
+{
+"year": 1980,
+"champion": "Los Angeles Lakers",
+"runnerUp": "Philadelphia 76ers",
+"result": "4–2"
+},
+{
+"year": 1981,
+"champion": "Boston Celtics",
+"runnerUp": "Houston Rockets",
+"result": "2–4"
+},
+{
+"year": 1982,
+"champion": "Los Angeles Lakers",
+"runnerUp": "Philadelphia 76ers",
+"result": "4–2"
+},
+{
+"year": 1983,
+"champion": "Philadelphia 76ers",
+"runnerUp": "Los Angeles Lakers",
+"result": "0–4"
+},
+{
+"year": 1984,
+"champion": "Boston Celtics",
+"runnerUp": "Los Angeles Lakers",
+"result": "3–4"
+},
+{
+"year": 1985,
+"champion": "Los Angeles Lakers",
+"runnerUp": "Boston Celtics",
+"result": "4–2"
+},
+{
+"year": 1986,
+"champion": "Boston Celtics",
+"runnerUp": "Houston Rockets",
+"result": "2–4"
+},
+{
+"year": 1987,
+"champion": "Los Angeles Lakers",
+"runnerUp": "Boston Celtics",
+"result": "4–2"
+},
+{
+"year": 1988,
+"champion": "Los Angeles Lakers",
+"runnerUp": "Detroit Pistons",
+"result": "4–3"
+},
+{
+"year": 1989,
+"champion": "Detroit Pistons",
+"runnerUp": "Los Angeles Lakers",
+"result": "0–4"
+},
+{
+"year": 1990,
+"champion": "Detroit Pistons",
+"runnerUp": "Portland Trail Blazers",
+"result": "1–4"
+},
+{
+"year": 1991,
+"champion": "Chicago Bulls",
+"runnerUp": "Los Angeles Lakers",
+"result": "1–4"
+},
+{
+"year": 1992,
+"champion": "Chicago Bulls",
+"runnerUp": "Portland Trail Blazers",
+"result": "2–4"
+},
+{
+"year": 1993,
+"champion": "Chicago Bulls",
+"runnerUp": "Phoenix Suns",
+"result": "2–4"
+},
+{
+"year": 1994,
+"champion": "Houston Rockets",
+"runnerUp": "New York Knicks",
+"result": "4–3"
+},
+{
+"year": 1995,
+"champion": "Houston Rockets",
+"runnerUp": "Orlando Magic",
+"result": "4–0"
+},
+{
+"year": 1996,
+"champion": "Chicago Bulls",
+"runnerUp": "Seattle SuperSonics",
+"result": "2–4"
+},
+{
+"year": 1997,
+"champion": "Chicago Bulls",
+"runnerUp": "Utah Jazz",
+"result": "2–4"
+},
+{
+"year": 1998,
+"champion": "Chicago Bulls",
+"runnerUp": "Utah Jazz",
+"result": "2–4"
+},
+{
+"year": 1999,
+"champion": "San Antonio Spurs",
+"runnerUp": "New York Knicks",
+"result": "4–1"
+},
+{
+"year": 2000,
+"champion": "Los Angeles Lakers",
+"runnerUp": "Indiana Pacers",
+"result": "4–2"
+},
+{
+"year": 2001,
+"champion": "Los Angeles Lakers",
+"runnerUp": "Philadelphia 76ers",
+"result": "4–1"
+},
+{
+"year": 2002,
+"champion": "Los Angeles Lakers",
+"runnerUp": "New Jersey Nets",
+"result": "4–0"
+},
+{
+"year": 2003,
+"champion": "San Antonio Spurs",
+"runnerUp": "New Jersey Nets",
+"result": "4–2"
+},
+{
+"year": 2004,
+"champion": "Detroit Pistons",
+"runnerUp": "Los Angeles Lakers",
+"result": "1–4"
+},
+{
+"year": 2005,
+"champion": "San Antonio Spurs",
+"runnerUp": "Detroit Pistons",
+"result": "4–3"
+},
+{
+"year": 2006,
+"champion": "Miami Heat",
+"runnerUp": "Dallas Mavericks",
+"result": "2–4"
+},
+{
+"year": 2007,
+"champion": "San Antonio Spurs",
+"runnerUp": "Cleveland Cavaliers",
+"result": "4–0"
+},
+{
+"year": 2008,
+"champion": "Boston Celtics",
+"runnerUp": "Los Angeles Lakers",
+"result": "2–4"
+},
+{
+"year": 2009,
+"champion": "Los Angeles Lakers",
+"runnerUp": "Orlando Magic",
+"result": "4–1"
+},
+{
+"year": 2010,
+"champion": "Los Angeles Lakers",
+"runnerUp": "Boston Celtics",
+"result": "4–3"
+},
+{
+"year": 2011,
+"champion": "Dallas Mavericks",
+"runnerUp": "Miami Heat",
+"result": "4–2"
+},
+{
+"year": 2012,
+"champion": "Miami Heat",
+"runnerUp": "Oklahoma City Thunder",
+"result": "1–4"
+},
+{
+"year": 2013,
+"champion": "Miami Heat",
+"runnerUp": "San Antonio Spurs",
+"result": "3–4"
+},
+{
+"year": 2014,
+"champion": "San Antonio Spurs",
+"runnerUp": "Miami Heat",
+"result": "4–1"
+},
+{
+"year": 2015,
+"champion": "Golden State Warriors",
+"runnerUp": "Cleveland Cavaliers",
+"result": "4–2"
+},
+{
+"year": 2016,
+"champion": "Cleveland Cavaliers",
+"runnerUp": "Golden State Warriors",
+"result": "3–4"
+},
+{
+"year": 2017,
+"champion": "Golden State Warriors",
+"runnerUp": "Cleveland Cavaliers",
+"result": "4–1"
+},
+{
+"year": 2018,
+"champion": "Golden State Warriors",
+"runnerUp": "Cleveland Cavaliers",
+"result": "4–0"
+},
+{
+"year": 2019,
+"champion": "Toronto Raptors",
+"runnerUp": "Golden State Warriors",
+"result": "2–4"
+},
+{
+"year": 2020,
+"champion": "Los Angeles Lakers",
+"runnerUp": "Miami Heat",
+"result": "4–2"
+},
+{
+"year": 2021,
+"champion": "Milwaukee Bucks",
+"runnerUp": "Phoenix Suns",
+"result": "2–4"
+},
+{
+"year": 2022,
+"champion": "Golden State Warriors",
+"runnerUp": "Boston Celtics",
+"result": "4–2"
+},
+{
+"year": 2023,
+"champion": "Denver Nuggets",
+"runnerUp": "Miami Heat",
+"result": "4–1"
+},
+{
+"year": 2024,
+"champion": "Boston Celtics",
+"runnerUp": "Dallas Mavericks",
+"result": "1–4"
+},
+{
+"year": 2025,
+"champion": "Oklahoma City Thunder",
+"runnerUp": "Indiana Pacers",
+"result": "4–3"
+},
+{
+"year": 2026,
+"champion": "New York Knicks",
+"runnerUp": "San Antonio Spurs",
+"result": "1–4"
+}
+],
+"franchises": [
+{
+"team": "Boston Celtics",
+"titles": 18,
+"losses": 5
+},
+{
+"team": "Los Angeles Lakers",
+"titles": 17,
+"losses": 15
+},
+{
+"team": "Golden State Warriors",
+"titles": 7,
+"losses": 5
+},
+{
+"team": "Chicago Bulls",
+"titles": 6,
+"losses": 0
+},
+{
+"team": "San Antonio Spurs",
+"titles": 5,
+"losses": 2
+},
+{
+"team": "Detroit Pistons",
+"titles": 3,
+"losses": 4
+},
+{
+"team": "Miami Heat",
+"titles": 3,
+"losses": 4
+},
+{
+"team": "New York Knicks",
+"titles": 3,
+"losses": 6
+},
+{
+"team": "Philadelphia 76ers",
+"titles": 3,
+"losses": 6
+},
+{
+"team": "Houston Rockets",
+"titles": 2,
+"losses": 2
+},
+{
+"team": "Milwaukee Bucks",
+"titles": 2,
+"losses": 1
+},
+{
+"team": "Oklahoma City Thunder",
+"titles": 2,
+"losses": 3
+},
+{
+"team": "Atlanta Hawks",
+"titles": 1,
+"losses": 3
+},
+{
+"team": "Baltimore Bullets",
+"titles": 1,
+"losses": 0
+},
+{
+"team": "Cleveland Cavaliers",
+"titles": 1,
+"losses": 4
+},
+{
+"team": "Dallas Mavericks",
+"titles": 1,
+"losses": 2
+},
+{
+"team": "Denver Nuggets",
+"titles": 1,
+"losses": 0
+},
+{
+"team": "Portland Trail Blazers",
+"titles": 1,
+"losses": 2
+},
+{
+"team": "Sacramento Kings",
+"titles": 1,
+"losses": 0
+},
+{
+"team": "Toronto Raptors",
+"titles": 1,
+"losses": 0
+},
+{
+"team": "Washington Wizards",
+"titles": 1,
+"losses": 3
+},
+{
+"team": "Brooklyn Nets",
+"titles": 0,
+"losses": 2
+},
+{
+"team": "Chicago Stags",
+"titles": 0,
+"losses": 1
+},
+{
+"team": "Indiana Pacers",
+"titles": 0,
+"losses": 2
+},
+{
+"team": "Orlando Magic",
+"titles": 0,
+"losses": 2
+},
+{
+"team": "Phoenix Suns",
+"titles": 0,
+"losses": 3
+},
+{
+"team": "Utah Jazz",
+"titles": 0,
+"losses": 2
+},
+{
+"team": "Washington Capitols",
+"titles": 0,
+"losses": 1
+}
+]
+}
