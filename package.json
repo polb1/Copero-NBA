@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node scripts/gen-pages.mjs && vite",
-    "build": "node scripts/gen-pages.mjs && tsc -b && vite build && node scripts/gen-league-pages.mjs",
+    "build": "node scripts/gen-pages.mjs && tsc -b && vite build && node scripts/gen-league-pages.mjs && node scripts/gen-team-pages.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "typecheck": "tsc -b --noEmit"
