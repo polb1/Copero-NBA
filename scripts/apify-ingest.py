@@ -27,11 +27,13 @@ DATA = ROOT / "public" / "data"
 MAP = DATA / "apify-map.json"
 ACTOR = "sian.agency~basketball-api-scraper"
 API = "https://api.apify.com/v2"
-MIN_BUDGET_USD = 1.2  # no arrancar si queda menos que esto en el ciclo
+MIN_BUDGET_USD = 0.30  # no arrancar si queda menos que esto en el ciclo
 
 # competitionId / seasonId de la temporada en curso.
 LIGAS = {
     "Liga ACB": {"competitionId": "264", "seasonId": "100873"},
+    "Basketball Bundesliga": {"competitionId": "227", "seasonId": "100143"},
+    "Lega Basket Serie A": {"competitionId": "262", "seasonId": "99996"},
 }
 
 MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
@@ -197,6 +199,18 @@ def main() -> None:
             print("[apify] aún no toca: " + ", ".join(recientes))
             return
     ligas = {k: v for k, v in LIGAS.items() if not objetivo or k == objetivo}
+    if "--rotar" in sys.argv and len(ligas) > 1:
+        def edad(n):
+            v = ligas[n].get("lastRun")
+            if not v:
+                return 10**6
+            try:
+                return (datetime.now() - datetime.fromisoformat(v)).total_seconds()
+            except Exception:
+                return 10**6
+        elegida = max(ligas, key=edad)
+        ligas = {elegida: ligas[elegida]}
+        print(f"[rotación] toca {elegida}")
     hechos: list[str] = []
     for nombre, ids in ligas.items():
         print(f"→ {nombre} (comp {ids['competitionId']} · temporada {ids['seasonId']})")
