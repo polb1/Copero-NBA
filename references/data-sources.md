@@ -46,3 +46,8 @@ Las fechas de `results.json` y `fixtures.json` se guardan siempre en ISO (`YYYY-
 - Total ≈ 2,55 $/mes de los 5 $ del plan gratuito.
 - NBA, EuroLeague y B.League: diarios y gratuitos (ESPN / API oficial / bleague.jp).
 - Prohibido `git push --force` en main: usar `git pull --rebase origin main` y push normal.
+
+## Pendiente: campeones históricos (evergreen)
+- `scripts/fetch-champions.py` parsea `List_of_NBA_champions` (Wikipedia, CC BY-SA).
+- Detectado: la tabla usa `rowspan`, así que faltan 26 temporadas (1950, 1953…). No se publica hasta completar el parser.
+- No se ha generado ninguna página con datos incompletos.
