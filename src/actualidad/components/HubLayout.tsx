@@ -167,9 +167,10 @@ export function HubLayout({ children }: { children: ReactNode }) {
               Datos no oficiales: resultados y clasificaciones de fuentes públicas (ESPN, EuroLeague, B.League y servicios de terceros) y noticias enlazadas desde los medios que las publican. Pueden contener errores o retrasos. Proyecto independiente, sin afiliación con la NBA ni con ninguna liga o club.
             </p>
             <div className="flex items-center gap-space-md">
-              <span>Términos y Condiciones</span>
-              <span>Privacidad</span>
-              <span>Reglas del Juego</span>
+              <a href="/legal/aviso-legal" className="hover:text-primary">Aviso legal</a>
+              <a href="/legal/privacidad" className="hover:text-primary">Privacidad</a>
+              <a href="/legal/cookies" className="hover:text-primary">Cookies</a>
+              <a href="/legal/fuentes" className="hover:text-primary">Fuentes</a>
               <span className="text-text-dim">© 2026 Copero NBA</span>
             </div>
           </div>
