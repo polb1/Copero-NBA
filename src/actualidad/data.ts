@@ -52,6 +52,8 @@ export interface HubData {
   fixtures: FixtureRow[];
   stats: StatRow[];
   leagues: Record<string, string[]>;
+  /** ISO de la última actualización de los datos ("" si aún no se conoce). */
+  updatedAt: string;
   loading: boolean;
 }
 
@@ -67,7 +69,7 @@ async function load<T>(url: string, fallback: T): Promise<T> {
 
 export function useHubData(): HubData {
   const [data, setData] = useState<HubData>({
-    news: [], standings: {}, results: [], fixtures: [], stats: [], leagues: {}, loading: true,
+    news: [], standings: {}, results: [], fixtures: [], stats: [], leagues: {}, updatedAt: '', loading: true,
   });
 
   useEffect(() => {
@@ -79,9 +81,10 @@ export function useHubData(): HubData {
       load<FixtureRow[]>('/data/fixtures.json', []),
       load<StatRow[]>('/data/stats.json', []),
       load<Record<string, string[]>>('/data/leagues.json', {}),
-    ]).then(([news, standings, results, fixtures, stats, leagues]) => {
+      load<{ at?: string }>('/data/updated.json', {}),
+    ]).then(([news, standings, results, fixtures, stats, leagues, updated]) => {
       if (!mounted) return;
-      setData({ news, standings, results, fixtures, stats, leagues, loading: false });
+      setData({ news, standings, results, fixtures, stats, leagues, updatedAt: updated.at || '', loading: false });
     });
     return () => { mounted = false; };
   }, []);

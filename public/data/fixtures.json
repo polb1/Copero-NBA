@@ -240,6 +240,54 @@
   "event": "Jornada 10"
  },
  {
+  "date": "2026-11-06",
+  "home": "Levanga Hokkaido",
+  "away": "Akita Northern Happinets",
+  "league": "B.League",
+  "time": "19:05",
+  "event": ""
+ },
+ {
+  "date": "2026-11-06",
+  "home": "Sendai 89ers",
+  "away": "Alvark Tokyo",
+  "league": "B.League",
+  "time": "19:05",
+  "event": ""
+ },
+ {
+  "date": "2026-11-06",
+  "home": "Chiba Jets",
+  "away": "Altiri Chiba",
+  "league": "B.League",
+  "time": "19:05",
+  "event": ""
+ },
+ {
+  "date": "2026-11-06",
+  "home": "SeaHorses Mikawa",
+  "away": "Gunma Crane Thunders",
+  "league": "B.League",
+  "time": "19:05",
+  "event": ""
+ },
+ {
+  "date": "2026-11-06",
+  "home": "Shiga Lakes",
+  "away": "Kawasaki Brave Thunders",
+  "league": "B.League",
+  "time": "19:05",
+  "event": ""
+ },
+ {
+  "date": "2026-11-06",
+  "home": "Hiroshima Dragonflies",
+  "away": "Nagasaki Velca",
+  "league": "B.League",
+  "time": "19:05",
+  "event": ""
+ },
+ {
   "date": "2026-11-04",
   "time": "",
   "home": "Real Madrid",
@@ -616,19 +664,19 @@
   "league": "Lega Basket Serie A"
  },
  {
-  "date": "2026-11-03",
+  "date": "2026-11-06",
   "time": "19:00",
-  "home": "Bayern München Basketball",
-  "away": "Braunschweig",
-  "event": "BMW Park",
+  "home": "Alba Berlin",
+  "away": "Phoenix Hagen",
+  "event": "Uber Arena",
   "league": "Basketball Bundesliga"
  },
  {
-  "date": "2026-11-03",
-  "time": "18:30",
-  "home": "Cholet",
-  "away": "Paris Basketball",
-  "event": "La Meilleraie",
+  "date": "2026-11-06",
+  "time": "19:00",
+  "home": "Boulazac Basket Dordogne",
+  "away": "Gravelines-Dunkerque",
+  "event": "",
   "league": "LNB Élite"
  },
  {
@@ -654,61 +702,5 @@
   "away": "BC Lietuvos rytas",
   "event": "Jonavos sporto arena",
   "league": "LKL"
- },
- {
-  "date": "2026-11-04",
-  "time": "09:00",
-  "home": "Brisbane Bullets",
-  "away": "Perth Wildcats",
-  "event": "Brisbane Entertainment Centre",
-  "league": "NBL Australia"
- },
- {
-  "date": "2026-11-06",
-  "home": "Levanga Hokkaido",
-  "away": "Akita Northern Happinets",
-  "league": "B.League",
-  "time": "19:05",
-  "event": ""
- },
- {
-  "date": "2026-11-06",
-  "home": "Sendai 89ers",
-  "away": "Alvark Tokyo",
-  "league": "B.League",
-  "time": "19:05",
-  "event": ""
- },
- {
-  "date": "2026-11-06",
-  "home": "Chiba Jets",
-  "away": "Altiri Chiba",
-  "league": "B.League",
-  "time": "19:05",
-  "event": ""
- },
- {
-  "date": "2026-11-06",
-  "home": "SeaHorses Mikawa",
-  "away": "Gunma Crane Thunders",
-  "league": "B.League",
-  "time": "19:05",
-  "event": ""
- },
- {
-  "date": "2026-11-06",
-  "home": "Shiga Lakes",
-  "away": "Kawasaki Brave Thunders",
-  "league": "B.League",
-  "time": "19:05",
-  "event": ""
- },
- {
-  "date": "2026-11-06",
-  "home": "Hiroshima Dragonflies",
-  "away": "Nagasaki Velca",
-  "league": "B.League",
-  "time": "19:05",
-  "event": ""
  }
 ]

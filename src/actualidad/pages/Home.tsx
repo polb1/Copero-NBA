@@ -4,7 +4,8 @@ import { Card, MoreLink, NewsCard, SectionHeader, StatLeader, StandingsTable, Te
 import { fechaCorta, useHubData } from '../data';
 
 export function Home() {
-  const { news, standings, results, fixtures, stats, leagues, loading } = useHubData();
+  const { news, standings, results, fixtures, stats, leagues, updatedAt, loading } = useHubData();
+  const ultimos = useMemo(() => [...results].filter((r) => r.date).sort((a, b) => b.date.localeCompare(a.date)), [results]);
   const [filter, setFilter] = useState<'all' | 'live' | 'final' | 'scheduled'>('all');
 
   const nba = standings.NBA || [];
@@ -57,21 +58,23 @@ export function Home() {
       {/* Ticker */}
       <div className="flex flex-wrap items-center justify-between gap-space-sm bg-court-surface px-space-md py-1.5 rounded-lg shadow-sm">
         <div className="flex items-center gap-space-sm min-w-0">
-          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-live-red text-on-surface font-display text-label-match-status uppercase tracking-wider">
-            <span className="w-1.5 h-1.5 rounded-full bg-text-primary animate-pulse" /> LIVE NBA
+          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-court-surface-elevated text-text-primary font-display text-label-match-status uppercase tracking-wider">
+            Último resultado
           </span>
           <p className="text-body-sm text-on-surface-variant truncate m-0">
-            {results[0] ? (
+            {ultimos[0] ? (
               <>
-                <span className="text-text-primary font-medium">{results[0].home} {results[0].hs} - {results[0].as} {results[0].away}</span>
-                {' '}· Último resultado · <span className="text-text-primary font-medium">{results[1] ? `${results[1].home} ${results[1].hs} - ${results[1].as} ${results[1].away}` : 'sin más partidos'}</span>
+                <span className="text-text-primary font-medium">{ultimos[0].home} {ultimos[0].hs} - {ultimos[0].as} {ultimos[0].away}</span>
+                {' '}· {ultimos[0].league} · {fechaCorta(ultimos[0].date)}
               </>
             ) : 'Cargando resultados…'}
           </p>
         </div>
-        <span className="font-mono text-data-mono text-secondary flex items-center gap-1 shrink-0">
-          <span className="material-symbols-outlined text-[16px]">sync</span> Actualización automática 15s
-        </span>
+        {updatedAt && (
+          <span className="font-mono text-data-mono text-secondary flex items-center gap-1 shrink-0">
+            <span className="material-symbols-outlined text-[16px]">sync</span> Datos de {new Date(updatedAt).toLocaleString('es-ES', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+          </span>
+        )}
       </div>
 
       <div>

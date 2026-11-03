@@ -851,6 +851,8 @@ def main():
     except Exception as e:
         print(f"[warn] noticias: {e}")
 
+    if changed:
+        write_json("updated.json", {"at": datetime.now(timezone.utc).isoformat(timespec="minutes")})
     stamp = datetime.now().strftime("%Y-%m-%d %H:%M")
     print(f"[{stamp}] " + ("Actualizado: " + " · ".join(changed) if changed else "Sin cambios; se conserva lo anterior."))
 

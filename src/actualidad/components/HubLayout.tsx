@@ -126,7 +126,7 @@ export function HubLayout({ children }: { children: ReactNode }) {
                   COPERO NBA
                 </span>
                 <span className="font-display text-label-table-header text-secondary tracking-widest uppercase">
-                  ANILLERO LIVE HUB
+                  ACTUALIDAD DE BALONCESTO
                 </span>
               </div>
             </Link>
