@@ -15,3 +15,13 @@
 - Basketball-Reference: /euro/league/2026.html 404; requiere formato diferente
 - Flashscore / Sofascore: 403/429 (WAF / bot wall)
 - ACB web API interna: acb.com/next (Next.js, no documentado libremente)
+
+## Sondeos 1-nov-2026 (códigos HTTP reales)
+- realgm.com / eurobasket.com → 403 (Cloudflare)
+- api.basketball-bundesliga.de/api/... → 401 (requiere token)
+- api.legabasket.it → no resuelve DNS; legabasket.it renderiza por JS (sin <table> en HTML)
+- ESPN ligas ita.1 / ger.1 / esp.1 → sin cobertura (0 eventos)
+- basketball-reference.com/euro|acb|italian/league/2026.html → 404
+- flashscore / sofascore → 403/429
+- NBA (ESPN), EuroLeague (api-live v2), B.League (bleague.jp) → OK y ya integrados
+- Apify sian.agency/basketball-api-scraper → OK (ACB completo; BBL/LBA posibles por ~0,35 $/liga)
