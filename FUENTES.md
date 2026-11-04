@@ -48,9 +48,15 @@ Fuentes oficiales comprobadas y **descartadas**:
 - **Fuente usada:** **API-Basketball** (`v1.basketball.api-sports.io`), liga `97`, plan gratuito.
 - **Términos revisados:** api-sports.io permite uso del plan gratuito con atribución y límite de peticiones.
 - **Límites:** **100 peticiones/día** en el plan gratuito. Consumo previsto: 2 peticiones por refresco (calendario + clasificación) → hasta 50 refrescos/día, muy por encima de lo necesario.
-- **Clave:** obligatoria, gratuita en <https://dashboard.api-sports.io>. Se guarda en `~/.hermes/apisports.env` con `chmod 600`; nunca en el repositorio.
-- **Estado:** adaptador escrito (`adapters/bsl_apisports.py`). **Sin clave no se puede validar**; hasta entonces `out/bsl_*.json` no se generan y el resto de ligas siguen funcionando.
-- **Riesgo:** bajo; el plan gratuito cubre de sobra una liga con 2 llamadas por refresco.
+- **Clave:** obligatoria, gratuita en <https://dashboard.api-sports.io>. Guardada en `~/.hermes/apisports.env` con `chmod 600`; nunca en el repositorio.
+- **Comprobado el 4/11/2026 con la clave real (liga 104 = Super Ligi):**
+  - `GET /status` → plan **Free**, 100 peticiones/día, cuenta de Dario.
+  - `GET /standings?league=104&season=2026-2027` → **bloqueado**: `"Free plans do not have access to this season, try from 2022 to 2024"`.
+  - `GET /games?league=104&season=2026-2027` → **bloqueado** por el mismo motivo.
+  - `GET /games?date=...` → funciona, pero **sólo devuelve el día actual**; otras fechas salen vacías. Hoy no había partidos de la liga 104.
+- **Conclusión:** el plan gratuito **no puede cubrir la temporada en curso**. Para BSL hace falta el plan **Pro (15 $/mes, 7.500 peticiones/día)**, que desbloquea todas las temporadas y competiciones.
+- **Estado:** adaptador escrito (`adapters/bsl_apisports.py`, liga 104). No genera `out/bsl_*.json` mientras el plan no desbloquee la temporada.
+- **Riesgo:** bajo técnico; el único límite es el plan.
 
 ## 5. GBL — Greek Basketball League (Grecia) · **prioridad máxima**
 

@@ -1,6 +1,27 @@
 {
- "updated": 1793819939,
+ "updated": 1793820345,
  "leagues": [
+  {
+   "key": "nba",
+   "games": 40,
+   "standings": 30,
+   "source": "ESPN (site.api.espn.com)",
+   "error": null
+  },
+  {
+   "key": "acb",
+   "games": 59,
+   "standings": 18,
+   "source": "ACB oficial (acb.com) + Apify para clasificación",
+   "error": null
+  },
+  {
+   "key": "euroleague",
+   "games": 70,
+   "standings": 20,
+   "source": "api-live.euroleague.net (API oficial)",
+   "error": null
+  },
   {
    "key": "gbl",
    "games": 182,
