@@ -55,6 +55,8 @@ function list(items, kind) {
 }
 
 let count = 0;
+fs.rmSync(path.join(OUT, 'liga'), { recursive: true, force: true });
+
 for (const name of names) {
   const slug = slugify(name);
   const rows = standings[name] || [];

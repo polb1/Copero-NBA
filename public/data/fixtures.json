@@ -1,147 +1,10 @@
 [
 {
-"date": "",
-"home": "Levanga Hokkaido",
-"away": "Akita Northern Happinets",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "Sendai 89ers",
-"away": "Alvark Tokyo",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "Chiba Jets",
-"away": "Chiba Jets",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "SeaHorses Mikawa",
-"away": "Gunma Crane Thunders",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "Shiga Lakes",
-"away": "Kawasaki Brave Thunders",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "Hiroshima Dragonflies",
-"away": "Nagasaki Velca",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "Levanga Hokkaido",
-"away": "Akita Northern Happinets",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "Sendai 89ers",
-"away": "Alvark Tokyo",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "Chiba Jets",
-"away": "Chiba Jets",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "SeaHorses Mikawa",
-"away": "Gunma Crane Thunders",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "Shiga Lakes",
-"away": "Kawasaki Brave Thunders",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "Hiroshima Dragonflies",
-"away": "Nagasaki Velca",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "Levanga Hokkaido",
-"away": "Akita Northern Happinets",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "Sendai 89ers",
-"away": "Alvark Tokyo",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "Chiba Jets",
-"away": "Chiba Jets",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "SeaHorses Mikawa",
-"away": "Gunma Crane Thunders",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "Shiga Lakes",
-"away": "Kawasaki Brave Thunders",
-"league": "B.League",
-"time": "",
-"event": ""
-},
-{
-"date": "",
-"home": "Hiroshima Dragonflies",
-"away": "Nagasaki Velca",
-"league": "B.League",
-"time": "",
-"event": ""
+"home": "Mykonos",
+"away": "Promitheas Patras",
+"league": "Greek Basket League",
+"date": "2026-09-17",
+"time": null
 },
 {
 "date": "2026-11-04",
@@ -149,238 +12,6 @@
 "home": "Real Madrid",
 "away": "Panathinaikos AKTOR Athens",
 "event": "Jornada 10",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-05",
-"time": "",
-"home": "Armani Olimpia Milan",
-"away": "Valencia Basket",
-"event": "Jornada 10",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-05",
-"time": "",
-"home": "LDLC ASVEL Villeurbanne",
-"away": "FC Bayern Munich",
-"event": "Jornada 10",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-05",
-"time": "",
-"home": "Hapoel IBI Tel Aviv",
-"away": "FC Barcelona",
-"event": "Jornada 10",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-05",
-"time": "",
-"home": "Fenerbahce Tarfin Istanbul",
-"away": "Kosner Baskonia Vitoria-Gasteiz",
-"event": "Jornada 10",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-05",
-"time": "",
-"home": "Anadolu Efes Istanbul",
-"away": "Paris Basketball",
-"event": "Jornada 10",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-06",
-"time": "",
-"home": "Partizan Mozzart Bet Belgrade",
-"away": "Maccabi Rapyd Tel Aviv",
-"event": "Jornada 10",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-06",
-"time": "",
-"home": "Virtus Bologna",
-"away": "Dubai Basketball",
-"event": "Jornada 10",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-06",
-"time": "",
-"home": "Olympiacos Piraeus",
-"away": "Crvena Zvezda Meridianbet Belgrade",
-"event": "Jornada 10",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-06",
-"time": "",
-"home": "Besiktas Istanbul",
-"away": "Zalgiris Kaunas",
-"event": "Jornada 10",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-11",
-"time": "",
-"home": "Partizan Mozzart Bet Belgrade",
-"away": "Kosner Baskonia Vitoria-Gasteiz",
-"event": "Jornada 11",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-11",
-"time": "",
-"home": "Paris Basketball",
-"away": "Fenerbahce Tarfin Istanbul",
-"event": "Jornada 11",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-12",
-"time": "",
-"home": "Real Madrid",
-"away": "Crvena Zvezda Meridianbet Belgrade",
-"event": "Jornada 11",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-12",
-"time": "",
-"home": "Valencia Basket",
-"away": "FC Bayern Munich",
-"event": "Jornada 11",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-12",
-"time": "",
-"home": "Armani Olimpia Milan",
-"away": "Zalgiris Kaunas",
-"event": "Jornada 11",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-12",
-"time": "",
-"home": "Olympiacos Piraeus",
-"away": "Dubai Basketball",
-"event": "Jornada 11",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-12",
-"time": "",
-"home": "Maccabi Rapyd Tel Aviv",
-"away": "Hapoel IBI Tel Aviv",
-"event": "Jornada 11",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-13",
-"time": "",
-"home": "LDLC ASVEL Villeurbanne",
-"away": "Besiktas Istanbul",
-"event": "Jornada 11",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-13",
-"time": "",
-"home": "Panathinaikos AKTOR Athens",
-"away": "FC Barcelona",
-"event": "Jornada 11",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-13",
-"time": "",
-"home": "Anadolu Efes Istanbul",
-"away": "Virtus Bologna",
-"event": "Jornada 11",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-17",
-"time": "",
-"home": "Virtus Bologna",
-"away": "Panathinaikos AKTOR Athens",
-"event": "Jornada 12",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-17",
-"time": "",
-"home": "Partizan Mozzart Bet Belgrade",
-"away": "Valencia Basket",
-"event": "Jornada 12",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-17",
-"time": "",
-"home": "FC Barcelona",
-"away": "Paris Basketball",
-"event": "Jornada 12",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-17",
-"time": "",
-"home": "Armani Olimpia Milan",
-"away": "Crvena Zvezda Meridianbet Belgrade",
-"event": "Jornada 12",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-17",
-"time": "",
-"home": "Kosner Baskonia Vitoria-Gasteiz",
-"away": "Hapoel IBI Tel Aviv",
-"event": "Jornada 12",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-17",
-"time": "",
-"home": "Fenerbahce Tarfin Istanbul",
-"away": "LDLC ASVEL Villeurbanne",
-"event": "Jornada 12",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-17",
-"time": "",
-"home": "Zalgiris Kaunas",
-"away": "FC Bayern Munich",
-"event": "Jornada 12",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-17",
-"time": "",
-"home": "Maccabi Rapyd Tel Aviv",
-"away": "Olympiacos Piraeus",
-"event": "Jornada 12",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-17",
-"time": "",
-"home": "Dubai Basketball",
-"away": "Anadolu Efes Istanbul",
-"event": "Jornada 12",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-18",
-"time": "",
-"home": "Besiktas Istanbul",
-"away": "Real Madrid",
-"event": "Jornada 12",
 "league": "EuroLeague"
 },
 {
@@ -497,6 +128,46 @@
 },
 {
 "date": "2026-11-05",
+"time": "",
+"home": "Armani Olimpia Milan",
+"away": "Valencia Basket",
+"event": "Jornada 10",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-05",
+"time": "",
+"home": "LDLC ASVEL Villeurbanne",
+"away": "FC Bayern Munich",
+"event": "Jornada 10",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-05",
+"time": "",
+"home": "Hapoel IBI Tel Aviv",
+"away": "FC Barcelona",
+"event": "Jornada 10",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-05",
+"time": "",
+"home": "Fenerbahce Tarfin Istanbul",
+"away": "Kosner Baskonia Vitoria-Gasteiz",
+"event": "Jornada 10",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-05",
+"time": "",
+"home": "Anadolu Efes Istanbul",
+"away": "Paris Basketball",
+"event": "Jornada 10",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-05",
 "time": "03:00",
 "home": "Phoenix Suns",
 "away": "Orlando Magic",
@@ -510,6 +181,38 @@
 "away": "Miami Heat",
 "event": "",
 "league": "NBA"
+},
+{
+"date": "2026-11-06",
+"time": "",
+"home": "Partizan Mozzart Bet Belgrade",
+"away": "Maccabi Rapyd Tel Aviv",
+"event": "Jornada 10",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-06",
+"time": "",
+"home": "Virtus Bologna",
+"away": "Dubai Basketball",
+"event": "Jornada 10",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-06",
+"time": "",
+"home": "Olympiacos Piraeus",
+"away": "Crvena Zvezda Meridianbet Belgrade",
+"event": "Jornada 10",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-06",
+"time": "",
+"home": "Besiktas Istanbul",
+"away": "Zalgiris Kaunas",
+"event": "Jornada 10",
+"league": "EuroLeague"
 },
 {
 "date": "2026-11-06",
@@ -608,6 +311,41 @@
 "event": "Jornada 7"
 },
 {
+"home": "Doxa Lefkadas",
+"away": "Aris",
+"league": "Greek Basket League",
+"date": "2026-11-07",
+"time": null
+},
+{
+"home": "Kolossos",
+"away": "Peristeri",
+"league": "Greek Basket League",
+"date": "2026-11-07",
+"time": null
+},
+{
+"home": "Iraklis",
+"away": "Mykonos",
+"league": "Greek Basket League",
+"date": "2026-11-07",
+"time": null
+},
+{
+"home": "Promitheas Patras",
+"away": "Karditsa",
+"league": "Greek Basket League",
+"date": "2026-11-07",
+"time": null
+},
+{
+"home": "PAOK",
+"away": "VIKOS ΦALCONS",
+"league": "Greek Basket League",
+"date": "2026-11-07",
+"time": null
+},
+{
 "date": "2026-11-08",
 "home": "Barça Basket",
 "away": "Río Breogán",
@@ -656,6 +394,100 @@
 "event": "Jornada 7"
 },
 {
+"home": "AEK",
+"away": "Panathinaikos",
+"league": "Greek Basket League",
+"date": "2026-11-08",
+"time": null
+},
+{
+"home": "Maroussi",
+"away": "Olympiacos",
+"league": "Greek Basket League",
+"date": "2026-11-08",
+"time": null
+},
+{
+"date": "2026-11-11",
+"time": "",
+"home": "Partizan Mozzart Bet Belgrade",
+"away": "Kosner Baskonia Vitoria-Gasteiz",
+"event": "Jornada 11",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-11",
+"time": "",
+"home": "Paris Basketball",
+"away": "Fenerbahce Tarfin Istanbul",
+"event": "Jornada 11",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-12",
+"time": "",
+"home": "Real Madrid",
+"away": "Crvena Zvezda Meridianbet Belgrade",
+"event": "Jornada 11",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-12",
+"time": "",
+"home": "Valencia Basket",
+"away": "FC Bayern Munich",
+"event": "Jornada 11",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-12",
+"time": "",
+"home": "Armani Olimpia Milan",
+"away": "Zalgiris Kaunas",
+"event": "Jornada 11",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-12",
+"time": "",
+"home": "Olympiacos Piraeus",
+"away": "Dubai Basketball",
+"event": "Jornada 11",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-12",
+"time": "",
+"home": "Maccabi Rapyd Tel Aviv",
+"away": "Hapoel IBI Tel Aviv",
+"event": "Jornada 11",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-13",
+"time": "",
+"home": "LDLC ASVEL Villeurbanne",
+"away": "Besiktas Istanbul",
+"event": "Jornada 11",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-13",
+"time": "",
+"home": "Panathinaikos AKTOR Athens",
+"away": "FC Barcelona",
+"event": "Jornada 11",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-13",
+"time": "",
+"home": "Anadolu Efes Istanbul",
+"away": "Virtus Bologna",
+"event": "Jornada 11",
+"league": "EuroLeague"
+},
+{
 "date": "2026-11-14",
 "home": "Río Breogán",
 "away": "Hereda San Pablo Burgos",
@@ -678,6 +510,27 @@
 "league": "Liga ACB",
 "time": "21:00",
 "event": "Jornada 8"
+},
+{
+"home": "AEK",
+"away": "Doxa Lefkadas",
+"league": "Greek Basket League",
+"date": "2026-11-14",
+"time": null
+},
+{
+"home": "Karditsa",
+"away": "PAOK",
+"league": "Greek Basket League",
+"date": "2026-11-14",
+"time": null
+},
+{
+"home": "Promitheas Patras",
+"away": "Iraklis",
+"league": "Greek Basket League",
+"date": "2026-11-14",
+"time": null
 },
 {
 "date": "2026-11-15",
@@ -728,6 +581,114 @@
 "event": "Jornada 8"
 },
 {
+"home": "Panathinaikos",
+"away": "Kolossos",
+"league": "Greek Basket League",
+"date": "2026-11-15",
+"time": null
+},
+{
+"home": "Peristeri",
+"away": "Mykonos",
+"league": "Greek Basket League",
+"date": "2026-11-15",
+"time": null
+},
+{
+"home": "VIKOS ΦALCONS",
+"away": "Maroussi",
+"league": "Greek Basket League",
+"date": "2026-11-15",
+"time": null
+},
+{
+"home": "Aris",
+"away": "Olympiacos",
+"league": "Greek Basket League",
+"date": "2026-11-15",
+"time": null
+},
+{
+"date": "2026-11-17",
+"time": "",
+"home": "Virtus Bologna",
+"away": "Panathinaikos AKTOR Athens",
+"event": "Jornada 12",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-17",
+"time": "",
+"home": "Partizan Mozzart Bet Belgrade",
+"away": "Valencia Basket",
+"event": "Jornada 12",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-17",
+"time": "",
+"home": "FC Barcelona",
+"away": "Paris Basketball",
+"event": "Jornada 12",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-17",
+"time": "",
+"home": "Armani Olimpia Milan",
+"away": "Crvena Zvezda Meridianbet Belgrade",
+"event": "Jornada 12",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-17",
+"time": "",
+"home": "Kosner Baskonia Vitoria-Gasteiz",
+"away": "Hapoel IBI Tel Aviv",
+"event": "Jornada 12",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-17",
+"time": "",
+"home": "Fenerbahce Tarfin Istanbul",
+"away": "LDLC ASVEL Villeurbanne",
+"event": "Jornada 12",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-17",
+"time": "",
+"home": "Zalgiris Kaunas",
+"away": "FC Bayern Munich",
+"event": "Jornada 12",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-17",
+"time": "",
+"home": "Maccabi Rapyd Tel Aviv",
+"away": "Olympiacos Piraeus",
+"event": "Jornada 12",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-17",
+"time": "",
+"home": "Dubai Basketball",
+"away": "Anadolu Efes Istanbul",
+"event": "Jornada 12",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-18",
+"time": "",
+"home": "Besiktas Istanbul",
+"away": "Real Madrid",
+"event": "Jornada 12",
+"league": "EuroLeague"
+},
+{
 "date": "2026-11-21",
 "home": "Hereda San Pablo Burgos",
 "away": "Unicaja",
@@ -750,6 +711,41 @@
 "league": "Liga ACB",
 "time": "21:00",
 "event": "Jornada 9"
+},
+{
+"home": "Iraklis",
+"away": "AEK",
+"league": "Greek Basket League",
+"date": "2026-11-21",
+"time": null
+},
+{
+"home": "Kolossos",
+"away": "Promitheas Patras",
+"league": "Greek Basket League",
+"date": "2026-11-21",
+"time": null
+},
+{
+"home": "Doxa Lefkadas",
+"away": "Peristeri",
+"league": "Greek Basket League",
+"date": "2026-11-21",
+"time": null
+},
+{
+"home": "PAOK",
+"away": "Aris",
+"league": "Greek Basket League",
+"date": "2026-11-21",
+"time": null
+},
+{
+"home": "Panathinaikos",
+"away": "Maroussi",
+"league": "Greek Basket League",
+"date": "2026-11-21",
+"time": null
 },
 {
 "date": "2026-11-22",
@@ -800,6 +796,20 @@
 "event": "Jornada 9"
 },
 {
+"home": "Mykonos",
+"away": "VIKOS ΦALCONS",
+"league": "Greek Basket League",
+"date": "2026-11-22",
+"time": null
+},
+{
+"home": "Karditsa",
+"away": "Olympiacos",
+"league": "Greek Basket League",
+"date": "2026-11-22",
+"time": null
+},
+{
 "date": "2026-12-05",
 "home": "Força Lleida CE",
 "away": "La Laguna Tenerife",
@@ -816,51 +826,248 @@
 "event": "Jornada 10"
 },
 {
-"date": "2026-11-07",
-"time": "19:00",
-"home": "Pallacanestro Reggiana",
-"away": "Reyer Venezia Mestre",
-"event": "PalaBigi",
-"league": "Lega Basket Serie A"
+"home": "PAOK",
+"away": "Promitheas Patras",
+"league": "Greek Basket League",
+"date": "2026-12-05",
+"time": null
 },
 {
-"date": "2026-11-06",
-"time": "19:00",
-"home": "Alba Berlin",
-"away": "Phoenix Hagen",
-"event": "Uber Arena",
-"league": "Basketball Bundesliga"
+"home": "AEK",
+"away": "Kolossos",
+"league": "Greek Basket League",
+"date": "2026-12-05",
+"time": null
 },
 {
-"date": "2026-11-06",
-"time": "19:00",
-"home": "Boulazac Basket Dordogne",
-"away": "Gravelines-Dunkerque",
-"event": "",
-"league": "LNB Élite"
+"home": "Peristeri",
+"away": "Karditsa",
+"league": "Greek Basket League",
+"date": "2026-12-05",
+"time": null
 },
 {
-"date": "2026-11-07",
-"time": "13:00",
-"home": "Doxa Lefkadas BC",
-"away": "Aris BC",
-"event": "",
-"league": "Greek Basket League"
+"home": "Maroussi",
+"away": "Iraklis",
+"league": "Greek Basket League",
+"date": "2026-12-05",
+"time": null
 },
 {
-"date": "2026-11-06",
-"time": "11:00",
-"home": "Hapoel Holon",
-"away": "Hapoel Galil Elyon",
-"event": "",
-"league": "Ligat ha'Al"
+"home": "Aris",
+"away": "VIKOS ΦALCONS",
+"league": "Greek Basket League",
+"date": "2026-12-05",
+"time": null
 },
 {
-"date": "2026-11-05",
-"time": "08:30",
-"home": "Cairns Taipans",
-"away": "Illawarra Hawks",
-"event": "Cairns Convention Centre",
-"league": "NBL Australia"
+"home": "Mykonos",
+"away": "Panathinaikos",
+"league": "Greek Basket League",
+"date": "2026-12-06",
+"time": null
+},
+{
+"home": "Doxa Lefkadas",
+"away": "Olympiacos",
+"league": "Greek Basket League",
+"date": "2026-12-06",
+"time": null
+},
+{
+"home": "Kolossos",
+"away": "Aris",
+"league": "Greek Basket League",
+"date": "2026-12-12",
+"time": null
+},
+{
+"home": "Promitheas Patras",
+"away": "Mykonos",
+"league": "Greek Basket League",
+"date": "2026-12-12",
+"time": null
+},
+{
+"home": "Karditsa",
+"away": "Maroussi",
+"league": "Greek Basket League",
+"date": "2026-12-12",
+"time": null
+},
+{
+"home": "Peristeri",
+"away": "AEK",
+"league": "Greek Basket League",
+"date": "2026-12-12",
+"time": null
+},
+{
+"home": "Olympiacos",
+"away": "PAOK",
+"league": "Greek Basket League",
+"date": "2026-12-13",
+"time": null
+},
+{
+"home": "Panathinaikos",
+"away": "Iraklis",
+"league": "Greek Basket League",
+"date": "2026-12-13",
+"time": null
+},
+{
+"home": "VIKOS ΦALCONS",
+"away": "Doxa Lefkadas",
+"league": "Greek Basket League",
+"date": "2026-12-13",
+"time": null
+},
+{
+"home": "Aris",
+"away": "Promitheas Patras",
+"league": "Greek Basket League",
+"date": "2026-12-19",
+"time": null
+},
+{
+"home": "Mykonos",
+"away": "Karditsa",
+"league": "Greek Basket League",
+"date": "2026-12-19",
+"time": null
+},
+{
+"home": "VIKOS ΦALCONS",
+"away": "Peristeri",
+"league": "Greek Basket League",
+"date": "2026-12-19",
+"time": null
+},
+{
+"home": "Maroussi",
+"away": "PAOK",
+"league": "Greek Basket League",
+"date": "2026-12-19",
+"time": null
+},
+{
+"home": "Iraklis",
+"away": "Kolossos",
+"league": "Greek Basket League",
+"date": "2026-12-19",
+"time": null
+},
+{
+"home": "AEK",
+"away": "Olympiacos",
+"league": "Greek Basket League",
+"date": "2026-12-20",
+"time": null
+},
+{
+"home": "Panathinaikos",
+"away": "Doxa Lefkadas",
+"league": "Greek Basket League",
+"date": "2026-12-20",
+"time": null
+},
+{
+"home": "Olympiacos",
+"away": "Mykonos",
+"league": "Greek Basket League",
+"date": "2026-12-27",
+"time": null
+},
+{
+"home": "Peristeri",
+"away": "Aris",
+"league": "Greek Basket League",
+"date": "2026-12-27",
+"time": null
+},
+{
+"home": "Maroussi",
+"away": "Kolossos",
+"league": "Greek Basket League",
+"date": "2026-12-27",
+"time": null
+},
+{
+"home": "Karditsa",
+"away": "Doxa Lefkadas",
+"league": "Greek Basket League",
+"date": "2026-12-27",
+"time": null
+},
+{
+"home": "Iraklis",
+"away": "VIKOS ΦALCONS",
+"league": "Greek Basket League",
+"date": "2026-12-27",
+"time": null
+},
+{
+"home": "PAOK",
+"away": "Panathinaikos",
+"league": "Greek Basket League",
+"date": "2026-12-27",
+"time": null
+},
+{
+"home": "Promitheas Patras",
+"away": "AEK",
+"league": "Greek Basket League",
+"date": "2026-12-27",
+"time": null
+},
+{
+"home": "PAOK",
+"away": "Peristeri",
+"league": "Greek Basket League",
+"date": "2027-01-03",
+"time": null
+},
+{
+"home": "AEK",
+"away": "Karditsa",
+"league": "Greek Basket League",
+"date": "2027-01-03",
+"time": null
+},
+{
+"home": "Kolossos",
+"away": "Mykonos",
+"league": "Greek Basket League",
+"date": "2027-01-03",
+"time": null
+},
+{
+"home": "VIKOS ΦALCONS",
+"away": "Promitheas Patras",
+"league": "Greek Basket League",
+"date": "2027-01-03",
+"time": null
+},
+{
+"home": "Doxa Lefkadas",
+"away": "Maroussi",
+"league": "Greek Basket League",
+"date": "2027-01-03",
+"time": null
+},
+{
+"home": "Aris",
+"away": "Iraklis",
+"league": "Greek Basket League",
+"date": "2027-01-03",
+"time": null
+},
+{
+"home": "Panathinaikos",
+"away": "Olympiacos",
+"league": "Greek Basket League",
+"date": "2027-01-03",
+"time": null
 }
 ]

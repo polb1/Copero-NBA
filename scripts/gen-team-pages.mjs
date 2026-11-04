@@ -30,6 +30,8 @@ delete standings.EU;
 
 // índice equipo -> liga
 const teamLeague = new Map();
+fs.rmSync(path.join(OUT, 'equipo'), { recursive: true, force: true });
+
 for (const [liga, rows] of Object.entries(standings)) {
   for (const r of rows || []) if (r.team) teamLeague.set(r.team, liga);
 }

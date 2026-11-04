@@ -1,0 +1,248 @@
+{
+ "league": "nba",
+ "season": "2026-2027",
+ "source": "ESPN (site.api.espn.com)",
+ "updated": 1793818766,
+ "standings": [
+  {
+   "rank": 1,
+   "team": "Philadelphia 76ers",
+   "played": null,
+   "wins": 7,
+   "losses": 1,
+   "points": null
+  },
+  {
+   "rank": 2,
+   "team": "Houston Rockets",
+   "played": null,
+   "wins": 7,
+   "losses": 1,
+   "points": null
+  },
+  {
+   "rank": 3,
+   "team": "Detroit Pistons",
+   "played": null,
+   "wins": 6,
+   "losses": 1,
+   "points": null
+  },
+  {
+   "rank": 4,
+   "team": "Memphis Grizzlies",
+   "played": null,
+   "wins": 6,
+   "losses": 1,
+   "points": null
+  },
+  {
+   "rank": 5,
+   "team": "Portland Trail Blazers",
+   "played": null,
+   "wins": 5,
+   "losses": 1,
+   "points": null
+  },
+  {
+   "rank": 6,
+   "team": "Los Angeles Lakers",
+   "played": null,
+   "wins": 6,
+   "losses": 2,
+   "points": null
+  },
+  {
+   "rank": 7,
+   "team": "Boston Celtics",
+   "played": null,
+   "wins": 5,
+   "losses": 2,
+   "points": null
+  },
+  {
+   "rank": 8,
+   "team": "Oklahoma City Thunder",
+   "played": null,
+   "wins": 5,
+   "losses": 2,
+   "points": null
+  },
+  {
+   "rank": 9,
+   "team": "San Antonio Spurs",
+   "played": null,
+   "wins": 5,
+   "losses": 2,
+   "points": null
+  },
+  {
+   "rank": 10,
+   "team": "Golden State Warriors",
+   "played": null,
+   "wins": 5,
+   "losses": 3,
+   "points": null
+  },
+  {
+   "rank": 11,
+   "team": "Minnesota Timberwolves",
+   "played": null,
+   "wins": 5,
+   "losses": 3,
+   "points": null
+  },
+  {
+   "rank": 12,
+   "team": "Washington Wizards",
+   "played": null,
+   "wins": 4,
+   "losses": 3,
+   "points": null
+  },
+  {
+   "rank": 13,
+   "team": "Toronto Raptors",
+   "played": null,
+   "wins": 4,
+   "losses": 3,
+   "points": null
+  },
+  {
+   "rank": 14,
+   "team": "Cleveland Cavaliers",
+   "played": null,
+   "wins": 4,
+   "losses": 3,
+   "points": null
+  },
+  {
+   "rank": 15,
+   "team": "Dallas Mavericks",
+   "played": null,
+   "wins": 4,
+   "losses": 3,
+   "points": null
+  },
+  {
+   "rank": 16,
+   "team": "Atlanta Hawks",
+   "played": null,
+   "wins": 4,
+   "losses": 4,
+   "points": null
+  },
+  {
+   "rank": 17,
+   "team": "Denver Nuggets",
+   "played": null,
+   "wins": 3,
+   "losses": 3,
+   "points": null
+  },
+  {
+   "rank": 18,
+   "team": "New York Knicks",
+   "played": null,
+   "wins": 3,
+   "losses": 4,
+   "points": null
+  },
+  {
+   "rank": 19,
+   "team": "New Orleans Pelicans",
+   "played": null,
+   "wins": 3,
+   "losses": 4,
+   "points": null
+  },
+  {
+   "rank": 20,
+   "team": "Charlotte Hornets",
+   "played": null,
+   "wins": 3,
+   "losses": 5,
+   "points": null
+  },
+  {
+   "rank": 21,
+   "team": "Miami Heat",
+   "played": null,
+   "wins": 2,
+   "losses": 5,
+   "points": null
+  },
+  {
+   "rank": 22,
+   "team": "Orlando Magic",
+   "played": null,
+   "wins": 2,
+   "losses": 5,
+   "points": null
+  },
+  {
+   "rank": 23,
+   "team": "Indiana Pacers",
+   "played": null,
+   "wins": 2,
+   "losses": 6,
+   "points": null
+  },
+  {
+   "rank": 24,
+   "team": "Phoenix Suns",
+   "played": null,
+   "wins": 1,
+   "losses": 4,
+   "points": null
+  },
+  {
+   "rank": 25,
+   "team": "Chicago Bulls",
+   "played": null,
+   "wins": 1,
+   "losses": 6,
+   "points": null
+  },
+  {
+   "rank": 26,
+   "team": "LA Clippers",
+   "played": null,
+   "wins": 1,
+   "losses": 6,
+   "points": null
+  },
+  {
+   "rank": 27,
+   "team": "Milwaukee Bucks",
+   "played": null,
+   "wins": 1,
+   "losses": 6,
+   "points": null
+  },
+  {
+   "rank": 28,
+   "team": "Utah Jazz",
+   "played": null,
+   "wins": 1,
+   "losses": 6,
+   "points": null
+  },
+  {
+   "rank": 29,
+   "team": "Brooklyn Nets",
+   "played": null,
+   "wins": 1,
+   "losses": 6,
+   "points": null
+  },
+  {
+   "rank": 30,
+   "team": "Sacramento Kings",
+   "played": null,
+   "wins": 1,
+   "losses": 6,
+   "points": null
+  }
+ ]
+}
