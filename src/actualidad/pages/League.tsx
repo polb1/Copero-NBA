@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Card, MatchRow, SectionHeader, StandingsTable, TeamBadge } from '../components/ui';
 import { leaguePath, LEAGUE_COUNTRY } from '../leagues';
@@ -41,6 +41,11 @@ export function LeaguePage() {
     const all = [...new Set([...Object.keys(standings), ...Object.keys(leagueMap)])];
     return all.find((n) => leaguePath(n) === `/liga/${league}`) || null;
   }, [league, standings, leagueMap]);
+
+  // Same title as the static page; RouteSeo only knows the generic one.
+  useEffect(() => {
+    if (name) document.title = `${name}: clasificación y resultados | Anillero`;
+  }, [name]);
 
   const rows = (name ? standings[name] || standings[name === 'EuroLeague' ? 'EU' : name] : []) || [];
 

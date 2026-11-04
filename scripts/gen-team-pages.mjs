@@ -25,6 +25,9 @@ const fmtDate = (iso) => {
   return m ? `${Number(m[3])} ${MESES[Number(m[2]) - 1]}` : (iso || '');
 };
 
+// "EU" es un alias interno de EuroLeague en standings.json: sin él, los clubes quedan en su liga nacional.
+delete standings.EU;
+
 // índice equipo -> liga
 const teamLeague = new Map();
 for (const [liga, rows] of Object.entries(standings)) {
@@ -49,7 +52,8 @@ const byTeam = (list, name) => list.filter((g) => g.home === name || g.away === 
 
 const shell = fs.readFileSync(path.join(OUT, 'index.html'), 'utf8');
 const css = (shell.match(/<link[^>]+rel="stylesheet"[^>]*>/g) || []).join('\n    ');
-const scripts = (shell.match(/<script[^>]+type="module"[^>]*><\/script>/g) || []).join('\n    ');
+// Standalone page: only the analytics beacon, never the app (React would mount over #root and show its 404).
+const scripts = (shell.match(/<script[^>]+cloudflareinsights[^>]*><\/script>/g) || []).join('\n    ');
 const fonts = (shell.match(/<link[^>]+fonts\.googleapis[^>]*>/g) || []).join('\n    ');
 
 let count = 0;
@@ -58,9 +62,9 @@ const urls = [];
 for (const [team, liga] of [...teamLeague.entries()].sort()) {
   const res = byTeam(results, team);
   const fix = byTeam(fixtures, team);
-  if (!res.length && !fix.length) continue; // sin datos: no generamos página vacía
-
   const row = (standings[liga] || []).find((r) => r.team === team);
+  // Sin datos no hay página, salvo si sale en una clasificación (la tabla del hub enlaza a todos).
+  if (!res.length && !fix.length && !row) continue;
   const slug = slugify(team);
   const form = res.slice(-5).map((g) => {
     const won = (g.home === team ? g.hs > g.as : g.as > g.hs);

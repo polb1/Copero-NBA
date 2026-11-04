@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 // Game screens are private per-player states, not content for search results.
-const PRIVATE_ROUTE = /^\/(start|play|careers)(\/|$)/;
+const PRIVATE_ROUTE = /^\/(start|play|careers|partido)(\/|$)/;
 
 const HUB_TITLES: Record<string, string> = {
   '/noticias': 'Noticias de baloncesto: NBA, EuroLeague y Liga ACB | Anillero · Modo Carrera',

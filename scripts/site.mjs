@@ -34,15 +34,15 @@ export function renderHtml(html, site) {
 }
 
 /** Pages of the app that exist as real URLs. Everything else answers 404 (dist/404.html). */
-export const APP_ROUTES = ['start', 'play', 'careers', 'noticias', 'resultados', 'calendario', 'estadisticas'];
-const PRIVATE_ROUTES = ['start', 'play', 'careers'];
+export const APP_ROUTES = ['start', 'play', 'careers', 'noticias', 'resultados', 'calendario', 'estadisticas', 'partido'];
+const PRIVATE_ROUTES = ['start', 'play', 'careers', 'partido'];
 
 /** Own title, description and H1 for each hub page, so crawlers that do not run JavaScript see them too. */
 const HUB_META = {
-  noticias: ['Noticias de baloncesto: NBA, EuroLeague y Liga ACB | NBA Legacy', 'Titulares de baloncesto de la NBA, la EuroLeague y la Liga ACB, con enlace a la fuente original.', 'Noticias de baloncesto'],
-  resultados: ['Resultados de baloncesto en directo | NBA Legacy', 'Últimos resultados de la NBA, la EuroLeague, la Liga ACB y otras ligas. Datos no oficiales.', 'Resultados de baloncesto'],
-  calendario: ['Calendario de partidos de baloncesto | NBA Legacy', 'Próximos partidos de la NBA, la EuroLeague y la Liga ACB.', 'Calendario de partidos'],
-  estadisticas: ['Estadísticas de baloncesto: líderes NBA y Europa | NBA Legacy', 'Líderes estadísticos de la NBA y de las ligas europeas. Datos no oficiales.', 'Estadísticas de baloncesto'],
+  noticias: ['Noticias de baloncesto: NBA, EuroLeague y Liga ACB | Anillero', 'Titulares de baloncesto de la NBA, la EuroLeague y la Liga ACB, con enlace a la fuente original.', 'Noticias de baloncesto'],
+  resultados: ['Resultados de baloncesto en directo | Anillero', 'Últimos resultados de la NBA, la EuroLeague, la Liga ACB y otras ligas. Datos no oficiales.', 'Resultados de baloncesto'],
+  calendario: ['Calendario de partidos de baloncesto | Anillero', 'Próximos partidos de la NBA, la EuroLeague y la Liga ACB.', 'Calendario de partidos'],
+  estadisticas: ['Estadísticas de baloncesto: líderes NBA y Europa | Anillero', 'Líderes estadísticos de la NBA y de las ligas europeas. Datos no oficiales.', 'Estadísticas de baloncesto'],
 };
 
 function hubMeta(route, leagues) {
@@ -51,7 +51,7 @@ function hubMeta(route, leagues) {
   const slug = route.slice(5);
   // shortcut: without the real name the slug is title-cased ("Liga Acb"); pass the league names to avoid it.
   const name = leagues[slug] ?? slug.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-  return [`${name}: clasificación y resultados | NBA Legacy`, `Clasificación y últimos resultados de ${name}. Datos no oficiales.`, `${name}: clasificación y resultados`];
+  return [`${name}: clasificación y resultados | Anillero`, `Clasificación y últimos resultados de ${name}. Datos no oficiales.`, `${name}: clasificación y resultados`];
 }
 
 /** Static copy of the app shell for one route, with its own canonical (and noindex for game screens). */
@@ -74,7 +74,8 @@ export function routeHtml(html, site, route, leagues = {}) {
 }
 
 /** Old hub URLs now live at the root. */
-export const redirectsFile = () => ['/actualidad / 301', '/clasificaciones / 301', ''].join(String.fromCharCode(10));
+// Match pages only exist in the app: every /partido/<id> is served by the one shell copy (thin pages, so noindex).
+export const redirectsFile = () => ['/actualidad / 301', '/clasificaciones / 301', '/partido/* /partido 200', ''].join(String.fromCharCode(10));
 
 export function robotsTxt(site) {
   // Pre-production stays crawlable on purpose: a Disallow would hide the noindex header from Google.
@@ -125,6 +126,12 @@ Key facts:
 ## Guides
 - [Best free basketball simulator games (2026)](${u}/en/best-basketball-simulators): comparison with Basketball GM, HoopDreams, DRAFTBOUND, My NBA Career Simulator and NBA 2K MyCareer
 - [Mejores simuladores de baloncesto gratis (2026)](${u}/mejores-simuladores-baloncesto): the same comparison in Spanish
+
+## Basketball news and data (Spanish, unofficial)
+- [Basketball hub](${u}/): latest results, standings and news from the NBA, EuroLeague, Liga ACB and more
+- [News](${u}/noticias), [Results](${u}/resultados), [Calendar](${u}/calendario), [Stats](${u}/estadisticas)
+- [NBA champions by season, 1947-2026](${u}/anillos/campeones) and [franchises with the most rings](${u}/anillos/franquicias)
+- League pages at ${u}/liga/<league> and team pages at ${u}/equipo/<team>; the full list is in ${u}/sitemap.xml
 `;
 }
 
