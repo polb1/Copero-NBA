@@ -1,0 +1,3284 @@
+{
+ "league": "gbl",
+ "season": "2026-2027",
+ "source": "esake.gr (ΕΣΑΚΕ, web oficial GBL)",
+ "updated": 1793819939,
+ "games": [
+  {
+   "id": "gbl-47FBE805-tsson-bc",
+   "round": 1,
+   "start_ts": 1791032400,
+   "status": "FT",
+   "home": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": 85
+   },
+   "away": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": 88
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-0AA956E9-llection",
+   "round": 1,
+   "start_ts": 1791036000,
+   "status": "FT",
+   "home": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": 91
+   },
+   "away": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": 75
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-1F83E401-gbl-αεκ",
+   "round": 1,
+   "start_ts": 1791036000,
+   "status": "FT",
+   "home": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": 91
+   },
+   "away": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": 70
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-DAA7CA1B-κος-cola",
+   "round": 1,
+   "start_ts": 1791039600,
+   "status": "FT",
+   "home": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": 88
+   },
+   "away": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": 94
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-A7698911-ιαπωνικη",
+   "round": 1,
+   "start_ts": 1791041400,
+   "status": "FT",
+   "home": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": 74
+   },
+   "away": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": 68
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-FDBBC910-ος-aktor",
+   "round": 1,
+   "start_ts": 1791111600,
+   "status": "FT",
+   "home": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": 103
+   },
+   "away": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": 74
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-4A03748D--ηρακλης",
+   "round": 1,
+   "start_ts": 1791127800,
+   "status": "FT",
+   "home": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": 68
+   },
+   "away": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": 78
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-C519D6ED--betsson",
+   "round": 2,
+   "start_ts": 1791637200,
+   "status": "FT",
+   "home": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": 91
+   },
+   "away": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": 89
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-08A5D3D2--μαρουσι",
+   "round": 2,
+   "start_ts": 1791640800,
+   "status": "FT",
+   "home": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": 79
+   },
+   "away": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": 82
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-28F71477-gbl-παοκ",
+   "round": 2,
+   "start_ts": 1791640800,
+   "status": "FT",
+   "home": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": 86
+   },
+   "away": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": 73
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-0048BBEF-ιαπωνικη",
+   "round": 2,
+   "start_ts": 1791644400,
+   "status": "FT",
+   "home": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": 85
+   },
+   "away": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": 74
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-1C3A75D4-gbl-αρης",
+   "round": 2,
+   "start_ts": 1791646200,
+   "status": "FT",
+   "home": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": 88
+   },
+   "away": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": 58
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-3BB0E9E4-κος-cola",
+   "round": 2,
+   "start_ts": 1791651600,
+   "status": "FT",
+   "home": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": 59
+   },
+   "away": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": 84
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-4930A53C-υμπιακος",
+   "round": 2,
+   "start_ts": 1791716400,
+   "status": "FT",
+   "home": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": 99
+   },
+   "away": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": 83
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-06B91358-gbl-αεκ",
+   "round": 3,
+   "start_ts": 1792242000,
+   "status": "FT",
+   "home": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": 84
+   },
+   "away": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": 79
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-4A05E464-llection",
+   "round": 3,
+   "start_ts": 1792245600,
+   "status": "FT",
+   "home": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": 84
+   },
+   "away": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": 88
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-B6A4C33F--ηρακλης",
+   "round": 3,
+   "start_ts": 1792249200,
+   "status": "FT",
+   "home": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": 71
+   },
+   "away": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": 53
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-C59619E9-ς-elabet",
+   "round": 3,
+   "start_ts": 1792249200,
+   "status": "FT",
+   "home": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": 79
+   },
+   "away": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": 80
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-575F58C3-gbl-αρης",
+   "round": 3,
+   "start_ts": 1792251000,
+   "status": "FT",
+   "home": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": 74
+   },
+   "away": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": 57
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-9BA09DF1-ος-aktor",
+   "round": 3,
+   "start_ts": 1792321200,
+   "status": "FT",
+   "home": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": 95
+   },
+   "away": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": 75
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-6CC281CB--φalcons",
+   "round": 3,
+   "start_ts": 1792321200,
+   "status": "FT",
+   "home": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": 68
+   },
+   "away": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": 79
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-2A098C20-tsson-bc",
+   "round": 4,
+   "start_ts": 1792846800,
+   "status": "FT",
+   "home": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": 72
+   },
+   "away": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": 88
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-D8B7382E-ς-elabet",
+   "round": 4,
+   "start_ts": 1792854000,
+   "status": "FT",
+   "home": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": 94
+   },
+   "away": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": 86
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-8645D767--betsson",
+   "round": 4,
+   "start_ts": 1792855800,
+   "status": "FT",
+   "home": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": 83
+   },
+   "away": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": 81
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-BD2162B8-gbl-παοκ",
+   "round": 4,
+   "start_ts": 1792855800,
+   "status": "FT",
+   "home": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": 65
+   },
+   "away": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": 62
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-A904D6E3-ος-aktor",
+   "round": 4,
+   "start_ts": 1792861200,
+   "status": "FT",
+   "home": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": 78
+   },
+   "away": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": 64
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-8C9531D2-llection",
+   "round": 4,
+   "start_ts": 1792926000,
+   "status": "FT",
+   "home": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": 80
+   },
+   "away": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": 70
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-31F4330D-κος-cola",
+   "round": 4,
+   "start_ts": 1792926000,
+   "status": "FT",
+   "home": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": 45
+   },
+   "away": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": 85
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-F744FDDE--φalcons",
+   "round": 5,
+   "start_ts": 1793451600,
+   "status": "FT",
+   "home": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": 95
+   },
+   "away": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": 84
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-EE1F3C5A-ιαπωνικη",
+   "round": 5,
+   "start_ts": 1793455200,
+   "status": "FT",
+   "home": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": 81
+   },
+   "away": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": 65
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-4A0F9BFB-tsson-bc",
+   "round": 5,
+   "start_ts": 1793455200,
+   "status": "FT",
+   "home": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": 59
+   },
+   "away": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": 73
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-7E63AA3B--μαρουσι",
+   "round": 5,
+   "start_ts": 1793458800,
+   "status": "FT",
+   "home": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": 87
+   },
+   "away": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": 76
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-29CD5AD8--ηρακλης",
+   "round": 5,
+   "start_ts": 1793460600,
+   "status": "FT",
+   "home": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": 53
+   },
+   "away": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": 63
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-290643D4-υμπιακος",
+   "round": 5,
+   "start_ts": 1793530800,
+   "status": "FT",
+   "home": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": 91
+   },
+   "away": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": 62
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-81203867-gbl-αρης",
+   "round": 5,
+   "start_ts": 1793545200,
+   "status": "FT",
+   "home": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": 101
+   },
+   "away": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": 91
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-7E44FE22-ς-elabet",
+   "round": 6,
+   "start_ts": 1794056400,
+   "status": "NS",
+   "home": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-FC90483F-llection",
+   "round": 6,
+   "start_ts": 1794060000,
+   "status": "NS",
+   "home": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-2FCC32F1--ηρακλης",
+   "round": 6,
+   "start_ts": 1794063600,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-35DA2FB8-κος-cola",
+   "round": 6,
+   "start_ts": 1794063600,
+   "status": "NS",
+   "home": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-9B455F5D-gbl-παοκ",
+   "round": 6,
+   "start_ts": 1794065400,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-DF85EF86-gbl-αεκ",
+   "round": 6,
+   "start_ts": 1794135600,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-84DE99E9--μαρουσι",
+   "round": 6,
+   "start_ts": 1794151800,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-51FB1AFE-gbl-αεκ",
+   "round": 7,
+   "start_ts": 1794668400,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-81DA1041-ιαπωνικη",
+   "round": 7,
+   "start_ts": 1794670200,
+   "status": "NS",
+   "home": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-7F2985F0-κος-cola",
+   "round": 7,
+   "start_ts": 1794670200,
+   "status": "NS",
+   "home": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-179E7312-ος-aktor",
+   "round": 7,
+   "start_ts": 1794740400,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-71EE959B--betsson",
+   "round": 7,
+   "start_ts": 1794740400,
+   "status": "NS",
+   "home": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-8DB3ABC7--φalcons",
+   "round": 7,
+   "start_ts": 1794751200,
+   "status": "NS",
+   "home": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-F30A6CCD-gbl-αρης",
+   "round": 7,
+   "start_ts": 1794756600,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-3C7521D5--ηρακλης",
+   "round": 8,
+   "start_ts": 1795266000,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-1439C9D6-llection",
+   "round": 8,
+   "start_ts": 1795269600,
+   "status": "NS",
+   "home": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-BE8E8A17-ς-elabet",
+   "round": 8,
+   "start_ts": 1795273200,
+   "status": "NS",
+   "home": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-95F2FDAA-gbl-παοκ",
+   "round": 8,
+   "start_ts": 1795275000,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-779E922D-ος-aktor",
+   "round": 8,
+   "start_ts": 1795275000,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-6AA68E52-tsson-bc",
+   "round": 8,
+   "start_ts": 1795345200,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-C02F68B7-ιαπωνικη",
+   "round": 8,
+   "start_ts": 1795352400,
+   "status": "NS",
+   "home": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-578190A6-gbl-παοκ",
+   "round": 9,
+   "start_ts": 1796479200,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-D27A4E05-gbl-αεκ",
+   "round": 9,
+   "start_ts": 1796482800,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-13D02223--betsson",
+   "round": 9,
+   "start_ts": 1796482800,
+   "status": "NS",
+   "home": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-6520DCAF--μαρουσι",
+   "round": 9,
+   "start_ts": 1796482800,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-09785B6D-gbl-αρης",
+   "round": 9,
+   "start_ts": 1796484600,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-65757E7F-tsson-bc",
+   "round": 9,
+   "start_ts": 1796562000,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-0AE5B110-ς-elabet",
+   "round": 9,
+   "start_ts": 1796571000,
+   "status": "NS",
+   "home": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-0105F623-llection",
+   "round": 10,
+   "start_ts": 1797084000,
+   "status": "NS",
+   "home": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-E22E9A05-κος-cola",
+   "round": 10,
+   "start_ts": 1797087600,
+   "status": "NS",
+   "home": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-BBF9D651-ιαπωνικη",
+   "round": 10,
+   "start_ts": 1797089400,
+   "status": "NS",
+   "home": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-4917877E--betsson",
+   "round": 10,
+   "start_ts": 1797089400,
+   "status": "NS",
+   "home": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-92DA3A6C-υμπιακος",
+   "round": 10,
+   "start_ts": 1797159600,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-70C1151C-ος-aktor",
+   "round": 10,
+   "start_ts": 1797170400,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-B524306F--φalcons",
+   "round": 10,
+   "start_ts": 1797174000,
+   "status": "NS",
+   "home": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-6233FBAF-gbl-αρης",
+   "round": 11,
+   "start_ts": 1797685200,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-90B23209-tsson-bc",
+   "round": 11,
+   "start_ts": 1797688800,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-616254A3--φalcons",
+   "round": 11,
+   "start_ts": 1797688800,
+   "status": "NS",
+   "home": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-EE5EC285--μαρουσι",
+   "round": 11,
+   "start_ts": 1797692400,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-0AF871B4--ηρακλης",
+   "round": 11,
+   "start_ts": 1797692400,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-910DB48C-gbl-αεκ",
+   "round": 11,
+   "start_ts": 1797764400,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-03F94621-ος-aktor",
+   "round": 11,
+   "start_ts": 1797789600,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-F85A1AE2-υμπιακος",
+   "round": 12,
+   "start_ts": 1798369200,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-65A8A3B3--betsson",
+   "round": 12,
+   "start_ts": 1798369200,
+   "status": "NS",
+   "home": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-C7DF534A--μαρουσι",
+   "round": 12,
+   "start_ts": 1798383600,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-154D801B-ιαπωνικη",
+   "round": 12,
+   "start_ts": 1798383600,
+   "status": "NS",
+   "home": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-470628F8--ηρακλης",
+   "round": 12,
+   "start_ts": 1798383600,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-5E50B000-gbl-παοκ",
+   "round": 12,
+   "start_ts": 1798385400,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-F50CD328-κος-cola",
+   "round": 12,
+   "start_ts": 1798392600,
+   "status": "NS",
+   "home": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-1FFE4341-gbl-παοκ",
+   "round": 13,
+   "start_ts": 1798974000,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-232F1D76-gbl-αεκ",
+   "round": 13,
+   "start_ts": 1798974000,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-143103C6-llection",
+   "round": 13,
+   "start_ts": 1798984800,
+   "status": "NS",
+   "home": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-EA1250C8--φalcons",
+   "round": 13,
+   "start_ts": 1798988400,
+   "status": "NS",
+   "home": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-7AEDEFB9-ς-elabet",
+   "round": 13,
+   "start_ts": 1798988400,
+   "status": "NS",
+   "home": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-7BA0A982-gbl-αρης",
+   "round": 13,
+   "start_ts": 1798990200,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-CD508C6E-ος-aktor",
+   "round": 13,
+   "start_ts": 1799002800,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-AAC7A343-tsson-bc",
+   "round": 14,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-AFD5BB94--betsson",
+   "round": 14,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-32FE4470-gbl-αρης",
+   "round": 14,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-5793E1DD-ς-elabet",
+   "round": 14,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-5883A35D-κος-cola",
+   "round": 14,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-0F45D05C-υμπιακος",
+   "round": 14,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-783DF8AF--μαρουσι",
+   "round": 14,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-89914779--ηρακλης",
+   "round": 15,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-B12E0A46--φalcons",
+   "round": 15,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-473E25A5-gbl-αεκ",
+   "round": 15,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-5F9B59F1-tsson-bc",
+   "round": 15,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-7A997A14-ιαπωνικη",
+   "round": 15,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-93D919AE-ος-aktor",
+   "round": 15,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-AD72AC1C-llection",
+   "round": 15,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-8A9CAE7E--betsson",
+   "round": 16,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-ACD9EF33-ιαπωνικη",
+   "round": 16,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-22A27391-gbl-παοκ",
+   "round": 16,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-69B726CB--φalcons",
+   "round": 16,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-7F76A81A--μαρουσι",
+   "round": 16,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-9F3C0623-ος-aktor",
+   "round": 16,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-E73C3CC0-υμπιακος",
+   "round": 16,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-A2EF0E8B--μαρουσι",
+   "round": 17,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-E7FDE68A-κος-cola",
+   "round": 17,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-53866682-gbl-αεκ",
+   "round": 17,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-5FA84942-ς-elabet",
+   "round": 17,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-7F3505BF-gbl-αρης",
+   "round": 17,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-192C2864--ηρακλης",
+   "round": 17,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-59DACB1A-tsson-bc",
+   "round": 17,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-85FA46CC-gbl-παοκ",
+   "round": 18,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-DA29D664-κος-cola",
+   "round": 18,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-DBE5926A-ιαπωνικη",
+   "round": 18,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-04EFC88A--betsson",
+   "round": 18,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-256BB057-llection",
+   "round": 18,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-8DD816F6-ς-elabet",
+   "round": 18,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-F43A7069-υμπιακος",
+   "round": 18,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-C4064918--ηρακλης",
+   "round": 19,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-FA0588DC--φalcons",
+   "round": 19,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-255DAC91--μαρουσι",
+   "round": 19,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-93537BA7--betsson",
+   "round": 19,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-AD37C0D5-gbl-αρης",
+   "round": 19,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-067EECBE-ς-elabet",
+   "round": 19,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-1819B7A0-υμπιακος",
+   "round": 19,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-81731E01-κος-cola",
+   "round": 20,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-C00A8538-tsson-bc",
+   "round": 20,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-DD256472-gbl-παοκ",
+   "round": 20,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-4AEADDED-gbl-αεκ",
+   "round": 20,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-646FFDC2-llection",
+   "round": 20,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-AC08C424-υμπιακος",
+   "round": 20,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-09187E45-ος-aktor",
+   "round": 20,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-C8292D54-tsson-bc",
+   "round": 21,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-13BD04A5--φalcons",
+   "round": 21,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-19B97B15-ιαπωνικη",
+   "round": 21,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-25B32CEB-gbl-αρης",
+   "round": 21,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-2FD55D90--betsson",
+   "round": 21,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-C8D0AA7B-llection",
+   "round": 21,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-F7FBD888-υμπιακος",
+   "round": 21,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-8C00E116--φalcons",
+   "round": 22,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-B14D5BD2-gbl-αεκ",
+   "round": 22,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-E533275E-ς-elabet",
+   "round": 22,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-64CB8D1B--μαρουσι",
+   "round": 22,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-A929E60B-gbl-παοκ",
+   "round": 22,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-12EC4248--ηρακλης",
+   "round": 22,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-4232F95C-ος-aktor",
+   "round": 22,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-9837F883-llection",
+   "round": 23,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-AB32ED7D--μαρουσι",
+   "round": 23,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-C37DDD37-κος-cola",
+   "round": 23,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-20B111EE-ς-elabet",
+   "round": 23,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-270B01A3-gbl-αρης",
+   "round": 23,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-7D20CE58-gbl-παοκ",
+   "round": 23,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-E8AF2B11-υμπιακος",
+   "round": 23,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-B4C658E5-tsson-bc",
+   "round": 24,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-DC2FB70A--ηρακλης",
+   "round": 24,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-F77FDC44-gbl-αεκ",
+   "round": 24,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-48A3B4E2--φalcons",
+   "round": 24,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-606AEDDB--betsson",
+   "round": 24,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-3872DC1E-ιαπωνικη",
+   "round": 24,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-44C614BC-υμπιακος",
+   "round": 24,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-9462887E-ς-elabet",
+   "round": 25,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-995F1876-κος-cola",
+   "round": 25,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-D4502CD6-llection",
+   "round": 25,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-6EBBAEAF-gbl-αεκ",
+   "round": 25,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-83B697EA-gbl-αρης",
+   "round": 25,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-F46C2903-ος-aktor",
+   "round": 25,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-7DDA1420--betsson",
+   "round": 25,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-3690EC22-tsson-bc",
+   "round": 26,
+   "start_ts": 1789640100,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-08F326C9-gbl-παοκ",
+   "round": 26,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-παοκ",
+    "name": "PAOK",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-κολοσσος-h-br-hotels-br-collection",
+    "name": "Kolossos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-0B8BCB93--μαρουσι",
+   "round": 26,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μαρουσι",
+    "name": "Maroussi",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-δοξα-br-λευκαδας-br-elabet",
+    "name": "Doxa Lefkadas",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-50377A0F--ηρακλης",
+   "round": 26,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ηρακλης",
+    "name": "Iraklis",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-περιστερι-br-betsson",
+    "name": "Peristeri",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-65E1166A-ιαπωνικη",
+   "round": 26,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-καρδιτσα-br-ιαπωνικη",
+    "name": "Karditsa",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αεκ",
+    "name": "AEK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-AC876A4A--φalcons",
+   "round": 26,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-vikos-br-φalcons",
+    "name": "VIKOS ΦALCONS",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-παναθηνα-κος-br-aktor",
+    "name": "Panathinaikos",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-1CD0EBBF-υμπιακος",
+   "round": 26,
+   "start_ts": null,
+   "status": "NS",
+   "home": {
+    "id": "gbl-ολυμπιακος",
+    "name": "Olympiacos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-αρης",
+    "name": "Aris",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  }
+ ]
+}

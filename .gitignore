@@ -7,3 +7,7 @@ dist
 /en/index.html
 /ca/
 .wrangler/
+
+# ingesta: caché y contadores, no el resultado
+out/.cache/
+out/.state.json

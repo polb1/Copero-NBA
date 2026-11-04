@@ -1,0 +1,13 @@
+{
+ "updated": 1793819939,
+ "leagues": [
+  {
+   "key": "gbl",
+   "games": 182,
+   "standings": 14,
+   "source": "esake.gr (ΕΣΑΚΕ, web oficial GBL)",
+   "error": null
+  }
+ ],
+ "budget": {}
+}
