@@ -556,7 +556,9 @@
 "w": 5,
 "l": 0,
 "form": "",
-"conf": "Greek Basket League"
+"conf": "Greek Basket League",
+"played": 5,
+"partial": false
 },
 {
 "rank": 2,
@@ -564,7 +566,9 @@
 "w": 4,
 "l": 1,
 "form": "",
-"conf": "Greek Basket League"
+"conf": "Greek Basket League",
+"played": 5,
+"partial": false
 },
 {
 "rank": 3,
@@ -572,7 +576,9 @@
 "w": 5,
 "l": 0,
 "form": "",
-"conf": "Greek Basket League"
+"conf": "Greek Basket League",
+"played": 5,
+"partial": false
 },
 {
 "rank": 4,
@@ -580,7 +586,9 @@
 "w": 3,
 "l": 2,
 "form": "",
-"conf": "Greek Basket League"
+"conf": "Greek Basket League",
+"played": 5,
+"partial": false
 },
 {
 "rank": 5,
@@ -588,7 +596,9 @@
 "w": 3,
 "l": 2,
 "form": "",
-"conf": "Greek Basket League"
+"conf": "Greek Basket League",
+"played": 5,
+"partial": false
 },
 {
 "rank": 6,
@@ -596,7 +606,9 @@
 "w": 2,
 "l": 3,
 "form": "",
-"conf": "Greek Basket League"
+"conf": "Greek Basket League",
+"played": 5,
+"partial": false
 },
 {
 "rank": 7,
@@ -604,7 +616,9 @@
 "w": 2,
 "l": 3,
 "form": "",
-"conf": "Greek Basket League"
+"conf": "Greek Basket League",
+"played": 5,
+"partial": false
 },
 {
 "rank": 8,
@@ -612,7 +626,9 @@
 "w": 4,
 "l": 1,
 "form": "",
-"conf": "Greek Basket League"
+"conf": "Greek Basket League",
+"played": 5,
+"partial": false
 },
 {
 "rank": 9,
@@ -620,7 +636,9 @@
 "w": 2,
 "l": 3,
 "form": "",
-"conf": "Greek Basket League"
+"conf": "Greek Basket League",
+"played": 5,
+"partial": false
 },
 {
 "rank": 10,
@@ -628,7 +646,9 @@
 "w": 1,
 "l": 4,
 "form": "",
-"conf": "Greek Basket League"
+"conf": "Greek Basket League",
+"played": 5,
+"partial": false
 },
 {
 "rank": 11,
@@ -636,7 +656,9 @@
 "w": 1,
 "l": 4,
 "form": "",
-"conf": "Greek Basket League"
+"conf": "Greek Basket League",
+"played": 5,
+"partial": false
 },
 {
 "rank": 12,
@@ -644,7 +666,9 @@
 "w": 1,
 "l": 4,
 "form": "",
-"conf": "Greek Basket League"
+"conf": "Greek Basket League",
+"played": 5,
+"partial": false
 },
 {
 "rank": 13,
@@ -652,7 +676,9 @@
 "w": 1,
 "l": 4,
 "form": "",
-"conf": "Greek Basket League"
+"conf": "Greek Basket League",
+"played": 5,
+"partial": false
 },
 {
 "rank": 14,
@@ -660,10 +686,215 @@
 "w": 1,
 "l": 4,
 "form": "",
-"conf": "Greek Basket League"
+"conf": "Greek Basket League",
+"played": 5,
+"partial": false
 }
 ],
-"Basketball Bundesliga": [],
-"VTB United League": [],
-"CBA": []
+"Basketball Bundesliga": [
+{
+"rank": 1,
+"team": "Bayern",
+"w": 1,
+"l": 0,
+"form": "",
+"conf": "Basketball Bundesliga",
+"played": 1,
+"partial": true
+},
+{
+"rank": 2,
+"team": "Basketball Braunschweig",
+"w": 0,
+"l": 1,
+"form": "",
+"conf": "Basketball Bundesliga",
+"played": 1,
+"partial": true
+}
+],
+"VTB United League": [
+{
+"rank": 1,
+"team": "Parma Perm",
+"w": 1,
+"l": 0,
+"form": "",
+"conf": "VTB United League",
+"played": 1,
+"partial": true
+},
+{
+"rank": 2,
+"team": "Samara",
+"w": 0,
+"l": 1,
+"form": "",
+"conf": "VTB United League",
+"played": 1,
+"partial": true
+}
+],
+"CBA": [
+{
+"rank": 1,
+"team": "Beijing",
+"w": 1,
+"l": 0,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+},
+{
+"rank": 2,
+"team": "Zhejiang Guangsha",
+"w": 1,
+"l": 0,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+},
+{
+"rank": 3,
+"team": "Fujian",
+"w": 1,
+"l": 0,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+},
+{
+"rank": 4,
+"team": "Liaoning",
+"w": 1,
+"l": 0,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+},
+{
+"rank": 5,
+"team": "Shanxi Zhongyu",
+"w": 1,
+"l": 0,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+},
+{
+"rank": 6,
+"team": "Shenzhen",
+"w": 1,
+"l": 0,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+},
+{
+"rank": 7,
+"team": "Jiangsu Dragons",
+"w": 1,
+"l": 0,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+},
+{
+"rank": 8,
+"team": "Shanghai",
+"w": 1,
+"l": 0,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+},
+{
+"rank": 9,
+"team": "Jilin",
+"w": 0,
+"l": 1,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+},
+{
+"rank": 10,
+"team": "Nanjing Tongxi",
+"w": 0,
+"l": 1,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+},
+{
+"rank": 11,
+"team": "Xinjiang",
+"w": 0,
+"l": 1,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+},
+{
+"rank": 12,
+"team": "Zhejiang Chouzhou",
+"w": 0,
+"l": 1,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+},
+{
+"rank": 13,
+"team": "Guangzhou",
+"w": 0,
+"l": 1,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+},
+{
+"rank": 14,
+"team": "Sichuan",
+"w": 0,
+"l": 1,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+},
+{
+"rank": 15,
+"team": "Tianjin",
+"w": 0,
+"l": 1,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+},
+{
+"rank": 16,
+"team": "Ningbo Rockets",
+"w": 0,
+"l": 1,
+"form": "",
+"conf": "CBA",
+"played": 1,
+"partial": true
+}
+]
 }
