@@ -25,8 +25,9 @@ NOMBRES = {
     "lega": "Lega Basket Serie A",
 }
 
-# Clasificación mínima para publicar (si no, se omite: datos parciales engañan)
-MIN_PARTIDOS_POR_EQUIPO = 5
+# Se publica desde el primer partido, pero marcada como parcial hasta tener muestra.
+MIN_PARTIDOS_POR_EQUIPO = 1
+COMPLETA_DESDE = 5
 
 # Alcance cerrado de anillero.com: sólo estas cinco competiciones.
 ALLOWED = ["NBA", "Liga ACB", "EuroLeague", "Basketbol Süper Ligi",
@@ -79,10 +80,12 @@ def main() -> None:
         filas = []
         if f_st.exists():
             filas = json.loads(f_st.read_text()).get("standings", [])
+        parcial = True
         if filas:
             minimo = min((r.get("played") or 0) for r in filas)
+            parcial = minimo < COMPLETA_DESDE
             if minimo < MIN_PARTIDOS_POR_EQUIPO:
-                print(f"{clave}: clasificación omitida (sólo {minimo} partidos por equipo)")
+                print(f"{clave}: clasificación omitida (sin partidos)")
                 standings.pop(nombre, None)
                 filas = []
             standings[nombre] = [
@@ -93,6 +96,8 @@ def main() -> None:
                     "l": r.get("losses"),
                     "form": "",
                     "conf": NOMBRES[clave],
+                    "played": r.get("played"),
+                    "partial": parcial,
                 }
                 for i, r in enumerate(filas)
             ]

@@ -135,6 +135,12 @@ export function LeaguePage() {
           <div className="lg:col-span-2 flex flex-col gap-space-md">
             <Card className="p-space-sm">
               <SectionHeader title={rows.length ? 'Clasificación' : 'Equipos'} right={rows.length ? 'En vivo' : 'Plantilla 2026-27'} />
+              {(rows[0] as { partial?: boolean })?.partial && (
+                <p className="text-body-sm text-secondary m-0 mb-2">
+                  Clasificación parcial: calculada con los partidos capturados desde el inicio del pipeline.
+                  Se completa a medida que se juegan jornadas.
+                </p>
+              )}
               {rows.length ? (
                 <StandingsTable rows={rows.slice(0, 10)} />
               ) : (
