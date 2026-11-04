@@ -76,7 +76,7 @@ function Sidebar() {
             COMPETICIONES
           </span>
           <span className="font-mono text-data-mono text-live-red flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full bg-tertiary" />6 LIGAS
+            <span className="w-2 h-2 rounded-full bg-tertiary" />{all.length} LIGAS
           </span>
         </div>
 
