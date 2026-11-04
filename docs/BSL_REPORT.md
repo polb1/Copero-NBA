@@ -41,3 +41,24 @@ Fecha: 4 de noviembre de 2026. Temporada en curso: 2026-2027.
 2. **Si BSL es prioritaria**: plan Pro de 15 $/mes, que además desbloquea BBL, VTB, CBA y
    Lega A con estadísticas y plantillas. Es la única vía lícita encontrada.
 3. **Descartado**: scraping de TBF mientras mantenga el challenge.
+
+---
+
+## Decisión (4/11/2026): BSL es la única liga nueva
+
+Se descartan BBL, VTB, CBA y Lega A. La web queda en **5 competiciones**:
+NBA, Liga ACB, Euroliga, GBL y BSL.
+
+Plan de carga de BSL con Apify:
+
+1. **Saldo actual: −0,46 $** (5,46 $ de 5 $ del ciclo 30 oct–29 nov). No se puede ejecutar
+   nada hasta el **30 de noviembre**.
+2. Al renovarse: `python3 scripts/apify-ingest.py --descubrir "Basketbol Süper Ligi"`
+   (~0,07 $) para obtener el `competitionId`, y guardarlo en `LIGAS`.
+3. Después: clasificación + calendario + parciales de BSL con **todo el saldo disponible**
+   (~5 $), en una sola pasada.
+4. Mientras tanto BSL se rellena con la ventana gratuita de API-Basketball (L1), que
+   acumula resultados desde el 4 de noviembre.
+
+Coste estimado de una pasada completa de BSL: **0,60-1,20 $** según cuántos partidos
+devuelva el actor (tarifa FREE: 0,015 $/evento + 0,05 $ de arranque).
