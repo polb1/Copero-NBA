@@ -147,3 +147,25 @@ const MANUAL: Record<string, string> = {
 };
 
 export const crestFor = (name: string): string | undefined => MANUAL[name] || GENERATED[name];
+
+
+/** Ligas que se muestran en portada y sidebar (el resto queda fuera). */
+export const MAIN_LEAGUES = [
+  'NBA',
+  'EuroLeague',
+  'Liga ACB',
+  'B.League',
+  'Basketball Bundesliga',
+  'Lega Basket Serie A',
+];
+
+export const slugifyName = (s: string) =>
+  s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+export const leagueHref = (liga: string) => `/liga/${slugifyName(liga)}`;
+
+/** Identificador legible de un partido: local--visitante--fecha. */
+export const matchId = (m: { home: string; away: string; date: string }) =>
+  `${slugifyName(m.home)}--${slugifyName(m.away)}--${m.date}`;
+
+export const matchHref = (m: { home: string; away: string; date: string }) => `/partido/${matchId(m)}`;

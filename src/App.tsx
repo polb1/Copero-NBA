@@ -11,6 +11,7 @@ import { RouteSeo } from './seo';
 import { Home as HubHome } from './actualidad/pages/Home';
 import { Noticias, Resultados, Calendario, Estadisticas } from './actualidad/pages/Pages';
 import { LeaguePage } from './actualidad/pages/League';
+import { Match } from './actualidad/pages/Match';
 import './actualidad/tailwind.css';
 
 // Dev-only scene gallery loads on demand.
@@ -88,6 +89,7 @@ export function App() {
             <Route path="/noticias" element={<HubLayout><Noticias /></HubLayout>} />
             <Route path="/clasificaciones" element={<Navigate to="/" replace />} />
             <Route path="/liga/:league" element={<HubLayout><LeaguePage /></HubLayout>} />
+            <Route path="/partido/:id" element={<HubLayout><Match /></HubLayout>} />
             <Route path="/resultados" element={<HubLayout><Resultados /></HubLayout>} />
             <Route path="/calendario" element={<HubLayout><Calendario /></HubLayout>} />
             <Route path="/estadisticas" element={<HubLayout><Estadisticas /></HubLayout>} />

@@ -95,8 +95,8 @@ def nba_standings():
 
 
 def fecha_corta(day):
-    """date -> '31 oct' (siempre en español y en minúsculas)."""
-    return f"{day.day} {MESES[day.month - 1]}"
+    """date -> ISO (2026-11-03). El formato lo pone la web."""
+    return day.strftime("%Y-%m-%d")
 
 
 def scoreboard(slug, days_back=2, days_ahead=2):
@@ -295,9 +295,9 @@ MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "
 
 
 def corta_fecha(iso):
+    """Normaliza a ISO; si ya viene en ISO lo deja igual."""
     try:
-        d = datetime.strptime(iso[:10], "%Y-%m-%d")
-        return f"{d.day} {MESES[d.month - 1]}"
+        return datetime.strptime(iso[:10], "%Y-%m-%d").strftime("%Y-%m-%d")
     except Exception:
         return iso[:10]
 

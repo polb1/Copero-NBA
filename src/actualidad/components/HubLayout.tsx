@@ -1,6 +1,7 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { leaguePath, LEAGUE_COUNTRY } from '../leagues';
+import { MAIN_LEAGUES } from '../data';
 import { useHubData } from '../data';
 
 const NAV = [
@@ -33,9 +34,11 @@ function Sidebar() {
   const { league: currentSlug } = useParams<{ league: string }>();
   const [q, setQ] = useState('');
 
+  // Solo las ligas principales: el resto se retira del menú (punto 5 del feedback).
   const all = useMemo(() => {
     const names = [...new Set([...Object.keys(standings), ...Object.keys(leagues)])];
-    return names.sort((a, b) => a.localeCompare(b));
+    const main = names.filter((n) => MAIN_LEAGUES.includes(n));
+    return (main.length ? main : names).sort((a, b) => a.localeCompare(b));
   }, [standings, leagues]);
 
   const featured = FEATURED
@@ -73,7 +76,7 @@ function Sidebar() {
             COMPETICIONES
           </span>
           <span className="font-mono text-data-mono text-live-red flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full bg-live-red animate-pulse" />EN VIVO
+            <span className="w-2 h-2 rounded-full bg-tertiary" />6 LIGAS
           </span>
         </div>
 

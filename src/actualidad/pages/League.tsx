@@ -43,10 +43,31 @@ export function LeaguePage() {
   }, [league, standings, leagueMap]);
 
   const rows = (name ? standings[name] || standings[name === 'EuroLeague' ? 'EU' : name] : []) || [];
+
+
   const clubs = (name ? leagueMap[name] || [] : []) || [];
   const leagueResults = name ? (results || []).filter((r) => sameLeague(r.league, name)) : [];
   const leagueFixtures = name ? (fixtures || []).filter((f) => sameLeague(f.league, name)) : [];
   const leagueStats = name ? (stats || []).filter((s) => sameLeague(s.league, name)) : [];
+  const teamStats = useMemo(() => {
+    const acc = new Map<string, { pj: number; w: number; l: number; pf: number; pc: number }>();
+    for (const r of leagueResults) {
+      const pares: [string, number, number][] = [[r.home, r.hs, r.as], [r.away, r.as, r.hs]];
+      for (const [team, pf, pc] of pares) {
+        const cur = acc.get(team) || { pj: 0, w: 0, l: 0, pf: 0, pc: 0 };
+        acc.set(team, { pj: cur.pj + 1, w: cur.w + (pf > pc ? 1 : 0), l: cur.l + (pf < pc ? 1 : 0), pf: cur.pf + pf, pc: cur.pc + pc });
+      }
+    }
+    return [...acc.entries()]
+      .map(([team, s]) => ({
+        team, pj: s.pj, w: s.w, l: s.l,
+        pct: ((s.w / Math.max(1, s.pj)) * 100).toFixed(1),
+        pf: (s.pf / Math.max(1, s.pj)).toFixed(1),
+        pc: (s.pc / Math.max(1, s.pj)).toFixed(1),
+        dif: Number(((s.pf - s.pc) / Math.max(1, s.pj)).toFixed(1)),
+      }))
+      .sort((a, b) => b.w - a.w || b.dif - a.dif);
+  }, [leagueResults]);
   const meta = leagueMeta(name || '');
 
   if (!name && !loading) {
@@ -205,6 +226,39 @@ export function LeaguePage() {
       {/* ESTADÍSTICAS */}
       {tab === 'estadisticas' && !loading && (
         <Card className="p-space-md">
+          <h3 className="font-display text-headline-md font-bold uppercase text-text-primary m-0 mb-2">Estadísticas de equipo</h3>
+          {teamStats.length ? (
+            <table className="w-full border-collapse mb-space-md">
+              <thead>
+                <tr className="bg-surface-container-low">
+                  {['EQUIPO', 'PJ', 'G', 'P', '%', 'PF', 'PC', 'DIF'].map((h) => (
+                    <th key={h} className="font-display text-label-table-header uppercase text-text-muted text-left px-2 py-2">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {teamStats.map((t) => (
+                  <tr key={t.team} className="border-t border-court-border hover:bg-court-surface-elevated">
+                    <td className="px-2 py-2">
+                      <span className="flex items-center gap-2">
+                        <TeamBadge name={t.team} size={20} />
+                        <span className="text-body-sm text-text-primary truncate">{t.team}</span>
+                      </span>
+                    </td>
+                    <td className="px-2 py-2 font-mono text-data-mono text-text-muted">{t.pj}</td>
+                    <td className="px-2 py-2 font-mono text-data-mono text-tertiary">{t.w}</td>
+                    <td className="px-2 py-2 font-mono text-data-mono text-text-muted">{t.l}</td>
+                    <td className="px-2 py-2 font-mono text-data-mono text-secondary">{t.pct}</td>
+                    <td className="px-2 py-2 font-mono text-data-mono text-text-primary">{t.pf}</td>
+                    <td className="px-2 py-2 font-mono text-data-mono text-text-muted">{t.pc}</td>
+                    <td className={`px-2 py-2 font-mono text-data-mono ${t.dif >= 0 ? 'text-tertiary' : 'text-live-red'}`}>{t.dif >= 0 ? '+' : ''}{t.dif}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="text-body-sm text-text-muted m-0 mb-space-md">Sin partidos registrados en esta liga.</p>
+          )}
           {leagueStats.length ? (
             <div className="flex flex-col">
               {leagueStats.map((s) => (
