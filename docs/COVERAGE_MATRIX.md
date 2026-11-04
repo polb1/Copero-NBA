@@ -32,3 +32,13 @@ Sin pagar se puede mantener L1 diario de las 8 ligas con **2 peticiones/día**, 
    (se publica sólo cuando cada equipo ha jugado ≥ 5 partidos; si no, se omite).
 2. No hay plantillas ni box score.
 3. El calendario futuro no se conoce por adelantado: se descubre el día que se juega.
+
+## Actualización: publicación desde el primer partido
+
+La clasificación de BSL, BBL, VTB, CBA y Lega A se publica **desde el primer partido
+capturado**, marcada como *parcial* en la web (aviso visible en la pestaña Clasificación).
+Pasa a considerarse completa cuando cada equipo ha jugado ≥ 5 partidos (`COMPLETA_DESDE`
+en `scripts/sync-out-to-site.py`).
+
+Captura: dos pasadas diarias (10:30 y 23:45). La ventana de fechas cubre hoy y ayer, así que
+no se pierde ningún partido aunque una de las dos ejecuciones falle.
