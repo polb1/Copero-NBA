@@ -27,13 +27,13 @@ DATA = ROOT / "public" / "data"
 MAP = DATA / "apify-map.json"
 ACTOR = "sian.agency~basketball-api-scraper"
 API = "https://api.apify.com/v2"
-MIN_BUDGET_USD = 0.30  # no arrancar si queda menos que esto en el ciclo
+MIN_BUDGET_USD = 0.60  # no arrancar si queda menos que esto en el ciclo
 
 # competitionId / seasonId de la temporada en curso.
 LIGAS = {
     "Liga ACB": {"competitionId": "264", "seasonId": "100873"},
-    "Basketball Bundesliga": {"competitionId": "227", "seasonId": "100143"},
-    "Lega Basket Serie A": {"competitionId": "262", "seasonId": "99996"},
+    # BSL: el competitionId hay que descubrirlo con `--descubrir "Basketbol Süper Ligi"`
+    # (cuesta ~0,07 $) y queda guardado en apify-map.json. Pendiente: saldo agotado.
 }
 
 MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
@@ -72,6 +72,17 @@ def run_actor(payload: dict) -> list[dict]:
         body = err.read().decode()[:300]
         print(f"[apify] {err.code}: {body}")
         return []
+
+
+def descubrir(texto: str) -> None:
+    """Busca competiciones en el actor y muestra id + temporadas (cuesta ~0,07 $)."""
+    items = run_actor({"operation": "searchCompetitions", "search": texto})
+    if not items:
+        print("[descubrir] sin resultados")
+        return
+    for it in items[:10]:
+        print(json.dumps(it, ensure_ascii=False)[:400])
+    print("\nGuarda el competitionId en LIGAS y ejecuta con --liga \"Basketbol Süper Ligi\".")
 
 
 def presupuesto_restante() -> float:
@@ -169,6 +180,16 @@ def main() -> None:
     solo_clasificacion = "--solo-clasificacion" in sys.argv
     if "--liga" in sys.argv:
         objetivo = sys.argv[sys.argv.index("--liga") + 1]
+
+    if "--descubrir" in sys.argv:
+        texto = sys.argv[sys.argv.index("--descubrir") + 1]
+        restante = presupuesto_restante()
+        print(f"presupuesto restante: ${restante:.2f}")
+        if restante < MIN_BUDGET_USD:
+            print(f"[apify] saldo insuficiente (< ${MIN_BUDGET_USD}); no se ejecuta nada")
+            return
+        descubrir(texto)
+        return
 
     restante = presupuesto_restante()
     print(f"presupuesto restante: ${restante:.2f}")

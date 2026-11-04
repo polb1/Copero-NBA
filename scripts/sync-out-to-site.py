@@ -19,10 +19,6 @@ DATA = ROOT / "public" / "data"
 NOMBRES = {
     "bsl": "Basketbol Süper Ligi",
     "gbl": "Greek Basket League",
-    "bbl": "Basketball Bundesliga",
-    "vtb": "VTB United League",
-    "cba": "CBA",
-    "lega": "Lega Basket Serie A",
 }
 
 # Se publica desde el primer partido, pero marcada como parcial hasta tener muestra.
@@ -30,9 +26,7 @@ MIN_PARTIDOS_POR_EQUIPO = 1
 COMPLETA_DESDE = 5
 
 # Alcance cerrado de anillero.com: sólo estas cinco competiciones.
-ALLOWED = ["NBA", "Liga ACB", "EuroLeague", "Basketbol Süper Ligi",
-           "Greek Basket League", "Basketball Bundesliga", "VTB United League",
-           "CBA", "Lega Basket Serie A"]
+ALLOWED = ["NBA", "Liga ACB", "EuroLeague", "Greek Basket League", "Basketbol Süper Ligi"]
 
 
 def iso(ts: int | None) -> str | None:
