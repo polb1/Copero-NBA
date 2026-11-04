@@ -27,7 +27,10 @@ OUT = ROOT / "out"
 DATA = ROOT / "public" / "data"
 STATE = OUT / ".state.json"
 
-LEAGUES = ["nba", "acb", "euroleague", "bsl", "gbl"]
+LEAGUES = ["nba", "acb", "euroleague", "lega", "bsl", "bbl", "vtb", "cba", "gbl"]
+
+# ligas servidas por API-Basketball en ventana de fechas
+API_LEAGUES = {"lega", "bsl", "bbl", "vtb", "cba"}
 
 # Caché por tipo de dato (segundos)
 TTL_GAMES = 3 * 3600
@@ -204,18 +207,25 @@ def procesar(liga: str, force: bool, st: dict) -> dict:
         resumen = _guardar(liga, res, resumen)
         return resumen
 
-    if liga == "bsl":
-        from adapters import bsl_apisports
+    if liga in API_LEAGUES:
+        from adapters import apisports_daily as apid
         if not presupuesto_ok(st):
             resumen["error"] = "presupuesto diario de API-Basketball agotado"
             return resumen
         try:
-            bsl_apisports.key()
-        except bsl_apisports.SinClave as e:
+            apid.key()
+        except RuntimeError as e:
             resumen["error"] = str(e)
             return resumen
-        res = bsl_apisports.fetch()
-        consumir(st, 2)
+        # la ventana de fechas se descarga una sola vez por ejecución
+        if not getattr(procesar, "_ventana_ok", False):
+            tocadas, peticiones = apid.recolectar()
+            consumir(st, peticiones)
+            procesar._ventana_ok = True  # type: ignore[attr-defined]
+        res = apid.fetch_league(liga)
+        if not res["games"]:
+            resumen["error"] = "sin partidos en la ventana de fechas (plan gratuito: hoy y ayer)"
+            return resumen
         resumen = _guardar(liga, res, resumen)
         return resumen
 
@@ -270,8 +280,16 @@ def indice(resumenes: list[dict], st: dict) -> None:
 
 
 # ---------------------------------------------------------------- CLI
+def api_id(liga: str) -> int:
+    from adapters.apisports_daily import LIGAS
+    for k, v in LIGAS.items():
+        if v == liga:
+            return k
+    return 0
+
+
 def cmd_discover() -> None:
-    print("Descubrimiento de fuentes (5 ligas)\n")
+    print(f"Descubrimiento de fuentes ({len(LEAGUES)} ligas)\n")
     for liga in LEAGUES:
         print(f"· {liga}")
         if liga in LEGACY_KEYS:
@@ -286,16 +304,11 @@ def cmd_discover() -> None:
                 print(f"    muestra: {st[0]['team']} {st[0]['wins']}-{st[0]['losses']} ({st[0]['points']} pts)")
             except Exception as e:
                 print(f"    ERROR: {e}")
-        elif liga == "bsl":
-            print("    candidatas descartadas: bsl.org.tr (410 Gone), tbf.org.tr (Cloudflare 403),")
-            print("      basketbolsuperligi.com (aparcado), realgm (403), eurobasket.com (sin conexión)")
-            try:
-                from adapters import bsl_apisports
-                bsl_apisports.key()
-                print("    fuente: API-Basketball (clave presente)")
-            except Exception as e:
-                print(f"    fuente: API-Basketball — NO configurada ({e})")
-                print("    acción: crear clave gratuita en https://dashboard.api-sports.io")
+        elif liga in API_LEAGUES:
+            from adapters import apisports_daily as apid
+            print(f"    fuente: API-Basketball liga {api_id(liga)} (ventana de fechas: hoy y ayer)")
+            print("    L1 sí (calendario/resultados) · L2/L3 no en plan gratuito")
+            continue
         print()
 
 

@@ -1,0 +1,332 @@
+{
+"nba-519625": {
+"away": {
+"id": "nba-152",
+"logo": "https://media.api-sports.io/basketball/teams/152.png",
+"name": "Oklahoma City Thunder",
+"score": 117
+},
+"date": "2026-11-03",
+"external_id": 519625,
+"home": {
+"id": "nba-137",
+"logo": "https://media.api-sports.io/basketball/teams/137.png",
+"name": "Cleveland Cavaliers",
+"score": 112
+},
+"id": "nba-519625",
+"period": null,
+"round": null,
+"start_ts": 1793664000,
+"status": "FT",
+"venue": "Rocket Arena"
+},
+"nba-519626": {
+"away": {
+"id": "nba-136",
+"logo": "https://media.api-sports.io/basketball/teams/136.png",
+"name": "Chicago Bulls",
+"score": 107
+},
+"date": "2026-11-03",
+"external_id": 519626,
+"home": {
+"id": "nba-154",
+"logo": "https://media.api-sports.io/basketball/teams/154.png",
+"name": "Philadelphia 76ers",
+"score": 126
+},
+"id": "nba-519626",
+"period": null,
+"round": null,
+"start_ts": 1793665800,
+"status": "FT",
+"venue": "Xfinity Mobile Arena"
+},
+"nba-519627": {
+"away": {
+"id": "nba-161",
+"logo": "https://media.api-sports.io/basketball/teams/161.png",
+"name": "Washington Wizards",
+"score": 103
+},
+"date": "2026-11-03",
+"external_id": 519627,
+"home": {
+"id": "nba-153",
+"logo": "https://media.api-sports.io/basketball/teams/153.png",
+"name": "Orlando Magic",
+"score": 94
+},
+"id": "nba-519627",
+"period": null,
+"round": null,
+"start_ts": 1793665800,
+"status": "FT",
+"venue": "Kia Center"
+},
+"nba-519628": {
+"away": {
+"id": "nba-134",
+"logo": "https://media.api-sports.io/basketball/teams/134.png",
+"name": "Brooklyn Nets",
+"score": 90
+},
+"date": "2026-11-03",
+"external_id": 519628,
+"home": {
+"id": "nba-151",
+"logo": "https://media.api-sports.io/basketball/teams/151.png",
+"name": "New York Knicks",
+"score": 103
+},
+"id": "nba-519628",
+"period": null,
+"round": null,
+"start_ts": 1793665800,
+"status": "FT",
+"venue": "Madison Square Garden"
+},
+"nba-519629": {
+"away": {
+"id": "nba-132",
+"logo": "https://media.api-sports.io/basketball/teams/132.png",
+"name": "Atlanta Hawks",
+"score": 108
+},
+"date": "2026-11-03",
+"external_id": 519629,
+"home": {
+"id": "nba-143",
+"logo": "https://media.api-sports.io/basketball/teams/143.png",
+"name": "Indiana Pacers",
+"score": 104
+},
+"id": "nba-519629",
+"period": null,
+"round": null,
+"start_ts": 1793665800,
+"status": "FT",
+"venue": "Gainbridge Fieldhouse"
+},
+"nba-519630": {
+"away": {
+"id": "nba-140",
+"logo": "https://media.api-sports.io/basketball/teams/140.png",
+"name": "Detroit Pistons",
+"score": 124
+},
+"date": "2026-11-03",
+"external_id": 519630,
+"home": {
+"id": "nba-135",
+"logo": "https://media.api-sports.io/basketball/teams/135.png",
+"name": "Charlotte Hornets",
+"score": 91
+},
+"id": "nba-519630",
+"period": null,
+"round": null,
+"start_ts": 1793665800,
+"status": "FT",
+"venue": "Spectrum Center"
+},
+"nba-519631": {
+"away": {
+"id": "nba-157",
+"logo": "https://media.api-sports.io/basketball/teams/157.png",
+"name": "Sacramento Kings",
+"score": 115
+},
+"date": "2026-11-03",
+"external_id": 519631,
+"home": {
+"id": "nba-138",
+"logo": "https://media.api-sports.io/basketball/teams/138.png",
+"name": "Dallas Mavericks",
+"score": 100
+},
+"id": "nba-519631",
+"period": null,
+"round": null,
+"start_ts": 1793667600,
+"status": "FT",
+"venue": "American Airlines Center"
+},
+"nba-519632": {
+"away": {
+"id": "nba-150",
+"logo": "https://media.api-sports.io/basketball/teams/150.png",
+"name": "New Orleans Pelicans",
+"score": 135
+},
+"date": "2026-11-03",
+"external_id": 519632,
+"home": {
+"id": "nba-146",
+"logo": "https://media.api-sports.io/basketball/teams/146.png",
+"name": "Memphis Grizzlies",
+"score": 134
+},
+"id": "nba-519632",
+"period": null,
+"round": null,
+"start_ts": 1793667600,
+"status": "FT",
+"venue": "FedExForum"
+},
+"nba-519633": {
+"away": {
+"id": "nba-148",
+"logo": "https://media.api-sports.io/basketball/teams/148.png",
+"name": "Milwaukee Bucks",
+"score": 100
+},
+"date": "2026-11-03",
+"external_id": 519633,
+"home": {
+"id": "nba-149",
+"logo": "https://media.api-sports.io/basketball/teams/149.png",
+"name": "Minnesota Timberwolves",
+"score": 112
+},
+"id": "nba-519633",
+"period": null,
+"round": null,
+"start_ts": 1793667600,
+"status": "FT",
+"venue": "Target Center"
+},
+"nba-519634": {
+"away": {
+"id": "nba-133",
+"logo": "https://media.api-sports.io/basketball/teams/133.png",
+"name": "Boston Celtics",
+"score": 93
+},
+"date": "2026-11-03",
+"external_id": 519634,
+"home": {
+"id": "nba-142",
+"logo": "https://media.api-sports.io/basketball/teams/142.png",
+"name": "Houston Rockets",
+"score": 109
+},
+"id": "nba-519634",
+"period": null,
+"round": null,
+"start_ts": 1793669400,
+"status": "FT",
+"venue": "Toyota Center"
+},
+"nba-519635": {
+"away": {
+"id": "nba-160",
+"logo": "https://media.api-sports.io/basketball/teams/160.png",
+"name": "Utah Jazz",
+"score": 97
+},
+"date": "2026-11-03",
+"external_id": 519635,
+"home": {
+"id": "nba-158",
+"logo": "https://media.api-sports.io/basketball/teams/158.png",
+"name": "San Antonio Spurs",
+"score": 119
+},
+"id": "nba-519635",
+"period": null,
+"round": null,
+"start_ts": 1793669400,
+"status": "FT",
+"venue": "Frost Bank Center"
+},
+"nba-519636": {
+"away": {
+"id": "nba-156",
+"logo": "https://media.api-sports.io/basketball/teams/156.png",
+"name": "Portland Trail Blazers",
+"score": 118
+},
+"date": "2026-11-03",
+"external_id": 519636,
+"home": {
+"id": "nba-139",
+"logo": "https://media.api-sports.io/basketball/teams/139.png",
+"name": "Denver Nuggets",
+"score": 110
+},
+"id": "nba-519636",
+"period": null,
+"round": null,
+"start_ts": 1793671200,
+"status": "FT",
+"venue": "Ball Arena"
+},
+"nba-519637": {
+"away": {
+"id": "nba-147",
+"logo": "https://media.api-sports.io/basketball/teams/147.png",
+"name": "Miami Heat",
+"score": 117
+},
+"date": "2026-11-03",
+"external_id": 519637,
+"home": {
+"id": "nba-145",
+"logo": "https://media.api-sports.io/basketball/teams/145.png",
+"name": "Los Angeles Lakers",
+"score": 138
+},
+"id": "nba-519637",
+"period": null,
+"round": null,
+"start_ts": 1793674800,
+"status": "FT",
+"venue": "Crypto.com Arena"
+},
+"nba-519638": {
+"away": {
+"id": "nba-159",
+"logo": "https://media.api-sports.io/basketball/teams/159.png",
+"name": "Toronto Raptors",
+"score": 125
+},
+"date": "2026-11-03",
+"external_id": 519638,
+"home": {
+"id": "nba-144",
+"logo": "https://media.api-sports.io/basketball/teams/144.png",
+"name": "Los Angeles Clippers",
+"score": 118
+},
+"id": "nba-519638",
+"period": null,
+"round": null,
+"start_ts": 1793674800,
+"status": "FT",
+"venue": "Intuit Dome"
+},
+"nba-519639": {
+"away": {
+"id": "nba-155",
+"logo": "https://media.api-sports.io/basketball/teams/155.png",
+"name": "Phoenix Suns",
+"score": 113
+},
+"date": "2026-11-03",
+"external_id": 519639,
+"home": {
+"id": "nba-141",
+"logo": "https://media.api-sports.io/basketball/teams/141.png",
+"name": "Golden State Warriors",
+"score": 116
+},
+"id": "nba-519639",
+"period": null,
+"round": null,
+"start_ts": 1793674800,
+"status": "FT",
+"venue": "Chase Center"
+}
+}

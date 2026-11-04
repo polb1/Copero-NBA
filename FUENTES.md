@@ -93,3 +93,19 @@ Fuentes oficiales comprobadas y **descartadas**:
 1. **BSL sin clave** de API-Basketball: es el único bloqueo. Sin ella no hay datos turcos.
 2. **Estadísticas de jugador** en ACB/Euroliga/BSL/GBL: ninguna fuente gratuita las ofrece completas. Se dejan vacías, nunca inventadas. Proveedores que sí las cubren: Goalserve, enetpulse, Statscore, Broadage (de pago).
 3. **Marcador en directo real** (cuarto a cuarto) sólo lo da API-Basketball en su plan gratuito para BSL; para el resto habría que contratar un feed en vivo.
+
+---
+
+## Actualización (brief v2, 4/11/2026): ventana de fechas
+
+Verificado con la clave real: el plan Free **sí** permite `GET /games?date=YYYY-MM-DD`
+(hoy y ayer) y `GET /games?id=...`, aunque bloquee todo lo que lleve `season=2026-2027`.
+Eso da **L1 de las 8 ligas con 2 peticiones/día** (liga 12 NBA, 117 ACB, 52 Lega,
+104 BSL, 40 BBL, 82 VTB, 31 CBA). No hay histórico previo, ni plantillas, ni box score.
+
+`adapters/apisports_daily.py` implementa esa ventana y acumula los partidos en
+`out/history/{liga}.json`; la clasificación se deriva de ahí (2 puntos victoria, 1 derrota)
+y sólo se publica cuando cada equipo ha jugado ≥ 5 partidos.
+
+Detalle completo en `docs/`: `LIMITES.md`, `LEGAL.md`, `COVERAGE_MATRIX.md`,
+`BSL_REPORT.md`, `FEASIBILITY_REPORT.md`.

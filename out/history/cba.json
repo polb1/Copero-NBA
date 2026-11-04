@@ -1,0 +1,178 @@
+{
+"cba-522671": {
+"away": {
+"id": "cba-3187",
+"logo": "https://media.api-sports.io/basketball/teams/3187.png",
+"name": "Ningbo Rockets",
+"score": 88
+},
+"date": "2026-11-03",
+"external_id": 522671,
+"home": {
+"id": "cba-422",
+"logo": "https://media.api-sports.io/basketball/teams/422.png",
+"name": "Beijing",
+"score": 120
+},
+"id": "cba-522671",
+"period": null,
+"round": "8",
+"start_ts": 1793705700,
+"status": "FT",
+"venue": "Cadillac Arena"
+},
+"cba-522672": {
+"away": {
+"id": "cba-426",
+"logo": "https://media.api-sports.io/basketball/teams/426.png",
+"name": "Guangzhou",
+"score": 93
+},
+"date": "2026-11-03",
+"external_id": 522672,
+"home": {
+"id": "cba-429",
+"logo": "https://media.api-sports.io/basketball/teams/429.png",
+"name": "Liaoning",
+"score": 100
+},
+"id": "cba-522672",
+"period": null,
+"round": "8",
+"start_ts": 1793705700,
+"status": "FT",
+"venue": "Liaoning Gymnasium"
+},
+"cba-522673": {
+"away": {
+"id": "cba-427",
+"logo": "https://media.api-sports.io/basketball/teams/427.png",
+"name": "Jiangsu Dragons",
+"score": 95
+},
+"date": "2026-11-03",
+"external_id": 522673,
+"home": {
+"id": "cba-430",
+"logo": "https://media.api-sports.io/basketball/teams/430.png",
+"name": "Nanjing Tongxi",
+"score": 93
+},
+"id": "cba-522673",
+"period": null,
+"round": "8",
+"start_ts": 1793705700,
+"status": "FT",
+"venue": "Nanjing Olympic Sports Center"
+},
+"cba-522674": {
+"away": {
+"id": "cba-428",
+"logo": "https://media.api-sports.io/basketball/teams/428.png",
+"name": "Jilin",
+"score": 109
+},
+"date": "2026-11-03",
+"external_id": 522674,
+"home": {
+"id": "cba-433",
+"logo": "https://media.api-sports.io/basketball/teams/433.png",
+"name": "Shanghai",
+"score": 110
+},
+"id": "cba-522674",
+"period": null,
+"round": "8",
+"start_ts": 1793705700,
+"status": "FT",
+"venue": "Shanghai Indoor Stadium"
+},
+"cba-522675": {
+"away": {
+"id": "cba-438",
+"logo": "https://media.api-sports.io/basketball/teams/438.png",
+"name": "Xinjiang",
+"score": 84
+},
+"date": "2026-11-03",
+"external_id": 522675,
+"home": {
+"id": "cba-434",
+"logo": "https://media.api-sports.io/basketball/teams/434.png",
+"name": "Shanxi Zhongyu",
+"score": 87
+},
+"id": "cba-522675",
+"period": null,
+"round": "8",
+"start_ts": 1793705700,
+"status": "FT",
+"venue": "Shanxi Sports Center"
+},
+"cba-522676": {
+"away": {
+"id": "cba-439",
+"logo": "https://media.api-sports.io/basketball/teams/439.png",
+"name": "Zhejiang Chouzhou",
+"score": 90
+},
+"date": "2026-11-03",
+"external_id": 522676,
+"home": {
+"id": "cba-435",
+"logo": "https://media.api-sports.io/basketball/teams/435.png",
+"name": "Shenzhen",
+"score": 93
+},
+"id": "cba-522676",
+"period": null,
+"round": "8",
+"start_ts": 1793705700,
+"status": "FT",
+"venue": "Shenzhen Dayun Arena"
+},
+"cba-522677": {
+"away": {
+"id": "cba-424",
+"logo": "https://media.api-sports.io/basketball/teams/424.png",
+"name": "Fujian",
+"score": 82
+},
+"date": "2026-11-03",
+"external_id": 522677,
+"home": {
+"id": "cba-436",
+"logo": "https://media.api-sports.io/basketball/teams/436.png",
+"name": "Sichuan",
+"score": 74
+},
+"id": "cba-522677",
+"period": null,
+"round": "8",
+"start_ts": 1793705700,
+"status": "FT",
+"venue": "Sichuan Provincial Gymnasium"
+},
+"cba-522678": {
+"away": {
+"id": "cba-440",
+"logo": "https://media.api-sports.io/basketball/teams/440.png",
+"name": "Zhejiang Guangsha",
+"score": 99
+},
+"date": "2026-11-03",
+"external_id": 522678,
+"home": {
+"id": "cba-437",
+"logo": "https://media.api-sports.io/basketball/teams/437.png",
+"name": "Tianjin",
+"score": 88
+},
+"id": "cba-522678",
+"period": null,
+"round": "8",
+"start_ts": 1793705700,
+"status": "FT",
+"venue": "University of Finance and Economics"
+}
+}
