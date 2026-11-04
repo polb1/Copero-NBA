@@ -1,0 +1,30 @@
+{
+ "league": "vtb",
+ "season": "2026-2027",
+ "source": "API-Basketball (api-sports.io), plan gratuito — ventana de fechas",
+ "updated": 1793822192,
+ "games": [
+  {
+   "away": {
+    "id": "vtb-2245",
+    "logo": "https://media.api-sports.io/basketball/teams/2245.png",
+    "name": "Samara",
+    "score": 68
+   },
+   "date": "2026-11-03",
+   "external_id": 513477,
+   "home": {
+    "id": "vtb-1027",
+    "logo": "https://media.api-sports.io/basketball/teams/1027.png",
+    "name": "Parma Perm",
+    "score": 109
+   },
+   "id": "vtb-513477",
+   "period": null,
+   "round": null,
+   "start_ts": 1793716200,
+   "status": "FT",
+   "venue": "Molot Sports Hall"
+  }
+ ]
+}

@@ -19,10 +19,19 @@ DATA = ROOT / "public" / "data"
 NOMBRES = {
     "bsl": "Basketbol Süper Ligi",
     "gbl": "Greek Basket League",
+    "bbl": "Basketball Bundesliga",
+    "vtb": "VTB United League",
+    "cba": "CBA",
+    "lega": "Lega Basket Serie A",
 }
 
+# Clasificación mínima para publicar (si no, se omite: datos parciales engañan)
+MIN_PARTIDOS_POR_EQUIPO = 5
+
 # Alcance cerrado de anillero.com: sólo estas cinco competiciones.
-ALLOWED = ["NBA", "Liga ACB", "EuroLeague", "Basketbol Süper Ligi", "Greek Basket League"]
+ALLOWED = ["NBA", "Liga ACB", "EuroLeague", "Basketbol Süper Ligi",
+           "Greek Basket League", "Basketball Bundesliga", "VTB United League",
+           "CBA", "Lega Basket Serie A"]
 
 
 def iso(ts: int | None) -> str | None:
@@ -67,8 +76,15 @@ def main() -> None:
                 fixtures.append({**base, "time": None})
                 programados += 1
 
+        filas = []
         if f_st.exists():
             filas = json.loads(f_st.read_text()).get("standings", [])
+        if filas:
+            minimo = min((r.get("played") or 0) for r in filas)
+            if minimo < MIN_PARTIDOS_POR_EQUIPO:
+                print(f"{clave}: clasificación omitida (sólo {minimo} partidos por equipo)")
+                standings.pop(nombre, None)
+                filas = []
             standings[nombre] = [
                 {
                     "rank": r.get("rank") or i + 1,
