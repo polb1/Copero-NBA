@@ -1,0 +1,30 @@
+{
+ "league": "bbl",
+ "season": "2026-2027",
+ "source": "API-Basketball (api-sports.io), plan gratuito — ventana de fechas",
+ "updated": 1793822192,
+ "games": [
+  {
+   "away": {
+    "id": "bbl-521",
+    "logo": "https://media.api-sports.io/basketball/teams/521.png",
+    "name": "Basketball Braunschweig",
+    "score": 66
+   },
+   "date": "2026-11-03",
+   "external_id": 509340,
+   "home": {
+    "id": "bbl-522",
+    "logo": "https://media.api-sports.io/basketball/teams/522.png",
+    "name": "Bayern",
+    "score": 108
+   },
+   "id": "bbl-509340",
+   "period": null,
+   "round": "2",
+   "start_ts": 1793732400,
+   "status": "FT",
+   "venue": "BMW Park"
+  }
+ ]
+}
