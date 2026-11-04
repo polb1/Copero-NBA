@@ -12,7 +12,7 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, State> {
   }
 
   componentDidCatch(error: Error) {
-    console.error('NBA Legacy crashed:', error);
+    console.error('Anillero · Modo Carrera crashed:', error);
   }
 
   private exportSave = () => {

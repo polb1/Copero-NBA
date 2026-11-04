@@ -1,290 +1,146 @@
 [
  {
-  "date": "2026-11-07",
-  "home": "Kids&Us Manresa",
-  "away": "Monbus Obradoiro",
-  "league": "Liga ACB",
-  "time": "18:00",
-  "event": "Jornada 7"
- },
- {
-  "date": "2026-11-07",
-  "home": "Bàsquet Girona",
-  "away": "Surne Bilbao Basket",
-  "league": "Liga ACB",
-  "time": "19:30",
-  "event": "Jornada 7"
- },
- {
-  "date": "2026-11-07",
-  "home": "Força Lleida CE",
-  "away": "Kosner Baskonia",
-  "league": "Liga ACB",
-  "time": "21:00",
-  "event": "Jornada 7"
- },
- {
-  "date": "2026-11-08",
-  "home": "Barça Basket",
-  "away": "Río Breogán",
-  "league": "Liga ACB",
-  "time": "12:00",
-  "event": "Jornada 7"
- },
- {
-  "date": "2026-11-08",
-  "home": "Hereda San Pablo Burgos",
-  "away": "Valencia Basket",
-  "league": "Liga ACB",
-  "time": "12:30",
-  "event": "Jornada 7"
- },
- {
-  "date": "2026-11-08",
-  "home": "La Laguna Tenerife",
-  "away": "Joventut Badalona",
-  "league": "Liga ACB",
-  "time": "13:00",
-  "event": "Jornada 7"
- },
- {
-  "date": "2026-11-08",
-  "home": "Casademont Zaragoza",
-  "away": "Unicaja",
-  "league": "Liga ACB",
-  "time": "17:00",
-  "event": "Jornada 7"
- },
- {
-  "date": "2026-11-08",
-  "home": "Leyma Basquet Coruña",
-  "away": "MoraBanc Andorra",
-  "league": "Liga ACB",
-  "time": "18:00",
-  "event": "Jornada 7"
- },
- {
-  "date": "2026-11-08",
-  "home": "Real Madrid",
-  "away": "UCAM Murcia",
-  "league": "Liga ACB",
-  "time": "19:00",
-  "event": "Jornada 7"
- },
- {
-  "date": "2026-11-14",
-  "home": "Río Breogán",
-  "away": "Hereda San Pablo Burgos",
-  "league": "Liga ACB",
-  "time": "18:00",
-  "event": "Jornada 8"
- },
- {
-  "date": "2026-11-14",
-  "home": "MoraBanc Andorra",
-  "away": "La Laguna Tenerife",
-  "league": "Liga ACB",
-  "time": "19:30",
-  "event": "Jornada 8"
- },
- {
-  "date": "2026-11-14",
-  "home": "Joventut Badalona",
-  "away": "Casademont Zaragoza",
-  "league": "Liga ACB",
-  "time": "21:00",
-  "event": "Jornada 8"
- },
- {
-  "date": "2026-11-15",
-  "home": "Força Lleida CE",
-  "away": "Kids&Us Manresa",
-  "league": "Liga ACB",
-  "time": "12:00",
-  "event": "Jornada 8"
- },
- {
-  "date": "2026-11-15",
-  "home": "Valencia Basket",
-  "away": "Leyma Basquet Coruña",
-  "league": "Liga ACB",
-  "time": "12:00",
-  "event": "Jornada 8"
- },
- {
-  "date": "2026-11-15",
-  "home": "Unicaja",
-  "away": "Bàsquet Girona",
-  "league": "Liga ACB",
-  "time": "12:30",
-  "event": "Jornada 8"
- },
- {
-  "date": "2026-11-15",
-  "home": "Barça Basket",
-  "away": "Monbus Obradoiro",
-  "league": "Liga ACB",
-  "time": "17:00",
-  "event": "Jornada 8"
- },
- {
-  "date": "2026-11-15",
-  "home": "Surne Bilbao Basket",
-  "away": "UCAM Murcia",
-  "league": "Liga ACB",
-  "time": "18:00",
-  "event": "Jornada 8"
- },
- {
-  "date": "2026-11-15",
-  "home": "Kosner Baskonia",
-  "away": "Real Madrid",
-  "league": "Liga ACB",
-  "time": "19:00",
-  "event": "Jornada 8"
- },
- {
-  "date": "2026-11-21",
-  "home": "Hereda San Pablo Burgos",
-  "away": "Unicaja",
-  "league": "Liga ACB",
-  "time": "18:00",
-  "event": "Jornada 9"
- },
- {
-  "date": "2026-11-21",
-  "home": "Kids&Us Manresa",
-  "away": "MoraBanc Andorra",
-  "league": "Liga ACB",
-  "time": "19:30",
-  "event": "Jornada 9"
- },
- {
-  "date": "2026-11-21",
-  "home": "UCAM Murcia",
-  "away": "Casademont Zaragoza",
-  "league": "Liga ACB",
-  "time": "21:00",
-  "event": "Jornada 9"
- },
- {
-  "date": "2026-11-22",
-  "home": "Monbus Obradoiro",
-  "away": "Bàsquet Girona",
-  "league": "Liga ACB",
-  "time": "12:00",
-  "event": "Jornada 9"
- },
- {
-  "date": "2026-11-22",
-  "home": "Surne Bilbao Basket",
-  "away": "Kosner Baskonia",
-  "league": "Liga ACB",
-  "time": "12:00",
-  "event": "Jornada 9"
- },
- {
-  "date": "2026-11-22",
-  "home": "Leyma Basquet Coruña",
-  "away": "Força Lleida CE",
-  "league": "Liga ACB",
-  "time": "12:30",
-  "event": "Jornada 9"
- },
- {
-  "date": "2026-11-22",
-  "home": "Valencia Basket",
-  "away": "Río Breogán",
-  "league": "Liga ACB",
-  "time": "17:00",
-  "event": "Jornada 9"
- },
- {
-  "date": "2026-11-22",
-  "home": "La Laguna Tenerife",
-  "away": "Barça Basket",
-  "league": "Liga ACB",
-  "time": "18:00",
-  "event": "Jornada 9"
- },
- {
-  "date": "2026-11-22",
-  "home": "Real Madrid",
-  "away": "Joventut Badalona",
-  "league": "Liga ACB",
-  "time": "19:00",
-  "event": "Jornada 9"
- },
- {
-  "date": "2026-12-05",
-  "home": "Força Lleida CE",
-  "away": "La Laguna Tenerife",
-  "league": "Liga ACB",
-  "time": "18:00",
-  "event": "Jornada 10"
- },
- {
-  "date": "2026-12-05",
-  "home": "Monbus Obradoiro",
-  "away": "Surne Bilbao Basket",
-  "league": "Liga ACB",
-  "time": "19:30",
-  "event": "Jornada 10"
- },
- {
-  "date": "2026-12-05",
-  "home": "Casademont Zaragoza",
-  "away": "Río Breogán",
-  "league": "Liga ACB",
-  "time": "21:00",
-  "event": "Jornada 10"
- },
- {
-  "date": "2026-11-06",
+  "date": "",
   "home": "Levanga Hokkaido",
   "away": "Akita Northern Happinets",
   "league": "B.League",
-  "time": "19:05",
+  "time": "",
   "event": ""
  },
  {
-  "date": "2026-11-06",
+  "date": "",
   "home": "Sendai 89ers",
   "away": "Alvark Tokyo",
   "league": "B.League",
-  "time": "19:05",
+  "time": "",
   "event": ""
  },
  {
-  "date": "2026-11-06",
+  "date": "",
   "home": "Chiba Jets",
-  "away": "Altiri Chiba",
+  "away": "Chiba Jets",
   "league": "B.League",
-  "time": "19:05",
+  "time": "",
   "event": ""
  },
  {
-  "date": "2026-11-06",
+  "date": "",
   "home": "SeaHorses Mikawa",
   "away": "Gunma Crane Thunders",
   "league": "B.League",
-  "time": "19:05",
+  "time": "",
   "event": ""
  },
  {
-  "date": "2026-11-06",
+  "date": "",
   "home": "Shiga Lakes",
   "away": "Kawasaki Brave Thunders",
   "league": "B.League",
-  "time": "19:05",
+  "time": "",
   "event": ""
  },
  {
-  "date": "2026-11-06",
+  "date": "",
   "home": "Hiroshima Dragonflies",
   "away": "Nagasaki Velca",
   "league": "B.League",
-  "time": "19:05",
+  "time": "",
+  "event": ""
+ },
+ {
+  "date": "",
+  "home": "Levanga Hokkaido",
+  "away": "Akita Northern Happinets",
+  "league": "B.League",
+  "time": "",
+  "event": ""
+ },
+ {
+  "date": "",
+  "home": "Sendai 89ers",
+  "away": "Alvark Tokyo",
+  "league": "B.League",
+  "time": "",
+  "event": ""
+ },
+ {
+  "date": "",
+  "home": "Chiba Jets",
+  "away": "Chiba Jets",
+  "league": "B.League",
+  "time": "",
+  "event": ""
+ },
+ {
+  "date": "",
+  "home": "SeaHorses Mikawa",
+  "away": "Gunma Crane Thunders",
+  "league": "B.League",
+  "time": "",
+  "event": ""
+ },
+ {
+  "date": "",
+  "home": "Shiga Lakes",
+  "away": "Kawasaki Brave Thunders",
+  "league": "B.League",
+  "time": "",
+  "event": ""
+ },
+ {
+  "date": "",
+  "home": "Hiroshima Dragonflies",
+  "away": "Nagasaki Velca",
+  "league": "B.League",
+  "time": "",
+  "event": ""
+ },
+ {
+  "date": "",
+  "home": "Levanga Hokkaido",
+  "away": "Akita Northern Happinets",
+  "league": "B.League",
+  "time": "",
+  "event": ""
+ },
+ {
+  "date": "",
+  "home": "Sendai 89ers",
+  "away": "Alvark Tokyo",
+  "league": "B.League",
+  "time": "",
+  "event": ""
+ },
+ {
+  "date": "",
+  "home": "Chiba Jets",
+  "away": "Chiba Jets",
+  "league": "B.League",
+  "time": "",
+  "event": ""
+ },
+ {
+  "date": "",
+  "home": "SeaHorses Mikawa",
+  "away": "Gunma Crane Thunders",
+  "league": "B.League",
+  "time": "",
+  "event": ""
+ },
+ {
+  "date": "",
+  "home": "Shiga Lakes",
+  "away": "Kawasaki Brave Thunders",
+  "league": "B.League",
+  "time": "",
+  "event": ""
+ },
+ {
+  "date": "",
+  "home": "Hiroshima Dragonflies",
+  "away": "Nagasaki Velca",
+  "league": "B.League",
+  "time": "",
   "event": ""
  },
  {
@@ -528,7 +384,7 @@
   "league": "EuroLeague"
  },
  {
-  "date": "2026-11-04",
+  "date": "4 nov",
   "time": "01:00",
   "home": "Detroit Pistons",
   "away": "Philadelphia 76ers",
@@ -536,7 +392,7 @@
   "league": "NBA"
  },
  {
-  "date": "2026-11-04",
+  "date": "4 nov",
   "time": "01:00",
   "home": "Washington Wizards",
   "away": "Atlanta Hawks",
@@ -544,7 +400,7 @@
   "league": "NBA"
  },
  {
-  "date": "2026-11-04",
+  "date": "4 nov",
   "time": "01:30",
   "home": "Boston Celtics",
   "away": "Milwaukee Bucks",
@@ -552,7 +408,7 @@
   "league": "NBA"
  },
  {
-  "date": "2026-11-04",
+  "date": "4 nov",
   "time": "01:30",
   "home": "Brooklyn Nets",
   "away": "Charlotte Hornets",
@@ -560,7 +416,7 @@
   "league": "NBA"
  },
  {
-  "date": "2026-11-04",
+  "date": "4 nov",
   "time": "01:30",
   "home": "New York Knicks",
   "away": "Chicago Bulls",
@@ -568,7 +424,7 @@
   "league": "NBA"
  },
  {
-  "date": "2026-11-04",
+  "date": "4 nov",
   "time": "02:00",
   "home": "Memphis Grizzlies",
   "away": "Indiana Pacers",
@@ -576,7 +432,7 @@
   "league": "NBA"
  },
  {
-  "date": "2026-11-04",
+  "date": "4 nov",
   "time": "02:00",
   "home": "New Orleans Pelicans",
   "away": "Utah Jazz",
@@ -584,7 +440,7 @@
   "league": "NBA"
  },
  {
-  "date": "2026-11-04",
+  "date": "4 nov",
   "time": "02:00",
   "home": "Oklahoma City Thunder",
   "away": "Cleveland Cavaliers",
@@ -592,7 +448,7 @@
   "league": "NBA"
  },
  {
-  "date": "2026-11-04",
+  "date": "4 nov",
   "time": "02:30",
   "home": "Houston Rockets",
   "away": "Minnesota Timberwolves",
@@ -600,7 +456,7 @@
   "league": "NBA"
  },
  {
-  "date": "2026-11-04",
+  "date": "4 nov",
   "time": "03:00",
   "home": "Denver Nuggets",
   "away": "Toronto Raptors",
@@ -608,7 +464,7 @@
   "league": "NBA"
  },
  {
-  "date": "2026-11-04",
+  "date": "4 nov",
   "time": "03:00",
   "home": "Phoenix Suns",
   "away": "Portland Trail Blazers",
@@ -616,7 +472,7 @@
   "league": "NBA"
  },
  {
-  "date": "2026-11-04",
+  "date": "4 nov",
   "time": "03:30",
   "home": "San Antonio Spurs",
   "away": "Dallas Mavericks",
@@ -624,7 +480,7 @@
   "league": "NBA"
  },
  {
-  "date": "2026-11-04",
+  "date": "4 nov",
   "time": "04:00",
   "home": "Sacramento Kings",
   "away": "Los Angeles Lakers",
@@ -632,7 +488,7 @@
   "league": "NBA"
  },
  {
-  "date": "2026-11-04",
+  "date": "4 nov",
   "time": "04:30",
   "home": "LA Clippers",
   "away": "Miami Heat",
@@ -640,7 +496,7 @@
   "league": "NBA"
  },
  {
-  "date": "2026-11-05",
+  "date": "5 nov",
   "time": "03:00",
   "home": "Phoenix Suns",
   "away": "Orlando Magic",
@@ -648,7 +504,7 @@
   "league": "NBA"
  },
  {
-  "date": "2026-11-05",
+  "date": "5 nov",
   "time": "04:00",
   "home": "Golden State Warriors",
   "away": "Miami Heat",
@@ -656,7 +512,311 @@
   "league": "NBA"
  },
  {
+  "date": "6 nov",
+  "time": "01:00",
+  "home": "Atlanta Hawks",
+  "away": "Washington Wizards",
+  "event": "NBA Cup - Group Play",
+  "league": "NBA"
+ },
+ {
+  "date": "6 nov",
+  "time": "01:00",
+  "home": "Charlotte Hornets",
+  "away": "Boston Celtics",
+  "event": "NBA Cup - Group Play",
+  "league": "NBA"
+ },
+ {
+  "date": "6 nov",
+  "time": "01:30",
+  "home": "Cleveland Cavaliers",
+  "away": "Philadelphia 76ers",
+  "event": "NBA Cup - Group Play",
+  "league": "NBA"
+ },
+ {
+  "date": "6 nov",
+  "time": "02:00",
+  "home": "Dallas Mavericks",
+  "away": "Utah Jazz",
+  "event": "NBA Cup - Group Play",
+  "league": "NBA"
+ },
+ {
+  "date": "6 nov",
+  "time": "02:00",
+  "home": "Memphis Grizzlies",
+  "away": "Oklahoma City Thunder",
+  "event": "NBA Cup - Group Play",
+  "league": "NBA"
+ },
+ {
+  "date": "6 nov",
+  "time": "02:00",
+  "home": "Milwaukee Bucks",
+  "away": "Toronto Raptors",
+  "event": "NBA Cup - Group Play",
+  "league": "NBA"
+ },
+ {
+  "date": "6 nov",
+  "time": "02:00",
+  "home": "New Orleans Pelicans",
+  "away": "Minnesota Timberwolves",
+  "event": "NBA Cup - Group Play",
+  "league": "NBA"
+ },
+ {
+  "date": "6 nov",
+  "time": "04:00",
+  "home": "Los Angeles Lakers",
+  "away": "Portland Trail Blazers",
+  "event": "NBA Cup - Group Play",
+  "league": "NBA"
+ },
+ {
+  "date": "6 nov",
+  "time": "04:00",
+  "home": "Sacramento Kings",
+  "away": "San Antonio Spurs",
+  "event": "NBA Cup - Group Play",
+  "league": "NBA"
+ },
+ {
   "date": "2026-11-07",
+  "home": "Kids&Us Manresa",
+  "away": "Monbus Obradoiro",
+  "league": "Liga ACB",
+  "time": "18:00",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-07",
+  "home": "Bàsquet Girona",
+  "away": "Surne Bilbao Basket",
+  "league": "Liga ACB",
+  "time": "19:30",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-07",
+  "home": "Força Lleida CE",
+  "away": "Kosner Baskonia",
+  "league": "Liga ACB",
+  "time": "21:00",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "Barça Basket",
+  "away": "Río Breogán",
+  "league": "Liga ACB",
+  "time": "12:00",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "Hereda San Pablo Burgos",
+  "away": "Valencia Basket",
+  "league": "Liga ACB",
+  "time": "12:30",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "La Laguna Tenerife",
+  "away": "Joventut Badalona",
+  "league": "Liga ACB",
+  "time": "13:00",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "Casademont Zaragoza",
+  "away": "Unicaja",
+  "league": "Liga ACB",
+  "time": "17:00",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "Leyma Basquet Coruña",
+  "away": "MoraBanc Andorra",
+  "league": "Liga ACB",
+  "time": "18:00",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "Real Madrid",
+  "away": "UCAM Murcia",
+  "league": "Liga ACB",
+  "time": "19:00",
+  "event": "Jornada 7"
+ },
+ {
+  "date": "2026-11-14",
+  "home": "Río Breogán",
+  "away": "Hereda San Pablo Burgos",
+  "league": "Liga ACB",
+  "time": "18:00",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-14",
+  "home": "MoraBanc Andorra",
+  "away": "La Laguna Tenerife",
+  "league": "Liga ACB",
+  "time": "19:30",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-14",
+  "home": "Joventut Badalona",
+  "away": "Casademont Zaragoza",
+  "league": "Liga ACB",
+  "time": "21:00",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-15",
+  "home": "Força Lleida CE",
+  "away": "Kids&Us Manresa",
+  "league": "Liga ACB",
+  "time": "12:00",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-15",
+  "home": "Valencia Basket",
+  "away": "Leyma Basquet Coruña",
+  "league": "Liga ACB",
+  "time": "12:00",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-15",
+  "home": "Unicaja",
+  "away": "Bàsquet Girona",
+  "league": "Liga ACB",
+  "time": "12:30",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-15",
+  "home": "Barça Basket",
+  "away": "Monbus Obradoiro",
+  "league": "Liga ACB",
+  "time": "17:00",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-15",
+  "home": "Surne Bilbao Basket",
+  "away": "UCAM Murcia",
+  "league": "Liga ACB",
+  "time": "18:00",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-15",
+  "home": "Kosner Baskonia",
+  "away": "Real Madrid",
+  "league": "Liga ACB",
+  "time": "19:00",
+  "event": "Jornada 8"
+ },
+ {
+  "date": "2026-11-21",
+  "home": "Hereda San Pablo Burgos",
+  "away": "Unicaja",
+  "league": "Liga ACB",
+  "time": "18:00",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-21",
+  "home": "Kids&Us Manresa",
+  "away": "MoraBanc Andorra",
+  "league": "Liga ACB",
+  "time": "19:30",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-21",
+  "home": "UCAM Murcia",
+  "away": "Casademont Zaragoza",
+  "league": "Liga ACB",
+  "time": "21:00",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-22",
+  "home": "Monbus Obradoiro",
+  "away": "Bàsquet Girona",
+  "league": "Liga ACB",
+  "time": "12:00",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-22",
+  "home": "Surne Bilbao Basket",
+  "away": "Kosner Baskonia",
+  "league": "Liga ACB",
+  "time": "12:00",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-22",
+  "home": "Leyma Basquet Coruña",
+  "away": "Força Lleida CE",
+  "league": "Liga ACB",
+  "time": "12:30",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-22",
+  "home": "Valencia Basket",
+  "away": "Río Breogán",
+  "league": "Liga ACB",
+  "time": "17:00",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-22",
+  "home": "La Laguna Tenerife",
+  "away": "Barça Basket",
+  "league": "Liga ACB",
+  "time": "18:00",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-11-22",
+  "home": "Real Madrid",
+  "away": "Joventut Badalona",
+  "league": "Liga ACB",
+  "time": "19:00",
+  "event": "Jornada 9"
+ },
+ {
+  "date": "2026-12-05",
+  "home": "Força Lleida CE",
+  "away": "La Laguna Tenerife",
+  "league": "Liga ACB",
+  "time": "18:00",
+  "event": "Jornada 10"
+ },
+ {
+  "date": "2026-12-05",
+  "home": "Monbus Obradoiro",
+  "away": "Surne Bilbao Basket",
+  "league": "Liga ACB",
+  "time": "19:30",
+  "event": "Jornada 10"
+ },
+ {
+  "date": "7 nov",
   "time": "19:00",
   "home": "Pallacanestro Reggiana",
   "away": "Reyer Venezia Mestre",
@@ -664,7 +824,7 @@
   "league": "Lega Basket Serie A"
  },
  {
-  "date": "2026-11-06",
+  "date": "6 nov",
   "time": "19:00",
   "home": "Alba Berlin",
   "away": "Phoenix Hagen",
@@ -672,7 +832,7 @@
   "league": "Basketball Bundesliga"
  },
  {
-  "date": "2026-11-06",
+  "date": "6 nov",
   "time": "19:00",
   "home": "Boulazac Basket Dordogne",
   "away": "Gravelines-Dunkerque",
@@ -680,7 +840,7 @@
   "league": "LNB Élite"
  },
  {
-  "date": "2026-11-07",
+  "date": "7 nov",
   "time": "13:00",
   "home": "Doxa Lefkadas BC",
   "away": "Aris BC",
@@ -688,7 +848,7 @@
   "league": "Greek Basket League"
  },
  {
-  "date": "2026-11-06",
+  "date": "6 nov",
   "time": "11:00",
   "home": "Hapoel Holon",
   "away": "Hapoel Galil Elyon",
@@ -696,11 +856,11 @@
   "league": "Ligat ha'Al"
  },
  {
-  "date": "2026-11-05",
-  "time": "16:50",
-  "home": "BC Jonava",
-  "away": "BC Lietuvos rytas",
-  "event": "Jonavos sporto arena",
-  "league": "LKL"
+  "date": "5 nov",
+  "time": "08:30",
+  "home": "Cairns Taipans",
+  "away": "Illawarra Hawks",
+  "event": "Cairns Convention Centre",
+  "league": "NBL Australia"
  }
 ]

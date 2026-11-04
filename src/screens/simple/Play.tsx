@@ -803,7 +803,7 @@ function Retired({ c }: { c: Career }) {
     else if (!out.ok) store.toast('No se pudo generar la imagen.');
   };
   const share = async () => {
-    const text = `NBA Legacy\n${u.first} ${u.last} (${u.pos}, ${countryByCode(u.nat).name})\n${r.totals.gp} PJ · ${f1(a.ppg)} PTS ${f1(a.rpg)} REB ${f1(a.apg)} AST · ${r.titles} anillo(s)\nLegacy Score ${r.legacyScore} · ${r.tier}\n${challengeDone(c) ? 'Reto cumplido' : 'Reto no cumplido'}: ${challengeOf(c).label}\n¿Puedes superarlo? ${location.origin + location.pathname}`;
+    const text = `Anillero · Modo Carrera\n${u.first} ${u.last} (${u.pos}, ${countryByCode(u.nat).name})\n${r.totals.gp} PJ · ${f1(a.ppg)} PTS ${f1(a.rpg)} REB ${f1(a.apg)} AST · ${r.titles} anillo(s)\nLegacy Score ${r.legacyScore} · ${r.tier}\n${challengeDone(c) ? 'Reto cumplido' : 'Reto no cumplido'}: ${challengeOf(c).label}\n¿Puedes superarlo? ${location.origin + location.pathname}`;
     // The link turns every shared career into an invitation to play.
     try {
       if (navigator.share) await navigator.share({ text });

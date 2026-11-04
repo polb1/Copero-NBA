@@ -1,156 +1,254 @@
 [
  {
+  "source": "NBA Maniacs",
+  "category": "NBA",
+  "title": "Santi Aldama, listo para arrancar",
+  "url": "https://www.nbamaniacs.com/noticias/santi-aldama-listo-para-arrancar/",
+  "date": "2026-11-04",
+  "image": "https://www.nbamaniacs.com/wp-content/uploads/2026/11/mie4-santi-aldama-300x169.jpg",
+  "summary": "El jugador español ya está plenamente recuperado de la cirugía de rodilla y podría debutar el miércoles con la camiseta de los Dallas Mavericks La entrada Santi Aldama, listo para arrancar se publicó primero en NBAManiacs . Source: NBAManiacs"
+ },
+ {
   "source": "Gigantes del Basket",
-  "category": "EUROLEAGUE",
-  "title": "Cuarta jornada de la EuroLeague Women: ¡Valencia Basket asalta Estambul!",
-  "url": "https://www.gigantes.com/euroleague-women/euroleague-women-cuarta-jornada-que-ha-pasado/",
-  "date": "2026-11-03"
+  "category": "BALONCESTO",
+  "title": "Las interesantes reflexiones de Giannis Antetokounmpo sobre Luka Doncic y su nivel",
+  "url": "https://www.gigantes.com/nba/interesantes-reflexiones-giannis-antetokounmpo-luka-doncic/",
+  "date": "2026-11-04",
+  "image": "https://cdn.gigantes.com/wp-content/uploads/sites/4/2026/10/1574-1.webp",
+  "summary": "El esloveno se fue a los 42 puntos ante los Heat de Antetokounmpo La entrada Las interesantes reflexiones de Giannis Antetokounmpo sobre Luka Doncic y su nivel se publicó primero en Gigantes del Basket ."
+ },
+ {
+  "source": "Relevo",
+  "category": "BALONCESTO",
+  "title": "Trey Nyoni, el adolescente que ha conquistado a Iraola en Liverpool: «Me di cuenta muy pronto»",
+  "url": "https://www.relevo.com/futbol/champions-league-masculina/trey-nyoni-liverpool-iraola.html",
+  "date": "2026-11-04",
+  "image": "https://www.relevo.com/wp-content/uploads/2026/11/trey-nyoni-liverpool-iraola.jpg",
+  "summary": "Con 19 años, el centrocampista inglés ha pasado de jugar minutos sueltos a ser titular ante el Arsenal. Iraola confía en él y el Liverpool rechazó hasta 35 millones del Nottingham Forest en verano. The post Trey Nyoni, el adolescente que ha conquistado a Iraol"
+ },
+ {
+  "source": "NBA Maniacs",
+  "category": "NBA",
+  "title": "Josh Hart hace justicia con Jordan Clarkson: «Estaba dispuesto a sacrificarse»",
+  "url": "https://www.nbamaniacs.com/noticias/josh-hart-justicia-con-jordan-clarkson/",
+  "date": "2026-11-04",
+  "image": "https://www.nbamaniacs.com/wp-content/uploads/2026/11/mie4-clarkson-hart-300x169.jpg",
+  "summary": "Los New York Knicks son un equipo diferente. Por historia, idiosincracia, carácter… los de la Gran Manzana respiran a su manera y quienes juegan bajo ... Leer Más La entrada Josh Hart hace justicia con Jordan Clarkson: «Estaba dispuesto a sacrificarse» se publ"
  },
  {
   "source": "Mundo Deportivo",
   "category": "BALONCESTO",
-  "title": "71-73: El Valencia Basket logra un triunfo histórico en Estambul",
-  "url": "https://www.mundodeportivo.com/baloncesto/20261103/1004246874/71-73-valencia-basket-logra-triunfo-historico-estambul.html",
-  "date": "2026-11-03"
+  "title": "La tiradora más ortopédica: así lanza los tiros libres. ¿Cómo no se puede lesionar?",
+  "url": "https://www.mundodeportivo.com/baloncesto/nba/20261104/1004247033/tiradora-ortopedica-asi-lanza-tiros-libres-no-lesionar.html",
+  "date": "2026-11-04",
+  "image": "https://imagenes2.mundodeportivo.com/files/og_thumbnail/uploads/2026/11/04/6aeaddb299977.jpeg",
+  "summary": "Tan fáciles y difíciles a la vez, los tiros libres esconden una complejidad inexplicable y, sino, que se le pregunten a Shaquille O’Neal con su 52,7% de carrera o al segundo mejor de la historia, LeBron James. Si bien The King es mucho mejor lanzador que Shaq "
+ },
+ {
+  "source": "Relevo",
+  "category": "BALONCESTO",
+  "title": "Del ojo de halcón al cantado electrónico: cómo el tenis se quedó sin jueces de línea",
+  "url": "https://www.relevo.com/tenis/ojo-de-halcon-cantado-electronico-lineas-tenis.html",
+  "date": "2026-11-04",
+  "image": "https://www.relevo.com/wp-content/uploads/2026/11/Camaras-Cantado-Electronico-Tenis.jpg",
+  "summary": "Las cámaras deciden si la bola entra en casi todo el circuito. Cómo funciona, el fin de los desafíos, el caso de Wimbledon y la excepción de Roland Garros. The post Del ojo de halcón al cantado electrónico: cómo el tenis se quedó sin jueces de línea appeared f"
+ },
+ {
+  "source": "Relevo",
+  "category": "BALONCESTO",
+  "title": "Los guantes de boxeo: cuánto pesan, cómo se revisan y por qué importan",
+  "url": "https://www.relevo.com/boxeo/guantes-de-boxeo-onzas-reglas.html",
+  "date": "2026-11-04",
+  "image": "https://www.relevo.com/wp-content/uploads/2026/11/guantes-de-boxeo-cuanto-pesan-como-se-revisan.jpg",
+  "summary": "Ocho o diez onzas, relleno, vendas y controles en el vestuario. Qué dicen los reglamentos sobre los guantes, los escándalos y la diferencia con las MMA. The post Los guantes de boxeo: cuánto pesan, cómo se revisan y por qué importan appeared first on Relevo ."
+ },
+ {
+  "source": "Relevo",
+  "category": "BALONCESTO",
+  "title": "Qué es el parque cerrado en la Fórmula 1 y por qué condiciona el fin de semana",
+  "url": "https://www.relevo.com/formula1/parque-cerrado-formula-1-que-es.html",
+  "date": "2026-11-04",
+  "image": "https://www.relevo.com/wp-content/uploads/2026/11/F1-parque-cerrado-reglas-activo-clasificacion-GP-Espana-2026.jpg",
+  "summary": "Desde la clasificación hasta la carrera, los equipos apenas pueden tocar sus coches. Qué es el parque cerrado, qué se permite y qué pasa si se incumple. The post Qué es el parque cerrado en la Fórmula 1 y por qué condiciona el fin de semana appeared first on R"
+ },
+ {
+  "source": "NBA Maniacs",
+  "category": "NBA",
+  "title": "Dalen Terry, la solución de OKC a la plaga de lesiones",
+  "url": "https://www.nbamaniacs.com/noticias/dalen-terry-solucion-okc/",
+  "date": "2026-11-04",
+  "image": "https://www.nbamaniacs.com/wp-content/uploads/2026/11/dalen-terry-300x169.jpg",
+  "summary": "El alero ha firmado un contrato de dos años con los Thunder La entrada Dalen Terry, la solución de OKC a la plaga de lesiones se publicó primero en NBAManiacs . Source: NBAManiacs"
+ },
+ {
+  "source": "Relevo",
+  "category": "BALONCESTO",
+  "title": "Dos hermanos de Avilés y casi un siglo de españoles en la NFL",
+  "url": "https://www.relevo.com/nfl/espanoles-nfl-historia-hermanos-aviles.html",
+  "date": "2026-11-04",
+  "image": "https://www.relevo.com/wp-content/uploads/2026/11/Alejandro-Villanueva-Pittsburgh-Steelers-NFL-2018.jpg",
+  "summary": "Seis españoles han llegado a la NFL, de los hermanos Rodríguez en 1929 a Arcega-Whiteside en 2019, y el coruñés Diego Paz aspira a ser el séptimo nombre. The post Dos hermanos de Avilés y casi un siglo de españoles en la NFL appeared first on Relevo ."
+ },
+ {
+  "source": "Mundo Deportivo",
+  "category": "NBA",
+  "title": "Noche sin ningún partido NBA: ¿por qué?",
+  "url": "https://www.mundodeportivo.com/baloncesto/nba/20261104/1004247027/noche-partido-nba.html",
+  "date": "2026-11-04",
+  "image": "https://imagenes2.mundodeportivo.com/files/og_thumbnail/uploads/2026/11/04/6aead3fb07499.jpeg",
+  "summary": "Excepcionalmente, no hubo partidos NBA anoche. La liga estadounidense estipuló que no hubiera ningún encuentro en la noche del 3 de noviembre para alentar a los aficionados y la comunidad NBA en general a votar en el Día de Elecciones de Estados Unidos. En con"
+ },
+ {
+  "source": "NBA Maniacs",
+  "category": "NBA",
+  "title": "Kawhi completa su tratamiento y se prepara para regresar",
+  "url": "https://www.nbamaniacs.com/noticias/kawhi-completa-tratamiento/",
+  "date": "2026-11-04",
+  "image": "https://www.nbamaniacs.com/wp-content/uploads/2026/11/kawhi-leonard-300x169.jpg",
+  "summary": "Los Raptors actualizarán su situación en siete días, dos semanas y media después de que Leonard jugase su último partido La entrada Kawhi completa su tratamiento y se prepara para regresar se publicó primero en NBAManiacs . Source: NBAManiacs"
+ },
+ {
+  "source": "Mundo Deportivo",
+  "category": "NBA",
+  "title": "La estrella NBA que se rinde a Aíto García Reneses: la importante lección de vida que le enseñó",
+  "url": "https://www.mundodeportivo.com/baloncesto/nba/20261104/1004247020/estrella-nba-rinde-aito-garcia-reneses-importante-leccion-vida-le-enseno.html",
+  "date": "2026-11-04",
+  "image": "https://imagenes2.mundodeportivo.com/files/og_thumbnail/uploads/2019/07/06/60e7cd22390c1.jpeg",
+  "summary": "El maestro Aíto García Reneses ha impartido muchas lecciones del baloncesto y de la vida en su extensa trayectoria entre pizarras. El reconocido entrenador ha labrado su carrera en los banquillos en Europa, pero su enseñanza e influencia llega hasta la NBA."
+ },
+ {
+  "source": "Mundo Deportivo",
+  "category": "BALONCESTO",
+  "title": "El Palau, rendido a un Joel Parra que marca el camino",
+  "url": "https://www.mundodeportivo.com/baloncesto/20261104/1004246665/nadie-parra-crecimiento-capitan-marca-camino.html",
+  "date": "2026-11-04",
+  "image": "https://imagenes2.mundodeportivo.com/files/og_thumbnail/uploads/2026/11/03/6ae9d2ec6e0af.jpeg",
+  "summary": "Hay jugadores que se ganan a una afición a base de talento y otros que lo hacen dejándose hasta la última gota de energía sobre la pista. Joel Parra ha conseguido reunir ambas cosas en este inicio de temporada. El alero catalán atraviesa uno de sus mejores mom"
+ },
+ {
+  "source": "Mundo Deportivo",
+  "category": "NBA",
+  "title": "“Si Euroliga y NBA se unen puede ser bueno para Europa. Si no, no hay jugadores para tantas ligas”",
+  "url": "https://www.mundodeportivo.com/baloncesto/nba/20261104/1004247019/euroliga-nba-unen-realmente-bueno-europa-dos-ligas-perdera-calidad.html",
+  "date": "2026-11-04",
+  "image": "https://imagenes2.mundodeportivo.com/files/og_thumbnail/uploads/2026/11/04/6aeaa92d7b37f.jpeg",
+  "summary": "La Euroliga es una competición llena de romanticismo, repleta de historia y apasionantes rivalidades, mientras que la NBA puede traer al Viejo Continente su reputada visión de negocio y espectáculo con su nueva liga europea. Sin embargo, hay una opinión prácti"
+ },
+ {
+  "source": "Relevo",
+  "category": "BALONCESTO",
+  "title": "El Barça se crece ante el Aston Villa",
+  "url": "https://www.relevo.com/futbol/champions-league-masculina/barca-aston-villa-raphinha-rivaldo.html",
+  "date": "2026-11-03",
+  "image": "https://www.relevo.com/wp-content/uploads/2026/11/barcelona-victoria-aston-villa-raphinha-rivaldo.jpg",
+  "summary": "El Barça derrota al Aston Villa en la que es la primera derrota de Emery en esta Champions League, con un partido atinado en lo ofensivo para los de Flick y en el que lograron no encajar. The post El Barça se crece ante el Aston Villa appeared first on Relevo "
+ },
+ {
+  "source": "Mundo Deportivo",
+  "category": "BALONCESTO",
+  "title": "90-66. El FIATC Girona gana al Levice eslovaco y consolida el liderato europeo",
+  "url": "https://www.mundodeportivo.com/baloncesto/20261103/1004246935/90-66-fiatc-girona-gana-levice-eslovaco-consolida-liderato-europeo.html",
+  "date": "2026-11-03",
+  "image": "https://imagenes2.mundodeportivo.com/files/og_thumbnail/uploads/2026/11/03/6aea5eeb07c75.jpeg",
+  "summary": "El FIATC Girona recuperó las sensaciones este martes y consolidó el liderato en la FIBA Europe Cup con una victoria contra el Patrioti Levice eslovaco (90-66) en el fortín de Fontajau, para poner fin a una racha de dos derrotas."
+ },
+ {
+  "source": "Relevo",
+  "category": "BALONCESTO",
+  "title": "El Bayern le explica al Atlético lo que es la primera línea europea",
+  "url": "https://www.relevo.com/futbol/champions-league-masculina/atletico-bayern-karl-laimer.html",
+  "date": "2026-11-03",
+  "image": "https://www.relevo.com/wp-content/uploads/2026/11/derrota-atletico-madrid-bayern-champions-le-normand.jpg",
+  "summary": "El Bayern ganó 0-2 en el Metropolitano sin necesidad de brillar. Le bastó castigar un error de Le Normand y una pérdida de Barrios para recordar al Atlético cuánto le separa de la élite. The post El Bayern le explica al Atlético lo que es la primera línea euro"
+ },
+ {
+  "source": "Mundo Deportivo",
+  "category": "BALONCESTO",
+  "title": "64-81: El Asisa Joventut logra su primer triunfo a domicilio de la temporada",
+  "url": "https://www.mundodeportivo.com/baloncesto/basketball-champions-league/20261103/1004246926/64-81-asisa-joventut-logra-primer-triunfo-domicilio-temporada.html",
+  "date": "2026-11-03",
+  "image": "https://imagenes2.mundodeportivo.com/files/og_thumbnail/uploads/2026/09/20/6ab02ff678b75.jpeg",
+  "summary": "El Asisa Joventut logró este martes su primer triunfo a domicilio de la temporada, en Portugal, al derrotar al Oporto por 64-81 en un duelo dominado mayormente por los de Dani Miret."
+ },
+ {
+  "source": "Gigantes del Basket",
+  "category": "BALONCESTO",
+  "title": "Qué ha pasado en la BCL: Asisa Joventut y Unicaja se mantienen invictos a base de triples",
+  "url": "https://www.gigantes.com/bcl/que-ha-pasado-bcl-hoy-ucam-murcia-surne-bilbao-jornada3/",
+  "date": "2026-11-03",
+  "image": "https://cdn.gigantes.com/wp-content/uploads/sites/4/2026/10/1574-1.webp",
+  "summary": "Los dos equipos españoles perdieron sus respectivos compromisos La entrada Qué ha pasado en la BCL: Asisa Joventut y Unicaja se mantienen invictos a base de triples se publicó primero en Gigantes del Basket ."
+ },
+ {
+  "source": "NBA Maniacs",
+  "category": "NBA",
+  "title": "La NBA no le hace ascos a acortar los partidos",
+  "url": "https://www.nbamaniacs.com/noticias/nba-40-minutos/",
+  "date": "2026-11-03",
+  "image": "https://www.nbamaniacs.com/wp-content/uploads/2026/11/Hart-300x169.jpg",
+  "summary": "¿Partidos de 40 minutos 'a la europea'? A Adam Silver no le suena tan mal esta idea ante la insostenible plaga de lesiones. La entrada La NBA no le hace ascos a acortar los partidos se publicó primero en NBAManiacs . Source: NBAManiacs"
+ },
+ {
+  "source": "Gigantes del Basket",
+  "category": "EUROLEAGUE",
+  "title": "Cuarta jornada de la EuroLeague Women: ¡Valencia Basket asalta Estambul y Casademont Zaragoza hace lo propio en Francia!",
+  "url": "https://www.gigantes.com/euroleague-women/euroleague-women-cuarta-jornada-que-ha-pasado/",
+  "date": "2026-11-03",
+  "image": "https://cdn.gigantes.com/wp-content/uploads/sites/4/2025/11/cropped-40.jpg",
+  "summary": "Dos visitas complicadas de los equipos españoles que se saldan con sendas victorias. La entrada Cuarta jornada de la EuroLeague Women: ¡Valencia Basket asalta Estambul y Casademont Zaragoza hace lo propio en Francia! se publicó primero en Gigantes del Basket ."
  },
  {
   "source": "Gigantes del Basket",
   "category": "BALONCESTO",
   "title": "El Kids&Us Manresa anuncia el segundo fichaje en 24 horas: Isaiah Mobley se suma a la pintura",
   "url": "https://www.gigantes.com/liga-endesa/isaiah-mobley-fichaje-manresa-trayectoria/",
-  "date": "2026-11-03"
- },
- {
-  "source": "Mundo Deportivo",
-  "category": "BALONCESTO",
-  "title": "El Kids&Us Manresa ficha al ala-pívot bahameño Isaiah Mobley",
-  "url": "https://www.mundodeportivo.com/baloncesto/20261103/1004246812/kids-us-manresa-ficha-ala-pivot-bahameno-isaiah-mobley.html",
-  "date": "2026-11-03"
+  "date": "2026-11-03",
+  "image": "https://cdn.gigantes.com/wp-content/uploads/sites/4/2026/10/1574-1.webp",
+  "summary": "El Kids&Us Manresa continúa moviéndose en el mercado para reforzar su juego interior. Después de anunciar la incorporación de Luka Ščuka, el conjunto dirigido por Diego Ocampo ha cerrado el... La entrada El Kids&Us Manresa anuncia el segundo fichaje en 24 hora"
  },
  {
   "source": "Gigantes del Basket",
   "category": "EUROLEAGUE",
   "title": "TJ Shorts, nombrado MVP de octubre en la Euroliga: sus números y logros",
   "url": "https://www.gigantes.com/euroliga/tj-shorts-mvp-octubre-valencia-basket/",
-  "date": "2026-11-03"
- },
- {
-  "source": "Mundo Deportivo",
-  "category": "EUROLEAGUE",
-  "title": "TJ Shorts, MVP de octubre en la Euroliga: los números que explican su impacto en Valencia Basket",
-  "url": "https://www.mundodeportivo.com/baloncesto/euroliga/20261103/1004246677/tj-shorts-mvp-octubre-euroliga-numeros-explican-impacto-valencia-basket.html",
-  "date": "2026-11-03"
+  "date": "2026-11-03",
+  "image": "https://cdn.gigantes.com/wp-content/uploads/sites/4/2026/10/1574-1.webp",
+  "summary": "El base recibe por segunda ocasión en su carrera este reconocimiento La entrada TJ Shorts, nombrado MVP de octubre en la Euroliga: sus números y logros se publicó primero en Gigantes del Basket ."
  },
  {
   "source": "NBA Maniacs",
   "category": "NBA",
   "title": "Ni invictos ni a cero (jornada 02/10/2026)",
   "url": "https://www.nbamaniacs.com/pospartidos/ni-invictos-ni-a-cero-jornada-02-10-2026/",
-  "date": "2026-11-03"
- },
- {
-  "source": "Mundo Deportivo",
-  "category": "BALONCESTO",
-  "title": "El Kids&Us Manresa, a dar un golpe encima de la mesa en Lituania",
-  "url": "https://www.mundodeportivo.com/baloncesto/eurocup/20261103/1004246655/kids-us-manresa-dar-golpe-encima-mesa-lituania.html",
-  "date": "2026-11-03"
+  "date": "2026-11-03",
+  "image": "https://www.nbamaniacs.com/wp-content/uploads/2026/11/mar3-memphis-300x169.jpg",
+  "summary": "Sacramento y New Orleans se convierten en protagonistas de una noche plena en la NBA que nos deja muchas historias. ¡Vamos a ello! La entrada Ni invictos ni a cero (jornada 02/10/2026) se publicó primero en NBAManiacs . Source: NBAManiacs"
  },
  {
   "source": "Gigantes del Basket",
   "category": "NBA",
   "title": "El inicio a nivel MVP de Luka Doncic en Lakers",
   "url": "https://www.gigantes.com/nba/el-inicio-a-nivel-mvp-de-luka-doncic-en-lakers/",
-  "date": "2026-11-03"
+  "date": "2026-11-03",
+  "image": "https://www.gigantes.com/wp-content/uploads/sites/4/2026/11/MINIATURAS-GIGANTES-1.jpg",
+  "summary": "Luka Doncic ha comenzado la temporada NBA a nivel de MVP, con números de escándalo y los Lakers en la parte alta de la clasificación. La entrada El inicio a nivel MVP de Luka Doncic en Lakers se publicó primero en Gigantes del Basket ."
  },
  {
   "source": "NBA Maniacs",
   "category": "NBA",
   "title": "Russell Westbrook será eterno en Oklahoma",
   "url": "https://www.nbamaniacs.com/noticias/westbrook-sera-eterno-en-oklahoma/",
-  "date": "2026-11-03"
- },
- {
-  "source": "Mundo Deportivo",
-  "category": "BALONCESTO",
-  "title": "Fernando Romay, 67 años: \"No puedo cobrar el 100% de mi jubilación. Si el Real Madrid cotizaba por mí, me declaraban profesional y entonces no podría ir a los Juegos Olímpicos, ni a los Europeos, ni con la Selección\"",
-  "url": "https://www.mundodeportivo.com/baloncesto/20261103/1004246608/fernando-romay-67-anos-no-cobrar-100-mi-jubilacion-real-madrid-cotizaba-mi-me-declaraban-profesional-no-juegos-olimpicos-europeos-seleccion.html",
-  "date": "2026-11-03"
+  "date": "2026-11-03",
+  "image": "https://www.nbamaniacs.com/wp-content/uploads/2026/11/mar3-russell-westbrook-300x169.jpg",
+  "summary": "Los Thunder anuncian que retirarán la camiseta del MVP de 2017 durante una ceremonia que tendrá lugar en el próximo mes de febrero La entrada Russell Westbrook será eterno en Oklahoma se publicó primero en NBAManiacs . Source: NBAManiacs"
  },
  {
   "source": "Gigantes del Basket",
   "category": "NBA",
   "title": "Por qué no hay hoy NBA: La razón por la que este 3 de noviembre no hay partidos",
   "url": "https://www.gigantes.com/nba/por-que-no-hay-hoy-nba-partidos-3noviembre/",
-  "date": "2026-11-03"
- },
- {
-  "source": "Mundo Deportivo",
-  "category": "BALONCESTO",
-  "title": "El desolador parte médico trastoca los planes del Real Madrid",
-  "url": "https://www.mundodeportivo.com/baloncesto/acb/20261103/1004246560/desolador-parte-medico-trastoca-planes-real-madrid.html",
-  "date": "2026-11-03"
- },
- {
-  "source": "NBA Maniacs",
-  "category": "NBA",
-  "title": "Los Knicks prolongan su dominio ante Brooklyn",
-  "url": "https://www.nbamaniacs.com/pospartidos/los-knicks-prolongan-su-dominio-ante-brooklyn/",
-  "date": "2026-11-03"
- },
- {
-  "source": "Gigantes del Basket",
-  "category": "BALONCESTO",
-  "title": "Cuándo juega el Real Madrid de baloncesto hoy: Día, hora y TV vs Panathinaikos",
-  "url": "https://www.gigantes.com/euroliga/cuando-juega-real-madrid/",
-  "date": "2026-11-03"
- },
- {
-  "source": "NBA Maniacs",
-  "category": "NBA",
-  "title": "Wembanyama y Tatum, jugadores de la semana",
-  "url": "https://www.nbamaniacs.com/noticias/wembanyama-y-tatum-jugadores-de-la-semana/",
-  "date": "2026-11-03"
- },
- {
-  "source": "NBA Maniacs",
-  "category": "NBA",
-  "title": "Kon Knueppel, a la vuelta de la esquina",
-  "url": "https://www.nbamaniacs.com/noticias/kon-knueppel-a-la-vuelta-de-la-esquina/",
-  "date": "2026-11-03"
- },
- {
-  "source": "NBA Maniacs",
-  "category": "NBA",
-  "title": "Los Kings estrenan por fin su casillero de victorias",
-  "url": "https://www.nbamaniacs.com/noticias/kings-estrenan-victorias/",
-  "date": "2026-11-03"
- },
- {
-  "source": "NBA Maniacs",
-  "category": "NBA",
-  "title": "Drama de lesiones: los Pacers caen ante Atlanta con solo seis jugadores",
-  "url": "https://www.nbamaniacs.com/noticias/pacers-atlanta-seis-jugadores/",
-  "date": "2026-11-03"
- },
- {
-  "source": "Relevo",
-  "category": "BALONCESTO",
-  "title": "Doncic y Gilgeous-Alexander pasan de 40 puntos y los Pelicans tumban a los invictos",
-  "url": "https://www.relevo.com/baloncesto/doncic-y-gilgeous-alexander-pasan-de-40-puntos-y-los-pelicans-tumban-a-los-invictos.html",
-  "date": "2026-11-03"
- },
- {
-  "source": "Mundo Deportivo",
-  "category": "BALONCESTO",
-  "title": "Jabari Parker y un posible regreso",
-  "url": "https://www.mundodeportivo.com/baloncesto/acb/20261103/1004246513/jabari-parker-posible-regreso.html",
-  "date": "2026-11-03"
- },
- {
-  "source": "Gigantes del Basket",
-  "category": "BALONCESTO",
-  "title": "Georgios Printezis explica por qué no se ve como presidente de la Federación griega",
-  "url": "https://www.gigantes.com/mas-basket/printezis-explicacion-presidente-federacion-griega/",
-  "date": "2026-11-03"
+  "date": "2026-11-03",
+  "image": "https://cdn.gigantes.com/wp-content/uploads/sites/4/2026/10/1574-1.webp",
+  "summary": "El Election Day frena la NBA por una noche La entrada Por qué no hay hoy NBA: La razón por la que este 3 de noviembre no hay partidos se publicó primero en Gigantes del Basket ."
  }
 ]

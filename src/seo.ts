@@ -5,13 +5,13 @@ import { useLocation } from 'react-router-dom';
 const PRIVATE_ROUTE = /^\/(start|play|careers)(\/|$)/;
 
 const HUB_TITLES: Record<string, string> = {
-  '/noticias': 'Noticias de baloncesto: NBA, EuroLeague y Liga ACB | NBA Legacy',
-  '/resultados': 'Resultados de baloncesto en directo | NBA Legacy',
-  '/calendario': 'Calendario de partidos de baloncesto | NBA Legacy',
-  '/estadisticas': 'Estadísticas de baloncesto: líderes NBA y Europa | NBA Legacy',
+  '/noticias': 'Noticias de baloncesto: NBA, EuroLeague y Liga ACB | Anillero · Modo Carrera',
+  '/resultados': 'Resultados de baloncesto en directo | Anillero · Modo Carrera',
+  '/calendario': 'Calendario de partidos de baloncesto | Anillero · Modo Carrera',
+  '/estadisticas': 'Estadísticas de baloncesto: líderes NBA y Europa | Anillero · Modo Carrera',
 };
 
-export const titleFor = (pathname: string, fallback: string) => HUB_TITLES[pathname] ?? (pathname.startsWith('/liga/') ? 'Clasificación y resultados de la liga | NBA Legacy' : fallback);
+export const titleFor = (pathname: string, fallback: string) => HUB_TITLES[pathname] ?? (pathname.startsWith('/liga/') ? 'Clasificación y resultados de la liga | Anillero · Modo Carrera' : fallback);
 
 export const robotsFor = (pathname: string, fallback: string) => (PRIVATE_ROUTE.test(pathname) ? 'noindex, follow' : fallback);
 
