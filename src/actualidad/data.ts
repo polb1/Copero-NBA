@@ -152,14 +152,10 @@ export const crestFor = (name: string): string | undefined => MANUAL[name] || GE
 /** Ligas que se muestran en portada y sidebar (el resto queda fuera). */
 export const MAIN_LEAGUES = [
   'NBA',
-  'EuroLeague',
   'Liga ACB',
-  'Basketbol Süper Ligi',
-  'Basketball Bundesliga',
-  'VTB United League',
-  'CBA',
-  'Lega Basket Serie A',
+  'EuroLeague',
   'Greek Basket League',
+  'Basketbol Süper Ligi',
 ];
 
 export const slugifyName = (s: string) =>
