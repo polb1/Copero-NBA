@@ -160,14 +160,33 @@ def main() -> None:
     index = (OUT / "index.html").read_text()
     scripts = "".join(re.findall(r'<script[^>]+type="module"[^>]*></script>', index))
 
+    # Plantillas reales (5 ligas): mandan sobre el equipo que devuelve baloncesto.
+    # baloncesto conserva el último club del jugador aunque ya no juegue allí.
+    club_actual = {}
+    try:
+        import json as _json
+        _root = Path(__file__).resolve().parent.parent
+        _roster = _json.loads((_root / "src" / "data" / "realRosters2026.json").read_text())
+        for _club, _data in (_roster.get("clubs") or {}).items():
+            for _pl in (_data.get("players") or []):
+                _n = (_pl.get("name") or "").strip()
+                if _n:
+                    club_actual[_n] = {"club": _club, "liga": _data.get("league") or "NBA"}
+    except Exception as _e:
+        print("sin plantillas actuales:", _e)
+
     (OUT / "jugador").mkdir(parents=True, exist_ok=True)
     urls: list[str] = []
     vistos: set[str] = set()
+    por_equipo: dict[str, list[dict]] = {}
 
     for p in activos:
         nombre = f"{p['first_name']} {p['last_name']}".strip()
         equipo = p["team"]["full_name"]
         liga = "NBA"
+        actual = club_actual.get(nombre)
+        if actual:
+            equipo, liga = actual["club"], actual["liga"]
         s = slug(nombre)
         if not s:
             continue
@@ -270,16 +289,21 @@ li a{{text-decoration:none;color:#e6e8ec}} .cta{{display:inline-block;margin-top
 <p class="meta">Perfil: balldontlie.io. Marcadores: fuentes públicas de la liga.</p>
 <a class="cta" href="/play">Jugar al simulador</a>
 </main>
-{scripts}
 </body>
 </html>"""
+        por_equipo.setdefault(equipo, []).append({"name": nombre, "slug": s, "indexable": es_indexable})
+
         d = OUT / "jugador" / s
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(page)
         if es_indexable:
             urls.append(f"https://anillero.com/jugador/{s}")
 
-    print(f"gen-player-pages: {len(urls)} jugadores")
+    # índice equipo -> jugadores, para que las fichas de equipo enlacen la plantilla
+    (DATA / "player-slugs.json").write_text(
+        json.dumps(por_equipo, ensure_ascii=False, indent=0, sort_keys=True)
+    )
+    print(f"gen-player-pages: {len(urls)} indexables · {sum(len(v) for v in por_equipo.values())} fichas enlazables")
 
     # Sólo las fichas con contenido propio entran en el sitemap.
     try:

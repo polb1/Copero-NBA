@@ -49,6 +49,34 @@ for (const f of fixtures) {
 
 const byTeam = (list, name) => list.filter((g) => g.home === name || g.away === name);
 
+const porEquipo = read('player-slugs.json', {});
+
+// Plantillas reales (ACB, Euroliga, GBL, BSL...) desde los datos del juego
+const rosters = (() => {
+  try {
+    const j = JSON.parse(fs.readFileSync('src/data/realRosters2026.json', 'utf8'));
+    return j.clubs || {};
+  } catch { return {}; }
+})();
+const STOP = new Set(['basket','basketball','club','baloncesto','sad','s','a','d','the','bc','b c','j k','jk','sk','basketbol','istanbul','athens','piraeus','madrid']);
+const normName = (t) => String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+const tokens = (t) => normName(t).split(' ').filter((w) => w.length > 2 && !STOP.has(w));
+const rosterFor = (team) => {
+  const t = normName(team);
+  if (rosters[team]) return rosters[team];
+  const exacto = Object.keys(rosters).find((k) => normName(k) === t);
+  if (exacto) return rosters[exacto];
+  // por tokens: gana el club que más palabras comparte (evita depender del patrocinador)
+  const mios = tokens(team);
+  let mejor = null;
+  let mejorPuntos = 0;
+  for (const k of Object.keys(rosters)) {
+    const suyos = tokens(k);
+    const puntos = suyos.filter((w) => mios.includes(w)).length;
+    if (puntos > mejorPuntos) { mejorPuntos = puntos; mejor = k; }
+  }
+  return mejorPuntos > 0 ? rosters[mejor] : null;
+};
 const shell = fs.readFileSync(path.join(OUT, 'index.html'), 'utf8');
 const css = (shell.match(/<link[^>]+rel="stylesheet"[^>]*>/g) || []).join('\n    ');
 const scripts = (shell.match(/<script[^>]+type="module"[^>]*><\/script>/g) || []).join('\n    ');
@@ -131,13 +159,31 @@ for (const [team, liga] of [...teamLeague.entries()].sort()) {
         <div class="stat"><b>${(row.w + row.l) ? ((row.w / (row.w + row.l)) * 100).toFixed(1) + '%' : '—'}</b><span>Victorias</span></div>` : ''}
         ${form ? `<div class="stat"><b>${form}</b><span>Última racha</span></div>` : ''}
       </div>
+      <h2>Plantilla</h2>
+      ${(() => {
+        const conPagina = new Map((porEquipo[team] || []).map((j) => [j.name, j.slug]));
+        const ros = rosterFor(team);
+        const lista = (ros && ros.players ? ros.players : []).map((pl) => ({
+          name: pl.name,
+          slug: conPagina.get(pl.name) || null,
+          pos: pl.pos || '',
+          number: pl.number ?? null,
+        }));
+        // los que tienen ficha propia y no estaban en el roster (NBA desde balldontlie)
+        for (const [name, slug] of conPagina) {
+          if (!lista.some((x) => x.name === name)) lista.push({ name, slug, pos: '', number: null });
+        }
+        if (!lista.length) return '<p class="meta">Sin plantilla disponible todavía.</p>';
+        lista.sort((a, b) => a.name.localeCompare(b.name, 'es'));
+        const entrenador = ros && ros.coach ? `<p class="meta">Entrenador: ${esc(ros.coach)}</p>` : '';
+        return `${entrenador}<ul class="squad">${lista.map((j) => `<li>${j.number !== null && j.number !== '' ? `<span class="num">${esc(j.number)}</span> ` : ''}${j.slug ? `<a href="/jugador/${j.slug}">${esc(j.name)}</a>` : esc(j.name)}${j.pos ? ` <span class="meta">${esc(j.pos)}</span>` : ''}</li>`).join('')}</ul>`;
+      })()}
       <h2>Últimos resultados</h2>
       ${res.length ? `<ul>${res.slice(-10).reverse().map((g) => `<li><span class="d">${fmtDate(g.date)}</span>${esc(g.home)} <b>${g.hs}-${g.as}</b> ${esc(g.away)}</li>`).join('')}</ul>` : '<p class="meta">Sin resultados registrados.</p>'}
       <h2>Próximos partidos</h2>
       ${fix.length ? `<ul>${fix.slice(0, 10).map((g) => `<li><span class="d">${fmtDate(g.date)}${g.time ? ' · ' + esc(g.time) : ''}</span>${esc(g.home)} — ${esc(g.away)}</li>`).join('')}</ul>` : '<p class="meta">Sin partidos programados.</p>'}
       <a class="cta" href="/play">Jugar al simulador</a>
     </main>
-    ${scripts}
   </body>
 </html>`;
 
