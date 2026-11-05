@@ -59,7 +59,7 @@ const html = `<!doctype html>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Jugadores de baloncesto: plantillas de las 5 ligas | Anillero</title>
+<title>Jugadores en activo: plantillas de las 5 ligas | Anillero</title>
 <meta name="description" content="Plantillas de NBA, Liga ACB, Euroliga, GBL y BSL: consulta los jugadores de cada equipo y su perfil." />
 <link rel="canonical" href="${SITE}/jugadores" />
 <meta property="og:type" content="website" />
@@ -87,11 +87,8 @@ h2{font-size:18px;margin:26px 0 10px;color:#f0c04d}
 <body>
 <main>
   <p class="meta"><a href="/">Anillero</a> · Jugadores</p>
-  <h1>Jugadores de las 5 ligas</h1>
-  <p class="meta">Plantillas por equipo. Los perfiles con ficha completa y vigencia contrastada están enlazados.</p>
-
-  <h2>Jugadores con ficha propia (${indexables.length})</h2>
-  <ul class="squad" style="columns:3">${indexables.map((j) => `<li><a href="/jugador/${j.slug}">${esc(j.name)}</a></li>`).join('')}</ul>
+  <h1>Jugadores en activo</h1>
+  <p class="meta">Plantillas 2026-27 por equipo, con dorsal, posición y altura. Para las leyendas retiradas, <a href="/hall-of-fame">Hall of Fame</a>.</p>
 
   <h2>Plantillas por equipo (${conPlantilla.length})</h2>
   ${conPlantilla.map(bloqueEquipo).join('')}

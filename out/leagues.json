@@ -1,5 +1,5 @@
 {
- "updated": 1793871911,
+ "updated": 1793919643,
  "leagues": [
   {
    "key": "nba",
@@ -39,6 +39,6 @@
  ],
  "budget": {
   "dia": "2026-11-05",
-  "apisports": 2
+  "apisports": 4
  }
 }

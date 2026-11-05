@@ -2,7 +2,7 @@
  "league": "gbl",
  "season": "2026-2027",
  "source": "esake.gr (ΕΣΑΚΕ, web oficial GBL)",
- "updated": 1793871911,
+ "updated": 1793919643,
  "games": [
   {
    "id": "gbl-47FBE805-tsson-bc",
@@ -3155,24 +3155,6 @@
    "venue": null
   },
   {
-   "id": "gbl-3690EC22-tsson-bc",
-   "round": 26,
-   "start_ts": 1789640100,
-   "status": "NS",
-   "home": {
-    "id": "gbl-μυκονος-br-betsson-bc",
-    "name": "Mykonos",
-    "score": null
-   },
-   "away": {
-    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
-    "name": "Promitheas Patras",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
    "id": "gbl-08F326C9-gbl-παοκ",
    "round": 26,
    "start_ts": null,
@@ -3239,6 +3221,24 @@
    "away": {
     "id": "gbl-αεκ",
     "name": "AEK",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "gbl-3690EC22-tsson-bc",
+   "round": 26,
+   "start_ts": 1807956900,
+   "status": "NS",
+   "home": {
+    "id": "gbl-μυκονος-br-betsson-bc",
+    "name": "Mykonos",
+    "score": null
+   },
+   "away": {
+    "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
+    "name": "Promitheas Patras",
     "score": null
    },
    "period": null,

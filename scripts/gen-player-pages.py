@@ -179,12 +179,14 @@ def main() -> None:
     urls: list[str] = []
     vistos: set[str] = set()
     por_equipo: dict[str, list[dict]] = {}
+    hof: list[dict] = []
 
     for p in activos:
         nombre = f"{p['first_name']} {p['last_name']}".strip()
         equipo = p["team"]["full_name"]
         liga = "NBA"
         actual = club_actual.get(nombre)
+        retirado = actual is None  # no está en ninguna plantilla 2026-27
         if actual:
             equipo, liga = actual["club"], actual["liga"]
         s = slug(nombre)
@@ -202,7 +204,7 @@ def main() -> None:
 
         altura = p.get("height") or "—"
         peso = p.get("weight") or "—"
-        titulo = f"{nombre} · {equipo} · NBA | Anillero"
+        titulo = (f"{nombre} · Hall of Fame · {equipo} | Anillero" if retirado else f"{nombre} · {equipo} · NBA | Anillero")
 
         filas_partidos = "".join(
             f'<li><a href="/partido/{slug(r["home"])}--{slug(r["away"])}--{r["date"]}">'
@@ -218,15 +220,37 @@ def main() -> None:
             if p.get("draft_year") else "no elegido en el draft"
         )
         formacion = f", formado en {p['college']}" if p.get("college") else ""
-        origen = f" de {p['country']}" if p.get("country") else ""
+        origen = f" ({p['country']})" if p.get("country") else ""
         situacion = (
             f" Su equipo es {row['rank']}º de la NBA con balance {row['w']}-{row['l']}."
             if row else ""
         )
-        contexto = (
-            f"{nombre} es {('un ' + p['position']) if p.get('position') else 'un jugador'}"
-            f" de {altura}{formacion}{origen}, {draft}.{situacion}"
+        POS_ES = {"G": "escolta", "F": "alero", "C": "pívot", "PG": "base", "SG": "escolta",
+                  "SF": "alero", "PF": "ala-pívot", "G-F": "escolta-alero", "F-G": "alero-escolta",
+                  "F-C": "alero-pívot", "C-F": "pívot-ala"}
+        pos_larga = POS_ES.get((p.get("position") or "").upper(), (p.get("position") or "jugador"))
+        seccion_perfil = "Hall of Fame" if retirado else "Perfil"
+        etiqueta = '<span class="hof">Hall of Fame</span> · ' if retirado else ""
+        bloque_partidos = "" if retirado else (
+            "<h2>Últimos partidos del equipo</h2>"
+            f"<ul>{filas_partidos}</ul>"
+            + (
+                f'<h2>Próximo partido</h2><p>{esc(proximos[0]["home"])} — {esc(proximos[0]["away"])} · {esc(proximos[0]["date"])}</p>'
+                if proximos else ""
+            )
         )
+
+        if retirado:
+            contexto = (
+                f"{nombre} fue {('un ' + pos_larga) if p.get('position') else 'un jugador'}"
+                f" de {altura}{formacion}{origen}, {draft}."
+                f" Su última camiseta en la NBA fue la de {equipo}."
+            )
+        else:
+            contexto = (
+                f"{nombre} es {('un ' + pos_larga) if p.get('position') else 'un jugador'}"
+                f" de {altura}{formacion}{origen}, {draft}.{situacion}"
+            )
 
         ld = {
             "@context": "https://schema.org",
@@ -259,7 +283,8 @@ def main() -> None:
 <style>
 body{{margin:0;background:#0b0c0e;color:#e6e8ec;font-family:Inter,system-ui,sans-serif;line-height:1.55}}
 main{{max-width:900px;margin:0 auto;padding:32px 20px 64px}}
-a{{color:#ff6b1a}} h1{{font-size:34px;margin:0 0 4px}} h2{{font-size:18px;margin:26px 0 10px;color:#f0c04d}}
+a{{color:#ff6b1a}} h1{{font-size:34px;margin:0 0 4px}}
+.hof{{display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#f0c04d;border:1px solid rgba(240,192,77,.4);border-radius:999px;padding:2px 8px;margin-right:8px}} h2{{font-size:18px;margin:26px 0 10px;color:#f0c04d}}
 .meta{{color:#98a0ae;margin:0 0 18px}} .grid{{display:flex;gap:14px;flex-wrap:wrap;margin:16px 0}}
 .stat{{background:#14171d;border:1px solid #232733;border-radius:10px;padding:12px 16px;min-width:100px}}
 .stat b{{display:block;font-size:20px}} .stat span{{color:#8a93a3;font-size:11px;text-transform:uppercase;letter-spacing:.06em}}
@@ -271,7 +296,7 @@ li a{{text-decoration:none;color:#e6e8ec}} .cta{{display:inline-block;margin-top
 <main>
 <p><a href="/">Anillero</a> · <a href="/liga/nba">NBA</a> · <a href="/equipo/{slug(equipo)}">{esc(equipo)}</a></p>
 <h1>{esc(nombre)}</h1>
-<p class="meta">{esc(p.get('position') or 'Jugador')} · {esc(equipo)} · {esc(liga)}</p>
+<p class="meta">{etiqueta}{esc(p.get('position') or 'Jugador')} · última camiseta: {esc(equipo)}</p>
 <div class="grid">
   <div class="stat"><b>{esc(p.get('jersey_number') or '—')}</b><span>Dorsal</span></div>
   <div class="stat"><b>{esc(altura)}</b><span>Altura</span></div>
@@ -279,25 +304,37 @@ li a{{text-decoration:none;color:#e6e8ec}} .cta{{display:inline-block;margin-top
   <div class="stat"><b>{esc(p.get('country') or '—')}</b><span>País</span></div>
   <div class="stat"><b>{esc(p.get('college') or '—')}</b><span>Universidad</span></div>
 </div>
-<h2>Perfil</h2>
+<h2>{seccion_perfil}</h2>
 <p class="meta">{contexto}</p>
-<h2>Equipo</h2>
-<p><a href="/equipo/{slug(equipo)}">{esc(equipo)}</a>{(f" · {row['rank']}º · {row['w']}-{row['l']}") if row else ""}</p>
-<h2>Últimos partidos del equipo</h2>
-<ul>{filas_partidos}</ul>
-{f'<h2>Próximo partido</h2><p>{esc(proximos[0]["home"])} — {esc(proximos[0]["away"])} · {esc(proximos[0]["date"])}</p>' if proximos else ''}
+<h2>{'Último equipo' if retirado else 'Equipo'}</h2>
+<p><a href="/equipo/{slug(equipo)}">{esc(equipo)}</a>{("" if retirado else ((f" · {row['rank']}º · {row['w']}-{row['l']}") if row else ""))}</p>
+{bloque_partidos}
 <p class="meta">Perfil: balldontlie.io. Marcadores: fuentes públicas de la liga.</p>
 <a class="cta" href="/play">Jugar al simulador</a>
 </main>
 </body>
 </html>"""
         por_equipo.setdefault(equipo, []).append({"name": nombre, "slug": s, "indexable": es_indexable})
+        if retirado:
+            hof.append({
+                "name": nombre,
+                "slug": s,
+                "pos": p.get("position") or "",
+                "draft": p.get("draft_year"),
+                "pick": p.get("draft_number"),
+                "country": p.get("country") or "",
+                "team": equipo,
+                "height": altura,
+            })
 
         d = OUT / "jugador" / s
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(page)
         if es_indexable:
             urls.append(f"https://anillero.com/jugador/{s}")
+
+    (DATA / "hall-of-fame.json").write_text(json.dumps(hof, ensure_ascii=False, indent=0))
+    print(f"hall of fame: {len(hof)} leyendas")
 
     # índice equipo -> jugadores, para que las fichas de equipo enlacen la plantilla
     (DATA / "player-slugs.json").write_text(
