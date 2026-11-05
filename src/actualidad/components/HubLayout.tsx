@@ -135,6 +135,8 @@ export function HubLayout({ children }: { children: ReactNode }) {
             </Link>
             <nav className="hidden xl:flex items-center gap-space-lg ml-space-md">
               {NAV.map((n) => <NavLink key={n.to} {...n} />)}
+              {/* página estática generada en build: enlace normal, no de router */}
+              <a href="/jugadores" className="font-display text-label-nav uppercase tracking-wider text-on-surface-variant hover:text-text-primary transition-colors">Jugadores</a>
             </nav>
           </div>
           <div className="flex items-center gap-space-md">

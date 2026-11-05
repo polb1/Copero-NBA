@@ -80,6 +80,7 @@ const portal = `
             <a href="/liga/euroleague">Euroliga</a>
             <a href="/liga/greek-basket-league">GBL</a>
             <a href="/liga/basketbol-super-ligi">BSL</a>
+            <a href="/jugadores">Jugadores</a>
             <a class="cta" href="/play">Jugar al simulador</a>
           </nav>
         </header>
