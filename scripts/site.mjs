@@ -106,7 +106,7 @@ export function publicUrls(site, extra = []) {
 /** /llms.txt: a plain summary for AI assistants and their crawlers (llmstxt.org format). */
 export function llmsTxt(site) {
   const u = site.url;
-  return `# NBA Legacy
+  return `# Anillero
 
 > Free basketball career simulator that runs in the browser (phone and desktop), at ${u}/. Create a player at 18, choose country and position, and live a whole career to retirement: youth club, NBA draft, contracts, injuries, trades, awards and legacy. No sign-up, no download. Available in Spanish, English and Catalan.
 
