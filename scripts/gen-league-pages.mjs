@@ -14,6 +14,7 @@ const read = (f, fb) => {
 };
 
 const standings = read('standings.json', {});
+const intros = read('league-intros.json', {});
 const results = read('results.json', []);
 const fixtures = read('fixtures.json', []);
 const leagues = read('leagues.json', {});
@@ -123,6 +124,7 @@ for (const name of names) {
     <main id="root">
       <p class="lead"><a href="/" style="color:#ff6b1a;text-decoration:none">Anillero</a> · Actualidad de baloncesto</p>
       <h1>${esc(name)}</h1>
+      ${intros[name] ? `<p class="lead">${esc(intros[name])}</p>` : ''}
       <p class="lead">${esc(description)}</p>
       <h2>Clasificación</h2>
       ${rows.length ? table(rows) : `<p class="dim">${clubs.length} equipos con plantilla disponible.</p>${clubs.length ? `<ul>${clubs.slice(0, 30).map((c) => `<li>${esc(typeof c === 'string' ? c : c.name)}</li>`).join('')}</ul>` : ''}`}
