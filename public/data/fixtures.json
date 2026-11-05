@@ -1,12 +1,5 @@
 [
 {
-"home": "Mykonos",
-"away": "Promitheas Patras",
-"league": "Greek Basket League",
-"date": "2026-09-17",
-"time": null
-},
-{
 "date": "2026-11-05",
 "time": "",
 "home": "Armani Olimpia Milan",
@@ -708,6 +701,13 @@
 "away": "Olympiacos",
 "league": "Greek Basket League",
 "date": "2027-01-03",
+"time": null
+},
+{
+"home": "Mykonos",
+"away": "Promitheas Patras",
+"league": "Greek Basket League",
+"date": "2027-04-17",
 "time": null
 },
 {
