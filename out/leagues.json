@@ -1,16 +1,16 @@
 {
- "updated": 1793833196,
+ "updated": 1793919643,
  "leagues": [
   {
    "key": "nba",
-   "games": 40,
-   "standings": 30,
-   "source": "ESPN (site.api.espn.com)",
-   "error": null
+   "games": 0,
+   "standings": 0,
+   "source": null,
+   "error": "ValueError: Invalid isoformat string: '4 nov'"
   },
   {
    "key": "acb",
-   "games": 59,
+   "games": 26,
    "standings": 18,
    "source": "ACB oficial (acb.com) + Apify para clasificación",
    "error": null
@@ -38,7 +38,7 @@
   }
  ],
  "budget": {
-  "dia": "2026-11-04",
+  "dia": "2026-11-05",
   "apisports": 4
  }
 }

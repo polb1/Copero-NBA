@@ -132,7 +132,6 @@ for (const name of names) {
       ${list(fix, 'next')}
       <a class="cta" href="/play">Jugar al simulador</a>
     </main>
-    ${scripts}
   </body>
 </html>`;
 

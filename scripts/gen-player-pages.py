@@ -14,6 +14,7 @@ import html
 import json
 import os
 import re
+import sys
 import time
 import unicodedata
 import urllib.request
@@ -74,7 +75,7 @@ def esc(s) -> str:
 
 
 def refresh_players() -> list[dict]:
-    """balldontlie pagina por cursor (meta.next_cursor)."""
+    """balldontlie pagina por cursor (meta.next_cursor). Plan free: 5 req/min."""
     out: list[dict] = []
     cursor = None
     for _ in range(80):  # tope de seguridad
@@ -90,12 +91,22 @@ def refresh_players() -> list[dict]:
 
 
 def load_players() -> list[dict]:
-    if CACHE.exists() and (time.time() - CACHE.stat().st_mtime) < 86400:
+    """La caché manda: sólo se descarga con --refresh o si no hay caché.
+
+    El build nunca espera a la API; el refresco va aparte, en su propio cron.
+    """
+    forzar = "--refresh" in sys.argv
+    if CACHE.exists() and not forzar:
         return json.loads(CACHE.read_text())
     if not KEY:
-        print("sin BALDONTLIE_API_KEY: usando cache si existe")
+        print("sin BALDONTLIE_API_KEY: usando caché si existe")
         return json.loads(CACHE.read_text()) if CACHE.exists() else []
-    return refresh_players()
+    try:
+        return refresh_players()
+    except Exception as e:
+        print(f"balldontlie no disponible ({type(e).__name__}); uso la caché")
+        return json.loads(CACHE.read_text()) if CACHE.exists() else []
+
 
 
 def main() -> None:
@@ -111,19 +122,73 @@ def main() -> None:
     nba_rows = standings.get("NBA", [])
     tablon = {r["team"]: r for r in nba_rows}
 
+    # --- Conjunto indexable: sólo jugadores con contenido propio ---
+    # Criterio: perfil completo + mención en la actualidad (señal de vigencia real).
+    # El conjunto es acumulativo: quien entra, se queda, para que la indexación no oscile.
+    import unicodedata
+
+    def _norm(t: str) -> str:
+        return unicodedata.normalize("NFD", (t or "").lower()).encode("ascii", "ignore").decode()
+
+    INDEXABLE = DATA / "players-indexable.json"
+    indexables: set[str] = set(json.loads(INDEXABLE.read_text())) if INDEXABLE.exists() else set()
+
+    try:
+        noticias = json.loads((DATA / "actualidad.json").read_text())
+        texto = _norm(" ".join(
+            f"{n.get('title','')} {n.get('summary','')} {n.get('description','')}" for n in noticias
+        ))
+    except Exception:
+        texto = ""
+
+    def perfil_completo(x: dict) -> bool:
+        return all([x.get("position"), x.get("height"), x.get("weight"),
+                    x.get("college"), x.get("country"), x.get("draft_year")])
+
+    for x in players:
+        if not x.get("team") or not x["team"].get("full_name") or not x.get("first_name"):
+            continue
+        apellido = _norm(x.get("last_name", ""))
+        if len(apellido) > 3 and apellido in texto and perfil_completo(x):
+            indexables.add(f"{x['first_name']} {x['last_name']}".strip())
+
+    INDEXABLE.write_text(json.dumps(sorted(indexables), ensure_ascii=False, indent=0))
+    print(f"indexables (contenido propio): {len(indexables)}")
+
     activos = [p for p in players if p.get("team") and p["team"].get("full_name") and p.get("first_name")]
 
     index = (OUT / "index.html").read_text()
     scripts = "".join(re.findall(r'<script[^>]+type="module"[^>]*></script>', index))
 
+    # Plantillas reales (5 ligas): mandan sobre el equipo que devuelve baloncesto.
+    # baloncesto conserva el último club del jugador aunque ya no juegue allí.
+    club_actual = {}
+    try:
+        import json as _json
+        _root = Path(__file__).resolve().parent.parent
+        _roster = _json.loads((_root / "src" / "data" / "realRosters2026.json").read_text())
+        for _club, _data in (_roster.get("clubs") or {}).items():
+            for _pl in (_data.get("players") or []):
+                _n = (_pl.get("name") or "").strip()
+                if _n:
+                    club_actual[_n] = {"club": _club, "liga": _data.get("league") or "NBA"}
+    except Exception as _e:
+        print("sin plantillas actuales:", _e)
+
     (OUT / "jugador").mkdir(parents=True, exist_ok=True)
     urls: list[str] = []
     vistos: set[str] = set()
+    por_equipo: dict[str, list[dict]] = {}
+    hof: list[dict] = []
 
     for p in activos:
         nombre = f"{p['first_name']} {p['last_name']}".strip()
         equipo = p["team"]["full_name"]
         liga = "NBA"
+        actual = club_actual.get(nombre)
+        retirado = actual is None  # no está en ninguna plantilla 2026-27
+        if actual:
+            equipo, liga = actual["club"], actual["liga"]
         s = slug(nombre)
         if not s:
             continue
@@ -139,13 +204,53 @@ def main() -> None:
 
         altura = p.get("height") or "—"
         peso = p.get("weight") or "—"
-        titulo = f"{nombre} · {equipo} · NBA | Anillero"
+        titulo = (f"{nombre} · Hall of Fame · {equipo} | Anillero" if retirado else f"{nombre} · {equipo} · NBA | Anillero")
 
         filas_partidos = "".join(
             f'<li><a href="/partido/{slug(r["home"])}--{slug(r["away"])}--{r["date"]}">'
             f'{esc(r["home"])} {r["hs"]}–{r["as"]} {esc(r["away"])}</a> · {esc(r["date"])}</li>'
             for r in partidos[:8]
         ) or "<li>Sin partidos registrados.</li>"
+
+        ronda = p.get("draft_round")
+        puesto = p.get("draft_number")
+        draft = (
+            f"elegido en el draft de {p['draft_year']}"
+            + (f" (ronda {ronda}, puesto {puesto})" if ronda and puesto else "")
+            if p.get("draft_year") else "no elegido en el draft"
+        )
+        formacion = f", formado en {p['college']}" if p.get("college") else ""
+        origen = f" ({p['country']})" if p.get("country") else ""
+        situacion = (
+            f" Su equipo es {row['rank']}º de la NBA con balance {row['w']}-{row['l']}."
+            if row else ""
+        )
+        POS_ES = {"G": "escolta", "F": "alero", "C": "pívot", "PG": "base", "SG": "escolta",
+                  "SF": "alero", "PF": "ala-pívot", "G-F": "escolta-alero", "F-G": "alero-escolta",
+                  "F-C": "alero-pívot", "C-F": "pívot-ala"}
+        pos_larga = POS_ES.get((p.get("position") or "").upper(), (p.get("position") or "jugador"))
+        seccion_perfil = "Hall of Fame" if retirado else "Perfil"
+        etiqueta = '<span class="hof">Hall of Fame</span> · ' if retirado else ""
+        bloque_partidos = "" if retirado else (
+            "<h2>Últimos partidos del equipo</h2>"
+            f"<ul>{filas_partidos}</ul>"
+            + (
+                f'<h2>Próximo partido</h2><p>{esc(proximos[0]["home"])} — {esc(proximos[0]["away"])} · {esc(proximos[0]["date"])}</p>'
+                if proximos else ""
+            )
+        )
+
+        if retirado:
+            contexto = (
+                f"{nombre} fue {('un ' + pos_larga) if p.get('position') else 'un jugador'}"
+                f" de {altura}{formacion}{origen}, {draft}."
+                f" Su última camiseta en la NBA fue la de {equipo}."
+            )
+        else:
+            contexto = (
+                f"{nombre} es {('un ' + pos_larga) if p.get('position') else 'un jugador'}"
+                f" de {altura}{formacion}{origen}, {draft}.{situacion}"
+            )
 
         ld = {
             "@context": "https://schema.org",
@@ -156,6 +261,9 @@ def main() -> None:
             "height": altura,
             "nationality": p.get("country") or "",
         }
+
+        es_indexable = nombre in indexables
+        robots = "index, follow" if es_indexable else "noindex, follow"
 
         page = f"""<!doctype html>
 <html lang="es">
@@ -170,12 +278,13 @@ def main() -> None:
 <meta property="og:description" content="Perfil de {esc(nombre)} en {esc(equipo)} (NBA)." />
 <meta property="og:image" content="https://anillero.com/og/anillero-1200x630.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="robots" content="index, follow" />
+<meta name="robots" content="{robots}" />
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 <style>
 body{{margin:0;background:#0b0c0e;color:#e6e8ec;font-family:Inter,system-ui,sans-serif;line-height:1.55}}
 main{{max-width:900px;margin:0 auto;padding:32px 20px 64px}}
-a{{color:#ff6b1a}} h1{{font-size:34px;margin:0 0 4px}} h2{{font-size:18px;margin:26px 0 10px;color:#f0c04d}}
+a{{color:#ff6b1a}} h1{{font-size:34px;margin:0 0 4px}}
+.hof{{display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#f0c04d;border:1px solid rgba(240,192,77,.4);border-radius:999px;padding:2px 8px;margin-right:8px}} h2{{font-size:18px;margin:26px 0 10px;color:#f0c04d}}
 .meta{{color:#98a0ae;margin:0 0 18px}} .grid{{display:flex;gap:14px;flex-wrap:wrap;margin:16px 0}}
 .stat{{background:#14171d;border:1px solid #232733;border-radius:10px;padding:12px 16px;min-width:100px}}
 .stat b{{display:block;font-size:20px}} .stat span{{color:#8a93a3;font-size:11px;text-transform:uppercase;letter-spacing:.06em}}
@@ -187,7 +296,7 @@ li a{{text-decoration:none;color:#e6e8ec}} .cta{{display:inline-block;margin-top
 <main>
 <p><a href="/">Anillero</a> · <a href="/liga/nba">NBA</a> · <a href="/equipo/{slug(equipo)}">{esc(equipo)}</a></p>
 <h1>{esc(nombre)}</h1>
-<p class="meta">{esc(p.get('position') or 'Jugador')} · {esc(equipo)} · {esc(liga)}</p>
+<p class="meta">{etiqueta}{esc(p.get('position') or 'Jugador')} · última camiseta: {esc(equipo)}</p>
 <div class="grid">
   <div class="stat"><b>{esc(p.get('jersey_number') or '—')}</b><span>Dorsal</span></div>
   <div class="stat"><b>{esc(altura)}</b><span>Altura</span></div>
@@ -195,35 +304,57 @@ li a{{text-decoration:none;color:#e6e8ec}} .cta{{display:inline-block;margin-top
   <div class="stat"><b>{esc(p.get('country') or '—')}</b><span>País</span></div>
   <div class="stat"><b>{esc(p.get('college') or '—')}</b><span>Universidad</span></div>
 </div>
-<h2>Equipo</h2>
-<p><a href="/equipo/{slug(equipo)}">{esc(equipo)}</a>{(f" · {row['rank']}º · {row['w']}-{row['l']}") if row else ""}</p>
-<h2>Últimos partidos del equipo</h2>
-<ul>{filas_partidos}</ul>
-{f'<h2>Próximo partido</h2><p>{esc(proximos[0]["home"])} — {esc(proximos[0]["away"])} · {esc(proximos[0]["date"])}</p>' if proximos else ''}
+<h2>{seccion_perfil}</h2>
+<p class="meta">{contexto}</p>
+<h2>{'Último equipo' if retirado else 'Equipo'}</h2>
+<p><a href="/equipo/{slug(equipo)}">{esc(equipo)}</a>{("" if retirado else ((f" · {row['rank']}º · {row['w']}-{row['l']}") if row else ""))}</p>
+{bloque_partidos}
 <p class="meta">Perfil: balldontlie.io. Marcadores: fuentes públicas de la liga.</p>
 <a class="cta" href="/play">Jugar al simulador</a>
 </main>
-{scripts}
 </body>
 </html>"""
+        por_equipo.setdefault(equipo, []).append({"name": nombre, "slug": s, "indexable": es_indexable})
+        if retirado:
+            hof.append({
+                "name": nombre,
+                "slug": s,
+                "pos": p.get("position") or "",
+                "draft": p.get("draft_year"),
+                "pick": p.get("draft_number"),
+                "country": p.get("country") or "",
+                "team": equipo,
+                "height": altura,
+            })
+
         d = OUT / "jugador" / s
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(page)
-        urls.append(f"https://anillero.com/jugador/{s}")
+        if es_indexable:
+            urls.append(f"https://anillero.com/jugador/{s}")
 
-    print(f"gen-player-pages: {len(urls)} jugadores")
+    (DATA / "hall-of-fame.json").write_text(json.dumps(hof, ensure_ascii=False, indent=0))
+    print(f"hall of fame: {len(hof)} leyendas")
 
+    # índice equipo -> jugadores, para que las fichas de equipo enlacen la plantilla
+    (DATA / "player-slugs.json").write_text(
+        json.dumps(por_equipo, ensure_ascii=False, indent=0, sort_keys=True)
+    )
+    print(f"gen-player-pages: {len(urls)} indexables · {sum(len(v) for v in por_equipo.values())} fichas enlazables")
+
+    # Sólo las fichas con contenido propio entran en el sitemap.
     try:
         sm_path = OUT / "sitemap.xml"
         sm = sm_path.read_text()
-        entries = "\n".join(
-            f'  <url>\n    <loc>{u}</loc>\n    <lastmod>{datetime.date.today().isoformat()}</lastmod>\n    <changefreq>weekly</changefreq>\n  </url>'
-            for u in urls
-        )
         sm = re.sub(r"\s*<url>\s*<loc>https://anillero\.com/jugador/[^<]+</loc>.*?</url>", "", sm, flags=re.S)
-        sm = sm.replace("</urlset>", entries + "\n</urlset>")
+        if urls:
+            entries = "\n".join(
+                f'  <url>\n    <loc>{u}</loc>\n    <lastmod>{datetime.date.today().isoformat()}</lastmod>\n    <changefreq>weekly</changefreq>\n  </url>'
+                for u in urls
+            )
+            sm = sm.replace("</urlset>", entries + "\n</urlset>")
         sm_path.write_text(sm)
-        print(f"sitemap: {len(urls)} jugadores")
+        print(f"sitemap: {len(urls)} jugadores indexables")
     except Exception as e:
         print("sitemap warn:", e)
 
