@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Card, SectionHeader, TeamBadge } from '../components/ui';
 import { fechaCorta, leagueHref, matchId, useHubData } from '../data';
@@ -8,6 +9,19 @@ import { fechaCorta, leagueHref, matchId, useHubData } from '../data';
  */
 export function Match() {
   const { id = '' } = useParams<{ id: string }>();
+
+  // Las fichas de partido son útiles para el usuario pero no aportan valor único
+  // a buscadores mientras no haya análisis propio: noindex, follow.
+  useEffect(() => {
+    const meta = document.createElement('meta');
+    meta.name = 'robots';
+    meta.content = 'noindex, follow';
+    document.head.appendChild(meta);
+    return () => {
+      document.head.removeChild(meta);
+    };
+  }, []);
+
   const { results, fixtures, standings, loading } = useHubData();
 
   const todos = [

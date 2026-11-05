@@ -2,8 +2,25 @@
  "league": "euroleague",
  "season": "2026-2027",
  "source": "api-live.euroleague.net (API oficial)",
- "updated": 1793832324,
+ "updated": 1793871048,
  "games": [
+  {
+   "id": "euroleague-valencia-basket-virtus-bologna-2026-11-19",
+   "start_ts": 1795046400,
+   "status": "NS",
+   "home": {
+    "id": "euroleague-valencia-basket",
+    "name": "Valencia Basket",
+    "score": null
+   },
+   "away": {
+    "id": "euroleague-virtus-bologna",
+    "name": "Virtus Bologna",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
   {
    "id": "euroleague-besiktas-istanbul-real-madrid-2026-11-18",
    "start_ts": 1794960000,
@@ -500,16 +517,16 @@
   {
    "id": "euroleague-real-madrid-panathinaikos-aktor-athens-2026-11-04",
    "start_ts": 1793750400,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "euroleague-real-madrid",
     "name": "Real Madrid",
-    "score": null
+    "score": 112
    },
    "away": {
     "id": "euroleague-panathinaikos-aktor-athens",
     "name": "Panathinaikos AKTOR Athens",
-    "score": null
+    "score": 115
    },
    "period": null,
    "venue": null
@@ -1122,23 +1139,6 @@
     "id": "euroleague-fc-bayern-munich",
     "name": "FC Bayern Munich",
     "score": 87
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "euroleague-real-madrid-ldlc-asvel-villeurbanne-2026-10-15",
-   "start_ts": 1792022400,
-   "status": "FT",
-   "home": {
-    "id": "euroleague-real-madrid",
-    "name": "Real Madrid",
-    "score": 111
-   },
-   "away": {
-    "id": "euroleague-ldlc-asvel-villeurbanne",
-    "name": "LDLC ASVEL Villeurbanne",
-    "score": 92
    },
    "period": null,
    "venue": null

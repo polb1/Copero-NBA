@@ -2,13 +2,13 @@
  "league": "euroleague",
  "season": "2026-2027",
  "source": "api-live.euroleague.net (API oficial)",
- "updated": 1793832324,
+ "updated": 1793871048,
  "standings": [
   {
    "rank": 1,
    "team": "Panathinaikos AKTOR Athens",
    "played": null,
-   "wins": 7,
+   "wins": 8,
    "losses": 2,
    "points": null
   },
@@ -30,14 +30,6 @@
   },
   {
    "rank": 4,
-   "team": "Real Madrid",
-   "played": null,
-   "wins": 6,
-   "losses": 3,
-   "points": null
-  },
-  {
-   "rank": 5,
    "team": "Valencia Basket",
    "played": null,
    "wins": 6,
@@ -45,7 +37,7 @@
    "points": null
   },
   {
-   "rank": 6,
+   "rank": 5,
    "team": "Hapoel IBI Tel Aviv",
    "played": null,
    "wins": 6,
@@ -53,7 +45,7 @@
    "points": null
   },
   {
-   "rank": 7,
+   "rank": 6,
    "team": "Fenerbahce Tarfin Istanbul",
    "played": null,
    "wins": 6,
@@ -61,7 +53,7 @@
    "points": null
   },
   {
-   "rank": 8,
+   "rank": 7,
    "team": "FC Barcelona",
    "played": null,
    "wins": 6,
@@ -69,11 +61,19 @@
    "points": null
   },
   {
-   "rank": 9,
+   "rank": 8,
    "team": "Dubai Basketball",
    "played": null,
    "wins": 6,
    "losses": 3,
+   "points": null
+  },
+  {
+   "rank": 9,
+   "team": "Real Madrid",
+   "played": null,
+   "wins": 6,
+   "losses": 4,
    "points": null
   },
   {
