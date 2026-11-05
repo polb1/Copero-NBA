@@ -116,6 +116,7 @@ const portal = `
 
         <footer>
           <p>Datos de fuentes públicas oficiales (ESPN, EuroLeague, ACB, ESAKE y API-Basketball). Última actualización: ${esc(actualizado)}.</p>
+          <p><a href="/manager-de-baloncesto">Manager de baloncesto</a> · <a href="/juegos-de-baloncesto-online">Juegos de baloncesto online</a> · <a href="/hall-of-fame">Hall of Fame</a> · <a href="/jugadores">Jugadores</a></p>
           <p><a href="/legal/fuentes">Fuentes y licencias</a> · <a href="/legal/aviso-legal">Aviso legal</a> · <a href="/legal/privacidad">Privacidad</a></p>
         </footer>
       </div>
