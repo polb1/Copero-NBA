@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Card, MatchRow, SectionHeader, StandingsTable, TeamBadge } from '../components/ui';
 import { leaguePath, LEAGUE_COUNTRY } from '../leagues';
@@ -34,6 +34,13 @@ const sameLeague = (a: string, b: string) => {
 export function LeaguePage() {
   const { league } = useParams<{ league: string }>();
   const { standings, results, fixtures, stats, leagues: leagueMap, loading } = useHubData();
+  const [intros, setIntros] = useState<Record<string, string>>({});
+  useEffect(() => {
+    fetch('/data/league-intros.json', { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : {}))
+      .then(setIntros)
+      .catch(() => {});
+  }, []);
   const [tab, setTab] = useState<Tab>('resumen');
 
   // Nombre real de la liga a partir del slug.
@@ -99,6 +106,9 @@ export function LeaguePage() {
             </span>
             <div>
               <h1 className="font-display text-headline-xl font-extrabold uppercase text-text-primary m-0 leading-none">{name}</h1>
+              {intros[name || ''] && (
+                <p className="text-body-sm text-on-surface-variant max-w-[70ch] mt-2 mb-0">{intros[name!]}</p>
+              )}
               <p className="text-body-sm text-text-muted m-0 mt-1">
                 {rows.length ? `${rows.length} equipos · clasificación en vivo` : `${clubs.length} equipos · plantilla de la temporada`}
               </p>
