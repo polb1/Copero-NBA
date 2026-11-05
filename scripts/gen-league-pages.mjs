@@ -63,7 +63,7 @@ for (const name of names) {
   const fix = fixtures.filter((f) => slugify(f.league) === slug);
   const clubs = leagues[name] || [];
   const title = `Clasificación y resultados de ${name} | Anillero`;
-  const description = `Clasificación ${rows.length ? 'completa' : 'de equipos'}, últimos resultados y próximos partidos de ${name}, actualizados a diario.`;
+  const description = `Clasificación ${rows.length ? 'completa' : 'de equipos'}, últimos resultados y próximos partidos de ${name}, actualizados periódicamente.`;
 
   const html = `<!doctype html>
 <html lang="es">

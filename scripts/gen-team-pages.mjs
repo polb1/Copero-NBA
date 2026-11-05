@@ -70,7 +70,7 @@ for (const [team, liga] of [...teamLeague.entries()].sort()) {
   }).join('');
 
   const title = `${team}: resultados, clasificación y próximos partidos | Anillero`;
-  const description = `${team} (${liga}): ${row ? `posición ${row.rank} con ${row.w}-${row.l}` : 'plantilla y calendario'}, últimos resultados y próximos partidos actualizados a diario.`;
+  const description = `${team} (${liga}): ${row ? `posición ${row.rank} con ${row.w}-${row.l}` : 'plantilla y calendario'}, últimos resultados y próximos partidos actualizados periódicamente.`;
 
   const html = `<!doctype html>
 <html lang="es">

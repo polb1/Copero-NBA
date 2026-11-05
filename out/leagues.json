@@ -1,6 +1,27 @@
 {
- "updated": 1793822192,
+ "updated": 1793833196,
  "leagues": [
+  {
+   "key": "nba",
+   "games": 40,
+   "standings": 30,
+   "source": "ESPN (site.api.espn.com)",
+   "error": null
+  },
+  {
+   "key": "acb",
+   "games": 59,
+   "standings": 18,
+   "source": "ACB oficial (acb.com) + Apify para clasificación",
+   "error": null
+  },
+  {
+   "key": "euroleague",
+   "games": 70,
+   "standings": 20,
+   "source": "api-live.euroleague.net (API oficial)",
+   "error": null
+  },
   {
    "key": "bsl",
    "games": 0,
@@ -9,36 +30,15 @@
    "error": "sin partidos en la ventana de fechas (plan gratuito: hoy y ayer)"
   },
   {
-   "key": "bbl",
-   "games": 1,
-   "standings": 2,
-   "source": "API-Basketball (api-sports.io), plan gratuito — ventana de fechas",
+   "key": "gbl",
+   "games": 182,
+   "standings": 14,
+   "source": "esake.gr (ΕΣΑΚΕ, web oficial GBL)",
    "error": null
-  },
-  {
-   "key": "vtb",
-   "games": 1,
-   "standings": 2,
-   "source": "API-Basketball (api-sports.io), plan gratuito — ventana de fechas",
-   "error": null
-  },
-  {
-   "key": "cba",
-   "games": 8,
-   "standings": 16,
-   "source": "API-Basketball (api-sports.io), plan gratuito — ventana de fechas",
-   "error": null
-  },
-  {
-   "key": "lega",
-   "games": 0,
-   "standings": 0,
-   "source": null,
-   "error": "sin partidos en la ventana de fechas (plan gratuito: hoy y ayer)"
   }
  ],
  "budget": {
   "dia": "2026-11-04",
-  "apisports": 2
+  "apisports": 4
  }
 }

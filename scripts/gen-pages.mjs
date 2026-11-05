@@ -9,9 +9,9 @@ const src = fs.readFileSync('index.html', 'utf8');
 const PAGES = {
   en: {
     locale: 'en_US',
-    title: 'NBA Career Simulator · Free Basketball Career Game | NBA Legacy',
+    title: 'NBA Career Simulator · Free Basketball Career Game | Anillero',
     description: 'Free basketball career simulator in your browser: create your player, start at your club, enter the NBA draft and win rings. No sign-up, made for mobile.',
-    ogTitle: 'NBA Legacy · Free basketball career simulator',
+    ogTitle: 'Anillero · Free basketball career simulator',
     ogDescription: 'Create your player, enter the NBA draft and build your legacy. Free, in your browser and on your phone.',
     loading: 'Loading…',
     guide: ['/en/best-basketball-simulators', 'Compared: the best free basketball simulator games'],
@@ -22,7 +22,7 @@ const PAGES = {
     genre: ['Sports simulation', 'Basketball'],
     ldDescription: 'Free basketball career simulator: create your player, play for your club, enter the NBA draft and build your legacy all the way to the Hall of Fame.',
     h1: 'Free NBA basketball career simulator',
-    intro: '<strong>NBA Legacy</strong> is a basketball career simulator you play for free in your browser, on your phone or on your computer. You create your player at 18 and live his whole career: your first club, the <strong>NBA draft</strong>, contracts, injuries, trades, rings and retirement. Every season you make between 1 and 5 decisions, depending on the mode, and the rest is played out game by game.',
+    intro: '<strong>Anillero</strong> is a basketball career simulator you play for free in your browser, on your phone or on your computer. You create your player at 18 and live his whole career: your first club, the <strong>NBA draft</strong>, contracts, injuries, trades, rings and retirement. Every season you make between 1 and 5 decisions, depending on the mode, and the rest is played out game by game.',
     howTitle: 'How to play',
     how: [
       '<strong>Create your player:</strong> name, jersey number, country (more than 190), position and play style.',
@@ -42,22 +42,22 @@ const PAGES = {
     ],
     faqTitle: 'Frequently asked questions',
     faq: [
-      ['Is NBA Legacy free?', 'Yes. It is a free game you play in your phone or computer browser, with no downloads, no sign-up and no ads.'],
+      ['Is Anillero free?', 'Yes. It is a free game you play in your phone or computer browser, with no downloads, no sign-up and no ads.'],
       ['How does the basketball career simulator work?', 'You create your player at 18, pick a country, position and style, and live his career season by season: youth club, NBA draft, contracts, injuries, trades, rings and retirement. Each season you make between 1 and 5 decisions, depending on the mode, and the rest is simulated game by game.'],
       ['Do my decisions change the career?', 'Yes. Every choice moves your morale, chemistry, pressure, the coach\'s trust, popularity or your money, and that changes your minutes, your performance in every game, the contracts you get and what you earn.'],
       ['Can I play in Spain or Europe instead of the NBA?', 'Yes. You can start at a club from your country (Real Madrid, Barça, Baskonia, Valencia Basket and many more), go to the draft or build your whole career in Europe winning leagues.'],
       ['How long does a career take?', 'A full career takes about 5 to 10 minutes. When you retire you can compare it with your previous careers and start another one right away.'],
       ['Can I play on my phone?', 'Yes. It is made for mobile: it works on iPhone and Android, can be installed on your home screen like an app and works offline.'],
       ['Is my game saved?', 'Yes. Your game is saved automatically in your browser and your finished careers stay in "My careers" with their stats, challenges and achievements.'],
-      ['Is this an official NBA game?', 'No. It is an independent project not affiliated with the NBA, ESPN or Wikipedia, and it is not an official product nor endorsed by the NBA. Real franchise and player names are used only as references within the simulation. 2026-27 rosters and data come from public sources (ESPN rosters and stats, and Wikipedia; snapshot of 2026-10-20); games, decisions, the draft, coaches, agents and the rest of the simulation are fictional or generated.'],
+      ['Is this an official NBA game?', 'No. It is an independent project not affiliated with the NBA, ESPN or Wikipedia, and it is not an official product nor endorsed by the NBA. Real franchise and player names are used only as references within the simulation. 2026-27 rosters and data come from public sources (ESPN rosters and stats, and Wikipedia; updated periodically); games, decisions, the draft, coaches, agents and the rest of the simulation are fictional or generated.'],
     ],
-    note: 'An independent project not affiliated with the NBA, ESPN or Wikipedia. Real franchise and player names are used only as references within the simulation. 2026-27 rosters and data are based on public sources (ESPN and Wikipedia; snapshot of 2026-10-20); games, decisions, the draft, coaches, agents and the rest of the simulation are fictional or generated. Not an official product and not endorsed by the NBA.',
+    note: 'An independent project not affiliated with the NBA, ESPN or Wikipedia. Real franchise and player names are used only as references within the simulation. 2026-27 rosters and data are based on public sources (ESPN and Wikipedia; updated periodically); games, decisions, the draft, coaches, agents and the rest of the simulation are fictional or generated. Not an official product and not endorsed by the NBA.',
   },
   ca: {
     locale: 'ca_ES',
-    title: 'Simulador de Carrera NBA Gratis · Crea el teu Jugador | NBA Legacy',
+    title: 'Simulador de Carrera NBA Gratis · Crea el teu Jugador | Anillero',
     description: 'Simulador de carrera de bàsquet gratis al navegador: crea el teu jugador, juga al teu club, entra al draft de l\'NBA i guanya anells. Sense registre, al mòbil.',
-    ogTitle: 'NBA Legacy · Simulador de carrera de bàsquet gratis',
+    ogTitle: 'Anillero · Simulador de carrera de bàsquet gratis',
     ogDescription: 'Crea el teu jugador, entra al draft de l\'NBA i construeix el teu llegat. Gratis, al navegador i al mòbil.',
     loading: 'Carregant…',
     guide: ['/mejores-simuladores-baloncesto', 'Comparativa: els millors simuladors de bàsquet gratis (en castellà)'],
@@ -68,7 +68,7 @@ const PAGES = {
     genre: ['Simulador esportiu', 'Bàsquet'],
     ldDescription: 'Simulador de carrera de bàsquet gratis: crea el teu jugador, juga al teu club, entra al draft de l\'NBA i construeix el teu llegat fins al Hall of Fame.',
     h1: 'Simulador de carrera de bàsquet NBA gratis',
-    intro: '<strong>NBA Legacy</strong> és un simulador de carrera de bàsquet que es juga gratis al navegador, al mòbil o a l\'ordinador. Crees el teu jugador amb 18 anys i vius tota la seva carrera: el teu primer club, el <strong>draft de l\'NBA</strong>, els contractes, les lesions, els traspassos, els anells i la retirada. Cada temporada prens entre 1 i 5 decisions, segons el mode, i la resta es juga partit a partit.',
+    intro: '<strong>Anillero</strong> és un simulador de carrera de bàsquet que es juga gratis al navegador, al mòbil o a l\'ordinador. Crees el teu jugador amb 18 anys i vius tota la seva carrera: el teu primer club, el <strong>draft de l\'NBA</strong>, els contractes, les lesions, els traspassos, els anells i la retirada. Cada temporada prens entre 1 i 5 decisions, segons el mode, i la resta es juga partit a partit.',
     howTitle: 'Com es juga',
     how: [
       '<strong>Crea el teu jugador:</strong> nom, dorsal, país (més de 190), posició i estil de joc.',
@@ -88,16 +88,16 @@ const PAGES = {
     ],
     faqTitle: 'Preguntes freqüents',
     faq: [
-      ['NBA Legacy és gratis?', 'Sí. És un joc gratuït que es juga al navegador del mòbil o de l\'ordinador, sense descàrregues, sense registre i sense anuncis.'],
+      ['Anillero és gratis?', 'Sí. És un joc gratuït que es juga al navegador del mòbil o de l\'ordinador, sense descàrregues, sense registre i sense anuncis.'],
       ['Com funciona el simulador de carrera de bàsquet?', 'Crees el teu jugador amb 18 anys, tries país, posició i estil, i vius la seva carrera temporada a temporada: club de formació, draft de l\'NBA, contractes, lesions, traspassos, anells i retirada. Cada temporada prens entre 1 i 5 decisions, segons el mode, i la resta se simula partit a partit.'],
       ['Les decisions canvien la carrera?', 'Sí. Cada elecció mou la moral, la química, la pressió, la confiança de l\'entrenador, la popularitat o els teus diners, i això afecta els teus minuts, el teu rendiment a cada partit, els contractes que reps i el que cobres.'],
       ['Puc jugar a Espanya o a Europa en lloc de l\'NBA?', 'Sí. Pots començar en un club del teu país (Reial Madrid, Barça, Baskonia, València Basket i molts més), anar al draft o fer tota la carrera a Europa guanyant lligues.'],
       ['Quant dura una carrera?', 'Una carrera completa es juga en uns 5 a 10 minuts. Quan et retires la pots comparar amb les teves carreres anteriors i començar-ne una altra al moment.'],
       ['Es pot jugar al mòbil?', 'Sí. Està pensat per al mòbil: funciona a iPhone i Android, es pot instal·lar a la pantalla d\'inici com una app i funciona sense connexió.'],
       ['Es desa la partida?', 'Sí. La partida es desa automàticament al navegador i les teves carreres acabades queden a "Les meves carreres" amb les seves estadístiques, reptes i assoliments.'],
-      ['És un joc oficial de l\'NBA?', 'No. És un projecte independent sense afiliació amb l\'NBA, ESPN ni Wikipedia, i no és un producte oficial ni té el suport de l\'NBA. Els noms de franquícies i jugadors reals s\'utilitzen només com a referència dins de la simulació. Les plantilles i dades 2026-27 provenen de fonts públiques (rosters i estadístiques d\'ESPN i Wikipedia, snapshot del 20-10-2026); els partits, les decisions, el draft, els entrenadors, els agents i la resta de la simulació són ficticis o generats.'],
+      ['És un joc oficial de l\'NBA?', 'No. És un projecte independent sense afiliació amb l\'NBA, ESPN ni Wikipedia, i no és un producte oficial ni té el suport de l\'NBA. Els noms de franquícies i jugadors reals s\'utilitzen només com a referència dins de la simulació. Les plantilles i dades 2026-27 provenen de fonts públiques (rosters i estadístiques d\'ESPN i Wikipedia, actualizados periódicamente); els partits, les decisions, el draft, els entrenadors, els agents i la resta de la simulació són ficticis o generats.'],
     ],
-    note: 'Projecte independent sense afiliació amb l\'NBA, ESPN ni Wikipedia. Els noms de franquícies i jugadors reals s\'utilitzen només com a referència dins de la simulació. Plantilles i dades 2026-27 basades en fonts públiques (ESPN i Wikipedia, snapshot del 20-10-2026); partits, decisions, draft, entrenadors, agents i la resta de la simulació són ficticis o generats. No és un producte oficial ni està avalat per l\'NBA.',
+    note: 'Projecte independent sense afiliació amb l\'NBA, ESPN ni Wikipedia. Els noms de franquícies i jugadors reals s\'utilitzen només com a referència dins de la simulació. Plantilles i dades 2026-27 basades en fonts públiques (ESPN i Wikipedia, actualizados periódicamente); partits, decisions, draft, entrenadors, agents i la resta de la simulació són ficticis o generats. No és un producte oficial ni està avalat per l\'NBA.',
   },
 };
 
@@ -119,7 +119,7 @@ for (const [lang, p] of Object.entries(PAGES)) {
   h = swap(h, /<meta property="og:locale" content="[^"]*" \/>/, `<meta property="og:locale" content="${p.locale}" />`, 'og:locale');
   h = swap(h, /<meta property="og:url" content="[^"]*" \/>/, `<meta property="og:url" content="${url}" />`, 'og:url');
   const ld = [
-    { '@context': 'https://schema.org', '@type': 'VideoGame', name: 'NBA Legacy', alternateName: p.alt, url, inLanguage: lang, genre: p.genre, gamePlatform: ['Web', 'Android', 'iOS'], applicationCategory: 'GameApplication', operatingSystem: 'Web', playMode: 'SinglePlayer', image: `${SITE}/icons/icon-512.png`, description: p.ldDescription, offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' } },
+    { '@context': 'https://schema.org', '@type': 'VideoGame', name: 'Anillero', alternateName: p.alt, url, inLanguage: lang, genre: p.genre, gamePlatform: ['Web', 'Android', 'iOS'], applicationCategory: 'GameApplication', operatingSystem: 'Web', playMode: 'SinglePlayer', image: `${SITE}/icons/icon-512.png`, description: p.ldDescription, offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' } },
     { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: p.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
   ];
   h = swap(h, /<script type="application\/ld\+json">[\s\S]*?<\/script>/, `<script type="application/ld+json">${JSON.stringify(ld)}</script>`, 'json-ld');
@@ -142,7 +142,7 @@ ${p.faq.map(([q, a]) => `          <details><summary>${q}</summary><p>${a}</p></
         </details>
       </div>
       <p class="about-links"><a href="${p.guide[0]}">${p.guide[1]}</a></p>
-      <p class="about-note">© NBA Legacy · ${p.note}</p>
+      <p class="about-note">© Anillero · ${p.note}</p>
     </footer>`;
   h = swap(h, /<footer id="about" class="about">[\s\S]*?<\/footer>/, about, 'about footer');
   h = swap(h, />Cargando…</, `>${p.loading}<`, 'splash');

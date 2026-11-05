@@ -39,10 +39,10 @@ const PRIVATE_ROUTES = ['start', 'play', 'careers'];
 
 /** Own title, description and H1 for each hub page, so crawlers that do not run JavaScript see them too. */
 const HUB_META = {
-  noticias: ['Noticias de baloncesto: NBA, EuroLeague y Liga ACB | NBA Legacy', 'Titulares de baloncesto de la NBA, la EuroLeague y la Liga ACB, con enlace a la fuente original.', 'Noticias de baloncesto'],
-  resultados: ['Resultados de baloncesto en directo | NBA Legacy', 'Últimos resultados de la NBA, la EuroLeague, la Liga ACB y otras ligas. Datos no oficiales.', 'Resultados de baloncesto'],
-  calendario: ['Calendario de partidos de baloncesto | NBA Legacy', 'Próximos partidos de la NBA, la EuroLeague y la Liga ACB.', 'Calendario de partidos'],
-  estadisticas: ['Estadísticas de baloncesto: líderes NBA y Europa | NBA Legacy', 'Líderes estadísticos de la NBA y de las ligas europeas. Datos no oficiales.', 'Estadísticas de baloncesto'],
+  noticias: ['Noticias de baloncesto: NBA, EuroLeague y Liga ACB | Anillero', 'Titulares de baloncesto de la NBA, la EuroLeague y la Liga ACB, con enlace a la fuente original.', 'Noticias de baloncesto'],
+  resultados: ['Resultados de baloncesto en directo | Anillero', 'Últimos resultados de la NBA, la EuroLeague, la Liga ACB y otras ligas. Datos no oficiales.', 'Resultados de baloncesto'],
+  calendario: ['Calendario de partidos de baloncesto | Anillero', 'Próximos partidos de la NBA, la EuroLeague y la Liga ACB.', 'Calendario de partidos'],
+  estadisticas: ['Estadísticas de baloncesto: líderes NBA y Europa | Anillero', 'Líderes estadísticos de la NBA y de las ligas europeas. Datos no oficiales.', 'Estadísticas de baloncesto'],
 };
 
 function hubMeta(route, leagues) {
@@ -51,7 +51,7 @@ function hubMeta(route, leagues) {
   const slug = route.slice(5);
   // shortcut: without the real name the slug is title-cased ("Liga Acb"); pass the league names to avoid it.
   const name = leagues[slug] ?? slug.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-  return [`${name}: clasificación y resultados | NBA Legacy`, `Clasificación y últimos resultados de ${name}. Datos no oficiales.`, `${name}: clasificación y resultados`];
+  return [`${name}: clasificación y resultados | Anillero`, `Clasificación y últimos resultados de ${name}. Datos no oficiales.`, `${name}: clasificación y resultados`];
 }
 
 /** Static copy of the app shell for one route, with its own canonical (and noindex for game screens). */
@@ -105,7 +105,7 @@ export function publicUrls(site, extra = []) {
 /** /llms.txt: a plain summary for AI assistants and their crawlers (llmstxt.org format). */
 export function llmsTxt(site) {
   const u = site.url;
-  return `# NBA Legacy
+  return `# Anillero
 
 > Free basketball career simulator that runs in the browser (phone and desktop), at ${u}/. Create a player at 18, choose country and position, and live a whole career to retirement: youth club, NBA draft, contracts, injuries, trades, awards and legacy. No sign-up, no download. Available in Spanish, English and Catalan.
 
