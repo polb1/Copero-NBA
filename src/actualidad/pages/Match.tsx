@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { slugify } from '../leagues';
 import { Card, SectionHeader, TeamBadge } from '../components/ui';
 import { fechaCorta, leagueHref, matchId, useHubData } from '../data';
 
@@ -66,9 +67,10 @@ export function Match() {
         <div className="flex items-center gap-3">
           <TeamBadge name={name} size={44} />
           <div className="min-w-0">
-            <Link to={`/equipo/${name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`} className="font-display text-headline-lg font-bold uppercase text-text-primary hover:text-primary truncate block">
+            {/* Plain <a>: team pages are static HTML, not app routes. */}
+            <a href={`/equipo/${slugify(name)}`} className="font-display text-headline-lg font-bold uppercase text-text-primary hover:text-primary truncate block no-underline">
               {name}
-            </Link>
+            </a>
             <span className="text-body-sm text-text-muted">
               {r ? `${r.rank}º · ${r.w}-${r.l} · ${((r.w / Math.max(1, r.w + r.l)) * 100).toFixed(1)}%` : 'Sin clasificación disponible'}
             </span>

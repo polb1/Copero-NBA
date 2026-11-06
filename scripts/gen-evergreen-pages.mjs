@@ -8,7 +8,8 @@ const SITE = 'https://anillero.com';
 const data = JSON.parse(fs.readFileSync('public/data/nba-champions.json', 'utf8'));
 const shell = fs.readFileSync(path.join(OUT, 'index.html'), 'utf8');
 const css = (shell.match(/<link[^>]+rel="stylesheet"[^>]*>/g) || []).join('\n    ');
-const scripts = (shell.match(/<script[^>]+type="module"[^>]*><\/script>/g) || []).join('\n    ');
+// Standalone page: only the analytics beacon, never the app (React would mount over #root and show its 404).
+const scripts = (shell.match(/<script[^>]+cloudflareinsights[^>]*><\/script>/g) || []).join('\n    ');
 const fonts = (shell.match(/<link[^>]+fonts\.googleapis[^>]*>/g) || []).join('\n    ');
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 

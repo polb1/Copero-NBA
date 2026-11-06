@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { slugify } from '../leagues';
 import { crestFor, initials, leagueMeta, pct, teamColor, type FixtureRow, type NewsItem, type ResultRow, type StandingRow, type StatRow } from '../data';
 
 export function SectionHeader({ title, right, id }: { title: string; right?: ReactNode; id?: string }) {
@@ -113,7 +114,8 @@ export function StandingsTable({ rows }: { rows: StandingRow[] }) {
             <td className="px-2 py-2">
               <span className="flex items-center gap-2">
                 <TeamBadge name={r.team} size={20} />
-                <span className="text-body-sm text-text-primary truncate">{r.team}</span>
+                {/* Plain <a>: team pages are static HTML, not app routes. */}
+                <a href={`/equipo/${slugify(r.team)}`} className="text-body-sm text-text-primary truncate no-underline hover:text-primary">{r.team}</a>
               </span>
             </td>
             <td className="px-2 py-2 font-mono text-data-mono text-text-muted">{r.w + r.l}</td>

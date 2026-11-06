@@ -49,6 +49,11 @@ export function LeaguePage() {
     return all.find((n) => leaguePath(n) === `/liga/${league}`) || null;
   }, [league, standings, leagueMap]);
 
+  // Same title as the static page; RouteSeo only knows the generic one.
+  useEffect(() => {
+    if (name) document.title = `${name}: clasificación y resultados | Anillero`;
+  }, [name]);
+
   const rows = (name ? standings[name] || standings[name === 'EuroLeague' ? 'EU' : name] : []) || [];
 
 

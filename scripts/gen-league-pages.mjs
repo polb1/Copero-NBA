@@ -36,7 +36,8 @@ const fmtDate = (iso) => {
   return `${Number(m[3])} ${meses[Number(m[2]) - 1]}`;
 };
 
-const names = [...new Set([...Object.keys(standings), ...Object.keys(leagues)])];
+// "EU" is an internal alias of EuroLeague in standings.json, not a league page.
+const names = [...new Set([...Object.keys(standings), ...Object.keys(leagues)])].filter((n) => n !== 'EU');
 
 function table(rows) {
   if (!rows?.length) return '';

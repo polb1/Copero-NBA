@@ -174,6 +174,8 @@ export function HubLayout({ children }: { children: ReactNode }) {
               Datos no oficiales: resultados y clasificaciones de fuentes públicas (ESPN, EuroLeague, B.League y servicios de terceros) y noticias enlazadas desde los medios que las publican. Pueden contener errores o retrasos. Proyecto independiente, sin afiliación con la NBA ni con ninguna liga o club.
             </p>
             <div className="flex items-center gap-space-md">
+              <a href="/anillos/campeones" className="hover:text-primary">Campeones NBA</a>
+              <a href="/anillos/franquicias" className="hover:text-primary">Anillos por equipo</a>
               <a href="/legal/aviso-legal" className="hover:text-primary">Aviso legal</a>
               <a href="/legal/privacidad" className="hover:text-primary">Privacidad</a>
               <a href="/legal/cookies" className="hover:text-primary">Cookies</a>

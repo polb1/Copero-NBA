@@ -34,8 +34,8 @@ export function renderHtml(html, site) {
 }
 
 /** Pages of the app that exist as real URLs. Everything else answers 404 (dist/404.html). */
-export const APP_ROUTES = ['start', 'play', 'careers', 'noticias', 'resultados', 'calendario', 'estadisticas'];
-const PRIVATE_ROUTES = ['start', 'play', 'careers'];
+export const APP_ROUTES = ['start', 'play', 'careers', 'noticias', 'resultados', 'calendario', 'estadisticas', 'partido'];
+const PRIVATE_ROUTES = ['start', 'play', 'careers', 'partido'];
 
 /** Own title, description and H1 for each hub page, so crawlers that do not run JavaScript see them too. */
 const HUB_META = {
@@ -74,7 +74,8 @@ export function routeHtml(html, site, route, leagues = {}) {
 }
 
 /** Old hub URLs now live at the root. */
-export const redirectsFile = () => ['/actualidad / 301', '/clasificaciones / 301', ''].join(String.fromCharCode(10));
+// Match pages only exist in the app: every /partido/<id> is served by the one shell copy (thin pages, so noindex).
+export const redirectsFile = () => ['/actualidad / 301', '/clasificaciones / 301', '/partido/* /partido 200', ''].join(String.fromCharCode(10));
 
 export function robotsTxt(site) {
   // Pre-production stays crawlable on purpose: a Disallow would hide the noindex header from Google.
@@ -125,6 +126,12 @@ Key facts:
 ## Guides
 - [Best free basketball simulator games (2026)](${u}/en/best-basketball-simulators): comparison with Basketball GM, HoopDreams, DRAFTBOUND, My NBA Career Simulator and NBA 2K MyCareer
 - [Mejores simuladores de baloncesto gratis (2026)](${u}/mejores-simuladores-baloncesto): the same comparison in Spanish
+
+## Basketball news and data (Spanish, unofficial)
+- [Basketball hub](${u}/): latest results, standings and news from the NBA, EuroLeague, Liga ACB and more
+- [News](${u}/noticias), [Results](${u}/resultados), [Calendar](${u}/calendario), [Stats](${u}/estadisticas)
+- [NBA champions by season, 1947-2026](${u}/anillos/campeones) and [franchises with the most rings](${u}/anillos/franquicias)
+- League pages at ${u}/liga/<league> and team pages at ${u}/equipo/<team>; the full list is in ${u}/sitemap.xml
 `;
 }
 
