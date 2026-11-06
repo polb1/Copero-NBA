@@ -2,6 +2,7 @@ import { Children, memo, useEffect, useState, type ReactNode } from 'react';
 import { LEGACY_TIERS, legacyScore } from '../../engine/legacy';
 import { ACHIEVEMENTS } from '../../engine/achievements';
 import { challengeDone, challengeOf } from '../../engine/challenges';
+import { dailyResult, isDailyCareer, recordDaily } from '../../engine/daily';
 import { Link, useNavigate } from 'react-router-dom';
 import type { Career, Offer, SeasonRecord, SeasonSummary } from '../../engine/types';
 import * as api from '../../engine/api';
@@ -790,6 +791,12 @@ function RetireModal({ c, onCancel }: { c: Career; onCancel: () => void }) {
 
 function Retired({ c }: { c: Career }) {
   const nav = useNavigate();
+  const daily = isDailyCareer(c) ? dailyResult(c) : null;
+  useEffect(() => {
+    if (daily) recordDaily(daily.done);
+    // se registra una vez por carrera; el guardado es idempotente por día
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const u = userOf(c);
   const r = c.retirement!;
   const a = averages(r.totals);
@@ -798,12 +805,12 @@ function Retired({ c }: { c: Career }) {
   const earned = ACHIEVEMENTS.filter((x) => c.achievements.includes(x.id));
   const rank = { pos: others.filter((x) => x > r.legacyScore).length + 1, total: others.length + 1, best: Math.max(0, ...others), record: others.length > 0 && r.legacyScore > Math.max(...others) };
   const download = async () => {
-    const out = await downloadPNG(c, `nba-legacy-${u.last.toLowerCase()}.png`);
+    const out = await downloadPNG(c, `anillero-${u.last.toLowerCase()}.png`);
     if (out.method === 'open') store.toast('Mantén pulsado para guardar la imagen.');
     else if (!out.ok) store.toast('No se pudo generar la imagen.');
   };
   const share = async () => {
-    const text = `Anillero · Modo Carrera\n${u.first} ${u.last} (${u.pos}, ${countryByCode(u.nat).name})\n${r.totals.gp} PJ · ${f1(a.ppg)} PTS ${f1(a.rpg)} REB ${f1(a.apg)} AST · ${r.titles} anillo(s)\nLegacy Score ${r.legacyScore} · ${r.tier}\n${challengeDone(c) ? 'Reto cumplido' : 'Reto no cumplido'}: ${challengeOf(c).label}\n¿Puedes superarlo? ${location.origin + location.pathname}`;
+    const text = `Anillero · Modo Carrera\n${u.first} ${u.last} (${u.pos}, ${countryByCode(u.nat).name})\n${r.totals.gp} PJ · ${f1(a.ppg)} PTS ${f1(a.rpg)} REB ${f1(a.apg)} AST · ${r.titles} anillo(s)\nLegacy Score ${r.legacyScore} · ${r.tier}\n${challengeDone(c) ? 'Reto cumplido' : 'Reto no cumplido'}: ${challengeOf(c).label}${daily ? `\nReto del día: ${daily.done ? 'cumplido' : 'no cumplido'}` : ''}\n¿Puedes superarlo? ${location.origin + location.pathname}`;
     // The link turns every shared career into an invitation to play.
     try {
       if (navigator.share) await navigator.share({ text });
@@ -813,6 +820,11 @@ function Retired({ c }: { c: Career }) {
   return (
     <div className="decision">
       <Scene kind="trophy" height={170}><h2>{r.tier}</h2></Scene>
+      {daily && (
+        <p className={`career-rank-line ${daily.done ? 'record' : ''}`}>
+          Reto del día: <b>{daily.label}</b> · {daily.done ? 'cumplido' : `no cumplido (${daily.progress[0]}/${daily.progress[1]})`}
+        </p>
+      )}
       <p className="small muted desc">Retirado a los {r.age} · Legacy Score <b className="accent">{r.legacyScore}</b> · Hall of Fame {Math.round(r.hofProbability * 100)}% · {fmtMoney(r.earnings)} ganados</p>
       {rank.total > 1 && (
         <p className={`career-rank-line ${rank.record ? 'record' : ''}`}>

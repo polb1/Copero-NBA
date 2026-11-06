@@ -138,6 +138,7 @@ export function HubLayout({ children }: { children: ReactNode }) {
               {/* página estática generada en build: enlace normal, no de router */}
               <a href="/jugadores" className="font-display text-label-nav uppercase tracking-wider text-on-surface-variant hover:text-text-primary transition-colors">Jugadores</a>
               <a href="/hall-of-fame" className="font-display text-label-nav uppercase tracking-wider text-on-surface-variant hover:text-text-primary transition-colors">Hall of Fame</a>
+              <a href="/start" className="font-display text-label-nav uppercase tracking-wider text-secondary hover:text-primary transition-colors">Reto del día</a>
             </nav>
           </div>
           <div className="flex items-center gap-space-md">
