@@ -8,6 +8,7 @@ import type { NewCareerInput } from '../../engine/career';
 import { newCareer } from '../../engine/api';
 import { newSeed } from '../../engine/rng';
 import { CHALLENGES, rollChallenge } from '../../engine/challenges';
+import { dailyGoalLabel, dailyPlayedToday, dailySetup, loadDaily, seedForDay, todayKey } from '../../engine/daily';
 import { careerHistory, playStreak, store, useCareer } from '../../store/store';
 import { userOf } from '../../engine/career';
 import { CourtPicker, Jersey } from '../../ui/simple';
@@ -60,6 +61,50 @@ export function Start() {
   // The chosen country stays on top so it is visible without scrolling the list.
   const countries = COUNTRIES.filter((c) => c.name.toLowerCase().includes(q.trim().toLowerCase())).sort((a, b) => Number(b.code === nat) - Number(a.code === nat) || a.name.localeCompare(b.name, 'es'));
 
+  // Reto del día: escenario y objetivo fijos para todos; se guarda la racha.
+  const startDaily = () => {
+    const key = todayKey();
+    const setup = dailySetup(key);
+    const posD = (setup.pos ?? 'SG') as Pos;
+    const [lo, hi] = HEIGHT_RANGE[posD];
+    const height = Math.round((lo + hi) / 2);
+    const archD = (setup.arch ?? 'shooter') as Archetype;
+    const growth = ARCHETYPES.find((a) => a.id === archD)!.growth.filter((g) => g !== 'balanced') as (keyof typeof TRAINING_AREAS)[];
+    const focus: NewCareerInput['focus'] = growth.length
+      ? Object.fromEntries(growth.map((g) => [g, Math.floor(10 / growth.length)]))
+      : { shooting: 2, defense: 2, playmaking: 2, athleticism: 2, rebounding: 2 };
+    const country = COUNTRIES.find((c) => c.code === setup.nat) ?? COUNTRIES[0];
+    const input: NewCareerInput = {
+      first: '',
+      last: setup.last ?? 'Reto del día',
+      jersey: 'RETO',
+      number: setup.number ?? 23,
+      nat: country.code,
+      birthplace: country.name,
+      age: 18,
+      height,
+      weight: Math.round(height * 0.52 - 6),
+      hand: 'R',
+      pos: posD,
+      arch: archD,
+      origin: '',
+      bio: '',
+      route: 'international',
+      draftedTier: 'first',
+      mode: 'quick',
+      talent: 'balanced',
+      focus,
+      look: { skin: 2, hair: 1, accent: '#c2410c' },
+    };
+    setCreating(true);
+    setTimeout(() => {
+      const c = newCareer(input, seedForDay(key));
+      (c.flags as Record<string, unknown>).daily = key;
+      store.setCareer(c);
+      nav('/play');
+    }, 30);
+  };
+
   const confirm = () => {
     const [lo, hi] = HEIGHT_RANGE[pos];
     const height = Math.round((lo + hi) / 2);
@@ -103,6 +148,22 @@ export function Start() {
   return (
     <div className="simple-wrap">
       <div className="simple-panel start-panel anim-in">
+        {/* Reto del día: mismo escenario y mismo objetivo para todos */}
+        <div className="daily-card">
+          <div className="daily-info">
+            <span className="daily-kicker">Reto del día · {todayKey().split('-').reverse().join('/')}</span>
+            <b>{dailyGoalLabel(todayKey())}</b>
+            <span className="tiny dim">
+              {dailyPlayedToday()
+                ? (loadDaily().done ? `Cumplido hoy · racha ${loadDaily().streak} día(s)` : `No cumplido hoy · racha ${loadDaily().streak} día(s)`)
+                : (loadDaily().streak > 0 ? `Racha actual: ${loadDaily().streak} día(s)` : 'Mismo escenario para todos los jugadores')}
+            </span>
+          </div>
+          <button type="button" className="daily-btn" onClick={startDaily} disabled={creating}>
+            {creating ? 'Preparando…' : dailyPlayedToday() ? 'Repetir reto' : 'Jugar el reto'}
+          </button>
+        </div>
+
         <div className="simple-head">
           <div>
             <h2>Crea tu jugador</h2>

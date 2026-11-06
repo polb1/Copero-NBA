@@ -9,6 +9,7 @@ import { fmtMoney, shownValue } from '../engine/contracts';
 import { countryByCode } from '../content/names';
 import { t } from '../i18n/i18n';
 import { DIAMOND_OVR } from './simple';
+import { dailyResult, isDailyCareer } from '../engine/daily';
 
 const natName = (code: string) => t(countryByCode(code).name);
 const COND = '"Barlow Condensed", Arial Narrow, sans-serif';
@@ -168,7 +169,7 @@ export function drawCard(c: Career): string {
   g.textAlign = 'left';
   g.fillStyle = '#ff6b1a';
   g.font = `700 34px ${COND}`;
-  g.fillText(t('NBA LEGACY · CARRERA COMPLETA'), 72, 110);
+  g.fillText(t('ANILLERO · CARRERA COMPLETA'), 72, 110);
   if (u.first) {
     g.fillStyle = '#b0b6c1';
     g.font = `600 44px ${COND}`;
@@ -181,6 +182,18 @@ export function drawCard(c: Career): string {
   g.font = `500 36px ${BODY}`;
   g.fillText(`${natName(u.nat)} · ${t(POS_LABEL[u.pos])} · #${c.profile.number}`, 72, 380, 620);
   g.fillText(t(`Retirado a los ${r.age} años · ${seasonLabel(r.season)}`), 72, 428, 620);
+
+  // Reto diario, si la carrera es la del día: sello pequeño bajo la ficha.
+  if (isDailyCareer(c)) {
+    const d = dailyResult(c);
+    const etiqueta = d.done ? t('RETO DEL DÍA · CUMPLIDO') : t('RETO DEL DÍA');
+    g.font = `700 24px ${COND}`;
+    g.fillStyle = d.done ? 'rgba(245,196,81,.16)' : 'rgba(255,255,255,.07)';
+    roundRect(g, 72, 452, g.measureText(etiqueta).width + 44, 46, 23);
+    g.fill();
+    g.fillStyle = d.done ? '#f5c451' : '#b0b6c1';
+    g.fillText(etiqueta, 94, 483);
+  }
 
   // Peak OVR, the headline number: a big gold card on the right.
   const hx = 724, hy = 150, hw = 284, hh = 300;
