@@ -1,0 +1,5 @@
+{
+  "token": "1c9cfbb4c45244808cc28e5587e79e49",
+  "provider": "cloudflare-web-analytics",
+  "note": "Token público del beacon (no es una API key). Sin cookies: no requiere banner de consentimiento."
+}
