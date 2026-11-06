@@ -53,6 +53,10 @@ for (const f of fixtures) {
 
 const byTeam = (list, name) => list.filter((g) => g.home === name || g.away === name);
 
+const crestMap = (() => {
+  try { return JSON.parse(fs.readFileSync('src/actualidad/crestMap.json', 'utf8')); } catch { return {}; }
+})();
+const gblRosters = read('gbl-rosters.json', {});
 const porEquipo = read('player-slugs.json', {});
 
 // Plantillas reales (ACB, Euroliga, GBL, BSL...) desde los datos del juego
@@ -65,7 +69,14 @@ const rosters = (() => {
 const STOP = new Set(['basket','basketball','club','baloncesto','sad','s','a','d','the','bc','b c','j k','jk','sk','basketbol','istanbul','athens','piraeus','madrid']);
 const normName = (t) => String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const tokens = (t) => normName(t).split(' ').filter((w) => w.length > 2 && !STOP.has(w));
+const ALIAS_ROSTER = {
+  'Barça Basket': 'FC Barcelona',
+  'Kosner Baskonia': 'Baskonia',
+};
+
 const rosterFor = (team) => {
+  const alias = ALIAS_ROSTER[team];
+  if (alias && rosters[alias]) return rosters[alias];
   const t = normName(team);
   if (rosters[team]) return rosters[team];
   const exacto = Object.keys(rosters).find((k) => normName(k) === t);
@@ -79,7 +90,17 @@ const rosterFor = (team) => {
     const puntos = suyos.filter((w) => mios.includes(w)).length;
     if (puntos > mejorPuntos) { mejorPuntos = puntos; mejor = k; }
   }
-  return mejorPuntos > 0 ? rosters[mejor] : null;
+  if (mejorPuntos > 0) return rosters[mejor];
+  // respaldo: plantillas de la liga griega (esake.gr)
+  const exactoGbl = gblRosters[team] || Object.entries(gblRosters).find(([k]) => normName(k) === t)?.[1];
+  if (exactoGbl) return { players: exactoGbl, coach: '' };
+  let mejorG = null;
+  let puntosG = 0;
+  for (const [k, v] of Object.entries(gblRosters)) {
+    const p = normName(k).split(' ').filter((w) => w.length > 3 && mios.includes(w)).length;
+    if (p > puntosG) { puntosG = p; mejorG = v; }
+  }
+  return puntosG > 0 ? { players: mejorG, coach: '' } : null;
 };
 const shell = fs.readFileSync(path.join(OUT, 'index.html'), 'utf8');
 const css = (shell.match(/<link[^>]+rel="stylesheet"[^>]*>/g) || []).join('\n    ');
@@ -105,8 +126,25 @@ for (const [team, liga] of [...teamLeague.entries()].sort()) {
   const title = `${team}: resultados, clasificación y próximos partidos | Anillero`;
   const description = `${team} (${liga}): ${row ? `posición ${row.rank} con ${row.w}-${row.l}` : 'plantilla y calendario'}, últimos resultados y próximos partidos actualizados periódicamente.`;
 
-  const crestFile = path.join('public', 'crests', `${slug}.png`);
-  const crest = fs.existsSync(crestFile) ? `/crests/${slug}.png` : null;
+  // escudo: alias exacto -> nombre normalizado -> tokens compartidos -> slug -> generado
+  const buscarEscudo = (nombre) => {
+    const directo = crestMap[nombre];
+    if (directo && fs.existsSync(path.join('public', directo))) return directo;
+    const t = normName(nombre);
+    const igual = Object.keys(crestMap).find((k) => normName(k) === t);
+    if (igual && fs.existsSync(path.join('public', crestMap[igual]))) return crestMap[igual];
+    const mios = t.split(' ').filter((w) => w.length >= 3);
+    let mejor = null;
+    let puntos = 0;
+    for (const k of Object.keys(crestMap)) {
+      const suyos = normName(k).split(' ').filter((w) => w.length >= 3);
+      const p = suyos.filter((w) => mios.includes(w)).length;
+      if (p > puntos && fs.existsSync(path.join('public', crestMap[k]))) { puntos = p; mejor = crestMap[k]; }
+    }
+    return puntos > 0 ? mejor : null;
+  };
+  const porSlug = `/crests/${slug}.png`;
+  const crest = buscarEscudo(team) || (fs.existsSync(path.join('public', porSlug)) ? porSlug : null);
   const pct = row && row.w + row.l ? ((row.w / (row.w + row.l)) * 100).toFixed(1) : null;
 
   const html = `<!doctype html>
@@ -200,7 +238,7 @@ for (const [team, liga] of [...teamLeague.entries()].sort()) {
     for (const [name, slug] of conPagina) {
       if (!lista.some((x) => x.name === name)) lista.push({ name, slug, pos: '', number: null, nat: '', height: null });
     }
-    if (!lista.length) return '<p class="coach">Sin plantilla disponible todavía.</p>';
+    if (!lista.length) return '<p class="coach">Todavía no tenemos la plantilla de este club. Puedes ver el resto de jugadores en <a href="/jugadores">Jugadores</a>.</p>';
     lista.sort((a, b) => (Number(a.number) || 999) - (Number(b.number) || 999));
     const coach = ros && ros.coach ? `<p class="coach">Entrenador: <b>${esc(ros.coach)}</b></p>` : '';
     return coach + `<ul class="squad">${lista.map((j) => `

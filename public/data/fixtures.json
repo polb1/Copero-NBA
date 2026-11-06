@@ -1,45 +1,5 @@
 [
 {
-"date": "2026-11-05",
-"time": "",
-"home": "Armani Olimpia Milan",
-"away": "Valencia Basket",
-"event": "Jornada 10",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-05",
-"time": "",
-"home": "LDLC ASVEL Villeurbanne",
-"away": "FC Bayern Munich",
-"event": "Jornada 10",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-05",
-"time": "",
-"home": "Hapoel IBI Tel Aviv",
-"away": "FC Barcelona",
-"event": "Jornada 10",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-05",
-"time": "",
-"home": "Fenerbahce Tarfin Istanbul",
-"away": "Kosner Baskonia Vitoria-Gasteiz",
-"event": "Jornada 10",
-"league": "EuroLeague"
-},
-{
-"date": "2026-11-05",
-"time": "",
-"home": "Anadolu Efes Istanbul",
-"away": "Paris Basketball",
-"event": "Jornada 10",
-"league": "EuroLeague"
-},
-{
 "date": "2026-11-06",
 "time": "",
 "home": "Partizan Mozzart Bet Belgrade",
@@ -410,6 +370,46 @@
 "league": "EuroLeague"
 },
 {
+"date": "2026-11-19",
+"time": "",
+"home": "Paris Basketball",
+"away": "Hapoel IBI Tel Aviv",
+"event": "Jornada 13",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-19",
+"time": "",
+"home": "Armani Olimpia Milan",
+"away": "Fenerbahce Tarfin Istanbul",
+"event": "Jornada 13",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-19",
+"time": "",
+"home": "FC Bayern Munich",
+"away": "Kosner Baskonia Vitoria-Gasteiz",
+"event": "Jornada 13",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-19",
+"time": "",
+"home": "Zalgiris Kaunas",
+"away": "Panathinaikos AKTOR Athens",
+"event": "Jornada 13",
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-19",
+"time": "",
+"home": "Maccabi Rapyd Tel Aviv",
+"away": "Dubai Basketball",
+"event": "Jornada 13",
+"league": "EuroLeague"
+},
+{
 "home": "Iraklis",
 "away": "AEK",
 "league": "Greek Basket League",
@@ -711,22 +711,6 @@
 "time": null
 },
 {
-"date": "5 nov",
-"time": "03:00",
-"home": "Phoenix Suns",
-"away": "Orlando Magic",
-"event": "",
-"league": "NBA"
-},
-{
-"date": "5 nov",
-"time": "04:00",
-"home": "Golden State Warriors",
-"away": "Miami Heat",
-"event": "",
-"league": "NBA"
-},
-{
 "date": "6 nov",
 "time": "01:00",
 "home": "Atlanta Hawks",
@@ -851,6 +835,62 @@
 "time": "04:00",
 "home": "Portland Trail Blazers",
 "away": "San Antonio Spurs",
+"event": "",
+"league": "NBA"
+},
+{
+"date": "8 nov",
+"time": "21:30",
+"home": "Chicago Bulls",
+"away": "Philadelphia 76ers",
+"event": "",
+"league": "NBA"
+},
+{
+"date": "8 nov",
+"time": "00:00",
+"home": "Detroit Pistons",
+"away": "Los Angeles Lakers",
+"event": "",
+"league": "NBA"
+},
+{
+"date": "8 nov",
+"time": "01:00",
+"home": "Minnesota Timberwolves",
+"away": "Utah Jazz",
+"event": "",
+"league": "NBA"
+},
+{
+"date": "8 nov",
+"time": "01:30",
+"home": "Dallas Mavericks",
+"away": "Brooklyn Nets",
+"event": "",
+"league": "NBA"
+},
+{
+"date": "8 nov",
+"time": "02:00",
+"home": "Milwaukee Bucks",
+"away": "Boston Celtics",
+"event": "",
+"league": "NBA"
+},
+{
+"date": "8 nov",
+"time": "03:00",
+"home": "LA Clippers",
+"away": "New Orleans Pelicans",
+"event": "",
+"league": "NBA"
+},
+{
+"date": "8 nov",
+"time": "03:00",
+"home": "Sacramento Kings",
+"away": "Miami Heat",
 "event": "",
 "league": "NBA"
 }

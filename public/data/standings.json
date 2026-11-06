@@ -74,7 +74,7 @@
 },
 {
 "rank": 10,
-"team": "Minnesota Timberwolves",
+"team": "Golden State Warriors",
 "w": 6,
 "l": 3,
 "form": "",
@@ -82,8 +82,8 @@
 },
 {
 "rank": 11,
-"team": "Golden State Warriors",
-"w": 5,
+"team": "Minnesota Timberwolves",
+"w": 6,
 "l": 3,
 "form": "",
 "conf": "West"
@@ -154,15 +154,15 @@
 },
 {
 "rank": 20,
-"team": "Miami Heat",
+"team": "Charlotte Hornets",
 "w": 3,
-"l": 5,
+"l": 6,
 "form": "",
 "conf": "East"
 },
 {
 "rank": 21,
-"team": "Charlotte Hornets",
+"team": "Miami Heat",
 "w": 3,
 "l": 6,
 "form": "",
@@ -178,15 +178,15 @@
 },
 {
 "rank": 23,
-"team": "Orlando Magic",
+"team": "Phoenix Suns",
 "w": 2,
 "l": 5,
 "form": "",
-"conf": "East"
+"conf": "West"
 },
 {
 "rank": 24,
-"team": "Brooklyn Nets",
+"team": "Orlando Magic",
 "w": 2,
 "l": 6,
 "form": "",
@@ -194,11 +194,11 @@
 },
 {
 "rank": 25,
-"team": "Phoenix Suns",
-"w": 1,
-"l": 5,
+"team": "Brooklyn Nets",
+"w": 2,
+"l": 6,
 "form": "",
-"conf": "West"
+"conf": "East"
 },
 {
 "rank": 26,
@@ -260,6 +260,30 @@
 },
 {
 "rank": 3,
+"team": "Valencia Basket",
+"w": 7,
+"l": 3,
+"form": "",
+"conf": "EL"
+},
+{
+"rank": 4,
+"team": "Fenerbahce Tarfin Istanbul",
+"w": 7,
+"l": 3,
+"form": "",
+"conf": "EL"
+},
+{
+"rank": 5,
+"team": "FC Barcelona",
+"w": 7,
+"l": 3,
+"form": "",
+"conf": "EL"
+},
+{
+"rank": 6,
 "team": "Crvena Zvezda Meridianbet Belgrade",
 "w": 6,
 "l": 3,
@@ -267,39 +291,7 @@
 "conf": "EL"
 },
 {
-"rank": 4,
-"team": "Valencia Basket",
-"w": 6,
-"l": 3,
-"form": "",
-"conf": "EL"
-},
-{
-"rank": 5,
-"team": "Hapoel IBI Tel Aviv",
-"w": 6,
-"l": 3,
-"form": "",
-"conf": "EL"
-},
-{
-"rank": 6,
-"team": "Fenerbahce Tarfin Istanbul",
-"w": 6,
-"l": 3,
-"form": "",
-"conf": "EL"
-},
-{
 "rank": 7,
-"team": "FC Barcelona",
-"w": 6,
-"l": 3,
-"form": "",
-"conf": "EL"
-},
-{
-"rank": 8,
 "team": "Dubai Basketball",
 "w": 6,
 "l": 3,
@@ -307,8 +299,16 @@
 "conf": "EL"
 },
 {
-"rank": 9,
+"rank": 8,
 "team": "Real Madrid",
+"w": 6,
+"l": 4,
+"form": "",
+"conf": "EL"
+},
+{
+"rank": 9,
+"team": "Hapoel IBI Tel Aviv",
 "w": 6,
 "l": 4,
 "form": "",
@@ -350,37 +350,37 @@
 "rank": 14,
 "team": "Anadolu Efes Istanbul",
 "w": 4,
-"l": 5,
+"l": 6,
 "form": "",
 "conf": "EL"
 },
 {
 "rank": 15,
-"team": "LDLC ASVEL Villeurbanne",
+"team": "Paris Basketball",
 "w": 4,
-"l": 5,
+"l": 6,
 "form": "",
 "conf": "EL"
 },
 {
 "rank": 16,
-"team": "Paris Basketball",
-"w": 3,
+"team": "LDLC ASVEL Villeurbanne",
+"w": 4,
 "l": 6,
 "form": "",
 "conf": "EL"
 },
 {
 "rank": 17,
-"team": "Maccabi Rapyd Tel Aviv",
-"w": 2,
+"team": "FC Bayern Munich",
+"w": 3,
 "l": 7,
 "form": "",
 "conf": "EL"
 },
 {
 "rank": 18,
-"team": "FC Bayern Munich",
+"team": "Maccabi Rapyd Tel Aviv",
 "w": 2,
 "l": 7,
 "form": "",
@@ -390,7 +390,7 @@
 "rank": 19,
 "team": "Armani Olimpia Milan",
 "w": 1,
-"l": 8,
+"l": 9,
 "form": "",
 "conf": "EL"
 },
@@ -398,7 +398,7 @@
 "rank": 20,
 "team": "Kosner Baskonia Vitoria-Gasteiz",
 "w": 1,
-"l": 8,
+"l": 9,
 "form": "",
 "conf": "EL"
 }

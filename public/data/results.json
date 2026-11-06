@@ -1,5 +1,21 @@
 [
 {
+"date": "5 nov",
+"home": "Phoenix Suns",
+"away": "Orlando Magic",
+"hs": 117,
+"as": 104,
+"league": "NBA"
+},
+{
+"date": "5 nov",
+"home": "Golden State Warriors",
+"away": "Miami Heat",
+"hs": 120,
+"as": 100,
+"league": "NBA"
+},
+{
 "date": "4 nov",
 "home": "Detroit Pistons",
 "away": "Philadelphia 76ers",
@@ -110,6 +126,46 @@
 "hs": 116,
 "as": 117,
 "league": "NBA"
+},
+{
+"date": "2026-11-05",
+"home": "Armani Olimpia Milan",
+"away": "Valencia Basket",
+"hs": 73,
+"as": 84,
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-05",
+"home": "LDLC ASVEL Villeurbanne",
+"away": "FC Bayern Munich",
+"hs": 95,
+"as": 99,
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-05",
+"home": "Hapoel IBI Tel Aviv",
+"away": "FC Barcelona",
+"hs": 90,
+"as": 93,
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-05",
+"home": "Fenerbahce Tarfin Istanbul",
+"away": "Kosner Baskonia Vitoria-Gasteiz",
+"hs": 84,
+"as": 65,
+"league": "EuroLeague"
+},
+{
+"date": "2026-11-05",
+"home": "Anadolu Efes Istanbul",
+"away": "Paris Basketball",
+"hs": 90,
+"as": 95,
+"league": "EuroLeague"
 },
 {
 "date": "2026-11-04",
@@ -472,22 +528,6 @@
 "as": 85
 },
 {
-"date": "2026-10-24",
-"home": "Kids&Us Manresa",
-"away": "Hereda San Pablo Burgos",
-"league": "Liga ACB",
-"hs": 81,
-"as": 99
-},
-{
-"date": "2026-10-24",
-"home": "UCAM Murcia",
-"away": "Leyma Basquet Coruña",
-"league": "Liga ACB",
-"hs": 88,
-"as": 81
-},
-{
 "home": "Mykonos",
 "away": "Aris",
 "league": "Greek Basket League",
@@ -665,22 +705,6 @@
 },
 {
 "date": "2026-10-16",
-"home": "Virtus Bologna",
-"away": "Kosner Baskonia Vitoria-Gasteiz",
-"hs": 86,
-"as": 78,
-"league": "EuroLeague"
-},
-{
-"date": "2026-10-16",
-"home": "FC Barcelona",
-"away": "Olympiacos Piraeus",
-"hs": 100,
-"as": 105,
-"league": "EuroLeague"
-},
-{
-"date": "2026-10-16",
 "home": "Panathinaikos AKTOR Athens",
 "away": "Hapoel IBI Tel Aviv",
 "hs": 81,
@@ -709,30 +733,6 @@
 "away": "FC Bayern Munich",
 "hs": 95,
 "as": 87,
-"league": "EuroLeague"
-},
-{
-"date": "2026-10-15",
-"home": "Valencia Basket",
-"away": "Maccabi Rapyd Tel Aviv",
-"hs": 88,
-"as": 91,
-"league": "EuroLeague"
-},
-{
-"date": "2026-10-15",
-"home": "Armani Olimpia Milan",
-"away": "Dubai Basketball",
-"hs": 97,
-"as": 101,
-"league": "EuroLeague"
-},
-{
-"date": "2026-10-15",
-"home": "Fenerbahce Tarfin Istanbul",
-"away": "Partizan Mozzart Bet Belgrade",
-"hs": 74,
-"as": 65,
 "league": "EuroLeague"
 },
 {

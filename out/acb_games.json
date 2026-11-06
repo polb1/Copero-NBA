@@ -2,7 +2,7 @@
  "league": "acb",
  "season": "2026-2027",
  "source": "ACB oficial (acb.com) + Apify para clasificación",
- "updated": 1793918758,
+ "updated": 1793957433,
  "games": [
   {
    "id": "acb-barca-basket-rio-breogan-2026-11-08",
@@ -408,40 +408,6 @@
     "id": "acb-real-madrid",
     "name": "Real Madrid",
     "score": 122
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "acb-kids-us-manresa-hereda-san-pablo-burgos-2026-10-24",
-   "start_ts": 1792800000,
-   "status": "FT",
-   "home": {
-    "id": "acb-kids-us-manresa",
-    "name": "Kids&Us Manresa",
-    "score": 81
-   },
-   "away": {
-    "id": "acb-hereda-san-pablo-burgos",
-    "name": "Hereda San Pablo Burgos",
-    "score": 99
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "acb-ucam-murcia-leyma-basquet-coruna-2026-10-24",
-   "start_ts": 1792800000,
-   "status": "FT",
-   "home": {
-    "id": "acb-ucam-murcia",
-    "name": "UCAM Murcia",
-    "score": 88
-   },
-   "away": {
-    "id": "acb-leyma-basquet-coruna",
-    "name": "Leyma Basquet Coruña",
-    "score": 81
    },
    "period": null,
    "venue": null

@@ -455,7 +455,7 @@
 "slug": "dominique-wilkins"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Doc Rivers",
 "slug": "doc-rivers"
 },
@@ -905,7 +905,7 @@
 "slug": "mookie-blaylock"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Antoine Carr",
 "slug": "antoine-carr"
 },
@@ -1510,7 +1510,7 @@
 "slug": "claude-terry"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Tony Robertson",
 "slug": "tony-robertson"
 },
@@ -2742,7 +2742,7 @@
 "slug": "jeff-judkins"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "M.L. Carr",
 "slug": "m-l-carr"
 },
@@ -3686,7 +3686,7 @@
 "slug": "charles-shackleford"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Kenny Anderson",
 "slug": "kenny-anderson"
 },
@@ -3881,7 +3881,7 @@
 "slug": "sundiata-gaines"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Damion James",
 "slug": "damion-james"
 },
@@ -3896,7 +3896,7 @@
 "slug": "larry-owens"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Jerome Jordan",
 "slug": "jerome-jordan"
 },
@@ -3976,7 +3976,7 @@
 "slug": "james-webb-iii"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Eddie Jordan",
 "slug": "eddie-jordan"
 },
@@ -4903,7 +4903,7 @@
 "slug": "derek-hood"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Tim James",
 "slug": "tim-james"
 },
@@ -5078,7 +5078,7 @@
 "slug": "dave-hoppen"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Dell Curry",
 "slug": "dell-curry"
 },
@@ -5238,7 +5238,7 @@
 "slug": "liam-mcneeley"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Sion James",
 "slug": "sion-james"
 },
@@ -5253,7 +5253,7 @@
 "slug": "kyle-mangas"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Christian Anderson",
 "slug": "christian-anderson"
 },
@@ -5567,7 +5567,7 @@
 "slug": "kornel-david"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Cory Carr",
 "slug": "cory-carr"
 },
@@ -5617,7 +5617,7 @@
 "slug": "steve-goodrich"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Eddy Curry",
 "slug": "eddy-curry"
 },
@@ -5827,7 +5827,7 @@
 "slug": "john-paxson"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Michael Jordan",
 "slug": "michael-jordan"
 },
@@ -6578,7 +6578,7 @@
 "slug": "antonio-lang"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Wesley Person",
 "slug": "wesley-person"
 },
@@ -6873,7 +6873,7 @@
 "slug": "willie-smith"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Austin Carr",
 "slug": "austin-carr"
 },
@@ -6893,7 +6893,7 @@
 "slug": "chad-kinch"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Walter Jordan",
 "slug": "walter-jordan"
 },
@@ -7722,7 +7722,7 @@
 "slug": "dominique-jones"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Bernard James",
 "slug": "bernard-james"
 },
@@ -8266,7 +8266,7 @@
 "slug": "justin-holiday"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Nikola Jokic",
 "slug": "nikola-jokic"
 },
@@ -8421,7 +8421,7 @@
 "slug": "darnell-mee"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Adonis Jordan",
 "slug": "adonis-jordan"
 },
@@ -8671,7 +8671,7 @@
 "slug": "billy-mckinney"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Anthony Roberts",
 "slug": "anthony-roberts"
 },
@@ -8771,7 +8771,7 @@
 "slug": "rob-williams"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Dwight Anderson",
 "slug": "dwight-anderson"
 },
@@ -10893,7 +10893,7 @@
 "slug": "seth-curry"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Stephen Curry",
 "slug": "stephen-curry"
 },
@@ -12233,7 +12233,7 @@
 "slug": "deivon-smith"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Yaxel Lendeborg",
 "slug": "yaxel-lendeborg"
 },
@@ -13197,7 +13197,7 @@
 "slug": "juaquin-hawkins"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Yao Ming",
 "slug": "yao-ming"
 },
@@ -13816,7 +13816,7 @@
 ],
 "Indiana Pacers": [
 {
-"indexable": false,
+"indexable": true,
 "name": "Justin Anderson",
 "slug": "justin-anderson"
 },
@@ -14286,7 +14286,7 @@
 "slug": "jim-thomas"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Chuck Person",
 "slug": "chuck-person"
 },
@@ -14421,7 +14421,7 @@
 "slug": "freddie-lewis"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Jerome Anderson",
 "slug": "jerome-anderson"
 },
@@ -15022,7 +15022,7 @@
 "slug": "pooh-richardson"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Stanley Roberts",
 "slug": "stanley-roberts"
 },
@@ -15032,7 +15032,7 @@
 "slug": "carlton-mckinney"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "David Rivers",
 "slug": "david-rivers"
 },
@@ -15282,7 +15282,7 @@
 "slug": "guillermo-diaz"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "JamesOn Curry",
 "slug": "jameson-curry"
 },
@@ -16062,7 +16062,7 @@
 "slug": "wayne-ellington"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Pau Gasol",
 "slug": "pau-gasol"
 },
@@ -16197,7 +16197,7 @@
 "slug": "shea-seals"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Lamar Odom",
 "slug": "lamar-odom"
 },
@@ -16802,7 +16802,7 @@
 "slug": "jim-paxson-46396102"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Bob Leonard",
 "slug": "bob-leonard"
 },
@@ -16962,7 +16962,7 @@
 "slug": "dennis-hamilton"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Cliff Anderson",
 "slug": "cliff-anderson"
 },
@@ -17017,7 +17017,7 @@
 "slug": "charles-kupec"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Bo Lamar",
 "slug": "bo-lamar"
 },
@@ -17027,7 +17027,7 @@
 "slug": "johnny-neumann"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Marv Roberts",
 "slug": "marv-roberts"
 },
@@ -17047,7 +17047,7 @@
 "slug": "d-moi-hodge"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Bronny James",
 "slug": "bronny-james"
 },
@@ -17082,7 +17082,7 @@
 "slug": "chris-manon"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Cameron Carr",
 "slug": "cameron-carr"
 },
@@ -17543,7 +17543,7 @@
 ],
 "Memphis Grizzlies": [
 {
-"indexable": false,
+"indexable": true,
 "name": "Marc Gasol",
 "slug": "marc-gasol"
 },
@@ -17788,7 +17788,7 @@
 "slug": "andre-emmett"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Lawrence Roberts",
 "slug": "lawrence-roberts"
 },
@@ -18257,7 +18257,7 @@
 "slug": "andrew-wiggins"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Glen Rice",
 "slug": "glen-rice"
 },
@@ -18362,7 +18362,7 @@
 "slug": "jamal-robinson"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Eddie House",
 "slug": "eddie-house"
 },
@@ -18846,7 +18846,7 @@
 "slug": "kyle-kuzma"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Meyers Leonard",
 "slug": "meyers-leonard"
 },
@@ -19251,7 +19251,7 @@
 "slug": "jerry-reynolds"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Fred Roberts",
 "slug": "fred-roberts"
 },
@@ -19698,7 +19698,7 @@
 "slug": "greg-monroe"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Austin Rivers",
 "slug": "austin-rivers"
 },
@@ -19778,7 +19778,7 @@
 "slug": "anthony-peeler"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Marlon Maxey",
 "slug": "marlon-maxey"
 },
@@ -19823,7 +19823,7 @@
 "slug": "cherokee-parks"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Chris Carr",
 "slug": "chris-carr"
 },
@@ -20043,7 +20043,7 @@
 "slug": "dan-godfread"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Gary Leonard",
 "slug": "gary-leonard"
 },
@@ -20332,7 +20332,7 @@
 ],
 "New Orleans Pelicans": [
 {
-"indexable": false,
+"indexable": true,
 "name": "Ryan Anderson",
 "slug": "ryan-anderson"
 },
@@ -20352,7 +20352,7 @@
 "slug": "willy-hernangomez"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "DeAndre Jordan",
 "slug": "deandre-jordan"
 },
@@ -20999,7 +20999,7 @@
 "slug": "othella-harrington"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Shandon Anderson",
 "slug": "shandon-anderson"
 },
@@ -22592,7 +22592,7 @@
 "slug": "jelani-mccoy"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Jerome James",
 "slug": "jerome-james"
 },
@@ -23459,7 +23459,7 @@
 ],
 "Olimpia Milano": [
 {
-"indexable": false,
+"indexable": true,
 "name": "Devin Booker",
 "slug": "devin-booker"
 },
@@ -24033,7 +24033,7 @@
 "slug": "anthony-black"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Tristan Da Silva",
 "slug": "tristan-da-silva"
 },
@@ -24048,7 +24048,7 @@
 "slug": "jase-richardson"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Noah Penda",
 "slug": "noah-penda"
 },
@@ -24484,7 +24484,7 @@
 "slug": "reggie-jackson"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "LeBron James",
 "slug": "lebron-james"
 },
@@ -24969,7 +24969,7 @@
 "slug": "johnny-dawkins"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Ron Anderson",
 "slug": "ron-anderson"
 },
@@ -25029,7 +25029,7 @@
 "slug": "dean-wade"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Tyrese Maxey",
 "slug": "tyrese-maxey"
 },
@@ -25284,7 +25284,7 @@
 "slug": "harvey-halbrook"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Joe Roberts",
 "slug": "joe-roberts"
 },
@@ -26840,7 +26840,7 @@
 "slug": "marcus-brown"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Derek Anderson",
 "slug": "derek-anderson"
 },
@@ -27040,7 +27040,7 @@
 "slug": "calvin-natt"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Kenny Carr",
 "slug": "kenny-carr"
 },
@@ -27090,7 +27090,7 @@
 "slug": "carl-bailey"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Richard Anderson",
 "slug": "richard-anderson"
 },
@@ -27220,7 +27220,7 @@
 "slug": "reggie-perry"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Deni Avdija",
 "slug": "deni-avdija"
 },
@@ -27275,7 +27275,7 @@
 "slug": "marcos-louzada-silva"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Vit Krejci",
 "slug": "vit-krejci"
 },
@@ -27420,7 +27420,7 @@
 "slug": "phil-lumpkin"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Daniel Anderson",
 "slug": "daniel-anderson"
 },
@@ -27440,7 +27440,7 @@
 "slug": "robin-jones"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Kim Anderson",
 "slug": "kim-anderson"
 },
@@ -28850,7 +28850,7 @@
 "slug": "de-andre-hunter"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Justin James",
 "slug": "justin-james"
 },
@@ -29180,7 +29180,7 @@
 "slug": "bob-boozer"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Oscar Robertson",
 "slug": "oscar-robertson"
 },
@@ -29380,7 +29380,7 @@
 "slug": "mike-barr"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Ryan Robertson",
 "slug": "ryan-robertson"
 },
@@ -29662,7 +29662,7 @@
 "slug": "jonathon-simmons"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Greg Anderson",
 "slug": "greg-anderson"
 },
@@ -29677,7 +29677,7 @@
 "slug": "jon-sundvold"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Alvin Robertson",
 "slug": "alvin-robertson"
 },
@@ -29832,7 +29832,7 @@
 "slug": "jeff-ayres"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "James Anderson",
 "slug": "james-anderson"
 },
@@ -30062,7 +30062,7 @@
 "slug": "keith-smart"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Michael Anderson",
 "slug": "michael-anderson"
 },
@@ -30087,7 +30087,7 @@
 "slug": "sean-elliott"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Willie Anderson",
 "slug": "willie-anderson"
 },
@@ -30394,7 +30394,7 @@
 ],
 "San Diego State": [
 {
-"indexable": false,
+"indexable": true,
 "name": "Nick Anderson",
 "slug": "nick-anderson"
 }
@@ -31147,7 +31147,7 @@
 ],
 "Toronto Raptors": [
 {
-"indexable": false,
+"indexable": true,
 "name": "Kyle Anderson",
 "slug": "kyle-anderson"
 },
@@ -31192,7 +31192,7 @@
 "slug": "amir-johnson"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Kawhi Leonard",
 "slug": "kawhi-leonard"
 },
@@ -31654,7 +31654,7 @@
 "slug": "donta-smith"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Ricky Ledo",
 "slug": "ricky-ledo"
 },
@@ -31875,7 +31875,7 @@
 "slug": "mike-brown"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Karl Malone",
 "slug": "karl-malone"
 },
@@ -32245,7 +32245,7 @@
 "slug": "marc-iavaroni"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Mitchell Anderson",
 "slug": "mitchell-anderson"
 },
@@ -32415,7 +32415,7 @@
 "slug": "e-c-coleman"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Aaron James",
 "slug": "aaron-james"
 },
@@ -32945,7 +32945,7 @@
 "slug": "mark-alarie"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Jeff Malone",
 "slug": "jeff-malone"
 },
@@ -33225,7 +33225,7 @@
 "slug": "jordan-crawford"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Trevor Booker",
 "slug": "trevor-booker"
 },
@@ -33255,7 +33255,7 @@
 "slug": "edwin-ubiles"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Glen Rice",
 "slug": "glen-rice-2038"
 },

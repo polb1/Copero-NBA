@@ -636,5 +636,49 @@
 "start_ts": 1793849400,
 "status": "FT",
 "venue": "Intuit Dome"
+},
+"nba-519654": {
+"away": {
+"id": "nba-153",
+"logo": "https://media.api-sports.io/basketball/teams/153.png",
+"name": "Orlando Magic",
+"score": 104
+},
+"date": "2026-11-06",
+"external_id": 519654,
+"home": {
+"id": "nba-155",
+"logo": "https://media.api-sports.io/basketball/teams/155.png",
+"name": "Phoenix Suns",
+"score": 117
+},
+"id": "nba-519654",
+"period": null,
+"round": null,
+"start_ts": 1793930400,
+"status": "FT",
+"venue": "Mortgage Matchup Center"
+},
+"nba-519655": {
+"away": {
+"id": "nba-147",
+"logo": "https://media.api-sports.io/basketball/teams/147.png",
+"name": "Miami Heat",
+"score": 100
+},
+"date": "2026-11-06",
+"external_id": 519655,
+"home": {
+"id": "nba-141",
+"logo": "https://media.api-sports.io/basketball/teams/141.png",
+"name": "Golden State Warriors",
+"score": 120
+},
+"id": "nba-519655",
+"period": null,
+"round": null,
+"start_ts": 1793934000,
+"status": "FT",
+"venue": "Chase Center"
 }
 }

@@ -1,254 +1,149 @@
 [
  {
+  "source": "Mundo Deportivo",
+  "category": "BALONCESTO",
+  "title": "Lola Pendande sustituye a Marta Suárez en la Selección",
+  "url": "https://www.mundodeportivo.com/baloncesto/basket-feb/20261106/1004247986/lola-pendande-sustituye-marta-suarez-seleccion.html",
+  "date": "2026-11-06"
+ },
+ {
+  "source": "Mundo Deportivo",
+  "category": "BALONCESTO",
+  "title": "Álex Reyes, baja en el Asisa Joventut por una lesión de cuádriceps",
+  "url": "https://www.mundodeportivo.com/baloncesto/acb/20261106/1004247985/alex-reyes-baja-asisa-joventut-lesion-cuadriceps.html",
+  "date": "2026-11-06"
+ },
+ {
+  "source": "Mundo Deportivo",
+  "category": "BALONCESTO",
+  "title": "El FIATC Girona busca hacerse fuerte en Fontajau para seguir mirando hacia arriba",
+  "url": "https://www.mundodeportivo.com/baloncesto/acb/20261106/1004247918/fiatc-girona-quiere-hacerse-fuerte-fontajau-seguir-mirando.html",
+  "date": "2026-11-06"
+ },
+ {
+  "source": "Mundo Deportivo",
+  "category": "LIGA ACB",
+  "title": "El Kids&Us Manresa quiere traspasar su dinámica europea a la Liga Endesa",
+  "url": "https://www.mundodeportivo.com/baloncesto/acb/20261106/1004247907/kids-us-manresa-quiere-traspasar-dinamica-europea-liga-endesa.html",
+  "date": "2026-11-06"
+ },
+ {
+  "source": "Mundo Deportivo",
+  "category": "BALONCESTO",
+  "title": "El iLerna Lleida, convencido de pescar en río revuelto ante el Baskonia",
+  "url": "https://www.mundodeportivo.com/baloncesto/acb/20261106/1004247906/ilerna-lleida-convencido-pescar-rio-revuelto-baskonia.html",
+  "date": "2026-11-06"
+ },
+ {
+  "source": "Gigantes del Basket",
+  "category": "BALONCESTO",
+  "title": "Moses Malone: ¿El jugador más infravalorado de la historia?",
+  "url": "https://www.gigantes.com/nba/moses-malone-jugador-mas-infravalorado-historia/",
+  "date": "2026-11-06"
+ },
+ {
+  "source": "NBA Maniacs",
+  "category": "NBA",
+  "title": "Deni Avdija habla de excelencia y culpa a Micah Nori",
+  "url": "https://www.nbamaniacs.com/noticias/deni-avdija-habla-de-excelencia-y-culpa-a-micah-nori/",
+  "date": "2026-11-06"
+ },
+ {
+  "source": "Mundo Deportivo",
+  "category": "BALONCESTO",
+  "title": "\"Cuando te traspasan, es como una ruptura. Salvo en el baloncesto, que no puedes elegir a tu nueva novia\"",
+  "url": "https://www.mundodeportivo.com/baloncesto/nba/20261106/1004247846/te-traspasan-ruptura-salvo-baloncesto-no-puedes-elegir-nueva-novia.html",
+  "date": "2026-11-06"
+ },
+ {
+  "source": "Gigantes del Basket",
+  "category": "BALONCESTO",
+  "title": "La lista de Montenegro, rival de España, para las ventanas FIBA de noviembre, con un canterano del Real Madrid",
+  "url": "https://www.gigantes.com/selecciones/convocados-montenegro-ventanas-fiba-espana-noviembre-2026/",
+  "date": "2026-11-06"
+ },
+ {
+  "source": "NBA Maniacs",
+  "category": "NBA",
+  "title": "Memphis Grizzlies vs Oklahoma City Thunder: previa, pronósticos y estadísticas",
+  "url": "https://www.nbamaniacs.com/previas/previa-grizzlies-vs-thunder-06-11-2026/",
+  "date": "2026-11-06"
+ },
+ {
+  "source": "Gigantes del Basket",
+  "category": "BALONCESTO",
+  "title": "La lista de España para la Ventana FIBA: Pendande sustituye a la lesionada Marta Suárez",
+  "url": "https://www.gigantes.com/selecciones/espana-ventana-fiba-noviembre-lista/",
+  "date": "2026-11-06"
+ },
+ {
+  "source": "NBA Maniacs",
+  "category": "NBA",
+  "title": "Philadelphia 76ers vs. Cleveland Cavaliers: previa, pronósticos y estadísticas",
+  "url": "https://www.nbamaniacs.com/previas/philadelphia-76ers-vs-cleveland-cavaliers-previa-pronosticos-y-estadisticas/",
+  "date": "2026-11-06"
+ },
+ {
+  "source": "NBA Maniacs",
+  "category": "NBA",
+  "title": "Doc Rivers se acuerda de Giannis Antetokounmpo… para mal",
+  "url": "https://www.nbamaniacs.com/noticias/doc-rivers-se-acuerda-de-giannis-antetokounmpo/",
+  "date": "2026-11-06"
+ },
+ {
   "source": "Gigantes del Basket",
   "category": "BALONCESTO",
   "title": "El gran mapa del baloncesto femenino español en la División 1 de la NCAA",
   "url": "https://www.gigantes.com/baloncesto-femenino/ncaa-mapa-espanolas-temporada-26-27/",
-  "date": "2026-11-05",
-  "image": "https://www.gigantes.com/wp-content/uploads/sites/4/2026/11/f032c7f6-ee3a-4452-b586-2a159b017e48.jpg",
-  "summary": "Las 164 jugadoras españolas y sus respectivas universidades en la División 1 de la NCAA 26-27. La entrada El gran mapa del baloncesto femenino español en la División 1 de la NCAA se publicó primero en Gigantes del Basket ."
+  "date": "2026-11-06"
  },
  {
-  "source": "Relevo",
+  "source": "Mundo Deportivo",
   "category": "BALONCESTO",
-  "title": "Gaël Monfils, el adiós del mago que volaba para golpear y sonreía al aterrizar",
-  "url": "https://www.relevo.com/tenis/atp/gael-monfils-retirada-paris.html",
-  "date": "2026-11-05",
-  "image": "https://www.relevo.com/wp-content/uploads/2026/11/despedida-gael-monfils-tenis-retirada.jpg",
-  "summary": "El francés, ex número seis del mundo, recibió un emotivo homenaje en París este martes rodeado de su gente y leyendas para poner fin a un legado de más de dos décadas The post Gaël Monfils, el adiós del mago que volaba para golpear y sonreía al aterrizar appea"
+  "title": "Valkyries, 1.000 millones de dólares y un triunfo que revoluciona el baloncesto femenino",
+  "url": "https://www.mundodeportivo.com/baloncesto/nba/20261106/1004247826/valkyries-1-000-millones-dolares-triunfo-revoluciona-baloncesto-femenino.html",
+  "date": "2026-11-06"
  },
  {
-  "source": "Relevo",
+  "source": "NBA Maniacs",
+  "category": "NBA",
+  "title": "Kawhi Leonard, ¿cuestión de días?",
+  "url": "https://www.nbamaniacs.com/noticias/kawhi-leonard-responde-positivamente-al-tratamiento/",
+  "date": "2026-11-06"
+ },
+ {
+  "source": "NBA Maniacs",
+  "category": "NBA",
+  "title": "Hasta Phoenix disfruta ante los Magic",
+  "url": "https://www.nbamaniacs.com/pospartidos/hasta-phoenix-disfruta-ante-los-magic/",
+  "date": "2026-11-06"
+ },
+ {
+  "source": "Gigantes del Basket",
   "category": "BALONCESTO",
-  "title": "Aday Mara se estrena como titular con los Thunder; Wembanyama firma 52 puntos con los Spurs",
-  "url": "https://www.relevo.com/baloncesto/aday-mara-estrena-como-titular-thunder-wembanyama-52-puntos-spurs.html",
-  "date": "2026-11-05",
-  "image": "https://www.relevo.com/wp-content/uploads/2026/11/Aday-Mara-Donovan-Mitchell-Oklahoma-City-Thunder-Cleveland-Cavaliers-NBA.jpg",
-  "summary": "Hugo González repite en el quinteto de los Celtics, LeBron llega a las 16.000 canastas y Doncic encadena tres partidos de 40 puntos. The post Aday Mara se estrena como titular con los Thunder; Wembanyama firma 52 puntos con los Spurs appeared first on Relevo ."
+  "title": "La única mancha del génesis: Una historia contra la historia, por Gonzalo Vázquez",
+  "url": "https://www.gigantes.com/nba/la-unica-mancha-del-genesis-una-historia-contra-la-historia-por-gonzalo-vazquez/",
+  "date": "2026-11-06"
+ },
+ {
+  "source": "NBA Maniacs",
+  "category": "NBA",
+  "title": "Miami tampoco puede parar a los Warriors",
+  "url": "https://www.nbamaniacs.com/pospartidos/miami-no-puede-warriors/",
+  "date": "2026-11-06"
  },
  {
   "source": "Gigantes del Basket",
   "category": "NBA",
-  "title": "El resumen de la noche NBA: Highlights, resultados y estadísticas. Salvaje Wembanyama y Doncic brilla",
+  "title": "El resumen de la noche NBA: Highlights, resultados y estadísticas. Curry y Booker lideran a Warriors y Suns",
   "url": "https://www.gigantes.com/nba/resumen-nba-hoy-highlights-resultados-estadisticas/",
-  "date": "2026-11-05",
-  "image": "https://cdn.gigantes.com/wp-content/uploads/sites/4/2026/10/1574-1.webp",
-  "summary": "Repasamos todo lo ocurrido en la madrugada NBA La entrada El resumen de la noche NBA: Highlights, resultados y estadísticas. Salvaje Wembanyama y Doncic brilla se publicó primero en Gigantes del Basket ."
- },
- {
-  "source": "NBA Maniacs",
-  "category": "NBA",
-  "title": "Los Knicks humillan a los Bulls",
-  "url": "https://www.nbamaniacs.com/pospartidos/los-knicks-humillan-a-los-bulls/",
-  "date": "2026-11-05",
-  "image": "https://www.nbamaniacs.com/wp-content/uploads/2026/11/2026-11-05T004808Z_1893272502_MT1USATODAY30278649_RTRMADP_3_NBA-CHICAGO-BULLS-AT-NEW-YORK-KNICKS-300x200.jpg",
-  "summary": "Igualan el récord de franquicia con 84 puntos en la primera mitad para regresar al 50% en victorias y derrotas (4-4) La entrada Los Knicks humillan a los Bulls se publicó primero en NBAManiacs . Source: NBAManiacs"
- },
- {
-  "source": "Relevo",
-  "category": "EUROLEAGUE",
-  "title": "El Real Madrid cae ante Panathinaikos en un homenaje al viejo baloncesto de la Euroliga",
-  "url": "https://www.relevo.com/baloncesto/euroliga-masculina/real-madrid-panathinaikos-euroliga-prorroga.html",
-  "date": "2026-11-05",
-  "image": "https://www.relevo.com/wp-content/uploads/2026/11/real-madrid-panathinaikos-euroliga-derrota-gran-nivel-bajas.jpg",
-  "summary": "El equipo blanco, repleto de bajas, se rehizo del tropezón inicial pero terminó hincando la rodilla en la prórroga ante el líder de la competición. The post El Real Madrid cae ante Panathinaikos en un homenaje al viejo baloncesto de la Euroliga appeared first "
- },
- {
-  "source": "Mundo Deportivo",
-  "category": "BALONCESTO",
-  "title": "Baba Miller, otro español que va para estrella: ¡tapón a Antetokounmpo y mate en la cara de Adebayo!",
-  "url": "https://www.mundodeportivo.com/baloncesto/nba/20261105/1004247433/baba-miller-espanol-estrella-tapon-antetokounmpo-mate-cara-adebayo.html",
-  "date": "2026-11-05",
-  "image": "https://imagenes2.mundodeportivo.com/files/og_thumbnail/uploads/2026/11/05/6aec37ae97cca.jpeg",
-  "summary": "A Baba Miller le está costando tener minutos y hacerse notar en estos primeros partidos de la NBA con Los Angeles Clippers. Pero el internacional español reivindicó anoche su esencia de estrella o cuanto menos de jugador llamado a grandes cosas sonrojando al d"
- },
- {
-  "source": "NBA Maniacs",
-  "category": "NBA",
-  "title": "Podcast #252: La liga de las lesiones",
-  "url": "https://www.nbamaniacs.com/podcast/podcast-nbamaniacs-252/",
-  "date": "2026-11-05",
-  "image": "https://www.nbamaniacs.com/wp-content/uploads/2026/11/PETER-300x169.jpg",
-  "summary": "La plaga de bajas actual nos da excusas para divagar sobre la deriva del juego y del negocio de la NBA. La entrada Podcast #252: La liga de las lesiones se publicó primero en NBAManiacs . Source: NBAManiacs"
- },
- {
-  "source": "Mundo Deportivo",
-  "category": "BALONCESTO",
-  "title": "Victor Wembanyama, el alien ya está aquí: ¡52 puntos, 24 rebotes y 8 tapones!",
-  "url": "https://www.mundodeportivo.com/baloncesto/nba/20261105/1004247426/victor-wembanyama-alien-52-puntos-24-rebotes-8-tapones.html",
-  "date": "2026-11-05",
-  "image": "https://imagenes2.mundodeportivo.com/files/og_thumbnail/uploads/2026/11/05/6aec2e89d2f37.jpeg",
-  "summary": "A Victor Wembanyama le caló hondo el dolor de perder las Finales NBA contra los New York Knicks tanto por el qué como el cómo, pues cómo olvidar esos 29 puntos de renta desperdiciados en el cuarto partido que dieron paso del casi 2-2 a un 3-1 definitivo en fav"
- },
- {
-  "source": "Relevo",
-  "category": "BALONCESTO",
-  "title": "España, campeona de Europa, abre la Finalissima de fútbol sala ante Portugal en Brasil",
-  "url": "https://www.relevo.com/futbol-sala/espana-portugal-finalissima-futbol-sala-niteroi.html",
-  "date": "2026-11-05",
-  "image": "https://www.relevo.com/wp-content/uploads/2026/11/UEFA-Futsal-EURO-2026-Final-Espana-Portugal-Equipo.jpg",
-  "summary": "España, campeona de Europa, reta a Portugal en la semifinal de la Finalissima de Niterói: la lista de Velasco, la cuenta de 2022 y los horarios del torneo. The post España, campeona de Europa, abre la Finalissima de fútbol sala ante Portugal en Brasil appeared"
- },
- {
-  "source": "Relevo",
-  "category": "BALONCESTO",
-  "title": "PFL, la otra liga de las MMA: cómo funciona y quién pelea allí",
-  "url": "https://www.relevo.com/mma/pfl-liga-mma-como-funciona-torneo.html",
-  "date": "2026-11-05",
-  "image": "https://www.relevo.com/wp-content/uploads/2026/11/PFL-MMA-Alfie-Davis-Usman-Nurmagomedov-Febrero-2026-Dubai.jpg",
-  "summary": "La PFL compró Bellator, dejó el torneo en 2026 y se ha fusionado con la promotora de Jake Paul. Así funciona hoy la otra gran empresa de MMA. The post PFL, la otra liga de las MMA: cómo funciona y quién pelea allí appeared first on Relevo ."
- },
- {
-  "source": "Relevo",
-  "category": "BALONCESTO",
-  "title": "Por qué la NFL ha comprado Madrid hasta 2027",
-  "url": "https://www.relevo.com/nfl/por-que-nfl-ha-comprado-madrid-hasta-2027.html",
-  "date": "2026-11-05",
-  "image": "https://www.relevo.com/wp-content/uploads/2026/11/Pelota-Oficial-NFL-Madrid-Game.jpg",
-  "summary": "Dos partidos firmados hasta 2027 y 3,3 millones públicos en 2025: así se explica el acuerdo de la NFL con el Bernabéu y qué espera Madrid. The post Por qué la NFL ha comprado Madrid hasta 2027 appeared first on Relevo ."
- },
- {
-  "source": "NBA Maniacs",
-  "category": "NBA",
-  "title": "La mayor salvajada de Wembanyama",
-  "url": "https://www.nbamaniacs.com/video/la-mayor-salvajada-de-wembanyama/",
-  "date": "2026-11-05",
-  "image": "https://www.nbamaniacs.com/wp-content/uploads/2026/11/jue5-wembanyama-300x169.jpg",
-  "summary": "El galo firma un partido de auténtico extraterrestre ante los Dallas Mavericks al igualar una hoja estadística que no se veía desde 1974 con Bob McAdoo La entrada La mayor salvajada de Wembanyama se publicó primero en NBAManiacs . Source: NBAManiacs"
- },
- {
-  "source": "Relevo",
-  "category": "BALONCESTO",
-  "title": "La Fórmula 1 vuelve a Interlagos: claves del Gran Premio de São Paulo",
-  "url": "https://www.relevo.com/formula1/gran-premio-sao-paulo-2026-interlagos-claves.html",
-  "date": "2026-11-05",
-  "image": "https://www.relevo.com/wp-content/uploads/2026/11/F1-GP-Sao-Paulo-Trofeo-2026.jpg",
-  "summary": "El Gran Premio de São Paulo se corre del 6 al 8 de noviembre en Interlagos. Cómo es el circuito, por qué el clima manda y qué queda del Mundial. The post La Fórmula 1 vuelve a Interlagos: claves del Gran Premio de São Paulo appeared first on Relevo ."
- },
- {
-  "source": "Mundo Deportivo",
-  "category": "NBA",
-  "title": "Lío en la NBA: los Warriors se niegan a pagar a Porzingis su sueldo",
-  "url": "https://www.mundodeportivo.com/baloncesto/nba/20261105/1004247420/lio-nba-warriors-niegan-pagar-porzingis-sueldo.html",
-  "date": "2026-11-05",
-  "image": "https://imagenes2.mundodeportivo.com/files/og_thumbnail/uploads/2026/03/08/69ad2737cfbda.jpeg",
-  "summary": "Nuevo capítulo en el caso Porzingis y, en este caso, uno que trae controversia. Según la ESPN, los Golden State Warriors no le están abonando al pívot letón los pagos bisemanales de los 20 millones de dólares que tiene que percibir esta temporada, pues la fran"
- },
- {
-  "source": "Mundo Deportivo",
-  "category": "NBA",
-  "title": "Luka Doncic sigue siendo un máquina anotadora y los Lakers ya rozan el liderato en el Oeste",
-  "url": "https://www.mundodeportivo.com/baloncesto/nba/20261105/1004247415/enesima-exhibicion-anotadora-luka-doncic-alzar-lakers-oeste.html",
-  "date": "2026-11-05",
-  "image": "https://imagenes2.mundodeportivo.com/files/og_thumbnail/uploads/2026/11/05/6aec2150672ec.jpeg",
-  "summary": "Los Ángeles Lakers son uno de los equipos más en forma en este inicio de temporada 26/27 de NBA. Los de California visitaban la pista de los Sacramento Kings, uno de los equipos más flojos en este arranque de año de la Conferencia Oeste y, gracias a un excelso"
- },
- {
-  "source": "Mundo Deportivo",
-  "category": "BALONCESTO",
-  "title": "Hugo González se lleva el duelo de canteras Barça - Real Madrid",
-  "url": "https://www.mundodeportivo.com/baloncesto/nba/20261105/1004247414/hugo-gonzalez-lleva-duelo-canteras-barca-real-madrid.html",
-  "date": "2026-11-05",
-  "image": "https://imagenes2.mundodeportivo.com/files/og_thumbnail/uploads/2026/11/05/6aec1ef32f2c3.jpeg",
-  "summary": "Hugo González volvió a dar una de cal y otra de arena con los Boston Celtics en lo que está siendo una especie de situación agridulce para el internacional español, lo que no le impidió sin embargo llevarse lo que fue un duelo de las canteras de Barça y Real M"
- },
- {
-  "source": "Mundo Deportivo",
-  "category": "BALONCESTO",
-  "title": "Aday Mara, titular y fiesta de tapones para humillar a otra estrella: como si matara moscas",
-  "url": "https://www.mundodeportivo.com/baloncesto/nba/20261105/1004247413/aday-mara-titular-fiesta-tapones-humillar-estrella-matara-moscas.html",
-  "date": "2026-11-05",
-  "image": "https://imagenes2.mundodeportivo.com/files/og_thumbnail/uploads/2026/11/05/6aec1367f040f.jpeg",
-  "summary": "Aday Mara no para. Cuanto mayor es la magnitud del desafío más crece el gigante, que no se achanta ante nada pese a que apenas puede contar los partidos que lleva en la NBA con sus manos, esas que son de seda para entregar pases y depositar suavemente bombas e"
- },
- {
-  "source": "NBA Maniacs",
-  "category": "NBA",
-  "title": "LeBron, primero en batir la barrera de los 16.000 tiros anotados",
-  "url": "https://www.nbamaniacs.com/noticias/lebron-16000-tiros-anotados/",
-  "date": "2026-11-05",
-  "image": "https://www.nbamaniacs.com/wp-content/uploads/2026/11/lebron-james-1-300x169.jpg",
-  "summary": "El alero superó a Kareem Abdul-Jabbar en esta estadística en el mes de marzo La entrada LeBron, primero en batir la barrera de los 16.000 tiros anotados se publicó primero en NBAManiacs . Source: NBAManiacs"
- },
- {
-  "source": "NBA Maniacs",
-  "category": "NBA",
-  "title": "Kon Knueppel vuelve a lesionarse a los seis minutos de regresar",
-  "url": "https://www.nbamaniacs.com/noticias/knuppel-vuelve-lesionarse/",
-  "date": "2026-11-05",
-  "image": "https://www.nbamaniacs.com/wp-content/uploads/2026/11/kon-knueppel-300x169.jpg",
-  "summary": "El escolta pareció recaer de la dolencia que sufría en el isquiotibial izquierdo La entrada Kon Knueppel vuelve a lesionarse a los seis minutos de regresar se publicó primero en NBAManiacs . Source: NBAManiacs"
+  "date": "2026-11-06"
  },
  {
   "source": "Gigantes del Basket",
   "category": "BALONCESTO",
-  "title": "Las palabras de Pedro Martínez tras la derrota del Real Madrid en la prórroga ante el Panathinaikos",
-  "url": "https://www.gigantes.com/euroliga/palabras-pedro-martinez-derrota-panathinaikos-2026/",
-  "date": "2026-11-04",
-  "image": "https://cdn.gigantes.com/wp-content/uploads/sites/4/2026/10/1574-1.webp",
-  "summary": "Esto dijo el técnico del conjunto blanco tras el encuentro La entrada Las palabras de Pedro Martínez tras la derrota del Real Madrid en la prórroga ante el Panathinaikos se publicó primero en Gigantes del Basket ."
- },
- {
-  "source": "Mundo Deportivo",
-  "category": "BALONCESTO",
-  "title": "Pedro Martínez: \"No hay que buscar excusas; hemos competido bien\"",
-  "url": "https://www.mundodeportivo.com/baloncesto/euroliga/20261104/1004247396/pedro-martinez-no-hay-buscar-excusas-hemos-competido.html",
-  "date": "2026-11-04",
-  "image": "https://imagenes2.mundodeportivo.com/files/og_thumbnail/uploads/2026/11/01/6ae75d5c69437.jpeg",
-  "summary": "Pedro Martínez , entrenador del Real Madrid , indicó que no debían \"buscar excusas\" pese a las bajas con las que contaban este miércoles para enfrentarse al Panathinaikos, y señaló el buen nivel con el que compitieron sus jugadores pese a la derrota en la prór"
- },
- {
-  "source": "Gigantes del Basket",
-  "category": "BALONCESTO",
-  "title": "El Real Madrid cede ante el Panathinaikos en la prórroga",
-  "url": "https://www.gigantes.com/euroliga/madrid-panathinaikos-resultado-resumen-cronica/",
-  "date": "2026-11-04",
-  "image": "https://cdn.gigantes.com/wp-content/uploads/sites/4/2026/10/1574-1.webp",
-  "summary": "Los blancos terminaron cediendo en el tiempo extra La entrada El Real Madrid cede ante el Panathinaikos en la prórroga se publicó primero en Gigantes del Basket ."
- },
- {
-  "source": "Gigantes del Basket",
-  "category": "NBA",
-  "title": "Quién es Ty Jerome, la nueva estrella que sorprende a la NBA con los Memphis Grizzlies",
-  "url": "https://www.gigantes.com/nba/quien-es-ty-jerome/",
-  "date": "2026-11-04",
-  "image": "https://cdn.gigantes.com/wp-content/uploads/sites/4/2026/10/1574-1.webp",
-  "summary": "La gran sorpresa de los Grizzlies en el Oeste La entrada Quién es Ty Jerome, la nueva estrella que sorprende a la NBA con los Memphis Grizzlies se publicó primero en Gigantes del Basket ."
- },
- {
-  "source": "Gigantes del Basket",
-  "category": "BALONCESTO",
-  "title": "La drástica decisión de los Golden State Warriors con el contrato de Kristaps Porzingis",
-  "url": "https://www.gigantes.com/nba/porzingis-baja-indefinida-decision-warriors/",
-  "date": "2026-11-04",
-  "image": "https://cdn.gigantes.com/wp-content/uploads/sites/4/2026/10/1574-1.webp",
-  "summary": "Los Warriors han dejado de pagar el contrato al jugador letón La entrada La drástica decisión de los Golden State Warriors con el contrato de Kristaps Porzingis se publicó primero en Gigantes del Basket ."
- },
- {
-  "source": "Gigantes del Basket",
-  "category": "EUROLEAGUE",
-  "title": "La factura de la Euroliga en los equipos españoles: 23 lesiones en menos de mes y medio",
-  "url": "https://www.gigantes.com/euroliga/lesiones-euroliga-equipos-espanoles/",
-  "date": "2026-11-04",
-  "image": "https://cdn.gigantes.com/wp-content/uploads/sites/4/2026/10/1574-1.webp",
-  "summary": "La lista no para de crecer en las últimas semanas La entrada La factura de la Euroliga en los equipos españoles: 23 lesiones en menos de mes y medio se publicó primero en Gigantes del Basket ."
- },
- {
-  "source": "NBA Maniacs",
-  "category": "NBA",
-  "title": "Kristaps Porzingis medita su retirada",
-  "url": "https://www.nbamaniacs.com/rumores-nba/kristaps-porzingis-medita-su-retirada/",
-  "date": "2026-11-04",
-  "image": "https://www.nbamaniacs.com/wp-content/uploads/2026/11/2026-04-18T040900Z_1018825339_MT1USATODAY28755835_RTRMADP_3_NBA-PLAYOFFS-GOLDEN-STATE-WARRIORS-AT-PHOENIX-SUNS-288x200.jpg",
-  "summary": "El ala-pívot sigue sin poder debutar aquejado de un raro síndrome conocido como POTS La entrada Kristaps Porzingis medita su retirada se publicó primero en NBAManiacs . Source: NBAManiacs"
- },
- {
-  "source": "NBA Maniacs",
-  "category": "NBA",
-  "title": "Boston Celtics vs Milwaukee Bucks: previa, pronósticos y estadísticas",
-  "url": "https://www.nbamaniacs.com/previas/celtics-vs-bucks-04-11-2026/",
-  "date": "2026-11-04",
-  "image": "https://www.nbamaniacs.com/wp-content/uploads/2026/11/BUCKS_VS_CELTICS_11_4_2026-300x169.jpg",
-  "summary": "La NBA vuelve a la acción tras el día de descanso por la jornada electoral en Estados Unidos, y lo hace con un choque que ... Leer Más La entrada Boston Celtics vs Milwaukee Bucks: previa, pronósticos y estadísticas se publicó primero en NBAManiacs . Source: N"
+  "title": "Los últimos días en Vitoria de Lamar Odom",
+  "url": "https://www.gigantes.com/nba/lamar-odom-historia/",
+  "date": "2026-11-06"
  }
 ]

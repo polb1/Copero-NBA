@@ -413,6 +413,11 @@ FEEDS = [
 ]
 # Feeds generalistas (todos los deportes): solo se guardan las piezas que hablan de baloncesto.
 BASKET_WORDS = ("baloncesto", "basket", "nba", "euroliga", "euroleague", "acb", "liga endesa", "wnba", "fiba")
+
+# Fútbol y otros deportes que se cuelan en los feeds generalistas.
+NO_BASKET = ("fútbol", "futbol", "messi", "cristiano", "madridismo", "la liga ", "champions league",
+             "atlético", "athletic club", "real sociedad", "betis", "sevilla fc", "tenis", "formula 1",
+             "motogp", "ciclismo", "vuelta a españa", "tour de francia")
 CUOTA_FUENTE = 7
 
 
@@ -474,7 +479,11 @@ def update_noticias():
             if not title or link in seen:
                 continue
             if basket_only:
-                texto = (title + " " + link + " " + _clean(desc.group(1) if desc else "")).lower()
+                # El término tiene que estar en el titular o en el resumen, no en la URL,
+                # y se descartan deportes que no son baloncesto.
+                texto = (title + " " + _clean(desc.group(1) if desc else "")).lower()
+                if any(w in texto for w in NO_BASKET) and not any(w in title.lower() for w in BASKET_WORDS):
+                    continue
                 if not any(w in texto for w in BASKET_WORDS):
                     continue
             try:

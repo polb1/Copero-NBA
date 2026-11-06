@@ -2,7 +2,7 @@
  "league": "euroleague",
  "season": "2026-2027",
  "source": "api-live.euroleague.net (API oficial)",
- "updated": 1793918758,
+ "updated": 1793957433,
  "games": [
   {
    "id": "euroleague-valencia-basket-virtus-bologna-2026-11-19",
@@ -16,6 +16,91 @@
    "away": {
     "id": "euroleague-virtus-bologna",
     "name": "Virtus Bologna",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "euroleague-paris-basketball-hapoel-ibi-tel-aviv-2026-11-19",
+   "start_ts": 1795046400,
+   "status": "NS",
+   "home": {
+    "id": "euroleague-paris-basketball",
+    "name": "Paris Basketball",
+    "score": null
+   },
+   "away": {
+    "id": "euroleague-hapoel-ibi-tel-aviv",
+    "name": "Hapoel IBI Tel Aviv",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "euroleague-armani-olimpia-milan-fenerbahce-tarfin-istanbul-2026-11-19",
+   "start_ts": 1795046400,
+   "status": "NS",
+   "home": {
+    "id": "euroleague-armani-olimpia-milan",
+    "name": "Armani Olimpia Milan",
+    "score": null
+   },
+   "away": {
+    "id": "euroleague-fenerbahce-tarfin-istanbul",
+    "name": "Fenerbahce Tarfin Istanbul",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "euroleague-fc-bayern-munich-kosner-baskonia-vitoria-gasteiz-2026-11-19",
+   "start_ts": 1795046400,
+   "status": "NS",
+   "home": {
+    "id": "euroleague-fc-bayern-munich",
+    "name": "FC Bayern Munich",
+    "score": null
+   },
+   "away": {
+    "id": "euroleague-kosner-baskonia-vitoria-gasteiz",
+    "name": "Kosner Baskonia Vitoria-Gasteiz",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "euroleague-zalgiris-kaunas-panathinaikos-aktor-athens-2026-11-19",
+   "start_ts": 1795046400,
+   "status": "NS",
+   "home": {
+    "id": "euroleague-zalgiris-kaunas",
+    "name": "Zalgiris Kaunas",
+    "score": null
+   },
+   "away": {
+    "id": "euroleague-panathinaikos-aktor-athens",
+    "name": "Panathinaikos AKTOR Athens",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "euroleague-maccabi-rapyd-tel-aviv-dubai-basketball-2026-11-19",
+   "start_ts": 1795046400,
+   "status": "NS",
+   "home": {
+    "id": "euroleague-maccabi-rapyd-tel-aviv",
+    "name": "Maccabi Rapyd Tel Aviv",
+    "score": null
+   },
+   "away": {
+    "id": "euroleague-dubai-basketball",
+    "name": "Dubai Basketball",
     "score": null
    },
    "period": null,
@@ -432,16 +517,16 @@
   {
    "id": "euroleague-armani-olimpia-milan-valencia-basket-2026-11-05",
    "start_ts": 1793836800,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "euroleague-armani-olimpia-milan",
     "name": "Armani Olimpia Milan",
-    "score": null
+    "score": 73
    },
    "away": {
     "id": "euroleague-valencia-basket",
     "name": "Valencia Basket",
-    "score": null
+    "score": 84
    },
    "period": null,
    "venue": null
@@ -449,16 +534,16 @@
   {
    "id": "euroleague-ldlc-asvel-villeurbanne-fc-bayern-munich-2026-11-05",
    "start_ts": 1793836800,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "euroleague-ldlc-asvel-villeurbanne",
     "name": "LDLC ASVEL Villeurbanne",
-    "score": null
+    "score": 95
    },
    "away": {
     "id": "euroleague-fc-bayern-munich",
     "name": "FC Bayern Munich",
-    "score": null
+    "score": 99
    },
    "period": null,
    "venue": null
@@ -466,16 +551,16 @@
   {
    "id": "euroleague-hapoel-ibi-tel-aviv-fc-barcelona-2026-11-05",
    "start_ts": 1793836800,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "euroleague-hapoel-ibi-tel-aviv",
     "name": "Hapoel IBI Tel Aviv",
-    "score": null
+    "score": 90
    },
    "away": {
     "id": "euroleague-fc-barcelona",
     "name": "FC Barcelona",
-    "score": null
+    "score": 93
    },
    "period": null,
    "venue": null
@@ -483,16 +568,16 @@
   {
    "id": "euroleague-fenerbahce-tarfin-istanbul-kosner-baskonia-vitoria-gasteiz-2026-11-05",
    "start_ts": 1793836800,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "euroleague-fenerbahce-tarfin-istanbul",
     "name": "Fenerbahce Tarfin Istanbul",
-    "score": null
+    "score": 84
    },
    "away": {
     "id": "euroleague-kosner-baskonia-vitoria-gasteiz",
     "name": "Kosner Baskonia Vitoria-Gasteiz",
-    "score": null
+    "score": 65
    },
    "period": null,
    "venue": null
@@ -500,16 +585,16 @@
   {
    "id": "euroleague-anadolu-efes-istanbul-paris-basketball-2026-11-05",
    "start_ts": 1793836800,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "euroleague-anadolu-efes-istanbul",
     "name": "Anadolu Efes Istanbul",
-    "score": null
+    "score": 90
    },
    "away": {
     "id": "euroleague-paris-basketball",
     "name": "Paris Basketball",
-    "score": null
+    "score": 95
    },
    "period": null,
    "venue": null
@@ -1042,40 +1127,6 @@
    "venue": null
   },
   {
-   "id": "euroleague-virtus-bologna-kosner-baskonia-vitoria-gasteiz-2026-10-16",
-   "start_ts": 1792108800,
-   "status": "FT",
-   "home": {
-    "id": "euroleague-virtus-bologna",
-    "name": "Virtus Bologna",
-    "score": 86
-   },
-   "away": {
-    "id": "euroleague-kosner-baskonia-vitoria-gasteiz",
-    "name": "Kosner Baskonia Vitoria-Gasteiz",
-    "score": 78
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "euroleague-fc-barcelona-olympiacos-piraeus-2026-10-16",
-   "start_ts": 1792108800,
-   "status": "FT",
-   "home": {
-    "id": "euroleague-fc-barcelona",
-    "name": "FC Barcelona",
-    "score": 100
-   },
-   "away": {
-    "id": "euroleague-olympiacos-piraeus",
-    "name": "Olympiacos Piraeus",
-    "score": 105
-   },
-   "period": null,
-   "venue": null
-  },
-  {
    "id": "euroleague-panathinaikos-aktor-athens-hapoel-ibi-tel-aviv-2026-10-16",
    "start_ts": 1792108800,
    "status": "FT",
@@ -1139,57 +1190,6 @@
     "id": "euroleague-fc-bayern-munich",
     "name": "FC Bayern Munich",
     "score": 87
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "euroleague-valencia-basket-maccabi-rapyd-tel-aviv-2026-10-15",
-   "start_ts": 1792022400,
-   "status": "FT",
-   "home": {
-    "id": "euroleague-valencia-basket",
-    "name": "Valencia Basket",
-    "score": 88
-   },
-   "away": {
-    "id": "euroleague-maccabi-rapyd-tel-aviv",
-    "name": "Maccabi Rapyd Tel Aviv",
-    "score": 91
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "euroleague-armani-olimpia-milan-dubai-basketball-2026-10-15",
-   "start_ts": 1792022400,
-   "status": "FT",
-   "home": {
-    "id": "euroleague-armani-olimpia-milan",
-    "name": "Armani Olimpia Milan",
-    "score": 97
-   },
-   "away": {
-    "id": "euroleague-dubai-basketball",
-    "name": "Dubai Basketball",
-    "score": 101
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "euroleague-fenerbahce-tarfin-istanbul-partizan-mozzart-bet-belgrade-2026-10-15",
-   "start_ts": 1792022400,
-   "status": "FT",
-   "home": {
-    "id": "euroleague-fenerbahce-tarfin-istanbul",
-    "name": "Fenerbahce Tarfin Istanbul",
-    "score": 74
-   },
-   "away": {
-    "id": "euroleague-partizan-mozzart-bet-belgrade",
-    "name": "Partizan Mozzart Bet Belgrade",
-    "score": 65
    },
    "period": null,
    "venue": null

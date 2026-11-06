@@ -2,7 +2,7 @@
  "league": "euroleague",
  "season": "2026-2027",
  "source": "api-live.euroleague.net (API oficial)",
- "updated": 1793918758,
+ "updated": 1793957433,
  "standings": [
   {
    "rank": 1,
@@ -22,6 +22,30 @@
   },
   {
    "rank": 3,
+   "team": "Valencia Basket",
+   "played": null,
+   "wins": 7,
+   "losses": 3,
+   "points": null
+  },
+  {
+   "rank": 4,
+   "team": "Fenerbahce Tarfin Istanbul",
+   "played": null,
+   "wins": 7,
+   "losses": 3,
+   "points": null
+  },
+  {
+   "rank": 5,
+   "team": "FC Barcelona",
+   "played": null,
+   "wins": 7,
+   "losses": 3,
+   "points": null
+  },
+  {
+   "rank": 6,
    "team": "Crvena Zvezda Meridianbet Belgrade",
    "played": null,
    "wins": 6,
@@ -29,39 +53,7 @@
    "points": null
   },
   {
-   "rank": 4,
-   "team": "Valencia Basket",
-   "played": null,
-   "wins": 6,
-   "losses": 3,
-   "points": null
-  },
-  {
-   "rank": 5,
-   "team": "Hapoel IBI Tel Aviv",
-   "played": null,
-   "wins": 6,
-   "losses": 3,
-   "points": null
-  },
-  {
-   "rank": 6,
-   "team": "Fenerbahce Tarfin Istanbul",
-   "played": null,
-   "wins": 6,
-   "losses": 3,
-   "points": null
-  },
-  {
    "rank": 7,
-   "team": "FC Barcelona",
-   "played": null,
-   "wins": 6,
-   "losses": 3,
-   "points": null
-  },
-  {
-   "rank": 8,
    "team": "Dubai Basketball",
    "played": null,
    "wins": 6,
@@ -69,8 +61,16 @@
    "points": null
   },
   {
-   "rank": 9,
+   "rank": 8,
    "team": "Real Madrid",
+   "played": null,
+   "wins": 6,
+   "losses": 4,
+   "points": null
+  },
+  {
+   "rank": 9,
+   "team": "Hapoel IBI Tel Aviv",
    "played": null,
    "wins": 6,
    "losses": 4,
@@ -113,36 +113,36 @@
    "team": "Anadolu Efes Istanbul",
    "played": null,
    "wins": 4,
-   "losses": 5,
+   "losses": 6,
    "points": null
   },
   {
    "rank": 15,
-   "team": "LDLC ASVEL Villeurbanne",
+   "team": "Paris Basketball",
    "played": null,
    "wins": 4,
-   "losses": 5,
+   "losses": 6,
    "points": null
   },
   {
    "rank": 16,
-   "team": "Paris Basketball",
+   "team": "LDLC ASVEL Villeurbanne",
    "played": null,
-   "wins": 3,
+   "wins": 4,
    "losses": 6,
    "points": null
   },
   {
    "rank": 17,
-   "team": "Maccabi Rapyd Tel Aviv",
+   "team": "FC Bayern Munich",
    "played": null,
-   "wins": 2,
+   "wins": 3,
    "losses": 7,
    "points": null
   },
   {
    "rank": 18,
-   "team": "FC Bayern Munich",
+   "team": "Maccabi Rapyd Tel Aviv",
    "played": null,
    "wins": 2,
    "losses": 7,
@@ -153,7 +153,7 @@
    "team": "Armani Olimpia Milan",
    "played": null,
    "wins": 1,
-   "losses": 8,
+   "losses": 9,
    "points": null
   },
   {
@@ -161,7 +161,7 @@
    "team": "Kosner Baskonia Vitoria-Gasteiz",
    "played": null,
    "wins": 1,
-   "losses": 8,
+   "losses": 9,
    "points": null
   }
  ]

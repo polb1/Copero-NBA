@@ -33,6 +33,14 @@ def esc(s) -> str:
 
 def main() -> None:
     rosters = json.loads((ROOT / "src" / "data" / "realRosters2026.json").read_text()).get("clubs") or {}
+
+    # plantillas de la GBL (esake.gr): mismos campos, liga griega
+    try:
+        gbl = json.loads((DATA / "gbl-rosters.json").read_text())
+        for club, jugadores in gbl.items():
+            rosters.setdefault(club, {"league": "Greek Basket League", "coach": "", "players": jugadores})
+    except Exception as e:  # noqa: BLE001
+        print("sin plantillas GBL:", e)
     mapa_path = DATA / "player-slugs.json"
     mapa = json.loads(mapa_path.read_text()) if mapa_path.exists() else {}
 

@@ -150,13 +150,34 @@ export function NewsCard({ item, large = false }: { item: NewsItem; large?: bool
       href={item.url}
       target="_blank"
       rel="noopener nofollow"
-      className="flex flex-col gap-2 bg-court-surface rounded-lg border border-court-border p-space-md hover:border-primary-container transition-colors"
+      className="group relative flex flex-col overflow-hidden rounded-xl border border-court-border bg-court-surface hover:border-primary-container transition-colors"
     >
-      <span><LeagueChip league={item.category} /></span>
-      <h3 className={`font-display font-bold text-text-primary m-0 leading-tight ${large ? 'text-headline-lg' : 'text-headline-md'}`}>
-        {item.title}
-      </h3>
-      <span className="text-body-sm text-text-dim">{item.source} · {item.date} · Leer en el medio original ↗</span>
+      <div className={`relative w-full ${large ? 'aspect-[16/9]' : 'aspect-[16/10]'} bg-court-surface-elevated overflow-hidden`}>
+        {item.image ? (
+          <img
+            src={item.image}
+            alt=""
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+          />
+        ) : null}
+        <div className="absolute inset-0 bg-gradient-to-t from-court-surface via-court-surface/20 to-transparent" />
+        <span className="absolute left-3 top-3">
+          <LeagueChip league={item.category} />
+        </span>
+      </div>
+      <div className="flex flex-col gap-1.5 p-space-md -mt-6 relative">
+        <h3 className={`font-display font-bold text-text-primary m-0 leading-tight ${large ? 'text-headline-lg' : 'text-headline-md'}`}>
+          {item.title}
+        </h3>
+        {item.summary ? (
+          <p className={`m-0 text-body-sm text-on-surface-variant ${large ? 'line-clamp-3' : 'line-clamp-2'}`}>{item.summary}</p>
+        ) : null}
+        <span className="text-label-table-header uppercase tracking-wider text-text-dim mt-1">
+          {item.source} · {item.date}
+        </span>
+      </div>
     </a>
   );
 }

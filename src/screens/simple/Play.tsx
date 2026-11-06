@@ -2,7 +2,7 @@ import { Children, memo, useEffect, useState, type ReactNode } from 'react';
 import { LEGACY_TIERS, legacyScore } from '../../engine/legacy';
 import { ACHIEVEMENTS } from '../../engine/achievements';
 import { challengeDone, challengeOf } from '../../engine/challenges';
-import { dailyResult, isDailyCareer, recordDaily } from '../../engine/daily';
+import { dailyResult, isDailyCareer, loadDaily, recordDaily } from '../../engine/daily';
 import { Link, useNavigate } from 'react-router-dom';
 import type { Career, Offer, SeasonRecord, SeasonSummary } from '../../engine/types';
 import * as api from '../../engine/api';
@@ -810,7 +810,7 @@ function Retired({ c }: { c: Career }) {
     else if (!out.ok) store.toast('No se pudo generar la imagen.');
   };
   const share = async () => {
-    const text = `Anillero · Modo Carrera\n${u.first} ${u.last} (${u.pos}, ${countryByCode(u.nat).name})\n${r.totals.gp} PJ · ${f1(a.ppg)} PTS ${f1(a.rpg)} REB ${f1(a.apg)} AST · ${r.titles} anillo(s)\nLegacy Score ${r.legacyScore} · ${r.tier}\n${challengeDone(c) ? 'Reto cumplido' : 'Reto no cumplido'}: ${challengeOf(c).label}${daily ? `\nReto del día: ${daily.done ? 'cumplido' : 'no cumplido'}` : ''}\n¿Puedes superarlo? ${location.origin + location.pathname}`;
+    const text = `Anillero · Modo Carrera\n${u.first} ${u.last} (${u.pos}, ${countryByCode(u.nat).name})\n${r.totals.gp} PJ · ${f1(a.ppg)} PTS ${f1(a.rpg)} REB ${f1(a.apg)} AST · ${r.titles} anillo(s)\nLegacy Score ${r.legacyScore} · ${r.tier}\nReto de carrera: ${challengeOf(c).label} · ${challengeDone(c) ? 'cumplido' : 'no cumplido'}${daily ? `\nReto del día: ${daily.label} · ${daily.done ? 'cumplido' : 'no cumplido'}` : ''}\n¿Puedes superarlo? ${location.origin + location.pathname}`;
     // The link turns every shared career into an invitation to play.
     try {
       if (navigator.share) await navigator.share({ text });
@@ -820,11 +820,18 @@ function Retired({ c }: { c: Career }) {
   return (
     <div className="decision">
       <Scene kind="trophy" height={170}><h2>{r.tier}</h2></Scene>
-      {daily && (
-        <p className={`career-rank-line ${daily.done ? 'record' : ''}`}>
-          Reto del día: <b>{daily.label}</b> · {daily.done ? 'cumplido' : `no cumplido (${daily.progress[0]}/${daily.progress[1]})`}
+      <div className="challenge-boxes">
+        <p className="career-rank-line">
+          <span className="tiny dim">Reto de tu carrera</span>{' '}
+          <b>{challengeOf(c).label}</b> · {challengeDone(c) ? 'cumplido' : 'pendiente'}
         </p>
-      )}
+        {daily && (
+          <p className={`career-rank-line ${daily.done ? 'record' : ''}`}>
+            <span className="tiny dim">Reto del día · racha {loadDaily().streak}</span>{' '}
+            <b>{daily.label}</b> · {daily.done ? 'cumplido' : `pendiente (${daily.progress[0]}/${daily.progress[1]})`}
+          </p>
+        )}
+      </div>
       <p className="small muted desc">Retirado a los {r.age} · Legacy Score <b className="accent">{r.legacyScore}</b> · Hall of Fame {Math.round(r.hofProbability * 100)}% · {fmtMoney(r.earnings)} ganados</p>
       {rank.total > 1 && (
         <p className={`career-rank-line ${rank.record ? 'record' : ''}`}>

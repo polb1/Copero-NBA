@@ -6,24 +6,63 @@ import { fechaCorta, useHubData } from '../data';
 export function Noticias() {
   const { news, loading } = useHubData();
   const [q, setQ] = useState('');
+  const [cat, setCat] = useState('TODAS');
+
+  const categorias = useMemo(() => ['TODAS', ...new Set(news.map((n) => (n.category || 'BALONCESTO').toUpperCase()))], [news]);
   const filtered = useMemo(
-    () => news.filter((n) => (n.title + n.source).toLowerCase().includes(q.toLowerCase())),
-    [news, q],
+    () => news.filter((n) => {
+      const okCat = cat === 'TODAS' || (n.category || '').toUpperCase() === cat;
+      const okQ = (n.title + n.source + (n.summary || '')).toLowerCase().includes(q.toLowerCase());
+      return okCat && okQ;
+    }),
+    [news, q, cat],
   );
+  const [portada, ...resto] = filtered;
+
   return (
-    <div className="max-w-[1200px] mx-auto flex flex-col gap-space-md">
+    <div className="max-w-[1300px] mx-auto flex flex-col gap-space-md">
       <SectionHeader title="Noticias" right={`${filtered.length} artículos`} />
-      <input
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        placeholder="Buscar noticias…"
-        className="w-full bg-court-surface border border-court-border rounded-lg px-space-md py-2 text-body-sm text-text-primary outline-none focus:border-primary-container"
-      />
-      {loading && <Card className="p-space-lg text-text-muted text-body-sm">Cargando…</Card>}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-space-md">
-        {filtered.map((n) => <NewsCard key={n.url} item={n} />)}
+
+      <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Buscar noticias, equipos o jugadores…"
+          className="flex-1 bg-court-surface border border-court-border rounded-lg px-space-md py-2 text-body-sm text-text-primary outline-none focus:border-primary-container"
+        />
+        <div className="flex flex-wrap gap-1.5">
+          {categorias.map((c) => (
+            <button
+              key={c}
+              onClick={() => setCat(c)}
+              className={`px-3 py-1.5 rounded-full font-display text-label-table-header uppercase tracking-wider border-0 cursor-pointer transition-colors ${
+                cat === c ? 'bg-primary-container text-on-primary-container' : 'bg-court-surface text-on-surface-variant hover:text-text-primary'
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
       </div>
-      {!loading && filtered.length === 0 && <Card className="p-space-lg text-text-muted text-body-sm">Sin resultados.</Card>}
+
+      {loading && <Card className="p-space-lg text-text-muted text-body-sm">Cargando…</Card>}
+
+      {portada && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-space-md">
+          <div className="lg:col-span-2">
+            <NewsCard item={portada} large />
+          </div>
+          <div className="flex flex-col gap-space-md">
+            {resto.slice(0, 2).map((n) => <NewsCard key={n.url} item={n} />)}
+          </div>
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+        {resto.slice(2).map((n) => <NewsCard key={n.url} item={n} />)}
+      </div>
+
+      {!loading && filtered.length === 0 && <Card className="p-space-lg text-text-muted text-body-sm">Sin resultados para esa búsqueda.</Card>}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 {
- "updated": 1793919643,
+ "updated": 1793958395,
  "leagues": [
   {
    "key": "nba",
@@ -10,7 +10,7 @@
   },
   {
    "key": "acb",
-   "games": 26,
+   "games": 24,
    "standings": 18,
    "source": "ACB oficial (acb.com) + Apify para clasificación",
    "error": null
@@ -38,7 +38,7 @@
   }
  ],
  "budget": {
-  "dia": "2026-11-05",
-  "apisports": 4
+  "dia": "2026-11-06",
+  "apisports": 2
  }
 }

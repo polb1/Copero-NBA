@@ -20,5 +20,27 @@
 "start_ts": 1793716200,
 "status": "FT",
 "venue": "Molot Sports Hall"
+},
+"vtb-513478": {
+"away": {
+"id": "vtb-1030",
+"logo": "https://media.api-sports.io/basketball/teams/1030.png",
+"name": "Unics Kazan",
+"score": null
+},
+"date": "2026-11-06",
+"external_id": 513478,
+"home": {
+"id": "vtb-1028",
+"logo": "https://media.api-sports.io/basketball/teams/1028.png",
+"name": "Saratov",
+"score": null
+},
+"id": "vtb-513478",
+"period": null,
+"round": null,
+"start_ts": 1793977200,
+"status": "NS",
+"venue": "Kristall Ice Sports Palace"
 }
 }

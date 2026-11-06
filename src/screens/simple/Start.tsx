@@ -8,7 +8,7 @@ import type { NewCareerInput } from '../../engine/career';
 import { newCareer } from '../../engine/api';
 import { newSeed } from '../../engine/rng';
 import { CHALLENGES, rollChallenge } from '../../engine/challenges';
-import { dailyGoalLabel, dailyPlayedToday, dailySetup, loadDaily, seedForDay, todayKey } from '../../engine/daily';
+import { dailyGoal, dailyGoalLabel, dailyPlayedToday, dailySetup, loadDaily, seedForDay, todayKey } from '../../engine/daily';
 import { careerHistory, playStreak, store, useCareer } from '../../store/store';
 import { userOf } from '../../engine/career';
 import { CourtPicker, Jersey } from '../../ui/simple';
@@ -33,7 +33,9 @@ export function Start() {
   const nav = useNavigate();
   const current = useCareer();
   // Another run starts from the last player's identity: two taps and you are playing again.
-  const prev = current ? userOf(current) : null;
+  // Una carrera del reto diario no sirve de plantilla: su apellido es la fecha.
+  const esDiaria = Boolean(current && (current.flags as Record<string, unknown>).daily);
+  const prev = current && !esDiaria ? userOf(current) : null;
   const [mode, setMode] = useState<Mode>(current?.mode === 'full' || current?.mode === 'express' ? current.mode : 'quick');
   const [first, setFirst] = useState(prev?.first ?? '');
   const [last, setLast] = useState(prev?.last ?? '');
@@ -100,6 +102,7 @@ export function Start() {
     setTimeout(() => {
       const c = newCareer(input, seedForDay(key));
       (c.flags as Record<string, unknown>).daily = key;
+      (c.flags as Record<string, unknown>).dailyGoal = dailyGoal(key).id;
       store.setCareer(c);
       nav('/play');
     }, 30);
@@ -153,6 +156,9 @@ export function Start() {
           <div className="daily-info">
             <span className="daily-kicker">Reto del día · {todayKey().split('-').reverse().join('/')}</span>
             <b>{dailyGoalLabel(todayKey())}</b>
+            <span className="tiny dim" style={{ maxWidth: 460 }}>
+              Reto extra, más difícil que el de carrera y el mismo para todos. Cumplirlo suma a tu racha diaria.
+            </span>
             <span className="tiny dim">
               {dailyPlayedToday()
                 ? (loadDaily().done ? `Cumplido hoy · racha ${loadDaily().streak} día(s)` : `No cumplido hoy · racha ${loadDaily().streak} día(s)`)
