@@ -6903,7 +6903,7 @@
 "slug": "mickey-dillard"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Steve Hayes",
 "slug": "steve-hayes"
 },
@@ -20113,7 +20113,7 @@
 "slug": "daishen-nix"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Ayo Dosunmu",
 "slug": "ayo-dosunmu"
 },
@@ -23474,7 +23474,7 @@
 "slug": "marko-guduric"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Devon Hall",
 "slug": "devon-hall"
 },
@@ -28880,7 +28880,7 @@
 "slug": "eric-mika"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Killian Hayes",
 "slug": "killian-hayes"
 },
@@ -32325,7 +32325,7 @@
 "slug": "jarrell-brantley"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Jaxson Hayes",
 "slug": "jaxson-hayes"
 },
@@ -33155,7 +33155,7 @@
 "slug": "darius-songaila"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Jarvis Hayes",
 "slug": "jarvis-hayes"
 },
@@ -33285,7 +33285,7 @@
 "slug": "nick-weatherspoon"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Elvin Hayes",
 "slug": "elvin-hayes"
 },

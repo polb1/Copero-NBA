@@ -491,6 +491,8 @@ def update_noticias():
             except Exception:
                 dt = datetime.now(timezone.utc)
             seen.add(link)
+            resumen = _clean(desc.group(1)) if desc else ""
+            imagen = _image(raw)
             items.append({
                 "source": source,
                 "category": _cat(title, default_cat),
@@ -498,6 +500,8 @@ def update_noticias():
                 "url": link,
                 "date": dt.strftime("%Y-%m-%d"),
                 "ts": dt.timestamp(),
+                "summary": resumen[:220],
+                "image": imagen,
             })
     # cuota por fuente: que no la copen los feeds con más volumen
     items.sort(key=lambda i: i["ts"], reverse=True)
