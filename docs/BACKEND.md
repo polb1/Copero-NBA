@@ -70,6 +70,47 @@ shares(id TEXT PRIMARY KEY, career_id TEXT, created_at INTEGER, views INTEGER)
 | GET | `/api/career/:id` | Carrera concreta (para `/c/<id>`) |
 | GET | `/c/:id` | Página pública de la carrera + Open Graph dinámico |
 | GET | `/api/stats` | Agregados anónimos (partidas, retos, compartidos) |
+| POST | `/api/share` | Registra un compartido de carrera (incrementa vistas) |
+
+## Detalles técnicos implementados
+
+### Sistema de retos dobles
+- **Reto de carrera** (`CHALLENGES`): objetivo personal de la carrera (1 anillo, 3 All-Star, OVR 85, MVP, 12 temporadas, 15k pts, ROY, All-NBA, DPOY, liga no-NBA).
+- **Reto del día** (`DAILY_GOALS`): objetivo duro, mismo para todos, cambia cada día (2 anillos, 5 All-Star, OVR 90, 15 temporadas, 30k pts, 2× All-NBA).
+- El reto del día se sortea al crear la carrera (`dailyGoal` en flags) y se evalúa al retirarse.
+- Raacha diaria: solo suma la primera vez que se cumple el día; repetir no infla.
+
+### Device ID anónimo
+- UUID v4 generado en cliente, guardado en `localStorage` (`anillero.device.v1`).
+- No hay datos personales; si el usuario quiere, pone apodo en la carrera.
+- Funciona en modo incógnito (catch en localStorage).
+
+### Payload de carrera
+```json
+{
+  "profile": { ... },      // NewCareerInput completo
+  "retirement": { ... }    // datos de retirada (age, totals, legacyScore, etc.)
+}
+```
+Peso máximo 200 KB (corte en worker).
+
+### Compartir carrera (`/c/:id`)
+- Página HTML estática con Open Graph (`og:title`, `og:description`, `og:image`).
+- Meta `twitter:card: summary_large_image`.
+- Tabla `shares` registra cada compartido para futuro contador de vistas.
+
+### Anti-trampas (mínimo viable)
+- Seed del día lo decide el servidor (`/api/daily/today`).
+- Al enviar resultado, el backend valida que la carrera tenga el mismo `dailyGoal` que el día.
+- Seed del día es determinista (FNV-1a sobre `YYYY-MM-DD`).
+
+### Analytics
+- Cloudflare Web Analytics (beacon sin cookies).
+- Se inyecta en `gen-analytics.mjs` si existe `public/data/analytics.json` con `token`.
+- Sin cookies, sin banner de consentimiento.
+
+### Proxy de desarrollo
+`vite.config.ts` redirige `/api/*` y `/c/*` a `http://localhost:8788` (wrangler dev).
 
 **Anti-trampas mínimo**: el seed del día lo decide el servidor (`/api/daily/today`), y el
 resultado se valida comprobando que la carrera se generó con ese seed. No es infalible,
