@@ -3,6 +3,7 @@ import { LEGACY_TIERS, legacyScore } from '../../engine/legacy';
 import { ACHIEVEMENTS } from '../../engine/achievements';
 import { challengeDone, challengeOf } from '../../engine/challenges';
 import { dailyResult, isDailyCareer, loadDaily, recordDaily } from '../../engine/daily';
+import { enviarResultadoDiario, guardarCarrera } from '../../lib/api';
 import { Link, useNavigate } from 'react-router-dom';
 import type { Career, Offer, SeasonRecord, SeasonSummary } from '../../engine/types';
 import * as api from '../../engine/api';
@@ -794,7 +795,26 @@ function Retired({ c }: { c: Career }) {
   const daily = isDailyCareer(c) ? dailyResult(c) : null;
   useEffect(() => {
     if (daily) recordDaily(daily.done);
-    // se registra una vez por carrera; el guardado es idempotente por día
+    // Se envía al backend sin bloquear la pantalla: si falla, la racha local sigue valiendo.
+    if (daily) {
+      const day = String((c.flags as Record<string, unknown>).daily ?? '');
+      enviarResultadoDiario({
+        day,
+        goalId: String((c.flags as Record<string, unknown>).dailyGoal ?? ''),
+        done: daily.done,
+        progressA: daily.progress[0],
+        progressB: daily.progress[1],
+        legacyScore: r.legacyScore,
+      }).catch(() => {});
+    }
+    guardarCarrera({
+      seed: c.seed,
+      legacyScore: r.legacyScore,
+      titles: r.titles,
+      tier: r.tier,
+      payload: { profile: c.profile, retirement: c.retirement },
+    }).catch(() => {});
+    // una vez por carrera; el guardado es idempotente por día
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const u = userOf(c);

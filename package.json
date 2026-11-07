@@ -8,7 +8,11 @@
     "build": "node scripts/gen-pages.mjs && tsc -b && vite build && node scripts/gen-portal-home.mjs && python3 scripts/gen-roster-player-pages.py && python3 scripts/gen-player-pages.py && node scripts/gen-league-pages.mjs && node scripts/gen-team-pages.mjs && node scripts/gen-intent-pages.mjs && node scripts/gen-hall-of-fame.mjs && node scripts/gen-players-index.mjs && node scripts/gen-evergreen-pages.mjs && node scripts/gen-legal-pages.mjs && node scripts/gen-analytics.mjs && node scripts/gen-sitemap.mjs",
     "preview": "vite preview",
     "test": "vitest run",
-    "typecheck": "tsc -b --noEmit"
+    "typecheck": "tsc -b --noEmit",
+    "worker:dev": "wrangler dev --local --port 8788",
+    "db:init": "wrangler d1 execute anillero --local --file=migrations/0001_init.sql",
+    "db:init:remote": "wrangler d1 execute anillero --remote --file=migrations/0001_init.sql",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "react": "18.3.1",
@@ -16,6 +20,7 @@
     "react-router-dom": "6.26.2"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261106.1",
     "@types/react": "18.3.11",
     "@types/react-dom": "18.3.1",
     "@vitejs/plugin-react": "4.3.2",

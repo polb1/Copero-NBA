@@ -21,12 +21,34 @@
 "status": "FT",
 "venue": "BMW Park"
 },
+"bbl-509341": {
+"away": {
+"id": "bbl-550",
+"logo": "https://media.api-sports.io/basketball/teams/550.png",
+"name": "Chemnitz",
+"score": null
+},
+"date": "2026-11-07",
+"external_id": 509341,
+"home": {
+"id": "bbl-534",
+"logo": "https://media.api-sports.io/basketball/teams/534.png",
+"name": "Vechta",
+"score": null
+},
+"id": "bbl-509341",
+"period": null,
+"round": "8",
+"start_ts": 1794078000,
+"status": "NS",
+"venue": "RASTA Dome"
+},
 "bbl-509342": {
 "away": {
 "id": "bbl-560",
 "logo": "https://media.api-sports.io/basketball/teams/560.png",
 "name": "Phoenix Hagen",
-"score": null
+"score": 72
 },
 "date": "2026-11-06",
 "external_id": 509342,
@@ -34,13 +56,79 @@
 "id": "bbl-519",
 "logo": "https://media.api-sports.io/basketball/teams/519.png",
 "name": "Alba Berlin",
-"score": null
+"score": 102
 },
 "id": "bbl-509342",
 "period": null,
 "round": "8",
 "start_ts": 1793991600,
-"status": "NS",
+"status": "FT",
 "venue": "Uber Arena"
+},
+"bbl-509343": {
+"away": {
+"id": "bbl-533",
+"logo": "https://media.api-sports.io/basketball/teams/533.png",
+"name": "Ulm",
+"score": null
+},
+"date": "2026-11-07",
+"external_id": 509343,
+"home": {
+"id": "bbl-561",
+"logo": "https://media.api-sports.io/basketball/teams/561.png",
+"name": "Rostock",
+"score": null
+},
+"id": "bbl-509343",
+"period": null,
+"round": "8",
+"start_ts": 1794072600,
+"status": "NS",
+"venue": "Stadthalle Rostock"
+},
+"bbl-509344": {
+"away": {
+"id": "bbl-520",
+"logo": "https://media.api-sports.io/basketball/teams/520.png",
+"name": "Bamberg",
+"score": null
+},
+"date": "2026-11-07",
+"external_id": 509344,
+"home": {
+"id": "bbl-563",
+"logo": "https://media.api-sports.io/basketball/teams/563.png",
+"name": "Trier",
+"score": null
+},
+"id": "bbl-509344",
+"period": null,
+"round": "8",
+"start_ts": 1794072600,
+"status": "NS",
+"venue": "Arena Trier"
+},
+"bbl-509345": {
+"away": {
+"id": "bbl-521",
+"logo": "https://media.api-sports.io/basketball/teams/521.png",
+"name": "Basketball Braunschweig",
+"score": null
+},
+"date": "2026-11-07",
+"external_id": 509345,
+"home": {
+"id": "bbl-524",
+"logo": "https://media.api-sports.io/basketball/teams/524.png",
+"name": "Bonn",
+"score": null
+},
+"id": "bbl-509345",
+"period": null,
+"round": "8",
+"start_ts": 1794078000,
+"status": "NS",
+"venue": "Telekom Dome"
 }
 }

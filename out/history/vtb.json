@@ -26,7 +26,7 @@
 "id": "vtb-1030",
 "logo": "https://media.api-sports.io/basketball/teams/1030.png",
 "name": "Unics Kazan",
-"score": null
+"score": 79
 },
 "date": "2026-11-06",
 "external_id": 513478,
@@ -34,13 +34,79 @@
 "id": "vtb-1028",
 "logo": "https://media.api-sports.io/basketball/teams/1028.png",
 "name": "Saratov",
-"score": null
+"score": 62
 },
 "id": "vtb-513478",
 "period": null,
 "round": null,
 "start_ts": 1793977200,
-"status": "NS",
+"status": "FT",
 "venue": "Kristall Ice Sports Palace"
+},
+"vtb-513479": {
+"away": {
+"id": "vtb-3118",
+"logo": "https://media.api-sports.io/basketball/teams/3118.png",
+"name": "Dynamo Vladivostok",
+"score": 111
+},
+"date": "2026-11-07",
+"external_id": 513479,
+"home": {
+"id": "vtb-1023",
+"logo": "https://media.api-sports.io/basketball/teams/1023.png",
+"name": "Enisey",
+"score": 97
+},
+"id": "vtb-513479",
+"period": null,
+"round": null,
+"start_ts": 1794042000,
+"status": "FT",
+"venue": "Arena Sever"
+},
+"vtb-513480": {
+"away": {
+"id": "vtb-1027",
+"logo": "https://media.api-sports.io/basketball/teams/1027.png",
+"name": "Parma Perm",
+"score": 36
+},
+"date": "2026-11-07",
+"external_id": 513480,
+"home": {
+"id": "vtb-1025",
+"logo": "https://media.api-sports.io/basketball/teams/1025.png",
+"name": "Lokomotiv Kuban",
+"score": 48
+},
+"id": "vtb-513480",
+"period": "Quarter 2",
+"round": null,
+"start_ts": 1794056400,
+"status": "LIVE",
+"venue": "Basket-Hall Krasnodar"
+},
+"vtb-513481": {
+"away": {
+"id": "vtb-1010",
+"logo": "https://media.api-sports.io/basketball/teams/1010.png",
+"name": "MBA Moscow",
+"score": 85
+},
+"date": "2026-11-07",
+"external_id": 513481,
+"home": {
+"id": "vtb-1019",
+"logo": "https://media.api-sports.io/basketball/teams/1019.png",
+"name": "Uralmash Ekaterinburg",
+"score": 101
+},
+"id": "vtb-513481",
+"period": null,
+"round": null,
+"start_ts": 1794049200,
+"status": "FT",
+"venue": "DIVS Sport Hall"
 }
 }

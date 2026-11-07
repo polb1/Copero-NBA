@@ -1,0 +1,24 @@
+{
+"lega-509632": {
+"away": {
+"id": "lega-731",
+"logo": "https://media.api-sports.io/basketball/teams/731.png",
+"name": "Venezia",
+"score": null
+},
+"date": "2026-11-07",
+"external_id": 509632,
+"home": {
+"id": "lega-725",
+"logo": "https://media.api-sports.io/basketball/teams/725.png",
+"name": "Reggiana",
+"score": null
+},
+"id": "lega-509632",
+"period": null,
+"round": "7",
+"start_ts": 1794078000,
+"status": "NS",
+"venue": "PalaBigi"
+}
+}

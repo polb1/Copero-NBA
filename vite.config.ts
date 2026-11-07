@@ -55,6 +55,14 @@ function site(): Plugin {
 export default defineConfig({
   base: '/',
   plugins: [react(), site()],
+  // En desarrollo, la API vive en `wrangler dev` (puerto 8788): sin proxy, el juego
+  // no podría hablar con el backend local y siempre tiraría del estado local.
+  server: {
+    proxy: {
+      '/api': { target: 'http://localhost:8788', changeOrigin: true },
+      '/c/': { target: 'http://localhost:8788', changeOrigin: true },
+    },
+  },
   esbuild: { legalComments: 'none' },
   build: {
     minify: 'terser',

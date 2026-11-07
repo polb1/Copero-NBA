@@ -1,6 +1,6 @@
 # Backend de Anillero · propuesta
 
-Fecha: 6 de noviembre de 2026. Estado: **propuesta**, no implementado.
+Fecha: 7 de noviembre de 2026. Estado: **implementado, probado en local y listo para desplegar**.
 
 ## Por qué hace falta
 
@@ -96,3 +96,36 @@ pero encarece el tramposo casual.
 - No guarda datos personales: solo un UUID anónimo y, si el jugador quiere, un apodo.
 - No toca la ingesta de datos deportivos: eso sigue en `ingest.py` y los JSON estáticos.
 - No sirve el juego: el juego sigue siendo estático y jugable sin conexión.
+
+
+---
+
+## Estado real (7 nov 2026)
+
+| Pieza | Estado |
+|---|---|
+| Worker con API | ✅ `worker/index.ts` — sirve `/api/*`, `/c/*` y delega el resto en los estáticos |
+| Esquema D1 | ✅ `migrations/0001_init.sql` (con tabla `shares`) |
+| `POST /api/daily/result` | ✅ probado: idempotente, racha correcta, no infla al repetir |
+| `GET /api/daily/today` | ✅ probado: seed del día, objetivo del día |
+| `GET /api/daily/leaderboard` | ✅ probado: top 50 por legacy score |
+| `GET /api/stats` | ✅ probado: agregados globales |
+| `POST /api/career` + `GET /api/career/:id` | ✅ probado |
+| `GET /c/:id` con Open Graph | ✅ probado: título, descripción, imagen |
+| Cliente | ✅ `src/lib/api.ts`; al retirarse envía resultado diario + carrera (fallback a localStorage si falla) |
+| Proxy de desarrollo | ✅ `/api` y `/c/*` → `wrangler dev` puerto 8788 |
+
+### Cómo desplegarlo (requiere tu cuenta de Cloudflare)
+
+```bash
+npx wrangler login
+npx wrangler d1 create anillero          # copia el database_id que devuelve
+# pega ese id en wrangler.jsonc -> d1_databases[0].database_id
+npm run db:init:remote                    # crea las tablas en la base real
+npm run deploy                            # publica worker + estáticos
+```
+
+Después: `curl https://anillero.com/api/health` debe devolver `{"ok":true}`.
+
+**Nota**: mientras no se cree la D1, el Worker no debe desplegarse con el binding roto o
+el sitio se caería. El `database_id` actual es un UUID de prueba.

@@ -1,0 +1,68 @@
+{
+"acb-513044": {
+"away": {
+"id": "acb-2337",
+"logo": "https://media.api-sports.io/basketball/teams/2337.png",
+"name": "Obradoiro CAB",
+"score": null
+},
+"date": "2026-11-07",
+"external_id": 513044,
+"home": {
+"id": "acb-1698",
+"logo": "https://media.api-sports.io/basketball/teams/1698.png",
+"name": "Manresa",
+"score": null
+},
+"id": "acb-513044",
+"period": null,
+"round": "7",
+"start_ts": 1794070800,
+"status": "NS",
+"venue": "Pavelló Nou Congost"
+},
+"acb-513045": {
+"away": {
+"id": "acb-1695",
+"logo": "https://media.api-sports.io/basketball/teams/1695.png",
+"name": "Bilbao",
+"score": null
+},
+"date": "2026-11-07",
+"external_id": 513045,
+"home": {
+"id": "acb-1139",
+"logo": "https://media.api-sports.io/basketball/teams/1139.png",
+"name": "Basquet Girona",
+"score": null
+},
+"id": "acb-513045",
+"period": null,
+"round": "7",
+"start_ts": 1794076200,
+"status": "NS",
+"venue": "Pavello Fontajau"
+},
+"acb-513046": {
+"away": {
+"id": "acb-2331",
+"logo": "https://media.api-sports.io/basketball/teams/2331.png",
+"name": "Baskonia",
+"score": null
+},
+"date": "2026-11-07",
+"external_id": 513046,
+"home": {
+"id": "acb-1123",
+"logo": "https://media.api-sports.io/basketball/teams/1123.png",
+"name": "Forca Lleida",
+"score": null
+},
+"id": "acb-513046",
+"period": null,
+"round": "7",
+"start_ts": 1794081600,
+"status": "NS",
+"venue": "Pavelló Barris Nord"
+}
+}

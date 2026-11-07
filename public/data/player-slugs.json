@@ -1963,7 +1963,7 @@
 ],
 "Barcelona Winterthur FC": [
 {
-"indexable": false,
+"indexable": true,
 "name": "Mario Hezonja",
 "slug": "mario-hezonja-1093953203"
 }
@@ -4201,7 +4201,7 @@
 "slug": "chris-chiozza"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Terance Mann",
 "slug": "terance-mann"
 },
@@ -6458,7 +6458,7 @@
 "slug": "james-harden"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Mario Hezonja",
 "slug": "mario-hezonja"
 },
@@ -7987,7 +7987,7 @@
 "slug": "jeremiah-robinson-earl"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Santi Aldama",
 "slug": "santi-aldama"
 },
@@ -9555,7 +9555,7 @@
 "slug": "dwight-buycks"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Peyton Siva",
 "slug": "peyton-siva"
 },
@@ -12158,7 +12158,7 @@
 "slug": "gui-santos"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Marcus Mann",
 "slug": "marcus-mann"
 },
@@ -14356,7 +14356,7 @@
 "slug": "obi-toppin"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Tyrese Haliburton",
 "slug": "tyrese-haliburton"
 },
@@ -18272,7 +18272,7 @@
 "slug": "grant-long"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Willie Burton",
 "slug": "willie-burton"
 },
@@ -28089,7 +28089,7 @@
 "slug": "sergio-rodriguez-1093988850"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Mario Hezonja",
 "slug": "mario-hezonja-1093988851"
 },
@@ -33515,7 +33515,7 @@
 "slug": "isaiah-todd"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Tre Mann",
 "slug": "tre-mann"
 },
@@ -33780,7 +33780,7 @@
 "slug": "stan-washington"
 },
 {
-"indexable": false,
+"indexable": true,
 "name": "Joe Pace",
 "slug": "joe-pace"
 },

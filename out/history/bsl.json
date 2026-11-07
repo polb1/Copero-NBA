@@ -1,0 +1,90 @@
+{
+"bsl-511230": {
+"away": {
+"id": "bsl-1270",
+"logo": "https://media.api-sports.io/basketball/teams/1270.png",
+"name": "Fenerbahce",
+"score": null
+},
+"date": "2026-11-07",
+"external_id": 511230,
+"home": {
+"id": "bsl-1267",
+"logo": "https://media.api-sports.io/basketball/teams/1267.png",
+"name": "Bursaspor",
+"score": null
+},
+"id": "bsl-511230",
+"period": null,
+"round": "7",
+"start_ts": 1794072600,
+"status": "NS",
+"venue": "Tofas Spor Salonu"
+},
+"bsl-511231": {
+"away": {
+"id": "bsl-7931",
+"logo": "https://media.api-sports.io/basketball/teams/7931.png",
+"name": "Bordo Bandirma",
+"score": 78
+},
+"date": "2026-11-07",
+"external_id": 511231,
+"home": {
+"id": "bsl-5678",
+"logo": "https://media.api-sports.io/basketball/teams/5678.png",
+"name": "Cayirova",
+"score": 95
+},
+"id": "bsl-511231",
+"period": null,
+"round": "7",
+"start_ts": 1794045600,
+"status": "FT",
+"venue": "Cayirova Kapali Spor Salonu"
+},
+"bsl-511234": {
+"away": {
+"id": "bsl-2264",
+"logo": "https://media.api-sports.io/basketball/teams/2264.png",
+"name": "Petkim Spor",
+"score": null
+},
+"date": "2026-11-07",
+"external_id": 511234,
+"home": {
+"id": "bsl-1736",
+"logo": "https://media.api-sports.io/basketball/teams/1736.png",
+"name": "Trabzonspor",
+"score": null
+},
+"id": "bsl-511234",
+"period": null,
+"round": "7",
+"start_ts": 1794063600,
+"status": "NS",
+"venue": "Hayri Gur Spor Salonu"
+},
+"bsl-511235": {
+"away": {
+"id": "bsl-7961",
+"logo": "https://media.api-sports.io/basketball/teams/7961.png",
+"name": "Korfez Basket",
+"score": 41
+},
+"date": "2026-11-07",
+"external_id": 511235,
+"home": {
+"id": "bsl-1277",
+"logo": "https://media.api-sports.io/basketball/teams/1277.png",
+"name": "Turk Telekom",
+"score": 47
+},
+"id": "bsl-511235",
+"period": "Quarter 3",
+"round": "7",
+"start_ts": 1794054600,
+"status": "LIVE",
+"venue": "Ankara Spor Salonu"
+}
+}
