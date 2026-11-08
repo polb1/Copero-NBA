@@ -12,7 +12,11 @@
     "worker:dev": "wrangler dev --local --port 8788",
     "db:init": "wrangler d1 execute anillero --local --file=migrations/0001_init.sql",
     "db:init:remote": "wrangler d1 execute anillero --remote --file=migrations/0001_init.sql",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "portal:crazygames": "node scripts/gen-portal-crazygames.mjs",
+    "portal:poki": "node scripts/gen-portal-poki.mjs",
+    "portal:itch": "node scripts/gen-portal-itch.mjs",
+    "portal:all": "npm run portal:crazygames && npm run portal:poki && npm run portal:itch"
   },
   "dependencies": {
     "react": "18.3.1",

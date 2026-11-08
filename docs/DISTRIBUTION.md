@@ -55,8 +55,9 @@ Fecha: 7 de noviembre de 2026. Estado: **listo para publicar**; backend desplega
 - [x] Build de portal sin enlaces salientes ni menú del hub (`/play` limpio).
 - [x] Textos legales revisados (marca NBA → "Anillero · Modo Carrera", escudos con fallback).
 - [x] Reto diario con backend (ranking, racha persistente, seed servidor).
-- [ ] Builds específicas por portal (CrazyGames full, Poki, itch.io).
-- [ ] Assets de marketing: clip gameplay, tráiler, press kit.
-- [ ] Textos de store: descripción corta (80 chars), larga (4000 chars), keywords.
-- [ ] High-res screenshots (5-10) en 16:9 y 9:16.
-- [ ] Política de privacidad y términos en inglés + español.
+- [x] **Builds específicas por portal** (CrazyGames full, Poki, itch.io) — scripts en `scripts/gen-portal-*.mjs`, comando `npm run portal:all`.
+- [ ] Assets de marketing: clip gameplay, tráiler, press kit — ver `docs/RECORDING_GUIDE.md`.
+- [x] Textos de store: descripción corta (80 chars), larga (4000 chars), keywords — en `docs/STORE_TEXTS.md`.
+- [ ] High-res screenshots (5-10) en 16:9 y 9:16 — pendientes de captura.
+- [x] Política de privacidad y términos en inglés + español — en `docs/LEGAL_PRIVACY.md` y `docs/LEGAL_TERMS.md`.
+- [ ] SDK integration checklist completado — ver `docs/SDK_INTEGRATION.md`.

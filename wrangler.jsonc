@@ -1,22 +1,35 @@
 // Cloudflare Workers: API (/api, /c) + estáticos del build de Vite (dist/).
 {
-  "name": "copero-x-nba",
-  "main": "worker/index.ts",
-  "compatibility_date": "2026-10-01",
-  "assets": {
-    "directory": "./dist",
-    "binding": "ASSETS",
-    "not_found_handling": "404-page",
-    "html_handling": "drop-trailing-slash",
-    "run_worker_first": ["/api/*", "/c/*"]
-  },
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "anillero",
-      "database_id": "f6b56d71-18ad-4048-8ae5-7425dae1687e",
-      "migrations_dir": "migrations"
-    }
-  ],
-  "observability": { "enabled": true }
+	"name": "copero-x-nba",
+	"main": "worker/index.ts",
+	"compatibility_date": "2026-10-01",
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS",
+		"not_found_handling": "404-page",
+		"html_handling": "drop-trailing-slash",
+		"run_worker_first": [
+			"/api/*",
+			"/c/*"
+		]
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "anillero",
+			"database_id": "139eaace-b636-4a02-adcb-2dcf425164b2",
+			"migrations_dir": "migrations"
+		},
+		{
+			"binding": "anillero",
+			"database_name": "anillero",
+			"database_id": "139eaace-b636-4a02-adcb-2dcf425164b2",
+			"remote": true
+		}
+	],
+	"observability": {
+		"enabled": true
+	}
+
+	
 }
