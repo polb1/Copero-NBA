@@ -28,6 +28,7 @@ export default {
         'on-secondary': 'rgb(var(--c-on-secondary) / <alpha-value>)',
         'secondary-container': 'rgb(var(--c-secondary-container) / <alpha-value>)',
         'tertiary': 'rgb(var(--c-tertiary) / <alpha-value>)',
+        'on-tertiary-fixed': 'rgb(var(--c-on-tertiary-fixed) / <alpha-value>)',
         'error': 'rgb(var(--c-error) / <alpha-value>)',
         'background': 'rgb(var(--c-background) / <alpha-value>)',
         'court-surface': 'rgb(var(--c-court-surface) / <alpha-value>)',
