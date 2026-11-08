@@ -5,10 +5,10 @@ import { crestFor, initials, leagueMeta, pct, teamColor, type FixtureRow, type N
 
 export function SectionHeader({ title, right, id }: { title: string; right?: ReactNode; id?: string }) {
   return (
-    <div id={id} className="flex items-center justify-between gap-space-md mb-space-sm">
+    <div id={id} className="flex flex-wrap items-center justify-between gap-x-space-md gap-y-1 mb-space-sm">
       <div className="flex items-center gap-space-sm">
         <span className="w-1 h-5 bg-primary-container rounded" />
-        <h2 className="font-display text-headline-md font-bold uppercase tracking-wider text-text-primary m-0">{title}</h2>
+        <h2 className="font-display text-headline-md font-bold uppercase tracking-wider text-text-primary m-0 whitespace-nowrap">{title}</h2>
       </div>
       {right && <div className="font-display text-label-table-header uppercase text-text-muted flex items-center gap-1">{right}</div>}
     </div>

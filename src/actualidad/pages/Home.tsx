@@ -80,7 +80,8 @@ export function Home() {
 
       {/* Ticker */}
       <div className="flex flex-wrap items-center justify-between gap-space-sm bg-court-surface px-space-md py-1.5 rounded-lg shadow-sm">
-        <div className="flex items-center gap-space-sm min-w-0">
+        {/* en móvil ya se ve el destacado justo encima: solo la hora de los datos */}
+        <div className="hidden sm:flex items-center gap-space-sm min-w-0">
           <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-court-surface-elevated text-text-primary font-display text-label-match-status uppercase tracking-wider">
             Último resultado
           </span>
@@ -148,7 +149,7 @@ export function Home() {
                 <button
                   key={key}
                   onClick={() => setFilter(key as typeof filter)}
-                  className={`px-space-md py-1 rounded font-display text-label-table-header uppercase tracking-wider border-0 cursor-pointer transition-all ${
+                  className={`px-space-md py-2 rounded font-display text-label-table-header uppercase tracking-wider border-0 cursor-pointer transition-all ${
                     filter === key
                       ? 'bg-primary-container text-on-primary-container'
                       : 'bg-court-surface-elevated text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'

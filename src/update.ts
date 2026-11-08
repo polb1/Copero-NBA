@@ -1,6 +1,5 @@
 // Picks up new deploys in tabs that stay open for days: when the player comes back to the tab, the page
 // is compared with the live one and, if the build changed, reloaded (the career is saved first).
-import { store } from './store/store';
 
 const entry = () => document.querySelector<HTMLScriptElement>('script[type="module"][src*="/assets/main-"]')?.getAttribute('src') ?? null;
 
@@ -21,6 +20,7 @@ async function check() {
   lastCheck = Date.now();
   const live = await liveEntry();
   if (!live || live === mine) return;
+  const { store } = await import('./store/store'); // dinámico: el hub no carga el motor
   // Never in the middle of a simulation: try again on the next return to the tab.
   if (store.get().sim || store.get().busy) { lastCheck = 0; return; }
   store.flush();

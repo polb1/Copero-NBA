@@ -70,7 +70,7 @@ export function Start() {
     const posD = (setup.pos ?? 'SG') as Pos;
     const [lo, hi] = HEIGHT_RANGE[posD];
     const height = Math.round((lo + hi) / 2);
-    const archD = (setup.arch ?? 'shooter') as Archetype;
+    const archD = (setup.arch ?? 'sharpshooter') as Archetype;
     const growth = ARCHETYPES.find((a) => a.id === archD)!.growth.filter((g) => g !== 'balanced') as (keyof typeof TRAINING_AREAS)[];
     const focus: NewCareerInput['focus'] = growth.length
       ? Object.fromEntries(growth.map((g) => [g, Math.floor(10 / growth.length)]))

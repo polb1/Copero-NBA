@@ -1,5 +1,4 @@
 import { Component, type ReactNode } from 'react';
-import { lastSlotId, loadCareer, exportCareer } from '../store/store';
 
 interface State { error: Error | null }
 
@@ -15,7 +14,9 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, State> {
     console.error('Anillero · Modo Carrera crashed:', error);
   }
 
-  private exportSave = () => {
+  // import dinámico: el hub no carga el motor del juego salvo que haga falta
+  private exportSave = async () => {
+    const { lastSlotId, loadCareer, exportCareer } = await import('../store/store');
     const id = lastSlotId();
     const c = id ? loadCareer(id) : null;
     if (c) exportCareer(c);

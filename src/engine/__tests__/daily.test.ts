@@ -57,3 +57,14 @@ describe('retos diarios', () => {
     expect(s.done).toBe(false);
   });
 });
+
+describe('dailySetup', () => {
+  it('siempre pide un arquetipo que existe', async () => {
+    const { ARCHETYPES } = await import('../attributes');
+    const ids = ARCHETYPES.map((a) => a.id);
+    for (let d = 1; d <= 60; d++) {
+      const key = `2026-${String(Math.ceil(d / 30)).padStart(2, '0')}-${String(((d - 1) % 30) + 1).padStart(2, '0')}`;
+      expect(ids).toContain(dailySetup(key).arch);
+    }
+  });
+});

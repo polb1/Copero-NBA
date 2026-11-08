@@ -105,7 +105,7 @@ export function LeaguePage() {
       {/* Cabecera de la liga */}
       <Card className="p-space-md">
         <div className="flex flex-wrap items-center justify-between gap-space-sm">
-          <div className="flex items-center gap-space-md">
+          <div className="flex flex-col items-start sm:flex-row sm:items-center gap-space-sm sm:gap-space-md">
             <span className={`px-2 py-1 rounded font-display text-label-table-header uppercase tracking-widest ${meta.chip}`}>
               {LEAGUE_COUNTRY[name || ''] || 'INT'}
             </span>
@@ -131,7 +131,7 @@ export function LeaguePage() {
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
-            className={`px-3 py-1 rounded font-display text-label-table-header uppercase tracking-wider border-0 cursor-pointer transition-colors ${
+            className={`px-3 py-2 rounded font-display text-label-table-header uppercase tracking-wider border-0 cursor-pointer transition-colors ${
               tab === t.id
                 ? 'bg-primary-container text-on-primary-container'
                 : 'bg-court-surface text-on-surface-variant hover:text-text-primary'
