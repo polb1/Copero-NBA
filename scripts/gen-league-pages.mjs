@@ -72,7 +72,7 @@ for (const name of names) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0b0c0e" />
+    <meta name="theme-color" content="#F7F3EC" />
     <title>${esc(title)}</title>
     <meta name="description" content="${esc(description)}" />
     <link rel="canonical" href="${SITE}/liga/${slug}" />
@@ -105,24 +105,25 @@ for (const name of names) {
       },
     })}</script>
     <style>
-      body{margin:0;background:#0b0c0e;color:#e6e8ec;font-family:Inter,system-ui,sans-serif;line-height:1.55}
+  h1,h2,h3{font-family:"Source Serif 4",Georgia,serif}
+      body{margin:0;background:#F7F3EC;color:#2B2420;font-family:Inter,system-ui,sans-serif;line-height:1.55}
       main{max-width:960px;margin:0 auto;padding:32px 20px 64px}
       h1{font-size:32px;margin:0 0 8px}
-      h2{font-size:20px;margin:28px 0 10px;color:#f0c04d}
-      p.lead{color:#98a0ae;margin-top:0}
+      h2{font-size:20px;margin:28px 0 10px;color:#8C6420}
+      p.lead{color:#6F645A;margin-top:0}
       table{width:100%;border-collapse:collapse;font-size:14px}
-      th,td{padding:7px 8px;border-bottom:1px solid #23262e;text-align:left}
-      th{color:#8a93a3;font-weight:600;text-transform:uppercase;font-size:11px;letter-spacing:.06em}
+      th,td{padding:7px 8px;border-bottom:1px solid #E5DBCB;text-align:left}
+      th{color:#6F645A;font-weight:600;text-transform:uppercase;font-size:11px;letter-spacing:.06em}
       ul{list-style:none;padding:0;margin:0}
-      li{padding:7px 0;border-bottom:1px solid #1c1f26;font-size:14px}
-      li span{color:#8a93a3;margin-right:8px;font-size:12px}
-      .cta{display:inline-block;margin-top:24px;background:#ff6b1a;color:#1b0b00;font-weight:700;padding:12px 20px;border-radius:10px;text-decoration:none}
-      .dim{color:#8a93a3}
+      li{padding:7px 0;border-bottom:1px solid #E5DBCB;font-size:14px}
+      li span{color:#6F645A;margin-right:8px;font-size:12px}
+      .cta{display:inline-block;margin-top:24px;background:#B85A31;color:#FFF8F2;font-weight:700;padding:12px 20px;border-radius:10px;text-decoration:none}
+      .dim{color:#6F645A}
     </style>
   </head>
   <body>
     <main id="root">
-      <p class="lead"><a href="/" style="color:#ff6b1a;text-decoration:none">Anillero</a> · Actualidad de baloncesto</p>
+      <p class="lead"><a href="/" style="color:#B85A31;text-decoration:none">Anillero</a> · Actualidad de baloncesto</p>
       <h1>${esc(name)}</h1>
       ${intros[name] ? `<p class="lead">${esc(intros[name])}</p>` : ''}
       <p class="lead">${esc(description)}</p>

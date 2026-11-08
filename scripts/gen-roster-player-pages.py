@@ -98,22 +98,23 @@ def main() -> None:
 <meta name="robots" content="noindex, follow" />
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 <style>
-:root{{color-scheme:dark}}
-body{{margin:0;background:#0b0c0e;color:#e6e8ec;font-family:Inter,system-ui,sans-serif;line-height:1.55}}
+  h1,h2,h3{{font-family:"Source Serif 4",Georgia,serif}}
+:root{{color-scheme:light}}
+body{{margin:0;background:#F7F3EC;color:#2B2420;font-family:Inter,system-ui,sans-serif;line-height:1.55}}
 main{{max-width:880px;margin:0 auto;padding:28px 20px 64px}}
-a{{color:#ff6b1a;text-decoration:none}}
-.crumbs{{font-size:13px;color:#8a93a3;margin-bottom:14px}}
-.crumbs a{{color:#98a0ae}}
+a{{color:#B85A31;text-decoration:none}}
+.crumbs{{font-size:13px;color:#6F645A;margin-bottom:14px}}
+.crumbs a{{color:#6F645A}}
 h1{{font-size:34px;margin:0 0 4px;letter-spacing:-.01em}}
-.meta{{color:#98a0ae;margin:0 0 20px}}
-.hero{{display:flex;align-items:center;gap:16px;padding:18px;border:1px solid #232733;border-radius:14px;background:linear-gradient(135deg,#151922,#0f1218)}}
-.num{{font-size:34px;font-weight:800;color:#ff6b1a;min-width:64px;text-align:center;font-variant-numeric:tabular-nums}}
+.meta{{color:#6F645A;margin:0 0 20px}}
+.hero{{display:flex;align-items:center;gap:16px;padding:18px;border:1px solid #E5DBCB;border-radius:14px;background:linear-gradient(135deg,#FFFDF8,#FFFDF8)}}
+.num{{font-size:34px;font-weight:800;color:#B85A31;min-width:64px;text-align:center;font-variant-numeric:tabular-nums}}
 .grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:18px 0}}
-.stat{{background:#12151b;border:1px solid #232733;border-radius:10px;padding:12px 14px}}
+.stat{{background:#FFFDF8;border:1px solid #E5DBCB;border-radius:10px;padding:12px 14px}}
 .stat b{{display:block;font-size:20px}}
-.stat span{{color:#8a93a3;font-size:11px;text-transform:uppercase;letter-spacing:.06em}}
-h2{{font-size:17px;margin:28px 0 10px;color:#f0c04d}}
-.cta{{display:inline-block;margin-top:26px;background:#ff6b1a;color:#1b0b00;font-weight:700;padding:12px 20px;border-radius:10px}}
+.stat span{{color:#6F645A;font-size:11px;text-transform:uppercase;letter-spacing:.06em}}
+h2{{font-size:17px;margin:28px 0 10px;color:#8C6420}}
+.cta{{display:inline-block;margin-top:26px;background:#B85A31;color:#FFF8F2;font-weight:700;padding:12px 20px;border-radius:10px}}
 </style>
 </head>
 <body>

@@ -69,19 +69,20 @@ const html = `<!doctype html>
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="robots" content="index, follow" />
 <style>
-body{margin:0;background:#0b0c0e;color:#e6e8ec;font-family:Inter,system-ui,sans-serif;line-height:1.55}
+  h1,h2,h3{font-family:"Source Serif 4",Georgia,serif}
+body{margin:0;background:#F7F3EC;color:#2B2420;font-family:Inter,system-ui,sans-serif;line-height:1.55}
 main{max-width:900px;margin:0 auto;padding:32px 20px 64px}
-a{color:#ff6b1a;text-decoration:none}
+a{color:#B85A31;text-decoration:none}
 h1{font-size:30px;margin:0 0 6px}
-h2{font-size:18px;margin:26px 0 10px;color:#f0c04d}
-.meta{color:#8a93a3;font-size:13px}
-.team{border-bottom:1px solid #1c1f26;padding:6px 0}
+h2{font-size:18px;margin:26px 0 10px;color:#8C6420}
+.meta{color:#6F645A;font-size:13px}
+.team{border-bottom:1px solid #E5DBCB;padding:6px 0}
 .team summary{cursor:pointer;font-size:15px}
 .team summary .meta{margin-left:8px}
 .squad{list-style:none;padding:6px 0 6px 14px;margin:0;columns:2;column-gap:24px}
 .squad li{font-size:13px;padding:2px 0}
-.squad a{color:#c9cfd9}
-.cta{display:inline-block;margin-top:24px;background:#ff6b1a;color:#1b0b00;font-weight:700;padding:10px 18px;border-radius:8px}
+.squad a{color:#3D342D}
+.cta{display:inline-block;margin-top:24px;background:#B85A31;color:#FFF8F2;font-weight:700;padding:10px 18px;border-radius:8px}
 </style>
 </head>
 <body>

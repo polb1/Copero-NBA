@@ -7,23 +7,23 @@ const SITE = 'https://anillero.com';
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 const CSS = `
-  :root{color-scheme:dark}
-  body{margin:0;background:#0b0c0e;color:#e6e8ec;font-family:Inter,system-ui,sans-serif;line-height:1.6}
-  a{color:#ff6b1a}
+  :root{color-scheme:light}
+  body{margin:0;background:#F7F3EC;color:#2B2420;font-family:Inter,system-ui,sans-serif;line-height:1.6}
+  a{color:#B85A31}
   .wrap{max-width:820px;margin:0 auto;padding:24px 20px 80px}
-  .crumbs{font-size:13px;color:#8a93a3}
+  .crumbs{font-size:13px;color:#6F645A}
   .hero{padding:30px 0 8px}
-  .kicker{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#f0c04d}
+  .kicker{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#8C6420}
   h1{font-size:clamp(28px,4.6vw,42px);line-height:1.1;margin:10px 0 12px;letter-spacing:-.02em}
-  .lead{font-size:17px;color:#b9c0cc;margin:0}
-  h2{font-size:20px;margin:34px 0 10px;color:#f0c04d}
+  .lead{font-size:17px;color:#4A4038;margin:0}
+  h2{font-size:20px;margin:34px 0 10px;color:#8C6420}
   ul{padding-left:20px}
   li{margin:6px 0}
-  .cta{display:inline-block;margin:26px 0 6px;background:#ff6b1a;color:#1b0b00;font-weight:700;padding:13px 22px;border-radius:10px;text-decoration:none}
-  .card{background:#12151b;border:1px solid #232733;border-radius:14px;padding:16px 18px;margin-top:14px}
-  .faq{border-top:1px solid #232733;margin-top:14px;padding-top:12px}
-  footer{margin-top:44px;border-top:1px solid #232733;padding-top:16px;color:#8a93a3;font-size:12px}
-  .lang{font-size:12px;color:#8a93a3;margin-top:10px}
+  .cta{display:inline-block;margin:26px 0 6px;background:#B85A31;color:#FFF8F2;font-weight:700;padding:13px 22px;border-radius:10px;text-decoration:none}
+  .card{background:#FFFDF8;border:1px solid #E5DBCB;border-radius:14px;padding:16px 18px;margin-top:14px}
+  .faq{border-top:1px solid #E5DBCB;margin-top:14px;padding-top:12px}
+  footer{margin-top:44px;border-top:1px solid #E5DBCB;padding-top:16px;color:#6F645A;font-size:12px}
+  .lang{font-size:12px;color:#6F645A;margin-top:10px}
 `;
 
 function page({ lang, title, desc, h1, kicker, lead, body, canonical, alternates, faq }) {
@@ -50,7 +50,8 @@ ${alt}
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="robots" content="index, follow" />
 <script type="application/ld+json">${ld}</script>
-<style>${CSS}</style>
+<style>
+  h1,h2,h3{font-family:"Source Serif 4",Georgia,serif}${CSS}</style>
 </head>
 <body>
 <div class="wrap">
@@ -84,7 +85,7 @@ const faqEn = [
 
 const faqBlock = (faq) => `<section class="faq">
     <h2>${faq === faqEs ? 'Preguntas frecuentes' : 'Frequently asked questions'}</h2>
-    ${faq.map(([q, a]) => `<div class="card"><b>${esc(q)}</b><p style="margin:6px 0 0;color:#b9c0cc">${esc(a)}</p></div>`).join('')}
+    ${faq.map(([q, a]) => `<div class="card"><b>${esc(q)}</b><p style="margin:6px 0 0;color:#4A4038">${esc(a)}</p></div>`).join('')}
   </section>`;
 
 const defs = [

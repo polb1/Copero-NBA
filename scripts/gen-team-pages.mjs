@@ -170,18 +170,19 @@ for (const [team, liga] of [...teamLeague.entries()].sort()) {
     memberOf: { '@type': 'SportsOrganization', name: liga },
   })}</script>
 <style>
-  :root{color-scheme:dark;--bg:#0b0c0e;--card:#12151b;--line:#232733;--muted:#8a93a3;--gold:#f0c04d;--orange:#ff6b1a}
+  h1,h2,h3{font-family:"Source Serif 4",Georgia,serif}
+  :root{color-scheme:light;--bg:#F7F3EC;--card:#FFFDF8;--line:#E5DBCB;--muted:#6F645A;--gold:#8C6420;--orange:#B85A31}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:#e6e8ec;font-family:Inter,system-ui,-apple-system,sans-serif;line-height:1.55}
+  body{margin:0;background:var(--bg);color:#2B2420;font-family:Inter,system-ui,-apple-system,sans-serif;line-height:1.55}
   a{color:var(--orange);text-decoration:none}
   .wrap{max-width:980px;margin:0 auto;padding:24px 20px 72px}
   .crumbs{font-size:13px;color:var(--muted);margin:0 0 16px}
   .hero{display:flex;align-items:center;gap:20px;padding:22px;border:1px solid var(--line);border-radius:16px;
-        background:radial-gradient(120% 120% at 0% 0%,rgba(255,107,26,.14),transparent 55%),linear-gradient(180deg,#151a23,#0e1117)}
-  .crest{width:84px;height:84px;border-radius:16px;background:#0b0c0e;border:1px solid var(--line);object-fit:contain;padding:8px;flex:0 0 auto}
-  .crest-fallback{width:84px;height:84px;border-radius:16px;display:grid;place-items:center;background:#1a1f29;border:1px solid var(--line);font-weight:800;font-size:26px;color:var(--orange);flex:0 0 auto}
+        background:radial-gradient(120% 120% at 0% 0%,rgba(184,90,49,.14),transparent 55%),linear-gradient(180deg,#FFFDF8,#FFFDF8)}
+  .crest{width:84px;height:84px;border-radius:16px;background:#F7F3EC;border:1px solid var(--line);object-fit:contain;padding:8px;flex:0 0 auto}
+  .crest-fallback{width:84px;height:84px;border-radius:16px;display:grid;place-items:center;background:#F3ECE1;border:1px solid var(--line);font-weight:800;font-size:26px;color:var(--orange);flex:0 0 auto}
   h1{font-size:34px;margin:0 0 2px;letter-spacing:-.02em;line-height:1.1}
-  .chip{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);border:1px solid rgba(240,192,77,.35);border-radius:999px;padding:2px 9px;margin-top:6px}
+  .chip{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);border:1px solid rgba(140,100,32,.35);border-radius:999px;padding:2px 9px;margin-top:6px}
   .chips{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 0}
   .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;min-width:110px}
   .kpi b{display:block;font-size:22px;font-variant-numeric:tabular-nums}
@@ -190,16 +191,16 @@ for (const [team, liga] of [...teamLeague.entries()].sort()) {
   .coach{color:var(--muted);font-size:13px;margin:-6px 0 12px}
   .squad{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;padding:0;margin:0;list-style:none}
   .player{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;transition:border-color .15s,transform .15s}
-  .player:hover{border-color:rgba(255,107,26,.55);transform:translateY(-1px)}
+  .player:hover{border-color:rgba(184,90,49,.55);transform:translateY(-1px)}
   .player .n{font-size:17px;font-weight:800;color:var(--orange);min-width:34px;text-align:center;font-variant-numeric:tabular-nums}
-  .player .nm{display:block;font-weight:600;font-size:14px;color:#e6e8ec;line-height:1.25}
+  .player .nm{display:block;font-weight:600;font-size:14px;color:#2B2420;line-height:1.25}
   .player .pos{display:block;font-size:12px;color:var(--muted);margin-top:2px}
   .list{list-style:none;padding:0;margin:0}
-  .list li{display:grid;grid-template-columns:70px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid #1a1e26;font-size:14px}
+  .list li{display:grid;grid-template-columns:70px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid #F3ECE1;font-size:14px}
   .list .d{color:var(--muted);font-size:12px}
   .list .sc{font-weight:700;font-variant-numeric:tabular-nums}
-  .w{color:#4edea3;font-weight:700}.l{color:#ff6b6b;font-weight:700}
-  .cta{display:inline-block;margin-top:30px;background:var(--orange);color:#1b0b00;font-weight:700;padding:12px 20px;border-radius:10px}
+  .w{color:#3F7D5A;font-weight:700}.l{color:#B3261E;font-weight:700}
+  .cta{display:inline-block;margin-top:30px;background:var(--orange);color:#FFF8F2;font-weight:700;padding:12px 20px;border-radius:10px}
   .foot{margin-top:36px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:12px}
   @media(max-width:560px){.hero{flex-direction:column;align-items:flex-start}h1{font-size:27px}}
 </style>

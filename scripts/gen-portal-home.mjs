@@ -124,32 +124,33 @@ const portal = `
 
 const css = `
     <style>
-      :root{color-scheme:dark}
-      body{margin:0;background:#0b0c0e;color:#e6e8ec;font-family:Inter,system-ui,-apple-system,sans-serif;line-height:1.55}
+  h1,h2,h3{font-family:"Source Serif 4",Georgia,serif}
+      :root{color-scheme:light}
+      body{margin:0;background:#F7F3EC;color:#2B2420;font-family:Inter,system-ui,-apple-system,sans-serif;line-height:1.55}
       .wrap{max-width:1080px;margin:0 auto;padding:20px}
-      .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid #1e222b;padding-bottom:14px}
-      .brand{font-weight:800;letter-spacing:.14em;color:#ff6b1a;text-decoration:none;font-size:18px}
+      .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid #E5DBCB;padding-bottom:14px}
+      .brand{font-weight:800;letter-spacing:.14em;color:#B85A31;text-decoration:none;font-size:18px}
       nav{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-      nav a{color:#aeb6c2;text-decoration:none;font-size:14px}
+      nav a{color:#5C5148;text-decoration:none;font-size:14px}
       nav a:hover{color:#fff}
-      .cta{background:#ff6b1a;color:#1b0b00!important;font-weight:700;padding:8px 14px;border-radius:8px}
+      .cta{background:#B85A31;color:#FFF8F2!important;font-weight:700;padding:8px 14px;border-radius:8px}
       h1{font-size:30px;margin:26px 0 6px}
-      h2{font-size:19px;margin:30px 0 10px;color:#f0c04d}
-      .lead{color:#98a0ae;margin:0 0 8px}
+      h2{font-size:19px;margin:30px 0 10px;color:#8C6420}
+      .lead{color:#6F645A;margin:0 0 8px}
       .matches{list-style:none;padding:0;margin:0}
-      .match{display:grid;grid-template-columns:150px 1fr auto;gap:10px;padding:8px 0;border-bottom:1px solid #1a1e26;font-size:14px}
-      .match .lg{color:#8a93a3;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
-      .match .dt{color:#8a93a3;font-size:12px}
+      .match{display:grid;grid-template-columns:150px 1fr auto;gap:10px;padding:8px 0;border-bottom:1px solid #F3ECE1;font-size:14px}
+      .match .lg{color:#6F645A;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+      .match .dt{color:#6F645A;font-size:12px}
       .tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
       .tbl h3{margin:0 0 6px;font-size:15px}
-      .tbl h3 a{color:#e6e8ec;text-decoration:none}
+      .tbl h3 a{color:#2B2420;text-decoration:none}
       table{width:100%;border-collapse:collapse;font-size:13px}
-      th{text-align:left;color:#8a93a3;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:4px 6px}
-      td{padding:5px 6px;border-top:1px solid #1a1e26}
-      .play{margin:34px 0;padding:20px;border:1px solid #2a2f3a;border-radius:12px;background:#12151b}
+      th{text-align:left;color:#6F645A;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:4px 6px}
+      td{padding:5px 6px;border-top:1px solid #F3ECE1}
+      .play{margin:34px 0;padding:20px;border:1px solid #D8CBB6;border-radius:12px;background:#FFFDF8}
       .cta.big{display:inline-block;margin-top:8px;padding:12px 20px;font-size:15px}
-      footer{margin-top:30px;border-top:1px solid #1e222b;padding-top:14px;color:#7d8695;font-size:12px}
-      footer a{color:#98a0ae}
+      footer{margin-top:30px;border-top:1px solid #E5DBCB;padding-top:14px;color:#7C7064;font-size:12px}
+      footer a{color:#6F645A}
       @media(max-width:640px){.match{grid-template-columns:1fr auto}.match .lg{display:none}}
     </style>`;
 

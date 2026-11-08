@@ -281,15 +281,16 @@ def main() -> None:
 <meta name="robots" content="{robots}" />
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 <style>
-body{{margin:0;background:#0b0c0e;color:#e6e8ec;font-family:Inter,system-ui,sans-serif;line-height:1.55}}
+  h1,h2,h3{{font-family:"Source Serif 4",Georgia,serif}}
+body{{margin:0;background:#F7F3EC;color:#2B2420;font-family:Inter,system-ui,sans-serif;line-height:1.55}}
 main{{max-width:900px;margin:0 auto;padding:32px 20px 64px}}
-a{{color:#ff6b1a}} h1{{font-size:34px;margin:0 0 4px}}
-.hof{{display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#f0c04d;border:1px solid rgba(240,192,77,.4);border-radius:999px;padding:2px 8px;margin-right:8px}} h2{{font-size:18px;margin:26px 0 10px;color:#f0c04d}}
-.meta{{color:#98a0ae;margin:0 0 18px}} .grid{{display:flex;gap:14px;flex-wrap:wrap;margin:16px 0}}
-.stat{{background:#14171d;border:1px solid #232733;border-radius:10px;padding:12px 16px;min-width:100px}}
-.stat b{{display:block;font-size:20px}} .stat span{{color:#8a93a3;font-size:11px;text-transform:uppercase;letter-spacing:.06em}}
-ul{{list-style:none;padding:0;margin:0}} li{{padding:7px 0;border-bottom:1px solid #1c1f26;font-size:14px}}
-li a{{text-decoration:none;color:#e6e8ec}} .cta{{display:inline-block;margin-top:24px;background:#ff6b1a;color:#1b0b00;font-weight:700;padding:12px 20px;border-radius:10px;text-decoration:none}}
+a{{color:#B85A31}} h1{{font-size:34px;margin:0 0 4px}}
+.hof{{display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#8C6420;border:1px solid rgba(140,100,32,.4);border-radius:999px;padding:2px 8px;margin-right:8px}} h2{{font-size:18px;margin:26px 0 10px;color:#8C6420}}
+.meta{{color:#6F645A;margin:0 0 18px}} .grid{{display:flex;gap:14px;flex-wrap:wrap;margin:16px 0}}
+.stat{{background:#FFFDF8;border:1px solid #E5DBCB;border-radius:10px;padding:12px 16px;min-width:100px}}
+.stat b{{display:block;font-size:20px}} .stat span{{color:#6F645A;font-size:11px;text-transform:uppercase;letter-spacing:.06em}}
+ul{{list-style:none;padding:0;margin:0}} li{{padding:7px 0;border-bottom:1px solid #E5DBCB;font-size:14px}}
+li a{{text-decoration:none;color:#2B2420}} .cta{{display:inline-block;margin-top:24px;background:#B85A31;color:#FFF8F2;font-weight:700;padding:12px 20px;border-radius:10px;text-decoration:none}}
 </style>
 </head>
 <body>

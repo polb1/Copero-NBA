@@ -26,35 +26,35 @@ const orden = [...grupos.keys()].sort((a, b) => parseInt(b) - parseInt(a));
 for (const lista of grupos.values()) lista.sort((a, b) => (a.pick || 999) - (b.pick || 999) || a.name.localeCompare(b.name, 'es'));
 
 const CSS = `
-  :root{color-scheme:dark;--bg:#0b0c0e;--card:#12151b;--line:#232733;--muted:#8a93a3;--gold:#f0c04d;--orange:#ff6b1a}
+  :root{color-scheme:light;--bg:#F7F3EC;--card:#FFFDF8;--line:#E5DBCB;--muted:#6F645A;--gold:#8C6420;--orange:#B85A31}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:#e6e8ec;font-family:Inter,system-ui,sans-serif;line-height:1.55}
+  body{margin:0;background:var(--bg);color:#2B2420;font-family:Inter,system-ui,sans-serif;line-height:1.55}
   a{text-decoration:none;color:inherit}
   .wrap{max-width:1180px;margin:0 auto;padding:24px 20px 80px}
   .crumbs{font-size:13px;color:var(--muted)}
   .hero{margin:14px 0 8px;padding:32px 26px;border:1px solid var(--line);border-radius:18px;
-        background:radial-gradient(90% 140% at 10% 0%,rgba(240,192,77,.16),transparent 60%),linear-gradient(180deg,#151a23,#0d1015)}
+        background:radial-gradient(90% 140% at 10% 0%,rgba(140,100,32,.16),transparent 60%),linear-gradient(180deg,#FFFDF8,#F7F3EC)}
   .kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
   h1{font-size:clamp(28px,5vw,44px);margin:8px 0 6px;letter-spacing:-.02em;line-height:1.05}
-  .lead{color:#b9c0cc;max-width:660px;margin:0}
+  .lead{color:#4A4038;max-width:660px;margin:0}
   .nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 6px}
-  .nav a{font-size:12px;color:#cfd5df;border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:#101319}
+  .nav a{font-size:12px;color:#3D342D;border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:#FFFDF8}
   .nav a:hover{border-color:var(--gold);color:var(--gold)}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-top:16px}
   .card{position:relative;display:flex;flex-direction:column;gap:2px;background:var(--card);border:1px solid var(--line);
         border-radius:14px;padding:14px 14px 12px;transition:transform .15s,border-color .15s,background .15s}
-  .card:hover{transform:translateY(-2px);border-color:rgba(240,192,77,.6);background:#161a22}
-  .ini{position:absolute;top:10px;right:12px;font-size:11px;font-weight:800;color:#39414f}
+  .card:hover{transform:translateY(-2px);border-color:rgba(140,100,32,.6);background:#FFFDF8}
+  .ini{position:absolute;top:10px;right:12px;font-size:11px;font-weight:800;color:#C9B9A2}
   .nm{font-weight:700;font-size:15px;line-height:1.25;padding-right:32px}
   .pos{font-size:12px;color:var(--muted)}
-  .team{font-size:12px;color:#9aa3b2;margin-top:4px}
+  .team{font-size:12px;color:#6F645A;margin-top:4px}
   .draft{font-size:11px;color:var(--gold);margin-top:6px}
   .decs{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:26px}
   .dec{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;transition:transform .15s,border-color .15s}
-  .dec:hover{transform:translateY(-2px);border-color:rgba(240,192,77,.6)}
+  .dec:hover{transform:translateY(-2px);border-color:rgba(140,100,32,.6)}
   .dec b{font-size:26px;color:var(--gold);display:block}
   .dec span{color:var(--muted);font-size:13px}
-  .dec em{display:block;margin-top:10px;color:#cfd5df;font-size:12px;font-style:normal}
+  .dec em{display:block;margin-top:10px;color:#3D342D;font-size:12px;font-style:normal}
   footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:12px}
   footer a{color:var(--orange)}
 `;
@@ -74,7 +74,8 @@ const shell = (title, desc, canonical, kicker, h1, lead, navHTML, body) => `<!do
 <meta property="og:image" content="${SITE}/og/anillero-1200x630.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="robots" content="index, follow" />
-<style>${CSS}</style>
+<style>
+  h1,h2,h3{font-family:"Source Serif 4",Georgia,serif}${CSS}</style>
 </head>
 <body>
 <div class="wrap">

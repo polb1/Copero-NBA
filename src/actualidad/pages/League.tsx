@@ -115,7 +115,7 @@ export function LeaguePage() {
                 <p className="text-body-sm text-on-surface-variant max-w-[70ch] mt-2 mb-0">{intros[name!]}</p>
               )}
               <p className="text-body-sm text-text-muted m-0 mt-1">
-                {rows.length ? `${rows.length} equipos · clasificación en vivo` : `${clubs.length} equipos · plantilla de la temporada`}
+                {rows.length ? `${rows.length} equipos · clasificación actualizada a diario` : `${clubs.length} equipos · plantilla de la temporada`}
               </p>
             </div>
           </div>
@@ -149,7 +149,7 @@ export function LeaguePage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-space-md">
           <div className="lg:col-span-2 flex flex-col gap-space-md">
             <Card className="p-space-sm">
-              <SectionHeader title={rows.length ? 'Clasificación' : 'Equipos'} right={rows.length ? 'En vivo' : 'Plantilla 2026-27'} />
+              <SectionHeader title={rows.length ? 'Clasificación' : 'Equipos'} right={rows.length ? 'Actualizada a diario' : 'Plantilla 2026-27'} />
               {(rows[0] as { partial?: boolean })?.partial && (
                 <p className="text-body-sm text-secondary m-0 mb-2">
                   Clasificación parcial: calculada con los partidos capturados desde el inicio del pipeline.

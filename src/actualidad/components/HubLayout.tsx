@@ -115,9 +115,9 @@ function Sidebar() {
 
 export function HubLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-court-surface-row text-on-surface font-body">
+    <div className="hub min-h-screen bg-court-surface-row text-on-surface font-body">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 h-16 z-50 bg-court-surface/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
+      <header className="fixed top-0 left-0 right-0 h-16 z-50 bg-court-surface/95 backdrop-blur-md border-b border-court-border">
         <div className="w-full h-full px-space-lg flex items-center justify-between gap-space-md">
           <div className="flex items-center gap-space-lg">
             <Link to="/" className="flex items-center gap-space-sm group">
@@ -144,7 +144,7 @@ export function HubLayout({ children }: { children: ReactNode }) {
           <div className="flex items-center gap-space-md">
             <Link
               to="/play"
-              className="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary-container text-on-primary font-display text-headline-md font-bold tracking-wider uppercase shadow-[0_0_12px_rgba(255,107,26,0.35)] hover:bg-secondary hover:text-on-secondary transition-all"
+              className="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary-container text-on-primary font-display text-body-lg font-semibold hover:bg-secondary hover:text-on-secondary transition-all"
             >
               <span className="material-symbols-outlined text-[18px]">casino</span>
               <span className="hidden sm:inline">Jugar al Simulador</span>

@@ -61,7 +61,7 @@ export function Home() {
               <span className="font-display text-label-table-header uppercase text-secondary tracking-widest">
                 Destacado · {destacado.league}
               </span>
-              <h2 className="font-display text-headline-xl font-extrabold uppercase text-text-primary m-0 leading-tight truncate">
+              <h2 className="font-display text-headline-xl-mobile md:text-headline-xl font-extrabold uppercase text-text-primary m-0 leading-tight md:truncate">
                 {destacado.home} <span className="text-secondary">{destacado.hs}</span> —{' '}
                 <span className="text-secondary">{destacado.as}</span> {destacado.away}
               </h2>
