@@ -169,18 +169,24 @@ for (const [team, liga] of [...teamLeague.entries()].sort()) {
     sport: 'Basketball',
     memberOf: { '@type': 'SportsOrganization', name: liga },
   })}</script>
+<script>try{var t=localStorage.getItem("anillero-theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+  :root{--a-bg:#F7F3EC;--a-card:#FFFDF8;--a-card2:#F3ECE1;--a-line:#E5DBCB;--a-line2:#D8CBB6;--a-line3:#C9B9A2;--a-ink:#2B2420;--a-ink2:#3D342D;--a-ink3:#4A4038;--a-ink4:#5C5148;--a-muted:#6F645A;--a-muted2:#7C7064;--a-gold:#8C6420;--a-accent:#B85A31;--a-on-accent:#FFF8F2;--a-win:#3F7D5A;--a-loss:#B3261E;--a-note-bg:#FBF1DE;--a-note-line:#E2C48B;--a-note-ink:#6B4A12}
+  :root[data-theme="dark"]{--a-bg:#1C1410;--a-card:#261B15;--a-card2:#31241C;--a-line:#4A3828;--a-line2:#5A4532;--a-line3:#6B5440;--a-ink:#F2E8D8;--a-ink2:#E6D9C4;--a-ink3:#D6C5AC;--a-ink4:#C7B497;--a-muted:#B3A089;--a-muted2:#9C8A73;--a-gold:#E0BC7A;--a-accent:#D9A95B;--a-on-accent:#1C1410;--a-win:#9CC795;--a-loss:#E39B8C;--a-note-bg:#33251C;--a-note-line:#6B5232;--a-note-ink:#E8CFA0;color-scheme:dark}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--a-bg:#1C1410;--a-card:#261B15;--a-card2:#31241C;--a-line:#4A3828;--a-line2:#5A4532;--a-line3:#6B5440;--a-ink:#F2E8D8;--a-ink2:#E6D9C4;--a-ink3:#D6C5AC;--a-ink4:#C7B497;--a-muted:#B3A089;--a-muted2:#9C8A73;--a-gold:#E0BC7A;--a-accent:#D9A95B;--a-on-accent:#1C1410;--a-win:#9CC795;--a-loss:#E39B8C;--a-note-bg:#33251C;--a-note-line:#6B5232;--a-note-ink:#E8CFA0;color-scheme:dark}}
+</style>
 <style>
   h1,h2,h3{font-family:"Source Serif 4",Georgia,serif}
-  :root{color-scheme:light;--bg:#F7F3EC;--card:#FFFDF8;--line:#E5DBCB;--muted:#6F645A;--gold:#8C6420;--orange:#B85A31}
+  :root{--bg:var(--a-bg);--card:var(--a-card);--line:var(--a-line);--muted:var(--a-muted);--gold:var(--a-gold);--orange:var(--a-accent)}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:#2B2420;font-family:Inter,system-ui,-apple-system,sans-serif;line-height:1.55}
+  body{margin:0;background:var(--bg);color:var(--a-ink);font-family:Inter,system-ui,-apple-system,sans-serif;line-height:1.55}
   a{color:var(--orange);text-decoration:none}
   .wrap{max-width:980px;margin:0 auto;padding:24px 20px 72px}
   .crumbs{font-size:13px;color:var(--muted);margin:0 0 16px}
   .hero{display:flex;align-items:center;gap:20px;padding:22px;border:1px solid var(--line);border-radius:16px;
-        background:radial-gradient(120% 120% at 0% 0%,rgba(184,90,49,.14),transparent 55%),linear-gradient(180deg,#FFFDF8,#FFFDF8)}
-  .crest{width:84px;height:84px;border-radius:16px;background:#F7F3EC;border:1px solid var(--line);object-fit:contain;padding:8px;flex:0 0 auto}
-  .crest-fallback{width:84px;height:84px;border-radius:16px;display:grid;place-items:center;background:#F3ECE1;border:1px solid var(--line);font-weight:800;font-size:26px;color:var(--orange);flex:0 0 auto}
+        background:radial-gradient(120% 120% at 0% 0%,rgba(184,90,49,.14),transparent 55%),linear-gradient(180deg,var(--a-card),var(--a-card))}
+  .crest{width:84px;height:84px;border-radius:16px;background:var(--a-bg);border:1px solid var(--line);object-fit:contain;padding:8px;flex:0 0 auto}
+  .crest-fallback{width:84px;height:84px;border-radius:16px;display:grid;place-items:center;background:var(--a-card2);border:1px solid var(--line);font-weight:800;font-size:26px;color:var(--orange);flex:0 0 auto}
   h1{font-size:34px;margin:0 0 2px;letter-spacing:-.02em;line-height:1.1}
   .chip{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);border:1px solid rgba(140,100,32,.35);border-radius:999px;padding:2px 9px;margin-top:6px}
   .chips{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 0}
@@ -193,14 +199,14 @@ for (const [team, liga] of [...teamLeague.entries()].sort()) {
   .player{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;transition:border-color .15s,transform .15s}
   .player:hover{border-color:rgba(184,90,49,.55);transform:translateY(-1px)}
   .player .n{font-size:17px;font-weight:800;color:var(--orange);min-width:34px;text-align:center;font-variant-numeric:tabular-nums}
-  .player .nm{display:block;font-weight:600;font-size:14px;color:#2B2420;line-height:1.25}
+  .player .nm{display:block;font-weight:600;font-size:14px;color:var(--a-ink);line-height:1.25}
   .player .pos{display:block;font-size:12px;color:var(--muted);margin-top:2px}
   .list{list-style:none;padding:0;margin:0}
-  .list li{display:grid;grid-template-columns:70px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid #F3ECE1;font-size:14px}
+  .list li{display:grid;grid-template-columns:70px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--a-card2);font-size:14px}
   .list .d{color:var(--muted);font-size:12px}
   .list .sc{font-weight:700;font-variant-numeric:tabular-nums}
-  .w{color:#3F7D5A;font-weight:700}.l{color:#B3261E;font-weight:700}
-  .cta{display:inline-block;margin-top:30px;background:var(--orange);color:#FFF8F2;font-weight:700;padding:12px 20px;border-radius:10px}
+  .w{color:var(--a-win);font-weight:700}.l{color:var(--a-loss);font-weight:700}
+  .cta{display:inline-block;margin-top:30px;background:var(--orange);color:var(--a-on-accent);font-weight:700;padding:12px 20px;border-radius:10px}
   .foot{margin-top:36px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:12px}
   @media(max-width:560px){.hero{flex-direction:column;align-items:flex-start}h1{font-size:27px}}
 </style>

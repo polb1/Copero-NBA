@@ -4,6 +4,33 @@ import { leaguePath, LEAGUE_COUNTRY } from '../leagues';
 import { MAIN_LEAGUES } from '../data';
 import { useHubData } from '../data';
 
+const THEME_KEY = 'anillero-theme';
+const isDark = () =>
+  document.documentElement.dataset.theme === 'dark' ||
+  (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+
+/** Claro / oscuro. Se guarda en localStorage; index.html lo aplica antes de pintar para que no parpadee. */
+function ThemeToggle() {
+  const [dark, setDark] = useState(isDark);
+  const toggle = () => {
+    const next = dark ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem(THEME_KEY, next); } catch { /* sin almacenamiento: solo esta visita */ }
+    setDark(!dark);
+  };
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={dark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'}
+      title={dark ? 'Tema claro' : 'Tema oscuro'}
+      className="w-9 h-9 rounded-full border border-court-border bg-court-surface-elevated text-primary flex items-center justify-center cursor-pointer hover:border-primary transition-colors"
+    >
+      <span className="material-symbols-outlined text-[20px]">{dark ? 'light_mode' : 'dark_mode'}</span>
+    </button>
+  );
+}
+
 const NAV = [
   { to: '/', label: 'Partidos de Hoy' },
   { to: '/noticias', label: 'Noticias' },
@@ -147,11 +174,9 @@ export function HubLayout({ children }: { children: ReactNode }) {
               className="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary-container text-on-primary font-display text-body-lg font-semibold hover:bg-secondary hover:text-on-secondary transition-all"
             >
               <span className="material-symbols-outlined text-[18px]">casino</span>
-              <span className="hidden sm:inline">Jugar al Simulador</span>
+              <span className="hidden sm:inline xl:hidden 2xl:inline">Jugar al Simulador</span>
             </Link>
-            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-              <span className="material-symbols-outlined text-on-primary text-[18px]">person</span>
-            </div>
+            <ThemeToggle />
           </div>
         </div>
       </header>
