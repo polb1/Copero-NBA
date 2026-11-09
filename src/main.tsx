@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { App } from './App';
+import App from './App';
 import { startTranslation } from './i18n/i18n';
 import { watchForUpdates } from './update';
 import './styles.css';
