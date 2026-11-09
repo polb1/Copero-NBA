@@ -57,7 +57,10 @@ export function enviarResultadoDiario(datos: {
   progressB: number;
   legacyScore: number;
 }): Promise<DailyResultResponse | null> {
-  return post<DailyResultResponse>('/api/daily/result', { deviceId: deviceId(), ...datos });
+  const id = deviceId();
+  // No enviar en modo privado/incógnito (deviceId fallback) (audit #17)
+  if (id === 'anon') return Promise.resolve(null);
+  return post<DailyResultResponse>('/api/daily/result', { deviceId: id, ...datos });
 }
 
 export interface FilaRanking {

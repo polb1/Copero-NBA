@@ -2,7 +2,7 @@
  "league": "acb",
  "season": "2026-2027",
  "source": "ACB oficial (acb.com) + Apify para clasificación",
- "updated": 1794058846,
+ "updated": 1794216636,
  "games": [
   {
    "id": "acb-barca-basket-rio-breogan-2026-11-08",
@@ -306,108 +306,6 @@
     "id": "acb-la-laguna-tenerife",
     "name": "La Laguna Tenerife",
     "score": 89
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "acb-basquet-girona-joventut-badalona-2026-10-25",
-   "start_ts": 1792886400,
-   "status": "FT",
-   "home": {
-    "id": "acb-basquet-girona",
-    "name": "Bàsquet Girona",
-    "score": 101
-   },
-   "away": {
-    "id": "acb-joventut-badalona",
-    "name": "Joventut Badalona",
-    "score": 87
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "acb-surne-bilbao-basket-morabanc-andorra-2026-10-25",
-   "start_ts": 1792886400,
-   "status": "FT",
-   "home": {
-    "id": "acb-surne-bilbao-basket",
-    "name": "Surne Bilbao Basket",
-    "score": 88
-   },
-   "away": {
-    "id": "acb-morabanc-andorra",
-    "name": "MoraBanc Andorra",
-    "score": 76
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "acb-la-laguna-tenerife-monbus-obradoiro-2026-10-25",
-   "start_ts": 1792886400,
-   "status": "FT",
-   "home": {
-    "id": "acb-la-laguna-tenerife",
-    "name": "La Laguna Tenerife",
-    "score": 106
-   },
-   "away": {
-    "id": "acb-monbus-obradoiro",
-    "name": "Monbus Obradoiro",
-    "score": 76
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "acb-valencia-basket-kosner-baskonia-2026-10-25",
-   "start_ts": 1792886400,
-   "status": "FT",
-   "home": {
-    "id": "acb-valencia-basket",
-    "name": "Valencia Basket",
-    "score": 84
-   },
-   "away": {
-    "id": "acb-kosner-baskonia",
-    "name": "Kosner Baskonia",
-    "score": 75
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "acb-rio-breogan-unicaja-2026-10-25",
-   "start_ts": 1792886400,
-   "status": "FT",
-   "home": {
-    "id": "acb-rio-breogan",
-    "name": "Río Breogán",
-    "score": 90
-   },
-   "away": {
-    "id": "acb-unicaja",
-    "name": "Unicaja",
-    "score": 103
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "acb-forca-lleida-ce-real-madrid-2026-10-25",
-   "start_ts": 1792886400,
-   "status": "FT",
-   "home": {
-    "id": "acb-forca-lleida-ce",
-    "name": "Força Lleida CE",
-    "score": 86
-   },
-   "away": {
-    "id": "acb-real-madrid",
-    "name": "Real Madrid",
-    "score": 122
    },
    "period": null,
    "venue": null

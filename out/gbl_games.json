@@ -2,7 +2,7 @@
  "league": "gbl",
  "season": "2026-2027",
  "source": "esake.gr (ΕΣΑΚΕ, web oficial GBL)",
- "updated": 1793958395,
+ "updated": 1794216737,
  "games": [
   {
    "id": "gbl-47FBE805-tsson-bc",
@@ -638,16 +638,16 @@
    "id": "gbl-7E44FE22-ς-elabet",
    "round": 6,
    "start_ts": 1794056400,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "gbl-δοξα-br-λευκαδας-br-elabet",
     "name": "Doxa Lefkadas",
-    "score": null
+    "score": 77
    },
    "away": {
     "id": "gbl-αρης",
     "name": "Aris",
-    "score": null
+    "score": 88
    },
    "period": null,
    "venue": null
@@ -656,16 +656,16 @@
    "id": "gbl-FC90483F-llection",
    "round": 6,
    "start_ts": 1794060000,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "gbl-κολοσσος-h-br-hotels-br-collection",
     "name": "Kolossos",
-    "score": null
+    "score": 81
    },
    "away": {
     "id": "gbl-περιστερι-br-betsson",
     "name": "Peristeri",
-    "score": null
+    "score": 78
    },
    "period": null,
    "venue": null
@@ -674,16 +674,16 @@
    "id": "gbl-2FCC32F1--ηρακλης",
    "round": 6,
    "start_ts": 1794063600,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "gbl-ηρακλης",
     "name": "Iraklis",
-    "score": null
+    "score": 95
    },
    "away": {
     "id": "gbl-μυκονος-br-betsson-bc",
     "name": "Mykonos",
-    "score": null
+    "score": 64
    },
    "period": null,
    "venue": null
@@ -692,16 +692,16 @@
    "id": "gbl-35DA2FB8-κος-cola",
    "round": 6,
    "start_ts": 1794063600,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "gbl-προμηθεας-br-πατρας-br-βικος-br-cola",
     "name": "Promitheas Patras",
-    "score": null
+    "score": 73
    },
    "away": {
     "id": "gbl-καρδιτσα-br-ιαπωνικη",
     "name": "Karditsa",
-    "score": null
+    "score": 90
    },
    "period": null,
    "venue": null
@@ -710,16 +710,16 @@
    "id": "gbl-9B455F5D-gbl-παοκ",
    "round": 6,
    "start_ts": 1794065400,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "gbl-παοκ",
     "name": "PAOK",
-    "score": null
+    "score": 93
    },
    "away": {
     "id": "gbl-vikos-br-φalcons",
     "name": "VIKOS ΦALCONS",
-    "score": null
+    "score": 67
    },
    "period": null,
    "venue": null
@@ -728,16 +728,16 @@
    "id": "gbl-DF85EF86-gbl-αεκ",
    "round": 6,
    "start_ts": 1794135600,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "gbl-αεκ",
     "name": "AEK",
-    "score": null
+    "score": 74
    },
    "away": {
     "id": "gbl-παναθηνα-κος-br-aktor",
     "name": "Panathinaikos",
-    "score": null
+    "score": 83
    },
    "period": null,
    "venue": null
@@ -746,16 +746,16 @@
    "id": "gbl-84DE99E9--μαρουσι",
    "round": 6,
    "start_ts": 1794151800,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "gbl-μαρουσι",
     "name": "Maroussi",
-    "score": null
+    "score": 81
    },
    "away": {
     "id": "gbl-ολυμπιακος",
     "name": "Olympiacos",
-    "score": null
+    "score": 83
    },
    "period": null,
    "venue": null

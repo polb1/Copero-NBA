@@ -1,44 +1,16 @@
 {
- "updated": 1793958395,
+ "updated": 1794219891,
  "leagues": [
   {
    "key": "nba",
-   "games": 0,
-   "standings": 0,
-   "source": null,
-   "error": "ValueError: Invalid isoformat string: '4 nov'"
-  },
-  {
-   "key": "acb",
-   "games": 24,
-   "standings": 18,
-   "source": "ACB oficial (acb.com) + Apify para clasificación",
-   "error": null
-  },
-  {
-   "key": "euroleague",
-   "games": 70,
-   "standings": 20,
-   "source": "api-live.euroleague.net (API oficial)",
-   "error": null
-  },
-  {
-   "key": "bsl",
-   "games": 0,
-   "standings": 0,
-   "source": null,
-   "error": "sin partidos en la ventana de fechas (plan gratuito: hoy y ayer)"
-  },
-  {
-   "key": "gbl",
-   "games": 182,
-   "standings": 14,
-   "source": "esake.gr (ΕΣΑΚΕ, web oficial GBL)",
+   "games": 38,
+   "standings": 30,
+   "source": "ESPN (site.api.espn.com)",
    "error": null
   }
  ],
  "budget": {
-  "dia": "2026-11-06",
-  "apisports": 2
+  "dia": "2026-11-09",
+  "apisports": 4
  }
 }

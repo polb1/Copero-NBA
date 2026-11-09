@@ -2,8 +2,76 @@
  "league": "euroleague",
  "season": "2026-2027",
  "source": "api-live.euroleague.net (API oficial)",
- "updated": 1794058846,
+ "updated": 1794216636,
  "games": [
+  {
+   "id": "euroleague-partizan-mozzart-bet-belgrade-besiktas-istanbul-2026-11-20",
+   "start_ts": 1795132800,
+   "status": "NS",
+   "home": {
+    "id": "euroleague-partizan-mozzart-bet-belgrade",
+    "name": "Partizan Mozzart Bet Belgrade",
+    "score": null
+   },
+   "away": {
+    "id": "euroleague-besiktas-istanbul",
+    "name": "Besiktas Istanbul",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "euroleague-fc-barcelona-crvena-zvezda-meridianbet-belgrade-2026-11-20",
+   "start_ts": 1795132800,
+   "status": "NS",
+   "home": {
+    "id": "euroleague-fc-barcelona",
+    "name": "FC Barcelona",
+    "score": null
+   },
+   "away": {
+    "id": "euroleague-crvena-zvezda-meridianbet-belgrade",
+    "name": "Crvena Zvezda Meridianbet Belgrade",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "euroleague-olympiacos-piraeus-real-madrid-2026-11-20",
+   "start_ts": 1795132800,
+   "status": "NS",
+   "home": {
+    "id": "euroleague-olympiacos-piraeus",
+    "name": "Olympiacos Piraeus",
+    "score": null
+   },
+   "away": {
+    "id": "euroleague-real-madrid",
+    "name": "Real Madrid",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "euroleague-anadolu-efes-istanbul-ldlc-asvel-villeurbanne-2026-11-20",
+   "start_ts": 1795132800,
+   "status": "NS",
+   "home": {
+    "id": "euroleague-anadolu-efes-istanbul",
+    "name": "Anadolu Efes Istanbul",
+    "score": null
+   },
+   "away": {
+    "id": "euroleague-ldlc-asvel-villeurbanne",
+    "name": "LDLC ASVEL Villeurbanne",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
   {
    "id": "euroleague-valencia-basket-virtus-bologna-2026-11-19",
    "start_ts": 1795046400,
@@ -449,16 +517,16 @@
   {
    "id": "euroleague-partizan-mozzart-bet-belgrade-maccabi-rapyd-tel-aviv-2026-11-06",
    "start_ts": 1793923200,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "euroleague-partizan-mozzart-bet-belgrade",
     "name": "Partizan Mozzart Bet Belgrade",
-    "score": null
+    "score": 88
    },
    "away": {
     "id": "euroleague-maccabi-rapyd-tel-aviv",
     "name": "Maccabi Rapyd Tel Aviv",
-    "score": null
+    "score": 67
    },
    "period": null,
    "venue": null
@@ -466,16 +534,16 @@
   {
    "id": "euroleague-virtus-bologna-dubai-basketball-2026-11-06",
    "start_ts": 1793923200,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "euroleague-virtus-bologna",
     "name": "Virtus Bologna",
-    "score": null
+    "score": 75
    },
    "away": {
     "id": "euroleague-dubai-basketball",
     "name": "Dubai Basketball",
-    "score": null
+    "score": 93
    },
    "period": null,
    "venue": null
@@ -483,16 +551,16 @@
   {
    "id": "euroleague-olympiacos-piraeus-crvena-zvezda-meridianbet-belgrade-2026-11-06",
    "start_ts": 1793923200,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "euroleague-olympiacos-piraeus",
     "name": "Olympiacos Piraeus",
-    "score": null
+    "score": 57
    },
    "away": {
     "id": "euroleague-crvena-zvezda-meridianbet-belgrade",
     "name": "Crvena Zvezda Meridianbet Belgrade",
-    "score": null
+    "score": 62
    },
    "period": null,
    "venue": null
@@ -500,16 +568,16 @@
   {
    "id": "euroleague-besiktas-istanbul-zalgiris-kaunas-2026-11-06",
    "start_ts": 1793923200,
-   "status": "NS",
+   "status": "FT",
    "home": {
     "id": "euroleague-besiktas-istanbul",
     "name": "Besiktas Istanbul",
-    "score": null
+    "score": 67
    },
    "away": {
     "id": "euroleague-zalgiris-kaunas",
     "name": "Zalgiris Kaunas",
-    "score": null
+    "score": 83
    },
    "period": null,
    "venue": null
@@ -1122,74 +1190,6 @@
     "id": "euroleague-virtus-bologna",
     "name": "Virtus Bologna",
     "score": 81
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "euroleague-panathinaikos-aktor-athens-hapoel-ibi-tel-aviv-2026-10-16",
-   "start_ts": 1792108800,
-   "status": "FT",
-   "home": {
-    "id": "euroleague-panathinaikos-aktor-athens",
-    "name": "Panathinaikos AKTOR Athens",
-    "score": 81
-   },
-   "away": {
-    "id": "euroleague-hapoel-ibi-tel-aviv",
-    "name": "Hapoel IBI Tel Aviv",
-    "score": 91
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "euroleague-crvena-zvezda-meridianbet-belgrade-paris-basketball-2026-10-16",
-   "start_ts": 1792108800,
-   "status": "FT",
-   "home": {
-    "id": "euroleague-crvena-zvezda-meridianbet-belgrade",
-    "name": "Crvena Zvezda Meridianbet Belgrade",
-    "score": 90
-   },
-   "away": {
-    "id": "euroleague-paris-basketball",
-    "name": "Paris Basketball",
-    "score": 81
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "euroleague-zalgiris-kaunas-anadolu-efes-istanbul-2026-10-16",
-   "start_ts": 1792108800,
-   "status": "FT",
-   "home": {
-    "id": "euroleague-zalgiris-kaunas",
-    "name": "Zalgiris Kaunas",
-    "score": 70
-   },
-   "away": {
-    "id": "euroleague-anadolu-efes-istanbul",
-    "name": "Anadolu Efes Istanbul",
-    "score": 85
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "euroleague-besiktas-istanbul-fc-bayern-munich-2026-10-16",
-   "start_ts": 1792108800,
-   "status": "FT",
-   "home": {
-    "id": "euroleague-besiktas-istanbul",
-    "name": "Besiktas Istanbul",
-    "score": 95
-   },
-   "away": {
-    "id": "euroleague-fc-bayern-munich",
-    "name": "FC Bayern Munich",
-    "score": 87
    },
    "period": null,
    "venue": null

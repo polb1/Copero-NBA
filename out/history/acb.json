@@ -4,7 +4,7 @@
 "id": "acb-2337",
 "logo": "https://media.api-sports.io/basketball/teams/2337.png",
 "name": "Obradoiro CAB",
-"score": null
+"score": 99
 },
 "date": "2026-11-07",
 "external_id": 513044,
@@ -12,13 +12,13 @@
 "id": "acb-1698",
 "logo": "https://media.api-sports.io/basketball/teams/1698.png",
 "name": "Manresa",
-"score": null
+"score": 100
 },
 "id": "acb-513044",
 "period": null,
 "round": "7",
 "start_ts": 1794070800,
-"status": "NS",
+"status": "FT",
 "venue": "Pavelló Nou Congost"
 },
 "acb-513045": {
@@ -26,7 +26,7 @@
 "id": "acb-1695",
 "logo": "https://media.api-sports.io/basketball/teams/1695.png",
 "name": "Bilbao",
-"score": null
+"score": 87
 },
 "date": "2026-11-07",
 "external_id": 513045,
@@ -34,13 +34,13 @@
 "id": "acb-1139",
 "logo": "https://media.api-sports.io/basketball/teams/1139.png",
 "name": "Basquet Girona",
-"score": null
+"score": 92
 },
 "id": "acb-513045",
 "period": null,
 "round": "7",
 "start_ts": 1794076200,
-"status": "NS",
+"status": "FT",
 "venue": "Pavello Fontajau"
 },
 "acb-513046": {
@@ -48,7 +48,7 @@
 "id": "acb-2331",
 "logo": "https://media.api-sports.io/basketball/teams/2331.png",
 "name": "Baskonia",
-"score": null
+"score": 98
 },
 "date": "2026-11-07",
 "external_id": 513046,
@@ -56,13 +56,145 @@
 "id": "acb-1123",
 "logo": "https://media.api-sports.io/basketball/teams/1123.png",
 "name": "Forca Lleida",
-"score": null
+"score": 93
 },
 "id": "acb-513046",
 "period": null,
 "round": "7",
 "start_ts": 1794081600,
-"status": "NS",
+"status": "FT",
 "venue": "Pavelló Barris Nord"
+},
+"acb-513047": {
+"away": {
+"id": "acb-1120",
+"logo": "https://media.api-sports.io/basketball/teams/1120.png",
+"name": "Breogan",
+"score": 91
+},
+"date": "2026-11-08",
+"external_id": 513047,
+"home": {
+"id": "acb-2329",
+"logo": "https://media.api-sports.io/basketball/teams/2329.png",
+"name": "Barcelona",
+"score": 99
+},
+"id": "acb-513047",
+"period": null,
+"round": "7",
+"start_ts": 1794135600,
+"status": "FT",
+"venue": "Palau Blaugrana"
+},
+"acb-513048": {
+"away": {
+"id": "acb-2341",
+"logo": "https://media.api-sports.io/basketball/teams/2341.png",
+"name": "Valencia",
+"score": 100
+},
+"date": "2026-11-08",
+"external_id": 513048,
+"home": {
+"id": "acb-1699",
+"logo": "https://media.api-sports.io/basketball/teams/1699.png",
+"name": "San Pablo Burgos",
+"score": 93
+},
+"id": "acb-513048",
+"period": null,
+"round": "7",
+"start_ts": 1794137400,
+"status": "FT",
+"venue": "Coliseum Burgos"
+},
+"acb-513049": {
+"away": {
+"id": "acb-2334",
+"logo": "https://media.api-sports.io/basketball/teams/2334.png",
+"name": "Joventut Badalona",
+"score": 74
+},
+"date": "2026-11-08",
+"external_id": 513049,
+"home": {
+"id": "acb-2339",
+"logo": "https://media.api-sports.io/basketball/teams/2339.png",
+"name": "Tenerife",
+"score": 80
+},
+"id": "acb-513049",
+"period": null,
+"round": "7",
+"start_ts": 1794139200,
+"status": "FT",
+"venue": "Pabellón Insular Santiago Martín"
+},
+"acb-513050": {
+"away": {
+"id": "acb-2340",
+"logo": "https://media.api-sports.io/basketball/teams/2340.png",
+"name": "Unicaja",
+"score": 91
+},
+"date": "2026-11-08",
+"external_id": 513050,
+"home": {
+"id": "acb-2330",
+"logo": "https://media.api-sports.io/basketball/teams/2330.png",
+"name": "Basket Zaragoza",
+"score": 96
+},
+"id": "acb-513050",
+"period": null,
+"round": "7",
+"start_ts": 1794153600,
+"status": "FT",
+"venue": "Pabellon Principe Felipe"
+},
+"acb-513051": {
+"away": {
+"id": "acb-2335",
+"logo": "https://media.api-sports.io/basketball/teams/2335.png",
+"name": "MoraBanc Andorra",
+"score": 100
+},
+"date": "2026-11-08",
+"external_id": 513051,
+"home": {
+"id": "acb-1127",
+"logo": "https://media.api-sports.io/basketball/teams/1127.png",
+"name": "Leyma Coruna",
+"score": 103
+},
+"id": "acb-513051",
+"period": null,
+"round": "7",
+"start_ts": 1794157200,
+"status": "FT",
+"venue": "Coliseum da Coruna"
+},
+"acb-513052": {
+"away": {
+"id": "acb-2336",
+"logo": "https://media.api-sports.io/basketball/teams/2336.png",
+"name": "Murcia",
+"score": 71
+},
+"date": "2026-11-08",
+"external_id": 513052,
+"home": {
+"id": "acb-2338",
+"logo": "https://media.api-sports.io/basketball/teams/2338.png",
+"name": "Real Madrid",
+"score": 90
+},
+"id": "acb-513052",
+"period": null,
+"round": "7",
+"start_ts": 1794160800,
+"status": "FT",
+"venue": "Movistar Arena"
 }
 }

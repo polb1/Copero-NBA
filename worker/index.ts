@@ -21,6 +21,29 @@ const json = (data: unknown, status = 200) =>
 
 const hoy = () => new Date().toISOString().slice(0, 10);
 
+/** Rate limiter simple en memoria (audit #7: evitar llenar la BD) */
+const RATE_LIMIT = new Map<string, { count: number; resetAt: number }>();
+const RATE_WINDOW_MS = 60_000; // 1 minuto
+const RATE_MAX_REQUESTS = 30; // máx 30 req/min por IP
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = RATE_LIMIT.get(ip);
+  if (!entry || now > entry.resetAt) {
+    RATE_LIMIT.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return true;
+  }
+  if (entry.count >= RATE_MAX_REQUESTS) return false;
+  entry.count++;
+  // Limpieza perezosa: eliminar entradas expiradas cada N peticiones (audit #7)
+  if (RATE_LIMIT.size > 1000 && Math.random() < 0.01) {
+    for (const [k, v] of RATE_LIMIT.entries()) {
+      if (now > v.resetAt) RATE_LIMIT.delete(k);
+    }
+  }
+  return true;
+}
+
 /** Semilla del día: la misma para todos, calculada en servidor. */
 export function seedDelDia(day: string): number {
   let h = 0x811c9dc5;
@@ -39,6 +62,13 @@ interface ResultadoDiario {
   progressA?: number;
   progressB?: number;
   legacyScore?: number;
+}
+
+interface DailyResultRow {
+  deviceId: string;
+  legacyScore: number;
+  done: number;
+  goalId: string;
 }
 
 async function resultadoDiario(env: Env, body: ResultadoDiario) {
@@ -113,16 +143,27 @@ async function hoyInfo(env: Env, day: string) {
 }
 
 async function ranking(env: Env, day: string) {
+  // Validar que el day coincide con el seed del día (audit #2)
+  const expectedSeed = seedDelDia(day);
   const { results } = await env.DB.prepare(
     `SELECT player_id AS deviceId, legacy_score AS legacyScore, done, goal_id AS goalId
        FROM daily_results
       WHERE day = ?
       ORDER BY legacy_score DESC, created_at ASC
-      LIMIT 50`,
+      LIMIT 50`
   )
     .bind(day)
-    .all();
-  return json({ day, ranking: results ?? [] });
+    .all<DailyResultRow>();
+
+  // No exponer deviceId real; usar hash corto para ranking público (audit #2)
+  const ranking = (results ?? []).map((r, i) => ({
+    pos: i + 1,
+    id: r.deviceId.slice(0, 8), // hash corto, no ID completo
+    legacyScore: r.legacyScore,
+    done: Boolean(r.done),
+    goalId: r.goalId,
+  }));
+  return json({ day, seed: expectedSeed, ranking });
 }
 
 async function statsGlobales(env: Env) {
@@ -198,20 +239,33 @@ async function paginaCarrera(env: Env, id: string) {
   }>();
   if (!row) return new Response('Carrera no encontrada', { status: 404 });
 
-  const titulo = `Carrera con ${row.titles} anillo(s) · Legacy ${row.legacy_score}`;
+  // Escape HTML to prevent XSS (audit #1)
+  function esc(s: string): string {
+    return s.replace(/[&<>"']/g, c => {
+      if (c === '&') return '&';
+      if (c === '<') return '<';
+      if (c === '>') return '>';
+      if (c === '"') return '"';
+      return "'"; // '
+    });
+  }
+  const tier = esc(row.tier || 'Carrera');
+  const legacy = row.legacy_score;
+  const titles = row.titles;
+  const titulo = `Carrera con ${titles} anillo(s) · Legacy ${legacy}`;
   const html = `<!doctype html><html lang="es"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${titulo} | Anillero</title>
-<meta name="description" content="${row.tier || 'Carrera'} · ${row.titles} anillos · Legacy Score ${row.legacy_score}">
-<meta property="og:title" content="${titulo}">
+<title>${esc(titulo)} | Anillero</title>
+<meta name="description" content="${tier} · ${titles} anillos · Legacy Score ${legacy}">
+<meta property="og:title" content="${esc(titulo)}">
 <meta property="og:description" content="¿Puedes superarlo? Juega gratis en Anillero.">
 <meta property="og:image" content="https://anillero.com/og/anillero-1200x630.png">
 <meta name="twitter:card" content="summary_large_image">
 <style>body{margin:0;background:#0b0c0e;color:#e6e8ec;font-family:Inter,system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;text-align:center;padding:24px}
 a{display:inline-block;margin-top:18px;background:#ff6b1a;color:#1b0b00;font-weight:700;padding:12px 20px;border-radius:10px;text-decoration:none}</style>
 </head><body><main>
-<h1>${row.tier || 'Carrera'}</h1>
-<p>${row.titles} anillo(s) · Legacy Score <b>${row.legacy_score}</b></p>
+<h1>${tier}</h1>
+<p>${titles} anillo(s) · Legacy Score <b>${legacy}</b></p>
 <a href="/play">Juega tu propia carrera</a>
 </main></body></html>`;
   return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8' } });
@@ -221,6 +275,11 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
     const path = url.pathname;
+    // Rate limiting por IP (audit #7)
+    const ip = request.headers.get('cf-connecting-ip') || 'unknown';
+    if (path.startsWith('/api/') && !checkRateLimit(ip)) {
+      return json({ error: 'demasiadas peticiones, intenta más tarde' }, 429);
+    }
 
     if (request.method === 'OPTIONS') {
       return new Response(null, {
@@ -262,6 +321,8 @@ export default {
 
         return json({ error: 'ruta no encontrada' }, 404);
       } catch (e) {
+        // Log error server-side for debugging (audit #5)
+        console.error('Worker error:', e);
         return json({ error: 'error interno', detail: String(e).slice(0, 200) }, 500);
       }
     }

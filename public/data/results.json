@@ -1,123 +1,243 @@
 [
  {
-  "date": "",
-  "home": "Yokohama B-Corsairs",
-  "away": "Kobe Storks",
-  "hs": 70,
-  "as": 87,
-  "league": "B.League"
+  "date": "2026-11-08",
+  "home": "Barça Basket",
+  "away": "Río Breogán",
+  "league": "Liga ACB",
+  "hs": 99,
+  "as": 91
  },
  {
-  "date": "",
-  "home": "Toyama Grouses",
-  "away": "Nagoya Diamond Dolphins",
+  "date": "2026-11-08",
+  "home": "Hereda San Pablo Burgos",
+  "away": "Valencia Basket",
+  "league": "Liga ACB",
+  "hs": 93,
+  "as": 100
+ },
+ {
+  "date": "2026-11-08",
+  "home": "La Laguna Tenerife",
+  "away": "Joventut Badalona",
+  "league": "Liga ACB",
   "hs": 80,
-  "as": 93,
-  "league": "B.League"
+  "as": 74
  },
  {
-  "date": "",
-  "home": "Utsunomiya Brex",
-  "away": "Ryukyu Golden Kings",
-  "hs": 79,
-  "as": 76,
-  "league": "B.League"
+  "date": "2026-11-08",
+  "home": "Casademont Zaragoza",
+  "away": "Unicaja",
+  "league": "Liga ACB",
+  "hs": 96,
+  "as": 91
  },
  {
-  "date": "",
-  "home": "Osaka Evessa",
-  "away": "Ibaraki Robots",
-  "hs": 68,
-  "as": 86,
-  "league": "B.League"
+  "date": "2026-11-08",
+  "home": "Leyma Basquet Coruña",
+  "away": "MoraBanc Andorra",
+  "league": "Liga ACB",
+  "hs": 103,
+  "as": 100
  },
  {
-  "date": "",
-  "home": "Sunrockers Shibuya",
-  "away": "Kyoto Hannaryz",
+  "date": "2026-11-08",
+  "home": "Real Madrid",
+  "away": "UCAM Murcia",
+  "league": "Liga ACB",
+  "hs": 90,
+  "as": 71
+ },
+ {
+  "date": "2026-11-07",
+  "home": "Kids&Us Manresa",
+  "away": "Monbus Obradoiro",
+  "league": "Liga ACB",
+  "hs": 100,
+  "as": 99
+ },
+ {
+  "date": "2026-11-07",
+  "home": "Bàsquet Girona",
+  "away": "Surne Bilbao Basket",
+  "league": "Liga ACB",
   "hs": 92,
-  "as": 87,
-  "league": "B.League"
+  "as": 87
  },
  {
-  "date": "",
-  "home": "Yokohama B-Corsairs",
-  "away": "Kobe Storks",
-  "hs": 70,
-  "as": 87,
-  "league": "B.League"
+  "date": "2026-11-07",
+  "home": "Força Lleida CE",
+  "away": "Kosner Baskonia",
+  "league": "Liga ACB",
+  "hs": 93,
+  "as": 98
  },
  {
-  "date": "",
-  "home": "Toyama Grouses",
-  "away": "Nagoya Diamond Dolphins",
-  "hs": 80,
-  "as": 93,
-  "league": "B.League"
+  "date": "2026-11-01",
+  "home": "Joventut Badalona",
+  "away": "Surne Bilbao Basket",
+  "league": "Liga ACB",
+  "hs": 78,
+  "as": 81
  },
  {
-  "date": "",
-  "home": "Utsunomiya Brex",
-  "away": "Ryukyu Golden Kings",
+  "date": "2026-11-01",
+  "home": "Monbus Obradoiro",
+  "away": "Río Breogán",
+  "league": "Liga ACB",
+  "hs": 90,
+  "as": 110
+ },
+ {
+  "date": "2026-11-01",
+  "home": "Real Madrid",
+  "away": "Hereda San Pablo Burgos",
+  "league": "Liga ACB",
+  "hs": 90,
+  "as": 79
+ },
+ {
+  "date": "2026-11-01",
+  "home": "Kosner Baskonia",
+  "away": "Kids&Us Manresa",
+  "league": "Liga ACB",
+  "hs": 106,
+  "as": 83
+ },
+ {
+  "date": "2026-11-01",
+  "home": "MoraBanc Andorra",
+  "away": "Valencia Basket",
+  "league": "Liga ACB",
   "hs": 79,
-  "as": 76,
-  "league": "B.League"
+  "as": 111
  },
  {
-  "date": "",
-  "home": "Osaka Evessa",
-  "away": "Ibaraki Robots",
-  "hs": 68,
-  "as": 86,
-  "league": "B.League"
+  "date": "2026-11-01",
+  "home": "Unicaja",
+  "away": "Barça Basket",
+  "league": "Liga ACB",
+  "hs": 89,
+  "as": 92
  },
  {
-  "date": "",
-  "home": "Sunrockers Shibuya",
-  "away": "Kyoto Hannaryz",
-  "hs": 92,
-  "as": 87,
-  "league": "B.League"
+  "date": "2026-10-31",
+  "home": "Casademont Zaragoza",
+  "away": "Bàsquet Girona",
+  "league": "Liga ACB",
+  "hs": 107,
+  "as": 78
  },
  {
-  "date": "",
-  "home": "Yokohama B-Corsairs",
-  "away": "Kobe Storks",
-  "hs": 70,
-  "as": 87,
-  "league": "B.League"
+  "date": "2026-10-31",
+  "home": "UCAM Murcia",
+  "away": "Força Lleida CE",
+  "league": "Liga ACB",
+  "hs": 125,
+  "as": 98
  },
  {
-  "date": "",
-  "home": "Toyama Grouses",
-  "away": "Nagoya Diamond Dolphins",
-  "hs": 80,
-  "as": 93,
-  "league": "B.League"
+  "date": "2026-10-31",
+  "home": "Leyma Basquet Coruña",
+  "away": "La Laguna Tenerife",
+  "league": "Liga ACB",
+  "hs": 93,
+  "as": 89
  },
  {
-  "date": "",
-  "home": "Utsunomiya Brex",
-  "away": "Ryukyu Golden Kings",
-  "hs": 79,
-  "as": 76,
-  "league": "B.League"
+  "date": "2026-10-25",
+  "home": "Bàsquet Girona",
+  "away": "Joventut Badalona",
+  "league": "Liga ACB",
+  "hs": 101,
+  "as": 87
  },
  {
-  "date": "",
-  "home": "Osaka Evessa",
-  "away": "Ibaraki Robots",
-  "hs": 68,
-  "as": 86,
-  "league": "B.League"
+  "date": "2026-10-25",
+  "home": "Surne Bilbao Basket",
+  "away": "MoraBanc Andorra",
+  "league": "Liga ACB",
+  "hs": 88,
+  "as": 76
  },
  {
-  "date": "",
-  "home": "Sunrockers Shibuya",
-  "away": "Kyoto Hannaryz",
-  "hs": 92,
-  "as": 87,
-  "league": "B.League"
+  "date": "2026-10-25",
+  "home": "La Laguna Tenerife",
+  "away": "Monbus Obradoiro",
+  "league": "Liga ACB",
+  "hs": 106,
+  "as": 76
+ },
+ {
+  "date": "2026-10-25",
+  "home": "Valencia Basket",
+  "away": "Kosner Baskonia",
+  "league": "Liga ACB",
+  "hs": 84,
+  "as": 75
+ },
+ {
+  "date": "2026-10-25",
+  "home": "Río Breogán",
+  "away": "Unicaja",
+  "league": "Liga ACB",
+  "hs": 90,
+  "as": 103
+ },
+ {
+  "date": "2026-10-25",
+  "home": "Força Lleida CE",
+  "away": "Real Madrid",
+  "league": "Liga ACB",
+  "hs": 86,
+  "as": 122
+ },
+ {
+  "date": "2026-10-24",
+  "home": "Kids&Us Manresa",
+  "away": "Hereda San Pablo Burgos",
+  "league": "Liga ACB",
+  "hs": 81,
+  "as": 99
+ },
+ {
+  "date": "2026-10-24",
+  "home": "UCAM Murcia",
+  "away": "Leyma Basquet Coruña",
+  "league": "Liga ACB",
+  "hs": 88,
+  "as": 81
+ },
+ {
+  "date": "2026-10-24",
+  "home": "Barça Basket",
+  "away": "Casademont Zaragoza",
+  "league": "Liga ACB",
+  "hs": 99,
+  "as": 81
+ },
+ {
+  "date": "2026-10-18",
+  "home": "Bàsquet Girona",
+  "away": "Leyma Basquet Coruña",
+  "league": "Liga ACB",
+  "hs": 110,
+  "as": 90
+ },
+ {
+  "date": "2026-10-18",
+  "home": "Casademont Zaragoza",
+  "away": "Força Lleida CE",
+  "league": "Liga ACB",
+  "hs": 109,
+  "as": 98
+ },
+ {
+  "date": "2026-10-18",
+  "home": "Real Madrid",
+  "away": "Surne Bilbao Basket",
+  "league": "Liga ACB",
+  "hs": 119,
+  "as": 84
  },
  {
   "date": "2026-10-21",
@@ -440,467 +560,115 @@
   "league": "EuroLeague"
  },
  {
-  "date": "5 nov",
-  "home": "Phoenix Suns",
-  "away": "Orlando Magic",
-  "hs": 117,
-  "as": 104,
+  "date": "2026-11-07",
+  "home": "Indiana Pacers",
+  "away": "Denver Nuggets",
+  "hs": 102,
+  "as": 114,
   "league": "NBA"
  },
  {
-  "date": "5 nov",
-  "home": "Golden State Warriors",
-  "away": "Miami Heat",
-  "hs": 120,
-  "as": 100,
-  "league": "NBA"
- },
- {
-  "date": "6 nov",
+  "date": "2026-11-07",
   "home": "Atlanta Hawks",
-  "away": "Washington Wizards",
-  "hs": 139,
-  "as": 132,
-  "league": "NBA"
- },
- {
-  "date": "6 nov",
-  "home": "Charlotte Hornets",
-  "away": "Boston Celtics",
-  "hs": 80,
-  "as": 119,
-  "league": "NBA"
- },
- {
-  "date": "6 nov",
-  "home": "Cleveland Cavaliers",
-  "away": "Philadelphia 76ers",
-  "hs": 119,
-  "as": 95,
-  "league": "NBA"
- },
- {
-  "date": "6 nov",
-  "home": "Dallas Mavericks",
-  "away": "Utah Jazz",
-  "hs": 112,
-  "as": 100,
-  "league": "NBA"
- },
- {
-  "date": "6 nov",
-  "home": "Memphis Grizzlies",
-  "away": "Oklahoma City Thunder",
-  "hs": 97,
-  "as": 128,
-  "league": "NBA"
- },
- {
-  "date": "6 nov",
-  "home": "Milwaukee Bucks",
-  "away": "Toronto Raptors",
-  "hs": 107,
+  "away": "Brooklyn Nets",
+  "hs": 124,
   "as": 121,
   "league": "NBA"
  },
  {
-  "date": "6 nov",
-  "home": "New Orleans Pelicans",
-  "away": "Minnesota Timberwolves",
-  "hs": 109,
-  "as": 115,
+  "date": "2026-11-07",
+  "home": "Cleveland Cavaliers",
+  "away": "New York Knicks",
+  "hs": 97,
+  "as": 109,
   "league": "NBA"
  },
  {
-  "date": "6 nov",
-  "home": "Los Angeles Lakers",
-  "away": "Portland Trail Blazers",
-  "hs": 124,
-  "as": 118,
-  "league": "NBA"
- },
- {
-  "date": "6 nov",
-  "home": "Sacramento Kings",
-  "away": "San Antonio Spurs",
-  "hs": 109,
-  "as": 124,
-  "league": "NBA"
- },
- {
-  "date": "2026-11-01",
-  "home": "Joventut Badalona",
-  "away": "Surne Bilbao Basket",
-  "league": "Liga ACB",
-  "hs": 78,
-  "as": 81
- },
- {
-  "date": "2026-11-01",
-  "home": "Monbus Obradoiro",
-  "away": "Río Breogán",
-  "league": "Liga ACB",
-  "hs": 90,
-  "as": 110
- },
- {
-  "date": "2026-11-01",
-  "home": "Real Madrid",
-  "away": "Hereda San Pablo Burgos",
-  "league": "Liga ACB",
-  "hs": 90,
-  "as": 79
- },
- {
-  "date": "2026-11-01",
-  "home": "Kosner Baskonia",
-  "away": "Kids&Us Manresa",
-  "league": "Liga ACB",
-  "hs": 106,
-  "as": 83
- },
- {
-  "date": "2026-11-01",
-  "home": "MoraBanc Andorra",
-  "away": "Valencia Basket",
-  "league": "Liga ACB",
-  "hs": 79,
-  "as": 111
- },
- {
-  "date": "2026-11-01",
-  "home": "Unicaja",
-  "away": "Barça Basket",
-  "league": "Liga ACB",
-  "hs": 89,
-  "as": 92
- },
- {
-  "date": "2026-10-31",
-  "home": "Casademont Zaragoza",
-  "away": "Bàsquet Girona",
-  "league": "Liga ACB",
-  "hs": 107,
-  "as": 78
- },
- {
-  "date": "2026-10-31",
-  "home": "UCAM Murcia",
-  "away": "Força Lleida CE",
-  "league": "Liga ACB",
-  "hs": 125,
-  "as": 98
- },
- {
-  "date": "2026-10-31",
-  "home": "Leyma Basquet Coruña",
-  "away": "La Laguna Tenerife",
-  "league": "Liga ACB",
-  "hs": 93,
-  "as": 89
- },
- {
-  "date": "2026-10-25",
-  "home": "Bàsquet Girona",
-  "away": "Joventut Badalona",
-  "league": "Liga ACB",
-  "hs": 101,
-  "as": 87
- },
- {
-  "date": "2026-10-25",
-  "home": "Surne Bilbao Basket",
-  "away": "MoraBanc Andorra",
-  "league": "Liga ACB",
-  "hs": 88,
-  "as": 76
- },
- {
-  "date": "3 oct",
-  "home": "Napoli Basket",
-  "away": "Pallacanestro Reggiana",
-  "hs": 99,
-  "as": 93,
-  "league": "Lega Basket Serie A"
- },
- {
-  "date": "4 oct",
-  "home": "Pallacanestro Trieste",
-  "away": "Reyer Venezia Mestre",
-  "hs": 82,
-  "as": 87,
-  "league": "Lega Basket Serie A"
- },
- {
-  "date": "4 oct",
-  "home": "Scafati Basket",
-  "away": "Pallacanestro Varese",
-  "hs": 77,
-  "as": 85,
-  "league": "Lega Basket Serie A"
- },
- {
-  "date": "4 oct",
-  "home": "BC Roma SPQR",
-  "away": "Derthona Basket",
-  "hs": 108,
-  "as": 70,
-  "league": "Lega Basket Serie A"
- },
- {
-  "date": "4 oct",
-  "home": "Virtus Pallacanestro Bologna",
-  "away": "Maxima Roma",
-  "hs": 98,
-  "as": 89,
-  "league": "Lega Basket Serie A"
- },
- {
-  "date": "5 oct",
-  "home": "Scaligera Basket Verona",
-  "away": "Olimpia Milano",
-  "hs": 75,
-  "as": 72,
-  "league": "Lega Basket Serie A"
- },
- {
-  "date": "24 sep",
-  "home": "Rasta Vechta",
-  "away": "Bamberg Baskets",
-  "hs": 67,
-  "as": 108,
-  "league": "Basketball Bundesliga"
- },
- {
-  "date": "25 sep",
-  "home": "Phoenix Hagen",
-  "away": "Ulm",
-  "hs": 78,
-  "as": 93,
-  "league": "Basketball Bundesliga"
- },
- {
-  "date": "25 sep",
-  "home": "Gladiators Trier",
-  "away": "Bonn",
-  "hs": 106,
-  "as": 80,
-  "league": "Basketball Bundesliga"
- },
- {
-  "date": "25 sep",
-  "home": "Hamburg Towers",
-  "away": "Niners Chemnitz",
-  "hs": 94,
-  "as": 90,
-  "league": "Basketball Bundesliga"
- },
- {
-  "date": "25 sep",
-  "home": "Mitteldeutscher BC",
-  "away": "Science City Jena",
-  "hs": 77,
-  "as": 62,
-  "league": "Basketball Bundesliga"
- },
- {
-  "date": "25 sep",
-  "home": "s.Oliver Würzburg",
-  "away": "Baskets Oldenburg",
-  "hs": 68,
-  "as": 77,
-  "league": "Basketball Bundesliga"
- },
- {
-  "date": "3 oct",
-  "home": "SLUC Nancy Basket",
-  "away": "Cholet",
-  "hs": 76,
-  "as": 85,
-  "league": "LNB Élite"
- },
- {
-  "date": "3 oct",
-  "home": "Strasbourg",
-  "away": "Boulazac Basket Dordogne",
-  "hs": 87,
+  "date": "2026-11-07",
+  "home": "Oklahoma City Thunder",
+  "away": "Washington Wizards",
+  "hs": 114,
   "as": 75,
-  "league": "LNB Élite"
+  "league": "NBA"
  },
  {
-  "date": "3 oct",
-  "home": "Limoges",
-  "away": "Saint-Quentin Basket-Ball",
-  "hs": 92,
-  "as": 75,
-  "league": "LNB Élite"
+  "date": "2026-11-07",
+  "home": "Golden State Warriors",
+  "away": "Orlando Magic",
+  "hs": 126,
+  "as": 119,
+  "league": "NBA"
  },
  {
-  "date": "3 oct",
-  "home": "Élan Béarnais",
-  "away": "Dijon",
-  "hs": 61,
-  "as": 89,
-  "league": "LNB Élite"
- },
- {
-  "date": "3 oct",
-  "home": "Bourg-en-Bresse",
-  "away": "Élan Chalon",
-  "hs": 90,
-  "as": 77,
-  "league": "LNB Élite"
- },
- {
-  "date": "4 oct",
-  "home": "Gravelines-Dunkerque",
-  "away": "Lyon-Villeurbanne",
-  "hs": 65,
-  "as": 70,
-  "league": "LNB Élite"
- },
- {
-  "date": "10 oct",
-  "home": "Aris BC",
-  "away": "AEK BC",
-  "hs": 88,
-  "as": 58,
-  "league": "Greek Basket League"
- },
- {
-  "date": "10 oct",
-  "home": "Promitheas Patras BC",
-  "away": "Panathinaikos BC",
-  "hs": 59,
-  "as": 84,
-  "league": "Greek Basket League"
- },
- {
-  "date": "10 oct",
-  "home": "ASK Karditsas BC",
-  "away": "Vikos Falcons BC",
-  "hs": 85,
-  "as": 74,
-  "league": "Greek Basket League"
- },
- {
-  "date": "10 oct",
-  "home": "PAOK BC",
-  "away": "Doxa Lefkadas BC",
-  "hs": 86,
-  "as": 73,
-  "league": "Greek Basket League"
- },
- {
-  "date": "11 oct",
-  "home": "Olympiacos BC",
-  "away": "Kolossos BC",
-  "hs": 99,
-  "as": 83,
-  "league": "Greek Basket League"
- },
- {
-  "date": "17 oct",
-  "home": "AEK BC",
-  "away": "Mykonos BC",
-  "hs": 84,
-  "as": 79,
-  "league": "Greek Basket League"
- },
- {
-  "date": "18 oct",
-  "home": "Maccabi Tel Aviv B.C.",
-  "away": "Ironi Kiryat Ata B.C.",
-  "hs": 116,
-  "as": 89,
-  "league": "Ligat ha'Al"
- },
- {
-  "date": "18 oct",
-  "home": "Hapoel Tel Aviv B.C.",
-  "away": "Maccabi Ashdod B.C.",
-  "hs": 81,
-  "as": 67,
-  "league": "Ligat ha'Al"
- },
- {
-  "date": "19 oct",
-  "home": "Hapoel Eilat BC",
-  "away": "Hapoel Holon",
-  "hs": 78,
-  "as": 69,
-  "league": "Ligat ha'Al"
- },
- {
-  "date": "19 oct",
-  "home": "Hapoel HaEmek",
-  "away": "Maccabi Rishon LeZion",
-  "hs": 60,
-  "as": 80,
-  "league": "Ligat ha'Al"
- },
- {
-  "date": "19 oct",
-  "home": "Hapoel Galil Elyon",
-  "away": "Maccabi Ironi Ramat Gan",
-  "hs": 104,
-  "as": 101,
-  "league": "Ligat ha'Al"
- },
- {
-  "date": "23 oct",
-  "home": "Hapoel Beer Sheva BC",
-  "away": "Hapoel Holon",
-  "hs": 75,
-  "as": 91,
-  "league": "Ligat ha'Al"
- },
- {
-  "date": "26 sep",
-  "home": "BC Lietkabelis",
-  "away": "BC Tauragė",
-  "hs": 85,
-  "as": 79,
-  "league": "LKL"
- },
- {
-  "date": "27 sep",
-  "home": "BC Žalgiris",
-  "away": "BC Šiauliai",
-  "hs": 101,
-  "as": 82,
-  "league": "LKL"
- },
- {
-  "date": "27 sep",
-  "home": "BC Juventus",
-  "away": "BC Nevėžis",
-  "hs": 94,
-  "as": 77,
-  "league": "LKL"
- },
- {
-  "date": "3 oct",
-  "home": "BC Lietuvos rytas",
-  "away": "BC Gargždai-SC",
+  "date": "2026-11-07",
+  "home": "Phoenix Suns",
+  "away": "Houston Rockets",
   "hs": 102,
-  "as": 105,
-  "league": "LKL"
+  "as": 99,
+  "league": "NBA"
  },
  {
-  "date": "3 oct",
-  "home": "BC Neptūnas",
-  "away": "BC Nevėžis",
-  "hs": 89,
-  "as": 62,
-  "league": "LKL"
+  "date": "2026-11-07",
+  "home": "Portland Trail Blazers",
+  "away": "San Antonio Spurs",
+  "hs": 103,
+  "as": 125,
+  "league": "NBA"
  },
  {
-  "date": "3 oct",
-  "home": "BC Jonava",
-  "away": "BC Šiauliai",
-  "hs": 63,
-  "as": 79,
-  "league": "LKL"
+  "date": "2026-11-08",
+  "home": "Chicago Bulls",
+  "away": "Philadelphia 76ers",
+  "hs": 121,
+  "as": 127,
+  "league": "NBA"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "Detroit Pistons",
+  "away": "Los Angeles Lakers",
+  "hs": 116,
+  "as": 121,
+  "league": "NBA"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "Minnesota Timberwolves",
+  "away": "Utah Jazz",
+  "hs": 115,
+  "as": 100,
+  "league": "NBA"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "Dallas Mavericks",
+  "away": "Brooklyn Nets",
+  "hs": 130,
+  "as": 93,
+  "league": "NBA"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "Milwaukee Bucks",
+  "away": "Boston Celtics",
+  "hs": 97,
+  "as": 117,
+  "league": "NBA"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "LA Clippers",
+  "away": "New Orleans Pelicans",
+  "hs": 139,
+  "as": 123,
+  "league": "NBA"
+ },
+ {
+  "date": "2026-11-08",
+  "home": "Sacramento Kings",
+  "away": "Miami Heat",
+  "hs": 108,
+  "as": 114,
+  "league": "NBA"
  }
 ]

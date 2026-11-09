@@ -70,7 +70,7 @@
 "id": "vtb-1027",
 "logo": "https://media.api-sports.io/basketball/teams/1027.png",
 "name": "Parma Perm",
-"score": 36
+"score": 84
 },
 "date": "2026-11-07",
 "external_id": 513480,
@@ -78,13 +78,13 @@
 "id": "vtb-1025",
 "logo": "https://media.api-sports.io/basketball/teams/1025.png",
 "name": "Lokomotiv Kuban",
-"score": 48
+"score": 106
 },
 "id": "vtb-513480",
-"period": "Quarter 2",
+"period": null,
 "round": null,
 "start_ts": 1794056400,
-"status": "LIVE",
+"status": "FT",
 "venue": "Basket-Hall Krasnodar"
 },
 "vtb-513481": {
@@ -108,5 +108,27 @@
 "start_ts": 1794049200,
 "status": "FT",
 "venue": "DIVS Sport Hall"
+},
+"vtb-513482": {
+"away": {
+"id": "vtb-1031",
+"logo": "https://media.api-sports.io/basketball/teams/1031.png",
+"name": "Zenit Petersburg",
+"score": 68
+},
+"date": "2026-11-08",
+"external_id": 513482,
+"home": {
+"id": "vtb-1022",
+"logo": "https://media.api-sports.io/basketball/teams/1022.png",
+"name": "CSKA Moscow",
+"score": 80
+},
+"id": "vtb-513482",
+"period": null,
+"round": null,
+"start_ts": 1794141000,
+"status": "FT",
+"venue": "Krylatskoe Sport Palace"
 }
 }

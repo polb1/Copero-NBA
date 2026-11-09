@@ -26,7 +26,7 @@
 "id": "bbl-550",
 "logo": "https://media.api-sports.io/basketball/teams/550.png",
 "name": "Chemnitz",
-"score": null
+"score": 90
 },
 "date": "2026-11-07",
 "external_id": 509341,
@@ -34,13 +34,13 @@
 "id": "bbl-534",
 "logo": "https://media.api-sports.io/basketball/teams/534.png",
 "name": "Vechta",
-"score": null
+"score": 99
 },
 "id": "bbl-509341",
 "period": null,
 "round": "8",
 "start_ts": 1794078000,
-"status": "NS",
+"status": "FT",
 "venue": "RASTA Dome"
 },
 "bbl-509342": {
@@ -70,7 +70,7 @@
 "id": "bbl-533",
 "logo": "https://media.api-sports.io/basketball/teams/533.png",
 "name": "Ulm",
-"score": null
+"score": 87
 },
 "date": "2026-11-07",
 "external_id": 509343,
@@ -78,13 +78,13 @@
 "id": "bbl-561",
 "logo": "https://media.api-sports.io/basketball/teams/561.png",
 "name": "Rostock",
-"score": null
+"score": 97
 },
 "id": "bbl-509343",
 "period": null,
 "round": "8",
 "start_ts": 1794072600,
-"status": "NS",
+"status": "FT",
 "venue": "Stadthalle Rostock"
 },
 "bbl-509344": {
@@ -92,7 +92,7 @@
 "id": "bbl-520",
 "logo": "https://media.api-sports.io/basketball/teams/520.png",
 "name": "Bamberg",
-"score": null
+"score": 79
 },
 "date": "2026-11-07",
 "external_id": 509344,
@@ -100,13 +100,13 @@
 "id": "bbl-563",
 "logo": "https://media.api-sports.io/basketball/teams/563.png",
 "name": "Trier",
-"score": null
+"score": 92
 },
 "id": "bbl-509344",
 "period": null,
 "round": "8",
 "start_ts": 1794072600,
-"status": "NS",
+"status": "FT",
 "venue": "Arena Trier"
 },
 "bbl-509345": {
@@ -114,7 +114,7 @@
 "id": "bbl-521",
 "logo": "https://media.api-sports.io/basketball/teams/521.png",
 "name": "Basketball Braunschweig",
-"score": null
+"score": 87
 },
 "date": "2026-11-07",
 "external_id": 509345,
@@ -122,13 +122,101 @@
 "id": "bbl-524",
 "logo": "https://media.api-sports.io/basketball/teams/524.png",
 "name": "Bonn",
-"score": null
+"score": 97
 },
 "id": "bbl-509345",
 "period": null,
 "round": "8",
 "start_ts": 1794078000,
-"status": "NS",
+"status": "FT",
 "venue": "Telekom Dome"
+},
+"bbl-509346": {
+"away": {
+"id": "bbl-526",
+"logo": "https://media.api-sports.io/basketball/teams/526.png",
+"name": "Frankfurt",
+"score": 73
+},
+"date": "2026-11-08",
+"external_id": 509346,
+"home": {
+"id": "bbl-2263",
+"logo": "https://media.api-sports.io/basketball/teams/2263.png",
+"name": "Syntainics MBC",
+"score": 77
+},
+"id": "bbl-509346",
+"period": null,
+"round": "8",
+"start_ts": 1794146400,
+"status": "FT",
+"venue": "Stadthalle Weissenfels"
+},
+"bbl-509347": {
+"away": {
+"id": "bbl-532",
+"logo": "https://media.api-sports.io/basketball/teams/532.png",
+"name": "Oldenburg",
+"score": 74
+},
+"date": "2026-11-08",
+"external_id": 509347,
+"home": {
+"id": "bbl-530",
+"logo": "https://media.api-sports.io/basketball/teams/530.png",
+"name": "Ludwigsburg",
+"score": 72
+},
+"id": "bbl-509347",
+"period": null,
+"round": "8",
+"start_ts": 1794151800,
+"status": "FT",
+"venue": "Arena Ludwigsburg"
+},
+"bbl-509348": {
+"away": {
+"id": "bbl-522",
+"logo": "https://media.api-sports.io/basketball/teams/522.png",
+"name": "Bayern",
+"score": 94
+},
+"date": "2026-11-08",
+"external_id": 509348,
+"home": {
+"id": "bbl-5923",
+"logo": "https://media.api-sports.io/basketball/teams/5923.png",
+"name": "Wurzburg",
+"score": 73
+},
+"id": "bbl-509348",
+"period": null,
+"round": "8",
+"start_ts": 1794157200,
+"status": "FT",
+"venue": "Tectake Arena"
+},
+"bbl-509349": {
+"away": {
+"id": "bbl-529",
+"logo": "https://media.api-sports.io/basketball/teams/529.png",
+"name": "Hamburg",
+"score": null
+},
+"date": "2026-11-09",
+"external_id": 509349,
+"home": {
+"id": "bbl-553",
+"logo": "https://media.api-sports.io/basketball/teams/553.png",
+"name": "Jena",
+"score": null
+},
+"id": "bbl-509349",
+"period": null,
+"round": "8",
+"start_ts": 1794250800,
+"status": "NS",
+"venue": "Sparkassen-Arena"
 }
 }

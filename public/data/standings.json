@@ -3,7 +3,7 @@
   {
    "rank": 1,
    "team": "Philadelphia 76ers",
-   "w": 8,
+   "w": 9,
    "l": 2,
    "form": "",
    "conf": "East"
@@ -11,7 +11,7 @@
   {
    "rank": 2,
    "team": "Los Angeles Lakers",
-   "w": 8,
+   "w": 9,
    "l": 2,
    "form": "",
    "conf": "West"
@@ -19,58 +19,58 @@
   {
    "rank": 3,
    "team": "Boston Celtics",
-   "w": 7,
+   "w": 8,
    "l": 2,
    "form": "",
    "conf": "East"
   },
   {
    "rank": 4,
-   "team": "Houston Rockets",
-   "w": 7,
+   "team": "Oklahoma City Thunder",
+   "w": 8,
    "l": 2,
    "form": "",
    "conf": "West"
   },
   {
    "rank": 5,
-   "team": "Oklahoma City Thunder",
-   "w": 7,
+   "team": "San Antonio Spurs",
+   "w": 8,
    "l": 2,
    "form": "",
    "conf": "West"
   },
   {
    "rank": 6,
-   "team": "San Antonio Spurs",
-   "w": 7,
-   "l": 2,
+   "team": "Minnesota Timberwolves",
+   "w": 8,
+   "l": 3,
    "form": "",
    "conf": "West"
   },
   {
    "rank": 7,
-   "team": "Detroit Pistons",
-   "w": 6,
-   "l": 2,
+   "team": "Golden State Warriors",
+   "w": 7,
+   "l": 3,
    "form": "",
-   "conf": "East"
+   "conf": "West"
   },
   {
    "rank": 8,
-   "team": "Portland Trail Blazers",
-   "w": 6,
-   "l": 2,
+   "team": "Houston Rockets",
+   "w": 7,
+   "l": 3,
    "form": "",
    "conf": "West"
   },
   {
    "rank": 9,
-   "team": "Minnesota Timberwolves",
-   "w": 7,
+   "team": "Detroit Pistons",
+   "w": 6,
    "l": 3,
    "form": "",
-   "conf": "West"
+   "conf": "East"
   },
   {
    "rank": 10,
@@ -82,7 +82,7 @@
   },
   {
    "rank": 11,
-   "team": "Golden State Warriors",
+   "team": "Portland Trail Blazers",
    "w": 6,
    "l": 3,
    "form": "",
@@ -91,7 +91,7 @@
   {
    "rank": 12,
    "team": "Atlanta Hawks",
-   "w": 6,
+   "w": 7,
    "l": 4,
    "form": "",
    "conf": "East"
@@ -99,22 +99,22 @@
   {
    "rank": 13,
    "team": "Denver Nuggets",
-   "w": 4,
+   "w": 5,
    "l": 3,
    "form": "",
    "conf": "West"
   },
   {
    "rank": 14,
-   "team": "Toronto Raptors",
-   "w": 5,
+   "team": "Dallas Mavericks",
+   "w": 6,
    "l": 4,
    "form": "",
-   "conf": "East"
+   "conf": "West"
   },
   {
    "rank": 15,
-   "team": "Cleveland Cavaliers",
+   "team": "New York Knicks",
    "w": 5,
    "l": 4,
    "form": "",
@@ -122,51 +122,51 @@
   },
   {
    "rank": 16,
-   "team": "Dallas Mavericks",
+   "team": "Toronto Raptors",
    "w": 5,
    "l": 4,
    "form": "",
-   "conf": "West"
+   "conf": "East"
   },
   {
    "rank": 17,
-   "team": "New York Knicks",
-   "w": 4,
-   "l": 4,
+   "team": "Cleveland Cavaliers",
+   "w": 5,
+   "l": 5,
    "form": "",
    "conf": "East"
   },
   {
    "rank": 18,
-   "team": "Washington Wizards",
+   "team": "Miami Heat",
    "w": 4,
-   "l": 5,
+   "l": 6,
    "form": "",
    "conf": "East"
   },
   {
    "rank": 19,
+   "team": "Washington Wizards",
+   "w": 4,
+   "l": 6,
+   "form": "",
+   "conf": "East"
+  },
+  {
+   "rank": 20,
    "team": "New Orleans Pelicans",
    "w": 4,
-   "l": 5,
+   "l": 6,
    "form": "",
    "conf": "West"
   },
   {
-   "rank": 20,
-   "team": "Miami Heat",
-   "w": 3,
-   "l": 6,
-   "form": "",
-   "conf": "East"
-  },
-  {
    "rank": 21,
-   "team": "Indiana Pacers",
+   "team": "Phoenix Suns",
    "w": 3,
-   "l": 6,
+   "l": 5,
    "form": "",
-   "conf": "East"
+   "conf": "West"
   },
   {
    "rank": 22,
@@ -178,49 +178,49 @@
   },
   {
    "rank": 23,
-   "team": "Phoenix Suns",
-   "w": 2,
-   "l": 5,
+   "team": "Indiana Pacers",
+   "w": 3,
+   "l": 7,
    "form": "",
-   "conf": "West"
+   "conf": "East"
   },
   {
    "rank": 24,
    "team": "Orlando Magic",
    "w": 2,
-   "l": 6,
+   "l": 7,
    "form": "",
    "conf": "East"
   },
   {
    "rank": 25,
-   "team": "Brooklyn Nets",
-   "w": 2,
-   "l": 6,
-   "form": "",
-   "conf": "East"
-  },
-  {
-   "rank": 26,
    "team": "LA Clippers",
-   "w": 1,
+   "w": 2,
    "l": 7,
    "form": "",
    "conf": "West"
   },
   {
+   "rank": 26,
+   "team": "Brooklyn Nets",
+   "w": 2,
+   "l": 8,
+   "form": "",
+   "conf": "East"
+  },
+  {
    "rank": 27,
    "team": "Chicago Bulls",
    "w": 1,
-   "l": 7,
+   "l": 8,
    "form": "",
    "conf": "East"
   },
   {
    "rank": 28,
-   "team": "Utah Jazz",
+   "team": "Sacramento Kings",
    "w": 1,
-   "l": 8,
+   "l": 9,
    "form": "",
    "conf": "West"
   },
@@ -228,15 +228,15 @@
    "rank": 29,
    "team": "Milwaukee Bucks",
    "w": 1,
-   "l": 8,
+   "l": 9,
    "form": "",
    "conf": "East"
   },
   {
    "rank": 30,
-   "team": "Sacramento Kings",
+   "team": "Utah Jazz",
    "w": 1,
-   "l": 8,
+   "l": 9,
    "form": "",
    "conf": "West"
   }
@@ -553,156 +553,298 @@
   {
    "rank": 1,
    "team": "PAOK",
-   "w": 5,
+   "w": 6,
    "l": 0,
    "form": "",
    "conf": "Greek Basket League",
-   "played": 5,
+   "played": 6,
    "partial": false
   },
   {
    "rank": 2,
    "team": "Aris",
-   "w": 4,
+   "w": 5,
    "l": 1,
    "form": "",
    "conf": "Greek Basket League",
-   "played": 5,
+   "played": 6,
    "partial": false
   },
   {
    "rank": 3,
    "team": "Olympiacos",
-   "w": 5,
+   "w": 6,
    "l": 0,
    "form": "",
    "conf": "Greek Basket League",
-   "played": 5,
+   "played": 6,
    "partial": false
   },
   {
    "rank": 4,
-   "team": "Peristeri",
-   "w": 3,
+   "team": "Karditsa",
+   "w": 4,
    "l": 2,
    "form": "",
    "conf": "Greek Basket League",
-   "played": 5,
+   "played": 6,
    "partial": false
   },
   {
    "rank": 5,
-   "team": "Karditsa",
-   "w": 3,
-   "l": 2,
+   "team": "Panathinaikos",
+   "w": 5,
+   "l": 1,
    "form": "",
    "conf": "Greek Basket League",
-   "played": 5,
+   "played": 6,
    "partial": false
   },
   {
    "rank": 6,
    "team": "Kolossos",
-   "w": 2,
+   "w": 3,
    "l": 3,
    "form": "",
    "conf": "Greek Basket League",
-   "played": 5,
+   "played": 6,
    "partial": false
   },
   {
    "rank": 7,
-   "team": "Doxa Lefkadas",
-   "w": 2,
+   "team": "Peristeri",
+   "w": 3,
    "l": 3,
    "form": "",
    "conf": "Greek Basket League",
-   "played": 5,
+   "played": 6,
    "partial": false
   },
   {
    "rank": 8,
-   "team": "Panathinaikos",
-   "w": 4,
-   "l": 1,
+   "team": "Doxa Lefkadas",
+   "w": 2,
+   "l": 4,
    "form": "",
    "conf": "Greek Basket League",
-   "played": 5,
+   "played": 6,
    "partial": false
   },
   {
    "rank": 9,
-   "team": "AEK",
+   "team": "Iraklis",
    "w": 2,
-   "l": 3,
+   "l": 4,
    "form": "",
    "conf": "Greek Basket League",
-   "played": 5,
+   "played": 6,
    "partial": false
   },
   {
    "rank": 10,
-   "team": "Maroussi",
-   "w": 1,
+   "team": "AEK",
+   "w": 2,
    "l": 4,
    "form": "",
    "conf": "Greek Basket League",
-   "played": 5,
+   "played": 6,
    "partial": false
   },
   {
    "rank": 11,
-   "team": "Mykonos",
+   "team": "Maroussi",
    "w": 1,
-   "l": 4,
+   "l": 5,
    "form": "",
    "conf": "Greek Basket League",
-   "played": 5,
+   "played": 6,
    "partial": false
   },
   {
    "rank": 12,
-   "team": "Promitheas Patras",
+   "team": "Mykonos",
    "w": 1,
-   "l": 4,
+   "l": 5,
    "form": "",
    "conf": "Greek Basket League",
-   "played": 5,
+   "played": 6,
    "partial": false
   },
   {
    "rank": 13,
-   "team": "Iraklis",
+   "team": "Promitheas Patras",
    "w": 1,
-   "l": 4,
+   "l": 5,
    "form": "",
    "conf": "Greek Basket League",
-   "played": 5,
+   "played": 6,
    "partial": false
   },
   {
    "rank": 14,
    "team": "VIKOS ΦALCONS",
    "w": 1,
-   "l": 4,
+   "l": 5,
    "form": "",
    "conf": "Greek Basket League",
-   "played": 5,
+   "played": 6,
    "partial": false
+  }
+ ],
+ "Basketbol Süper Ligi": [
+  {
+   "rank": 1,
+   "team": "Fenerbahce",
+   "w": 1,
+   "l": 0,
+   "form": "",
+   "conf": "Basketbol Süper Ligi",
+   "played": 1,
+   "partial": true
+  },
+  {
+   "rank": 2,
+   "team": "Cayirova",
+   "w": 1,
+   "l": 0,
+   "form": "",
+   "conf": "Basketbol Süper Ligi",
+   "played": 1,
+   "partial": true
+  },
+  {
+   "rank": 3,
+   "team": "Turk Telekom",
+   "w": 1,
+   "l": 0,
+   "form": "",
+   "conf": "Basketbol Süper Ligi",
+   "played": 1,
+   "partial": true
+  },
+  {
+   "rank": 4,
+   "team": "Bahcesehir Kol.",
+   "w": 1,
+   "l": 0,
+   "form": "",
+   "conf": "Basketbol Süper Ligi",
+   "played": 1,
+   "partial": true
+  },
+  {
+   "rank": 5,
+   "team": "Petkim Spor",
+   "w": 1,
+   "l": 0,
+   "form": "",
+   "conf": "Basketbol Süper Ligi",
+   "played": 1,
+   "partial": true
+  },
+  {
+   "rank": 6,
+   "team": "Galatasaray",
+   "w": 1,
+   "l": 0,
+   "form": "",
+   "conf": "Basketbol Süper Ligi",
+   "played": 1,
+   "partial": true
+  },
+  {
+   "rank": 7,
+   "team": "Tofas",
+   "w": 1,
+   "l": 0,
+   "form": "",
+   "conf": "Basketbol Süper Ligi",
+   "played": 1,
+   "partial": true
+  },
+  {
+   "rank": 8,
+   "team": "Anadolu Efes",
+   "w": 0,
+   "l": 1,
+   "form": "",
+   "conf": "Basketbol Süper Ligi",
+   "played": 1,
+   "partial": true
+  },
+  {
+   "rank": 9,
+   "team": "Esenler Erokspor",
+   "w": 0,
+   "l": 1,
+   "form": "",
+   "conf": "Basketbol Süper Ligi",
+   "played": 1,
+   "partial": true
+  },
+  {
+   "rank": 10,
+   "team": "Trabzonspor",
+   "w": 0,
+   "l": 1,
+   "form": "",
+   "conf": "Basketbol Süper Ligi",
+   "played": 1,
+   "partial": true
+  },
+  {
+   "rank": 11,
+   "team": "Denizli Basket",
+   "w": 0,
+   "l": 1,
+   "form": "",
+   "conf": "Basketbol Süper Ligi",
+   "played": 1,
+   "partial": true
+  },
+  {
+   "rank": 12,
+   "team": "Korfez Basket",
+   "w": 0,
+   "l": 1,
+   "form": "",
+   "conf": "Basketbol Süper Ligi",
+   "played": 1,
+   "partial": true
+  },
+  {
+   "rank": 13,
+   "team": "Bordo Bandirma",
+   "w": 0,
+   "l": 1,
+   "form": "",
+   "conf": "Basketbol Süper Ligi",
+   "played": 1,
+   "partial": true
+  },
+  {
+   "rank": 14,
+   "team": "Bursaspor",
+   "w": 0,
+   "l": 1,
+   "form": "",
+   "conf": "Basketbol Süper Ligi",
+   "played": 1,
+   "partial": true
   }
  ],
  "B.League": [
   {
    "rank": 1,
-   "team": "Sendai 89ers",
-   "w": 11,
+   "team": "Alvark Tokyo",
+   "w": 12,
    "l": 4,
    "form": "",
    "conf": "B1"
   },
   {
    "rank": 2,
-   "team": "Alvark Tokyo",
+   "team": "Sendai 89ers",
    "w": 11,
    "l": 4,
    "form": "",
@@ -767,13 +909,21 @@
   {
    "rank": 10,
    "team": "Chiba Jets",
+   "w": 6,
+   "l": 9,
+   "form": "",
+   "conf": "B1"
+  },
+  {
+   "rank": 11,
+   "team": "Altiri Chiba",
    "w": 5,
    "l": 10,
    "form": "",
    "conf": "B1"
   },
   {
-   "rank": 11,
+   "rank": 12,
    "team": "Kawasaki Brave Thunders",
    "w": 4,
    "l": 10,
@@ -781,10 +931,10 @@
    "conf": "B1"
   },
   {
-   "rank": 12,
+   "rank": 13,
    "team": "Akita Northern Happinets",
    "w": 4,
-   "l": 10,
+   "l": 11,
    "form": "",
    "conf": "B1"
   }

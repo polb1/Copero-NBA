@@ -2,7 +2,7 @@
  "league": "euroleague",
  "season": "2026-2027",
  "source": "api-live.euroleague.net (API oficial)",
- "updated": 1794058846,
+ "updated": 1794216636,
  "standings": [
   {
    "rank": 1,
@@ -14,10 +14,10 @@
   },
   {
    "rank": 2,
-   "team": "Olympiacos Piraeus",
+   "team": "Crvena Zvezda Meridianbet Belgrade",
    "played": null,
    "wins": 7,
-   "losses": 2,
+   "losses": 3,
    "points": null
   },
   {
@@ -38,7 +38,7 @@
   },
   {
    "rank": 5,
-   "team": "FC Barcelona",
+   "team": "Olympiacos Piraeus",
    "played": null,
    "wins": 7,
    "losses": 3,
@@ -46,17 +46,17 @@
   },
   {
    "rank": 6,
-   "team": "Crvena Zvezda Meridianbet Belgrade",
+   "team": "Dubai Basketball",
    "played": null,
-   "wins": 6,
+   "wins": 7,
    "losses": 3,
    "points": null
   },
   {
    "rank": 7,
-   "team": "Dubai Basketball",
+   "team": "FC Barcelona",
    "played": null,
-   "wins": 6,
+   "wins": 7,
    "losses": 3,
    "points": null
   },
@@ -80,36 +80,20 @@
    "rank": 10,
    "team": "Zalgiris Kaunas",
    "played": null,
-   "wins": 5,
+   "wins": 6,
    "losses": 4,
    "points": null
   },
   {
    "rank": 11,
-   "team": "Besiktas Istanbul",
+   "team": "Partizan Mozzart Bet Belgrade",
    "played": null,
-   "wins": 4,
+   "wins": 5,
    "losses": 5,
    "points": null
   },
   {
    "rank": 12,
-   "team": "Partizan Mozzart Bet Belgrade",
-   "played": null,
-   "wins": 4,
-   "losses": 5,
-   "points": null
-  },
-  {
-   "rank": 13,
-   "team": "Virtus Bologna",
-   "played": null,
-   "wins": 4,
-   "losses": 5,
-   "points": null
-  },
-  {
-   "rank": 14,
    "team": "Anadolu Efes Istanbul",
    "played": null,
    "wins": 4,
@@ -117,8 +101,24 @@
    "points": null
   },
   {
-   "rank": 15,
+   "rank": 13,
+   "team": "Besiktas Istanbul",
+   "played": null,
+   "wins": 4,
+   "losses": 6,
+   "points": null
+  },
+  {
+   "rank": 14,
    "team": "Paris Basketball",
+   "played": null,
+   "wins": 4,
+   "losses": 6,
+   "points": null
+  },
+  {
+   "rank": 15,
+   "team": "Virtus Bologna",
    "played": null,
    "wins": 4,
    "losses": 6,
@@ -145,7 +145,7 @@
    "team": "Maccabi Rapyd Tel Aviv",
    "played": null,
    "wins": 2,
-   "losses": 7,
+   "losses": 8,
    "points": null
   },
   {

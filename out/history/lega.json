@@ -1,10 +1,54 @@
 {
+"lega-509630": {
+"away": {
+"id": "lega-719",
+"logo": "https://media.api-sports.io/basketball/teams/719.png",
+"name": "Cantu",
+"score": 87
+},
+"date": "2026-11-08",
+"external_id": 509630,
+"home": {
+"id": "lega-7904",
+"logo": "https://media.api-sports.io/basketball/teams/7904.png",
+"name": "Maxima Roma",
+"score": 99
+},
+"id": "lega-509630",
+"period": null,
+"round": "7",
+"start_ts": 1794150000,
+"status": "FT",
+"venue": "Palazzo dello Sport"
+},
+"lega-509631": {
+"away": {
+"id": "lega-727",
+"logo": "https://media.api-sports.io/basketball/teams/727.png",
+"name": "Trento",
+"score": 86
+},
+"date": "2026-11-08",
+"external_id": 509631,
+"home": {
+"id": "lega-722",
+"logo": "https://media.api-sports.io/basketball/teams/722.png",
+"name": "Olimpia Milano",
+"score": 88
+},
+"id": "lega-509631",
+"period": null,
+"round": "7",
+"start_ts": 1794153600,
+"status": "FT",
+"venue": "Unipol Forum"
+},
 "lega-509632": {
 "away": {
 "id": "lega-731",
 "logo": "https://media.api-sports.io/basketball/teams/731.png",
 "name": "Venezia",
-"score": null
+"score": 83
 },
 "date": "2026-11-07",
 "external_id": 509632,
@@ -12,13 +56,123 @@
 "id": "lega-725",
 "logo": "https://media.api-sports.io/basketball/teams/725.png",
 "name": "Reggiana",
-"score": null
+"score": 78
 },
 "id": "lega-509632",
 "period": null,
 "round": "7",
 "start_ts": 1794078000,
-"status": "NS",
+"status": "FT",
 "venue": "PalaBigi"
+},
+"lega-509633": {
+"away": {
+"id": "lega-690",
+"logo": "https://media.api-sports.io/basketball/teams/690.png",
+"name": "Basket Napoli",
+"score": 91
+},
+"date": "2026-11-08",
+"external_id": 509633,
+"home": {
+"id": "lega-699",
+"logo": "https://media.api-sports.io/basketball/teams/699.png",
+"name": "Scafati",
+"score": 89
+},
+"id": "lega-509633",
+"period": null,
+"round": "7",
+"start_ts": 1794157200,
+"status": "FT",
+"venue": "Pala Mangano"
+},
+"lega-509634": {
+"away": {
+"id": "lega-728",
+"logo": "https://media.api-sports.io/basketball/teams/728.png",
+"name": "Treviso",
+"score": 76
+},
+"date": "2026-11-08",
+"external_id": 509634,
+"home": {
+"id": "lega-700",
+"logo": "https://media.api-sports.io/basketball/teams/700.png",
+"name": "Tortona",
+"score": 87
+},
+"id": "lega-509634",
+"period": null,
+"round": "7",
+"start_ts": 1794155400,
+"status": "FT",
+"venue": "Cittadella dello Sport"
+},
+"lega-509635": {
+"away": {
+"id": "lega-7903",
+"logo": "https://media.api-sports.io/basketball/teams/7903.png",
+"name": "BC Roma",
+"score": 100
+},
+"date": "2026-11-08",
+"external_id": 509635,
+"home": {
+"id": "lega-729",
+"logo": "https://media.api-sports.io/basketball/teams/729.png",
+"name": "Trieste",
+"score": 116
+},
+"id": "lega-509635",
+"period": null,
+"round": "7",
+"start_ts": 1794135600,
+"status": "FT",
+"venue": "PalaTrieste"
+},
+"lega-509636": {
+"away": {
+"id": "lega-714",
+"logo": "https://media.api-sports.io/basketball/teams/714.png",
+"name": "Udine",
+"score": 84
+},
+"date": "2026-11-08",
+"external_id": 509636,
+"home": {
+"id": "lega-730",
+"logo": "https://media.api-sports.io/basketball/teams/730.png",
+"name": "Varese",
+"score": 81
+},
+"id": "lega-509636",
+"period": null,
+"round": "7",
+"start_ts": 1794160800,
+"status": "FT",
+"venue": "Palasport Lino Oldrini"
+},
+"lega-509637": {
+"away": {
+"id": "lega-716",
+"logo": "https://media.api-sports.io/basketball/teams/716.png",
+"name": "Verona",
+"score": null
+},
+"date": "2026-11-09",
+"external_id": 509637,
+"home": {
+"id": "lega-732",
+"logo": "https://media.api-sports.io/basketball/teams/732.png",
+"name": "Virtus Bologna",
+"score": null
+},
+"id": "lega-509637",
+"period": null,
+"round": "7",
+"start_ts": 1794250800,
+"status": "NS",
+"venue": "Segafredo Arena"
 }
 }

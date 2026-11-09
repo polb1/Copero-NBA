@@ -21,7 +21,7 @@ import urllib.request
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
-DATA = os.path.expanduser("~/codigo/copero-NBA/public/data")
+DATA = os.environ.get("ACTUALIDAD_DATA_DIR") or os.path.join(os.path.dirname(__file__), "..", "public", "data")
 UA = "CoperoNBA/1.0 (+actualidad)"
 ESPN = "https://site.api.espn.com/apis"
 

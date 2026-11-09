@@ -3,7 +3,7 @@
 // - Hashed build files and our own images: cache first (their URLs change when they change).
 // - Google Fonts: cache first. Other cross-origin requests (e.g. NBA logos) are left alone: opaque
 //   responses would eat the storage quota.
-const CACHE = 'nbalegacy-v1';
+const CACHE = 'nbalegacy-v2';
 
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', (e) => {

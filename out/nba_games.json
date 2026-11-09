@@ -2,15 +2,15 @@
  "league": "nba",
  "season": "2026-2027",
  "source": "ESPN (site.api.espn.com)",
- "updated": 1793832324,
+ "updated": 1794219891,
  "games": [
   {
-   "id": "nba-atlanta-hawks-washington-wizards-2026-11-06",
-   "start_ts": 1793923200,
+   "id": "nba-indiana-pacers-washington-wizards-11 nov",
+   "start_ts": 1794355200,
    "status": "NS",
    "home": {
-    "id": "nba-atlanta-hawks",
-    "name": "Atlanta Hawks",
+    "id": "nba-indiana-pacers",
+    "name": "Indiana Pacers",
     "score": null
    },
    "away": {
@@ -22,12 +22,29 @@
    "venue": null
   },
   {
-   "id": "nba-charlotte-hornets-boston-celtics-2026-11-06",
-   "start_ts": 1793923200,
+   "id": "nba-new-york-knicks-cleveland-cavaliers-11 nov",
+   "start_ts": 1794355200,
    "status": "NS",
    "home": {
-    "id": "nba-charlotte-hornets",
-    "name": "Charlotte Hornets",
+    "id": "nba-new-york-knicks",
+    "name": "New York Knicks",
+    "score": null
+   },
+   "away": {
+    "id": "nba-cleveland-cavaliers",
+    "name": "Cleveland Cavaliers",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-toronto-raptors-boston-celtics-11 nov",
+   "start_ts": 1794355200,
+   "status": "NS",
+   "home": {
+    "id": "nba-toronto-raptors",
+    "name": "Toronto Raptors",
     "score": null
    },
    "away": {
@@ -39,114 +56,12 @@
    "venue": null
   },
   {
-   "id": "nba-cleveland-cavaliers-philadelphia-76ers-2026-11-06",
-   "start_ts": 1793923200,
+   "id": "nba-chicago-bulls-san-antonio-spurs-11 nov",
+   "start_ts": 1794355200,
    "status": "NS",
    "home": {
-    "id": "nba-cleveland-cavaliers",
-    "name": "Cleveland Cavaliers",
-    "score": null
-   },
-   "away": {
-    "id": "nba-philadelphia-76ers",
-    "name": "Philadelphia 76ers",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-dallas-mavericks-utah-jazz-2026-11-06",
-   "start_ts": 1793923200,
-   "status": "NS",
-   "home": {
-    "id": "nba-dallas-mavericks",
-    "name": "Dallas Mavericks",
-    "score": null
-   },
-   "away": {
-    "id": "nba-utah-jazz",
-    "name": "Utah Jazz",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-memphis-grizzlies-oklahoma-city-thunder-2026-11-06",
-   "start_ts": 1793923200,
-   "status": "NS",
-   "home": {
-    "id": "nba-memphis-grizzlies",
-    "name": "Memphis Grizzlies",
-    "score": null
-   },
-   "away": {
-    "id": "nba-oklahoma-city-thunder",
-    "name": "Oklahoma City Thunder",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-milwaukee-bucks-toronto-raptors-2026-11-06",
-   "start_ts": 1793923200,
-   "status": "NS",
-   "home": {
-    "id": "nba-milwaukee-bucks",
-    "name": "Milwaukee Bucks",
-    "score": null
-   },
-   "away": {
-    "id": "nba-toronto-raptors",
-    "name": "Toronto Raptors",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-new-orleans-pelicans-minnesota-timberwolves-2026-11-06",
-   "start_ts": 1793923200,
-   "status": "NS",
-   "home": {
-    "id": "nba-new-orleans-pelicans",
-    "name": "New Orleans Pelicans",
-    "score": null
-   },
-   "away": {
-    "id": "nba-minnesota-timberwolves",
-    "name": "Minnesota Timberwolves",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-los-angeles-lakers-portland-trail-blazers-2026-11-06",
-   "start_ts": 1793923200,
-   "status": "NS",
-   "home": {
-    "id": "nba-los-angeles-lakers",
-    "name": "Los Angeles Lakers",
-    "score": null
-   },
-   "away": {
-    "id": "nba-portland-trail-blazers",
-    "name": "Portland Trail Blazers",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-sacramento-kings-san-antonio-spurs-2026-11-06",
-   "start_ts": 1793923200,
-   "status": "NS",
-   "home": {
-    "id": "nba-sacramento-kings",
-    "name": "Sacramento Kings",
+    "id": "nba-chicago-bulls",
+    "name": "Chicago Bulls",
     "score": null
    },
    "away": {
@@ -158,12 +73,63 @@
    "venue": null
   },
   {
-   "id": "nba-phoenix-suns-orlando-magic-2026-11-05",
-   "start_ts": 1793836800,
+   "id": "nba-memphis-grizzlies-denver-nuggets-11 nov",
+   "start_ts": 1794355200,
    "status": "NS",
    "home": {
-    "id": "nba-phoenix-suns",
-    "name": "Phoenix Suns",
+    "id": "nba-memphis-grizzlies",
+    "name": "Memphis Grizzlies",
+    "score": null
+   },
+   "away": {
+    "id": "nba-denver-nuggets",
+    "name": "Denver Nuggets",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-milwaukee-bucks-los-angeles-lakers-11 nov",
+   "start_ts": 1794355200,
+   "status": "NS",
+   "home": {
+    "id": "nba-milwaukee-bucks",
+    "name": "Milwaukee Bucks",
+    "score": null
+   },
+   "away": {
+    "id": "nba-los-angeles-lakers",
+    "name": "Los Angeles Lakers",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-new-orleans-pelicans-brooklyn-nets-11 nov",
+   "start_ts": 1794355200,
+   "status": "NS",
+   "home": {
+    "id": "nba-new-orleans-pelicans",
+    "name": "New Orleans Pelicans",
+    "score": null
+   },
+   "away": {
+    "id": "nba-brooklyn-nets",
+    "name": "Brooklyn Nets",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-utah-jazz-orlando-magic-11 nov",
+   "start_ts": 1794355200,
+   "status": "NS",
+   "home": {
+    "id": "nba-utah-jazz",
+    "name": "Utah Jazz",
     "score": null
    },
    "away": {
@@ -175,8 +141,263 @@
    "venue": null
   },
   {
-   "id": "nba-golden-state-warriors-miami-heat-2026-11-05",
-   "start_ts": 1793836800,
+   "id": "nba-houston-rockets-golden-state-warriors-11 nov",
+   "start_ts": 1794355200,
+   "status": "NS",
+   "home": {
+    "id": "nba-houston-rockets",
+    "name": "Houston Rockets",
+    "score": null
+   },
+   "away": {
+    "id": "nba-golden-state-warriors",
+    "name": "Golden State Warriors",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-portland-trail-blazers-oklahoma-city-thunder-11 nov",
+   "start_ts": 1794355200,
+   "status": "NS",
+   "home": {
+    "id": "nba-portland-trail-blazers",
+    "name": "Portland Trail Blazers",
+    "score": null
+   },
+   "away": {
+    "id": "nba-oklahoma-city-thunder",
+    "name": "Oklahoma City Thunder",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-new-york-knicks-milwaukee-bucks-10 nov",
+   "start_ts": 1794268800,
+   "status": "NS",
+   "home": {
+    "id": "nba-new-york-knicks",
+    "name": "New York Knicks",
+    "score": null
+   },
+   "away": {
+    "id": "nba-milwaukee-bucks",
+    "name": "Milwaukee Bucks",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-philadelphia-76ers-boston-celtics-10 nov",
+   "start_ts": 1794268800,
+   "status": "NS",
+   "home": {
+    "id": "nba-philadelphia-76ers",
+    "name": "Philadelphia 76ers",
+    "score": null
+   },
+   "away": {
+    "id": "nba-boston-celtics",
+    "name": "Boston Celtics",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-phoenix-suns-la-clippers-10 nov",
+   "start_ts": 1794268800,
+   "status": "NS",
+   "home": {
+    "id": "nba-phoenix-suns",
+    "name": "Phoenix Suns",
+    "score": null
+   },
+   "away": {
+    "id": "nba-la-clippers",
+    "name": "LA Clippers",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-utah-jazz-miami-heat-10 nov",
+   "start_ts": 1794268800,
+   "status": "NS",
+   "home": {
+    "id": "nba-utah-jazz",
+    "name": "Utah Jazz",
+    "score": null
+   },
+   "away": {
+    "id": "nba-miami-heat",
+    "name": "Miami Heat",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-sacramento-kings-orlando-magic-10 nov",
+   "start_ts": 1794268800,
+   "status": "NS",
+   "home": {
+    "id": "nba-sacramento-kings",
+    "name": "Sacramento Kings",
+    "score": null
+   },
+   "away": {
+    "id": "nba-orlando-magic",
+    "name": "Orlando Magic",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-portland-trail-blazers-oklahoma-city-thunder-10 nov",
+   "start_ts": 1794268800,
+   "status": "NS",
+   "home": {
+    "id": "nba-portland-trail-blazers",
+    "name": "Portland Trail Blazers",
+    "score": null
+   },
+   "away": {
+    "id": "nba-oklahoma-city-thunder",
+    "name": "Oklahoma City Thunder",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-atlanta-hawks-los-angeles-lakers-9 nov",
+   "start_ts": 1794182400,
+   "status": "NS",
+   "home": {
+    "id": "nba-atlanta-hawks",
+    "name": "Atlanta Hawks",
+    "score": null
+   },
+   "away": {
+    "id": "nba-los-angeles-lakers",
+    "name": "Los Angeles Lakers",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-charlotte-hornets-cleveland-cavaliers-9 nov",
+   "start_ts": 1794182400,
+   "status": "NS",
+   "home": {
+    "id": "nba-charlotte-hornets",
+    "name": "Charlotte Hornets",
+    "score": null
+   },
+   "away": {
+    "id": "nba-cleveland-cavaliers",
+    "name": "Cleveland Cavaliers",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-detroit-pistons-washington-wizards-9 nov",
+   "start_ts": 1794182400,
+   "status": "NS",
+   "home": {
+    "id": "nba-detroit-pistons",
+    "name": "Detroit Pistons",
+    "score": null
+   },
+   "away": {
+    "id": "nba-washington-wizards",
+    "name": "Washington Wizards",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-toronto-raptors-memphis-grizzlies-9 nov",
+   "start_ts": 1794182400,
+   "status": "NS",
+   "home": {
+    "id": "nba-toronto-raptors",
+    "name": "Toronto Raptors",
+    "score": null
+   },
+   "away": {
+    "id": "nba-memphis-grizzlies",
+    "name": "Memphis Grizzlies",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-dallas-mavericks-indiana-pacers-9 nov",
+   "start_ts": 1794182400,
+   "status": "NS",
+   "home": {
+    "id": "nba-dallas-mavericks",
+    "name": "Dallas Mavericks",
+    "score": null
+   },
+   "away": {
+    "id": "nba-indiana-pacers",
+    "name": "Indiana Pacers",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-houston-rockets-denver-nuggets-9 nov",
+   "start_ts": 1794182400,
+   "status": "NS",
+   "home": {
+    "id": "nba-houston-rockets",
+    "name": "Houston Rockets",
+    "score": null
+   },
+   "away": {
+    "id": "nba-denver-nuggets",
+    "name": "Denver Nuggets",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-phoenix-suns-san-antonio-spurs-9 nov",
+   "start_ts": 1794182400,
+   "status": "NS",
+   "home": {
+    "id": "nba-phoenix-suns",
+    "name": "Phoenix Suns",
+    "score": null
+   },
+   "away": {
+    "id": "nba-san-antonio-spurs",
+    "name": "San Antonio Spurs",
+    "score": null
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-golden-state-warriors-new-orleans-pelicans-9 nov",
+   "start_ts": 1794182400,
    "status": "NS",
    "home": {
     "id": "nba-golden-state-warriors",
@@ -184,502 +405,247 @@
     "score": null
    },
    "away": {
-    "id": "nba-miami-heat",
-    "name": "Miami Heat",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-detroit-pistons-philadelphia-76ers-2026-11-04",
-   "start_ts": 1793750400,
-   "status": "NS",
-   "home": {
-    "id": "nba-detroit-pistons",
-    "name": "Detroit Pistons",
-    "score": null
-   },
-   "away": {
-    "id": "nba-philadelphia-76ers",
-    "name": "Philadelphia 76ers",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-washington-wizards-atlanta-hawks-2026-11-04",
-   "start_ts": 1793750400,
-   "status": "NS",
-   "home": {
-    "id": "nba-washington-wizards",
-    "name": "Washington Wizards",
-    "score": null
-   },
-   "away": {
-    "id": "nba-atlanta-hawks",
-    "name": "Atlanta Hawks",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-boston-celtics-milwaukee-bucks-2026-11-04",
-   "start_ts": 1793750400,
-   "status": "NS",
-   "home": {
-    "id": "nba-boston-celtics",
-    "name": "Boston Celtics",
-    "score": null
-   },
-   "away": {
-    "id": "nba-milwaukee-bucks",
-    "name": "Milwaukee Bucks",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-brooklyn-nets-charlotte-hornets-2026-11-04",
-   "start_ts": 1793750400,
-   "status": "NS",
-   "home": {
-    "id": "nba-brooklyn-nets",
-    "name": "Brooklyn Nets",
-    "score": null
-   },
-   "away": {
-    "id": "nba-charlotte-hornets",
-    "name": "Charlotte Hornets",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-new-york-knicks-chicago-bulls-2026-11-04",
-   "start_ts": 1793750400,
-   "status": "NS",
-   "home": {
-    "id": "nba-new-york-knicks",
-    "name": "New York Knicks",
-    "score": null
-   },
-   "away": {
-    "id": "nba-chicago-bulls",
-    "name": "Chicago Bulls",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-memphis-grizzlies-indiana-pacers-2026-11-04",
-   "start_ts": 1793750400,
-   "status": "NS",
-   "home": {
-    "id": "nba-memphis-grizzlies",
-    "name": "Memphis Grizzlies",
-    "score": null
-   },
-   "away": {
-    "id": "nba-indiana-pacers",
-    "name": "Indiana Pacers",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-new-orleans-pelicans-utah-jazz-2026-11-04",
-   "start_ts": 1793750400,
-   "status": "NS",
-   "home": {
     "id": "nba-new-orleans-pelicans",
     "name": "New Orleans Pelicans",
     "score": null
    },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-chicago-bulls-philadelphia-76ers-8 nov",
+   "start_ts": 1794096000,
+   "status": "FT",
+   "home": {
+    "id": "nba-chicago-bulls",
+    "name": "Chicago Bulls",
+    "score": 121
+   },
    "away": {
-    "id": "nba-utah-jazz",
-    "name": "Utah Jazz",
-    "score": null
+    "id": "nba-philadelphia-76ers",
+    "name": "Philadelphia 76ers",
+    "score": 127
    },
    "period": null,
    "venue": null
   },
   {
-   "id": "nba-oklahoma-city-thunder-cleveland-cavaliers-2026-11-04",
-   "start_ts": 1793750400,
-   "status": "NS",
+   "id": "nba-detroit-pistons-los-angeles-lakers-8 nov",
+   "start_ts": 1794096000,
+   "status": "FT",
    "home": {
-    "id": "nba-oklahoma-city-thunder",
-    "name": "Oklahoma City Thunder",
-    "score": null
-   },
-   "away": {
-    "id": "nba-cleveland-cavaliers",
-    "name": "Cleveland Cavaliers",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-houston-rockets-minnesota-timberwolves-2026-11-04",
-   "start_ts": 1793750400,
-   "status": "NS",
-   "home": {
-    "id": "nba-houston-rockets",
-    "name": "Houston Rockets",
-    "score": null
-   },
-   "away": {
-    "id": "nba-minnesota-timberwolves",
-    "name": "Minnesota Timberwolves",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-denver-nuggets-toronto-raptors-2026-11-04",
-   "start_ts": 1793750400,
-   "status": "NS",
-   "home": {
-    "id": "nba-denver-nuggets",
-    "name": "Denver Nuggets",
-    "score": null
-   },
-   "away": {
-    "id": "nba-toronto-raptors",
-    "name": "Toronto Raptors",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-phoenix-suns-portland-trail-blazers-2026-11-04",
-   "start_ts": 1793750400,
-   "status": "NS",
-   "home": {
-    "id": "nba-phoenix-suns",
-    "name": "Phoenix Suns",
-    "score": null
-   },
-   "away": {
-    "id": "nba-portland-trail-blazers",
-    "name": "Portland Trail Blazers",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-san-antonio-spurs-dallas-mavericks-2026-11-04",
-   "start_ts": 1793750400,
-   "status": "NS",
-   "home": {
-    "id": "nba-san-antonio-spurs",
-    "name": "San Antonio Spurs",
-    "score": null
-   },
-   "away": {
-    "id": "nba-dallas-mavericks",
-    "name": "Dallas Mavericks",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-sacramento-kings-los-angeles-lakers-2026-11-04",
-   "start_ts": 1793750400,
-   "status": "NS",
-   "home": {
-    "id": "nba-sacramento-kings",
-    "name": "Sacramento Kings",
-    "score": null
+    "id": "nba-detroit-pistons",
+    "name": "Detroit Pistons",
+    "score": 116
    },
    "away": {
     "id": "nba-los-angeles-lakers",
     "name": "Los Angeles Lakers",
-    "score": null
+    "score": 121
    },
    "period": null,
    "venue": null
   },
   {
-   "id": "nba-la-clippers-miami-heat-2026-11-04",
-   "start_ts": 1793750400,
-   "status": "NS",
-   "home": {
-    "id": "nba-la-clippers",
-    "name": "LA Clippers",
-    "score": null
-   },
-   "away": {
-    "id": "nba-miami-heat",
-    "name": "Miami Heat",
-    "score": null
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-cleveland-cavaliers-oklahoma-city-thunder-2026-11-02",
-   "start_ts": 1793577600,
-   "status": "FT",
-   "home": {
-    "id": "nba-cleveland-cavaliers",
-    "name": "Cleveland Cavaliers",
-    "score": 112
-   },
-   "away": {
-    "id": "nba-oklahoma-city-thunder",
-    "name": "Oklahoma City Thunder",
-    "score": 117
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-charlotte-hornets-detroit-pistons-2026-11-02",
-   "start_ts": 1793577600,
-   "status": "FT",
-   "home": {
-    "id": "nba-charlotte-hornets",
-    "name": "Charlotte Hornets",
-    "score": 91
-   },
-   "away": {
-    "id": "nba-detroit-pistons",
-    "name": "Detroit Pistons",
-    "score": 124
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-indiana-pacers-atlanta-hawks-2026-11-02",
-   "start_ts": 1793577600,
-   "status": "FT",
-   "home": {
-    "id": "nba-indiana-pacers",
-    "name": "Indiana Pacers",
-    "score": 104
-   },
-   "away": {
-    "id": "nba-atlanta-hawks",
-    "name": "Atlanta Hawks",
-    "score": 108
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-new-york-knicks-brooklyn-nets-2026-11-02",
-   "start_ts": 1793577600,
-   "status": "FT",
-   "home": {
-    "id": "nba-new-york-knicks",
-    "name": "New York Knicks",
-    "score": 103
-   },
-   "away": {
-    "id": "nba-brooklyn-nets",
-    "name": "Brooklyn Nets",
-    "score": 90
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-orlando-magic-washington-wizards-2026-11-02",
-   "start_ts": 1793577600,
-   "status": "FT",
-   "home": {
-    "id": "nba-orlando-magic",
-    "name": "Orlando Magic",
-    "score": 94
-   },
-   "away": {
-    "id": "nba-washington-wizards",
-    "name": "Washington Wizards",
-    "score": 103
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-philadelphia-76ers-chicago-bulls-2026-11-02",
-   "start_ts": 1793577600,
-   "status": "FT",
-   "home": {
-    "id": "nba-philadelphia-76ers",
-    "name": "Philadelphia 76ers",
-    "score": 126
-   },
-   "away": {
-    "id": "nba-chicago-bulls",
-    "name": "Chicago Bulls",
-    "score": 107
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-dallas-mavericks-sacramento-kings-2026-11-02",
-   "start_ts": 1793577600,
-   "status": "FT",
-   "home": {
-    "id": "nba-dallas-mavericks",
-    "name": "Dallas Mavericks",
-    "score": 100
-   },
-   "away": {
-    "id": "nba-sacramento-kings",
-    "name": "Sacramento Kings",
-    "score": 115
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-memphis-grizzlies-new-orleans-pelicans-2026-11-02",
-   "start_ts": 1793577600,
-   "status": "FT",
-   "home": {
-    "id": "nba-memphis-grizzlies",
-    "name": "Memphis Grizzlies",
-    "score": 134
-   },
-   "away": {
-    "id": "nba-new-orleans-pelicans",
-    "name": "New Orleans Pelicans",
-    "score": 135
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-minnesota-timberwolves-milwaukee-bucks-2026-11-02",
-   "start_ts": 1793577600,
+   "id": "nba-minnesota-timberwolves-utah-jazz-8 nov",
+   "start_ts": 1794096000,
    "status": "FT",
    "home": {
     "id": "nba-minnesota-timberwolves",
     "name": "Minnesota Timberwolves",
-    "score": 112
+    "score": 115
    },
    "away": {
-    "id": "nba-milwaukee-bucks",
-    "name": "Milwaukee Bucks",
+    "id": "nba-utah-jazz",
+    "name": "Utah Jazz",
     "score": 100
    },
    "period": null,
    "venue": null
   },
   {
-   "id": "nba-houston-rockets-boston-celtics-2026-11-02",
-   "start_ts": 1793577600,
+   "id": "nba-dallas-mavericks-brooklyn-nets-8 nov",
+   "start_ts": 1794096000,
    "status": "FT",
    "home": {
-    "id": "nba-houston-rockets",
-    "name": "Houston Rockets",
-    "score": 109
+    "id": "nba-dallas-mavericks",
+    "name": "Dallas Mavericks",
+    "score": 130
    },
    "away": {
-    "id": "nba-boston-celtics",
-    "name": "Boston Celtics",
+    "id": "nba-brooklyn-nets",
+    "name": "Brooklyn Nets",
     "score": 93
    },
    "period": null,
    "venue": null
   },
   {
-   "id": "nba-san-antonio-spurs-utah-jazz-2026-11-02",
-   "start_ts": 1793577600,
+   "id": "nba-milwaukee-bucks-boston-celtics-8 nov",
+   "start_ts": 1794096000,
    "status": "FT",
    "home": {
-    "id": "nba-san-antonio-spurs",
-    "name": "San Antonio Spurs",
-    "score": 119
-   },
-   "away": {
-    "id": "nba-utah-jazz",
-    "name": "Utah Jazz",
+    "id": "nba-milwaukee-bucks",
+    "name": "Milwaukee Bucks",
     "score": 97
    },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-denver-nuggets-portland-trail-blazers-2026-11-02",
-   "start_ts": 1793577600,
-   "status": "FT",
-   "home": {
-    "id": "nba-denver-nuggets",
-    "name": "Denver Nuggets",
-    "score": 110
-   },
    "away": {
-    "id": "nba-portland-trail-blazers",
-    "name": "Portland Trail Blazers",
-    "score": 118
+    "id": "nba-boston-celtics",
+    "name": "Boston Celtics",
+    "score": 117
    },
    "period": null,
    "venue": null
   },
   {
-   "id": "nba-golden-state-warriors-phoenix-suns-2026-11-02",
-   "start_ts": 1793577600,
-   "status": "FT",
-   "home": {
-    "id": "nba-golden-state-warriors",
-    "name": "Golden State Warriors",
-    "score": 116
-   },
-   "away": {
-    "id": "nba-phoenix-suns",
-    "name": "Phoenix Suns",
-    "score": 113
-   },
-   "period": null,
-   "venue": null
-  },
-  {
-   "id": "nba-la-clippers-toronto-raptors-2026-11-02",
-   "start_ts": 1793577600,
+   "id": "nba-la-clippers-new-orleans-pelicans-8 nov",
+   "start_ts": 1794096000,
    "status": "FT",
    "home": {
     "id": "nba-la-clippers",
     "name": "LA Clippers",
-    "score": 118
+    "score": 139
    },
    "away": {
-    "id": "nba-toronto-raptors",
-    "name": "Toronto Raptors",
-    "score": 125
+    "id": "nba-new-orleans-pelicans",
+    "name": "New Orleans Pelicans",
+    "score": 123
    },
    "period": null,
    "venue": null
   },
   {
-   "id": "nba-los-angeles-lakers-miami-heat-2026-11-02",
-   "start_ts": 1793577600,
+   "id": "nba-sacramento-kings-miami-heat-8 nov",
+   "start_ts": 1794096000,
    "status": "FT",
    "home": {
-    "id": "nba-los-angeles-lakers",
-    "name": "Los Angeles Lakers",
-    "score": 138
+    "id": "nba-sacramento-kings",
+    "name": "Sacramento Kings",
+    "score": 108
    },
    "away": {
     "id": "nba-miami-heat",
     "name": "Miami Heat",
-    "score": 117
+    "score": 114
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-indiana-pacers-denver-nuggets-7 nov",
+   "start_ts": 1794009600,
+   "status": "FT",
+   "home": {
+    "id": "nba-indiana-pacers",
+    "name": "Indiana Pacers",
+    "score": 102
+   },
+   "away": {
+    "id": "nba-denver-nuggets",
+    "name": "Denver Nuggets",
+    "score": 114
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-atlanta-hawks-brooklyn-nets-7 nov",
+   "start_ts": 1794009600,
+   "status": "FT",
+   "home": {
+    "id": "nba-atlanta-hawks",
+    "name": "Atlanta Hawks",
+    "score": 124
+   },
+   "away": {
+    "id": "nba-brooklyn-nets",
+    "name": "Brooklyn Nets",
+    "score": 121
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-cleveland-cavaliers-new-york-knicks-7 nov",
+   "start_ts": 1794009600,
+   "status": "FT",
+   "home": {
+    "id": "nba-cleveland-cavaliers",
+    "name": "Cleveland Cavaliers",
+    "score": 97
+   },
+   "away": {
+    "id": "nba-new-york-knicks",
+    "name": "New York Knicks",
+    "score": 109
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-oklahoma-city-thunder-washington-wizards-7 nov",
+   "start_ts": 1794009600,
+   "status": "FT",
+   "home": {
+    "id": "nba-oklahoma-city-thunder",
+    "name": "Oklahoma City Thunder",
+    "score": 114
+   },
+   "away": {
+    "id": "nba-washington-wizards",
+    "name": "Washington Wizards",
+    "score": 75
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-golden-state-warriors-orlando-magic-7 nov",
+   "start_ts": 1794009600,
+   "status": "FT",
+   "home": {
+    "id": "nba-golden-state-warriors",
+    "name": "Golden State Warriors",
+    "score": 126
+   },
+   "away": {
+    "id": "nba-orlando-magic",
+    "name": "Orlando Magic",
+    "score": 119
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-phoenix-suns-houston-rockets-7 nov",
+   "start_ts": 1794009600,
+   "status": "FT",
+   "home": {
+    "id": "nba-phoenix-suns",
+    "name": "Phoenix Suns",
+    "score": 102
+   },
+   "away": {
+    "id": "nba-houston-rockets",
+    "name": "Houston Rockets",
+    "score": 99
+   },
+   "period": null,
+   "venue": null
+  },
+  {
+   "id": "nba-portland-trail-blazers-san-antonio-spurs-7 nov",
+   "start_ts": 1794009600,
+   "status": "FT",
+   "home": {
+    "id": "nba-portland-trail-blazers",
+    "name": "Portland Trail Blazers",
+    "score": 103
+   },
+   "away": {
+    "id": "nba-san-antonio-spurs",
+    "name": "San Antonio Spurs",
+    "score": 125
    },
    "period": null,
    "venue": null
