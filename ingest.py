@@ -21,6 +21,16 @@ import time
 import traceback
 from datetime import datetime, timezone
 from pathlib import Path
+import locale
+
+# Configurar locale en español para parsear meses abreviados
+try:
+    locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+except locale.Error:
+    try:
+        locale.setlocale(locale.LC_TIME, 'C.UTF-8')
+    except locale.Error:
+        pass  # fallback to default
 
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "out"
@@ -39,6 +49,42 @@ TTL_LIVE = 5 * 60
 
 # Presupuesto diario de peticiones (API-Basketball free = 100/día)
 PRESUPUESTO = {"apisports": 100}
+
+
+# Meses en español (abreviados)
+MESES_ES = {
+    "ene": 1, "feb": 2, "mar": 3, "abr": 4, "may": 5, "jun": 6,
+    "jul": 7, "ago": 8, "sep": 9, "oct": 10, "nov": 11, "dic": 12
+}
+
+
+def parse_date_flexible(date_str: str) -> datetime | None:
+    """Parsea fechas en formato ISO (2026-11-07) o abreviado (7 nov)."""
+    if not date_str:
+        return None
+    # ISO format
+    try:
+        return datetime.fromisoformat(date_str)
+    except ValueError:
+        pass
+    # Formato "d MMM" (ej: "7 nov", "8 nov", "3 oct") - meses en español
+    try:
+        parts = date_str.strip().split()
+        if len(parts) != 2:
+            return None
+        day = int(parts[0])
+        mes_abrev = parts[1].lower()[:3]
+        month = MESES_ES.get(mes_abrev)
+        if not month:
+            return None
+        now = datetime.now()
+        dt = datetime(now.year, month, day)
+        # Si la fecha es futura (ej: diciembre y estamos en noviembre), restar un año
+        if dt.month > now.month + 1:  # margen de 1 mes
+            dt = dt.replace(year=now.year - 1)
+        return dt
+    except (ValueError, IndexError):
+        return None
 
 
 # ---------------------------------------------------------------- estado/caché
@@ -161,7 +207,7 @@ def legacy(liga: str) -> dict:
             continue
         juegos.append(game(
             f"{liga}-{slug(r['home'])}-{slug(r['away'])}-{r.get('date')}",
-            int(datetime.fromisoformat(r["date"]).replace(tzinfo=timezone.utc).timestamp()) if r.get("date") else None,
+            int(dt.replace(tzinfo=timezone.utc).timestamp()) if (dt := parse_date_flexible(r["date"])) else None,
             "FT",
             {"id": f"{liga}-{slug(r['home'])}", "name": r["home"], "score": r["hs"]},
             {"id": f"{liga}-{slug(r['away'])}", "name": r["away"], "score": r["as"]},
@@ -171,7 +217,7 @@ def legacy(liga: str) -> dict:
             continue
         juegos.append(game(
             f"{liga}-{slug(f['home'])}-{slug(f['away'])}-{f.get('date')}",
-            int(datetime.fromisoformat(f["date"]).replace(tzinfo=timezone.utc).timestamp()) if f.get("date") else None,
+            int(dt.replace(tzinfo=timezone.utc).timestamp()) if (dt := parse_date_flexible(f["date"])) else None,
             "NS",
             {"id": f"{liga}-{slug(f['home'])}", "name": f["home"], "score": None},
             {"id": f"{liga}-{slug(f['away'])}", "name": f["away"], "score": None},
