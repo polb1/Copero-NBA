@@ -105,7 +105,7 @@ export function LeaguePage() {
       {/* Cabecera de la liga */}
       <Card className="p-space-md">
         <div className="flex flex-wrap items-center justify-between gap-space-sm">
-          <div className="flex items-center gap-space-md">
+          <div className="flex flex-col items-start sm:flex-row sm:items-center gap-space-sm sm:gap-space-md">
             <span className={`px-2 py-1 rounded font-display text-label-table-header uppercase tracking-widest ${meta.chip}`}>
               {LEAGUE_COUNTRY[name || ''] || 'INT'}
             </span>
@@ -115,7 +115,7 @@ export function LeaguePage() {
                 <p className="text-body-sm text-on-surface-variant max-w-[70ch] mt-2 mb-0">{intros[name!]}</p>
               )}
               <p className="text-body-sm text-text-muted m-0 mt-1">
-                {rows.length ? `${rows.length} equipos · clasificación en vivo` : `${clubs.length} equipos · plantilla de la temporada`}
+                {rows.length ? `${rows.length} equipos · clasificación actualizada a diario` : `${clubs.length} equipos · plantilla de la temporada`}
               </p>
             </div>
           </div>
@@ -131,7 +131,7 @@ export function LeaguePage() {
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
-            className={`px-3 py-1 rounded font-display text-label-table-header uppercase tracking-wider border-0 cursor-pointer transition-colors ${
+            className={`px-3 py-2 rounded font-display text-label-table-header uppercase tracking-wider border-0 cursor-pointer transition-colors ${
               tab === t.id
                 ? 'bg-primary-container text-on-primary-container'
                 : 'bg-court-surface text-on-surface-variant hover:text-text-primary'
@@ -149,7 +149,7 @@ export function LeaguePage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-space-md">
           <div className="lg:col-span-2 flex flex-col gap-space-md">
             <Card className="p-space-sm">
-              <SectionHeader title={rows.length ? 'Clasificación' : 'Equipos'} right={rows.length ? 'En vivo' : 'Plantilla 2026-27'} />
+              <SectionHeader title={rows.length ? 'Clasificación' : 'Equipos'} right={rows.length ? 'Actualizada a diario' : 'Plantilla 2026-27'} />
               {(rows[0] as { partial?: boolean })?.partial && (
                 <p className="text-body-sm text-secondary m-0 mb-2">
                   Clasificación parcial: calculada con los partidos capturados desde el inicio del pipeline.

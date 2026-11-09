@@ -1,4 +1,4 @@
-// Cloudflare Workers: API (/api, /c) + estáticos del build de Vite (dist/).
+// Cloudflare Workers: API (/api, /c) + estáticos del build de Vite (dist.).
 {
 	"name": "copero-x-nba",
 	"main": "worker/index.ts",
@@ -19,17 +19,9 @@
 			"database_name": "anillero",
 			"database_id": "139eaace-b636-4a02-adcb-2dcf425164b2",
 			"migrations_dir": "migrations"
-		},
-		{
-			"binding": "anillero",
-			"database_name": "anillero",
-			"database_id": "139eaace-b636-4a02-adcb-2dcf425164b2",
-			"remote": true
 		}
 	],
 	"observability": {
 		"enabled": true
 	}
-
-	
 }

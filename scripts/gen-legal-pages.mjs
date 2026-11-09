@@ -15,17 +15,24 @@ const scripts = (shell.match(/<script[^>]+cloudflareinsights[^>]*><\/script>/g) 
 const fonts = (shell.match(/<link[^>]+fonts\.googleapis[^>]*>/g) || []).join('\n    ');
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-const style = `<style>
-  body{margin:0;background:#0b0c0e;color:#e6e8ec;font-family:Inter,system-ui,sans-serif;line-height:1.65}
+const style = `<script>try{var t=localStorage.getItem("anillero-theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+  :root{--a-bg:var(--a-bg);--a-card:var(--a-card);--a-card2:var(--a-card2);--a-line:var(--a-line);--a-line2:var(--a-line2);--a-line3:var(--a-line3);--a-ink:var(--a-ink);--a-ink2:var(--a-ink2);--a-ink3:var(--a-ink3);--a-ink4:var(--a-ink4);--a-muted:var(--a-muted);--a-muted2:var(--a-muted2);--a-gold:var(--a-gold);--a-accent:var(--a-accent);--a-on-accent:var(--a-on-accent);--a-win:var(--a-win);--a-loss:var(--a-loss);--a-note-bg:var(--a-note-bg);--a-note-line:var(--a-note-line);--a-note-ink:var(--a-note-ink)}
+  :root[data-theme="dark"]{--a-bg:#1C1410;--a-card:#261B15;--a-card2:#31241C;--a-line:#4A3828;--a-line2:#5A4532;--a-line3:#6B5440;--a-ink:#F2E8D8;--a-ink2:#E6D9C4;--a-ink3:#D6C5AC;--a-ink4:#C7B497;--a-muted:#B3A089;--a-muted2:#9C8A73;--a-gold:#E0BC7A;--a-accent:#D9A95B;--a-on-accent:#1C1410;--a-win:#9CC795;--a-loss:#A08C74;--a-note-bg:#33251C;--a-note-line:#6B5232;--a-note-ink:#E8CFA0;color-scheme:dark}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--a-bg:#1C1410;--a-card:#261B15;--a-card2:#31241C;--a-line:#4A3828;--a-line2:#5A4532;--a-line3:#6B5440;--a-ink:#F2E8D8;--a-ink2:#E6D9C4;--a-ink3:#D6C5AC;--a-ink4:#C7B497;--a-muted:#B3A089;--a-muted2:#9C8A73;--a-gold:#E0BC7A;--a-accent:#D9A95B;--a-on-accent:#1C1410;--a-win:#9CC795;--a-loss:#A08C74;--a-note-bg:#33251C;--a-note-line:#6B5232;--a-note-ink:#E8CFA0;color-scheme:dark}}
+</style>
+<style>
+  h1,h2,h3{font-family:"Source Serif 4",Georgia,serif}
+  body{margin:0;background:var(--a-bg);color:var(--a-ink);font-family:Inter,system-ui,sans-serif;line-height:1.65}
   main{max-width:820px;margin:0 auto;padding:40px 20px 72px}
   h1{font-size:30px;margin:0 0 6px}
-  h2{font-size:18px;margin:28px 0 8px;color:#f0c04d}
-  p,li{color:#c3c8d2;font-size:15px}
-  .upd{color:#7c8494;font-size:12px;margin:0 0 24px}
-  .todo{background:#2a1a08;border:1px solid #6b3d0c;color:#ffcf9a;padding:10px 14px;border-radius:8px;font-size:14px}
-  a{color:#ff6b1a}
+  h2{font-size:18px;margin:28px 0 8px;color:var(--a-gold)}
+  p,li{color:var(--a-ink3);font-size:15px}
+  .upd{color:var(--a-muted2);font-size:12px;margin:0 0 24px}
+  .todo{background:var(--a-note-bg);border:1px solid var(--a-note-line);color:var(--a-note-ink);padding:10px 14px;border-radius:8px;font-size:14px}
+  a{color:var(--a-accent)}
   ul{padding-left:20px}
-  code{background:#161a21;padding:2px 6px;border-radius:4px;font-size:13px}
+  code{background:var(--a-card);padding:2px 6px;border-radius:4px;font-size:13px}
 </style>`;
 
 const pages = [
@@ -123,7 +130,7 @@ for (const p of pages) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0b0c0e" />
+    <meta name="theme-color" content="#F7F3EC" />
     <title>${esc(p.title)}</title>
     <meta name="description" content="${esc(p.h1)} de Anillero: información legal, privacidad, cookies y fuentes de datos." />
     <link rel="canonical" href="${url}" />
@@ -138,7 +145,7 @@ for (const p of pages) {
   </head>
   <body>
     <main id="root">
-      <p><a href="/" style="color:#ff6b1a;text-decoration:none">Anillero</a></p>
+      <p><a href="/" style="color:var(--a-accent);text-decoration:none">Anillero</a></p>
       <h1>${esc(p.h1)}</h1>
       <p class="upd">Última actualización: ${UPDATED}</p>
       ${p.body}

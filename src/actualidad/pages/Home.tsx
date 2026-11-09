@@ -5,6 +5,10 @@ import { fechaCorta, leagueHref, matchHref, useHubData, MAIN_LEAGUES } from '../
 
 const esPrincipal = (liga: string) => MAIN_LEAGUES.includes(liga);
 
+/** ¿Ganó este lado? Solo partidos con marcador; los próximos no resaltan a nadie. */
+const win = (m: { hs?: number; as?: number }, side: 'home' | 'away') =>
+  m.hs !== undefined && m.as !== undefined && (side === 'home' ? m.hs > m.as : m.as > m.hs);
+
 export function Home() {
   const { news, standings, results, fixtures, stats, updatedAt, loading } = useHubData();
   const [filter, setFilter] = useState<'all' | 'final' | 'scheduled'>('all');
@@ -61,9 +65,9 @@ export function Home() {
               <span className="font-display text-label-table-header uppercase text-secondary tracking-widest">
                 Destacado · {destacado.league}
               </span>
-              <h2 className="font-display text-headline-xl font-extrabold uppercase text-text-primary m-0 leading-tight truncate">
-                {destacado.home} <span className="text-secondary">{destacado.hs}</span> —{' '}
-                <span className="text-secondary">{destacado.as}</span> {destacado.away}
+              <h2 className="font-display text-headline-xl-mobile md:text-headline-xl font-extrabold uppercase text-text-primary m-0 leading-tight md:truncate">
+                {destacado.home} <span className={win(destacado, 'home') ? 'text-secondary' : 'text-text-muted'}>{destacado.hs}</span> —{' '}
+                <span className={win(destacado, 'away') ? 'text-secondary' : 'text-text-muted'}>{destacado.as}</span> {destacado.away}
               </h2>
               <p className="text-body-sm text-text-muted m-0 mt-1">{(destacado as { date: string }).date === new Date().toISOString().slice(0, 10) ? 'Hoy' : fechaCorta(destacado.date)} · Resultado final</p>
             </div>
@@ -76,7 +80,8 @@ export function Home() {
 
       {/* Ticker */}
       <div className="flex flex-wrap items-center justify-between gap-space-sm bg-court-surface px-space-md py-1.5 rounded-lg shadow-sm">
-        <div className="flex items-center gap-space-sm min-w-0">
+        {/* en móvil ya se ve el destacado justo encima: solo la hora de los datos */}
+        <div className="hidden sm:flex items-center gap-space-sm min-w-0">
           <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-court-surface-elevated text-text-primary font-display text-label-match-status uppercase tracking-wider">
             Último resultado
           </span>
@@ -106,24 +111,19 @@ export function Home() {
           {principales.slice(0, 3).map((r, i) => (
             <Link key={i} to={matchHref(r)} className="block">
               <Card className="p-space-md flex flex-col gap-2 hover:border-primary-container transition-colors h-full">
-                <div className="flex items-center gap-space-xs text-body-sm text-secondary">
+                <div className="flex items-center gap-space-xs text-body-sm text-text-muted">
                   <span className="font-display text-label-match-status uppercase">{r.league}</span>
                   <span>· {fechaCorta(r.date)}</span>
                 </div>
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2 truncate">
-                    <TeamBadge name={r.home} size={22} />
-                    <span className="font-display text-headline-md font-bold truncate">{r.home}</span>
+                {[[r.home, r.hs, r.hs > r.as], [r.away, r.as, r.as > r.hs]].map(([team, pts, won]) => (
+                  <div key={String(team)} className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 truncate">
+                      <TeamBadge name={String(team)} size={22} />
+                      <span className={`font-display text-headline-md truncate ${won ? 'font-bold text-text-primary' : 'font-medium text-text-muted'}`}>{team}</span>
+                    </div>
+                    <span className={`font-display text-score-display tabular-nums ${won ? 'text-secondary' : 'text-text-muted'}`}>{pts}</span>
                   </div>
-                  <span className="font-display text-score-display text-secondary tabular-nums">{r.hs}</span>
-                </div>
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2 truncate">
-                    <TeamBadge name={r.away} size={22} />
-                    <span className="font-body text-body-sm truncate">{r.away}</span>
-                  </div>
-                  <span className="font-display text-score-display text-secondary tabular-nums">{r.as}</span>
-                </div>
+                ))}
               </Card>
             </Link>
           ))}
@@ -149,7 +149,7 @@ export function Home() {
                 <button
                   key={key}
                   onClick={() => setFilter(key as typeof filter)}
-                  className={`px-space-md py-1 rounded font-display text-label-table-header uppercase tracking-wider border-0 cursor-pointer transition-all ${
+                  className={`px-space-md py-2 rounded font-display text-label-table-header uppercase tracking-wider border-0 cursor-pointer transition-all ${
                     filter === key
                       ? 'bg-primary-container text-on-primary-container'
                       : 'bg-court-surface-elevated text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
@@ -184,10 +184,10 @@ export function Home() {
                           <div className="flex items-center justify-between gap-2">
                             <span className="flex items-center gap-2 min-w-0">
                               <TeamBadge name={m.home} size={20} />
-                              <span className="font-display text-body-sm font-bold truncate">{m.home}</span>
+                              <span className={`font-display text-body-sm truncate ${win(m, 'home') ? 'font-bold text-text-primary' : 'text-on-surface-variant'}`}>{m.home}</span>
                             </span>
                             {(m as { hs?: number }).hs !== undefined ? (
-                              <b className="font-display text-score-display-sm text-secondary tabular-nums">{(m as { hs?: number }).hs}</b>
+                              <b className={`font-display text-score-display-sm tabular-nums ${win(m, 'home') ? 'text-secondary' : 'text-text-muted'}`}>{(m as { hs?: number }).hs}</b>
                             ) : (
                               <span className="font-display text-label-match-status text-secondary">{m.status === 'scheduled' ? (m as { time?: string }).time || '—' : 'FINAL'}</span>
                             )}
@@ -195,10 +195,10 @@ export function Home() {
                           <div className="flex items-center justify-between gap-2">
                             <span className="flex items-center gap-2 min-w-0">
                               <TeamBadge name={m.away} size={20} />
-                              <span className="font-display text-body-sm truncate text-on-surface-variant">{m.away}</span>
+                              <span className={`font-display text-body-sm truncate ${win(m, 'away') ? 'font-bold text-text-primary' : 'text-on-surface-variant'}`}>{m.away}</span>
                             </span>
                             {(m as { as?: number }).as !== undefined ? (
-                              <b className="font-display text-score-display-sm text-secondary tabular-nums">{(m as { as?: number }).as}</b>
+                              <b className={`font-display text-score-display-sm tabular-nums ${win(m, 'away') ? 'text-secondary' : 'text-text-muted'}`}>{(m as { as?: number }).as}</b>
                             ) : null}
                           </div>
                         </div>

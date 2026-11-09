@@ -110,7 +110,7 @@ export function dailySetup(key: string): Partial<NewCareerInput> {
   const seed = seedForDay(key);
   const nats = ['ESP', 'ARG', 'FRA', 'SRB', 'USA', 'GRE', 'TUR', 'LTU'];
   const posiciones = ['PG', 'SG', 'SF', 'PF', 'C'] as const;
-  const arquetipos = ['shooter', 'slasher', 'playmaker', 'defender', 'post'] as const;
+  const arquetipos = ['sharpshooter', 'slasher', 'playmaker'] as const; // los ids de ARCHETYPES (otro id rompía el reto)
   return {
     nat: nats[seed % nats.length],
     pos: posiciones[(seed >>> 3) % posiciones.length] as NewCareerInput['pos'],

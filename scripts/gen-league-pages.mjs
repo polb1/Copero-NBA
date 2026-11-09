@@ -72,7 +72,7 @@ for (const name of names) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0b0c0e" />
+    <meta name="theme-color" content="#F7F3EC" />
     <title>${esc(title)}</title>
     <meta name="description" content="${esc(description)}" />
     <link rel="canonical" href="${SITE}/liga/${slug}" />
@@ -104,25 +104,32 @@ for (const name of names) {
         ],
       },
     })}</script>
-    <style>
-      body{margin:0;background:#0b0c0e;color:#e6e8ec;font-family:Inter,system-ui,sans-serif;line-height:1.55}
+    <script>try{var t=localStorage.getItem("anillero-theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+  :root{--a-bg:#F7F3EC;--a-card:#FFFDF8;--a-card2:#F3ECE1;--a-line:#E5DBCB;--a-line2:#D8CBB6;--a-line3:#C9B9A2;--a-ink:#2B2420;--a-ink2:#3D342D;--a-ink3:#4A4038;--a-ink4:#5C5148;--a-muted:#6F645A;--a-muted2:#7C7064;--a-gold:#8C6420;--a-accent:#B85A31;--a-on-accent:#FFF8F2;--a-win:#3F7D5A;--a-loss:#8A7E72;--a-note-bg:#FBF1DE;--a-note-line:#E2C48B;--a-note-ink:#6B4A12}
+  :root[data-theme="dark"]{--a-bg:#1C1410;--a-card:#261B15;--a-card2:#31241C;--a-line:#4A3828;--a-line2:#5A4532;--a-line3:#6B5440;--a-ink:#F2E8D8;--a-ink2:#E6D9C4;--a-ink3:#D6C5AC;--a-ink4:#C7B497;--a-muted:#B3A089;--a-muted2:#9C8A73;--a-gold:#E0BC7A;--a-accent:#D9A95B;--a-on-accent:#1C1410;--a-win:#9CC795;--a-loss:#A08C74;--a-note-bg:#33251C;--a-note-line:#6B5232;--a-note-ink:#E8CFA0;color-scheme:dark}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--a-bg:#1C1410;--a-card:#261B15;--a-card2:#31241C;--a-line:#4A3828;--a-line2:#5A4532;--a-line3:#6B5440;--a-ink:#F2E8D8;--a-ink2:#E6D9C4;--a-ink3:#D6C5AC;--a-ink4:#C7B497;--a-muted:#B3A089;--a-muted2:#9C8A73;--a-gold:#E0BC7A;--a-accent:#D9A95B;--a-on-accent:#1C1410;--a-win:#9CC795;--a-loss:#A08C74;--a-note-bg:#33251C;--a-note-line:#6B5232;--a-note-ink:#E8CFA0;color-scheme:dark}}
+</style>
+<style>
+  h1,h2,h3{font-family:"Source Serif 4",Georgia,serif}
+      body{margin:0;background:var(--a-bg);color:var(--a-ink);font-family:Inter,system-ui,sans-serif;line-height:1.55}
       main{max-width:960px;margin:0 auto;padding:32px 20px 64px}
       h1{font-size:32px;margin:0 0 8px}
-      h2{font-size:20px;margin:28px 0 10px;color:#f0c04d}
-      p.lead{color:#98a0ae;margin-top:0}
+      h2{font-size:20px;margin:28px 0 10px;color:var(--a-gold)}
+      p.lead{color:var(--a-muted);margin-top:0}
       table{width:100%;border-collapse:collapse;font-size:14px}
-      th,td{padding:7px 8px;border-bottom:1px solid #23262e;text-align:left}
-      th{color:#8a93a3;font-weight:600;text-transform:uppercase;font-size:11px;letter-spacing:.06em}
+      th,td{padding:7px 8px;border-bottom:1px solid var(--a-line);text-align:left}
+      th{color:var(--a-muted);font-weight:600;text-transform:uppercase;font-size:11px;letter-spacing:.06em}
       ul{list-style:none;padding:0;margin:0}
-      li{padding:7px 0;border-bottom:1px solid #1c1f26;font-size:14px}
-      li span{color:#8a93a3;margin-right:8px;font-size:12px}
-      .cta{display:inline-block;margin-top:24px;background:#ff6b1a;color:#1b0b00;font-weight:700;padding:12px 20px;border-radius:10px;text-decoration:none}
-      .dim{color:#8a93a3}
+      li{padding:7px 0;border-bottom:1px solid var(--a-line);font-size:14px}
+      li span{color:var(--a-muted);margin-right:8px;font-size:12px}
+      .cta{display:inline-block;margin-top:24px;background:var(--a-accent);color:var(--a-on-accent);font-weight:700;padding:12px 20px;border-radius:10px;text-decoration:none}
+      .dim{color:var(--a-muted)}
     </style>
   </head>
   <body>
     <main id="root">
-      <p class="lead"><a href="/" style="color:#ff6b1a;text-decoration:none">Anillero</a> · Actualidad de baloncesto</p>
+      <p class="lead"><a href="/" style="color:var(--a-accent);text-decoration:none">Anillero</a> · Actualidad de baloncesto</p>
       <h1>${esc(name)}</h1>
       ${intros[name] ? `<p class="lead">${esc(intros[name])}</p>` : ''}
       <p class="lead">${esc(description)}</p>

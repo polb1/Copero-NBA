@@ -2,6 +2,113 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Colores del hub. Claro: papel crema y terracota. Oscuro: madera de nogal, marfil y latón.
+   El tema sale de <html data-theme> (botón de la cabecera) o, si no se eligió, del sistema. */
+:root {
+  --c-surface: 255 253 248;
+  --c-surface-dim: 241 234 223;
+  --c-surface-bright: 255 255 255;
+  --c-surface-container-lowest: 255 255 255;
+  --c-surface-container-low: 250 246 239;
+  --c-surface-container: 244 238 228;
+  --c-surface-container-high: 237 229 216;
+  --c-surface-container-highest: 230 220 204;
+  --c-on-surface: 43 36 32;
+  --c-on-surface-variant: 92 81 72;
+  --c-outline: 185 172 155;
+  --c-outline-variant: 227 217 201;
+  --c-primary: 180 83 42;
+  --c-on-primary: 255 248 242;
+  --c-primary-container: 184 90 49;
+  --c-on-primary-container: 255 248 242;
+  --c-secondary: 140 100 32;
+  --c-on-secondary: 255 255 255;
+  --c-secondary-container: 235 216 176;
+  --c-tertiary: 63 125 90;
+  --c-on-tertiary-fixed: 255 255 255;
+  --c-error: 179 38 30;
+  --c-background: 247 243 236;
+  --c-court-surface: 255 253 248;
+  --c-court-surface-elevated: 243 236 225;
+  --c-court-surface-row: 247 243 236;
+  --c-court-border: 229 219 203;
+  --c-live-red: 138 126 114;
+  --c-live-pulse: 138 126 114;
+  --c-text-primary: 43 36 32;
+  --c-text-muted: 111 100 90;
+  --c-text-dim: 154 142 130;
+}
+:root[data-theme="dark"] {
+  --c-surface: 38 27 21;
+  --c-surface-dim: 28 20 16;
+  --c-surface-bright: 69 52 42;
+  --c-surface-container-lowest: 26 18 14;
+  --c-surface-container-low: 34 24 18;
+  --c-surface-container: 42 30 23;
+  --c-surface-container-high: 51 37 28;
+  --c-surface-container-highest: 61 45 34;
+  --c-on-surface: 242 232 216;
+  --c-on-surface-variant: 214 197 172;
+  --c-outline: 140 117 88;
+  --c-outline-variant: 74 56 40;
+  --c-primary: 217 169 91;
+  --c-on-primary: 28 20 16;
+  --c-primary-container: 184 137 63;
+  --c-on-primary-container: 28 20 16;
+  --c-secondary: 224 188 122;
+  --c-on-secondary: 28 20 16;
+  --c-secondary-container: 90 67 38;
+  --c-tertiary: 156 199 149;
+  --c-on-tertiary-fixed: 28 20 16;
+  --c-error: 227 155 140;
+  --c-background: 28 20 16;
+  --c-court-surface: 38 27 21;
+  --c-court-surface-elevated: 49 36 28;
+  --c-court-surface-row: 28 20 16;
+  --c-court-border: 74 56 40;
+  --c-live-red: 160 140 116;
+  --c-live-pulse: 160 140 116;
+  --c-text-primary: 242 232 216;
+  --c-text-muted: 179 160 137;
+  --c-text-dim: 138 119 97;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --c-surface: 38 27 21;
+    --c-surface-dim: 28 20 16;
+    --c-surface-bright: 69 52 42;
+    --c-surface-container-lowest: 26 18 14;
+    --c-surface-container-low: 34 24 18;
+    --c-surface-container: 42 30 23;
+    --c-surface-container-high: 51 37 28;
+    --c-surface-container-highest: 61 45 34;
+    --c-on-surface: 242 232 216;
+    --c-on-surface-variant: 214 197 172;
+    --c-outline: 140 117 88;
+    --c-outline-variant: 74 56 40;
+    --c-primary: 217 169 91;
+    --c-on-primary: 28 20 16;
+    --c-primary-container: 184 137 63;
+    --c-on-primary-container: 28 20 16;
+    --c-secondary: 224 188 122;
+    --c-on-secondary: 28 20 16;
+    --c-secondary-container: 90 67 38;
+    --c-tertiary: 156 199 149;
+    --c-on-tertiary-fixed: 28 20 16;
+    --c-error: 227 155 140;
+    --c-background: 28 20 16;
+    --c-court-surface: 38 27 21;
+    --c-court-surface-elevated: 49 36 28;
+    --c-court-surface-row: 28 20 16;
+    --c-court-border: 74 56 40;
+    --c-live-red: 160 140 116;
+    --c-live-pulse: 160 140 116;
+    --c-text-primary: 242 232 216;
+    --c-text-muted: 179 160 137;
+    --c-text-dim: 138 119 97;
+  }
+}
+
 ::-webkit-scrollbar { display: none; }
 
 /* Iconos Material Symbols (el diseño los usa como ligaduras) */
@@ -20,3 +127,33 @@
   -webkit-font-smoothing: antialiased;
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
+
+/* Tema clásico: titulares en serifa sin mayúsculas forzadas; etiquetas pequeñas en Inter. */
+.hub .font-display { letter-spacing: 0; font-variant-numeric: lining-nums tabular-nums; }
+.hub .font-display.uppercase:not(.text-label-table-header):not(.text-label-match-status):not(.text-label-nav) { text-transform: none; }
+.hub .text-label-table-header, .hub .text-label-match-status {
+  font-family: Inter, system-ui, sans-serif;
+  letter-spacing: 0.04em;
+}
+.hub .text-label-nav { font-family: Inter, system-ui, sans-serif; font-size: 12px; line-height: 14px; letter-spacing: 0.04em; font-weight: 600; }
+.hub a { text-decoration-color: rgba(180, 83, 42, 0.35); }
+.hub header a { white-space: nowrap; }
+.hub header nav { gap: 0.875rem; }
+
+/* Oscuro: veta de madera muy sutil en el fondo y botones de latón cepillado. */
+:root {
+  --hub-grain: none;
+  --hub-brass: none;
+}
+:root[data-theme="dark"] {
+  --hub-grain: repeating-linear-gradient(90deg, rgba(255, 228, 190, 0.02) 0 2px, transparent 2px 9px, rgba(0, 0, 0, 0.06) 9px 11px, transparent 11px 23px), linear-gradient(180deg, #221812, #18110D);
+  --hub-brass: linear-gradient(180deg, #D4A85F, #A9793A);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --hub-grain: repeating-linear-gradient(90deg, rgba(255, 228, 190, 0.02) 0 2px, transparent 2px 9px, rgba(0, 0, 0, 0.06) 9px 11px, transparent 11px 23px), linear-gradient(180deg, #221812, #18110D);
+    --hub-brass: linear-gradient(180deg, #D4A85F, #A9793A);
+  }
+}
+.hub { background-image: var(--hub-grain); }
+.hub .bg-primary-container { background-image: var(--hub-brass); }

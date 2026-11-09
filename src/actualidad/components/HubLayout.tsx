@@ -1,8 +1,35 @@
-import { useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { leaguePath, LEAGUE_COUNTRY } from '../leagues';
 import { MAIN_LEAGUES } from '../data';
 import { useHubData } from '../data';
+
+const THEME_KEY = 'anillero-theme';
+const isDark = () =>
+  document.documentElement.dataset.theme === 'dark' ||
+  (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+
+/** Claro / oscuro. Se guarda en localStorage; index.html lo aplica antes de pintar para que no parpadee. */
+function ThemeToggle() {
+  const [dark, setDark] = useState(isDark);
+  const toggle = () => {
+    const next = dark ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem(THEME_KEY, next); } catch { /* sin almacenamiento: solo esta visita */ }
+    setDark(!dark);
+  };
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={dark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'}
+      title={dark ? 'Tema claro' : 'Tema oscuro'}
+      className="w-9 h-9 rounded-full border border-court-border bg-court-surface-elevated text-primary flex items-center justify-center cursor-pointer hover:border-primary transition-colors"
+    >
+      <span className="material-symbols-outlined text-[20px]">{dark ? 'light_mode' : 'dark_mode'}</span>
+    </button>
+  );
+}
 
 const NAV = [
   { to: '/', label: 'Partidos de Hoy' },
@@ -29,7 +56,7 @@ function NavLink({ to, label }: { to: string; label: string }) {
   );
 }
 
-function Sidebar() {
+function Sidebar({ open }: { open: boolean }) {
   const { standings, leagues, loading } = useHubData();
   const { league: currentSlug } = useParams<{ league: string }>();
   const [q, setQ] = useState('');
@@ -54,7 +81,7 @@ function Sidebar() {
       <Link
         key={name}
         to={leaguePath(name)}
-        className={`flex items-center justify-between gap-2 px-space-sm py-1.5 rounded transition-colors text-body-sm border-l-2 ${
+        className={`flex items-center justify-between gap-2 px-space-sm py-2.5 xl:py-1.5 rounded transition-colors text-body-sm border-l-2 ${
           active
             ? 'bg-primary-container/20 text-primary border-primary-container'
             : 'text-on-surface-variant border-transparent hover:bg-court-surface-elevated hover:text-on-surface'
@@ -69,8 +96,17 @@ function Sidebar() {
   };
 
   return (
-    <aside className="hidden xl:block fixed left-0 top-16 bottom-0 w-64 bg-court-surface z-40 overflow-y-auto">
+    <aside id="hub-menu" className={`${open ? "block" : "hidden"} xl:block fixed left-0 right-0 xl:right-auto top-16 bottom-0 xl:w-64 bg-court-surface z-40 overflow-y-auto overscroll-contain`}>
       <div className="py-space-md px-space-sm flex flex-col gap-space-md">
+        {/* en móvil el menú de cabecera no cabe: va aquí arriba */}
+        <nav className="xl:hidden flex flex-col">
+          {NAV.map((n) => (
+            <Link key={n.to} to={n.to} className="px-space-sm py-3 text-body-lg text-text-primary border-b border-court-border">{n.label}</Link>
+          ))}
+          <a href="/jugadores" className="px-space-sm py-3 text-body-lg text-text-primary border-b border-court-border">Jugadores</a>
+          <a href="/hall-of-fame" className="px-space-sm py-3 text-body-lg text-text-primary border-b border-court-border">Hall of Fame</a>
+          <a href="/start" className="px-space-sm py-3 text-body-lg text-secondary border-b border-court-border">Reto del día</a>
+        </nav>
         <div className="flex items-center justify-between px-space-sm py-space-xs rounded bg-court-surface-elevated">
           <span className="font-display text-label-table-header uppercase text-secondary tracking-widest">
             COMPETICIONES
@@ -114,10 +150,13 @@ function Sidebar() {
 }
 
 export function HubLayout({ children }: { children: ReactNode }) {
+  const [menu, setMenu] = useState(false);
+  const { pathname } = useLocation();
+  useEffect(() => setMenu(false), [pathname]);
   return (
-    <div className="min-h-screen bg-court-surface-row text-on-surface font-body">
+    <div className="hub min-h-screen bg-court-surface-row text-on-surface font-body">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 h-16 z-50 bg-court-surface/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
+      <header className="fixed top-0 left-0 right-0 h-16 z-50 bg-court-surface/95 backdrop-blur-md border-b border-court-border">
         <div className="w-full h-full px-space-lg flex items-center justify-between gap-space-md">
           <div className="flex items-center gap-space-lg">
             <Link to="/" className="flex items-center gap-space-sm group">
@@ -128,7 +167,7 @@ export function HubLayout({ children }: { children: ReactNode }) {
                 <span className="font-display text-headline-md font-bold tracking-wider uppercase text-text-primary leading-none">
                   ANILLERO
                 </span>
-                <span className="font-display text-label-table-header text-secondary tracking-widest uppercase">
+                <span className="hidden sm:inline font-display text-label-table-header text-secondary tracking-widest uppercase">
                   ACTUALIDAD DE BALONCESTO
                 </span>
               </div>
@@ -141,22 +180,30 @@ export function HubLayout({ children }: { children: ReactNode }) {
               <a href="/start" className="font-display text-label-nav uppercase tracking-wider text-secondary hover:text-primary transition-colors">Reto del día</a>
             </nav>
           </div>
-          <div className="flex items-center gap-space-md">
+          <div className="flex items-center gap-space-sm sm:gap-space-md">
             <Link
               to="/play"
-              className="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary-container text-on-primary font-display text-headline-md font-bold tracking-wider uppercase shadow-[0_0_12px_rgba(255,107,26,0.35)] hover:bg-secondary hover:text-on-secondary transition-all"
+              className="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary-container text-on-primary font-display text-body-lg font-semibold hover:bg-secondary hover:text-on-secondary transition-all"
             >
               <span className="material-symbols-outlined text-[18px]">casino</span>
-              <span className="hidden sm:inline">Jugar al Simulador</span>
+              <span className="hidden sm:inline xl:hidden 2xl:inline">Jugar al Simulador</span>
             </Link>
-            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-              <span className="material-symbols-outlined text-on-primary text-[18px]">person</span>
-            </div>
+            <ThemeToggle />
+            <button
+              type="button"
+              onClick={() => setMenu(!menu)}
+              aria-expanded={menu}
+              aria-controls="hub-menu"
+              aria-label={menu ? "Cerrar menú" : "Abrir menú"}
+              className="xl:hidden w-9 h-9 rounded-full border border-court-border bg-court-surface-elevated text-text-primary flex items-center justify-center cursor-pointer"
+            >
+              <span className="material-symbols-outlined text-[20px]">{menu ? "close" : "menu"}</span>
+            </button>
           </div>
         </div>
       </header>
 
-      <Sidebar />
+      <Sidebar open={menu} />
 
       {/* Contenido */}
       <div className="xl:pl-64">

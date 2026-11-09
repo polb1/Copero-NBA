@@ -97,23 +97,30 @@ def main() -> None:
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="robots" content="noindex, follow" />
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
+<script>try{{var t=localStorage.getItem("anillero-theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}}catch(e){{}}</script>
 <style>
-:root{{color-scheme:dark}}
-body{{margin:0;background:#0b0c0e;color:#e6e8ec;font-family:Inter,system-ui,sans-serif;line-height:1.55}}
+  :root{{--a-bg:#F7F3EC;--a-card:#FFFDF8;--a-card2:#F3ECE1;--a-line:#E5DBCB;--a-line2:#D8CBB6;--a-line3:#C9B9A2;--a-ink:#2B2420;--a-ink2:#3D342D;--a-ink3:#4A4038;--a-ink4:#5C5148;--a-muted:#6F645A;--a-muted2:#7C7064;--a-gold:#8C6420;--a-accent:#B85A31;--a-on-accent:#FFF8F2;--a-win:#3F7D5A;--a-loss:#8A7E72;--a-note-bg:#FBF1DE;--a-note-line:#E2C48B;--a-note-ink:#6B4A12}}
+  :root[data-theme="dark"]{{--a-bg:#1C1410;--a-card:#261B15;--a-card2:#31241C;--a-line:#4A3828;--a-line2:#5A4532;--a-line3:#6B5440;--a-ink:#F2E8D8;--a-ink2:#E6D9C4;--a-ink3:#D6C5AC;--a-ink4:#C7B497;--a-muted:#B3A089;--a-muted2:#9C8A73;--a-gold:#E0BC7A;--a-accent:#D9A95B;--a-on-accent:#1C1410;--a-win:#9CC795;--a-loss:#A08C74;--a-note-bg:#33251C;--a-note-line:#6B5232;--a-note-ink:#E8CFA0;color-scheme:dark}}
+  @media (prefers-color-scheme:dark){{:root:not([data-theme="light"]){{--a-bg:#1C1410;--a-card:#261B15;--a-card2:#31241C;--a-line:#4A3828;--a-line2:#5A4532;--a-line3:#6B5440;--a-ink:#F2E8D8;--a-ink2:#E6D9C4;--a-ink3:#D6C5AC;--a-ink4:#C7B497;--a-muted:#B3A089;--a-muted2:#9C8A73;--a-gold:#E0BC7A;--a-accent:#D9A95B;--a-on-accent:#1C1410;--a-win:#9CC795;--a-loss:#A08C74;--a-note-bg:#33251C;--a-note-line:#6B5232;--a-note-ink:#E8CFA0;color-scheme:dark}}}}
+</style>
+<style>
+  h1,h2,h3{{font-family:"Source Serif 4",Georgia,serif}}
+
+body{{margin:0;background:var(--a-bg);color:var(--a-ink);font-family:Inter,system-ui,sans-serif;line-height:1.55}}
 main{{max-width:880px;margin:0 auto;padding:28px 20px 64px}}
-a{{color:#ff6b1a;text-decoration:none}}
-.crumbs{{font-size:13px;color:#8a93a3;margin-bottom:14px}}
-.crumbs a{{color:#98a0ae}}
+a{{color:var(--a-accent);text-decoration:none}}
+.crumbs{{font-size:13px;color:var(--a-muted);margin-bottom:14px}}
+.crumbs a{{color:var(--a-muted)}}
 h1{{font-size:34px;margin:0 0 4px;letter-spacing:-.01em}}
-.meta{{color:#98a0ae;margin:0 0 20px}}
-.hero{{display:flex;align-items:center;gap:16px;padding:18px;border:1px solid #232733;border-radius:14px;background:linear-gradient(135deg,#151922,#0f1218)}}
-.num{{font-size:34px;font-weight:800;color:#ff6b1a;min-width:64px;text-align:center;font-variant-numeric:tabular-nums}}
+.meta{{color:var(--a-muted);margin:0 0 20px}}
+.hero{{display:flex;align-items:center;gap:16px;padding:18px;border:1px solid var(--a-line);border-radius:14px;background:linear-gradient(135deg,var(--a-card),var(--a-card))}}
+.num{{font-size:34px;font-weight:800;color:var(--a-accent);min-width:64px;text-align:center;font-variant-numeric:tabular-nums}}
 .grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:18px 0}}
-.stat{{background:#12151b;border:1px solid #232733;border-radius:10px;padding:12px 14px}}
+.stat{{background:var(--a-card);border:1px solid var(--a-line);border-radius:10px;padding:12px 14px}}
 .stat b{{display:block;font-size:20px}}
-.stat span{{color:#8a93a3;font-size:11px;text-transform:uppercase;letter-spacing:.06em}}
-h2{{font-size:17px;margin:28px 0 10px;color:#f0c04d}}
-.cta{{display:inline-block;margin-top:26px;background:#ff6b1a;color:#1b0b00;font-weight:700;padding:12px 20px;border-radius:10px}}
+.stat span{{color:var(--a-muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}}
+h2{{font-size:17px;margin:28px 0 10px;color:var(--a-gold)}}
+.cta{{display:inline-block;margin-top:26px;background:var(--a-accent);color:var(--a-on-accent);font-weight:700;padding:12px 20px;border-radius:10px}}
 </style>
 </head>
 <body>
