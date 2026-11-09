@@ -14,7 +14,7 @@
     {
       "binding": "DB",
       "database_name": "anillero",
-      "database_id": "f6b56d71-18ad-4048-8ae5-7425dae1687e",
+      "database_id": "139eaace-b636-4a02-adcb-2dcf425164b2",
       "migrations_dir": "migrations"
     }
   ],
