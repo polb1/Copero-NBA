@@ -28,6 +28,11 @@ API = "https://v1.basketball.api-sports.io"
 ROOT = Path(__file__).resolve().parent.parent
 HIST = ROOT / "out" / "history"
 
+# Configuración vía variables de entorno
+TIMEOUT = int(os.environ.get("API_BASKETBALL_TIMEOUT", "30"))
+MAX_RETRIES = int(os.environ.get("API_BASKETBALL_MAX_RETRIES", "3"))
+BACKOFF_BASE = float(os.environ.get("API_BASKETBALL_BACKOFF_BASE", "2.0"))
+
 # id de API-Basketball -> clave interna
 LIGAS = {
     12: "nba",
@@ -60,6 +65,23 @@ STATUS = {
 }
 
 
+def _get_with_retry(url: str, headers: dict, params: dict | None = None) -> dict:
+    """GET con reintentos y backoff exponencial."""
+    full_url = f"{url}?{urllib.parse.urlencode(params)}" if params else url
+    ultimo = None
+    for intento in range(MAX_RETRIES):
+        try:
+            req = urllib.request.Request(full_url, headers=headers)
+            with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+                return json.loads(r.read().decode())
+        except Exception as e:
+            ultimo = e
+            if intento < MAX_RETRIES - 1:
+                sleep_time = BACKOFF_BASE ** intento
+                time.sleep(sleep_time)
+    raise ultimo  # type: ignore[misc]
+
+
 def key() -> str:
     k = os.environ.get("API_BASKETBALL_KEY", "").strip()
     if k:
@@ -73,13 +95,11 @@ def key() -> str:
 
 
 def _get(path: str, params: dict) -> dict:
-    url = f"{API}/{path}?" + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, headers={
+    url = f"{API}/{path}"
+    return _get_with_retry(url, {
         "x-apisports-key": key(),
         "User-Agent": "AnilleroBot/1.0 (+https://anillero.com)",
-    })
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.loads(r.read().decode())
+    }, params)
 
 
 def _game(g: dict) -> dict:

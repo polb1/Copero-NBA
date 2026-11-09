@@ -25,14 +25,34 @@ DATA = os.path.expanduser("~/codigo/copero-NBA/public/data")
 UA = "CoperoNBA/1.0 (+actualidad)"
 ESPN = "https://site.api.espn.com/apis"
 
+# Configuración vía variables de entorno
+TIMEOUT = int(os.environ.get("ESPN_TIMEOUT", "25"))
+MAX_RETRIES = int(os.environ.get("ESPN_MAX_RETRIES", "3"))
+BACKOFF_BASE = float(os.environ.get("ESPN_BACKOFF_BASE", "2.0"))
+
+
+def get_json_with_retry(url: str) -> dict:
+    """GET con reintentos y backoff exponencial."""
+    ultimo = None
+    for intento in range(MAX_RETRIES):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/json"})
+            with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+                raw = r.read()
+            if raw[:2] == b"\x1f\x8b":
+                raw = gzip.decompress(raw)
+            return json.loads(raw.decode("utf-8", "replace"))
+        except Exception as e:
+            ultimo = e
+            if intento < MAX_RETRIES - 1:
+                sleep_time = BACKOFF_BASE ** intento
+                time.sleep(sleep_time)
+    raise ultimo  # type: ignore[misc]
+
 
 def get_json(url):
-    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/json"})
-    with urllib.request.urlopen(req, timeout=25) as r:
-        raw = r.read()
-    if raw[:2] == b"\x1f\x8b":
-        raw = gzip.decompress(raw)
-    return json.loads(raw.decode("utf-8", "replace"))
+    """Wrapper para compatibilidad hacia atrás."""
+    return get_json_with_retry(url)
 
 
 def read_json(name, default):

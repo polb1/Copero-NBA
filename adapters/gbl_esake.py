@@ -9,6 +9,7 @@ Términos: contenido del organizador (ΕΣΑΚΕ). Uso informativo con atribuci�
 """
 from __future__ import annotations
 
+import os
 import re
 import time
 import urllib.request
@@ -19,28 +20,32 @@ BASE = "https://esake.gr"
 UA = "AnilleroBot/1.0 (+https://anillero.com; contacto: legal@anillero.com)"
 SOURCE = "esake.gr (ΕΣΑΚΕ, web oficial GBL)"
 
+# Configuración vía variables de entorno
+TIMEOUT = int(os.environ.get("GBL_TIMEOUT", "30"))
+MAX_RETRIES = int(os.environ.get("GBL_MAX_RETRIES", "3"))
+BACKOFF_BASE = float(os.environ.get("GBL_BACKOFF_BASE", "2.0"))
+
 MESES_GR = {
     "Ιαν": 1, "Φεβ": 2, "Μαρ": 3, "Απρ": 4, "Μαΐ": 5, "Μαι": 5, "Ιουν": 6,
     "Ιουλ": 7, "Αυγ": 8, "Σεπ": 9, "Οκτ": 10, "Νοε": 11, "Δεκ": 12,
 }
 
-
 CACHE = Path(__file__).resolve().parent.parent / "out" / ".cache"
 TTL = 3 * 3600
 
 
-def _get(path: str, cache_key: str | None = None) -> str:
-    """GET con caché en disco y reintentos (3 intentos, backoff)."""
+def _get_with_retry(path: str, cache_key: str | None = None) -> str:
+    """GET con caché en disco y reintentos (backoff exponencial)."""
     if cache_key:
         f = CACHE / cache_key
         if f.exists() and (time.time() - f.stat().st_mtime) < TTL:
             return f.read_text(encoding="utf-8")
 
     ultimo = None
-    for intento in range(3):
+    for intento in range(MAX_RETRIES):
         try:
             req = urllib.request.Request(BASE + path, headers={"User-Agent": UA})
-            with urllib.request.urlopen(req, timeout=30) as r:
+            with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
                 html = r.read().decode("utf-8", "ignore")
             if cache_key:
                 CACHE.mkdir(parents=True, exist_ok=True)
@@ -48,8 +53,15 @@ def _get(path: str, cache_key: str | None = None) -> str:
             return html
         except Exception as e:
             ultimo = e
-            time.sleep(5 * (intento + 1))
+            if intento < MAX_RETRIES - 1:
+                sleep_time = BACKOFF_BASE ** intento
+                time.sleep(sleep_time)
     raise ultimo  # type: ignore[misc]
+
+
+def _get(path: str, cache_key: str | None = None) -> str:
+    """Wrapper para compatibilidad hacia atrás."""
+    return _get_with_retry(path, cache_key)
 
 
 def _txt(s: str) -> str:
@@ -67,7 +79,6 @@ def normalize_name(name: str) -> str:
     """Quita patrocinadores del nombre para que el club sea estable."""
     limpio = re.sub(r"\s+(BETSSON|AKTOR|H HOTELS COLLECTION|ELABET|ΙΑΠΩΝΙΚΗ|ONEX|MOTION|CARDS|KAPPA)\s*$", "", name, flags=re.I)
     return limpio.strip() or name
-
 
 
 # Nombres latinos de los 14 clubes (clave: nombre griego sin patrocinador)

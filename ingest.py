@@ -47,6 +47,11 @@ TTL_GAMES = 3 * 3600
 TTL_STANDINGS = 6 * 3600
 TTL_LIVE = 5 * 60
 
+# Configuración de red (timeouts, reintentos) — variables de entorno con defaults
+TIMEOUT = int(os.environ.get("INGEST_TIMEOUT", "30"))
+MAX_RETRIES = int(os.environ.get("INGEST_MAX_RETRIES", "3"))
+BACKOFF_BASE = float(os.environ.get("INGEST_BACKOFF_BASE", "2.0"))
+
 # Presupuesto diario de peticiones (API-Basketball free = 100/día)
 PRESUPUESTO = {"apisports": 100}
 
