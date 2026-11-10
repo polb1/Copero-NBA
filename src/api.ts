@@ -28,15 +28,19 @@ export function createApp() {
     credentials: true,
   }));
 
+  // Auth instance cache (singleton per worker instance)
+  let authInstance: ReturnType<typeof createAuth> | null = null;
+
+  function getAuth(env: Env) {
+    if (!authInstance) {
+      authInstance = createAuth(env);
+    }
+    return authInstance;
+  }
+
   // Inject auth and db into context
   app.use('/api/*', async (c, next) => {
-    let auth: ReturnType<typeof createAuth>;
-    try {
-      auth = createAuth(c.env);
-    } catch (error) {
-      console.error('Auth init error:', error);
-      return c.json({ error: 'Auth initialization failed', detail: String(error) }, 500);
-    }
+    const auth = getAuth(c.env);
     const db = createDb(c.env.DB);
     c.set('auth', auth);
     c.set('db', db);
@@ -66,10 +70,12 @@ export function createApp() {
   app.on(['GET', 'POST'], '/api/auth/*', async (c) => {
     const auth = c.get('auth');
     try {
-      return auth.handler(c.req.raw);
+      const response = await auth.handler(c.req.raw);
+      return response;
     } catch (error) {
-      console.error('Auth error:', error);
-      return c.json({ error: 'Auth error', detail: String(error), stack: error instanceof Error ? error.stack : undefined }, 500);
+      console.error('Auth handler error:', error);
+      console.error('Error stack:', error instanceof Error ? error.stack : 'no stack');
+      return c.json({ error: 'Auth handler error', detail: String(error), stack: error instanceof Error ? error.stack : undefined }, 500);
     }
   });
 

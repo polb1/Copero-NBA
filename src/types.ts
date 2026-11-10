@@ -9,4 +9,5 @@ export interface Env {
   TURNSTILE_SECRET_KEY: string;
   KV: KVNamespace;
   BETTER_AUTH_SECRET: string;
+  BETTER_AUTH_URL: string;
 }

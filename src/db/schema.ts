@@ -1,5 +1,6 @@
 import { sqliteTable, text, integer, index, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import { sql } from 'drizzle-orm';
+import { relations } from 'drizzle-orm';
 
 // ============================================
 // EXISTING TABLES (from migrations/0001_init.sql)
@@ -7,7 +8,7 @@ import { sql } from 'drizzle-orm';
 
 export const players = sqliteTable('players', {
   id: text('id').primaryKey(),
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch() * 1000)`),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull().default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`),
   nickname: text('nickname'),
   country: text('country'),
 });
@@ -16,8 +17,8 @@ export const careers = sqliteTable('careers', {
   id: text('id').primaryKey(),
   playerId: text('player_id').notNull(),
   seed: integer('seed').notNull().default(0),
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch() * 1000)`),
-  finishedAt: integer('finished_at', { mode: 'timestamp' }),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull().default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`),
+  finishedAt: integer('finished_at', { mode: 'timestamp_ms' }),
   legacyScore: integer('legacy_score').notNull().default(0),
   titles: integer('titles').notNull().default(0),
   tier: text('tier'),
@@ -35,7 +36,7 @@ export const dailyResults = sqliteTable('daily_results', {
   progressA: integer('progress_a').notNull().default(0),
   progressB: integer('progress_b').notNull().default(0),
   legacyScore: integer('legacy_score').notNull().default(0),
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch() * 1000)`),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull().default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`),
 }, (table) => [
   uniqueIndex('pk_daily_results').on(table.day, table.playerId),
   index('idx_daily_day').on(table.day, table.legacyScore),
@@ -53,39 +54,50 @@ export const dailyStreaks = sqliteTable('daily_streaks', {
 export const shares = sqliteTable('shares', {
   id: text('id').primaryKey(),
   careerId: text('career_id').notNull(),
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch() * 1000)`),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull().default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`),
   views: integer('views').notNull().default(0),
 }, (table) => [
   index('idx_shares_career').on(table.careerId),
 ]);
 
 // ============================================
-// NEW AUTH TABLES (Better Auth compatible)
+// BETTER AUTH TABLES (exact schema from auth generate)
 // ============================================
 
 export const user = sqliteTable('user', {
   id: text('id').primaryKey(),
-  name: text('name'),
+  name: text('name').notNull(),
   email: text('email').notNull().unique(),
-  emailVerified: integer('email_verified', { mode: 'boolean' }).notNull().default(false),
+  emailVerified: integer('email_verified', { mode: 'boolean' }).default(false).notNull(),
   image: text('image'),
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch() * 1000)`),
-  updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch() * 1000)`),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' })
+    .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+    .notNull(),
+  updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
+    .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+    .$onUpdate(() => new Date())
+    .notNull(),
   // Guest migration fields
-  guestId: text('guest_id').unique(), // Link to guest data
-  guestDataClaimed: integer('guest_data_claimed', { mode: 'boolean' }).notNull().default(false),
+  guestId: text('guest_id').unique(),
+  guestDataClaimed: integer('guest_data_claimed', { mode: 'boolean' }).default(false).notNull(),
 });
 
 export const session = sqliteTable('session', {
   id: text('id').primaryKey(),
-  expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
+  expiresAt: integer('expires_at', { mode: 'timestamp_ms' }).notNull(),
   token: text('token').notNull().unique(),
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch() * 1000)`),
-  updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch() * 1000)`),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' })
+    .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+    .notNull(),
+  updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
+    .$onUpdate(() => new Date())
+    .notNull(),
   ipAddress: text('ip_address'),
   userAgent: text('user_agent'),
   userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
-});
+}, (table) => [
+  index('session_userId_idx').on(table.userId),
+]);
 
 export const account = sqliteTable('account', {
   id: text('id').primaryKey(),
@@ -95,25 +107,34 @@ export const account = sqliteTable('account', {
   accessToken: text('access_token'),
   refreshToken: text('refresh_token'),
   idToken: text('id_token'),
-  accessTokenExpiresAt: integer('access_token_expires_at', { mode: 'timestamp' }),
-  refreshTokenExpiresAt: integer('refresh_token_expires_at', { mode: 'timestamp' }),
+  accessTokenExpiresAt: integer('access_token_expires_at', { mode: 'timestamp_ms' }),
+  refreshTokenExpiresAt: integer('refresh_token_expires_at', { mode: 'timestamp_ms' }),
   scope: text('scope'),
-  password: text('password'), // hashed password for email/password auth
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch() * 1000)`),
-  updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch() * 1000)`),
+  password: text('password'),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' })
+    .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+    .notNull(),
+  updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
+    .$onUpdate(() => new Date())
+    .notNull(),
 }, (table) => [
+  index('account_userId_idx').on(table.userId),
   uniqueIndex('idx_account_provider_account').on(table.providerId, table.accountId),
-  index('idx_account_user').on(table.userId),
 ]);
 
 export const verification = sqliteTable('verification', {
   id: text('id').primaryKey(),
   identifier: text('identifier').notNull(),
   value: text('value').notNull(),
-  expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch() * 1000)`),
-  updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch() * 1000)`),
+  expiresAt: integer('expires_at', { mode: 'timestamp_ms' }).notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' })
+    .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+    .notNull(),
+  updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
+    .$onUpdate(() => new Date())
+    .notNull(),
 }, (table) => [
+  index('verification_identifier_idx').on(table.identifier),
   uniqueIndex('idx_verification_identifier_value').on(table.identifier, table.value),
 ]);
 
@@ -122,15 +143,42 @@ export const verification = sqliteTable('verification', {
 // ============================================
 
 export const guest = sqliteTable('guest', {
-  id: text('id').primaryKey(), // encrypted guest ID from cookie
-  data: text('data').notNull(), // JSON blob with localStorage data (careers, streaks, etc.)
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch() * 1000)`),
-  updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch() * 1000)`),
-  claimedBy: text('claimed_by').references(() => user.id), // null until claimed
-  claimedAt: integer('claimed_at', { mode: 'timestamp' }),
+  id: text('id').primaryKey(),
+  data: text('data').notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' })
+    .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+    .notNull(),
+  updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
+    .$onUpdate(() => new Date())
+    .notNull(),
+  claimedBy: text('claimed_by').references(() => user.id),
+  claimedAt: integer('claimed_at', { mode: 'timestamp_ms' }),
 }, (table) => [
   index('idx_guest_claimed_by').on(table.claimedBy),
 ]);
+
+// ============================================
+// RELATIONS (for Better Auth)
+// ============================================
+
+export const userRelations = relations(user, ({ many }) => ({
+  sessions: many(session),
+  accounts: many(account),
+}));
+
+export const sessionRelations = relations(session, ({ one }) => ({
+  user: one(user, {
+    fields: [session.userId],
+    references: [user.id],
+  }),
+}));
+
+export const accountRelations = relations(account, ({ one }) => ({
+  user: one(user, {
+    fields: [account.userId],
+    references: [user.id],
+  }),
+}));
 
 // ============================================
 // TYPE EXPORTS

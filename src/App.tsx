@@ -21,6 +21,14 @@ const Careers = lazyNamed(() => import('./GameShell'), 'Careers');
 
 const Gallery = lazyNamed(() => import('./screens/Gallery'), 'Gallery');
 
+// Auth pages (lazy loaded)
+const LoginPage = lazy(() => import('./screens/Auth/LoginPage').then(m => ({ default: m.LoginPage })));
+const RegisterPage = lazy(() => import('./screens/Auth/RegisterPage').then(m => ({ default: m.RegisterPage })));
+const ForgotPasswordPage = lazy(() => import('./screens/Auth/ForgotPasswordPage').then(m => ({ default: m.ForgotPasswordPage })));
+const ResetPasswordPage = lazy(() => import('./screens/Auth/ResetPasswordPage').then(m => ({ default: m.ResetPasswordPage })));
+const VerifyEmailPage = lazy(() => import('./screens/Auth/VerifyEmailPage').then(m => ({ default: m.VerifyEmailPage })));
+const ProfilePage = lazy(() => import('./screens/Auth/ProfilePageWrapper').then(m => ({ default: m.ProfilePageWrapper })));
+
 function ScrollTop() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -69,6 +77,12 @@ export function App() {
             <Route path="/resultados" element={<HubLayout><Resultados /></HubLayout>} />
             <Route path="/calendario" element={<HubLayout><Calendario /></HubLayout>} />
             <Route path="/estadisticas" element={<HubLayout><Estadisticas /></HubLayout>} />
+            <Route path="/auth/login" element={<LoginPage />} />
+            <Route path="/auth/register" element={<RegisterPage />} />
+            <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/verify-email" element={<VerifyEmailPage />} />
+            <Route path="/perfil" element={<ProfilePage />} />
             {import.meta.env.DEV && <Route path="/gallery" element={<Gallery />} />}
             <Route path="*" element={<NotFound />} />
           </Routes>
