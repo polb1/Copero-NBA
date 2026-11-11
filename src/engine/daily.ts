@@ -115,8 +115,8 @@ export function dailySetup(key: string): Partial<NewCareerInput> {
     nat: nats[seed % nats.length],
     pos: posiciones[(seed >>> 3) % posiciones.length] as NewCareerInput['pos'],
     arch: arquetipos[(seed >>> 7) % arquetipos.length] as NewCareerInput['arch'],
-    first: 'Reto',
-    last: `del día ${key.slice(8)}/${key.slice(5, 7)}`,
+    first: 'Jugador',
+    last: 'Reto Diario',
     number: (seed % 99) + 1,
   };
 }
