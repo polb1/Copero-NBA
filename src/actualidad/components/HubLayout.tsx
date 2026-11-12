@@ -3,6 +3,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { leaguePath, LEAGUE_COUNTRY } from '../leagues';
 import { MAIN_LEAGUES } from '../data';
 import { useHubData } from '../data';
+import { useAuth } from '../../screens/Auth';
 
 const THEME_KEY = 'anillero-theme';
 const isDark = () =>
@@ -58,6 +59,7 @@ function NavLink({ to, label }: { to: string; label: string }) {
 
 function Sidebar({ open }: { open: boolean }) {
   const { standings, leagues, loading } = useHubData();
+  const { user } = useAuth();
   const { league: currentSlug } = useParams<{ league: string }>();
   const [q, setQ] = useState('');
 
@@ -105,7 +107,18 @@ function Sidebar({ open }: { open: boolean }) {
           ))}
           <a href="/jugadores" className="px-space-sm py-3 text-body-lg text-text-primary border-b border-court-border">Jugadores</a>
           <a href="/hall-of-fame" className="px-space-sm py-3 text-body-lg text-text-primary border-b border-court-border">Hall of Fame</a>
-          <a href="/start" className="px-space-sm py-3 text-body-lg text-secondary border-b border-court-border">Reto del día</a>
+          <Link to="/start" className="px-space-sm py-3 text-body-lg text-secondary border-b border-court-border">Reto del día</Link>
+          {user ? (
+            <Link to="/perfil" className="px-space-sm py-3 text-body-lg text-primary border-b border-court-border flex items-center justify-between">
+              <span>Mi Perfil ({user.name || user.email})</span>
+              <span className="material-symbols-outlined text-[20px]">account_circle</span>
+            </Link>
+          ) : (
+            <Link to="/auth/login" className="px-space-sm py-3 text-body-lg text-primary border-b border-court-border flex items-center justify-between">
+              <span>Iniciar sesión / Registrarse</span>
+              <span className="material-symbols-outlined text-[20px]">login</span>
+            </Link>
+          )}
         </nav>
         <div className="flex items-center justify-between px-space-sm py-space-xs rounded bg-court-surface-elevated">
           <span className="font-display text-label-table-header uppercase text-secondary tracking-widest">
@@ -151,6 +164,7 @@ function Sidebar({ open }: { open: boolean }) {
 
 export function HubLayout({ children }: { children: ReactNode }) {
   const [menu, setMenu] = useState(false);
+  const { user } = useAuth();
   const { pathname } = useLocation();
   useEffect(() => setMenu(false), [pathname]);
   return (
@@ -177,17 +191,42 @@ export function HubLayout({ children }: { children: ReactNode }) {
               {/* página estática generada en build: enlace normal, no de router */}
               <a href="/jugadores" className="font-display text-label-nav uppercase tracking-wider text-on-surface-variant hover:text-text-primary transition-colors">Jugadores</a>
               <a href="/hall-of-fame" className="font-display text-label-nav uppercase tracking-wider text-on-surface-variant hover:text-text-primary transition-colors">Hall of Fame</a>
-              <a href="/start" className="font-display text-label-nav uppercase tracking-wider text-secondary hover:text-primary transition-colors">Reto del día</a>
+              <Link to="/start" className="font-display text-label-nav uppercase tracking-wider text-secondary hover:text-primary transition-colors">Reto del día</Link>
             </nav>
           </div>
           <div className="flex items-center gap-space-sm sm:gap-space-md">
             <Link
-              to="/play"
+              to="/start"
               className="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary-container text-on-primary font-display text-body-lg font-semibold hover:bg-secondary hover:text-on-secondary transition-all"
             >
               <span className="material-symbols-outlined text-[18px]">casino</span>
               <span className="hidden sm:inline xl:hidden 2xl:inline">Jugar al Simulador</span>
             </Link>
+            {user ? (
+              <Link
+                to="/perfil"
+                title={`Perfil de ${user.name || user.email}`}
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-court-border bg-court-surface-elevated hover:border-primary transition-colors text-body-sm text-text-primary"
+              >
+                {user.image ? (
+                  <img src={user.image} alt={user.name} className="w-6 h-6 rounded-full object-cover" />
+                ) : (
+                  <span className="w-6 h-6 rounded-full bg-primary text-black font-bold text-xs flex items-center justify-center uppercase">
+                    {(user.name || user.email || 'U')[0]}
+                  </span>
+                )}
+                <span className="hidden lg:inline font-medium max-w-[100px] truncate">{user.name || user.email.split('@')[0]}</span>
+              </Link>
+            ) : (
+              <Link
+                to="/auth/login"
+                title="Iniciar sesión o registrarse"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-court-border bg-court-surface-elevated text-text-primary hover:border-primary hover:text-primary transition-colors text-body-sm font-semibold"
+              >
+                <span className="material-symbols-outlined text-[18px]">account_circle</span>
+                <span className="hidden sm:inline">Entrar</span>
+              </Link>
+            )}
             <ThemeToggle />
             <button
               type="button"

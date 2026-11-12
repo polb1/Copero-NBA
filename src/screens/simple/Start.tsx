@@ -33,9 +33,11 @@ export function Start() {
   const nav = useNavigate();
   const current = useCareer();
   // Another run starts from the last player's identity: two taps and you are playing again.
-  // Una carrera del reto diario no sirve de plantilla: su apellido es la fecha.
-  const esDiaria = Boolean(current && (current.flags as Record<string, unknown>).daily);
-  const prev = current && !esDiaria ? userOf(current) : null;
+  // Una carrera del reto diario o con nombres temporales no sirve de plantilla.
+  const isPlaceholderName = (name?: string) => !name || /del d[ií]a|reto/i.test(name);
+  const rawUser = current ? userOf(current) : null;
+  const esDiaria = Boolean(current && ((current.flags as Record<string, unknown>)?.daily || isPlaceholderName(rawUser?.last)));
+  const prev = rawUser && !esDiaria ? rawUser : null;
   const [mode, setMode] = useState<Mode>(current?.mode === 'full' || current?.mode === 'express' ? current.mode : 'quick');
   const [first, setFirst] = useState(prev?.first ?? '');
   const [last, setLast] = useState(prev?.last ?? '');
@@ -76,10 +78,12 @@ export function Start() {
       ? Object.fromEntries(growth.map((g) => [g, Math.floor(10 / growth.length)]))
       : { shooting: 2, defense: 2, playmaking: 2, athleticism: 2, rebounding: 2 };
     const country = COUNTRIES.find((c) => c.code === setup.nat) ?? COUNTRIES[0];
+    const playerFirst = setup.first ?? country.first[0];
+    const playerLast = setup.last ?? country.last[0];
     const input: NewCareerInput = {
-      first: '',
-      last: setup.last ?? 'Reto del día',
-      jersey: 'RETO',
+      first: playerFirst,
+      last: playerLast,
+      jersey: playerLast.toUpperCase().slice(0, 10),
       number: setup.number ?? 23,
       nat: country.code,
       birthplace: country.name,

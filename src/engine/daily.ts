@@ -3,6 +3,7 @@
 import type { Career } from './types';
 import type { NewCareerInput } from './career';
 import { awardCounts, careerTotals } from './legacy';
+import { COUNTRIES } from '../content/names';
 
 // Retos del día: más duros que el reto de carrera. El de carrera es "el objetivo
 // de tu carrera"; el diario es un extra de dificultad con racha, para todos igual.
@@ -105,18 +106,22 @@ export function recordDaily(done: boolean): DailyState {
   return next;
 }
 
-/** Escenario fijo del día: mismo país, posición y arquetipo para todos. */
+/** Escenario fijo del día: mismo país, posición y arquetipo para todos con nombre nativo realista. */
 export function dailySetup(key: string): Partial<NewCareerInput> {
   const seed = seedForDay(key);
   const nats = ['ESP', 'ARG', 'FRA', 'SRB', 'USA', 'GRE', 'TUR', 'LTU'];
+  const nat = nats[seed % nats.length];
   const posiciones = ['PG', 'SG', 'SF', 'PF', 'C'] as const;
   const arquetipos = ['sharpshooter', 'slasher', 'playmaker'] as const; // los ids de ARCHETYPES (otro id rompía el reto)
+  const country = COUNTRIES.find((c) => c.code === nat) ?? COUNTRIES[0];
+  const firstName = country.first[(seed >>> 11) % country.first.length];
+  const lastName = country.last[(seed >>> 15) % country.last.length];
   return {
-    nat: nats[seed % nats.length],
+    nat,
     pos: posiciones[(seed >>> 3) % posiciones.length] as NewCareerInput['pos'],
     arch: arquetipos[(seed >>> 7) % arquetipos.length] as NewCareerInput['arch'],
-    first: 'Jugador',
-    last: 'Reto Diario',
+    first: firstName,
+    last: lastName,
     number: (seed % 99) + 1,
   };
 }

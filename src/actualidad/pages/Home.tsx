@@ -234,7 +234,7 @@ export function Home() {
               Elige tu club, juega la temporada, entra en el draft y compite por el anillo con plantillas reales.
             </p>
             <Link
-              to="/play"
+              to="/start"
               className="mt-space-md inline-flex items-center justify-center gap-2 w-full px-space-md py-2 rounded bg-primary-container text-on-primary font-display text-headline-md font-bold uppercase tracking-wider hover:bg-secondary transition-colors"
             >
               <span className="material-symbols-outlined text-[18px]">play_arrow</span> Jugar al simulador ahora

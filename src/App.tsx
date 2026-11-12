@@ -7,6 +7,7 @@ import { Home as HubHome } from './actualidad/pages/Home';
 import { Noticias, Resultados, Calendario, Estadisticas } from './actualidad/pages/Pages';
 import { LeaguePage } from './actualidad/pages/League';
 import { Match } from './actualidad/pages/Match';
+import { AuthProvider } from './screens/Auth';
 import './actualidad/tailwind.css';
 
 // El juego y la galería (solo dev) se cargan aparte: el hub no descarga el simulador.
@@ -57,36 +58,38 @@ export function App() {
   return (
     <ErrorBoundary>
       <BrowserRouter>
-        <ScrollTop />
-        <RouteSeo />
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path="/" element={<HubLayout><HubHome /></HubLayout>} />
-            <Route element={<GameShell />}>
-              <Route path="/en" element={<GameEntry />} />
-              <Route path="/ca" element={<GameEntry />} />
-              <Route path="/start" element={<Start />} />
-              <Route path="/play" element={<PlayEntry />} />
-              <Route path="/careers" element={<Careers />} />
-            </Route>
-            <Route path="/actualidad" element={<Navigate to="/" replace />} />
-            <Route path="/noticias" element={<HubLayout><Noticias /></HubLayout>} />
-            <Route path="/clasificaciones" element={<Navigate to="/" replace />} />
-            <Route path="/liga/:league" element={<HubLayout><LeaguePage /></HubLayout>} />
-            <Route path="/partido/:id" element={<HubLayout><Match /></HubLayout>} />
-            <Route path="/resultados" element={<HubLayout><Resultados /></HubLayout>} />
-            <Route path="/calendario" element={<HubLayout><Calendario /></HubLayout>} />
-            <Route path="/estadisticas" element={<HubLayout><Estadisticas /></HubLayout>} />
-            <Route path="/auth/login" element={<LoginPage />} />
-            <Route path="/auth/register" element={<RegisterPage />} />
-            <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
-            <Route path="/verify-email" element={<VerifyEmailPage />} />
-            <Route path="/perfil" element={<ProfilePage />} />
-            {import.meta.env.DEV && <Route path="/gallery" element={<Gallery />} />}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+        <AuthProvider>
+          <ScrollTop />
+          <RouteSeo />
+          <Suspense fallback={<Loading />}>
+            <Routes>
+              <Route path="/" element={<HubLayout><HubHome /></HubLayout>} />
+              <Route element={<GameShell />}>
+                <Route path="/en" element={<GameEntry />} />
+                <Route path="/ca" element={<GameEntry />} />
+                <Route path="/start" element={<Start />} />
+                <Route path="/play" element={<PlayEntry />} />
+                <Route path="/careers" element={<Careers />} />
+              </Route>
+              <Route path="/actualidad" element={<Navigate to="/" replace />} />
+              <Route path="/noticias" element={<HubLayout><Noticias /></HubLayout>} />
+              <Route path="/clasificaciones" element={<Navigate to="/" replace />} />
+              <Route path="/liga/:league" element={<HubLayout><LeaguePage /></HubLayout>} />
+              <Route path="/partido/:id" element={<HubLayout><Match /></HubLayout>} />
+              <Route path="/resultados" element={<HubLayout><Resultados /></HubLayout>} />
+              <Route path="/calendario" element={<HubLayout><Calendario /></HubLayout>} />
+              <Route path="/estadisticas" element={<HubLayout><Estadisticas /></HubLayout>} />
+              <Route path="/auth/login" element={<LoginPage />} />
+              <Route path="/auth/register" element={<RegisterPage />} />
+              <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
+              <Route path="/verify-email" element={<VerifyEmailPage />} />
+              <Route path="/perfil" element={<ProfilePage />} />
+              {import.meta.env.DEV && <Route path="/gallery" element={<Gallery />} />}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </AuthProvider>
       </BrowserRouter>
     </ErrorBoundary>
   );
