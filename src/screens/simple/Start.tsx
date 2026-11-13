@@ -6,7 +6,7 @@ import { HEIGHT_RANGE } from '../../engine/players';
 import { COUNTRIES } from '../../content/names';
 import type { NewCareerInput } from '../../engine/career';
 import { newCareer } from '../../engine/api';
-import { newSeed } from '../../engine/rng';
+import { newSeed, rngFor } from '../../engine/rng';
 import { CHALLENGES, rollChallenge } from '../../engine/challenges';
 import { dailyGoal, dailyGoalLabel, dailyPlayedToday, dailySetup, loadDaily, seedForDay, todayKey } from '../../engine/daily';
 import { careerHistory, playStreak, store, useCareer } from '../../store/store';
@@ -118,11 +118,12 @@ export function Start() {
     const growth = ARCHETYPES.find((a) => a.id === arch)!.growth.filter((g) => g !== 'balanced') as (keyof typeof TRAINING_AREAS)[];
     const focus: NewCareerInput['focus'] = growth.length ? Object.fromEntries(growth.map((g) => [g, Math.floor(10 / growth.length)])) : { shooting: 2, defense: 2, playmaking: 2, athleticism: 2, rebounding: 2 };
     const country = COUNTRIES.find((c) => c.code === nat)!;
-    if (!named) return;
+    const nameRng = rngFor(seed, 'random-player-name');
+    const firstName = first.trim() && last.trim() ? first.trim() : !first.trim() && !last.trim() ? nameRng.pick(country.first) : '';
     // One name is enough: on its own it becomes the surname shown on the jersey.
-    const surname = last.trim() || first.trim();
+    const surname = last.trim() || first.trim() || nameRng.pick(country.last);
     const input: NewCareerInput = {
-      first: last.trim() ? first.trim() : '',
+      first: firstName,
       last: surname,
       jersey: surname.toUpperCase(),
       number,
@@ -181,6 +182,7 @@ export function Start() {
             {!current && careerHistory().length === 0 && <p className="tiny dim" style={{ margin: '4px 0 0', maxWidth: 420 }}>Elige país y posición y vive tu carrera desde los 18 años: draft, contratos, anillos y un legado que comparar en cada nueva partida.</p>}
           </div>
           <div className="row" style={{ gap: 8, flexWrap: 'wrap' }}>
+          <Link to="/auth/login" target="_blank" rel="noreferrer" className="btn sm ghost">¿Tienes cuenta? Entrar</Link>
           <LangSwitch />
           <div className="seg" role="radiogroup" aria-label="Ritmo">
             <button aria-pressed={mode === 'express'} title="1 decisión por temporada" onClick={() => setMode('express')}>Exprés</button>
@@ -197,7 +199,7 @@ export function Start() {
             <div className="name-fields">
               <label className="name-field"><span>Nombre</span><input className="input" value={first} maxLength={20} onChange={(e) => setFirst(e.target.value)} placeholder="Ej.: Marc" autoComplete="off" /></label>
               <label className="name-field"><span>Apellido</span><input className="input" value={last} maxLength={14} onChange={(e) => setLast(e.target.value)} placeholder="Ej.: Gasol" autoComplete="off" /></label>
-              {!named && <p className="name-hint">Escribe al menos un nombre o un apellido.</p>}
+              {!named && <p className="name-hint">Sin nombre, crearemos un jugador aleatorio.</p>}
             </div>
             <div className="mini-fields">
               <label className="mini" style={{ maxWidth: 90 }}><span>Número</span><input className="input" type="number" min={0} max={99} value={number} onChange={(e) => setNumber(Math.max(0, Math.min(99, Number(e.target.value) || 0)))} /></label>
@@ -257,7 +259,7 @@ export function Start() {
         <div className="simple-foot">
           {current ? <button className="btn pill" onClick={() => nav('/play')}>Volver</button> : <Link to="/careers" className="btn pill">Mis carreras</Link>}
           {replacing && <span className="small dim foot-hint">Empezar de nuevo reemplaza la carrera actual.</span>}
-          <button className="btn pill light" disabled={creating || !named} title={named ? undefined : 'Escribe al menos un nombre o un apellido.'} onClick={() => (replacing ? setAskReplace(true) : confirm())}>{creating ? 'Creando tu liga…' : replacing ? 'Empezar de nuevo' : 'Empezar carrera'}</button>
+          <button className="btn pill light" disabled={creating} title={!named ? 'Se elegirá un nombre aleatorio del país seleccionado.' : undefined} onClick={() => (replacing && prev ? setAskReplace(true) : confirm())}>{creating ? 'Creando tu liga…' : replacing ? 'Empezar de nuevo' : named ? 'Empezar carrera' : 'Empezar con jugador aleatorio'}</button>
         </div>
       </div>
       {askReplace && prev && current && (
