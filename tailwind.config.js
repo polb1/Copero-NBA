@@ -3,7 +3,9 @@ export default {
   darkMode: 'class',
   // Preflight off: el juego ya tiene su propio reset y no queremos romperlo.
   corePlugins: { preflight: false },
-  content: ['./index.html', './src/actualidad/**/*.{ts,tsx}'],
+  // The auth routes use Tailwind classes too; scanning only actualidad leaves
+  // the login/register pages completely unstyled in production builds.
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       // Valores en src/actualidad/tailwind.css (tema claro y oscuro); aquí solo los nombres.

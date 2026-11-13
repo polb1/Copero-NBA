@@ -113,11 +113,13 @@ export function LoginForm({ onSuccess, onSwitchToRegister, onSwitchToForgot }: L
       </div>
 
       <div>
-        <TurnstileWidget
-          onToken={(token) => setValue('turnstileToken', token)}
-          onError={() => setError('Error en el captcha. Inténtalo de nuevo.')}
-          onExpire={() => setError('El captcha ha expirado. Completa de nuevo.')}
-        />
+        <div className="flex justify-center overflow-hidden">
+          <TurnstileWidget
+            onToken={(token) => setValue('turnstileToken', token)}
+            onError={() => setError('Error en el captcha. Inténtalo de nuevo.')}
+            onExpire={() => setError('El captcha ha expirado. Completa de nuevo.')}
+          />
+        </div>
         {errors.turnstileToken && (
           <p className="mt-1 text-sm text-red-400">{errors.turnstileToken.message}</p>
         )}
