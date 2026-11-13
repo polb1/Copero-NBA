@@ -2,7 +2,7 @@ import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from '@better-auth/drizzle-adapter';
 import { createDb } from '../db';
 import type { Env } from '../types';
-import * as betterAuthSchema from '../db/better-auth-schema';
+import { account, session, user, verification } from '../db/schema';
 
 export function createAuth(env: Env) {
   const db = createDb(env.DB);
@@ -15,10 +15,10 @@ export function createAuth(env: Env) {
     database: drizzleAdapter(db, {
       provider: 'sqlite',
       schema: {
-        user: betterAuthSchema.user,
-        session: betterAuthSchema.session,
-        account: betterAuthSchema.account,
-        verification: betterAuthSchema.verification,
+        user,
+        session,
+        account,
+        verification,
       },
     }),
     secret: env.BETTER_AUTH_SECRET || 'dev-secret-change-in-production',

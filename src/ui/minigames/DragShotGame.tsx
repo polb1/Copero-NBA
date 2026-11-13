@@ -31,7 +31,7 @@ type Phase = 'aim' | 'flight' | 'result';
 type MissKind = 'short' | 'long' | 'side';
 interface Aim { pointer: Vec; angleDeg: number; power: number; curve: number }
 
-const INSTRUCTION = 'Arrastra el balón hacia atrás y suelta para lanzar';
+const DRAG_HELP = 'Mantén el balón y arrastra: más distancia da potencia; desviarte añade curva';
 const HINT_BALL = 'Empieza el arrastre sobre el balón';
 const HINT_SHORT = 'Arrastra más para coger potencia';
 const RESULT_MS = 900;
@@ -58,6 +58,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
   const curveRef = useRef(0);
   const [power, setPower] = useState(0);
   const [angle, setAngle] = useState(0);
+  const [curve, setCurve] = useState(0);
   const [result, setResult] = useState<'in' | 'out' | null>(null);
   const [missKind, setMissKind] = useState<MissKind | null>(null);
   const [hint, setHint] = useState<string | null>(null);
@@ -135,9 +136,11 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     moved.current = false;
     angleRef.current = 0;
     powerRef.current = 0;
+    curveRef.current = 0;
     setAim(null);
     setAngle(0);
     setPower(0);
+    setCurve(0);
   }, []);
 
   const beginShot = useCallback((nextOrigin: Vec) => {
@@ -196,7 +199,8 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
       return;
     }
     const setup = setupRef.current;
-    const flight = createFlight(setup.origin, angleDeg, pwr, setup.aspect, curveRef.current);
+    const shotCurve = curveRef.current;
+    const flight = createFlight(setup.origin, angleDeg, pwr, setup.aspect, shotCurve);
     flightRef.current = flight;
     trailRef.current = [project(setup, flight.s, flight.h, flight.lat)];
     phaseRef.current = 'flight';
@@ -207,7 +211,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     phaseRef.current = 'flight';
 
     if (motionReduced()) {
-      const sim = simulateShot(setup.origin, angleDeg, pwr, specRef.current, setup.aspect);
+      const sim = simulateShot(setup.origin, angleDeg, pwr, specRef.current, setup.aspect, shotCurve);
       const last = sim.path[sim.path.length - 1] ?? project(setup, 0, 13);
       paintBall(last);
       const kind: MissKind | null = sim.made ? null : sim.touchedBoard ? 'long' : 'short';
@@ -229,7 +233,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
         acc -= SUBSTEP;
         if (f.s > maxS) maxS = f.s;
       }
-      const p = project(setup, f.s, f.h);
+      const p = project(setup, f.s, f.h, f.lat);
       paintBall(p);
       const trail = trailRef.current;
       trail.push(p);
@@ -289,6 +293,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     setAngle(a.angleDeg);
     setPower(a.power);
     curveRef.current = a.curve ?? 0;
+    setCurve(curveRef.current);
     setAim({ pointer: { x: a.pullX, y: a.pullY }, angleDeg: a.angleDeg, power: a.power, curve: curveRef.current });
     return a;
   };
@@ -434,7 +439,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
   return (
     <div className={`drag-game ${result ?? ''}`}>
       <div className="shot-top">
-        <span className="tiny dim">{t(INSTRUCTION)}</span>
+        <span className="tiny dim">{t(DRAG_HELP)}</span>
         <span className="shot-score"><b>{made}</b> / {attempts}</span>
       </div>
 
@@ -516,7 +521,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
         <span style={{ width: `${Math.round(power * 100)}%` }} />
       </div>
       <div className="row between drag-meta">
-        <span className="tiny dim">{t('Potencia')} {Math.round(power * 100)}% · {t('Ángulo')} {Math.round(angle)}°</span>
+        <span className="tiny dim">{t('Potencia')} {Math.round(power * 100)}% · {t('Ángulo')} {Math.round(angle)}° · {t('Curva')} {Math.round(curve * 100)}%</span>
         <span className="tiny dim">{t('Tiro')} {Math.min(attempt + 1, attempts)}/{attempts}</span>
       </div>
 

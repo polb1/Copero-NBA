@@ -31,7 +31,10 @@ const ASPECT = 0.675;
 function findShot(origin: Vec, aspect = ASPECT): { angle: number; power: number } | null {
   for (let angle = 25; angle <= 75; angle += 1) {
     for (let power = 0.05; power <= 1.0001; power += 0.004) {
-      if (simulateShot(origin, angle, power, spec, aspect).made) {
+      const shot = simulateShot(origin, angle, power, spec, aspect);
+      // Rim-assisted makes may enter at a different angle after the bounce.
+      // These checks are about clean, direct trajectories.
+      if (shot.made && !shot.touchedRim) {
         return { angle, power: Math.round(power * 1000) / 1000 };
       }
     }

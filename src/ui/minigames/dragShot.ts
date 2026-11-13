@@ -40,9 +40,12 @@ export const SPEED_MAX = 150;
 export const MIN_PULL = 0.05;
 /** Ángulo de referencia: arrastrar recto hacia atrás lanza a 50°. */
 export const AIM_BASE_ANGLE = 50;
-/** Cuánto sube/baja el ángulo al desviar el arrastre de la recta. */
-export const AIM_TILT_GAIN = 0.4;
-export const MAX_PULL = 0.55;
+/** How much a pull-angle change affects the launch arc. */
+export const AIM_TILT_GAIN = 0.2;
+// A short, comfortable pull on a phone should reach useful power. The old
+// 55%-of-screen threshold made a normal 50–70px swipe feel weak and left most
+// attempts short of the rim.
+export const MAX_PULL = 0.36;
 /** Paso fijo (240 Hz) para que el balón no atraviese el aro. */
 export const SUBSTEP = 1 / 240;
 export const MAX_FLIGHT_S = 5;
@@ -126,11 +129,17 @@ export function project(setup: Setup, s: number, h: number, lat = 0): Vec {
   const kLine = clamp(k, -0.6, 1.6);
   const kRef = clamp(k, 0, 1);
   const lineY = setup.origin.y + (RIM_Y - setup.origin.y) * kLine;
+  // Project the lateral axis as the perpendicular to the shot line. The old
+  // fixed `lat * 8` moved the rendered ball several hoop-widths for a small
+  // amount of spin, so the visual result disagreed with the collision result.
+  const depth = (RIM_Y - setup.origin.y) * setup.aspect;
+  const lateralX = -depth / D;
+  const lateralY = (RIM_X - setup.origin.x) / (D * setup.aspect);
   // Altura que tendría la recta tirador→aro en este punto.
   const refH = RELEASE_HEIGHT + (RIM_HEIGHT - RELEASE_HEIGHT) * kRef;
   return {
-    x: setup.origin.x + (RIM_X - setup.origin.x) * kLine + lat * 8,
-    y: lineY - (h - refH) * VISUAL_ARC - RELEASE_LIFT * (1 - kRef),
+    x: setup.origin.x + (RIM_X - setup.origin.x) * kLine + lat * lateralX,
+    y: lineY - (h - refH) * VISUAL_ARC - RELEASE_LIFT * (1 - kRef) + lat * lateralY,
   };
 }
 
@@ -211,10 +220,11 @@ export function createFlight(origin: Vec, angleDeg: number, power: number, aspec
 }
 
 /** Rebote especular con pérdida de energía. */
-function reflect(f: Flight, ns: number, nh: number, restitution: number): void {
-  const dot = f.vs * ns + f.vh * nh;
+function reflect(f: Flight, ns: number, nh: number, nl: number, restitution: number): void {
+  const dot = f.vs * ns + f.vh * nh + f.vlat * nl;
   f.vs = (f.vs - 2 * dot * ns) * restitution;
   f.vh = (f.vh - 2 * dot * nh) * restitution;
+  f.vlat = (f.vlat - 2 * dot * nl) * restitution;
 }
 
 /**
@@ -233,9 +243,11 @@ export function stepFlight(
   const prevH = f.h;
 
   f.vh -= GRAVITY * dt;
-  // Efecto lateral: el balón se abre hacia un lado y vuelve (curva real).
+  // Efecto lateral: the drag adds a modest sideways acceleration which bends
+  // the whole flight. Keep the scale small enough that a straight pull stays
+  // straight and a deliberate curve remains controllable.
   if (f.curve) {
-    f.vlat += -f.curve * 26 * dt;      // aceleración hacia el lado del efecto
+    f.vlat += -f.curve * 8 * dt;
     f.lat += f.vlat * dt;
     f.vlat *= 1 - 0.35 * dt;           // se frena con el aire
   }
@@ -251,13 +263,12 @@ export function stepFlight(
     !f.made &&
     !f.touchedBoard &&
     !f.touchedFloor &&
-    !f.touchedRim &&
     f.vh < 0 &&
     -f.vh >= f.vs * MIN_ENTRY_SLOPE &&
     prevH >= RIM_HEIGHT &&
     f.h <= RIM_HEIGHT &&
-    Math.abs(f.s - D) <= band &&
-    Math.abs(f.lat) <= RIM_HALF * 0.85
+    Math.abs(f.s - D) <= Math.min(band, RIM_HALF + 1.1) &&
+    Math.abs(f.lat) <= RIM_HALF - BALL_R * 0.35
   ) {
     f.made = true;
     f.done = true;
@@ -272,16 +283,21 @@ export function stepFlight(
   for (const lip of [D - RIM_HALF, D + RIM_HALF]) {
     const ds = f.s - lip;
     const dh = f.h - RIM_HEIGHT;
-    const dist = Math.hypot(ds, dh);
+    const dl = f.lat;
+    const dist = Math.hypot(ds, dh, dl);
     const minDist = LIP_R + BALL_R;
     if (dist > 0.0001 && dist < minDist) {
       const ns = ds / dist;
       const nh = dh / dist;
+      const nl = dl / dist;
       const push = minDist - dist;
       f.s += ns * push;
       f.h += nh * push;
-      reflect(f, ns, nh, 0.42);
+      f.lat += nl * push;
+      reflect(f, ns, nh, nl, 0.42);
       f.vs *= 0.84;
+      f.vh *= 0.84;
+      f.vlat *= 0.84;
       f.touchedRim = true;
       events.push('rim');
     }
@@ -293,7 +309,8 @@ export function stepFlight(
     f.s + BALL_R >= boardS &&
     f.h >= BACKBOARD_BOTTOM &&
     f.h <= BACKBOARD_TOP &&
-    f.vs > 0
+    f.vs > 0 &&
+    Math.abs(f.lat) <= 12
   ) {
     f.s = boardS - BALL_R;
     f.vs = -f.vs * 0.46;
@@ -332,15 +349,16 @@ export function simulateShot(
   power: number,
   spec: Pick<MinigameSpec, 'zone'>,
   aspect = 1,
+  curve = 0,
 ): ShotResult {
   const setup = setupFor(origin, aspect);
-  const f = createFlight(origin, angleDeg, power, aspect);
+  const f = createFlight(origin, angleDeg, power, aspect, curve);
   const events: ShotEvent[] = [];
-  const path: Vec[] = [project(setup, f.s, f.h)];
+  const path: Vec[] = [project(setup, f.s, f.h, f.lat)];
   let guard = 0;
   while (!f.done && guard < MAX_FLIGHT_S / SUBSTEP + 4) {
     events.push(...stepFlight(f, SUBSTEP, spec, setup));
-    path.push(project(setup, f.s, f.h));
+    path.push(project(setup, f.s, f.h, f.lat));
     guard += 1;
   }
   return {
@@ -367,14 +385,15 @@ export function aimFromDrag(
   aspect = 1,
 ): { angleDeg: number; power: number; length: number; pullX: number; pullY: number; curve: number } {
   const a = safeAspect(aspect);
-  const dx = origin.x - pointer.x;
+  const grip = project(setupFor(origin, a), 0, 13);
+  const dx = grip.x - pointer.x;
   // Arrastrar hacia abajo (y de pantalla mayor) lanza hacia arriba.
-  const dy = (pointer.y - origin.y) * a;
+  const dy = (pointer.y - grip.y) * a;
   const length = Math.hypot(dx, dy) / 100;
 
   // Eje de referencia: desde el BALÓN (las manos, que es donde se agarra y
   // donde el jugador ve la línea) hasta el aro, no desde los pies.
-  const handY = origin.y - RELEASE_LIFT;
+  const handY = grip.y;
   const axisX = RIM_X - origin.x;
   const axisY = -(RIM_Y - handY) * a;
   const axisDeg = (Math.atan2(axisY, axisX) * 180) / Math.PI;
@@ -390,11 +409,11 @@ export function aimFromDrag(
 
   // Cuanto más cerca está el aro, más vertical tiene que ser el tiro.
   const distance = shotDistance(origin, a);
-  const base = AIM_BASE_ANGLE + Math.max(0, 32 - distance) * 1.7;
+  const base = AIM_BASE_ANGLE + Math.max(0, 32 - distance) * 1.1;
 
   return {
-    angleDeg: clamp(base + delta * AIM_TILT_GAIN, 34, 78),
-    curve: clamp(delta / 55, -0.85, 0.85),
+    angleDeg: clamp(base + delta * AIM_TILT_GAIN, 38, 66),
+    curve: clamp(delta / 90, -0.3, 0.3),
     power: clamp(length / MAX_PULL, 0, 1),
     length,
     pullX: clamp(pointer.x, 0, 100),
@@ -404,8 +423,9 @@ export function aimFromDrag(
 
 export function pointerNearBall(origin: Vec, pointer: Vec, aspect = 1, radius = 0.14): boolean {
   const a = safeAspect(aspect);
-  const dx = (pointer.x - origin.x) / 100;
-  const dy = ((pointer.y - origin.y) / 100) * a;
+  const grip = project(setupFor(origin, a), 0, 13);
+  const dx = (pointer.x - grip.x) / 100;
+  const dy = ((pointer.y - grip.y) / 100) * a;
   return Math.hypot(dx, dy) <= radius;
 }
 
