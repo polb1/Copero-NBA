@@ -28,6 +28,7 @@ const RegisterPage = lazy(() => import('./screens/Auth/RegisterPage').then(m => 
 const ForgotPasswordPage = lazy(() => import('./screens/Auth/ForgotPasswordPage').then(m => ({ default: m.ForgotPasswordPage })));
 const ResetPasswordPage = lazy(() => import('./screens/Auth/ResetPasswordPage').then(m => ({ default: m.ResetPasswordPage })));
 const VerifyEmailPage = lazy(() => import('./screens/Auth/VerifyEmailPage').then(m => ({ default: m.VerifyEmailPage })));
+const AuthCallbackPage = lazy(() => import('./screens/Auth/AuthCallbackPage').then(m => ({ default: m.AuthCallbackPage })));
 const ProfilePage = lazy(() => import('./screens/Auth/ProfilePageWrapper').then(m => ({ default: m.ProfilePageWrapper })));
 
 function ScrollTop() {
@@ -80,6 +81,7 @@ export function App() {
               <Route path="/calendario" element={<HubLayout><Calendario /></HubLayout>} />
               <Route path="/estadisticas" element={<HubLayout><Estadisticas /></HubLayout>} />
               <Route path="/auth/login" element={<LoginPage />} />
+              <Route path="/auth/callback" element={<AuthCallbackPage />} />
               <Route path="/auth/register" element={<RegisterPage />} />
               <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
               <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
