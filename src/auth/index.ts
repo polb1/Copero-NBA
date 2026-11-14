@@ -102,7 +102,7 @@ export function createAuth(env: Env) {
       google: {
         clientId: env.GOOGLE_CLIENT_ID,
         clientSecret: env.GOOGLE_CLIENT_SECRET,
-        callbackURL: `${baseURL}/api/auth/callback/google`,
+        redirectURI: `${baseURL}/api/auth/callback/google`,
       },
     };
   }
