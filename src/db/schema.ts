@@ -77,9 +77,6 @@ export const user = sqliteTable('user', {
     .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
     .$onUpdate(() => new Date())
     .notNull(),
-  // Guest migration fields
-  guestId: text('guest_id').unique(),
-  guestDataClaimed: integer('guest_data_claimed', { mode: 'boolean' }).default(false).notNull(),
 });
 
 export const session = sqliteTable('session', {
