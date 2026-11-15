@@ -2,76 +2,91 @@ import type { MinigameSpec } from '../../engine/types';
 import { clamp } from '../../engine/rng';
 
 /**
- * Física de tiro 2.5D para el minijuego.
+ * Drag & Shoot — Física 2.5D realista con buena UX.
  *
- * El fallo del modelo anterior era usar la `y` de pantalla como altura: la
- * canasta está "al fondo" (arriba) y el jugador delante (abajo), así que esa
- * `y` es PROFUNDIDAD, no altura. Aquí la simulación ocurre en un plano real
- * (distancia `s`, altura `h`) y luego se proyecta a la pantalla:
- *
- *   pantalla = origen + (canasta - origen) * (s / D) + (0, -h / aspecto)
- *
- * Con eso el balón sale del jugador, sube y cae dentro del aro con una
- * parábola de verdad, y el resultado lo decide la simulación (gravedad, aro y
- * tablero sólidos). Nada está precalculado ni guiado.
+ * Cambios clave vs versión anterior:
+ * - Arrastre DIRECTO: arrastras HACIA donde quieres que vaya el balón (no tirachinas inverso)
+ * - Preview de trayectoria en tiempo real mientras arrastras
+ * - Potencia = distancia del arrastre (lineal, fácil de controlar)
+ * - Curva/efecto = componente perpendicular al eje tirador→aro
+ * - Parámetros más permisivos: banda de acierto mayor, ángulo de entrada más bajo
+ * - Rebotes físicos creíbles (aro, tablero, suelo)
  */
 
-/** Centro del aro en pantalla (porcentajes de la cancha). */
+// ============ CONSTANTES DEL MUNDO (unidades de "cancha") ============
+
+/** Centro del aro en coordenadas de pantalla % (0-100). */
 export const RIM_X = 80;
 export const RIM_Y = 46;
-/** Semiancho del aro, en unidades de distancia. */
-export const RIM_HALF = 2.0;
-/** Altura del aro sobre el suelo de la canasta. */
-export const RIM_HEIGHT = 22;
-/** Altura de salida del balón sobre los pies del tirador. */
-export const RELEASE_HEIGHT = 15.5;
-export const BALL_R = 0.9;
-export const LIP_R = 0.15;
-export const BACKBOARD_OFFSET = 2.2;
+
+/** Geometría del aro y tablero. */
+export const RIM_HALF = 2.0;        // radio interior del aro
+export const RIM_HEIGHT = 22;       // altura del aro sobre el suelo
+export const RELEASE_HEIGHT = 15.5; // altura de salida del balón (manos)
+export const BALL_R = 0.9;          // radio del balón
+export const LIP_R = 0.15;          // grosor del aro (para colisión toroide)
+export const BACKBOARD_OFFSET = 2.2; // distancia aro→tablero
 export const BACKBOARD_TOP = RIM_HEIGHT + 9;
 export const BACKBOARD_BOTTOM = RIM_HEIGHT - 1;
+export const BACKBOARD_HALF_WIDTH = 4.8;
 
-/** Gravedad en unidades de distancia por segundo². */
-export const GRAVITY = 70;
-/** Mapeo potencia → velocidad inicial. */
-export const SPEED_MIN = 20;
-export const SPEED_MAX = 150;
-/** Arrastre necesario para lanzar / potencia máxima. */
-export const MIN_PULL = 0.05;
-/** Ángulo de referencia: arrastrar recto hacia atrás lanza a 50°. */
-export const AIM_BASE_ANGLE = 50;
-/** How much a pull-angle change affects the launch arc. */
-export const AIM_TILT_GAIN = 0.2;
-// A short, comfortable pull on a phone should reach useful power. The old
-// 55%-of-screen threshold made a normal 50–70px swipe feel weak and left most
-// attempts short of the rim.
-export const MAX_PULL = 0.36;
-/** Paso fijo (240 Hz) para que el balón no atraviese el aro. */
-export const SUBSTEP = 1 / 240;
-export const MAX_FLIGHT_S = 5;
+// Física
+export const GRAVITY = 65;          // gravedad (unidades/s²) - un poco más suave
+export const AIR_DRAG = 0.02;       // resistencia aire horizontal
+export const LIFT_DRAG = 0.01;      // resistencia aire vertical
+export const SPIN_DECAY = 0.08;     // decaimiento efecto lateral
+
+// Potencia
+export const SPEED_MIN = 18;
+export const SPEED_MAX = 140;
+export const MIN_PULL = 0.04;       // arrastre mínimo para lanzar
+export const MAX_PULL = 0.45;       // arrastre para potencia máx (en % de pantalla)
+
+// Ángulos
+export const MIN_ANGLE = 28;        // ángulo mínimo lanzamiento (grados)
+export const MAX_ANGLE = 75;        // ángulo máximo
+export const IDEAL_ANGLE = 52;      // ángulo ideal para distancia media
+
+// Entrada en aro
+export const MIN_ENTRY_SLOPE = 0.35; // tangente mínima ángulo entrada (~19°) - MÁS PERMISIVO
+export const RIM_RESTITUTION = 0.45; // restitución aro (rebote)
+export const BOARD_RESTITUTION = 0.55; // restitución tablero
+export const FLOOR_RESTITUTION = 0.35; // restitución suelo
+
+// Simulación
+export const SUBSTEP = 1 / 240;     // paso fijo 240 Hz
+export const MAX_FLIGHT_S = 6;
+
+// Visual
+export const VISUAL_ARC_SCALE = 1.7; // escala visual del arco (perspectiva)
+export const RELEASE_LIFT = 7;       // elevación visual punto salida
+
+// ============ TIPOS ============
 
 export interface Vec { x: number; y: number }
 
 export interface Flight {
-  /** Distancia recorrida sobre la línea tirador→canasta. */
-  s: number;
-  /** Desvío lateral (curva del lanzamiento), en unidades de canasta. */
-  lat: number;
-  /** Velocidad lateral inicial (efecto). */
-  vlat: number;
-  /** Aceleración lateral por efecto (curva). */
-  curve: number;
-  /** Altura sobre el suelo. */
-  h: number;
-  vs: number;
-  vh: number;
-  t: number;
+  // Posición en plano 2.5D
+  s: number;      // distancia horizontal sobre eje tirador→aro
+  lat: number;    // desvío lateral (curva)
+  h: number;      // altura sobre suelo
+
+  // Velocidades
+  vs: number;     // velocidad horizontal (hacia aro)
+  vlat: number;   // velocidad lateral (efecto)
+  vh: number;     // velocidad vertical
+
+  // Estado
+  t: number;      // tiempo transcurrido
   done: boolean;
   made: boolean;
   touchedRim: boolean;
   touchedBoard: boolean;
   touchedFloor: boolean;
-  apex: number;
+  apex: number;   // altura máxima
+
+  // Para debug/visualización
+  curve: number;  // efecto aplicado [-1, 1]
 }
 
 export type ShotEvent = 'rim' | 'board' | 'floor' | 'score';
@@ -81,29 +96,44 @@ export interface ShotResult {
   touchedRim: boolean;
   touchedBoard: boolean;
   events: ShotEvent[];
-  /** Trayectoria en pantalla, un punto por subpaso. */
-  path: Vec[];
+  path: Vec[];          // trayectoria en pantalla (%)
   seconds: number;
-  /** Altura máxima alcanzada, en unidades de distancia. */
   apex: number;
+  entryAngle?: number;  // ángulo de entrada en aro (grados)
+  missKind?: 'short' | 'long' | 'left' | 'right';
 }
 
 export interface Setup {
-  origin: Vec;
-  /** Distancia horizontal (en el plano) entre tirador y aro. */
-  distance: number;
-  aspect: number;
+  origin: Vec;     // posición tirador en pantalla (%)
+  distance: number; // distancia horizontal real (unidades cancha)
+  aspect: number;   // aspect ratio pantalla
 }
 
+export interface AimResult {
+  angleDeg: number;  // ángulo lanzamiento sobre horizontal
+  power: number;     // 0-1
+  curve: number;     // -1 a 1 (efecto lateral)
+  length: number;    // distancia arrastre normalizada
+  pullStart: Vec;    // donde empezó el arrastre (centro balón)
+  pullEnd: Vec;      // donde terminó
+  velocity: { vs: number; vh: number; vlat: number }; // velocidades iniciales
+  previewPath: Vec[]; // trayectoria preview para mostrar mientras arrastras
+}
+
+// ============ UTILIDADES ============
+
 const rad = (deg: number): number => (deg * Math.PI) / 180;
+const deg = (r: number): number => (r * 180) / Math.PI;
 
 export const safeAspect = (aspect: number): number =>
-  Number.isFinite(aspect) && aspect > 0 ? aspect : 1;
+  Number.isFinite(aspect) && aspect > 0 ? aspect : 0.675;
 
-/** Distancia real (en unidades de cancha) entre el tirador y el aro. */
+/** Distancia horizontal real entre tirador y aro (unidades cancha). */
 export function shotDistance(origin: Vec, aspect = 1): number {
   const a = safeAspect(aspect);
-  return Math.hypot(RIM_X - origin.x, (RIM_Y - origin.y) * a);
+  const dx = RIM_X - origin.x;
+  const dy = (RIM_Y - origin.y) * a;
+  return Math.hypot(dx, dy) / 100 * 100; // normalizado a unidades de cancha
 }
 
 export function setupFor(origin: Vec, aspect = 1): Setup {
@@ -111,103 +141,97 @@ export function setupFor(origin: Vec, aspect = 1): Setup {
 }
 
 /**
- * Escala visual de la altura: la cancha está dibujada en perspectiva, así que
- * el arco se pinta como un abultamiento sobre la recta tirador→aro (no como
- * altura a escala real, que saldría enorme).
- */
-export const VISUAL_ARC = 1.9;
-/** El balón sale de las manos, no de los pies: subida visual en el punto de salida. */
-export const RELEASE_LIFT = 7;
-
-/**
- * Proyecta un punto del plano (s, h) a la pantalla. Con `s=0` cae exactamente
- * en las manos del tirador y con `s=D, h=RIM_HEIGHT` exactamente en el aro.
+ * Proyecta punto del plano (s, h, lat) a pantalla (%).
+ * s=0 → manos tirador, s=D,h=RIM_HEIGHT → centro aro.
  */
 export function project(setup: Setup, s: number, h: number, lat = 0): Vec {
   const D = Math.max(1, setup.distance);
-  const k = s / D;
-  const kLine = clamp(k, -0.6, 1.6);
-  const kRef = clamp(k, 0, 1);
-  const lineY = setup.origin.y + (RIM_Y - setup.origin.y) * kLine;
-  // Project the lateral axis as the perpendicular to the shot line. The old
-  // fixed `lat * 8` moved the rendered ball several hoop-widths for a small
-  // amount of spin, so the visual result disagreed with the collision result.
-  const depth = (RIM_Y - setup.origin.y) * setup.aspect;
-  const lateralX = -depth / D;
-  const lateralY = (RIM_X - setup.origin.x) / (D * setup.aspect);
-  // Altura que tendría la recta tirador→aro en este punto.
+  const k = clamp(s / D, -0.5, 1.5);
+  const kRef = clamp(s / D, 0, 1);
+
+  // Interpolación lineal en pantalla
+  const lineX = setup.origin.x + (RIM_X - setup.origin.x) * k;
+  const lineY = setup.origin.y + (RIM_Y - setup.origin.y) * k;
+
+  // Vector perpendicular para desvío lateral
+  const dx = RIM_X - setup.origin.x;
+  const dy = (RIM_Y - setup.origin.y) * setup.aspect;
+  const len = Math.hypot(dx, dy) || 1;
+  const nx = -dy / len;
+  const ny = (dx / len) / setup.aspect;
+
+  // Altura de referencia de la recta tirador→aro
   const refH = RELEASE_HEIGHT + (RIM_HEIGHT - RELEASE_HEIGHT) * kRef;
+
   return {
-    x: setup.origin.x + (RIM_X - setup.origin.x) * kLine + lat * lateralX,
-    y: lineY - (h - refH) * VISUAL_ARC - RELEASE_LIFT * (1 - kRef) + lat * lateralY,
+    x: lineX + nx * lat * 4.5,
+    y: lineY + ny * lat * 4.5 - (h - refH) * VISUAL_ARC_SCALE - RELEASE_LIFT * (1 - kRef),
   };
 }
 
-/**
- * El balón tiene que caer dentro, no colarse plano: la velocidad vertical de
- * bajada debe superar esta fracción de la horizontal (45° de entrada).
- */
-export const MIN_ENTRY_SLOPE = 0.45;
-
-/** Franja de acierto alrededor del centro del aro. */
-/**
- * Margen de ayuda a la puntería: si el balón cruza el plano del aro dentro de
- * este margen (algo mayor que el aro real) cuenta como dentro y se centra en el
- * aro al dibujarlo. Sin esto el gesto exigía una precisión de milímetros y no
- * entraba nunca.
- */
+/** Banda de ayuda al acierto (más generosa que el aro físico). */
 export function assistBand(zone: number): number {
-  return scoringBand(zone) * 1.8;
-}
-
-export function scoringBand(zone: number): number {
   const z = Number.isFinite(zone) ? zone : 30;
-  return clamp(RIM_HALF + z * 0.05, RIM_HALF, RIM_HALF + 2.2);
+  return clamp(RIM_HALF + z * 0.07, RIM_HALF + 0.3, RIM_HALF + 3.0);
 }
 
-/**
- * Velocidad que haría entrar el balón justo en el aro desde `origin` con este
- * ángulo. Es la referencia con la que se normaliza la potencia: así el punto
- * dulce cae siempre hacia el 50 % del arrastre, en vez de moverse entre el 16 %
- * y el 66 % según la distancia.
- */
+/** Velocidad ideal para entrar al centro del aro desde esta distancia/ángulo. */
 export function idealSpeed(origin: Vec, angleDeg: number, aspect = 1): number {
   const distance = shotDistance(origin, aspect);
-  const theta = rad(clamp(angleDeg, 30, 80));
+  const theta = rad(clamp(angleDeg, MIN_ANGLE, MAX_ANGLE));
   const rise = RIM_HEIGHT - RELEASE_HEIGHT;
-  const denom = 2 * Math.cos(theta) ** 2 * (distance * Math.tan(theta) - rise);
-  if (!(denom > 0.5)) return 60;
-  const v2 = (GRAVITY * distance * distance) / denom;
-  return clamp(Math.sqrt(Math.max(0, v2)), 18, 150);
+  const targetD = distance + 0.15; // apuntamos un pelín por delante del centro
+
+  const denom = 2 * Math.cos(theta) ** 2 * (targetD * Math.tan(theta) - rise);
+  if (!(denom > 0.3)) return 55;
+
+  const v2 = (GRAVITY * targetD * targetD) / denom;
+  return clamp(Math.sqrt(Math.max(0, v2)), SPEED_MIN, SPEED_MAX);
 }
 
-/**
- * Velocidad de salida. La potencia ya viene normalizada por `idealSpeed` de la
- * distancia: 0.5 = tiro perfecto, menos se queda corto, más se pasa.
- */
+/** Calcula velocidades iniciales a partir de ángulo, potencia y curva. */
 export function launchVelocity(
   angleDeg: number,
   power: number,
-  origin?: Vec,
+  origin: Vec,
   aspect = 1,
-): { vs: number; vh: number } {
-  const p = clamp(Number.isFinite(power) ? power : 0, 0, 1);
-  const reference = origin ? idealSpeed(origin, angleDeg, aspect) : 60;
-  const speed = clamp(reference * (0.70 + 0.58 * Math.pow(p, 1.12)), SPEED_MIN, SPEED_MAX);
-  const theta = rad(clamp(Number.isFinite(angleDeg) ? angleDeg : 0, -30, 85));
-  return { vs: speed * Math.cos(theta), vh: speed * Math.sin(theta) };
+  curve = 0
+): { vs: number; vh: number; vlat: number } {
+  const p = clamp(power, 0, 1);
+  const reference = idealSpeed(origin, angleDeg, aspect);
+  const sweetP = 0.5; // punto dulce en 50% potencia
+  // Curva de potencia: más lineal alrededor del punto dulce
+  const speed = clamp(
+    reference * (0.7 + 0.6 * p / sweetP),
+    SPEED_MIN,
+    SPEED_MAX
+  );
+
+  const theta = rad(clamp(angleDeg, MIN_ANGLE, MAX_ANGLE));
+  const phi = rad(clamp(curve * 30, -35, 35)); // curva máx ±35°
+
+  return {
+    vs: speed * Math.cos(theta) * Math.cos(phi),
+    vh: speed * Math.sin(theta),
+    vlat: speed * Math.cos(theta) * Math.sin(phi),
+  };
 }
 
-export function createFlight(origin: Vec, angleDeg: number, power: number, aspect = 1, curve = 0): Flight {
-  const v = launchVelocity(angleDeg, power, origin, aspect);
-  const c = clamp(Number.isFinite(curve) ? curve : 0, -1, 1);
+/** Crea estado inicial de vuelo. */
+export function createFlight(
+  origin: Vec,
+  angleDeg: number,
+  power: number,
+  aspect = 1,
+  curve = 0
+): Flight {
+  const v = launchVelocity(angleDeg, power, origin, aspect, curve);
   return {
     s: 0,
     lat: 0,
-    vlat: 0,
-    curve: c,
     h: RELEASE_HEIGHT,
     vs: v.vs,
+    vlat: v.vlat,
     vh: v.vh,
     t: 0,
     done: false,
@@ -216,151 +240,188 @@ export function createFlight(origin: Vec, angleDeg: number, power: number, aspec
     touchedBoard: false,
     touchedFloor: false,
     apex: RELEASE_HEIGHT,
+    curve: clamp(curve, -1, 1),
   };
 }
 
 /** Rebote especular con pérdida de energía. */
-function reflect(f: Flight, ns: number, nh: number, nl: number, restitution: number): void {
-  const dot = f.vs * ns + f.vh * nh + f.vlat * nl;
-  f.vs = (f.vs - 2 * dot * ns) * restitution;
-  f.vh = (f.vh - 2 * dot * nh) * restitution;
-  f.vlat = (f.vlat - 2 * dot * nl) * restitution;
+function reflectVel(f: Flight, nx: number, ny: number, nz: number, restitution: number): void {
+  const dot = f.vs * nx + f.vlat * ny + f.vh * nz;
+  if (dot >= 0) return; // solo rebote si viene hacia la superficie
+  f.vs = (f.vs - (1 + restitution) * dot * nx) * 0.95;
+  f.vlat = (f.vlat - (1 + restitution) * dot * ny) * 0.95;
+  f.vh = (f.vh - (1 + restitution) * dot * nz) * 0.95;
 }
 
 /**
- * Avanza el vuelo `dt` segundos (muta) y devuelve lo que ha tocado. La colisión
- * se resuelve sacando el balón del obstáculo y reflejando la velocidad.
+ * Avanza un subpaso de simulación. Devuelve eventos ocurridos.
  */
 export function stepFlight(
   f: Flight,
   dt: number,
   spec: Pick<MinigameSpec, 'zone'>,
-  setup: Setup,
+  setup: Setup
 ): ShotEvent[] {
   const events: ShotEvent[] = [];
   if (f.done) return events;
-  const D = Math.max(1, setup.distance);
-  const prevH = f.h;
 
+  const D = Math.max(1, setup.distance);
+  const prevS = f.s;
+  const prevH = f.h;
+  const prevLat = f.lat;
+
+  // Fuerzas
   f.vh -= GRAVITY * dt;
-  // Efecto lateral: the drag adds a modest sideways acceleration which bends
-  // the whole flight. Keep the scale small enough that a straight pull stays
-  // straight and a deliberate curve remains controllable.
-  if (f.curve) {
-    f.vlat += -f.curve * 8 * dt;
-    f.lat += f.vlat * dt;
-    f.vlat *= 1 - 0.35 * dt;           // se frena con el aire
-  }
+  f.vs *= 1 - AIR_DRAG * dt;
+  f.vlat *= 1 - SPIN_DECAY * dt;
+
+  // Integración
   f.s += f.vs * dt;
+  f.lat += f.vlat * dt;
   f.h += f.vh * dt;
   f.t += dt;
   if (f.h > f.apex) f.apex = f.h;
 
-  // --- Acierto: el balón cruza el plano del aro bajando, dentro de la
-  // abertura y sin haber tocado tablero ni suelo antes.
+  // ===== 1. ENCESTE (cruce continuo del plano del aro) =====
+  // Interpola entre subpasos para no perder el enceste cuando el balón cruza
+  // la altura del aro entre dos frames de la simulación.
+  const crossedRimHeight = prevH >= RIM_HEIGHT && f.h <= RIM_HEIGHT;
+  const crossingT = crossedRimHeight
+    ? clamp((prevH - RIM_HEIGHT) / Math.max(0.0001, prevH - f.h), 0, 1)
+    : 0;
+  const crossingS = prevS + (f.s - prevS) * crossingT;
+  const crossingLat = prevLat + (f.lat - prevLat) * crossingT;
   const band = assistBand(spec.zone);
+  const distFromCenter = Math.hypot(crossingS - D, crossingLat);
+
   if (
     !f.made &&
-    !f.touchedBoard &&
     !f.touchedFloor &&
     f.vh < 0 &&
-    -f.vh >= f.vs * MIN_ENTRY_SLOPE &&
-    prevH >= RIM_HEIGHT &&
-    f.h <= RIM_HEIGHT &&
-    Math.abs(f.s - D) <= Math.min(band, RIM_HALF + 1.1) &&
-    Math.abs(f.lat) <= RIM_HALF - BALL_R * 0.35
+    crossedRimHeight &&
+    distFromCenter <= band &&
+    -f.vh >= f.vs * (MIN_ENTRY_SLOPE * 0.6)
   ) {
     f.made = true;
     f.done = true;
-    // Se centra en el aro para que el dibujo coincida con el acierto.
     f.s = D;
+    f.lat = 0;
     f.h = RIM_HEIGHT;
     events.push('score');
     return events;
   }
 
-  // --- Aro: dos círculos sólidos (delantero y trasero).
-  for (const lip of [D - RIM_HALF, D + RIM_HALF]) {
-    const ds = f.s - lip;
-    const dh = f.h - RIM_HEIGHT;
-    const dl = f.lat;
-    const dist = Math.hypot(ds, dh, dl);
-    const minDist = LIP_R + BALL_R;
-    if (dist > 0.0001 && dist < minDist) {
-      const ns = ds / dist;
-      const nh = dh / dist;
-      const nl = dl / dist;
-      const push = minDist - dist;
-      f.s += ns * push;
-      f.h += nh * push;
-      f.lat += nl * push;
-      reflect(f, ns, nh, nl, 0.42);
-      f.vs *= 0.84;
-      f.vh *= 0.84;
-      f.vlat *= 0.84;
-      f.touchedRim = true;
-      events.push('rim');
-    }
+  // ===== 2. ARO (toroide 3D) =====
+  const distHoriz = Math.hypot(f.s - D, f.lat);
+  const distToWire = Math.hypot(distHoriz - RIM_HALF, f.h - RIM_HEIGHT);
+  const minWireDist = BALL_R + LIP_R;
+
+  if (distToWire < minWireDist && distToWire > 0.001) {
+    // Normal del toroide
+    const nr = (distHoriz - RIM_HALF) / distToWire;
+    const nh = (f.h - RIM_HEIGHT) / distToWire;
+    const ns = distHoriz > 0.001 ? nr * (f.s - D) / distHoriz : 0;
+    const nlat = distHoriz > 0.001 ? nr * f.lat / distHoriz : 0;
+
+    // Empuja fuera
+    const push = minWireDist - distToWire;
+    f.s += ns * push;
+    f.lat += nlat * push;
+    f.h += nh * push;
+
+    // Rebote
+    reflectVel(f, ns, nlat, nh, RIM_RESTITUTION);
+    f.touchedRim = true;
+    if (!events.includes('rim')) events.push('rim');
   }
 
-  // --- Tablero: plano vertical detrás del aro.
+  // ===== 3. TABLERO (plano vertical detrás del aro) =====
   const boardS = D + BACKBOARD_OFFSET;
   if (
     f.s + BALL_R >= boardS &&
     f.h >= BACKBOARD_BOTTOM &&
     f.h <= BACKBOARD_TOP &&
-    f.vs > 0 &&
-    Math.abs(f.lat) <= 12
+    Math.abs(f.lat) <= BACKBOARD_HALF_WIDTH &&
+    f.vs > 0
   ) {
     f.s = boardS - BALL_R;
-    f.vs = -f.vs * 0.46;
+    f.vs = -f.vs * BOARD_RESTITUTION;
     f.vh *= 0.9;
+    f.vlat *= 0.9;
     f.touchedBoard = true;
-    events.push('board');
+    if (!events.includes('board')) events.push('board');
   }
 
-  // --- Suelo: bota y muere cuando se queda sin energía.
+  // ===== 4. SUELO =====
   if (f.h <= BALL_R) {
     f.h = BALL_R;
     f.touchedFloor = true;
-    if (Math.abs(f.vh) < 26) {
+    if (Math.abs(f.vh) < 15) { // muere
       f.done = true;
-      events.push('floor');
+      if (!events.includes('floor')) events.push('floor');
       return events;
     }
-    f.vh = Math.abs(f.vh) * 0.34;
-    f.vs *= 0.7;
-    events.push('floor');
+    // Rebota
+    f.vh = Math.abs(f.vh) * FLOOR_RESTITUTION;
+    f.vs *= 0.65;
+    f.vlat *= 0.65;
+    if (!events.includes('floor')) events.push('floor');
   }
 
-  if (f.s > D + 26 || f.s < -8) {
+  // Límites
+  if (f.s > D + 30 || f.s < -15 || f.t >= MAX_FLIGHT_S) {
     f.done = true;
-    events.push('floor');
-    return events;
+    if (!events.includes('floor')) events.push('floor');
   }
-  if (f.t >= MAX_FLIGHT_S) f.done = true;
+
   return events;
 }
 
-/** Simula un tiro completo; lo usan los tests y el modo sin animación. */
+/** Simula tiro completo (para tests y modo instantáneo). */
 export function simulateShot(
   origin: Vec,
   angleDeg: number,
   power: number,
   spec: Pick<MinigameSpec, 'zone'>,
-  aspect = 1,
-  curve = 0,
+  aspect = 1
 ): ShotResult {
   const setup = setupFor(origin, aspect);
-  const f = createFlight(origin, angleDeg, power, aspect, curve);
+  const f = createFlight(origin, angleDeg, power, aspect);
   const events: ShotEvent[] = [];
   const path: Vec[] = [project(setup, f.s, f.h, f.lat)];
   let guard = 0;
-  while (!f.done && guard < MAX_FLIGHT_S / SUBSTEP + 4) {
+  const D = Math.max(1, setup.distance);
+  const band = assistBand(spec.zone);
+
+  while (!f.done && guard < MAX_FLIGHT_S / SUBSTEP + 10) {
     events.push(...stepFlight(f, SUBSTEP, spec, setup));
     path.push(project(setup, f.s, f.h, f.lat));
-    guard += 1;
+    guard++;
   }
+
+  // Ángulo de entrada
+  let entryAngle: number | undefined;
+  if (f.made) {
+    const v = launchVelocity(angleDeg, power, origin, aspect);
+    const disc = v.vh * v.vh + 2 * GRAVITY * (RELEASE_HEIGHT - RIM_HEIGHT);
+    if (disc >= 0) {
+      const t = (v.vh + Math.sqrt(disc)) / GRAVITY;
+      const vs = v.vs * (1 - AIR_DRAG) ** t;
+      const vh = v.vh - GRAVITY * t;
+      entryAngle = deg(Math.atan2(-vh, vs));
+    }
+  }
+
+  // Tipo de fallo
+  let missKind: ShotResult['missKind'];
+  if (!f.made) {
+    if (f.touchedFloor && f.s < D - RIM_HALF) missKind = 'short';
+    else if (f.touchedFloor && f.s > D + RIM_HALF) missKind = 'long';
+    else if (f.lat < -band) missKind = 'left';
+    else if (f.lat > band) missKind = 'right';
+    else missKind = f.touchedBoard ? 'long' : 'short';
+  }
+
   return {
     made: f.made,
     touchedRim: f.touchedRim,
@@ -369,112 +430,148 @@ export function simulateShot(
     path,
     seconds: f.t,
     apex: f.apex,
+    entryAngle,
+    missKind,
   };
 }
 
+/** Clona estado de vuelo. */
 export const cloneFlight = (f: Flight): Flight => ({ ...f });
 
+// ============ PUNTERÍA DESDE ARRASTRE (DIRECTA, NO TIROCHINAS) ============
+
 /**
- * Puntería de tirachinas: arrastras el balón en contra del objetivo y sale
- * disparado al lado contrario. El ángulo devuelto es el de lanzamiento sobre
- * la línea tirador→canasta.
+ * Convierte arrastre en parámetros de tiro.
+ * Arrastra HACIA donde quieres que vaya: arrastrar arriba-derecha → tira arriba-derecha.
  */
 export function aimFromDrag(
   origin: Vec,
-  pointer: Vec,
-  aspect = 1,
-): { angleDeg: number; power: number; length: number; pullX: number; pullY: number; curve: number } {
+  pullEnd: Vec,
+  aspect = 1
+): AimResult {
   const a = safeAspect(aspect);
-  const grip = project(setupFor(origin, a), 0, 13);
-  const dx = grip.x - pointer.x;
-  // Arrastrar hacia abajo (y de pantalla mayor) lanza hacia arriba.
-  const dy = (pointer.y - grip.y) * a;
-  const length = Math.hypot(dx, dy) / 100;
 
-  // Eje de referencia: desde el BALÓN (las manos, que es donde se agarra y
-  // donde el jugador ve la línea) hasta el aro, no desde los pies.
-  const handY = grip.y;
-  const axisX = RIM_X - origin.x;
-  const axisY = -(RIM_Y - handY) * a;
-  const axisDeg = (Math.atan2(axisY, axisX) * 180) / Math.PI;
+  // La medida empieza en el centro visible del balón, no en los pies del
+  // jugador: así un clic sin arrastre no suma potencia ni altera el ángulo.
+  const grip = project(setupFor(origin, a), 0, RELEASE_HEIGHT);
+  const dragX = pullEnd.x - grip.x;
+  const dragY = (pullEnd.y - grip.y) * a; // compensar aspect
 
-  // Ángulo respecto a "tirar recto hacia atrás" (el lanzamiento apunta al aro):
-  // ese gesto da el arco de referencia (50°) y desviarse hacia abajo lo sube.
-  // Así el gesto natural entra, en vez de salir plano como antes.
-  const dragDeg = (Math.atan2(dy, dx) * 180) / Math.PI;
-  // El lanzamiento "recto" apunta justo al aro; su ángulo es el del eje.
+  const length = Math.hypot(dragX, dragY) / 100; // normalizado a unidades cancha
+  const power = clamp(length / MAX_PULL, 0, 1);
+
+  // Eje de referencia: del tirador al aro
+  const axisX = RIM_X - grip.x;
+  const axisY = (RIM_Y - grip.y) * a;
+  const axisDeg = deg(Math.atan2(-axisY, axisX)); // -Y porque pantalla Y crece hacia abajo
+
+  // Dirección del arrastre
+  const dragDeg = deg(Math.atan2(-dragY, dragX));
+
+  // Diferencia = cuánto te desvías del centro
   let delta = dragDeg - axisDeg;
   while (delta > 180) delta -= 360;
   while (delta < -180) delta += 360;
 
-  // Cuanto más cerca está el aro, más vertical tiene que ser el tiro.
+  // Ángulo de lanzamiento: base + corrección por distancia
   const distance = shotDistance(origin, a);
-  const base = AIM_BASE_ANGLE + Math.max(0, 32 - distance) * 1.1;
+  const baseAngle = IDEAL_ANGLE + Math.max(0, 28 - distance) * 1.2; // más cerca = más arco
+
+  // Curva: componente perpendicular al eje (delta positivo = gira a la izquierda = curva negativa en convención world)
+  const curve = clamp(-delta / 45, -1, 1); // ±45° desviación = curva máx
+
+  // Ángulo final
+  const angleDeg = clamp(baseAngle + delta * 0.25, MIN_ANGLE, MAX_ANGLE);
+
+  // Velocidades para preview
+  const velocity = launchVelocity(angleDeg, power, origin, a, curve);
+
+  // Preview de trayectoria (simulación rápida sin colisiones complejas)
+  const previewPath = generatePreviewPath(origin, velocity, a, setupFor(origin, a));
 
   return {
-    angleDeg: clamp(base + delta * AIM_TILT_GAIN, 38, 66),
-    curve: clamp(delta / 90, -0.3, 0.3),
-    power: clamp(length / MAX_PULL, 0, 1),
+    angleDeg,
+    power,
+    curve,
     length,
-    pullX: clamp(pointer.x, 0, 100),
-    pullY: clamp(pointer.y, 0, 100),
+    pullStart: grip,
+    pullEnd,
+    velocity,
+    previewPath,
   };
 }
 
-export function pointerNearBall(origin: Vec, pointer: Vec, aspect = 1, radius = 0.14): boolean {
+/** Genera puntos de preview para mostrar mientras arrastras. */
+function generatePreviewPath(
+  origin: Vec,
+  v: { vs: number; vh: number; vlat: number },
+  aspect: number,
+  setup: Setup
+): Vec[] {
+  const points: Vec[] = [];
+  const D = Math.max(1, setup.distance);
+  let s = 0, lat = 0, h = RELEASE_HEIGHT;
+  let vs = v.vs, vlat = v.vlat, vh = v.vh;
+  const dt = 0.02; // 50 Hz para preview (más rápido)
+
+  points.push(project(setup, s, h, lat));
+
+  for (let i = 0; i < 120 && s < D * 1.3 && h > -5; i++) {
+    vh -= GRAVITY * dt;
+    vs *= 1 - AIR_DRAG * dt;
+    vlat *= 1 - SPIN_DECAY * dt;
+    s += vs * dt;
+    lat += vlat * dt;
+    h += vh * dt;
+    if (h < BALL_R) break;
+    points.push(project(setup, s, h, lat));
+  }
+  return points;
+}
+
+/** Detecta si el puntero empieza cerca del balón. */
+export function pointerNearBall(origin: Vec, pointer: Vec, aspect = 1, radius = 0.12): boolean {
   const a = safeAspect(aspect);
-  const grip = project(setupFor(origin, a), 0, 13);
-  const dx = (pointer.x - grip.x) / 100;
-  const dy = ((pointer.y - grip.y) / 100) * a;
+  const dx = (pointer.x - origin.x) / 100;
+  const dy = ((pointer.y - origin.y) / 100) * a;
   return Math.hypot(dx, dy) <= radius;
 }
 
-/** Posiciones de tiro: variedad de distancia y ángulo, siempre delante del aro. */
+// ============ POSICIONES DE TIRO ============
+
 export const COURT_SPOTS: Vec[] = [
-  { x: 26, y: 78 }, // ala izquierda
-  { x: 38, y: 84 }, // frontal lejano
-  { x: 50, y: 80 }, // frontal media
-  { x: 60, y: 72 }, // ala derecha cercana
-  { x: 30, y: 62 }, // media distancia izquierda
-  { x: 46, y: 64 }, // media distancia frontal
-  { x: 58, y: 58 }, // media distancia derecha
-  { x: 22, y: 88 }, // esquina lejana
-  { x: 66, y: 62 }, // tiro corto
-  { x: 42, y: 90 }, // muy lejos, frontal
+  { x: 26, y: 78 }, { x: 38, y: 84 }, { x: 50, y: 80 }, { x: 60, y: 72 },
+  { x: 30, y: 62 }, { x: 46, y: 64 }, { x: 58, y: 58 }, { x: 22, y: 88 },
+  { x: 66, y: 62 }, { x: 42, y: 90 }, { x: 34, y: 70 }, { x: 54, y: 76 },
 ];
 
-/**
- * Una posición distinta para cada tiro: determinista por (tiro, semilla) y sin
- * repetir la del tiro anterior.
- */
 export function courtSpot(attempt: number, seed = 0): Vec {
   const n = COURT_SPOTS.length;
   const a = Math.abs(Math.floor(attempt));
   const s = Math.abs(Math.floor(seed));
   const pick = (a * 7 + s * 3 + Math.floor(a / n) * 5) % n;
   const base = COURT_SPOTS[pick];
-  const jitterX = (((a * 37 + s * 11) % 7) - 3) * 0.7;
-  const jitterY = (((a * 23 + s * 13) % 7) - 3) * 0.6;
+  const jitterX = (((a * 37 + s * 11) % 7) - 3) * 0.6;
+  const jitterY = (((a * 23 + s * 13) % 7) - 3) * 0.5;
   return {
     x: Math.round(clamp(base.x + jitterX, 18, 70) * 10) / 10,
     y: Math.round(clamp(base.y + jitterY, 54, 91) * 10) / 10,
   };
 }
 
+/** Distancia al aro para UI. */
+export const distanceToRim = shotDistance;
+
 /**
- * Ángulo de entrada del balón en el aro para un lanzamiento limpio. Lo usan
- * los tests para comprobar que los tiros buenos entran como en la realidad
- * (entre ~35° y ~65° sobre la horizontal).
+ * Ángulo de entrada del balón en el aro para un lanzamiento limpio.
+ * Lo usan los tests para comprobar que los tiros buenos entran cayendo.
  */
 export function entryAngle(origin: Vec, angleDeg: number, power: number, aspect = 1): number {
   const v = launchVelocity(angleDeg, power, origin, aspect);
   const disc = v.vh * v.vh + 2 * GRAVITY * (RELEASE_HEIGHT - RIM_HEIGHT);
   if (disc < 0) return NaN;
   const t = (v.vh + Math.sqrt(disc)) / GRAVITY;
-  const vs = v.vs;
+  const vs = v.vs * (1 - AIR_DRAG) ** t;
   const vh = v.vh - GRAVITY * t;
-  return (Math.atan2(-vh, vs) * 180) / Math.PI;
+  return deg(Math.atan2(-vh, vs));
 }
-
-/** Distancia a la canasta para una posición, en unidades de cancha. */
-export const distanceToRim = shotDistance;

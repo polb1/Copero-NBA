@@ -9,6 +9,7 @@ import {
   BACKBOARD_OFFSET,
   BACKBOARD_TOP,
   MIN_PULL,
+  RELEASE_HEIGHT,
   RIM_HEIGHT,
   RIM_X,
   RIM_Y,
@@ -25,16 +26,16 @@ import {
   type Flight,
   type Setup,
   type Vec,
+  type AimResult,
 } from './dragShot';
 
 type Phase = 'aim' | 'flight' | 'result';
-type MissKind = 'short' | 'long' | 'side';
-interface Aim { pointer: Vec; angleDeg: number; power: number; curve: number }
+type MissKind = 'short' | 'long' | 'left' | 'right';
 
-const DRAG_HELP = 'Mantén el balón y arrastra: más distancia da potencia; desviarte añade curva';
+const INSTRUCTION = 'Arrastra el balón HACIA donde quieres tirar y suelta';
 const HINT_BALL = 'Empieza el arrastre sobre el balón';
-const HINT_SHORT = 'Arrastra más para coger potencia';
-const RESULT_MS = 900;
+const HINT_SHORT = 'Arrastra más lejos para más potencia';
+const RESULT_MS = 1000;
 
 const isInteractive = (target: EventTarget | null): boolean => {
   const el = target as HTMLElement | null;
@@ -54,11 +55,9 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
   const [made, setMade] = useState(0);
   const [shots, setShots] = useState<boolean[]>([]);
   const [phase, setPhase] = useState<Phase>('aim');
-  const [aim, setAim] = useState<Aim | null>(null);
-  const curveRef = useRef(0);
+  const [aim, setAim] = useState<AimResult | null>(null);
   const [power, setPower] = useState(0);
   const [angle, setAngle] = useState(0);
-  const [curve, setCurve] = useState(0);
   const [result, setResult] = useState<'in' | 'out' | null>(null);
   const [missKind, setMissKind] = useState<MissKind | null>(null);
   const [hint, setHint] = useState<string | null>(null);
@@ -67,6 +66,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
   const arena = useRef<HTMLDivElement>(null);
   const ballEl = useRef<HTMLSpanElement>(null);
   const trailEl = useRef<SVGPolylineElement>(null);
+  const previewEl = useRef<SVGPolylineElement>(null);
 
   const phaseRef = useRef<Phase>('aim');
   const aspectRef = useRef(0.675);
@@ -79,8 +79,6 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
   const pointerId = useRef<number | null>(null);
   const startPoint = useRef<Vec | null>(null);
   const moved = useRef(false);
-  const angleRef = useRef(0);
-  const powerRef = useRef(0);
   const madeRef = useRef(0);
   const attemptRef = useRef(0);
   const done = useRef(false);
@@ -119,13 +117,21 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     el.setAttribute('points', points.map((p) => `${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(' '));
   }, []);
 
+  const paintPreview = useCallback((points: Vec[]) => {
+    const el = previewEl.current;
+    if (!el) return;
+    if (points.length < 2) { el.setAttribute('points', ''); return; }
+    el.setAttribute('points', points.map((p) => `${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(' '));
+  }, []);
+
   const measure = useCallback(() => {
     const el = arena.current;
     const r = el?.getBoundingClientRect();
-    const a = r && r.width > 0 && r.height > 0 && Number.isFinite(r.height / r.width) ? r.height / r.width : 0.675;
+    const a = r && r.width > 0 && r.height > 0 && Number.isFinite(r.height / r.width)
+      ? r.height / r.width : 0.675;
     aspectRef.current = a > 0 ? a : 0.675;
     setupRef.current = setupFor(origin, aspectRef.current);
-    const p = project(setupRef.current, 0, 13);
+    const p = project(setupRef.current, 0, RELEASE_HEIGHT);
     paintBall(p);
   }, [origin, paintBall]);
 
@@ -134,22 +140,21 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     pointerId.current = null;
     startPoint.current = null;
     moved.current = false;
-    angleRef.current = 0;
-    powerRef.current = 0;
-    curveRef.current = 0;
     setAim(null);
     setAngle(0);
     setPower(0);
-    setCurve(0);
-  }, []);
+    paintPreview([]);
+  }, [paintPreview]);
 
   const beginShot = useCallback((nextOrigin: Vec) => {
     setupRef.current = setupFor(nextOrigin, aspectRef.current);
     flightRef.current = null;
     trailRef.current = [];
     paintTrail([]);
-    paintBall(project(setupRef.current, 0, 13));
-  }, [paintBall, paintTrail]);
+    paintPreview([]);
+    const p = project(setupRef.current, 0, RELEASE_HEIGHT);
+    paintBall(p);
+  }, [paintBall, paintTrail, paintPreview]);
 
   const advance = useCallback(() => {
     if (!mounted.current) return;
@@ -182,7 +187,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     resetAim();
     setResult(made_ ? 'in' : 'out');
     setMissKind(kind);
-    try { navigator.vibrate?.(made_ ? [16, 36, 16] : 34); } catch { /* sin soporte */ }
+    try { navigator.vibrate?.(made_ ? [20, 40, 20] : 60); } catch { /* noop */ }
     if (made_) {
       madeRef.current += 1;
       setMade(madeRef.current);
@@ -191,16 +196,15 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     schedule(advance, RESULT_MS);
   }, [advance, resetAim, schedule, stopRaf]);
 
-  /** Lanza el balón con la puntería actual y simula el vuelo fotograma a fotograma. */
-  const shoot = useCallback((angleDeg: number, pwr: number) => {
+  /** Lanza con parámetros actuales y anima frame a frame. */
+  const shoot = useCallback((angleDeg: number, pwr: number, curve: number) => {
     if (phaseRef.current !== 'aim' || done.current || !mounted.current) return;
     if (pwr < MIN_PULL) {
       setHint(HINT_SHORT);
       return;
     }
     const setup = setupRef.current;
-    const shotCurve = curveRef.current;
-    const flight = createFlight(setup.origin, angleDeg, pwr, setup.aspect, shotCurve);
+    const flight = createFlight(setup.origin, angleDeg, pwr, setup.aspect, curve);
     flightRef.current = flight;
     trailRef.current = [project(setup, flight.s, flight.h, flight.lat)];
     phaseRef.current = 'flight';
@@ -208,13 +212,14 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     setAim(null);
     setHint(null);
     resetAim();
-    phaseRef.current = 'flight';
 
     if (motionReduced()) {
-      const sim = simulateShot(setup.origin, angleDeg, pwr, specRef.current, setup.aspect, shotCurve);
-      const last = sim.path[sim.path.length - 1] ?? project(setup, 0, 13);
+      const sim = simulateShot(setup.origin, angleDeg, pwr, specRef.current, setup.aspect);
+      const last = sim.path[sim.path.length - 1] ?? project(setup, 0, RELEASE_HEIGHT);
       paintBall(last);
-      const kind: MissKind | null = sim.made ? null : sim.touchedBoard ? 'long' : 'short';
+      const kind: MissKind | null = sim.made ? null
+        : sim.touchedBoard || sim.events.some(e => e === 'floor' && sim.path[sim.path.length-1].x > setup.distance)
+          ? 'long' : 'short';
       finish(sim.made, kind);
       return;
     }
@@ -222,32 +227,36 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     let acc = 0;
     let last = performance.now();
     let maxS = 0;
+
     const loop = (now: number) => {
       rafRef.current = 0;
       if (!mounted.current || !flightRef.current) return;
       const f = flightRef.current;
       acc += Math.min(0.05, Math.max(0, (now - last) / 1000));
       last = now;
+
       while (acc >= SUBSTEP && !f.done) {
         stepFlight(f, SUBSTEP, specRef.current, setup);
         acc -= SUBSTEP;
         if (f.s > maxS) maxS = f.s;
       }
+
       const p = project(setup, f.s, f.h, f.lat);
       paintBall(p);
+
       const trail = trailRef.current;
       trail.push(p);
-      if (trail.length > 14) trail.shift();
+      if (trail.length > 20) trail.shift();
       paintTrail(trail);
 
       if (f.done) {
         const kind: MissKind | null = f.made
           ? null
-          : f.touchedBoard || maxS > setup.distance + RIM_HALF
+          : f.touchedBoard || maxS > setup.distance + RIM_HALF * 2
             ? 'long'
-            : maxS < setup.distance - RIM_HALF
+            : maxS < setup.distance - RIM_HALF * 2
               ? 'short'
-              : 'side';
+              : f.lat < 0 ? 'left' : 'right';
         finish(f.made, kind);
         return;
       }
@@ -276,6 +285,8 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     beginShot(origin);
   }, [beginShot, origin]);
 
+  // --- POINTER HANDLING (arrastre DIRECTO) ---
+
   const point = (e: ReactPointerEvent<HTMLDivElement>): Vec => {
     const el = arena.current;
     if (!el) return { x: 50, y: 50 };
@@ -283,27 +294,6 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     const w = r.width > 0 ? r.width : 1;
     const h = r.height > 0 ? r.height : 1;
     return { x: ((e.clientX - r.left) / w) * 100, y: ((e.clientY - r.top) / h) * 100 };
-  };
-
-  const applyAim = (p: Vec) => {
-    const setup = setupRef.current;
-    const a = aimFromDrag(setup.origin, p, setup.aspect);
-    angleRef.current = a.angleDeg;
-    powerRef.current = a.power;
-    setAngle(a.angleDeg);
-    setPower(a.power);
-    curveRef.current = a.curve ?? 0;
-    setCurve(curveRef.current);
-    setAim({ pointer: { x: a.pullX, y: a.pullY }, angleDeg: a.angleDeg, power: a.power, curve: curveRef.current });
-    return a;
-  };
-
-  const dragMoved = (p: Vec): boolean => {
-    const s = startPoint.current;
-    if (!s) return false;
-    const dx = (p.x - s.x) / 100;
-    const dy = ((p.y - s.y) / 100) * aspectRef.current;
-    return Math.hypot(dx, dy) > 0.004;
   };
 
   const down = (e: ReactPointerEvent<HTMLDivElement>) => {
@@ -321,59 +311,80 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     pointerId.current = e.pointerId;
     startPoint.current = p;
     moved.current = false;
-    try { e.currentTarget.setPointerCapture?.(e.pointerId); } catch { /* sin soporte */ }
-    applyAim(p);
+    try { e.currentTarget.setPointerCapture?.(e.pointerId); } catch { /* noop */ }
+
+    // Preview inicial
+    const a = aimFromDrag(setupRef.current.origin, p, aspectRef.current);
+    setAim(a);
+    setAngle(a.angleDeg);
+    setPower(a.power);
   };
 
   const move = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (!dragging.current || pointerId.current !== e.pointerId || phaseRef.current !== 'aim') return;
     e.preventDefault();
     const p = point(e);
-    if (dragMoved(p)) moved.current = true;
-    applyAim(p);
+    if (!moved.current && startPoint.current) {
+      const dx = (p.x - startPoint.current.x) / 100;
+      const dy = ((p.y - startPoint.current.y) / 100) * aspectRef.current;
+      if (Math.hypot(dx, dy) > 0.004) moved.current = true;
+    }
+
+    const a = aimFromDrag(setupRef.current.origin, p, aspectRef.current);
+    setAim(a);
+    setAngle(a.angleDeg);
+    setPower(a.power);
   };
 
   const up = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (pointerId.current !== e.pointerId) return;
     pointerId.current = null;
-    try { e.currentTarget.releasePointerCapture?.(e.pointerId); } catch { /* ya no hay captura */ }
+    try { e.currentTarget.releasePointerCapture?.(e.pointerId); } catch { /* noop */ }
     if (!dragging.current) return;
     dragging.current = false;
     if (phaseRef.current !== 'aim' || done.current) return;
     e.preventDefault();
+
     const p = point(e);
-    if (dragMoved(p)) moved.current = true;
-    const a = applyAim(p);
+    if (!moved.current && startPoint.current) {
+      const dx = (p.x - startPoint.current.x) / 100;
+      const dy = ((p.y - startPoint.current.y) / 100) * aspectRef.current;
+      if (Math.hypot(dx, dy) > 0.004) moved.current = true;
+    }
+    const a = aimFromDrag(setupRef.current.origin, p, aspectRef.current);
+
     if (!moved.current || a.length < MIN_PULL) {
       resetAim();
       setHint(HINT_SHORT);
       return;
     }
-    shoot(a.angleDeg, a.power);
+    shoot(a.angleDeg, a.power, a.curve);
   };
 
   const cancel = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (pointerId.current !== e.pointerId) return;
     pointerId.current = null;
-    try { e.currentTarget.releasePointerCapture?.(e.pointerId); } catch { /* nada */ }
+    try { e.currentTarget.releasePointerCapture?.(e.pointerId); } catch { /* noop */ }
     if (phaseRef.current === 'aim') resetAim();
     dragging.current = false;
   };
 
+  // --- KEYBOARD ---
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (phaseRef.current !== 'aim' || done.current || isInteractive(e.target)) return;
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         e.preventDefault();
-        angleRef.current = clamp(angleRef.current + (e.key === 'ArrowLeft' ? -2 : 2), -20, 80);
-        setAngle(angleRef.current);
+        const newAngle = clamp(angle + (e.key === 'ArrowLeft' ? -2 : 2), 28, 75);
+        setAngle(newAngle);
       } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
         e.preventDefault();
-        powerRef.current = clamp(powerRef.current + (e.key === 'ArrowUp' ? 0.04 : -0.04), 0, 1);
-        setPower(powerRef.current);
+        const newPower = clamp(power + (e.key === 'ArrowUp' ? 0.05 : -0.05), 0, 1);
+        setPower(newPower);
       } else if (e.key === ' ' || e.key === 'Enter') {
         e.preventDefault();
-        shoot(angleRef.current, powerRef.current);
+        if (power >= MIN_PULL) shoot(angle, power, 0);
+        else setHint(HINT_SHORT);
       } else if (e.key === 'Escape') {
         e.preventDefault();
         resetAim();
@@ -382,22 +393,21 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [resetAim, shoot]);
+  }, [angle, power, resetAim, shoot]);
 
   useEffect(() => {
     const onBlur = () => { if (phaseRef.current === 'aim') resetAim(); };
     const onVis = () => { if (document.hidden && phaseRef.current === 'aim') resetAim(); };
     window.addEventListener('blur', onBlur);
     document.addEventListener('visibilitychange', onVis);
-    return () => {
-      window.removeEventListener('blur', onBlur);
-      document.removeEventListener('visibilitychange', onVis);
-    };
+    return () => { window.removeEventListener('blur', onBlur); document.removeEventListener('visibilitychange', onVis); };
   }, [resetAim]);
 
-  // --- Geometría de la cancha (en el viewBox 0..100, deformado por el aspecto).
+  // --- GEOMETRÍA CANCHA (viewBox 0..100) ---
+
   const setup = setupRef.current;
   const originProj = project(setup, 0, 0);
+
   const boardX = (() => {
     const p = project(setup, setup.distance + BACKBOARD_OFFSET, RIM_HEIGHT);
     return p.x;
@@ -411,22 +421,9 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
     return p.y;
   })();
 
-  // Ancho del aro en pantalla, con un mínimo para que siempre se vea.
   const rimWidth = Math.max(7, (Math.abs(RIM_X - setup.origin.x) * (2 * RIM_HALF)) / Math.max(1, setup.distance));
   const rimStart = { x: RIM_X - rimWidth / 2, y: RIM_Y };
   const rimEnd = { x: RIM_X + rimWidth / 2, y: RIM_Y };
-
-  const pullPath = (() => {
-    if (!aim) return '';
-    const o = project(setup, 0, 13);
-    const dx = aim.pointer.x - o.x;
-    const dy = aim.pointer.y - o.y;
-    const len = Math.hypot(dx, dy) || 1;
-    const sag = Math.min(2.2, len * 0.06);
-    const mx = (o.x + aim.pointer.x) / 2;
-    const my = (o.y + aim.pointer.y) / 2;
-    return `M ${o.x} ${o.y} Q ${mx - (dy / len) * sag} ${my + (dx / len) * sag} ${aim.pointer.x} ${aim.pointer.y}`;
-  })();
 
   const live = hint
     ? t(hint)
@@ -434,12 +431,12 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
       ? t(`Tiro ${Math.min(attempt + 1, attempts)} de ${attempts}: ${result === 'in' ? 'Dentro' : 'Fuera'}`)
       : '';
 
-  const missLabel = missKind === 'short' ? 'Corto' : missKind === 'long' ? 'Largo' : 'Desviado';
+  const missLabel = missKind === 'short' ? 'Corto' : missKind === 'long' ? 'Largo' : missKind === 'left' ? 'Izquierda' : 'Derecha';
 
   return (
     <div className={`drag-game ${result ?? ''}`}>
       <div className="shot-top">
-        <span className="tiny dim">{t(DRAG_HELP)}</span>
+        <span className="tiny dim">{t(INSTRUCTION)}</span>
         <span className="shot-score"><b>{made}</b> / {attempts}</span>
       </div>
 
@@ -453,61 +450,130 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
         onContextMenu={(e) => e.preventDefault()}
         role="application"
         tabIndex={0}
-        aria-label={t(`Arrastra el balón hacia atrás y suelta. Tiro ${Math.min(attempt + 1, attempts)} de ${attempts}`)}
+        aria-label={t(`Arrastra el balón hacia donde quieras tirar. Tiro ${Math.min(attempt + 1, attempts)} de ${attempts}`)}
       >
         <svg className="drag-court" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <defs>
             <linearGradient id="dragFloor" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#241a12" />
-              <stop offset="60%" stopColor="#33231546" />
-              <stop offset="100%" stopColor="#4a2f1b" />
+              <stop offset="0%" stopColor="#1e1510" />
+              <stop offset="50%" stopColor="#2d1f15" />
+              <stop offset="100%" stopColor="#3d2a18" />
             </linearGradient>
+            <linearGradient id="rimGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#e8a030" />
+              <stop offset="50%" stopColor="#ffcc44" />
+              <stop offset="100%" stopColor="#e8a030" />
+            </linearGradient>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
           </defs>
+
           <rect x="0" y="0" width="100" height="100" fill="url(#dragFloor)" />
-          {/* suelo: bandas de madera */}
-          <g className="drag-wood" aria-hidden="true">
-            {Array.from({ length: 9 }, (_, i) => (
-              <line key={i} x1={-10 + i * 15} y1="100" x2={26 + i * 9} y2="56" />
+
+          {/* Suelo: bandas madera perspectiva */}
+          <g className="drag-wood" aria-hidden="true" stroke="#2a1a10" strokeWidth="0.3" opacity="0.4">
+            {Array.from({ length: 10 }, (_, i) => (
+              <line key={i} x1={-15 + i * 18} y1="100" x2={20 + i * 10} y2="56" />
             ))}
           </g>
-          {/* líneas de la cancha en perspectiva */}
-          <path className="drag-line" d="M 6 96 L 30 56 L 96 56" vectorEffect="non-scaling-stroke" />
-          <path className="drag-line" d="M 0 74 L 22 56" vectorEffect="non-scaling-stroke" />
-          <ellipse className="drag-line" cx={boardX - 60} cy="78" rx="30" ry="9" vectorEffect="non-scaling-stroke" />
-          {/* poste y tablero */}
-          <line className="drag-pole" x1={boardX} y1={RIM_Y} x2={boardX} y2="94" vectorEffect="non-scaling-stroke" />
-          <line className="drag-board" x1={boardX} y1={boardTopY} x2={boardX} y2={boardBottomY} vectorEffect="non-scaling-stroke" />
-          {/* aro */}
-          <line className="drag-rim" x1={rimStart.x} y1={rimStart.y} x2={rimEnd.x} y2={rimEnd.y} vectorEffect="non-scaling-stroke" />
-          {/* red */}
+
+          {/* Líneas cancha */}
+          <path className="drag-line" d="M 6 96 L 28 56 L 96 56" vectorEffect="non-scaling-stroke" stroke="#4a3520" strokeWidth="0.6" fill="none" />
+          <path className="drag-line" d="M 0 74 L 20 56" vectorEffect="non-scaling-stroke" stroke="#4a3520" strokeWidth="0.6" fill="none" />
+          <ellipse className="drag-line" cx={boardX - 55} cy="78" rx="28" ry="8" vectorEffect="non-scaling-stroke" stroke="#4a3520" strokeWidth="0.5" fill="none" />
+
+          {/* Zona pintada (key) */}
+          <path className="drag-line" d={`M ${boardX - 12} 56 L ${boardX - 12} 72`} vectorEffect="non-scaling-stroke" stroke="#4a3520" strokeWidth="0.5" fill="none" />
+          <ellipse cx={boardX - 12} cy="64" rx="12" ry="6" vectorEffect="non-scaling-stroke" stroke="#4a3520" strokeWidth="0.5" fill="none" />
+
+          {/* Poste y tablero */}
+          <line className="drag-pole" x1={boardX} y1={RIM_Y} x2={boardX} y2="94" vectorEffect="non-scaling-stroke" stroke="#555" strokeWidth="1.2" />
+          <line className="drag-board" x1={boardX} y1={boardTopY} x2={boardX} y2={boardBottomY} vectorEffect="non-scaling-stroke" stroke="#fff" strokeWidth="3" filter="url(#glow)" />
+          <rect x={boardX - 0.8} y={boardBottomY} width="1.6" height={boardTopY - boardBottomY} fill="#fff" opacity="0.9" rx="0.8" />
+
+          {/* Aro */}
+          <line className="drag-rim" x1={rimStart.x} y1={rimStart.y} x2={rimEnd.x} y2={rimEnd.y} vectorEffect="non-scaling-stroke" stroke="url(#rimGrad)" strokeWidth="1.8" filter="url(#glow)" />
+          <line className="drag-rim" x1={rimStart.x} y1={rimStart.y} x2={rimEnd.x} y2={rimEnd.y} vectorEffect="non-scaling-stroke" stroke="#b8860b" strokeWidth="0.6" />
+
+          {/* Red */}
           <path
             className="drag-net"
-            d={`M ${rimStart.x} ${rimStart.y} L ${rimStart.x + rimWidth * 0.18} ${rimStart.y + 9} L ${rimStart.x + rimWidth * 0.82} ${rimStart.y + 9} L ${rimEnd.x} ${rimEnd.y}`}
+            d={`M ${rimStart.x} ${rimStart.y} L ${rimStart.x + rimWidth * 0.15} ${rimStart.y + 10} L ${rimStart.x + rimWidth * 0.85} ${rimStart.y + 10} L ${rimEnd.x} ${rimEnd.y}`}
             vectorEffect="non-scaling-stroke"
+            stroke="#e8e0d0"
+            strokeWidth="0.4"
+            fill="none"
           />
-          <path className="drag-net-line" d={`M ${rimStart.x + rimWidth * 0.5} ${rimStart.y + 9} L ${rimStart.x + rimWidth * 0.5} ${rimStart.y + 1}`} vectorEffect="non-scaling-stroke" />
-          <polyline className="drag-trail" ref={trailEl} points="" />
-          {aim && <path className="drag-pull" d={pullPath} vectorEffect="non-scaling-stroke" />}
+          <path className="drag-net-line" d={`M ${rimStart.x + rimWidth * 0.5} ${rimStart.y + 10} L ${rimStart.x + rimWidth * 0.5} ${rimStart.y + 1}`} vectorEffect="non-scaling-stroke" stroke="#e8e0d0" strokeWidth="0.3" />
+
+          {/* Trayectoria PREVIEW (mientras arrastras) */}
+          {aim && aim.previewPath.length > 1 && (
+            <polyline
+              ref={previewEl}
+              points={aim.previewPath.map((p) => `${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(' ')}
+              className="drag-preview"
+              vectorEffect="non-scaling-stroke"
+              stroke="#ffcc44"
+              strokeWidth="1.2"
+              strokeDasharray="4,3"
+              fill="none"
+              opacity="0.8"
+            />
+          )}
+
+          {/* Trayectoria REAL (durante vuelo) */}
+          <polyline className="drag-trail" ref={trailEl} points="" vectorEffect="non-scaling-stroke" stroke="#ffcc44" strokeWidth="1.5" fill="none" opacity="0.9" />
+
+          {/* Línea de arrastre (guía visual) */}
+          {aim && (
+            <path
+              className="drag-pull"
+              d={( () => {
+                const o = project(setup, 0, RELEASE_HEIGHT);
+                const dx = aim.pullEnd.x - o.x;
+                const dy = aim.pullEnd.y - o.y;
+                const len = Math.hypot(dx, dy) || 1;
+                const sag = Math.min(3, len * 0.08);
+                const mx = (o.x + aim.pullEnd.x) / 2;
+                const my = (o.y + aim.pullEnd.y) / 2;
+                return `M ${o.x} ${o.y} Q ${mx - (dy / len) * sag} ${my + (dx / len) * sag} ${aim.pullEnd.x} ${aim.pullEnd.y}`;
+              })()}
+              vectorEffect="non-scaling-stroke"
+              stroke="#ffcc44"
+              strokeWidth="2"
+              strokeDasharray="6,4"
+              fill="none"
+              opacity="0.7"
+            />
+          )}
         </svg>
 
-        <span className="drag-shadow" style={{ left: `${originProj.x}%`, top: `${originProj.y}%` }} aria-hidden="true" />
+        {/* Sombra balón */}
+        <span className="drag-shadow" style={{ left: `${originProj.x}%`, top: `${originProj.y + 2}%` }} aria-hidden="true" />
+
+        {/* Jugador (silhouette) */}
         <span className="drag-player" style={{ left: `${originProj.x}%`, top: `${originProj.y}%` }} aria-hidden="true" />
 
+        {/* Balón */}
         <span
           className={`drag-ball${phase === 'flight' ? ' flying' : ''}`}
           ref={ballEl}
-          style={{ left: `${project(setup, 0, 13).x}%`, top: `${project(setup, 0, 13).y}%` }}
+          style={{ left: `${project(setup, 0, RELEASE_HEIGHT).x}%`, top: `${project(setup, 0, RELEASE_HEIGHT).y}%` }}
           aria-hidden="true"
         />
 
+        {/* Ghost pointer mientras arrastras */}
         {aim && (
           <span
             className="drag-ghost"
-            style={{ left: `${aim.pointer.x}%`, top: `${aim.pointer.y}%` }}
+            style={{ left: `${aim.pullEnd.x}%`, top: `${aim.pullEnd.y}%` }}
             aria-hidden="true"
           />
         )}
 
+        {/* Mensaje resultado */}
         {result && (
           <span className={`drag-msg ${result}`}>
             {result === 'in' ? t('¡DENTRO!') : t(missLabel)}
@@ -517,14 +583,17 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
         <div className="sr-only" aria-live="polite" aria-atomic="true">{live}</div>
       </div>
 
-      <div className="drag-power" aria-hidden="true">
+      {/* Barra potencia */}
+      <div className="drag-power" aria-hidden="true" role="progressbar" aria-valuenow={Math.round(power * 100)} aria-valuemin={0} aria-valuemax={100}>
         <span style={{ width: `${Math.round(power * 100)}%` }} />
       </div>
+
       <div className="row between drag-meta">
-        <span className="tiny dim">{t('Potencia')} {Math.round(power * 100)}% · {t('Ángulo')} {Math.round(angle)}° · {t('Curva')} {Math.round(curve * 100)}%</span>
+        <span className="tiny dim">{t('Potencia')} {Math.round(power * 100)}% · {t('Ángulo')} {Math.round(angle)}°</span>
         <span className="tiny dim">{t('Tiro')} {Math.min(attempt + 1, attempts)}/{attempts}</span>
       </div>
 
+      {/* Puntos aciertos */}
       <div className="mg-dots" aria-label={`${made} aciertos`}>
         {Array.from({ length: attempts }, (_, i) => (
           <span key={i} className={i < shots.length ? (shots[i] ? 'hit' : 'miss') : ''} />
@@ -533,7 +602,7 @@ export function DragShotGame({ spec, onDone, onSimulate }: {
 
       <div className="row between" style={{ marginTop: 10 }}>
         <span className="tiny dim">
-          {t('Flechas: ángulo y potencia')} · {t('Espacio/Enter: lanzar')} · {t('zona')} {spec.zone}%
+          {t('Flechas: ángulo/potencia')} · {t('Espacio/Enter: lanzar')} · {t('Esc: cancelar')} · {t('zona')} {spec.zone}%
         </span>
         {phase === 'aim' && shots.length === 0 && (
           <button type="button" className="btn sm ghost" onClick={onSimulate}>{t('Simular')}</button>
