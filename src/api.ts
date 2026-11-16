@@ -94,6 +94,57 @@ export function createApp() {
     return c.json({ user });
   });
 
+  // The authenticated account is the owner of the active career. The browser
+  // keeps a local copy for fast startup/offline play, while this is the source
+  // used to restore it on another device.
+  app.get('/api/me/career', requireAuth, async (c) => {
+    const user = c.get('user')!;
+    const saved = await c.get('db').select().from(schema.accountCareers)
+      .where(eq(schema.accountCareers.userId, user.id)).get();
+    if (!saved) return c.json({ career: null, updatedAt: null });
+
+    try {
+      return c.json({ career: JSON.parse(saved.payload), updatedAt: saved.updatedAt.getTime() });
+    } catch {
+      return c.json({ error: 'No se pudo leer la carrera guardada' }, 500);
+    }
+  });
+
+  app.put('/api/me/career', requireAuth, async (c) => {
+    const user = c.get('user')!;
+    const raw = await c.req.text();
+    if (new TextEncoder().encode(raw).byteLength > 1_500_000) {
+      return c.json({ error: 'La carrera supera el tamaño permitido' }, 413);
+    }
+
+    let body: { career?: unknown };
+    try {
+      body = JSON.parse(raw) as { career?: unknown };
+    } catch {
+      return c.json({ error: 'Solicitud no válida' }, 400);
+    }
+
+    const career = body.career as { id?: unknown; updatedAt?: unknown } | undefined;
+    if (!career || typeof career !== 'object' || typeof career.id !== 'string' || !career.id ||
+        typeof career.updatedAt !== 'number' || !Number.isFinite(career.updatedAt)) {
+      return c.json({ error: 'Carrera no válida' }, 400);
+    }
+
+    const payload = JSON.stringify(body.career);
+    const updatedAt = new Date();
+    await c.get('db').insert(schema.accountCareers).values({
+      userId: user.id,
+      careerId: career.id,
+      payload,
+      updatedAt,
+    }).onConflictDoUpdate({
+      target: schema.accountCareers.userId,
+      set: { careerId: career.id, payload, updatedAt },
+    });
+
+    return c.json({ ok: true, careerId: career.id, updatedAt: updatedAt.getTime() });
+  });
+
   // Claim guest data
   app.post('/api/me/claim-guest', requireAuth, async (c) => {
     const db = c.get('db');

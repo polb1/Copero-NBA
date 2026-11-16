@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, useCallback, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback, useRef, ReactNode } from 'react';
 
 interface User {
   id: string;
@@ -64,6 +64,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     refreshSession();
   }, [refreshSession]);
 
+  const syncedAccountId = useRef<string | null>(null);
+  useEffect(() => {
+    if (!user?.id) {
+      if (syncedAccountId.current) {
+        syncedAccountId.current = null;
+        void import('../../store/store').then((m) => m.stopAccountCareerSync());
+      }
+      return;
+    }
+
+    syncedAccountId.current = user.id;
+    let cancelled = false;
+    void import('../../store/store').then((m) => {
+      if (!cancelled) return m.syncAccountCareer(user.id);
+      return undefined;
+    }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [user?.id]);
+
   const login = async (email: string, password: string, turnstileToken: string) => {
     const res = await fetch('/api/auth/sign-in/email', {
       method: 'POST',
@@ -89,6 +108,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
+    try {
+      const saves = await import('../../store/store');
+      await saves.flushAccountCareerSave();
+    } catch { /* The local copy remains saved if the network is unavailable. */ }
     await fetch('/api/auth/sign-out', { method: 'POST', credentials: 'include' });
     setUser(null);
   };

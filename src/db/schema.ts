@@ -154,6 +154,16 @@ export const guest = sqliteTable('guest', {
   index('idx_guest_claimed_by').on(table.claimedBy),
 ]);
 
+/** One active career per authenticated account, shared across browsers and devices. */
+export const accountCareers = sqliteTable('account_careers', {
+  userId: text('user_id').primaryKey().references(() => user.id, { onDelete: 'cascade' }),
+  careerId: text('career_id').notNull(),
+  payload: text('payload').notNull(),
+  updatedAt: integer('updated_at', { mode: 'timestamp_ms' }).notNull(),
+}, (table) => [
+  index('idx_account_careers_updated').on(table.updatedAt),
+]);
+
 // ============================================
 // RELATIONS (for Better Auth)
 // ============================================

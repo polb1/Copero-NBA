@@ -17,6 +17,7 @@ const KEY_HISTORY = 'nbalegacy:history';
 const KEY_STREAK = 'nbalegacy:streak';
 const KEY_SETTINGS = 'nbalegacy:settings';
 const KEY_LAST = 'nbalegacy:last';
+const KEY_ACCOUNT_OWNER = 'nbalegacy:account-owner';
 
 export interface SlotMeta {
   id: string;
@@ -74,14 +75,20 @@ function metaFor(c: Career): SlotMeta {
 
 export function saveCareer(c: Career): boolean {
   c.updatedAt = Date.now();
+  const priorOwner = read<{ careerId: string; userId: string | null } | null>(KEY_ACCOUNT_OWNER, null);
+  const ownerId = priorOwner?.careerId === c.id
+    ? priorOwner.userId
+    : accountUserId && accountSyncReady ? accountUserId : null;
   // One career at a time: starting a new one replaces the previous save (finished ones live on in the history).
   for (const s of listSlots()) if (s.id !== c.id) deleteSlot(s.id);
   const ok = write(KEY_SAVE(c.id), c);
   write(KEY_INDEX, [metaFor(c)]);
+  write(KEY_ACCOUNT_OWNER, { careerId: c.id, userId: ownerId });
   touchStreak();
   if (c.retirement) recordHistory(c);
   write(KEY_LAST, c.id);
   mergeAchievements(c.achievements);
+  queueAccountCareerSave(c);
   return ok;
 }
 
@@ -103,6 +110,8 @@ export function deleteSlot(id: string) {
     /* ignore */
   }
   write(KEY_INDEX, listSlots().filter((s) => s.id !== id));
+  const owner = read<{ careerId: string; userId: string | null } | null>(KEY_ACCOUNT_OWNER, null);
+  if (owner?.careerId === id) write(KEY_ACCOUNT_OWNER, null);
 }
 
 export function lastSlotId(): string | null {
@@ -267,15 +276,126 @@ interface State {
   toasts: { id: number; text: string }[];
   settings: Settings;
   saveError: boolean;
+  accountCareerStatus: 'local' | 'syncing' | 'saved' | 'empty' | 'error';
 }
 
-let state: State = { career: null, busy: null, sim: null, simFast: false, toasts: [], settings: getSettings(), saveError: false };
+let state: State = { career: null, busy: null, sim: null, simFast: false, toasts: [], settings: getSettings(), saveError: false, accountCareerStatus: 'local' };
 const listeners = new Set<() => void>();
 const emit = () => listeners.forEach((l) => l());
 const set = (patch: Partial<State>) => {
   state = { ...state, ...patch };
   emit();
 };
+
+let accountUserId: string | null = null;
+let accountSyncReady = false;
+let accountSyncVersion = 0;
+let accountSaveTimer: ReturnType<typeof setTimeout> | null = null;
+let pendingAccountCareer: Career | null = null;
+
+async function uploadAccountCareer(userId: string, version: number, career: Career): Promise<boolean> {
+  try {
+    const response = await fetch('/api/me/career', {
+      method: 'PUT',
+      credentials: 'include',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ career }),
+    });
+    if (!response.ok) throw new Error(`Guardado en cuenta: ${response.status}`);
+    if (version === accountSyncVersion && userId === accountUserId) {
+      write(KEY_ACCOUNT_OWNER, { careerId: career.id, userId });
+      set({ accountCareerStatus: 'saved' });
+    }
+    return true;
+  } catch {
+    if (version === accountSyncVersion && userId === accountUserId) set({ accountCareerStatus: 'error' });
+    return false;
+  }
+}
+
+function queueAccountCareerSave(career: Career) {
+  if (!accountUserId || !accountSyncReady) return;
+  set({ accountCareerStatus: 'syncing' });
+  pendingAccountCareer = career;
+  if (accountSaveTimer) clearTimeout(accountSaveTimer);
+  const userId = accountUserId;
+  const version = accountSyncVersion;
+  accountSaveTimer = setTimeout(() => {
+    accountSaveTimer = null;
+    const pending = pendingAccountCareer;
+    pendingAccountCareer = null;
+    if (pending && version === accountSyncVersion && userId === accountUserId) {
+      void uploadAccountCareer(userId, version, pending);
+    }
+  }, 500);
+}
+
+/** Stop syncing when the account signs out or changes. The local save remains available. */
+export function stopAccountCareerSync() {
+  accountSyncVersion += 1;
+  accountUserId = null;
+  accountSyncReady = false;
+  pendingAccountCareer = null;
+  if (accountSaveTimer) clearTimeout(accountSaveTimer);
+  accountSaveTimer = null;
+  set({ accountCareerStatus: 'local' });
+}
+
+/** Restore the newest local/account copy, then keep both copies in sync. */
+export async function syncAccountCareer(userId: string) {
+  if (accountUserId === userId && accountSyncReady) return;
+  accountSyncVersion += 1;
+  const version = accountSyncVersion;
+  accountUserId = userId;
+  accountSyncReady = false;
+  pendingAccountCareer = null;
+  if (accountSaveTimer) clearTimeout(accountSaveTimer);
+  accountSaveTimer = null;
+  set({ accountCareerStatus: 'syncing' });
+
+  // Finish the current local write before comparing it with the account copy.
+  flushSave();
+  try {
+    const response = await fetch('/api/me/career', { credentials: 'include', headers: { accept: 'application/json' } });
+    if (!response.ok) throw new Error(`No se pudo leer la carrera de la cuenta (${response.status})`);
+    const remote = await response.json() as { career?: Career | null; updatedAt?: number | null };
+    if (version !== accountSyncVersion || userId !== accountUserId) return;
+
+    const localId = lastSlotId();
+    const diskCareer = localId ? loadCareer(localId) : null;
+    const liveCareer = state.career;
+    const storedOwner = read<{ careerId: string; userId: string | null } | null>(KEY_ACCOUNT_OWNER, null);
+    const latestLocal = liveCareer && (!diskCareer || liveCareer.updatedAt >= diskCareer.updatedAt) ? liveCareer : diskCareer;
+    const belongsToAnotherAccount = Boolean(latestLocal && storedOwner?.careerId === latestLocal.id &&
+      storedOwner.userId && storedOwner.userId !== userId);
+    const local = belongsToAnotherAccount ? null : latestLocal;
+    let selected: Career | null = null;
+
+    if (remote.career && (!local || (remote.updatedAt ?? remote.career.updatedAt) >= local.updatedAt)) {
+      selected = remote.career;
+      store.setCareer(selected, false);
+      saveCareer(selected);
+      write(KEY_ACCOUNT_OWNER, { careerId: selected.id, userId });
+    } else if (local) {
+      selected = local;
+      if (!await uploadAccountCareer(userId, version, local)) throw new Error('No se pudo subir la carrera local');
+    } else if (belongsToAnotherAccount && latestLocal) {
+      // Never copy one account's private career into a different account.
+      deleteSlot(latestLocal.id);
+      if (state.career?.id === latestLocal.id) store.setCareer(null, false);
+    }
+
+    if (version !== accountSyncVersion || userId !== accountUserId) return;
+    accountSyncReady = true;
+    const latest = state.career;
+    if (latest && selected && latest.updatedAt > selected.updatedAt) queueAccountCareerSave(latest);
+    set({ accountCareerStatus: selected ? 'saved' : 'empty' });
+  } catch {
+    if (version !== accountSyncVersion || userId !== accountUserId) return;
+    accountSyncReady = true;
+    set({ accountCareerStatus: 'error' });
+  }
+}
 
 // ---------- Live simulation worker ----------
 let worker: Worker | null | undefined;
@@ -346,8 +466,10 @@ function scheduleSave(c: Career) {
 }
 // Never lose the last action when the tab is closed or the app goes to the background.
 if (typeof window !== 'undefined') {
-  window.addEventListener('pagehide', flushSave);
-  document.addEventListener('visibilitychange', () => document.visibilityState === 'hidden' && flushSave());
+  window.addEventListener('pagehide', () => { flushSave(); void flushAccountCareerSave(); });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') { flushSave(); void flushAccountCareerSave(); }
+  });
 }
 
 export const store = {
@@ -449,6 +571,17 @@ export const store = {
     set({ settings: s });
   },
 };
+
+/** Complete the pending account write before signing out or leaving the page. */
+export async function flushAccountCareerSave(): Promise<boolean> {
+  store.flush();
+  if (!accountUserId || !accountSyncReady) return false;
+  if (accountSaveTimer) clearTimeout(accountSaveTimer);
+  accountSaveTimer = null;
+  const career = pendingAccountCareer ?? state.career;
+  pendingAccountCareer = null;
+  return career ? uploadAccountCareer(accountUserId, accountSyncVersion, career) : true;
+}
 
 export function useStore<T>(sel: (s: State) => T): T {
   return useSyncExternalStore(store.subscribe, () => sel(store.get()));

@@ -34,6 +34,7 @@ import { LangSwitch } from '../../ui/LangSwitch';
 import { ConfirmModal } from '../../ui/ConfirmModal';
 import { Minigame } from '../../ui/Minigame';
 import { MINIGAME_TIER_LABEL } from '../../content/minigames';
+import { useAuth } from '../Auth';
 
 const num = (n: number) => Math.round(n).toLocaleString('es-ES');
 
@@ -79,6 +80,7 @@ export function Play() {
         </div>
       </div>
       <div className="play-tools">
+        <AccountSaveStatus />
         <Link to="/careers" className="btn sm ghost"><Icon name="trophy" /> Mis carreras</Link>
         <LangSwitch />
         {c.phase !== 'retired' && <Link to="/start" className="btn sm ghost"><Icon name="history" /> Reiniciar</Link>}
@@ -87,6 +89,21 @@ export function Play() {
       <div className="toasts" aria-live="polite">{toasts.map((t) => <div key={t.id} className="toast">{t.text}</div>)}</div>
     </div>
   );
+}
+
+function AccountSaveStatus() {
+  const { isAuthenticated } = useAuth();
+  const status = useStore((s) => s.accountCareerStatus);
+
+  if (!isAuthenticated) {
+    return <span className="account-save-status local">Solo en este navegador · <Link to="/auth/login">Inicia sesión para sincronizar</Link></span>;
+  }
+  if (status === 'syncing') return <span className="account-save-status syncing">Sincronizando con tu cuenta…</span>;
+  if (status === 'error') {
+    return <span className="account-save-status error">No se pudo sincronizar; la copia local sigue guardada.</span>;
+  }
+  if (status === 'empty') return <span className="account-save-status">Aún no hay una carrera guardada en esta cuenta.</span>;
+  return <span className="account-save-status saved">Carrera guardada en tu cuenta</span>;
 }
 
 /**
