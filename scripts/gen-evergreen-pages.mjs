@@ -94,7 +94,7 @@ for (const p of pages) {
       url,
       inLanguage: 'es',
       isPartOf: { '@type': 'WebSite', name: 'Anillero', url: SITE },
-      mainEntity: { '@type': p.ld['@type'], name: p.ld.name },
+      mainEntity: { '@type': p.ld['@type'], name: p.ld.name, description: p.description },
     })}</script>
     ${style}
   </head>
