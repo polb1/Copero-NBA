@@ -178,20 +178,24 @@ def main() -> None:
     (OUT / "jugador").mkdir(parents=True, exist_ok=True)
     urls: list[str] = []
     vistos: set[str] = set()
+    mismos: set[tuple[str, str]] = set()
     por_equipo: dict[str, list[dict]] = {}
     hof: list[dict] = []
 
     for p in activos:
         nombre = f"{p['first_name']} {p['last_name']}".strip()
-        equipo = p["team"]["full_name"]
-        liga = "NBA"
+        t = p["team"]
+        # balldontlie repite ciudad y nombre en clubes no NBA ("Real Madrid Real Madrid")
+        equipo = t["name"] if t.get("city") and t["city"] in (t.get("name") or "") else t["full_name"]
+        liga = "NBA" if (t.get("conference") or "").strip() else ""  # sin conferencia = club fuera de la NBA
         actual = club_actual.get(nombre)
-        retirado = actual is None  # no está en ninguna plantilla 2026-27
+        retirado = actual is None  # no está en ninguna plantilla 2026-27 (no implica Hall of Fame)
         if actual:
             equipo, liga = actual["club"], actual["liga"]
         s = slug(nombre)
-        if not s:
+        if not s or (nombre, equipo) in mismos:  # la fuente repite al mismo jugador con otro id
             continue
+        mismos.add((nombre, equipo))
         if s in vistos:  # homónimos: se distinguen por id para no pisarse
             s = f"{s}-{p['id']}"
         vistos.add(s)
@@ -204,7 +208,7 @@ def main() -> None:
 
         altura = p.get("height") or "—"
         peso = p.get("weight") or "—"
-        titulo = (f"{nombre} · Hall of Fame · {equipo} | Anillero" if retirado else f"{nombre} · {equipo} · NBA | Anillero")
+        titulo = f"{nombre} · {equipo}{(' · ' + liga) if liga and not retirado else ''} | Anillero"
 
         filas_partidos = "".join(
             f'<li><a href="/partido/{slug(r["home"])}--{slug(r["away"])}--{r["date"]}">'
@@ -229,8 +233,8 @@ def main() -> None:
                   "SF": "alero", "PF": "ala-pívot", "G-F": "escolta-alero", "F-G": "alero-escolta",
                   "F-C": "alero-pívot", "C-F": "pívot-ala"}
         pos_larga = POS_ES.get((p.get("position") or "").upper(), (p.get("position") or "jugador"))
-        seccion_perfil = "Hall of Fame" if retirado else "Perfil"
-        etiqueta = '<span class="hof">Hall of Fame</span> · ' if retirado else ""
+        seccion_perfil = "Perfil"
+        etiqueta = ""
         bloque_partidos = "" if retirado else (
             "<h2>Últimos partidos del equipo</h2>"
             f"<ul>{filas_partidos}</ul>"
@@ -242,9 +246,9 @@ def main() -> None:
 
         if retirado:
             contexto = (
-                f"{nombre} fue {('un ' + pos_larga) if p.get('position') else 'un jugador'}"
+                f"{nombre} es {('un ' + pos_larga) if p.get('position') else 'un jugador'}"
                 f" de {altura}{formacion}{origen}, {draft}."
-                f" Su última camiseta en la NBA fue la de {equipo}."
+                f" Su último equipo registrado es {equipo}."
             )
         else:
             contexto = (
@@ -271,7 +275,7 @@ def main() -> None:
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{esc(titulo)}</title>
-<meta name="description" content="{esc(nombre)}, {esc(p.get('position') or 'jugador')} de {esc(equipo)} en la NBA: perfil, equipo, clasificación y últimos partidos." />
+<meta name="description" content="{esc(nombre)}, {esc(p.get('position') or 'jugador')} {'con último equipo registrado en ' if retirado else 'de '}{esc(equipo)}{(' (' + esc(liga) + ')') if liga else ''}: perfil, trayectoria y partidos." />
 <link rel="canonical" href="https://anillero.com/jugador/{s}" />
 <meta property="og:type" content="profile" />
 <meta property="og:title" content="{esc(nombre)} · {esc(equipo)}" />

@@ -85,7 +85,7 @@ const shell = (title, desc, canonical, kicker, h1, lead, navHTML, body) => `<!do
 </head>
 <body>
 <div class="wrap">
-  <p class="crumbs"><a href="/">Anillero</a> · <a href="/hall-of-fame">Hall of Fame</a>${kicker ? ` · ${esc(kicker)}` : ''}</p>
+  <p class="crumbs"><a href="/">Anillero</a> · <a href="/hall-of-fame">Jugadores históricos</a>${kicker ? ` · ${esc(kicker)}` : ''}</p>
   <header class="hero">
     <span class="kicker">${esc(kicker || 'Leyendas')}</span>
     <h1>${esc(h1)}</h1>
@@ -116,11 +116,11 @@ const decCards = orden.map((d) => `
       </a>`).join('');
 
 const index = shell(
-  'Hall of Fame del baloncesto: leyendas por generación | Anillero',
-  `Las leyendas del baloncesto por generación: ${hof.length} jugadores retirados con ficha de posición, draft, altura y último equipo.`,
+  'Jugadores históricos de la NBA por generación | Anillero',
+  `Jugadores de la NBA por generación de draft: ${hof.length} jugadores sin equipo en las plantillas actuales, con ficha de posición, draft, altura y último equipo.`,
   `${SITE}/hall-of-fame`,
-  'Leyendas',
-  'Hall of Fame',
+  'Por generación',
+  'Jugadores históricos',
   `${hof.length} jugadores retirados que ya son historia del baloncesto, ordenados por la generación de su draft.`,
   nav,
   `<div class="decs">${decCards}</div>`,
@@ -132,11 +132,11 @@ fs.writeFileSync(path.join(OUT, 'hall-of-fame', 'index.html'), index);
 for (const d of orden) {
   const lista = grupos.get(d);
   const pg = shell(
-    `Hall of Fame · ${d} | Anillero`,
+    `Jugadores históricos · ${d} | Anillero`,
     `${lista.length} jugadores draftados en los ${d}: fichas con posición, altura, universidad y último equipo.`,
     `${SITE}/hall-of-fame/${dslug(d)}`,
     d,
-    `Hall of Fame · ${d}`,
+    `Jugadores históricos · ${d}`,
     `${lista.length} jugadores draftados en los ${d}. Entra en cualquiera para ver su ficha completa.`,
     nav,
     `<div class="grid">${lista.map(tarjeta).join('')}</div>`,

@@ -33,9 +33,11 @@ export function GameShell() {
 }
 
 /** Language landings (/en/, /ca/) go straight into the game: the current career, or creating one. */
+// /en y /ca son landings indexables: sin carrera se muestra la creación en la misma URL
+// (antes redirigía a /start, que es noindex, y Google veía las landings como no indexables).
 export function GameEntry() {
   const c = useCareer();
-  return <Navigate to={c ? '/play' : '/start'} replace />;
+  return c ? <Navigate to="/play" replace /> : <Start />;
 }
 
 /** /play only makes sense with a career: without one, start creating it. */

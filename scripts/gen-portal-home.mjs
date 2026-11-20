@@ -81,7 +81,7 @@ const portal = `
             <a href="/liga/greek-basket-league">GBL</a>
             <a href="/liga/basketbol-super-ligi">BSL</a>
             <a href="/jugadores">Jugadores</a>
-            <a href="/hall-of-fame">Hall of Fame</a>
+            <a href="/hall-of-fame">Jugadores históricos</a>
             <a class="cta" href="/play">Jugar al simulador</a>
           </nav>
         </header>
@@ -116,7 +116,7 @@ const portal = `
 
         <footer>
           <p>Datos de fuentes públicas oficiales (ESPN, EuroLeague, ACB, ESAKE y API-Basketball). Última actualización: ${esc(actualizado)}.</p>
-          <p><a href="/manager-de-baloncesto">Manager de baloncesto</a> · <a href="/juegos-de-baloncesto-online">Juegos de baloncesto online</a> · <a href="/hall-of-fame">Hall of Fame</a> · <a href="/jugadores">Jugadores</a></p>
+          <p><a href="/manager-de-baloncesto">Manager de baloncesto</a> · <a href="/juegos-de-baloncesto-online">Juegos de baloncesto online</a> · <a href="/hall-of-fame">Jugadores históricos</a> · <a href="/jugadores">Jugadores</a></p>
           <p><a href="/legal/fuentes">Fuentes y licencias</a> · <a href="/legal/aviso-legal">Aviso legal</a> · <a href="/legal/privacidad">Privacidad</a></p>
         </footer>
       </div>
@@ -177,6 +177,11 @@ const start = html.indexOf('<div id="root">');
 const end = html.indexOf('<script', start);
 if (start === -1 || end === -1) throw new Error('gen-portal-home: no encuentro el bloque #root');
 html = html.slice(0, start) + portal + '\n    ' + css + '\n    ' + html.slice(end);
+
+// Datos del hub en línea: la portada pinta el partido destacado (LCP) sin esperar a 7 fetch.
+const hub = { news: actualidad, standings, results, fixtures, stats: read('stats.json', []), leagues: read('leagues.json', {}), updatedAt: read('updated.json', {}).at || '' };
+html = html.replace('</head>', `<script>window.__HUB__=${JSON.stringify(hub).replace(/</g, '\u003c')}</script>
+  </head>`);
 
 fs.writeFileSync(indexPath, html);
 console.log('gen-portal-home: home del portal generada');

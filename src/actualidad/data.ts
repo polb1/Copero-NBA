@@ -69,27 +69,36 @@ async function load<T>(url: string, fallback: T): Promise<T> {
   }
 }
 
+// Una sola carga compartida por todos los componentes (antes HubLayout y la página pedían los 7 JSON cada uno).
+let shared: Promise<HubData> | null = null;
+function loadHub(): Promise<HubData> {
+  shared ??= Promise.all([
+    load<NewsItem[]>('/data/actualidad.json', []),
+    load<Record<string, StandingRow[]>>('/data/standings.json', {}),
+    load<ResultRow[]>('/data/results.json', []),
+    load<FixtureRow[]>('/data/fixtures.json', []),
+    load<StatRow[]>('/data/stats.json', []),
+    load<Record<string, string[]>>('/data/leagues.json', {}),
+    load<{ at?: string }>('/data/updated.json', {}),
+  ]).then(([news, standings, results, fixtures, stats, leagues, updated]) => (
+    { news, standings, results, fixtures, stats, leagues, updatedAt: updated.at || '', loading: false }
+  ));
+  return shared;
+}
+
 export function useHubData(): HubData {
-  const [data, setData] = useState<HubData>({
+  // La portada trae los datos en línea (window.__HUB__, generado en el build): primer render ya completo.
+  const inline = (globalThis as { __HUB__?: Omit<HubData, 'loading'> }).__HUB__;
+  const [data, setData] = useState<HubData>(inline ? { ...inline, loading: false } : {
     news: [], standings: {}, results: [], fixtures: [], stats: [], leagues: {}, updatedAt: '', loading: true,
   });
 
   useEffect(() => {
+    if (inline) return;
     let mounted = true;
-    Promise.all([
-      load<NewsItem[]>('/data/actualidad.json', []),
-      load<Record<string, StandingRow[]>>('/data/standings.json', {}),
-      load<ResultRow[]>('/data/results.json', []),
-      load<FixtureRow[]>('/data/fixtures.json', []),
-      load<StatRow[]>('/data/stats.json', []),
-      load<Record<string, string[]>>('/data/leagues.json', {}),
-      load<{ at?: string }>('/data/updated.json', {}),
-    ]).then(([news, standings, results, fixtures, stats, leagues, updated]) => {
-      if (!mounted) return;
-      setData({ news, standings, results, fixtures, stats, leagues, updatedAt: updated.at || '', loading: false });
-    });
+    loadHub().then((d) => { if (mounted) setData(d); });
     return () => { mounted = false; };
-  }, []);
+  }, [inline]);
 
   return data;
 }

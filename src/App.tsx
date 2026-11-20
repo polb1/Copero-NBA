@@ -7,7 +7,7 @@ import { Home as HubHome } from './actualidad/pages/Home';
 import { Noticias, Resultados, Calendario, Estadisticas } from './actualidad/pages/Pages';
 import { LeaguePage } from './actualidad/pages/League';
 import { Match } from './actualidad/pages/Match';
-import { AuthProvider } from './screens/Auth';
+import { AuthProvider } from './screens/Auth/AuthContext';
 import './actualidad/tailwind.css';
 
 // El juego y la galería (solo dev) se cargan aparte: el hub no descarga el simulador.

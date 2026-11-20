@@ -70,7 +70,7 @@ ${alt}
     <p class="lang">${Object.keys(alternates).filter((k) => k !== 'x-default').map((k) => `<a href="${alternates[k]}">${k.toUpperCase()}</a>`).join(' · ')}</p>
   </header>
   ${body}
-  <footer><a href="/">${lang === 'es' ? 'Resultados y clasificaciones' : 'Scores and standings'}</a> · <a href="/hall-of-fame">Hall of Fame</a> · <a href="/play">Play</a></footer>
+  <footer><a href="/">${lang === 'es' ? 'Resultados y clasificaciones' : 'Scores and standings'}</a> · <a href="/hall-of-fame">Jugadores históricos</a> · <a href="/play">Play</a></footer>
 </div>
 </body>
 </html>`;

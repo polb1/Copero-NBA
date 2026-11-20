@@ -3,7 +3,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { leaguePath, LEAGUE_COUNTRY } from '../leagues';
 import { MAIN_LEAGUES } from '../data';
 import { useHubData } from '../data';
-import { useAuth } from '../../screens/Auth';
+import { useAuth } from '../../screens/Auth/AuthContext';
 
 const THEME_KEY = 'anillero-theme';
 const isDark = () =>
@@ -106,7 +106,7 @@ function Sidebar({ open }: { open: boolean }) {
             <Link key={n.to} to={n.to} className="px-space-sm py-3 text-body-lg text-text-primary border-b border-court-border">{n.label}</Link>
           ))}
           <a href="/jugadores" className="px-space-sm py-3 text-body-lg text-text-primary border-b border-court-border">Jugadores</a>
-          <a href="/hall-of-fame" className="px-space-sm py-3 text-body-lg text-text-primary border-b border-court-border">Hall of Fame</a>
+          <a href="/hall-of-fame" className="px-space-sm py-3 text-body-lg text-text-primary border-b border-court-border">Jugadores históricos</a>
           <Link to="/start" className="px-space-sm py-3 text-body-lg text-secondary border-b border-court-border">Reto del día</Link>
           {user ? (
             <Link to="/perfil" className="px-space-sm py-3 text-body-lg text-primary border-b border-court-border flex items-center justify-between">
@@ -190,7 +190,7 @@ export function HubLayout({ children }: { children: ReactNode }) {
               {NAV.map((n) => <NavLink key={n.to} {...n} />)}
               {/* página estática generada en build: enlace normal, no de router */}
               <a href="/jugadores" className="font-display text-label-nav uppercase tracking-wider text-on-surface-variant hover:text-text-primary transition-colors">Jugadores</a>
-              <a href="/hall-of-fame" className="font-display text-label-nav uppercase tracking-wider text-on-surface-variant hover:text-text-primary transition-colors">Hall of Fame</a>
+              <a href="/hall-of-fame" className="font-display text-label-nav uppercase tracking-wider text-on-surface-variant hover:text-text-primary transition-colors">Históricos</a>
               <Link to="/start" className="font-display text-label-nav uppercase tracking-wider text-secondary hover:text-primary transition-colors">Reto del día</Link>
             </nav>
           </div>

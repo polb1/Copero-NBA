@@ -95,7 +95,7 @@ h2{font-size:18px;margin:26px 0 10px;color:var(--a-gold)}
 <main>
   <p class="meta"><a href="/">Anillero</a> · Jugadores</p>
   <h1>Jugadores en activo</h1>
-  <p class="meta">Plantillas 2026-27 por equipo, con dorsal, posición y altura. Para las leyendas retiradas, <a href="/hall-of-fame">Hall of Fame</a>.</p>
+  <p class="meta">Plantillas 2026-27 por equipo, con dorsal, posición y altura. Para los que ya no están en plantilla, <a href="/hall-of-fame">jugadores históricos</a>.</p>
 
   <h2>Plantillas por equipo (${conPlantilla.length})</h2>
   ${conPlantilla.map(bloqueEquipo).join('')}
