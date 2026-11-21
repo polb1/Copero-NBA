@@ -9,7 +9,9 @@ const SPA_ONLY = /^\/(auth\/|verify-email$|perfil$|partido\/.+)/;
 
 export default {
   fetch: (request: Request, env: Env, ctx: ExecutionContext) => {
-    const { pathname } = new URL(request.url);
+    const { pathname, hostname } = new URL(request.url);
+    // panel.anillero.com: su portada es el Control Center. En el resto de hosts, "/" es la portada pública.
+    if (pathname === '/') return hostname.startsWith('panel.') ? Response.redirect(new URL('/control-center', request.url).toString(), 302) : env.ASSETS.fetch(request);
     if (SPA_ONLY.test(pathname)) return env.ASSETS.fetch(new URL('/', request.url));
     return app.fetch(request, env, ctx);
   },

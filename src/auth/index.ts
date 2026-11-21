@@ -11,7 +11,8 @@ export function createAuth(env: Env) {
   
   const authConfig: any = {
     baseURL,
-    trustedOrigins: [baseURL],
+    // panel.<dominio> (Control Center) inicia sesión contra el mismo Worker.
+    trustedOrigins: [baseURL, baseURL.replace('://', '://panel.')],
     database: drizzleAdapter(db, {
       provider: 'sqlite',
       schema: {
