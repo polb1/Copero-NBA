@@ -14,7 +14,9 @@
 			"/auth/*",
 			"/verify-email",
 			"/perfil",
-			"/partido/*"
+			"/partido/*",
+			"/control-center",
+			"/control-center.html"
 		]
 	},
 	"d1_databases": [

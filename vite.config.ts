@@ -26,7 +26,8 @@ function site(): Plugin {
   return {
     name: 'site-env',
     // The dev server is not production: no beacon, so local visits never reach the stats.
-    transformIndexHtml: (html, ctx) => renderHtml(html, ctx.server ? { ...cfg, production: false } : cfg),
+    // The private Control Center gets neither the analytics beacon nor public-site rewrites.
+    transformIndexHtml: (html, ctx) => ctx.path.endsWith('control-center.html') ? html : renderHtml(html, ctx.server ? { ...cfg, production: false } : cfg),
     generateBundle: { order: 'post', handler(_, bundle) {
       // Cloudflare answers 404 for any path without a file, so every real route of the app gets its own copy of the shell.
       const shell = bundle['index.html'];
@@ -74,6 +75,7 @@ export default defineConfig({
         ca: resolve(__dirname, 'ca/index.html'),
         guideEs: resolve(__dirname, 'mejores-simuladores-baloncesto/index.html'),
         guideEn: resolve(__dirname, 'en/best-basketball-simulators/index.html'),
+        controlCenter: resolve(__dirname, 'control-center.html'),
       },
     },
   },

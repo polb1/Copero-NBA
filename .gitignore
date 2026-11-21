@@ -11,3 +11,6 @@ dist
 # ingesta: caché y contadores, no el resultado
 out/.cache/
 out/.state.json
+
+# Secretos locales de wrangler dev
+.dev.vars

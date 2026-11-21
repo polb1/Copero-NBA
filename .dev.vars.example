@@ -1,0 +1,7 @@
+# Copia a .dev.vars (no se sube a git) para wrangler dev.
+BETTER_AUTH_URL=http://localhost:8788
+BETTER_AUTH_SECRET=genera-uno-con-openssl-rand-hex-32
+# Emails con acceso al Control Center, separados por comas.
+CC_ALLOWED_EMAILS=cc-a@test.localhost,cc-b@test.localhost
+# Opcional: production | pre | local. Si falta, se deduce del host.
+# CC_ENV=local

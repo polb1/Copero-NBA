@@ -6,6 +6,7 @@ import * as schema from './db/schema';
 import { eq } from 'drizzle-orm';
 import type { Env } from './types';
 import type { ContextVariableMap } from 'hono';
+import { mountControlCenter } from './control-center/api';
 
 // Extend Hono's Context to include auth and db
 declare module 'hono' {
@@ -87,6 +88,9 @@ export function createApp() {
     }
     await next();
   };
+
+  // Backoffice privado (/control-center y /api/cc/*).
+  mountControlCenter(app, getAuth);
 
   // Current user info
   app.get('/api/me', requireAuth, async (c) => {

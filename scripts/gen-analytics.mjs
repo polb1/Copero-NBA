@@ -29,7 +29,7 @@ function walkDir(dir) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
     if (e.isDirectory()) walkDir(p);
-    else if (e.name.endsWith('.html')) {
+    else if (e.name.endsWith('.html') && e.name !== 'control-center.html') { // el panel privado no se mide
       const html = fs.readFileSync(p, 'utf8');
       if (html.includes('cloudflareinsights.com/beacon')) continue;
       if (!html.includes('</head>')) continue;

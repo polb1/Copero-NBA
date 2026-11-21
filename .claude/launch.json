@@ -25,6 +25,12 @@
         "--strictPort"
       ],
       "port": 4173
+    },
+    {
+      "name": "worker",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["wrangler", "dev", "--local", "--port", "8789"],
+      "port": 8789, "autoPort": false
     }
   ]
 }

@@ -10,4 +10,8 @@ export interface Env {
   KV: KVNamespace;
   BETTER_AUTH_SECRET: string;
   BETTER_AUTH_URL: string;
+  /** Emails con acceso al Control Center, separados por comas. */
+  CC_ALLOWED_EMAILS?: string;
+  /** Entorno de los datos del Control Center: production | pre | local (si falta, se deduce del host). */
+  CC_ENV?: string;
 }
