@@ -188,7 +188,6 @@ test('T20 importación idempotente sin tareas hechas y panel fuera del sitemap y
     assert.equal(t.assignee, null);
     assert.ok(t.evidence && t.done_criteria, t.source_ref);
   }
-  assert.equal(d1("SELECT COUNT(*) AS n FROM cc_incidents WHERE env = 'local' AND source_ref IS NOT NULL")[0].n, first.json.incidents);
 
   assert.ok(existsSync('dist/sitemap.xml'), 'falta dist/: ejecuta npm run build');
   assert.doesNotMatch(readFileSync('dist/sitemap.xml', 'utf8'), /control-center/);

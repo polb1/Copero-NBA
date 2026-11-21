@@ -5,7 +5,7 @@ import type { Hono, Context } from 'hono';
 import type { Env } from '../types';
 import type { createAuth } from '../auth';
 import { DEFAULT_CATEGORIES, ENTITIES, detectEnv, isAllowed, milestoneProgress, parseAllowed, validate, type EntityKind } from './logic';
-import { SEED_INCIDENTS, SEED_MILESTONES, SEED_TASKS } from './seed';
+import { SEED_TASKS } from './seed';
 
 type CcUser = { email: string; name?: string; emailVerified: boolean };
 type Ctx = Context<{ Bindings: Env; Variables: any }>;
@@ -64,9 +64,15 @@ export function mountControlCenter(app: Hono<any>, getAuth: (env: Env) => Return
     for (const [k, v] of Object.entries(NOINDEX)) c.res.headers.set(k, v);
   });
 
-  app.get('/api/cc/me', (c: Ctx) => {
+  app.get('/api/cc/me', async (c: Ctx) => {
     const u = c.get('user') as CcUser;
-    return c.json({ user: { email: u.email, name: u.name ?? u.email }, env: envOf(c), members: parseAllowed(c.env.CC_ALLOWED_EMAILS) });
+    const members = parseAllowed(c.env.CC_ALLOWED_EMAILS);
+    const rows = members.length
+      ? (await c.env.DB.prepare(`SELECT email, name FROM user WHERE lower(email) IN (${members.map(() => '?').join(',')})`).bind(...members).all<{ email: string; name: string }>()).results
+      : [];
+    // Nombre de pila de cada miembro (de su cuenta); sin cuenta, la parte local del email.
+    const names = Object.fromEntries(members.map((m) => [m, (rows.find((r) => r.email.toLowerCase() === m)?.name || m.split('@')[0]).split(' ')[0]]));
+    return c.json({ user: { email: u.email, name: u.name ?? u.email }, env: envOf(c), members, names });
   });
 
   app.get('/api/cc/dashboard', async (c: Ctx) => {
@@ -175,28 +181,13 @@ export function mountControlCenter(app: Hono<any>, getAuth: (env: Env) => Return
     const env = envOf(c), me = (c.get('user') as CcUser).email, db = c.env.DB;
     const cats = await db.prepare('SELECT id, name FROM cc_categories WHERE env = ?').bind(env).all<{ id: string; name: string }>();
     const catId = (name: string) => cats.results.find((x) => x.name === name)?.id ?? null;
-    const stmts: D1PreparedStatement[] = [];
-    for (const m of SEED_MILESTONES) {
-      stmts.push(db.prepare('INSERT OR IGNORE INTO cc_milestones (id, env, title, description, due_date, status, source_ref, created_by, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?,?)')
-        .bind(id(), env, m.title, m.description, m.due_date, 'abierto', m.ref, me, now(), now()));
-    }
-    await db.batch(stmts);
-    const ms = await db.prepare('SELECT id, source_ref FROM cc_milestones WHERE env = ? AND source_ref IS NOT NULL').bind(env).all<{ id: string; source_ref: string }>();
-    const msId = (ref?: string) => ms.results.find((x) => x.source_ref === ref)?.id ?? null;
-    const t2: D1PreparedStatement[] = [];
-    SEED_TASKS.forEach((t, i) => {
-      t2.push(db.prepare(`INSERT OR IGNORE INTO cc_tasks (id, env, title, description, status, priority, category_id, assignee, suggested_assignee, visibility, milestone_id, weight, evidence, done_criteria, source, source_ref, verified, sort, created_by, created_at, updated_at)
-        VALUES (?,?,?,?,?,?,?,NULL,?, 'shared',?,?,?,?,?,?,0,?,?,?,?)`)
-        .bind(id(), env, t.title, t.description, t.status, t.priority, catId(t.category), t.suggested ?? null, msId(t.milestone), t.weight, t.evidence, t.done_criteria, t.source, t.ref, i, me, now(), now()));
-    });
-    for (const inc of SEED_INCIDENTS) {
-      t2.push(db.prepare('INSERT OR IGNORE INTO cc_incidents (id, env, title, description, severity, status, category_id, evidence, source, source_ref, created_by, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)')
-        .bind(id(), env, inc.title, inc.description, inc.severity, 'abierta', catId(inc.category), inc.evidence, inc.source, inc.ref, me, now(), now()));
-    }
+    const t2 = SEED_TASKS.map((t, i) => db.prepare(`INSERT OR IGNORE INTO cc_tasks (id, env, title, description, status, priority, category_id, assignee, visibility, weight, evidence, done_criteria, source, source_ref, verified, sort, created_by, created_at, updated_at)
+      VALUES (?,?,?,?,?,?,?,NULL,'shared',?,?,?,?,?,0,?,?,?,?)`)
+      .bind(id(), env, t.title, t.description, t.status, t.priority, catId(t.category), t.weight, t.evidence, t.done_criteria, t.source, t.ref, i, me, now(), now()));
     const res = await db.batch(t2);
     const inserted = res.reduce((s, r) => s + (r.meta.changes ?? 0), 0);
-    await log(c, 'importó', 'tasks', 'import', `${inserted} elementos de las auditorías`);
-    return c.json({ ok: true, inserted, tasks: SEED_TASKS.length, incidents: SEED_INCIDENTS.length, milestones: SEED_MILESTONES.length });
+    await log(c, 'importó', 'tasks', 'import', `${inserted} tareas de la auditoría`);
+    return c.json({ ok: true, inserted, tasks: SEED_TASKS.length });
   });
 
   // CRUD genérico.

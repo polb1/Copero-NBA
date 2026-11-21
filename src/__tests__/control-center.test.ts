@@ -1,8 +1,8 @@
 // Control Center: pruebas T01–T06 (reglas puras). T07–T20 están en scripts/control-center.e2e.mjs
 // y se ejecutan contra `wrangler dev` con D1 local.
 import { DEFAULT_CATEGORIES, detectEnv, isAllowed, milestoneProgress, validate } from '../control-center/logic';
-import { SEED_INCIDENTS, SEED_MILESTONES, SEED_TASKS } from '../control-center/seed';
-import { applyFilters } from '../control-center/App';
+import { SEED_TASKS } from '../control-center/seed';
+import { COLUMNS, visibleTasks } from '../control-center/App';
 
 describe('Control Center', () => {
   it('T01 deduce el entorno de los datos por host, con CC_ENV por encima', () => {
@@ -42,38 +42,33 @@ describe('Control Center', () => {
     expect(validate('notes', { title: 'n', pinned: 1 }, false).ok).toBe(true);
   });
 
-  it('T05 la importación inicial trae evidencia y criterios, y nada hecho ni asignado', () => {
+  it('T05 la auditoría trae qué hacer, cuándo está hecho y de dónde sale; nada hecho ni asignado', () => {
     const cats = DEFAULT_CATEGORIES.map(([n]) => n);
-    const msRefs = SEED_MILESTONES.map((m) => m.ref);
-    const refs = [...SEED_TASKS, ...SEED_INCIDENTS].map((x) => x.ref);
+    const refs = SEED_TASKS.map((t) => t.ref);
     expect(new Set(refs).size).toBe(refs.length);
     expect(SEED_TASKS.length).toBeGreaterThanOrEqual(20);
     for (const t of SEED_TASKS) {
-      expect(t.status).not.toBe('done');
-      expect(t.evidence.length, t.ref).toBeGreaterThan(10);
-      expect(t.done_criteria.length, t.ref).toBeGreaterThan(10);
-      expect(t.source).toMatch(/\.md$/);
-      expect(cats).toContain(t.category);
-      if (t.milestone) expect(msRefs).toContain(t.milestone);
+      expect(t.status).toBe('todo');
       expect(t).not.toHaveProperty('assignee');
+      expect(t.description.length, t.ref).toBeGreaterThan(30);
+      expect(t.done_criteria.length, t.ref).toBeGreaterThan(10);
+      expect(t.evidence.length, t.ref).toBeGreaterThan(10);
+      expect(cats).toContain(t.category);
       expect(validate('tasks', { title: t.title, description: t.description, evidence: t.evidence, done_criteria: t.done_criteria, priority: t.priority, status: t.status }, false).ok).toBe(true);
-    }
-    for (const i of SEED_INCIDENTS) {
-      expect(i.evidence.length, i.ref).toBeGreaterThan(5);
-      expect(cats).toContain(i.category);
     }
   });
 
-  it('T06 los filtros combinan texto, estado, prioridad y «Sin asignar»', () => {
+  it('T06 el tablero agrupa en 3 columnas y filtra por persona y texto', () => {
     const tasks = [
-      { id: '1', title: 'Canonical', description: '', evidence: 'G1', status: 'todo', priority: 'P0', assignee: null },
-      { id: '2', title: 'CI', description: 'GitHub Actions', evidence: '', status: 'doing', priority: 'P1', assignee: 'a@x.com' },
-      { id: '3', title: 'OG', description: '', evidence: '', status: 'todo', priority: 'P2', assignee: 'b@x.com' },
+      { id: '1', title: 'Canonical', description: '', status: 'backlog', priority: 'P2', sort: 0, assignee: null },
+      { id: '2', title: 'CI', description: 'GitHub Actions', status: 'review', priority: 'P1', sort: 0, assignee: 'a@x.com' },
+      { id: '3', title: 'OG', description: '', status: 'todo', priority: 'P0', sort: 0, assignee: 'b@x.com' },
     ];
-    const base = { q: '', status: '', priority: '', category_id: '', assignee: '', milestone_id: '' };
-    expect(applyFilters(tasks, { ...base, q: 'github' }).map((t) => t.id)).toEqual(['2']);
-    expect(applyFilters(tasks, { ...base, status: 'todo' }).map((t) => t.id)).toEqual(['1', '3']);
-    expect(applyFilters(tasks, { ...base, assignee: '__none' }).map((t) => t.id)).toEqual(['1']);
-    expect(applyFilters(tasks, { ...base, status: 'todo', priority: 'P2' }).map((t) => t.id)).toEqual(['3']);
+    const statuses = COLUMNS.flatMap((c) => [...c.statuses]);
+    for (const s of ['backlog', 'todo', 'doing', 'review', 'done']) expect(statuses.filter((x) => x === s).length, s).toBe(1);
+    expect(visibleTasks(tasks, '', '').map((t) => t.id)).toEqual(['3', '2', '1']);
+    expect(visibleTasks(tasks, '__none', '').map((t) => t.id)).toEqual(['1']);
+    expect(visibleTasks(tasks, 'a@x.com', '').map((t) => t.id)).toEqual(['2']);
+    expect(visibleTasks(tasks, '', 'github').map((t) => t.id)).toEqual(['2']);
   });
 });
