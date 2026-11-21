@@ -52,7 +52,8 @@ function NotFound() {
 }
 
 function Loading() {
-  return <div className="busy" role="status" aria-live="polite" style={{ background: 'transparent' }}><div className="ball" /></div>;
+  // .busy es position:fixed y no ocupa sitio: el envoltorio reserva el alto del splash (sin CLS mientras llega el chunk).
+  return <div style={{ minHeight: '100vh' }}><div className="busy" role="status" aria-live="polite" style={{ background: 'transparent' }}><div className="ball" /></div></div>;
 }
 
 export function App() {

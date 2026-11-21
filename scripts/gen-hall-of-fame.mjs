@@ -44,7 +44,7 @@ const CSS = `
   .card{position:relative;display:flex;flex-direction:column;gap:2px;background:var(--card);border:1px solid var(--line);
         border-radius:14px;padding:14px 14px 12px;transition:transform .15s,border-color .15s,background .15s}
   .card:hover{transform:translateY(-2px);border-color:rgba(140,100,32,.6);background:var(--a-card)}
-  .ini{position:absolute;top:10px;right:12px;font-size:11px;font-weight:800;color:var(--a-line3)}
+  .ini{position:absolute;top:10px;right:12px;font-size:11px;font-weight:800;color:var(--a-muted2)}
   .nm{font-weight:700;font-size:15px;line-height:1.25;padding-right:32px}
   .pos{font-size:12px;color:var(--muted)}
   .team{font-size:12px;color:var(--a-muted);margin-top:4px}
@@ -81,6 +81,7 @@ const shell = (title, desc, canonical, kicker, h1, lead, navHTML, body) => `<!do
   @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--a-bg:#1C1410;--a-card:#261B15;--a-card2:#31241C;--a-line:#4A3828;--a-line2:#5A4532;--a-line3:#6B5440;--a-ink:#F2E8D8;--a-ink2:#E6D9C4;--a-ink3:#D6C5AC;--a-ink4:#C7B497;--a-muted:#B3A089;--a-muted2:#9C8A73;--a-gold:#E0BC7A;--a-accent:#D9A95B;--a-on-accent:#1C1410;--a-win:#9CC795;--a-loss:#A08C74;--a-note-bg:#33251C;--a-note-line:#6B5232;--a-note-ink:#E8CFA0;color-scheme:dark}}
 </style>
 <style>
+  p a{text-decoration:underline!important;text-underline-offset:2px} /* enlaces en texto distinguibles sin color (WCAG 1.4.1) */
   h1,h2,h3{font-family:"Source Serif 4",Georgia,serif}${CSS}</style>
 </head>
 <body>

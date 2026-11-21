@@ -75,6 +75,7 @@ const html = `<!doctype html>
   @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--a-bg:#1C1410;--a-card:#261B15;--a-card2:#31241C;--a-line:#4A3828;--a-line2:#5A4532;--a-line3:#6B5440;--a-ink:#F2E8D8;--a-ink2:#E6D9C4;--a-ink3:#D6C5AC;--a-ink4:#C7B497;--a-muted:#B3A089;--a-muted2:#9C8A73;--a-gold:#E0BC7A;--a-accent:#D9A95B;--a-on-accent:#1C1410;--a-win:#9CC795;--a-loss:#A08C74;--a-note-bg:#33251C;--a-note-line:#6B5232;--a-note-ink:#E8CFA0;color-scheme:dark}}
 </style>
 <style>
+  p a{text-decoration:underline!important;text-underline-offset:2px} /* enlaces en texto distinguibles sin color (WCAG 1.4.1) */
   h1,h2,h3{font-family:"Source Serif 4",Georgia,serif}
 body{margin:0;background:var(--a-bg);color:var(--a-ink);font-family:Inter,system-ui,sans-serif;line-height:1.55}
 main{max-width:900px;margin:0 auto;padding:32px 20px 64px}
@@ -83,7 +84,7 @@ h1{font-size:30px;margin:0 0 6px}
 h2{font-size:18px;margin:26px 0 10px;color:var(--a-gold)}
 .meta{color:var(--a-muted);font-size:13px}
 .team{border-bottom:1px solid var(--a-line);padding:6px 0}
-.team summary{cursor:pointer;font-size:15px}
+.team summary{cursor:pointer;font-size:15px;min-height:24px;padding:6px 0}
 .team summary .meta{margin-left:8px}
 .squad{list-style:none;padding:6px 0 6px 14px;margin:0;columns:2;column-gap:24px}
 .squad li{font-size:13px;padding:2px 0}

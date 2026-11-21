@@ -36,7 +36,7 @@
   --c-live-pulse: 138 126 114;
   --c-text-primary: 43 36 32;
   --c-text-muted: 111 100 90;
-  --c-text-dim: 154 142 130;
+  --c-text-dim: 116 106 96; /* contraste AA 4,5:1 sobre superficie y contenedor */
 }
 :root[data-theme="dark"] {
   --c-surface: 38 27 21;
@@ -70,7 +70,7 @@
   --c-live-pulse: 160 140 116;
   --c-text-primary: 242 232 216;
   --c-text-muted: 179 160 137;
-  --c-text-dim: 138 119 97;
+  --c-text-dim: 160 143 121; /* contraste AA 4,5:1 sobre superficie y contenedor */
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -105,7 +105,7 @@
     --c-live-pulse: 160 140 116;
     --c-text-primary: 242 232 216;
     --c-text-muted: 179 160 137;
-    --c-text-dim: 138 119 97;
+    --c-text-dim: 160 143 121; /* contraste AA 4,5:1 sobre superficie y contenedor */
   }
 }
 

@@ -103,10 +103,12 @@ const rosterFor = (team) => {
   return puntosG > 0 ? { players: mejorG, coach: '' } : null;
 };
 const shell = fs.readFileSync(path.join(OUT, 'index.html'), 'utf8');
-const css = (shell.match(/<link[^>]+rel="stylesheet"[^>]*>/g) || []).join('\n    ');
+// Solo las fuentes de texto (van en `fonts`): estas páginas no usan el CSS de la app ni Material Symbols, que bloqueaban el pintado (Lighthouse R5).
+const css = '';
 // Standalone page: only the analytics beacon, never the app (React would mount over #root and show its 404).
 const scripts = (shell.match(/<script[^>]+cloudflareinsights[^>]*><\/script>/g) || []).join('\n    ');
-const fonts = (shell.match(/<link[^>]+fonts\.googleapis[^>]*>/g) || []).join('\n    ');
+// Sin Material Symbols y con display=optional: sin cambio de fuente a mitad de carga (CLS, R10).
+const fonts = [...new Set(shell.match(/<link[^>]+fonts\.googleapis[^>]*>/g) || [])].filter((l) => !l.includes('Material+Symbols')).join('\n    ').replace(/display=swap/g, 'display=optional');
 
 let count = 0;
 const urls = [];
@@ -176,6 +178,7 @@ for (const [team, liga] of [...teamLeague.entries()].sort()) {
   @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--a-bg:#1C1410;--a-card:#261B15;--a-card2:#31241C;--a-line:#4A3828;--a-line2:#5A4532;--a-line3:#6B5440;--a-ink:#F2E8D8;--a-ink2:#E6D9C4;--a-ink3:#D6C5AC;--a-ink4:#C7B497;--a-muted:#B3A089;--a-muted2:#9C8A73;--a-gold:#E0BC7A;--a-accent:#D9A95B;--a-on-accent:#1C1410;--a-win:#9CC795;--a-loss:#A08C74;--a-note-bg:#33251C;--a-note-line:#6B5232;--a-note-ink:#E8CFA0;color-scheme:dark}}
 </style>
 <style>
+  p a{text-decoration:underline!important;text-underline-offset:2px} /* enlaces en texto distinguibles sin color (WCAG 1.4.1) */
   h1,h2,h3{font-family:"Source Serif 4",Georgia,serif}
   :root{--bg:var(--a-bg);--card:var(--a-card);--line:var(--a-line);--muted:var(--a-muted);--gold:var(--a-gold);--orange:var(--a-accent)}
   *{box-sizing:border-box}

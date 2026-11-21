@@ -1,0 +1,25 @@
+# Cabeceras de Cloudflare Workers Static Assets (no se aplican a /api ni a las rutas que pasan por el Worker).
+
+# Archivos con hash en el nombre: nunca cambian bajo la misma URL.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Imágenes sin hash: pueden cambiar con el mismo nombre, así que caché corta y revalidación en segundo plano.
+/crests/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/flags/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/stock/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/icons/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/favicon.ico
+  Cache-Control: public, max-age=86400
+
+# Seguridad en todo el sitio. HSTS prudente: 1 día y sin includeSubDomains (pre.anillero.com y otros subdominios no se ven afectados);
+# se puede subir a 1 año cuando se confirme que todo el dominio sirve HTTPS.
+/*
+  Strict-Transport-Security: max-age=86400
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: frame-ancestors 'self'

@@ -54,6 +54,7 @@ export function Home() {
 
   return (
     <div className="max-w-[1400px] mx-auto flex flex-col gap-space-md">
+      <h1 className="sr-only">Resultados y clasificaciones de baloncesto</h1>
       {/* Destacado: el resultado más reciente de las ligas principales */}
       {destacado && (
         <Link

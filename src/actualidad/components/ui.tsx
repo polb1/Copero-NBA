@@ -22,7 +22,7 @@ export function TeamBadge({ name, size = 24 }: { name: string; size?: number }) 
     return (
       <img
         src={crest}
-        alt={name}
+        alt="" /* decorativo: el nombre del equipo siempre va al lado */
         width={size}
         height={size}
         loading="lazy"
